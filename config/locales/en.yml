@@ -1,23 +1,32 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      repository:
+        slug: "Slug"
+        title: "Title"
+        teaser: "Teaser"
+        short_description: "Short Description"
+        description: "Description"
+        color: "Highlight Color"
+        public: "Display to Public"
+        in_georgia: "Located in Georgia"
+        homepage_url: "Repository Homepage URL"
+        directions_url: "Driving Directions URL"
+        address: "Address"
+        strengths: "Strengths"
+        contact: "Contact Information"
+    help:
+      repository:
+        slug: "This is formerly known as the Repository ID"
+        title: "Primary display title for the Repository"
+        teaser: "Brief description of repository for inclusion in small panels"
+        short_description: "Short description for Repository lists"
+        description: "Full description for Repository main page"
+        color: "Color for highlighting repository in lists"
+        public: "Check this to show the Repository to public users"
+        in_georgia: "Check this to indicate that the repository is located in Georgia"
+        homepage_url: "URL for Repository main homepage"
+        directions_url: "URL for driving directions to physical repository location"
+        address: "Physical address of Repository"
+        strengths: "Strengths of the Items housed in the Collections of this Repository"
+        contact: "Contact information for individuals working at this Repository"

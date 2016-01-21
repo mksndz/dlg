@@ -1,0 +1,30 @@
+<h1>Repositories</h1>
+
+<%= button_to 'Add Repository', new_repository_path, class: 'btn btn-success', method: :get %>
+
+<% if @repositories.empty? %>
+
+    <p>No repositories have been added yet.</p>
+
+<% else %>
+
+    <div class="row">
+      <div class="col-md-1">ID</div>
+      <div class="col-md-2">Slug</div>
+      <div class="col-md-5">Title</div>
+      <div class="col-md-4">Actions</div>
+    </div>
+
+
+    <% @repositories.each do |repository| %>
+
+      <div class="row">
+        <div class="col-md-1"><%= repository.id %></div>
+        <div class="col-md-2"><%= repository.slug %></div>
+        <div class="col-md-5"><%= repository.title %></div>
+        <div class="col-md-4"></div>
+      </div>
+
+    <% end %>
+
+<% end %>
