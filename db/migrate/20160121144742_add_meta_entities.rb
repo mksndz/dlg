@@ -34,7 +34,7 @@ class AddMetaEntities < ActiveRecord::Migration
       t.index   :slug, unique: true
 
       # relations
-      t.references :repositories, index: true, foreign_key: true
+      t.references :repository, index: true, foreign_key: true
 
       # dlg specific metadata
       t.boolean :dpla,          null: false, default: false, index: true
@@ -79,7 +79,7 @@ class AddMetaEntities < ActiveRecord::Migration
       t.index   :slug, unique: true
 
       # relations
-      t.references :collections, index: true, foreign_key: true
+      t.references :collection, index: true, foreign_key: true
 
       # dlg specific metadata
       t.boolean :dpla,        null: false, default: false, index: true
