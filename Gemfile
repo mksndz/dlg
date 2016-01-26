@@ -46,12 +46,12 @@ group :development do
 end
 
 
-gem 'blacklight', '>= 5.3.0'
+gem 'blacklight', '>= 6.0.0'
 gem 'jettywrapper', '>= 2.0'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
-gem 'rsolr', '~> 1.0.6'
+gem 'rsolr'
 gem 'devise'
 gem 'devise-guests', '~> 0.3'
-gem 'blacklight-marc', '~> 5.0'
+gem 'blacklight-marc'
 gem 'pg'
 gem 'bootstrap_form'
