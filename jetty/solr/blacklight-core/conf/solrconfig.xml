@@ -224,6 +224,7 @@
          address_text,
          strengths_text,
          contacts_text,
+         resource_id_ss,
        </str>
 
        <str name="facet">true</str>
