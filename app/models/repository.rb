@@ -10,6 +10,14 @@ class Repository < ActiveRecord::Base
   searchable do
 
     string :slug
+
+    # set empty proxy id field so sunspot knows about it
+    # value is set prior to save
+    # see monkeypatch @ config/initializers/sunspot_indexer_id.rb
+    string :sunspot_id do
+      ''
+    end
+
     string :homepage_url
     string :directions_url
 

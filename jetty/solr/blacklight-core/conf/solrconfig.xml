@@ -86,6 +86,11 @@
             http://wiki.apache.org/solr/LocalParams
        -->
 
+       <!--
+        You use the qf parameter to tell the dismax query parser which fields you want to
+        search and their corresponding score boosts.
+        -->
+
        <str name="qf">
          title_unstem_search^100000
          subtitle_unstem_search^50000
@@ -110,6 +115,11 @@
          isbn_t
          text
        </str>
+
+       <!-- the pf parameter, which is an abbreviation of "phrase fields". The syntax
+            is identical to qf. You should start with the same value and then make adjustments.
+            -->
+
        <str name="pf">
          title_unstem_search^1000000
          subtitle_unstem_search^500000
@@ -185,9 +195,22 @@
          subject_addl_unstem_search^100
          subject_addl_t^10
        </str>
-       
+
+       <!-- phrase slop -->
        <int name="ps">3</int>
+
        <float name="tie">0.01</float>
+
+       <!--
+       This parameter can be used to specify a set of fields to return, limiting
+        the amount of information in the response. When returning the results to
+         the client, only fields in this list will be included.
+        The set of fields to be returned can be specified as a space (or comma)
+        separated list of field names. The string "score" can be used to
+        indicate that the score of each document for the particular query
+        should be returned as a field, and the string "*" can be used to
+        indicate all stored fields the document has.
+      -->
 
        <!-- NOT using marc_display because it is large and will slow things down for search results -->
        <str name="fl">
@@ -225,6 +248,8 @@
          strengths_text,
          contacts_text,
          resource_id_ss,
+         sunspot_id_s,
+         text
        </str>
 
        <str name="facet">true</str>
