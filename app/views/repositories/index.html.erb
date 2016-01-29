@@ -1,6 +1,10 @@
 <h1>Repositories</h1>
 
+<br>
+
 <%= button_to 'Add Repository', new_repository_path, class: 'btn btn-success', method: :get %>
+
+<br>
 
 <% if @repositories.empty? %>
 
@@ -8,7 +12,7 @@
 
 <% else %>
 
-    <div class="row">
+    <div class="row" style="font-weight: bold;">
       <div class="col-md-1">ID</div>
       <div class="col-md-2">Slug</div>
       <div class="col-md-5">Title</div>
@@ -22,7 +26,10 @@
         <div class="col-md-1"><%= repository.id %></div>
         <div class="col-md-2"><%= repository.slug %></div>
         <div class="col-md-5"><%= repository.title %></div>
-        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <%= link_to 'Edit', repository %> |
+          <%= link_to 'Delete', repository, method: :delete %>
+        </div>
       </div>
 
     <% end %>
