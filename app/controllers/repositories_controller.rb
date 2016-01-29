@@ -10,6 +10,12 @@ class RepositoriesController < ApplicationController
 
   end
 
+  def show
+
+    find_repository
+
+  end
+
   def new
 
     @repository = Repository.new
@@ -36,7 +42,7 @@ class RepositoriesController < ApplicationController
 
   def update
 
-    if find_repository.update(repository_params).save
+    if find_repository.update(repository_params)
       redirect_to @repository, notice: 'Repository updated'
     else
       redirect_to :new, alert: 'Error creating repository'

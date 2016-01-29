@@ -27,7 +27,7 @@
         <div class="col-md-2"><%= repository.slug %></div>
         <div class="col-md-5"><%= repository.title %></div>
         <div class="col-md-4">
-          <%= link_to 'Edit', repository %> |
+          <%= link_to 'Edit', edit_repository_path(repository) %> |
           <%= link_to 'Delete', repository, method: :delete %>
         </div>
       </div>
