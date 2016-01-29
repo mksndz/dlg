@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20160121144742) do
     t.text      "short_description"
     t.text      "teaser"
     t.string    "color"
-    t.integer   "other_repositories",                 null: false
+    t.integer   "other_repositories", default: [],    null: false, array: true
     t.text      "dc_title",           default: [],    null: false, array: true
     t.text      "dc_format",          default: [],    null: false, array: true
     t.text      "dc_publisher",       default: [],    null: false, array: true
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20160121144742) do
     t.boolean  "dpla",              default: false, null: false
     t.boolean  "public",            default: false, null: false
     t.boolean  "in_georgia",        default: true,  null: false
-    t.integer  "other_collections",                 null: false
+    t.integer  "other_collections", default: [],    null: false, array: true
     t.text     "dc_title",          default: [],    null: false, array: true
     t.text     "dc_format",         default: [],    null: false, array: true
     t.text     "dc_publisher",      default: [],    null: false, array: true

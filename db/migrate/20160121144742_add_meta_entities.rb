@@ -48,7 +48,7 @@ class AddMetaEntities < ActiveRecord::Migration
 
       # 'other repositories' for the rare cases where a collection is
       # in >1 repository
-      t.integer :other_repositories, null: false, default: []
+      t.integer :other_repositories, array: true, null: false, default: []
 
       # dublin core fields
       t.text :dc_title,       array: true, null: false, default: []
@@ -87,7 +87,7 @@ class AddMetaEntities < ActiveRecord::Migration
       t.boolean :in_georgia,  null: false, default: true
 
       # 'other collections' for the rare cases where an item is in >1 collection
-      t.integer :other_collections, null: false, default: []
+      t.integer :other_collections, array: true, null: false, default: []
 
       # dublin core fields
       t.text :dc_title,       array: true, null: false, default: []
