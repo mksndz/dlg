@@ -497,41 +497,58 @@
        when adding a document.
    -->
 
-   <!-- Meta Custom Fields -->
+   <field name="id"                       type="string"   indexed="true"  stored="true" required="true" />
+   <field name="text"                     type="text"     indexed="true"  stored="true" />
 
-   <field name="resource_id_ss"   type="string" indexed="true" stored="true" required="false" />
-   <field name="sunspot_id_s"     type="string" indexed="true" stored="true" required="false" />
+   <!-- sunspot required fields -->
+   <field name="type"                     type="string"   indexed="true"  stored="true" multiValued="true"/>
+   <field name="class_name"               type="string"   indexed="true"  stored="true" multiValued="true"/>
+
+   <!-- sunspot hack field -->
+   <field name="sunspot_id_s"             type="string"   indexed="true"  stored="true" />
 
    <!-- searchable fields -->
-   <field name="id"               type="string" indexed="true"  stored="true" required="true" />
-   <field name="text"             type="text"   indexed="true"  stored="true" />
-   <field name="type"             type="string" indexed="true"  stored="true" multiValued="true"/>
-   <field name="slug_s"           type="string" indexed="true"  stored="true" />
-   <field name="class_name"       type="string" indexed="true"  stored="true" multiValued="true"/>
-   <field name="title_text"       type="text"   indexed="true"  stored="true" />
-   <field name="description_text" type="text"   indexed="true"  stored="true" />
+   <field name="slug_s"                   type="string"   indexed="true"  stored="true" />
+   <field name="display_title_text"       type="string"   indexed="true"  stored="true" />
+   <field name="title_text"               type="text"     indexed="true"  stored="true" />
+   <field name="description_text"         type="text"     indexed="true"  stored="true" />
 
    <!-- boolean fields -->
-   <field name="in_georgia_b"     type="boolean"  indexed="true"  stored="false" />
-   <field name="public_b"         type="boolean"  indexed="true"  stored="false" />
+   <field name="dpla_b"                   type="boolean"  indexed="true"  stored="false" />
+   <field name="in_georgia_b"             type="boolean"  indexed="true"  stored="false" />
+   <field name="public_b"                 type="boolean"  indexed="true"  stored="false" />
 
    <!-- display only fields -->
-   <field name="homepage_url_s"           type="string" indexed="false" stored="true" />
-   <field name="directions_url_s"         type="string" indexed="false" stored="true" />
-   <field name="teaser_text"              type="text"   indexed="false" stored="true" />
-   <field name="short_description_text"   type="text"   indexed="false" stored="true" />
-   <field name="address_text"             type="text"   indexed="false" stored="true" />
-   <field name="strengths_text"           type="text"   indexed="false" stored="true" />
-   <field name="contact_text"             type="text"   indexed="false" stored="true" />
+   <field name="homepage_url_s"           type="string"   indexed="false" stored="true" />
+   <field name="directions_url_s"         type="string"   indexed="false" stored="true" />
+   <field name="teaser_text"              type="text"     indexed="false" stored="true" />
+   <field name="short_description_text"   type="text"     indexed="false" stored="true" />
+   <field name="address_text"             type="text"     indexed="false" stored="true" />
+   <field name="strengths_text"           type="text"     indexed="false" stored="true" />
+   <field name="contact_text"             type="text"     indexed="false" stored="true" />
+   <field name="in_collection_text"       type="string"   indexed="false" stored="true" />
+   <field name="in_repository_text"       type="string"   indexed="false" stored="true" />
+
+   <!-- dublin core fields -->
+   <field name="dc_title_text"            type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_format_text"           type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_publisher_text"        type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_identifier_text"       type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_rights_text"           type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_contributor_text"      type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_coverage_t_text"       type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_coverage_s_text"       type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_date_text"             type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_source_text"           type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_subject_text"          type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_type_text"             type="text"     indexed="true"  stored="true" multiValued="true" />
+   <field name="dc_description_text"      type="text"     indexed="true"  stored="true" multiValued="true" />
+
 
    <!--&lt;!&ndash; NOTE: this is not a full list of fields in the index; dynamic fields are also used &ndash;&gt;-->
    <!--<field name="timestamp" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>-->
     <!--default, catch all search field-->
 
-   <!--&lt;!&ndash; added for sunspot &ndash;&gt;-->
-   <!--<field name="type" type="string" indexed="true" stored="true" multiValued="true"/>-->
-   <!--<field name="class_name" type="string" indexed="true" stored="true" multiValued="true"/>-->
-   <!---->
    <!--&lt;!&ndash; these display fields are NOT multi-valued &ndash;&gt;-->
    <!--<field name="marc_display" type="string" indexed="false" stored="true" multiValued="false"/>-->
    <!--<field name="title_display" type="string" indexed="false" stored="true" multiValued="false"/>-->
