@@ -2,10 +2,6 @@ class RepositoriesController < ApplicationController
 
   def index
 
-    # @repositories = Repository.all
-
-    @wat = Repository.search { fulltext 'test' }
-
     @repositories = Repository.all
 
   end
