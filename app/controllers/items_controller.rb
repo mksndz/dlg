@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to @item, notice: 'Item created'
     else
-      redirect_to new_item_path, alert: 'Error creating item'
+      render :new, alert: 'Error creating item'
     end
 
   end
@@ -43,7 +43,7 @@ class ItemsController < ApplicationController
     if find_item.update(item_params)
       redirect_to @item, notice: 'Item updated'
     else
-      redirect_to :new, alert: 'Error creating item'
+      render :edit, alert: 'Error creating item'
     end
 
   end

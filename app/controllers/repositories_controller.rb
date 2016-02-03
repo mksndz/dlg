@@ -25,7 +25,7 @@ class RepositoriesController < ApplicationController
     if @repository.save
       redirect_to @repository, notice: 'Repository created'
     else
-      redirect_to new_repository_path, alert: 'Error creating repository'
+      render :new, alert: 'Error creating repository'
     end
 
   end
@@ -41,7 +41,7 @@ class RepositoriesController < ApplicationController
     if find_repository.update(repository_params)
       redirect_to @repository, notice: 'Repository updated'
     else
-      redirect_to :new, alert: 'Error creating repository'
+      render :edit, alert: 'Error creating repository'
     end
 
   end
