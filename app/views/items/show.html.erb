@@ -10,3 +10,7 @@
 <%= render 'shared/show_field', field_name: t(:public,        scope: [:activerecord, :attributes, :item]), value: @item.public%>
 
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @item} %>
+
+
+<%= render 'shared/show_field', field_name: t(:created_at,        scope: [:activerecord, :attributes, :item]), value: @item.created_at %>
+<%= render 'shared/show_field', field_name: t(:updated_at,        scope: [:activerecord, :attributes, :item]), value: @item.updated_at %>

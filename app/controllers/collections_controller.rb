@@ -15,6 +15,7 @@ class CollectionsController < ApplicationController
   def new
 
     @collection = Collection.new
+    repositories_for_select
 
   end
 
@@ -33,6 +34,7 @@ class CollectionsController < ApplicationController
   def edit
 
     find_collection
+    repositories_for_select
 
   end
 
@@ -62,7 +64,12 @@ class CollectionsController < ApplicationController
     @collection = Collection.find(params[:id])
   end
 
+  def repositories_for_select
+    @repositories_for_select = Repository.all.collect { |r| [ "#{r.title} (#{r.slug}}", r.id ] }
+  end
+
   def collection_params
+    remove_blank_multi_values
     params.require(:collection).permit(
         :repository_id,
         :slug,
@@ -76,6 +83,7 @@ class CollectionsController < ApplicationController
         :color,
         :other_repositories,
         :date_range,
+        :dc_title       => [],
         :dc_format      => [],
         :dc_publisher   => [],
         :dc_identifier  => [],
@@ -88,6 +96,30 @@ class CollectionsController < ApplicationController
         :dc_subject     => [],
         :dc_type        => [],
         :dc_description => []
+    )
+  end
+
+  def remove_blank_multi_values
+    multi_fields.each do |f|
+      params[:collection][f].reject! { |v| v == '' }
+    end
+  end
+
+  def multi_fields
+    %w(
+      dc_title
+      dc_format
+      dc_publisher
+      dc_identifier
+      dc_rights
+      dc_contributor
+      dc_coverage_s
+      dc_coverage_t
+      dc_date
+      dc_source
+      dc_subject
+      dc_type
+      dc_description
     )
   end
 

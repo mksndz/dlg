@@ -19,7 +19,6 @@
       <div class="col-md-4">Actions</div>
     </div>
 
-
     <% @repositories.each do |repository| %>
 
       <div class="row">
@@ -27,6 +26,7 @@
         <div class="col-md-2"><%= repository.slug %></div>
         <div class="col-md-5"><%= repository.title %></div>
         <div class="col-md-4">
+          <%= link_to 'Show', repository %> |
           <%= link_to 'Edit', edit_repository_path(repository) %> |
           <%= link_to 'Delete', repository, method: :delete %>
         </div>
