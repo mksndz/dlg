@@ -1,0 +1,12 @@
+<h1>Show <%= @item.dc_title.first %></h1>
+
+<%= link_to 'Edit', edit_item_path(@item) %>
+
+<br><br>
+
+<%= render('shared/show_field', field_name: t(:collection_id, scope: [:activerecord, :attributes, :item]), value: @item.collection.dc_title.first) if @item.collection %>
+<%= render 'shared/show_field', field_name: t(:slug,          scope: [:activerecord, :attributes, :item]), value: @item.slug %>
+<%= render 'shared/show_field', field_name: t(:dpla,          scope: [:activerecord, :attributes, :item]), value: @item.dpla %>
+<%= render 'shared/show_field', field_name: t(:public,        scope: [:activerecord, :attributes, :item]), value: @item.public%>
+
+<%= render partial: 'shared/show_dc_fields', locals: { entity: @item} %>

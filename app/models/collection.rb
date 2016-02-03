@@ -1,6 +1,6 @@
 class Collection < ActiveRecord::Base
 
-  has_many :items, dependent: :destroy, counter_cache: true
+  has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
   has_many :dpla_items, -> { where dpla: true }, class_name: 'Item'
   belongs_to :repository
@@ -19,7 +19,11 @@ class Collection < ActiveRecord::Base
     end
 
     string :in_repository do
-      self.repository.title
+      if self.repository
+        self.repository.title
+      else
+        ''
+      end
     end
 
     boolean :in_georgia

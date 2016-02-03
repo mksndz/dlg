@@ -1,6 +1,6 @@
 class Item < ActiveRecord::Base
 
-  belongs_to :collection, counter_cache: true
+  belongs_to :collection
   has_one :repository, through: :collection
 
   searchable do
@@ -18,7 +18,11 @@ class Item < ActiveRecord::Base
     boolean :public
 
     string :in_collection do
-      self.collection.display_title
+      if self.collection
+        self.collection.display_title
+      else
+        ''
+      end
     end
 
     text :dc_title

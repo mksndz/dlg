@@ -1,0 +1,37 @@
+<h1>Items</h1>
+
+<br>
+
+<%= button_to 'Add Item', new_item_path, class: 'btn btn-success', method: :get %>
+
+<br>
+
+<% if @items.empty? %>
+
+    <p>No items have been added yet.</p>
+
+<% else %>
+
+    <div class="row" style="font-weight: bold;">
+      <div class="col-md-1">ID</div>
+      <div class="col-md-2">Slug</div>
+      <div class="col-md-5">DC Title</div>
+      <div class="col-md-4">Actions</div>
+    </div>
+
+
+    <% @items.each do |item| %>
+
+      <div class="row">
+        <div class="col-md-1"><%= item.id %></div>
+        <div class="col-md-2"><%= item.slug %></div>
+        <div class="col-md-5"><%= item.dc_title.first %></div>
+        <div class="col-md-4">
+          <%= link_to 'Edit', edit_item_path(item) %> |
+          <%= link_to 'Delete', item, method: :delete %>
+        </div>
+      </div>
+
+    <% end %>
+
+<% end %>

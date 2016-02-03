@@ -17,6 +17,7 @@ en:
         contact: "Contact Information"
       collection:
         slug: "Slug"
+        repository_id: "Repository"
         display_title: "Display Title"
         teaser: "Teaser"
         short_description: "Short Description"
@@ -42,6 +43,7 @@ en:
         dc_description: "Description (DC)"
       item:
         slug: "Slug"
+        collection_id: "Collection"
         public: "Display to Public"
         dpla: "Push to DPLA"
         in_georgia: "Located in Georgia"
@@ -76,6 +78,7 @@ en:
         contact: "Contact information for individuals working at this Repository"
       collection:
         slug: "This is formerly known as the Collection ID"
+        repository_id: "Primary Repository to which this Collection belongs"
         display_title: "Primary display title for the Collection"
         teaser: "Brief description of the collection for inclusion in small panels"
         short_description: "Short description for Collection lists"
@@ -101,6 +104,7 @@ en:
         dc_description: "An account of the resource. Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource."
       item:
         slug: "This is formerly known as the Item ID"
+        collection_id: "Primary Collection to which this Item belongs"
         public: "Check this to display the Collection to the public"
         dpla: "Check this to include the Item in the OAI-PMH harvest by DPLA"
         in_georgia: "Check this to indicate the Item is located in Georgia"
