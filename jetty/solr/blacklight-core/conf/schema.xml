@@ -526,8 +526,8 @@
    <field name="address_text"             type="text"     indexed="false" stored="true" />
    <field name="strengths_text"           type="text"     indexed="false" stored="true" />
    <field name="contact_text"             type="text"     indexed="false" stored="true" />
-   <field name="in_collection_text"       type="string"   indexed="false" stored="true" />
-   <field name="in_repository_text"       type="string"   indexed="false" stored="true" />
+   <field name="in_collection_s"          type="string"   indexed="false" stored="true" />
+   <field name="in_repository_s"          type="string"   indexed="false" stored="true" />
 
    <!-- dublin core fields -->
    <field name="dc_title_text"            type="text"     indexed="true"  stored="true" multiValued="true" />
@@ -543,7 +543,6 @@
    <field name="dc_subject_text"          type="text"     indexed="true"  stored="true" multiValued="true" />
    <field name="dc_type_text"             type="text"     indexed="true"  stored="true" multiValued="true" />
    <field name="dc_description_text"      type="text"     indexed="true"  stored="true" multiValued="true" />
-
 
    <!--&lt;!&ndash; NOTE: this is not a full list of fields in the index; dynamic fields are also used &ndash;&gt;-->
    <!--<field name="timestamp" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>-->
