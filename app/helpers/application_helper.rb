@@ -28,7 +28,7 @@ module ApplicationHelper
   end
 
   def input_name
-    "#{class_name}[#{@term}]"
+    "#{class_name}[#{@term}][]"
   end
 
   def class_name
