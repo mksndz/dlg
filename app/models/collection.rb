@@ -6,6 +6,7 @@ class Collection < ActiveRecord::Base
   belongs_to :repository
 
   validates_presence_of :slug, :display_title
+  validates_uniqueness_of :slug
 
   searchable do
 

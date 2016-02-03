@@ -6,6 +6,7 @@ class Repository < ActiveRecord::Base
   has_many :items, through: :collections
 
   validates_presence_of :slug, :title
+  validates_uniqueness_of :slug
 
   searchable do
 

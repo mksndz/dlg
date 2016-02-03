@@ -122,4 +122,18 @@ en:
         dc_subject: "The topic of the resource. Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary."
         dc_type: "The nature or genre of the resource. Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary. To describe the file format, physical medium, or dimensions of the resource, use the Format element."
         dc_description: "An account of the resource. Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource."
+    errors:
+      messages:
+        blank: "cannot be blank"
+        taken: "must be unique"
+      models:
+        repository:
+          attributes:
+            slug:
+        collection:
+          attributes:
+            slug:
+        item:
+          attributes:
+            slug:
 

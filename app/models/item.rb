@@ -3,6 +3,9 @@ class Item < ActiveRecord::Base
   belongs_to :collection
   has_one :repository, through: :collection
 
+  validates_presence_of :slug
+  validates_uniqueness_of :slug
+
   searchable do
 
     string :slug

@@ -1,5 +1,7 @@
 <%= bootstrap_form_for(@collection) do |f| %>
 
+    <%= f.alert_message 'The record could not be saved due to the following errors:' %>
+
     <%= f.text_field :slug %>
 
     <%= f.select :repository_id, @repositories_for_select, { include_blank: true }, {} %>
