@@ -26,6 +26,7 @@ class CollectionsController < ApplicationController
     if @collection.save
       redirect_to @collection, notice: 'Collection created'
     else
+      repositories_for_select
       render :new, alert: 'Error creating collection'
     end
 
@@ -43,6 +44,7 @@ class CollectionsController < ApplicationController
     if find_collection.update(collection_params)
       redirect_to @collection, notice: 'Collection updated'
     else
+      repositories_for_select
       render :edit, alert: 'Error creating collection'
     end
 
