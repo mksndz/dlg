@@ -1,10 +1,8 @@
 <h1>Repositories</h1>
 
-<br>
+<%= link_to 'Add Repository', new_repository_path %>
 
-<%= button_to 'Add Repository', new_repository_path, class: 'btn btn-success', method: :get %>
-
-<br>
+<br><br>
 
 <% if @repositories.empty? %>
 
