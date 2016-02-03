@@ -1,12 +1,12 @@
 class Collection < ActiveRecord::Base
+  include Slugged
 
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
   has_many :dpla_items, -> { where dpla: true }, class_name: 'Item'
   belongs_to :repository
 
-  validates_presence_of :slug, :display_title
-  validates_uniqueness_of :slug
+  validates_presence_of :display_title
 
   searchable do
 
