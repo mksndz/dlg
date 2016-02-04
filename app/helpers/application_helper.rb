@@ -1,5 +1,10 @@
 module ApplicationHelper
 
+  # set menu items as 'active'
+  def admin_active_class(key)
+    request.original_url.include?('/' + key) ? 'active' : ''
+  end
+
   # Generate JS-friendly set of inputs for the entity and attribute
   def text_field_multi(object, term)
 

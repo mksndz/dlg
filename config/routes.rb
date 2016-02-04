@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  scope :admin do
+  get 'admin/index'
+
+  resources :admin, only: :index
+
+  scope 'admin' do
     resources :repositories, :collections, :items
   end
 
