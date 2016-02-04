@@ -1,6 +1,12 @@
-<h1>Show <%= @item.dc_title.first %></h1>
+<%= content_for :admin_area_title do %>
+    Show Item
+<% end %>
 
-<%= link_to 'Edit', edit_item_path(@item) %>
+<%= content_for :admin_area_subtitle do %>
+    <%= @item.dc_title.first %>
+<% end %>
+
+<%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-default' %>
 
 <br><br>
 
@@ -12,5 +18,5 @@
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @item} %>
 
 
-<%= render 'shared/show_field', field_name: t(:created_at,        scope: [:activerecord, :attributes, :item]), value: @item.created_at %>
-<%= render 'shared/show_field', field_name: t(:updated_at,        scope: [:activerecord, :attributes, :item]), value: @item.updated_at %>
+<%= render 'shared/show_field', field_name: t(:created_at,    scope: [:activerecord, :attributes, :item]), value: @item.created_at %>
+<%= render 'shared/show_field', field_name: t(:updated_at,    scope: [:activerecord, :attributes, :item]), value: @item.updated_at %>

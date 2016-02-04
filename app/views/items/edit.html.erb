@@ -1,3 +1,9 @@
-<h1>Edit <%= @item.dc_title.first %></h1>
+<%= content_for :admin_area_title do %>
+    Edit Item
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @item.dc_title.first %>
+<% end %>
 
 <%= render 'form' %>

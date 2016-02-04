@@ -1,5 +1,7 @@
 class CollectionsController < ApplicationController
 
+  layout 'admin'
+
   def index
 
     @collections = Collection.all

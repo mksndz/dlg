@@ -1,5 +1,7 @@
 class RepositoriesController < ApplicationController
 
+  layout 'admin'
+
   def index
 
     @repositories = Repository.all

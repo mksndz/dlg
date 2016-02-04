@@ -1,3 +1,9 @@
-<h1>Edit <%= @collection.dc_title.first %></h1>
+<%= content_for :admin_area_title do %>
+    Edit Collection
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @collection.display_title %>
+<% end %>
 
 <%= render 'form' %>

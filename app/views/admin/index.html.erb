@@ -1,7 +1,8 @@
 <h1>Admin Area</h1>
 
-<div class="list-group">
-  <%= link_to 'Repositories', repositories_path, class: "list-group-item #{admin_active_class 'repositories'}" %>
-  <%= link_to 'Collections', collections_path, class: "list-group-item #{admin_active_class 'collections'}" %>
-  <%= link_to 'Items', items_path, class: "list-group-item #{admin_active_class 'items'}" %>
+<div class="col-md-2">
+  <%= render 'shared/admin_menu' %>
+</div>
+<div class="col-md-10">
+  <p>Welcome to META Admin</p>
 </div>

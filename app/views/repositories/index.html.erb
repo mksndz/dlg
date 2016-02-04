@@ -1,6 +1,8 @@
-<h1>Repositories</h1>
+<%= content_for :admin_area_title do %>
+    Repositories
+<% end %>
 
-<%= link_to 'Add Repository', new_repository_path %>
+<%= link_to 'Add Repository', new_repository_path, class: 'btn btn-default' %>
 
 <br><br>
 
@@ -10,26 +12,43 @@
 
 <% else %>
 
-    <div class="row" style="font-weight: bold;">
-      <div class="col-md-1">ID</div>
-      <div class="col-md-2">Slug</div>
-      <div class="col-md-5">Title</div>
-      <div class="col-md-4">Actions</div>
-    </div>
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Slug</th>
+        <th>Title</th>
+        <th>Collections</th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
 
-    <% @repositories.each do |repository| %>
-
-      <div class="row">
-        <div class="col-md-1"><%= repository.id %></div>
-        <div class="col-md-2"><%= repository.slug %></div>
-        <div class="col-md-5"><%= repository.title %></div>
-        <div class="col-md-4">
-          <%= link_to 'Show', repository %> |
-          <%= link_to 'Edit', edit_repository_path(repository) %> |
-          <%= link_to 'Delete', repository, method: :delete %>
-        </div>
-      </div>
-
-    <% end %>
+      <tbody>
+      <% @repositories.each do |repository| %>
+          <tr>
+            <td>
+              <%= link_to repository.id, repository %>
+            </td>
+            <td>
+              <%= link_to repository.slug, repository %>
+            </td>
+            <td>
+              <%= repository.title %>
+            </td>
+            <td>
+              <%= repository.collections.count %>
+            </td>
+            <td>
+              <div class="btn-group btn-group-xs">
+                <%= link_to 'View', repository, class: 'btn btn-default' %>
+                <%= link_to 'BL View', solr_document_path(repository.slug), class: 'btn btn-default' %>
+                <%= link_to 'Edit', edit_repository_path(repository), class: 'btn btn-default' %>
+                <%= link_to 'Delete', repository, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+              </div>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
 
 <% end %>

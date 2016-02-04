@@ -1,3 +1,9 @@
-<h1>Edit <%= @repository.title %></h1>
+<%= content_for :admin_area_title do %>
+    Edit Repository
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @repository.title %>
+<% end %>
 
 <%= render 'form' %>

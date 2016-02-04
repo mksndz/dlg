@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
 
+  layout 'admin'
+
   def index
 
     @items = Item.all
