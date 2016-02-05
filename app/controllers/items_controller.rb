@@ -103,7 +103,7 @@ class ItemsController < ApplicationController
 
   def remove_blank_multi_values
       multi_fields.each do |f|
-        params[:item][f].reject! { |v| v == '' } # todo errors when f is not an array
+        params[:item][f].reject! { |v| v == '' }
       end
   end
 
