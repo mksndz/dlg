@@ -8,7 +8,6 @@ class ItemsController < ApplicationController
     @items = Item
                  .order(sort_column + ' ' + sort_direction)
                  .page(params[:page])
-                 .per(limit)
 
   end
 
@@ -132,10 +131,6 @@ class ItemsController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-  end
-
-  def limit
-    params[:show_all] ? 0 : 2
   end
 
 end
