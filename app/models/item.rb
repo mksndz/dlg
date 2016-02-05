@@ -42,4 +42,8 @@ class Item < ActiveRecord::Base
 
   end
 
+  def title
+    dc_title.first
+  end
+
 end

@@ -1,10 +1,14 @@
 class ItemsController < ApplicationController
+  helper_method :sort_column, :sort_direction
 
   layout 'admin'
 
   def index
 
-    @items = Item.all
+    @items = Item
+                 .order(sort_column + ' ' + sort_direction)
+                 .page(params[:page])
+                 .per(limit)
 
   end
 
@@ -100,7 +104,7 @@ class ItemsController < ApplicationController
 
   def remove_blank_multi_values
       multi_fields.each do |f|
-        params[:item][f].reject! { |v| v == '' }
+        params[:item][f].reject! { |v| v == '' } # todo errors when f is not an array
       end
   end
 
@@ -120,6 +124,18 @@ class ItemsController < ApplicationController
       dc_type
       dc_description
     )
+  end
+
+  def sort_column
+    Item.column_names.include?(params[:sort]) ? params[:sort] : 'id'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  def limit
+    params[:show_all] ? 0 : 2
   end
 
 end

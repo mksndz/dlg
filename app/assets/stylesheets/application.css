@@ -16,6 +16,14 @@
  */
 
 label.required:before {
-    content:"* ";
+    content: "* ";
+}
+
+a.current.asc:after {
+    content: " \25B4 ";
+}
+
+a.current.desc:after {
+    content: " \25BE ";
 }
 

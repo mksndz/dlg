@@ -13,10 +13,18 @@
     <table class="table table-condensed table-hover">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Slug</th>
-          <th>Title</th>
-          <th>Collection</th>
+          <th>
+            <%= sortable 'id', 'ID' %>
+          </th>
+          <th>
+            <%= sortable 'slug' %>
+          </th>
+          <th>
+            <%= sortable 'dc_title', 'Title' %>
+          </th>
+          <th>
+            <%= sortable 'collection_id', 'Collection' %>
+          </th>
           <th width="185px"></th>
         </tr>
       </thead>
@@ -37,16 +45,13 @@
               <%= link_to item.collection.display_title, item.collection %>
             </td>
             <td>
-              <div class="btn-group btn-group-xs">
-                <%= link_to 'View', item, class: 'btn btn-default' %>
-                <%= link_to 'BL View', solr_document_path(item.slug), class: 'btn btn-default' %>
-                <%= link_to 'Edit', edit_item_path(item), class: 'btn btn-default' %>
-                <%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
-              </div>
+              <%= render partial: 'shared/entity_actions', locals: { entity: item } %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+
+    <%= paginate @items %>
 
 <% end %>
