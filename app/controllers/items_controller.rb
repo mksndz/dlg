@@ -5,9 +5,17 @@ class ItemsController < ApplicationController
 
   def index
 
-    @items = Item
-                 .order(sort_column + ' ' + sort_direction)
-                 .page(params[:page])
+    collections_for_select
+    if params[:collection_id]
+      @items = Item
+                   .where(collection_id: params[:collection_id])
+                   .order(sort_column + ' ' + sort_direction)
+                   .page(params[:page])
+    else
+      @items = Item
+                   .order(sort_column + ' ' + sort_direction)
+                   .page(params[:page])
+    end
 
   end
 
