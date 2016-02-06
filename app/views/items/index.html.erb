@@ -47,7 +47,7 @@
 
       <tbody>
         <% @items.each do |item| %>
-          <tr>
+          <tr class="<%= warning_highlight(item) %>">
             <td>
               <%= link_to item.id, item %>
             </td>
