@@ -1,10 +1,22 @@
 class CollectionsController < ApplicationController
+  helper_method :sort_column, :sort_direction
 
   layout 'admin'
 
   def index
 
-    @collections = Collection.all
+    @repositories = Repository.all.order(:title)
+
+    if params[:repository_id]
+      @collections = Collection
+                   .where(repository_id: params[:repository_id])
+                   .order(sort_column + ' ' + sort_direction)
+                   .page(params[:page])
+    else
+      @collections = Collection
+                         .order(sort_column + ' ' + sort_direction)
+                         .page(params[:page])
+    end
 
   end
 
@@ -125,6 +137,14 @@ class CollectionsController < ApplicationController
       dc_type
       dc_description
     )
+  end
+
+  def sort_column
+    Collection.column_names.include?(params[:sort]) ? params[:sort] : 'id'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
 end

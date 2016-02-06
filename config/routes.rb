@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   scope 'admin' do
     resources :repositories, :collections, :items
     get 'items/for/:collection_id', to: 'items#index', as: :items_for
+    get 'collections/for/:repository_id', to: 'collections#index', as: :collections_for
   end
 
   mount Blacklight::Engine => '/'

@@ -2,6 +2,22 @@
     Collections
 <% end %>
 
+<%=
+  content_for :admin_area_subtitle do
+    if params[:repository_id]
+      @collections.first.repository.title if @collections.first && @collections.first.repository
+    else
+      'All of them'
+    end
+  end
+%>
+
+<%=
+  content_for :sub_menu do
+    render 'repositories_list'
+  end
+%>
+
 <%= link_to 'Add Collection', new_collection_path, class: 'btn btn-default' %>
 
 <% if @collections.empty? %>
@@ -13,11 +29,22 @@
     <table class="table table-condensed table-hover">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Slug</th>
-          <th>Display Title</th>
-          <th>Repository</th>
-          <th>Items</th>
+          <th>
+            <%= sortable 'id', 'ID' %>
+          </th>
+          <th>
+            <%= sortable 'slug', 'Slug' %>
+
+          </th>
+          <th>
+            <%= sortable 'display_title', 'Display Title' %>
+          </th>
+          <th>
+            <%= sortable 'repository_id', 'Repository' %>
+          </th>
+          <th>
+            Items
+          </th>
           <th width="185px"></th>
         </tr>
       </thead>
@@ -35,22 +62,21 @@
                 <%= collection.display_title %>
               </td>
               <td>
-                <%= link_to collection.repository.title, collection.repository %>
+                <%= link_to(collection.repository.title, collection.repository) if collection.repository %>
               </td>
               <td>
-                <%= collection.items.count %>
+                <%= link_to collection.items.count, items_for_path(collection) %>
               </td>
               <td>
                 <div class="btn-group btn-group-xs">
-                  <%= link_to 'View', collection, class: 'btn btn-default' %>
-                  <%= link_to 'BL View', solr_document_path(collection.slug), class: 'btn btn-default' %>
-                  <%= link_to 'Edit', edit_collection_path(collection), class: 'btn btn-default' %>
-                  <%= link_to 'Delete', collection, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+                  <%= render partial: 'shared/entity_actions', locals: { entity: collection } %>
                 </div>
               </td>
             </tr>
         <% end %>
       </tbody>
     </table>
+
+    <%= paginate @collections %>
 
 <% end %>

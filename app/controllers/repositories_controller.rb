@@ -1,10 +1,12 @@
 class RepositoriesController < ApplicationController
+  helper_method :sort_direction, :sort_column
+
 
   layout 'admin'
 
   def index
 
-    @repositories = Repository.all
+    @repositories = Repository.page(params[:page])
 
   end
 
@@ -80,6 +82,15 @@ class RepositoriesController < ApplicationController
       :strengths,
       :contact
     )
+  end
+
+
+  def sort_column
+    Repository.column_names.include?(params[:sort]) ? params[:sort] : 'id'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
 end
