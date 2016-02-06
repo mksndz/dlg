@@ -12,6 +12,12 @@
     end
 %>
 
+<%=
+    content_for :sub_menu do
+      render 'shared/collections_list'
+    end
+%>
+
 <%= link_to 'Add Item', new_item_path, class: 'btn btn-default' %>
 
 <% if @items.empty? %>

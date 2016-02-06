@@ -5,7 +5,8 @@ class ItemsController < ApplicationController
 
   def index
 
-    collections_for_select
+    @collections = Collection.all.order(:display_title)
+
     if params[:collection_id]
       @items = Item
                    .where(collection_id: params[:collection_id])
