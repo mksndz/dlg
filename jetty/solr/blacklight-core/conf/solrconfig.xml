@@ -217,47 +217,13 @@
 
        <!-- NOT using marc_display because it is large and will slow things down for search results -->
        <str name="fl">
-         id, 
-         score,
-         <!--author_display,-->
-         <!--author_vern_display, -->
-         <!--format, -->
-         <!--isbn_t, -->
-         <!--language_facet, -->
-         <!--lc_callnum_display,-->
-         <!--material_type_display, -->
-         <!--published_display,-->
-         <!--published_vern_display,-->
-         <!--pub_date,-->
-         <!--title_display,-->
-         <!--title_vern_display,-->
-         <!--subject_topic_facet,-->
-         <!--subject_geo_facet,-->
-         <!--subject_era_facet,-->
-         <!--subtitle_display,-->
-         <!--subtitle_vern_display,-->
-         <!--url_fulltext_display,-->
-         <!--url_suppl_display,-->
-         type,
-         class_name,
-         title_text,
-         description_text,
-         slug_s,
-         homepage_url_s,
-         directions_url_s,
-         teaser_text,
-         short_description_text,
-         address_text,
-         strengths_text,
-         contacts_text,
-         sunspot_id_s,
-         text
+         *,
        </str>
 
        <str name="facet">true</str>
        <str name="facet.mincount">1</str>
        <str name="facet.limit">10</str>
-       <!--<str name="facet.field">format</str>-->
+       <str name="facet.field">type</str>
        <!--<str name="facet.field">lc_1letter_facet</str>-->
        <!--<str name="facet.field">lc_alpha_facet</str>-->
        <!--<str name="facet.field">lc_b4cutter_facet</str>-->
