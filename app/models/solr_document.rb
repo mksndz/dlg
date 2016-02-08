@@ -25,6 +25,12 @@ class SolrDocument
   # single valued. See Blacklight::Document::SemanticFields#field_semantics
   # and Blacklight::Document::SemanticFields#to_semantic_values
   # Recommendation: Use field names from Dublin Core
-  use_extension( Blacklight::Document::DublinCore)    
+  use_extension(Blacklight::Document::DublinCore)
+
+  # get corresponding DB entity for this SolrDocument
+  def db_model
+    model, id = self.response.docs.first['sunspot_id_s'].split(' ')
+    model.classify.constantize.find id
+  end
 
 end

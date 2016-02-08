@@ -195,4 +195,8 @@ class CatalogController < ApplicationController
     config.spell_max = 5
   end
 
+  add_nav_action :admin # if admin
+  add_results_collection_tool :export_as_xml # if admin
+  # add_show_tools_partial :admin_actions # if admin
+
 end 
