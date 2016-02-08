@@ -19,12 +19,14 @@ class CatalogController < ApplicationController
       :qt => 'search',
       :rows => 10 
     }
+
+    config.add_facet_fields_to_solr_request!
     
     # solr path which will be added to solr base url before the other solr params.
     #config.solr_path = 'select' 
     
     # items to show per page, each number in the array represent another option to choose from.
-    #config.per_page = [10,20,50,100]
+    config.per_page = [10,20,50,100]
 
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SearchHelper#solr_doc_params) or
     ## parameters included in the Blacklight-jetty document requestHandler.
@@ -38,13 +40,12 @@ class CatalogController < ApplicationController
     #}
 
     # solr field configuration for search results/index views
-    # config.index.title_field = 'title_display'
     config.index.title_field = 'title_text'
     config.index.display_type_field = 'class_name'
 
     # solr field configuration for document/show views
-    #config.show.title_field = 'title_display'
-    #config.show.display_type_field = 'format'
+    config.show.title_field = 'title_text'
+    config.show.display_type_field = 'class_name'
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -65,7 +66,7 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    # config.add_facet_field 'format', :label => 'Format'
+    config.add_facet_field 'class_name', :label => 'Type'
     # config.add_facet_field 'pub_date', :label => 'Publication Year', :single => true
     # config.add_facet_field 'subject_topic_facet', :label => 'Topic', :limit => 20
     # config.add_facet_field 'language_facet', :label => 'Language', :limit => true
