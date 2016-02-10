@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210130217) do
+ActiveRecord::Schema.define(version: 20160210161159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,6 @@ ActiveRecord::Schema.define(version: 20160210130217) do
   create_table "collections", force: :cascade do |t|
     t.string    "slug",                               null: false
     t.integer   "repository_id"
-    t.boolean   "dpla",               default: false, null: false
-    t.boolean   "public",             default: false, null: false
     t.boolean   "in_georgia",         default: true,  null: false
     t.boolean   "remote",             default: false, null: false
     t.text      "display_title",                      null: false
@@ -56,10 +54,11 @@ ActiveRecord::Schema.define(version: 20160210130217) do
     t.daterange "date_range"
     t.datetime  "created_at",                         null: false
     t.datetime  "updated_at",                         null: false
+    t.text      "dc_creator",         default: [],    null: false, array: true
+    t.text      "dc_language",        default: [],    null: false, array: true
+    t.text      "dc_relation",        default: [],    null: false, array: true
   end
 
-  add_index "collections", ["dpla"], name: "index_collections_on_dpla", using: :btree
-  add_index "collections", ["public"], name: "index_collections_on_public", using: :btree
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
   add_index "collections", ["slug"], name: "index_collections_on_slug", unique: true, using: :btree
 
