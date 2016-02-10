@@ -92,8 +92,26 @@
         -->
 
        <str name="qf">
-         title_text
-         description_text
+         title_unstem_search^100000
+         author_unstem_search^100000
+         sunject_unstem_search^100000
+         dc_title_texts
+         dc_format_texts
+         dc_publisher_texts
+         dc_identifier_texts
+         dc_rights_texts
+         dc_contributor_texts
+         dc_coverage_t_texts
+         dc_coverage_s_texts
+         dc_date_texts
+         dc_source_texts
+         dc_subject_texts
+         dc_type_texts
+         dc_description_texts
+         dc_creator_texts
+         dc_language_texts
+         dc_relation_texts
+         text
          <!--title_unstem_search^100000-->
          <!--subtitle_unstem_search^50000-->
          <!--title_t^25000-->
@@ -123,42 +141,64 @@
             -->
 
        <str name="pf">
-         title_unstem_search^1000000
-         subtitle_unstem_search^500000
-         title_t^250000
-         subtitle_t^100000
-         title_addl_unstem_search^50000
-         title_addl_t^25000
-         title_added_entry_unstem_search^15000
-         title_added_entry_t^12500
-         subject_topic_unstem_search^10000
-         subject_unstem_search^7500
-         subject_topic_facet^6250
-         subject_t^5000
-         author_unstem_search^2500
-         author_addl_unstem_search^2500
-         author_t^1000
-         author_addl_t^500
-         subject_addl_unstem_search^2500
-         subject_addl_t^500
-         title_series_unstem_search^250
-         title_series_t^100
-         text^10
+         title_unstem_search^100000
+         author_unstem_search^100000
+         sunject_unstem_search^100000
+         dc_title_texts
+         dc_format_texts
+         dc_publisher_texts
+         dc_identifier_texts
+         dc_rights_texts
+         dc_contributor_texts
+         dc_coverage_t_texts
+         dc_coverage_s_texts
+         dc_date_texts
+         dc_source_texts
+         dc_subject_texts
+         dc_type_texts
+         dc_description_texts
+         dc_creator_texts
+         dc_language_texts
+         dc_relation_texts
+         text
+         <!--title_unstem_search^1000000-->
+         <!--subtitle_unstem_search^500000-->
+         <!--title_t^250000-->
+         <!--subtitle_t^100000-->
+         <!--title_addl_unstem_search^50000-->
+         <!--title_addl_t^25000-->
+         <!--title_added_entry_unstem_search^15000-->
+         <!--title_added_entry_t^12500-->
+         <!--subject_topic_unstem_search^10000-->
+         <!--subject_unstem_search^7500-->
+         <!--subject_topic_facet^6250-->
+         <!--subject_t^5000-->
+         <!--author_unstem_search^2500-->
+         <!--author_addl_unstem_search^2500-->
+         <!--author_t^1000-->
+         <!--author_addl_t^500-->
+         <!--subject_addl_unstem_search^2500-->
+         <!--subject_addl_t^500-->
+         <!--title_series_unstem_search^250-->
+         <!--title_series_t^100-->
+         <!--text^10-->
        </str>
-       <!--<str name="author_qf">-->
+       <str name="author_qf">
+         author_unstem_search
          <!--author_unstem_search^200-->
          <!--author_addl_unstem_search^50-->
          <!--author_t^20-->
          <!--author_addl_t-->
-       <!--</str>-->
-       <!--<str name="author_pf">-->
+       </str>
+       <str name="author_pf">
+         author_unstem_search
          <!--author_unstem_search^2000-->
          <!--author_addl_unstem_search^500-->
          <!--author_t^200-->
          <!--author_addl_t^10-->
-       <!--</str>-->
+       </str>
        <str name="title_qf">
-         title_text
+         title_unstem_search
          <!--title_unstem_search^50000-->
          <!--subtitle_unstem_search^25000-->
          <!--title_addl_unstem_search^10000-->
@@ -171,32 +211,35 @@
          <!--title_series_t-->
        </str>
        <str name="title_pf">
-         title_unstem_search^500000
-         subtitle_unstem_search^250000
-         title_addl_unstem_search^100000
-         title_t^50000
-         subtitle_t^25000
-         title_addl_t^1000
-         title_added_entry_unstem_search^500
-         title_added_entry_t^100
-         title_series_t^50
-         title_series_unstem_search^10
+         title_unstem_search
+         <!--title_unstem_search^500000-->
+         <!--subtitle_unstem_search^250000-->
+         <!--title_addl_unstem_search^100000-->
+         <!--title_t^50000-->
+         <!--subtitle_t^25000-->
+         <!--title_addl_t^1000-->
+         <!--title_added_entry_unstem_search^500-->
+         <!--title_added_entry_t^100-->
+         <!--title_series_t^50-->
+         <!--title_series_unstem_search^10-->
        </str>
        <str name="subject_qf">
-         subject_topic_unstem_search^200
-         subject_unstem_search^125
-         subject_topic_facet^100
-         subject_t^50
-         subject_addl_unstem_search^10
-         subject_addl_t
+         subject_unstem_search
+         <!--subject_topic_unstem_search^200-->
+         <!--subject_unstem_search^125-->
+         <!--subject_topic_facet^100-->
+         <!--subject_t^50-->
+         <!--subject_addl_unstem_search^10-->
+         <!--subject_addl_t-->
        </str>
        <str name="subject_pf">
-         subject_topic_unstem_search^2000
-         subject_unstem_search^1250
-         subject_t^1000
-         subject_topic_facet^500
-         subject_addl_unstem_search^100
-         subject_addl_t^10
+         subject_unstem_search
+         <!--subject_topic_unstem_search^2000-->
+         <!--subject_unstem_search^1250-->
+         <!--subject_t^1000-->
+         <!--subject_topic_facet^500-->
+         <!--subject_addl_unstem_search^100-->
+         <!--subject_addl_t^10-->
        </str>
 
        <!-- phrase slop -->
@@ -222,16 +265,13 @@
 
        <str name="facet">true</str>
        <str name="facet.mincount">1</str>
-       <str name="facet.limit">10</str>
-       <str name="facet.field">type</str>
-       <!--<str name="facet.field">lc_1letter_facet</str>-->
-       <!--<str name="facet.field">lc_alpha_facet</str>-->
-       <!--<str name="facet.field">lc_b4cutter_facet</str>-->
-       <!--<str name="facet.field">language_facet</str>-->
-       <!--<str name="facet.field">pub_date</str>-->
-       <!--<str name="facet.field">subject_era_facet</str>-->
-       <!--<str name="facet.field">subject_geo_facet</str>-->
-       <!--<str name="facet.field">subject_topic_facet</str>-->
+       <str name="facet.limit">20</str>
+       <str name="facet.field">format_ss</str>
+       <str name="facet.field">location_facet_sm</str>
+       <str name="facet.field">subject_facet_sm</str>
+       <str name="facet.field">type_facet_sm</str>
+       <str name="facet.field">creator_facet_sm</str>
+       <str name="facet.field">in_collection_ss</str>
        
        <str name="spellcheck">true</str>
        <str name="spellcheck.dictionary">default</str>
@@ -314,7 +354,7 @@
     <lst name="defaults">
       <str name="defType">lucene</str>
       <str name="echoParams">explicit</str>
-      <str name="sort">score desc, pub_date_sort desc, title_sort asc</str>   
+      <str name="sort">score desc, pub_date_sort desc, title_sort asc</str>
       <str name="df">text</str> 
       <str name="q.op">AND</str> 
       <str name="qs">1</str>
