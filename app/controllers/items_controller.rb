@@ -81,7 +81,7 @@ class ItemsController < ApplicationController
   end
 
   def collections_for_select
-    @collections_for_select = Collection.all.collect { |c| [ "#{c.display_title} (#{c.slug}}", c.id ] }
+    @collections_for_select = Collection.all.collect { |c| [ "#{c.display_title} (#{c.slug})", c.id ] }
   end
 
   def item_params
