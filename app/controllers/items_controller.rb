@@ -91,7 +91,6 @@ class ItemsController < ApplicationController
         :slug,
         :dpla,
         :public,
-        :in_georgia,
         :other_collections,
         :date_range,
         :dc_title       => [],
@@ -106,7 +105,10 @@ class ItemsController < ApplicationController
         :dc_source      => [],
         :dc_subject     => [],
         :dc_type        => [],
-        :dc_description => []
+        :dc_description => [],
+        :dc_creator     => [],
+        :dc_language    => [],
+        :dc_relation    => []
     )
   end
 
@@ -131,6 +133,9 @@ class ItemsController < ApplicationController
       dc_subject
       dc_type
       dc_description
+      dc_creator
+      dc_language
+      dc_relation
     )
   end
 
