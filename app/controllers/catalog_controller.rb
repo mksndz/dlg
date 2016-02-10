@@ -92,35 +92,26 @@ class CatalogController < ApplicationController
     #   The ordering of the field names is the order of the display
 
     config.add_index_field 'title_text', :label => 'Title'
-    config.add_index_field 'description_text', :label => 'Description'
-
-
-    # config.add_index_field 'title_display', :label => 'Title'
-    # config.add_index_field 'title_vern_display', :label => 'Title'
-    # config.add_index_field 'author_display', :label => 'Author'
-    # config.add_index_field 'author_vern_display', :label => 'Author'
-    # config.add_index_field 'format', :label => 'Format'
-    # config.add_index_field 'language_facet', :label => 'Language'
-    # config.add_index_field 'published_display', :label => 'Published'
-    # config.add_index_field 'published_vern_display', :label => 'Published'
-    # config.add_index_field 'lc_callnum_display', :label => 'Call number'
+    config.add_index_field 'description_texts', :label => 'Description'
+    config.add_index_field 'in_collection_ss', :label => 'Collection'
+    config.add_index_field 'dc_creator_texts', :label => 'Author'
+    config.add_index_field 'dc_type_texts', :label => 'Format'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 
-    # config.add_show_field 'title_display', :label => 'Title'
-    # config.add_show_field 'title_vern_display', :label => 'Title'
-    # config.add_show_field 'subtitle_display', :label => 'Subtitle'
-    # config.add_show_field 'subtitle_vern_display', :label => 'Subtitle'
-    # config.add_show_field 'author_display', :label => 'Author'
-    # config.add_show_field 'author_vern_display', :label => 'Author'
-    # config.add_show_field 'format', :label => 'Format'
-    # config.add_show_field 'url_fulltext_display', :label => 'URL'
-    # config.add_show_field 'url_suppl_display', :label => 'More Information'
-    # config.add_show_field 'language_facet', :label => 'Language'
-    # config.add_show_field 'published_display', :label => 'Published'
-    # config.add_show_field 'published_vern_display', :label => 'Published'
-    # config.add_show_field 'lc_callnum_display', :label => 'Call number'
-    # config.add_show_field 'isbn_t', :label => 'ISBN'
+    config.add_show_field 'title_text', :label => 'Title'
+    config.add_show_field 'dc_description_texts', :label => 'Description'
+    config.add_show_field 'in_collection_ss', :label => 'Collection'
+    config.add_show_field 'dc_creator_texts', :label => 'Author'
+    config.add_show_field 'dc_format_texts', :label => 'File Type'
+    config.add_show_field 'dc_publisher_texts', :label => 'Publisher'
+    config.add_show_field 'dc_contributor_texts', :label => 'Contributor'
+    config.add_show_field 'dc_coverage_t_texts', :label => 'Date'
+    config.add_show_field 'dc_coverage_s_texts', :label => 'Location'
+    config.add_show_field 'dc_source_texts', :label => 'Source'
+    config.add_show_field 'dc_rights_texts', :label => 'Rights'
+    config.add_show_field 'dc_subject_texts', :label => 'Subjects'
+    config.add_show_field 'dc_identifier_texts', :label => 'Identifier'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -161,33 +152,32 @@ class CatalogController < ApplicationController
       }
     end
     
-    config.add_search_field('author') do |field|
-      field.solr_parameters = { :'spellcheck.dictionary' => 'author' }
-      field.solr_local_parameters = { 
-        :qf => '$author_qf',
-        :pf => '$author_pf'
-      }
-    end
+    # config.add_search_field('author') do |field|
+    #   field.solr_parameters = { :'spellcheck.dictionary' => 'author' }
+    #   field.solr_local_parameters = {
+    #     :qf => '$author_qf',
+    #     :pf => '$author_pf'
+    #   }
+    # end
     
     # Specifying a :qt only to show it's possible, and so our internal automated
     # tests can test it. In this case it's the same as 
     # config[:default_solr_parameters][:qt], so isn't actually neccesary. 
-    config.add_search_field('subject') do |field|
-      field.solr_parameters = { :'spellcheck.dictionary' => 'subject' }
-      field.qt = 'search'
-      field.solr_local_parameters = { 
-        :qf => '$subject_qf',
-        :pf => '$subject_pf'
-      }
-    end
+    # config.add_search_field('subject') do |field|
+    #   field.solr_parameters = { :'spellcheck.dictionary' => 'subject' }
+    #   field.qt = 'search'
+    #   field.solr_local_parameters = {
+    #     :qf => '$subject_qf',
+    #     :pf => '$subject_pf'
+    #   }
+    # end
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    # config.add_sort_field 'score desc, pub_date_sort desc, title_sort asc', :label => 'relevance'
+    config.add_sort_field 'score desc, pub_date_sort desc, sort_title asc', :label => 'relevance'
     # config.add_sort_field 'pub_date_sort desc, title_sort asc', :label => 'year'
-    # config.add_sort_field 'author_sort asc, title_sort asc', :label => 'author'
     config.add_sort_field 'sort_title_s asc', :label => 'title'
 
     # If there are more than this many search results, no spelling ("did you 
