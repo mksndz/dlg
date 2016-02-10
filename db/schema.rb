@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121144742) do
+ActiveRecord::Schema.define(version: 20160210130217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,6 @@ ActiveRecord::Schema.define(version: 20160121144742) do
     t.integer  "collection_id"
     t.boolean  "dpla",              default: false, null: false
     t.boolean  "public",            default: false, null: false
-    t.boolean  "in_georgia",        default: true,  null: false
     t.integer  "other_collections", default: [],    null: false, array: true
     t.text     "dc_title",          default: [],    null: false, array: true
     t.text     "dc_format",         default: [],    null: false, array: true
@@ -85,6 +84,9 @@ ActiveRecord::Schema.define(version: 20160121144742) do
     t.text     "dc_description",    default: [],    null: false, array: true
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.text     "dc_creator",        default: [],    null: false, array: true
+    t.text     "dc_language",       default: [],    null: false, array: true
+    t.text     "dc_relation",       default: [],    null: false, array: true
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree

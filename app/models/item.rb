@@ -39,6 +39,9 @@ class Item < ActiveRecord::Base
     text :dc_subject
     text :dc_type
     text :dc_description
+    text :dc_creator
+    text :dc_language
+    text :dc_relation
 
   end
 
