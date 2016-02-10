@@ -590,15 +590,6 @@
    <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false" multiValued="false"/>
 
    <!-- Blacklight example config fields I should look in to reproducing -->
-   <!--<field name="title_display" type="string" indexed="false" stored="true" multiValued="false"/>-->
-   <!--<field name="title_vern_display" type="string" indexed="false" stored="true" multiValued="false"/>-->
-   <!--<field name="subtitle_display" type="string" indexed="false" stored="true" multiValued="false"/>-->
-   <!--<field name="author_display" type="string" indexed="false" stored="true" multiValued="false"/>-->
-   <!--<field name="language_facet" type="string" indexed="true" stored="true" multiValued="true" />-->
-   <!--<field name="subject_topic_facet" type="string" indexed="true" stored="true" multiValued="true" />-->
-   <!--<field name="subject_era_facet" type="string" indexed="true" stored="true" multiValued="true" />-->
-   <!--<field name="subject_geo_facet" type="string" indexed="true" stored="true" multiValued="true" />-->
-   <!--<field name="pub_date" type="string" indexed="true" stored="true" multiValued="true"/>-->
    <!-- pub_date sort uses new trie-based int fields, which are recommended for any int and are displayable, sortable, and range-quer
    we use 'tint' for faster range-queries. -->
    <!--<field name="pub_date_sort" type="tint" indexed="true" stored="true" multiValued="false"/>-->
