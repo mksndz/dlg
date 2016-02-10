@@ -6,8 +6,8 @@ Sunspot::Indexer.module_eval do
   def prepare_full_update(model)
     document = old_prepare_full_update(model)
     if model.respond_to? :slug
-      document.field_by_name(:sunspot_id_s).value = document.field_by_name(:id).value
-      document.field_by_name(:id).value = document.field_by_name(:slug_s).value
+      document.field_by_name(:sunspot_id_ss).value = document.field_by_name(:id).value
+      document.field_by_name(:id).value = document.field_by_name(:slug_ss).value
     end
     document
   end
@@ -30,7 +30,7 @@ end
 # the default Sunspot functionality will work
 class Sunspot::Search::Hit
   def initialize(raw_hit, highlights, search)
-    raw_hit['id'] = raw_hit['sunspot_id_s'] if raw_hit['slug_s']
+    raw_hit['id'] = raw_hit['sunspot_id_ss'] if raw_hit['slug_ss']
     @class_name, @primary_key = *raw_hit['id'].match(/([^ ]+) (.+)/)[1..2]
     @score = raw_hit['score']
     @search = search

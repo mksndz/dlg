@@ -502,16 +502,16 @@
    -->
 
 
-   <field name="id"   type="string"   indexed="true"  stored="true" multiValued="false" required="true" />
-   <field name="text" stored="false" type="string" multiValued="true" indexed="true"/>
-   <field name="timestamp"                type="date"     indexed="true"  stored="true" multiValued="false" default="NOW" />
+   <field name="id"             type="string" indexed="true"  stored="true"   multiValued="false" required="true" />
+   <field name="text"           type="string" indexed="true"  stored="false"  multiValued="true" />
+   <field name="timestamp"      type="date"   indexed="true"  stored="true"   multiValued="false" default="NOW" />
 
    <!-- sunspot required fields -->
-   <field name="type" stored="false" type="string" multiValued="true" indexed="true"/>
-   <field name="class_name" stored="false" type="string" multiValued="false" indexed="true"/>
+   <field name="type"           type="string" indexed="true"  stored="false"  multiValued="true" />
+   <field name="class_name"     type="string" indexed="true"  stored="false"  multiValued="false" />
 
    <!-- sunspot hack field -->
-   <field name="sunspot_id_s"             type="string"   indexed="true"  stored="true" />
+   <field name="sunspot_id_ss"  type="string" indexed="true"  stored="true" />
 
    <!-- Sunspot geo fields, use these one day -->
    <!--<field name="lat" stored="true" type="tdouble" multiValued="false" indexed="true"/>-->
