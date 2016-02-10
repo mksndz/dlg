@@ -10,12 +10,16 @@
 
 <br><br>
 
-<%= render('shared/show_field', field_name: t(:repository_id, scope: [:activerecord, :attributes, :collection]), value: @collection.repository.title) if @collection.repository %>
-<%= render 'shared/show_field', field_name: t(:slug,          scope: [:activerecord, :attributes, :collection]), value: @collection.slug %>
-<%= render 'shared/show_field', field_name: t(:dpla,          scope: [:activerecord, :attributes, :collection]), value: @collection.dpla %>
-<%= render 'shared/show_field', field_name: t(:public,        scope: [:activerecord, :attributes, :collection]), value: @collection.public%>
+<%= render('shared/show_field', field_name: t('activerecord.attributes.collection.repository_id'), value: @collection.repository.title) if @collection.repository %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.slug'), value: @collection.slug %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.display_title'), value: @collection.display_title %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.short_description'), value: @collection.short_description %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.teaser'), value: @collection.teaser %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.in_georgia'), value: @collection.in_georgia %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.remote'), value: @collection.remote %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.color'), value: @collection.color %>
 
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @collection } %>
 
-<%= render 'shared/show_field', field_name: t(:created_at,    scope: [:activerecord, :attributes, :collection]), value: @collection.created_at %>
-<%= render 'shared/show_field', field_name: t(:updated_at,    scope: [:activerecord, :attributes, :collection]), value: @collection.updated_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.created_at'), value: @collection.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.updated_at'), value: @collection.updated_at %>

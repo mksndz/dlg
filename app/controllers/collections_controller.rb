@@ -1,4 +1,6 @@
 class CollectionsController < ApplicationController
+  include DcHelper
+
   helper_method :sort_column, :sort_direction
 
   layout 'admin'
@@ -89,8 +91,6 @@ class CollectionsController < ApplicationController
     params.require(:collection).permit(
         :repository_id,
         :slug,
-        :dpla,
-        :public,
         :in_georgia,
         :remote,
         :display_title,
@@ -111,32 +111,17 @@ class CollectionsController < ApplicationController
         :dc_source      => [],
         :dc_subject     => [],
         :dc_type        => [],
-        :dc_description => []
+        :dc_description => [],
+        :dc_creator     => [],
+        :dc_language    => [],
+        :dc_relation    => []
     )
   end
 
   def remove_blank_multi_values
-    multi_fields.each do |f|
+    dc_fields.each do |f|
       params[:collection][f].reject! { |v| v == '' }
     end
-  end
-
-  def multi_fields
-    %w(
-      dc_title
-      dc_format
-      dc_publisher
-      dc_identifier
-      dc_rights
-      dc_contributor
-      dc_coverage_s
-      dc_coverage_t
-      dc_date
-      dc_source
-      dc_subject
-      dc_type
-      dc_description
-    )
   end
 
   def sort_column

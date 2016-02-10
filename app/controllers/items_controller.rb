@@ -1,4 +1,6 @@
 class ItemsController < ApplicationController
+  include DcHelper
+
   helper_method :sort_column, :sort_direction
 
   layout 'admin'
@@ -113,31 +115,11 @@ class ItemsController < ApplicationController
   end
 
   def remove_blank_multi_values
-      multi_fields.each do |f|
+      dc_fields.each do |f|
         params[:item][f].reject! { |v| v == '' }
       end
   end
 
-  def multi_fields
-    %w(
-      dc_title
-      dc_format
-      dc_publisher
-      dc_identifier
-      dc_rights
-      dc_contributor
-      dc_coverage_s
-      dc_coverage_t
-      dc_date
-      dc_source
-      dc_subject
-      dc_type
-      dc_description
-      dc_creator
-      dc_language
-      dc_relation
-    )
-  end
 
   def sort_column
     Item.column_names.include?(params[:sort]) ? params[:sort] : 'id'
