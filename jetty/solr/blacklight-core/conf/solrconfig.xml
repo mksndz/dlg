@@ -95,22 +95,22 @@
          title_unstem_search^100000
          author_unstem_search^100000
          sunject_unstem_search^100000
-         dc_title_texts
-         dc_format_texts
-         dc_publisher_texts
-         dc_identifier_texts
-         dc_rights_texts
-         dc_contributor_texts
-         dc_coverage_t_texts
-         dc_coverage_s_texts
-         dc_date_texts
-         dc_source_texts
-         dc_subject_texts
-         dc_type_texts
-         dc_description_texts
-         dc_creator_texts
-         dc_language_texts
-         dc_relation_texts
+         dc_title_text
+         dc_format_text
+         dc_publisher_text
+         dc_identifier_text
+         dc_rights_text
+         dc_contributor_text
+         dc_coverage_t_text
+         dc_coverage_s_text
+         dc_date_text
+         dc_source_text
+         dc_subject_text
+         dc_type_text
+         dc_description_text
+         dc_creator_text
+         dc_language_text
+         dc_relation_text
          text
          <!--title_unstem_search^100000-->
          <!--subtitle_unstem_search^50000-->
@@ -144,22 +144,22 @@
          title_unstem_search^100000
          author_unstem_search^100000
          sunject_unstem_search^100000
-         dc_title_texts
-         dc_format_texts
-         dc_publisher_texts
-         dc_identifier_texts
-         dc_rights_texts
-         dc_contributor_texts
-         dc_coverage_t_texts
-         dc_coverage_s_texts
-         dc_date_texts
-         dc_source_texts
-         dc_subject_texts
-         dc_type_texts
-         dc_description_texts
-         dc_creator_texts
-         dc_language_texts
-         dc_relation_texts
+         dc_title_text
+         dc_format_text
+         dc_publisher_text
+         dc_identifier_text
+         dc_rights_text
+         dc_contributor_text
+         dc_coverage_t_text
+         dc_coverage_s_text
+         dc_date_text
+         dc_source_text
+         dc_subject_text
+         dc_type_text
+         dc_description_text
+         dc_creator_text
+         dc_language_text
+         dc_relation_text
          text
          <!--title_unstem_search^1000000-->
          <!--subtitle_unstem_search^500000-->
@@ -267,10 +267,10 @@
        <str name="facet.mincount">1</str>
        <str name="facet.limit">20</str>
        <str name="facet.field">format_ss</str>
-       <str name="facet.field">location_facet_sm</str>
-       <str name="facet.field">subject_facet_sm</str>
-       <str name="facet.field">type_facet_sm</str>
-       <str name="facet.field">creator_facet_sm</str>
+       <str name="facet.field">location_facet</str>
+       <str name="facet.field">subject_facet</str>
+       <str name="facet.field">type_facet</str>
+       <str name="facet.field">creator_facet</str>
        <str name="facet.field">in_collection_ss</str>
        
        <str name="spellcheck">true</str>

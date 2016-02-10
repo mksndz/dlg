@@ -520,7 +520,7 @@
    <field name="textSpell" stored="false" type="textSpell" multiValued="true" indexed="true"/>
 
    <!-- required by Solr 5 -->
-   <field name="_version_" type="tlong" indexed="true" stored="true" multiValued="false" />
+   <!--<field name="_version_" type="tlong" indexed="true" stored="true" multiValued="false" />-->
 
    <!-- sunspot dynamic fields -->
    <dynamicField name="_local*"   stored="false"  type="tdouble"  multiValued="false"   indexed="true"/>
@@ -550,10 +550,12 @@
    <dynamicField name="*_lm"      stored="false"  type="tlong"    multiValued="true"    indexed="true"/>
    <dynamicField name="*_ls"      stored="true"   type="tlong"    multiValued="false"   indexed="true"/>
    <dynamicField name="*_lms"     stored="true"   type="tlong"    multiValued="true"    indexed="true"/>
+
    <dynamicField name="*_s"       stored="false"  type="string"   multiValued="false"   indexed="true"/>
    <dynamicField name="*_sm"      stored="false"  type="string"   multiValued="true"    indexed="true"/>
    <dynamicField name="*_ss"      stored="true"   type="string"   multiValued="false"   indexed="true"/>
    <dynamicField name="*_sms"     stored="true"   type="string"   multiValued="true"    indexed="true"/>
+
    <dynamicField name="*_it"      stored="false"  type="tint"     multiValued="false"   indexed="true"/>
    <dynamicField name="*_itm"     stored="false"  type="tint"     multiValued="true"    indexed="true"/>
    <dynamicField name="*_its"     stored="true"   type="tint"     multiValued="false"   indexed="true"/>
@@ -566,8 +568,10 @@
    <dynamicField name="*_dtm"     stored="false"  type="tdate"    multiValued="true"    indexed="true"/>
    <dynamicField name="*_dts"     stored="true"   type="tdate"    multiValued="false"   indexed="true"/>
    <dynamicField name="*_dtms"    stored="true"   type="tdate"    multiValued="true"    indexed="true"/>
+
    <dynamicField name="*_textv"   stored="false"  type="text"     multiValued="true"    indexed="true"  termVectors="true" />
    <dynamicField name="*_textsv"  stored="true"   type="text"     multiValued="true"    indexed="true"  termVectors="true" />
+
    <dynamicField name="*_et"      stored="false"  type="tdouble"  multiValued="false"   indexed="true"  termVectors="true" />
    <dynamicField name="*_etm"     stored="false"  type="tdouble"  multiValued="true"    indexed="true"  termVectors="true" />
    <dynamicField name="*_ets"     stored="true"   type="tdouble"  multiValued="false"   indexed="true"  termVectors="true" />
@@ -592,6 +596,10 @@
    <!-- for search fields -->
    <dynamicField name="*_unstem_search" type="text_general" indexed="true" stored="false" multiValued="true" />
 
+   <!-- for display only fields -->
+   <dynamicField name="*_display" type="string"         indexed="false" stored="true"   multiValued="true" />
+   <dynamicField name="*_facet"   type="string"         indexed="true"  stored="false"  multiValued="true" />
+   <dynamicField name="*_sort"    type="alphaOnlySort"  indexed="true"  stored="false"  multiValued="false" />
 
     <!-- Blacklight example config fields I should look in to reproducing -->
    <!-- pub_date sort uses new trie-based int fields, which are recommended for any int and are displayable, sortable, and range-quer
@@ -666,10 +674,33 @@
   <copyField source="*_s"     dest="textSpell" />
 
   <!-- unstemmed fields -->
-  <copyField source="dc_title_texts"    dest="title_unstem_search"/>
-  <copyField source="dc_creator_texts"  dest="author_unstem_search"/>
-  <copyField source="dc_subject_texts"  dest="subject_unstem_search"/>
+  <copyField source="dc_title_text"    dest="title_unstem_search" />
+  <copyField source="dc_creator_text"  dest="author_unstem_search" />
+  <copyField source="dc_subject_text"  dest="subject_unstem_search" />
 
+  <!-- display only fields -->
+  <copyField source="dc_title_text" dest="dc_title_display" />
+  <copyField source="dc_format_text" dest="dc_format_display" />
+  <copyField source="dc_publisher_text" dest="dc_publisher_display" />
+  <copyField source="dc_identifier_text" dest="dc_identifier_display" />
+  <copyField source="dc_rights_text" dest="dc_rights_display" />
+  <copyField source="dc_contributor_text" dest="dc_contributor_display" />
+  <copyField source="dc_coverage_t_text" dest="dc_coverage_t_display" />
+  <copyField source="dc_coverage_s_text" dest="dc_coverage_s_display" />
+  <copyField source="dc_date_text" dest="dc_date_display" />
+  <copyField source="dc_source_text" dest="dc_source_display" />
+  <copyField source="dc_subject_text" dest="dc_subject_display" />
+  <copyField source="dc_type_text" dest="dc_type_display" />
+  <copyField source="dc_description_text" dest="dc_description_display" />
+  <copyField source="dc_creator_text" dest="dc_creator_display" />
+  <copyField source="dc_language_text" dest="dc_language_display" />
+  <copyField source="dc_relation_text" dest="dc_relation_display" />
+
+  <!-- facet fields -->
+  <copyField source="dc_coverage_s_text" dest="location_facet" />
+  <copyField source="dc_type_text" dest="type_facet" />
+  <copyField source="dc_creator_text" dest="creator_facet" />
+  <copyField source="dc_subject_text" dest="subject_facet" />
 
   <!--<copyField source="subtitle_t" dest="subtitle_unstem_search"/>-->
   <!--<copyField source="title_addl_t" dest="title_addl_unstem_search"/>-->

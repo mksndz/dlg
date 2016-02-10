@@ -40,11 +40,11 @@ class CatalogController < ApplicationController
     #}
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'dc_title_texts'
+    config.index.title_field = 'dc_title_display'
     config.index.display_type_field = 'format_ss'
 
     # solr field configuration for document/show views
-    config.show.title_field = 'dc_title_texts'
+    config.show.title_field = 'dc_title_display'
     config.show.display_type_field = 'format_ss'
 
     # solr fields that will be treated as facets by the blacklight application
@@ -66,12 +66,12 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'format_ss',             label: 'Format*',     limit: true
-    config.add_facet_field 'location_facet_sm',     label: 'Location',    limit: true
-    config.add_facet_field 'subject_facet_sm',      label: 'Subject',     limit: 20
-    config.add_facet_field 'type_facet_sm',         label: 'Type',        limit: true
-    config.add_facet_field 'creator_facet_sm',      label: 'Creator',     limit: true
-    config.add_facet_field 'in_collection_ss',      label: 'Collection',  limit: true
+    config.add_facet_field 'format_ss',          label: 'Format*',     limit: true
+    config.add_facet_field 'location_facet',     label: 'Location',    limit: true
+    config.add_facet_field 'subject_facet',      label: 'Subject',     limit: 20
+    config.add_facet_field 'type_facet',         label: 'Type',        limit: true
+    config.add_facet_field 'creator_facet',      label: 'Creator',     limit: true
+    config.add_facet_field 'in_collection_ss',   label: 'Collection',  limit: true
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
@@ -91,27 +91,27 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
 
-    config.add_index_field 'dc_title_texts', :label => 'Title'
-    config.add_index_field 'description_texts', :label => 'Description'
+    config.add_index_field 'dc_title_display', :label => 'Title'
+    config.add_index_field 'description_display', :label => 'Description'
     config.add_index_field 'in_collection_ss', :label => 'Collection'
-    config.add_index_field 'dc_creator_texts', :label => 'Author'
-    config.add_index_field 'dc_type_texts', :label => 'Format'
+    config.add_index_field 'dc_creator_display', :label => 'Author'
+    config.add_index_field 'dc_type_display', :label => 'Format'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 
-    config.add_show_field 'dc_title_texts', :label => 'Title'
-    config.add_show_field 'dc_description_texts', :label => 'Description'
+    config.add_show_field 'dc_title_display', :label => 'Title'
+    config.add_show_field 'dc_description_display', :label => 'Description'
     config.add_show_field 'in_collection_ss', :label => 'Collection'
-    config.add_show_field 'dc_creator_texts', :label => 'Author'
-    config.add_show_field 'dc_format_texts', :label => 'File Type'
-    config.add_show_field 'dc_publisher_texts', :label => 'Publisher'
-    config.add_show_field 'dc_contributor_texts', :label => 'Contributor'
-    config.add_show_field 'dc_coverage_t_texts', :label => 'Date'
-    config.add_show_field 'dc_coverage_s_texts', :label => 'Location'
-    config.add_show_field 'dc_source_texts', :label => 'Source'
-    config.add_show_field 'dc_rights_texts', :label => 'Rights'
-    config.add_show_field 'dc_subject_texts', :label => 'Subjects'
-    config.add_show_field 'dc_identifier_texts', :label => 'Identifier'
+    config.add_show_field 'dc_creator_display', :label => 'Author'
+    config.add_show_field 'dc_format_display', :label => 'File Type'
+    config.add_show_field 'dc_publisher_display', :label => 'Publisher'
+    config.add_show_field 'dc_contributor_display', :label => 'Contributor'
+    config.add_show_field 'dc_coverage_t_display', :label => 'Date'
+    config.add_show_field 'dc_coverage_s_display', :label => 'Location'
+    config.add_show_field 'dc_source_display', :label => 'Source'
+    config.add_show_field 'dc_rights_display', :label => 'Rights'
+    config.add_show_field 'dc_subject_display', :label => 'Subjects'
+    config.add_show_field 'dc_identifier_display', :label => 'Identifier'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

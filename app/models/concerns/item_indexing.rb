@@ -22,43 +22,28 @@ module ItemIndexing
         collection ? collection.display_title : ''
       end
 
-      # DC Fields for Searching and Display
-      text :dc_title,       stored: true
-      text :dc_format,      stored: true
-      text :dc_publisher,   stored: true
-      text :dc_identifier,  stored: true
-      text :dc_rights,      stored: true
-      text :dc_contributor, stored: true
-      text :dc_coverage_t,  stored: true
-      text :dc_coverage_s,  stored: true
-      text :dc_date,        stored: true
-      text :dc_source,      stored: true
-      text :dc_subject,     stored: true
-      text :dc_type,        stored: true
-      text :dc_description, stored: true
-      text :dc_creator,     stored: true
-      text :dc_language,    stored: true
-      text :dc_relation,    stored: true
+      # DC Fields for Searching
+      # *_display fields created via copyFields
+      text :dc_title
+      text :dc_format
+      text :dc_publisher
+      text :dc_identifier
+      text :dc_rights
+      text :dc_contributor
+      text :dc_coverage_t
+      text :dc_coverage_s
+      text :dc_date
+      text :dc_source
+      text :dc_subject
+      text :dc_type
+      text :dc_description
+      text :dc_creator
+      text :dc_language
+      text :dc_relation
 
       # Fields for Faceting, etc.
       string :format, stored: true do
         dc_type.first ? dc_type.first : ''
-      end
-
-      string :location_facet, multiple: true do
-        dc_coverage_s
-      end
-
-      string :subject_facet, multiple: true do
-        dc_subject
-      end
-
-      string :type_facet, multiple: true do
-        dc_type
-      end
-
-      string :creator_facet, multiple: true do
-        dc_creator
       end
 
       string :sort_title do
