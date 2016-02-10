@@ -3,7 +3,6 @@ module ItemIndexing
 
   included do
 
-
     searchable do
 
       string :slug, stored: true
@@ -23,6 +22,7 @@ module ItemIndexing
         collection ? collection.display_title : ''
       end
 
+      # DC Fields for Searching and Display
       text :dc_title,       stored: true
       text :dc_format,      stored: true
       text :dc_publisher,   stored: true
@@ -40,13 +40,32 @@ module ItemIndexing
       text :dc_language,    stored: true
       text :dc_relation,    stored: true
 
-      # attempt to get format as single valued field
+      # Fields for Faceting, etc.
       string :format, stored: true do
         dc_type.first ? dc_type.first : ''
       end
 
-    end
+      string :location_facet, multiple: true do
+        dc_coverage_s
+      end
 
+      string :subject_facet, multiple: true do
+        dc_subject
+      end
+
+      string :type_facet, multiple: true do
+        dc_type
+      end
+
+      string :creator_facet, multiple: true do
+        dc_creator
+      end
+
+      string :sort_title do
+        dc_title.first.downcase.gsub(/^(an?|the)\b/, '')
+      end
+
+    end
 
   end
 

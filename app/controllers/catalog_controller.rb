@@ -40,12 +40,12 @@ class CatalogController < ApplicationController
     #}
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'title_text'
-    config.index.display_type_field = 'class_name'
+    config.index.title_field = 'dc_title_texts'
+    config.index.display_type_field = 'format_ss'
 
     # solr field configuration for document/show views
-    config.show.title_field = 'title_text'
-    config.show.display_type_field = 'class_name'
+    config.show.title_field = 'dc_title_texts'
+    config.show.display_type_field = 'format_ss'
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -66,13 +66,13 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'class_name', :label => 'Type'
-    # config.add_facet_field 'pub_date', :label => 'Publication Year', :single => true
-    # config.add_facet_field 'subject_topic_facet', :label => 'Topic', :limit => 20
-    # config.add_facet_field 'language_facet', :label => 'Language', :limit => true
-    # config.add_facet_field 'lc_1letter_facet', :label => 'Call Number'
-    # config.add_facet_field 'subject_geo_facet', :label => 'Region'
-    # config.add_facet_field 'subject_era_facet', :label => 'Era'
+    config.add_facet_field 'format_ss',             label: 'Format*',     limit: true
+    config.add_facet_field 'location_facet_sm',     label: 'Location',    limit: true
+    config.add_facet_field 'subject_facet_sm',      label: 'Subject',     limit: 20
+    config.add_facet_field 'type_facet_sm',         label: 'Type',        limit: true
+    config.add_facet_field 'creator_facet_sm',      label: 'Creator',     limit: true
+    config.add_facet_field 'in_collection_ss',      label: 'Collection',  limit: true
+
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
     #
