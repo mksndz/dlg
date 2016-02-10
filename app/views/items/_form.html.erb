@@ -14,10 +14,6 @@
       <%= f.check_box :dpla %>
     <% end %>
 
-    <%= f.form_group :in_georgia do %>
-      <%= f.check_box :in_georgia %>
-    <% end %>
-
     <%= f.select :other_collections, @collections_for_select, { include_blank: true }, { multiple: true } %>
 
     <%= text_field_multi @item, :dc_title%>
