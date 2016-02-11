@@ -38,6 +38,16 @@ RSpec.describe Item, type: :model do
     expect(i.slug).not_to be_empty
   end
 
+  it 'indexes the item in Solr' do
+    i = Fabricate(:item)
+    Sunspot.commit
+    sleep 1
+    results = Item.search do
+      fulltext i.title
+    end.results
+    expect(results).to include i
+  end
+
   after(:all) { Repository.destroy_all }
   after(:all) { Item.destroy_all }
 
