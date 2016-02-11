@@ -7,7 +7,7 @@ Fabricator(:item) do
       Faker::Lorem.sentence(5),
       Faker::Lorem.sentence(4)
   ] }
-  dc_format { [
+  dc_type { [
       %w(StillImage Text).sample
   ]}
   dc_subject { [
