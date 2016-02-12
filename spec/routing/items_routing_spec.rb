@@ -1,38 +1,42 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe ItemsController, type: :routing do
-  describe "routing" do
+  describe 'routing' do
 
-    it "routes to #index" do
-      expect(:get => "/items").to route_to("items#index")
+    before(:all){
+      @item = Fabricate(:item)
+    }
+
+    it 'routes to #index' do
+      expect(get: '/admin/items').to route_to('items#index')
     end
 
-    it "routes to #new" do
-      expect(:get => "/items/new").to route_to("items#new")
+    it 'routes to #new' do
+      expect(get: '/admin/items/new').to route_to('items#new')
     end
 
-    it "routes to #show" do
-      expect(:get => "/items/1").to route_to("items#show", :id => "1")
+    it 'routes to #show' do
+      expect(get: "/admin/items/#{@item.id}").to route_to(controller: 'items', action: 'show', id: @item.id.to_s)
     end
 
-    it "routes to #edit" do
-      expect(:get => "/items/1/edit").to route_to("items#edit", :id => "1")
+    it 'routes to #edit' do
+      expect(get: "/admin/items/#{@item.id}/edit").to route_to(controller: 'items', action: 'edit', id: @item.id.to_s)
     end
 
-    it "routes to #create" do
-      expect(:post => "/items").to route_to("items#create")
+    it 'routes to #create' do
+      expect(post: '/admin/items').to route_to('items#create')
     end
 
-    it "routes to #update via PUT" do
-      expect(:put => "/items/1").to route_to("items#update", :id => "1")
+    it 'routes to #update via PUT' do
+      expect(put: "/admin/items/#{@item.id}").to route_to(controller: 'items', action: 'update', id: @item.id.to_s)
     end
 
-    it "routes to #update via PATCH" do
-      expect(:patch => "/items/1").to route_to("items#update", :id => "1")
+    it 'routes to #update via PATCH' do
+      expect(patch: "/admin/items/#{@item.id}").to route_to(controller: 'items', action: 'update', id: @item.id.to_s)
     end
 
-    it "routes to #destroy" do
-      expect(:delete => "/items/1").to route_to("items#destroy", :id => "1")
+    it 'routes to #destroy' do
+      expect(delete: "/admin/items/#{@item.id}").to route_to(controller: 'items', action: 'destroy', id: @item.id.to_s)
     end
 
   end
