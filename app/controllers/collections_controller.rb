@@ -120,7 +120,7 @@ class CollectionsController < ApplicationController
 
   def remove_blank_multi_values
     dc_fields.each do |f|
-      params[:collection][f].reject! { |v| v == '' }
+      params[:collection][f].reject! { |v| v == '' } if params[:collection][f]
     end
   end
 

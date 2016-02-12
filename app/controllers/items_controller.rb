@@ -116,7 +116,7 @@ class ItemsController < ApplicationController
 
   def remove_blank_multi_values
       dc_fields.each do |f|
-        params[:item][f].reject! { |v| v == '' }
+        params[:item][f].reject! { |v| v == '' } if params[:item][f]
       end
   end
 
