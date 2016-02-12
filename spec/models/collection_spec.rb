@@ -40,7 +40,4 @@ RSpec.describe Collection, type: :model do
     expect(Fabricate(:collection)).to respond_to :public_items
   end
   
-  after(:all) { Repository.destroy_all }
-  after(:all) { Collection.destroy_all }
-  
 end

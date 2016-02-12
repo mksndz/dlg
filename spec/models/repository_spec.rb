@@ -32,6 +32,4 @@ RSpec.describe Repository, type: :model do
     expect(r.items.first).to be_kind_of Item
   end
 
-  after(:all) { Repository.destroy_all }
-
 end
