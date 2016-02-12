@@ -56,6 +56,12 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   # clean up Solr index after test suite
+  config.after(:suite){
+    Repository.destroy_all
+    Collection.destroy_all
+    Item.destroy_all
+  }
+
   config.after(:all){
     Sunspot.remove_all! Item
   }
