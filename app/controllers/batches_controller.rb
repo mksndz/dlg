@@ -3,7 +3,7 @@ class BatchesController < ApplicationController
 
   helper_method :sort_column, :sort_direction
 
-  layout :admin
+  layout 'admin'
 
   # GET /batches
   # GET /batches.json
@@ -44,6 +44,8 @@ class BatchesController < ApplicationController
   def create
     @batch = Batch.new(batch_params)
 
+    set_user
+
     respond_to do |format|
       if @batch.save
         format.html { redirect_to @batch, notice: 'Batch was successfully created.' }
@@ -58,6 +60,9 @@ class BatchesController < ApplicationController
   # PATCH/PUT /batches/1
   # PATCH/PUT /batches/1.json
   def update
+
+    set_user
+
     respond_to do |format|
       if @batch.update(batch_params)
         format.html { redirect_to @batch, notice: 'Batch was successfully updated.' }
@@ -83,6 +88,10 @@ class BatchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_batch
       @batch = Batch.find(params[:id])
+      end
+
+    def set_user
+      @batch.user = current_user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
