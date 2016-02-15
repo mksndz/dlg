@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Batch Items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @batch_items.each do |batch_item| %>
+      <tr>
+        <td><%= link_to 'Show', batch_item %></td>
+        <td><%= link_to 'Edit', edit_batch_item_path(batch_item) %></td>
+        <td><%= link_to 'Destroy', batch_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Batch item', new_batch_item_path %>

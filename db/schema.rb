@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215192059) do
+ActiveRecord::Schema.define(version: 20160215215212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,8 +98,11 @@ ActiveRecord::Schema.define(version: 20160215192059) do
     t.text     "dc_creator",        default: [],    null: false, array: true
     t.text     "dc_language",       default: [],    null: false, array: true
     t.text     "dc_relation",       default: [],    null: false, array: true
+    t.string   "type"
+    t.integer  "batch_id"
   end
 
+  add_index "items", ["batch_id"], name: "index_items_on_batch_id", using: :btree
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
   add_index "items", ["dpla"], name: "index_items_on_dpla", using: :btree
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
@@ -155,5 +158,6 @@ ActiveRecord::Schema.define(version: 20160215192059) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "collections", "repositories"
+  add_foreign_key "items", "batches"
   add_foreign_key "items", "collections"
 end

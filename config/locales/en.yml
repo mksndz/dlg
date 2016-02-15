@@ -8,7 +8,7 @@ en:
         committed_at: "Committed At"
         created_at: "Created At"
         updated_at: "Updated At"
-        included_count: "Included Count"
+        contained_count: "Included Count"
       repository:
         slug: "Slug"
         title: "Title"
