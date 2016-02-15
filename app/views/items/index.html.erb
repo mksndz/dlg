@@ -61,7 +61,7 @@
               <%= link_to(item.collection.display_title, item.collection) if item.collection %>
             </td>
             <td>
-              <%= render partial: 'shared/entity_actions', locals: { entity: item } %>
+              <%= render partial: 'shared/entity_actions', locals: { entity: item, show_bl: true } %>
             </td>
           </tr>
         <% end %>
