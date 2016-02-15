@@ -1,0 +1,19 @@
+<%= content_for :admin_area_title do %>
+    Show Batch
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @batch.name %>
+<% end %>
+
+<%= link_to 'Edit', edit_batch_path(@batch), class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.user_id'),         value: @batch.user.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.name'),            value: @batch.name %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.notes'),           value: @batch.notes %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.included_count'),  value: @batch.included_count %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.committed_at'),    value: @batch.committed_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.updated_at'),      value: @batch.updated_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.created_at'),      value: @batch.created_at %>

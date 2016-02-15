@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   resources :admin, only: :index
 
   scope 'admin' do
-    resources :repositories, :collections, :items
+    resources :repositories, :collections, :items, :batches
+    get 'batches/for/:user_id', to: 'batches#index', as: :batches_for
     get 'items/for/:collection_id', to: 'items#index', as: :items_for
     get 'collections/for/:repository_id', to: 'collections#index', as: :collections_for
   end

@@ -1,0 +1,74 @@
+<%= content_for :admin_area_title do %>
+    Batches
+<% end %>
+
+<%=
+  content_for :admin_area_subtitle do
+    if params[:user_id] && @user
+      'For ' + @user.email
+    else
+      'All of them'
+    end
+  end
+%>
+
+<%=
+  content_for :sub_menu do
+    render 'batch_users_list' if @users
+  end
+%>
+
+<%= link_to 'Add Batch', new_batch_path, class: 'btn btn-default' %>
+
+<% if @batches.empty? %>
+
+    <p>No Batches have been added yet.</p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'id', 'ID' %>
+        </th>
+        <th>
+          <%= sortable 'name' %>
+        </th>
+        <th>
+          <%= sortable 'contained_count', 'Contained Count' %>
+        </th>
+        <th>
+          <%= sortable @user.email, 'Creator' %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @batches.each do |batch| %>
+          <tr>
+            <td>
+              <%= link_to batch.id, batch %>
+            </td>
+            <td>
+              <%= link_to batch.name, batch %>
+            </td>
+            <td>
+              <%= batch.contained_count %>
+            </td>
+            <td>
+              <%= @user.email %>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { entity: batch } %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @batches %>
+
+<% end %>
+

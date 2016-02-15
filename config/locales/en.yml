@@ -1,6 +1,14 @@
 en:
   activerecord:
     attributes:
+      batch:
+        name: "Name"
+        notes: "Descriptive Notes"
+        user_id: "Creator"
+        committed_at: "Committed At"
+        created_at: "Created At"
+        updated_at: "Updated At"
+        included_count: "Included Count"
       repository:
         slug: "Slug"
         title: "Title"
@@ -74,6 +82,9 @@ en:
         created_at: "Created"
         updated_at: "Last Updated"
     help:
+      batch:
+        name: "Your Batch needs a unique name"
+        notes: "Please describe the updates being made by this Batch operation"
       repository:
         slug: "This is formerly known as the Repository ID"
         title: "Primary display title for the Repository"
