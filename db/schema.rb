@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210161159) do
+ActiveRecord::Schema.define(version: 20160215192059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "batches", force: :cascade do |t|
+    t.integer  "user_id",         null: false
+    t.integer  "contained_count"
+    t.string   "name",            null: false
+    t.text     "notes"
+    t.datetime "committed_at"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "batches", ["user_id"], name: "index_batches_on_user_id", using: :btree
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       null: false
