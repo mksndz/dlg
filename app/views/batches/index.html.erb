@@ -36,7 +36,7 @@
           <%= sortable 'name' %>
         </th>
         <th>
-          <%= sortable 'contained_count', 'Contained Count' %>
+          Item Count
         </th>
         <th>
           Creator
@@ -55,7 +55,7 @@
               <%= link_to batch.name, batch %>
             </td>
             <td>
-              <%= link_to batch.batchitems_count, batch_batch_items_path(batch_id: batch.id) %>
+              <%= link_to batch.batch_items.size, batch_batch_items_path(batch_id: batch.id) %>
             </td>
             <td>
               <%= batch.user.email %>
