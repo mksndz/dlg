@@ -16,8 +16,9 @@ class CatalogController < ApplicationController
 
     ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = { 
-      :qt => 'search',
-      :rows => 10 
+      qt: 'search',
+      fq: '+class_name:"Item"', # return only Items
+      rows: 10
     }
 
     config.add_facet_fields_to_solr_request!
@@ -31,13 +32,13 @@ class CatalogController < ApplicationController
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SearchHelper#solr_doc_params) or
     ## parameters included in the Blacklight-jetty document requestHandler.
     #
-    #config.default_document_solr_params = {
+    # config.default_document_solr_params = {
     #  :qt => 'document',
     #  ## These are hard-coded in the blacklight 'document' requestHandler
     #  # :fl => '*',
     #  # :rows => 1
-    #  # :q => '{!raw f=id v=$id}' 
-    #}
+    #  # :q => '{!raw f=id v=$id}'
+    # }
 
     # solr field configuration for search results/index views
     config.index.title_field = 'dc_title_display'
