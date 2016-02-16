@@ -18,7 +18,7 @@ Sunspot::Indexer.module_eval do
   def remove(*models)
     @connection.delete_by_id(
         models.map do |model|
-          model.respond_to? :slug ? model.slug : model.id
+          model.respond_to?(:slug) ? model.slug : model.id
         end
     )
   end
