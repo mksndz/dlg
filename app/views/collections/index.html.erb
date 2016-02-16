@@ -65,11 +65,11 @@
                 <%= link_to(collection.repository.title, collection.repository) if collection.repository %>
               </td>
               <td>
-                <%= link_to collection.items.count, items_for_path(collection) %>
+                <%= link_to collection.items.size, items_for_path(collection) %>
               </td>
               <td>
                 <div class="btn-group btn-group-xs">
-                  <%= render partial: 'shared/entity_actions', locals: { entity: collection, show_bl: true } %>
+                  <%= render partial: 'shared/entity_actions', locals: { entity: collection, show_bl: false } %>
                 </div>
               </td>
             </tr>

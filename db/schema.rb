@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20160215231222) do
     t.datetime "committed_at"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.integer  "batchitems_count", default: 0, null: false
   end
 
   add_index "batches", ["user_id"], name: "index_batches_on_user_id", using: :btree
@@ -69,7 +68,6 @@ ActiveRecord::Schema.define(version: 20160215231222) do
     t.text      "dc_creator",         default: [],    null: false, array: true
     t.text      "dc_language",        default: [],    null: false, array: true
     t.text      "dc_relation",        default: [],    null: false, array: true
-    t.integer   "items_count",        default: 0,     null: false
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
@@ -125,7 +123,6 @@ ActiveRecord::Schema.define(version: 20160215231222) do
     t.text     "contact"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.integer  "collections_count", default: 0,     null: false
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree
