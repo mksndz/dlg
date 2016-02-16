@@ -1,7 +1,7 @@
 class Batch < ActiveRecord::Base
 
   belongs_to :user
-  has_many :batch_items, table_name: 'items'
+  has_many :batch_items, table_name: 'items', counter_cache: true
 
   searchable do
 
@@ -14,6 +14,10 @@ class Batch < ActiveRecord::Base
     time :updated_at
     time :created_at
 
+  end
+
+  def committed?
+    !!committed_at
   end
 
 end

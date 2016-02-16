@@ -1,6 +1,9 @@
-<h1>Editing Batch Item</h1>
+<%= content_for :admin_area_title do %>
+    Edit Batch Item
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @item.title %>
+<% end %>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @batch_item %> |
-<%= link_to 'Back', batch_items_path %>

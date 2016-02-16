@@ -1,17 +1,9 @@
-<%= form_for(@batch_item) do |f| %>
-  <% if @batch_item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@batch_item.errors.count, "error") %> prohibited this batch_item from being saved:</h2>
+<%= bootstrap_form_for([@batch, @item]) do |f| %>
 
-      <ul>
-      <% @batch_item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <%= f.alert_message 'The Batch Item could not be saved due to the following errors:' %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <%= render partial: 'shared/item_form_fields', locals: { f: f } %>
+
+    <%= f.primary 'Save' %>
+
 <% end %>

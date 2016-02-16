@@ -1,5 +1,5 @@
 class BatchItem < AbstractItem
 
-  has_one :batch
+  belongs_to :batch
 
 end

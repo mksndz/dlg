@@ -1,25 +1,67 @@
-<p id="notice"><%= notice %></p>
+<%= content_for :admin_area_title do %>
+    Items for Batch
+<% end %>
 
-<h1>Listing Batch Items</h1>
+<%=
+  content_for :admin_area_subtitle do
+    @batch.name
+  end
+%>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= link_to 'Add Batch Item', new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
 
-  <tbody>
-    <% @batch_items.each do |batch_item| %>
+<% if @items.empty? %>
+
+    <p>No Batch Items have been added yet.</p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
       <tr>
-        <td><%= link_to 'Show', batch_item %></td>
-        <td><%= link_to 'Edit', edit_batch_item_path(batch_item) %></td>
-        <td><%= link_to 'Destroy', batch_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>
+          <%= sortable 'id', 'ID' %>
+        </th>
+        <th>
+          <%= sortable 'slug' %>
+        </th>
+        <th>
+          <%= sortable 'dc_title', 'Title' %>
+        </th>
+        <th>
+          <%= sortable 'collection_id', 'Collection' %>
+        </th>
+        <th width="185px"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>
+      <tbody>
+      <% @items.each do |item| %>
+          <tr>
+            <td>
+              <%= link_to item.id, batch_batch_item_path(@batch, item) %>
+            </td>
+            <td>
+              <%= link_to item.slug, edit_batch_batch_item_path(@batch, item) %>
+            </td>
+            <td>
+              <%= item.dc_title.first %>
+            </td>
+            <td>
+              <%= link_to(item.collection.display_title, item.collection) if item.collection %>
+            </td>
+            <td>
+              <div class="btn-group btn-group-xs">
+                <%= link_to 'View', batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
+                <%= link_to 'Edit', edit_batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
+                <%= link_to 'Delete', batch_batch_item_path(@batch, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+              </div>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'New Batch item', new_batch_item_path %>
+    <%= paginate @items %>
+
+<% end %>

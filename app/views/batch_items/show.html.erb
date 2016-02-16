@@ -1,4 +1,21 @@
-<p id="notice"><%= notice %></p>
+<%= content_for :admin_area_title do %>
+    Show Item
+<% end %>
 
-<%= link_to 'Edit', edit_batch_item_path(@batch_item) %> |
-<%= link_to 'Back', batch_items_path %>
+<%= content_for :admin_area_subtitle do %>
+    <%= @item.dc_title.first %>
+<% end %>
+
+<%= link_to 'Edit', edit_batch_batch_item_path(@batch, @item), class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render('shared/show_field', field_name: t('activerecord.attributes.batchitem.collection_id'), value: @item.collection.display_title) if @item.collection %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batchitem.slug'), value: @item.slug %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batchitem.dpla'), value: @item.dpla %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batchitem.public'), value: @item.public%>
+
+<%= render partial: 'shared/show_dc_fields', locals: { entity: @item} %>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batchitem.created_at'), value: @item.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batchitem.updated_at'), value: @item.updated_at %>

@@ -39,7 +39,7 @@
           <%= sortable 'contained_count', 'Contained Count' %>
         </th>
         <th>
-          <%= sortable @user.email, 'Creator' %>
+          Creator
         </th>
         <th width="185px"></th>
       </tr>
@@ -55,10 +55,10 @@
               <%= link_to batch.name, batch %>
             </td>
             <td>
-              <%= batch.contained_count %>
+              <%= link_to batch.batchitems_count, batch_batch_items_path(batch_id: batch.id) %>
             </td>
             <td>
-              <%= @user.email %>
+              <%= batch.user.email %>
             </td>
             <td>
               <%= render partial: 'shared/entity_actions', locals: { entity: batch, show_bl: false } %>

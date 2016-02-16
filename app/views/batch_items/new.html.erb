@@ -1,5 +1,9 @@
-<h1>New Batch Item</h1>
-
+<%= content_for :admin_area_title do %>
+    New Batch Item
+<% end %>
+<%=
+  content_for :admin_area_subtitle do
+    @batch.name
+  end
+%>
 <%= render 'form' %>
-
-<%= link_to 'Back', batch_items_path %>

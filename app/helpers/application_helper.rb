@@ -44,7 +44,7 @@ module ApplicationHelper
   end
 
   def class_name
-    @object.class.name.demodulize.downcase
+    @object.class.name.demodulize.underscore
   end
 
 end
