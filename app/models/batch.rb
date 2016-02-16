@@ -1,7 +1,7 @@
 class Batch < ActiveRecord::Base
 
   belongs_to :user
-  has_many :batch_items, table_name: 'items', counter_cache: true
+  has_many :batch_items, table_name: 'items'
 
   searchable do
 

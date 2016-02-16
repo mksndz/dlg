@@ -60,6 +60,8 @@ RSpec.configure do |config|
     Repository.destroy_all
     Collection.destroy_all
     Item.destroy_all
+    Batch.destroy_all
+    BatchItem.destroy_all
   }
 
   config.after(:all){
