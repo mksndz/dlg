@@ -1,5 +1,13 @@
-class Item < AbstractItem
+class Item < ActiveRecord::Base
   include ItemIndexing
+  include Slugged
+
+  belongs_to :collection
+  has_one :repository, through: :collection
+
+  def title
+    dc_title.first
+  end
 
   def to_xml(options = {})
     default_options = {

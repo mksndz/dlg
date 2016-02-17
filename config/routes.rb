@@ -7,8 +7,11 @@ Rails.application.routes.draw do
   scope 'admin' do
 
     resources :repositories, :collections, :items
+
     resources :batches do
       resources :batch_items
+      get 'import/xml', to: 'batch_items#xml', as: :xml_input
+      post 'import/results', to: 'batch_items#from_xml', as: :import_from_xml
     end
 
     get 'batches/for/:user_id', to: 'batches#index', as: :batches_for

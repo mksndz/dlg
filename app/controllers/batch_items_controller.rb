@@ -70,6 +70,23 @@ class BatchItemsController < ApplicationController
     end
   end
 
+  def xml
+
+  end
+
+  def from_xml
+
+    @items = BatchItem.create_from_xml params[:xml]
+
+    @items.each do |item|
+      item.batch = @batch
+      item.save
+    end
+
+    render :import_results
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_batch_item

@@ -7,6 +7,7 @@
 <% end %>
 
 <%= link_to 'Edit', edit_collection_path(@collection), class: 'btn btn-default' %>
+<%= link_to 'XML For Included Items', '#xml' , class: 'btn btn-default' %>
 
 <br><br>
 
@@ -24,4 +25,5 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.created_at'), value: @collection.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.updated_at'), value: @collection.updated_at %>
 
+<a name="xml"></a>
 <pre><%= @collection.items.to_xml %></pre>

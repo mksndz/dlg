@@ -11,18 +11,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215231222) do
+ActiveRecord::Schema.define(version: 20160217213415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "batch_items", force: :cascade do |t|
+    t.string   "slug",                              null: false
+    t.boolean  "dpla",              default: false, null: false
+    t.boolean  "public",            default: false, null: false
+    t.integer  "other_collections", default: [],    null: false, array: true
+    t.text     "dc_title",          default: [],    null: false, array: true
+    t.text     "dc_format",         default: [],    null: false, array: true
+    t.text     "dc_publisher",      default: [],    null: false, array: true
+    t.text     "dc_identifier",     default: [],    null: false, array: true
+    t.text     "dc_rights",         default: [],    null: false, array: true
+    t.text     "dc_contributor",    default: [],    null: false, array: true
+    t.text     "dc_coverage_t",     default: [],    null: false, array: true
+    t.text     "dc_coverage_s",     default: [],    null: false, array: true
+    t.text     "dc_date",           default: [],    null: false, array: true
+    t.text     "dc_source",         default: [],    null: false, array: true
+    t.text     "dc_subject",        default: [],    null: false, array: true
+    t.text     "dc_type",           default: [],    null: false, array: true
+    t.text     "dc_description",    default: [],    null: false, array: true
+    t.text     "dc_creator",        default: [],    null: false, array: true
+    t.text     "dc_language",       default: [],    null: false, array: true
+    t.text     "dc_relation",       default: [],    null: false, array: true
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "batch_id",                          null: false
+    t.integer  "collection_id",                     null: false
+  end
+
+  add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
+
   create_table "batches", force: :cascade do |t|
-    t.integer  "user_id",                      null: false
-    t.string   "name",                         null: false
+    t.integer  "user_id",      null: false
+    t.string   "name",         null: false
     t.text     "notes"
     t.datetime "committed_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "batches", ["user_id"], name: "index_batches_on_user_id", using: :btree
@@ -97,11 +126,8 @@ ActiveRecord::Schema.define(version: 20160215231222) do
     t.text     "dc_creator",        default: [],    null: false, array: true
     t.text     "dc_language",       default: [],    null: false, array: true
     t.text     "dc_relation",       default: [],    null: false, array: true
-    t.string   "type"
-    t.integer  "batch_id"
   end
 
-  add_index "items", ["batch_id"], name: "index_items_on_batch_id", using: :btree
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
   add_index "items", ["dpla"], name: "index_items_on_dpla", using: :btree
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
@@ -156,7 +182,8 @@ ActiveRecord::Schema.define(version: 20160215231222) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "batch_items", "batches"
+  add_foreign_key "batch_items", "collections"
   add_foreign_key "collections", "repositories"
-  add_foreign_key "items", "batches"
   add_foreign_key "items", "collections"
 end

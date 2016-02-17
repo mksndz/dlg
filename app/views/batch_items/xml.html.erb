@@ -1,0 +1,17 @@
+<%= content_for :admin_area_title do %>
+    XML Import for Batch
+<% end %>
+
+<%=
+  content_for :admin_area_subtitle do
+    @batch.name
+  end
+%>
+
+<%= bootstrap_form_tag url: batch_import_from_xml_path(@batch) do |f| %>
+
+    <%= f.text_area :xml, label: 'XML' %>
+
+    <%= f.submit 'Import' %>
+
+<% end %>
