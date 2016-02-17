@@ -23,3 +23,5 @@
 
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.created_at'), value: @collection.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.updated_at'), value: @collection.updated_at %>
+
+<pre><%= @collection.items.to_xml %></pre>

@@ -10,7 +10,7 @@
 
 <br><br>
 
-<%= render('shared/show_field', field_name: t('activerecord.attributes.item.collection_id'), value: @item.collection.dc_title.first) if @item.collection %>
+<%= render('shared/show_field', field_name: t('activerecord.attributes.item.collection_id'), value: @item.collection.display_title) if @item.collection %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.slug'), value: @item.slug %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.dpla'), value: @item.dpla %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.public'), value: @item.public%>
@@ -19,3 +19,5 @@
 
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.created_at'), value: @item.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.updated_at'), value: @item.updated_at %>
+
+<pre><%= @item.as_xml %></pre>
