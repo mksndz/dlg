@@ -47,7 +47,7 @@ module ItemIndexing
       end
 
       string :sort_title do
-        dc_title.first.downcase.gsub(/^(an?|the)\b/, '')
+        dc_title.first ? dc_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
       end
 
     end
