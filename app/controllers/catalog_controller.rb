@@ -183,10 +183,24 @@ class CatalogController < ApplicationController
     # If there are more than this many search results, no spelling ("did you 
     # mean") suggestion is offered.
     config.spell_max = 5
+
+    # enable XML output for search results
+    config.index.respond_to.xml = Proc.new {
+      render xml: solr_to_ar.to_xml
+    }
   end
 
   add_nav_action :admin # if admin
   add_results_collection_tool :export_as_xml # if admin
   # add_show_tools_partial :admin_actions # if admin
 
-end 
+  private
+
+  def solr_to_ar
+    @response['response']['docs'].map do |d|
+      klass, id = d['sunspot_id_ss'].split(' ')
+      klass.constantize.find(id)
+    end
+  end
+
+end
