@@ -12,7 +12,7 @@ class BatchItemsController < ApplicationController
   # GET /batch_items
   # GET /batch_items.json
   def index
-    @items = BatchItem.where(batch_id: @batch.id).page(params[:page])
+    @batch_items = BatchItem.where(batch_id: @batch.id).page(params[:page])
   end
 
   # GET /batch_items/1
@@ -22,7 +22,7 @@ class BatchItemsController < ApplicationController
 
   # GET /batch_items/new
   def new
-    @item = BatchItem.new
+    @batch_item = BatchItem.new
   end
 
   # GET /batch_items/1/edit
@@ -32,16 +32,16 @@ class BatchItemsController < ApplicationController
   # POST /batch_items
   # POST /batch_items.json
   def create
-    @item = BatchItem.new(batch_item_params)
-    @item.batch = @batch
+    @batch_item = BatchItem.new(batch_item_params)
+    @batch_item.batch = @batch
 
     respond_to do |format|
-      if @item.save
-        format.html { redirect_to batch_batch_item_path(@batch, @item), notice: 'Batch item was successfully created.' }
-        format.json { render :show, status: :created, location: @item }
+      if @batch_item.save
+        format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully created.' }
+        format.json { render :show, status: :created, location: @batch_item }
       else
         format.html { render :new }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
+        format.json { render json: @batch_item.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -50,12 +50,12 @@ class BatchItemsController < ApplicationController
   # PATCH/PUT /batch_items/1.json
   def update
     respond_to do |format|
-      if @item.update(batch_item_params)
-        format.html { redirect_to batch_batch_item_path(@batch, @item), notice: 'Batch item was successfully updated.' }
-        format.json { render :show, status: :ok, location: @item }
+      if @batch_item.update(batch_item_params)
+        format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully updated.' }
+        format.json { render :show, status: :ok, location: @batch_item }
       else
         format.html { render :edit }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
+        format.json { render json: @batch_item.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -63,7 +63,7 @@ class BatchItemsController < ApplicationController
   # DELETE /batch_items/1
   # DELETE /batch_items/1.json
   def destroy
-    @item.destroy
+    @batch_item.destroy
     respond_to do |format|
       format.html { redirect_to batch_batch_items_path(@batch), notice: 'Batch item was successfully destroyed.' }
       format.json { head :no_content }
@@ -76,9 +76,9 @@ class BatchItemsController < ApplicationController
 
   def from_xml
 
-    @items = BatchItem.create_from_xml params[:xml]
+    @batch_items = BatchItem.create_from_xml params[:xml]
 
-    @items.each do |item|
+    @batch_items.each do |item|
       item.batch = @batch
       item.save
     end
@@ -90,7 +90,7 @@ class BatchItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_batch_item
-      @item = BatchItem.find(params[:id])
+      @batch_item = BatchItem.find(params[:id])
     end
 
     def set_batch

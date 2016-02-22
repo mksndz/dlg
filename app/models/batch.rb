@@ -1,7 +1,9 @@
 class Batch < ActiveRecord::Base
 
   belongs_to :user
-  has_many :batch_items, table_name: 'items', dependent: :destroy
+  has_many :batch_items, dependent: :destroy
+
+  validates_presence_of :user, :name
 
   searchable do
 

@@ -10,7 +10,7 @@
 
 <%= link_to 'Add Batch Item', new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
 
-<% if @items.empty? %>
+<% if @batch_items.empty? %>
 
     <p>No Batch Items have been added yet.</p>
 
@@ -36,7 +36,7 @@
       </thead>
 
       <tbody>
-      <% @items.each do |item| %>
+      <% @batch_items.each do |item| %>
           <tr>
             <td>
               <%= link_to item.id, batch_batch_item_path(@batch, item) %>
@@ -62,6 +62,6 @@
       </tbody>
     </table>
 
-    <%= paginate @items %>
+    <%= paginate @batch_items %>
 
 <% end %>

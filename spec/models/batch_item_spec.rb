@@ -6,9 +6,9 @@ RSpec.describe BatchItem, type: :model do
     expect(BatchItem.count).to eq 0
   end
 
-  it 'has one after adding one' do
-    Fabricate(:batch_item)
-    expect(BatchItem.count).to eq 1
+  it 'has some after creating a batch' do
+    Fabricate(:batch)
+    expect(BatchItem.count).to be >1
   end
   it 'has a Batch' do
     b = Fabricate(:batch)

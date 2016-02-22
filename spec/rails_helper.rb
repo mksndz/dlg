@@ -57,11 +57,11 @@ RSpec.configure do |config|
 
   # clean up Solr index after test suite
   config.after(:suite){
-    Repository.destroy_all
-    Collection.destroy_all
+    BatchItem.destroy_all
     Item.destroy_all
     Batch.destroy_all
-    BatchItem.destroy_all
+    Collection.destroy_all
+    Repository.destroy_all
   }
 
   config.after(:all){
