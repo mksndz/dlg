@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :roles
   get 'admin/index'
 
   resources :admin, only: :index
