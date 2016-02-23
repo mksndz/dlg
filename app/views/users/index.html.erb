@@ -16,7 +16,10 @@
     <thead>
     <tr>
       <th>
-        Email
+        <%= sortable 'id', 'ID' %>
+      </th>
+      <th>
+        <%= sortable 'email', 'Email' %>
       </th>
       <th>
         Roles
@@ -28,6 +31,9 @@
     <tbody>
     <% @users.each do |user| %>
         <tr>
+          <td>
+            <%= user.id %>
+          </td>
           <td>
             <%= user.email %>
           </td>

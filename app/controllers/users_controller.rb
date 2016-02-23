@@ -2,9 +2,11 @@ class UsersController < ApplicationController
 
   layout 'admin'
 
+  helper_method :sort_column, :sort_direction
+
   # load_and_authorize_resource
 
-  before_action :set_roles, only: [:new, :edit]
+  # before_action :set_roles, only: [:new, :edit]
   before_action :find_user, only: [:show, :edit, :update, :destroy]
 
   # rescue_from Exception do
@@ -13,7 +15,9 @@ class UsersController < ApplicationController
 
   # list all users
   def index
-    @users = User.all.page(params[:page])
+    @users = User
+                 .order(sort_column + ' ' + sort_direction)
+                 .page(params[:page])
   end
 
   # show a users info
@@ -46,7 +50,6 @@ class UsersController < ApplicationController
 
   # display the edit user info form (different from devise user self-service form)
   def edit
-    @roles = Role.all
   end
 
   # modify a user
@@ -97,6 +100,14 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :roles => [])
+  end
+
+  def sort_column
+    User.column_names.include?(params[:sort]) ? params[:sort] : 'id'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
 
 end
