@@ -42,7 +42,7 @@ class UsersController < ApplicationController
       if @user.save
         format.html { redirect_to @user, notice: 'User created!' }
       else
-        format.html { redirect_to new_user_path, alert: 'User could not be created!' }
+        format.html { render :new, alert: 'User could not be created!' }
       end
     end
 
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
       if @user.save
         format.html { redirect_to @user, notice: 'User updated!' }
       else
-        format.html { redirect_to edit_user_path(@user), alert: 'User could not be updated!' }
+        format.html { render :edit, alert: 'User could not be updated!' }
       end
     end
   end
