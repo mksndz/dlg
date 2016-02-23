@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  has_many :batches
+
   if Blacklight::Utils.needs_attr_accessible?
     attr_accessible :email, :password, :password_confirmation
   end
