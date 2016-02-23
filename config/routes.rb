@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   scope 'admin' do
 
-    resources :repositories, :collections, :items, :roles
+    resources :repositories, :collections, :items, :roles, :users
 
     resources :batches do
       resources :batch_items

@@ -1,0 +1,16 @@
+<%= bootstrap_form_for(@user) do |f| %>
+
+    <%= f.alert_message 'The Batch could not be saved due to the following errors:' %>
+
+    <%= f.email_field :email %>
+
+    <% if current_page?(action: 'new') %>
+      <%= f.password_field :password %>
+      <%= f.password_field :password_confirmation %>
+    <% end %>
+
+    <%= f.collection_check_boxes :roles, Role.all, :id, :name %>
+
+    <%= f.primary 'Save' %>
+
+<% end %>

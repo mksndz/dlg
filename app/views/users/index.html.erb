@@ -1,0 +1,49 @@
+<% content_for :admin_area_title do %>
+    Users
+<% end %>
+
+<%= link_to 'Add User', new_user_path, class: 'btn btn-default' %>
+
+<br><br>
+
+<% if @users.empty? %>
+
+    <p>No Users have been added yet. How strange!</p>
+
+<% else %>
+
+  <table class="table table-condensed table-hover">
+    <thead>
+    <tr>
+      <th>
+        Email
+      </th>
+      <th>
+        Roles
+      </th>
+      <th colspan="1"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @users.each do |user| %>
+        <tr>
+          <td>
+            <%= user.email %>
+          </td>
+          <td>
+            <% user.roles.each do |role| %>
+                <%= role.name %><br />
+            <% end %>
+          </td>
+          <td>
+            <%= render partial: 'shared/entity_actions', locals: { entity: user, show_bl: false } %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+    <%= paginate @users %>
+
+<% end %>

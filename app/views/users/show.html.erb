@@ -1,0 +1,28 @@
+<%= content_for :admin_area_title do %>
+    Show User
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @user.email %>
+<% end %>
+
+<%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.user.email'), value: @user.email %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Roles</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @user.roles.each do |role| %>
+          <li><%= role.name %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+
