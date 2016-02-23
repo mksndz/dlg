@@ -6,4 +6,8 @@ Fabricator(:collection) do
   display_title Faker::Lorem.sentence(3)
   items(count: 5)
 
+  dc_title { [
+      Faker::Hipster.sentence(5),
+      Faker::Hipster.sentence(4)
+  ] }
 end

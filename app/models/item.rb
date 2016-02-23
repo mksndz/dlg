@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  include ItemIndexing
+  include SolrIndexing
   include Slugged
 
   belongs_to :collection

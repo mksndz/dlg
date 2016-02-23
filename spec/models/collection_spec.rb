@@ -39,5 +39,23 @@ RSpec.describe Collection, type: :model do
   it 'respond to DPLA Items' do
     expect(Fabricate(:collection)).to respond_to :public_items
   end
-  
+
+  it 'indexes the item in Solr' do
+    c = Fabricate(:collection)
+    Sunspot.commit
+    results = Collection.search do
+      fulltext c.title
+    end.results
+    expect(results).to include c
+  end
+
+  it 'deindexes the item in Solr on delete' do
+    c = Fabricate(:collection)
+    c.destroy
+    results = Collection.search do
+      fulltext c.title # todo is there a better way?
+    end.results
+    expect(results).to be_empty
+  end
+
 end

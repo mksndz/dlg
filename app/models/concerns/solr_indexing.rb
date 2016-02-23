@@ -1,4 +1,4 @@
-module ItemIndexing
+module SolrIndexing
   extend ActiveSupport::Concern
 
   included do
@@ -15,12 +15,16 @@ module ItemIndexing
         ''
       end
 
-      boolean :dpla
-      boolean :public
 
-      string :in_collection, stored: true do
-        collection ? collection.display_title : ''
+      boolean :dpla if self.respond_to?(:dpla)
+      boolean :public if self.respond_to?(:public)
+
+      if self.respond_to?(:collection)
+        string :in_collection, stored: true do
+          collection ? collection.display_title : ''
+        end
       end
+
 
       # DC Fields for Searching
       # *_display fields created via copyFields

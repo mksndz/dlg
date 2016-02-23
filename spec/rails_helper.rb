@@ -68,5 +68,8 @@ RSpec.configure do |config|
 
   config.after(:all){
     Sunspot.remove_all! Item
+    Sunspot.remove_all! Collection
+    Sunspot.remove_all! Batch
+    Sunspot.remove_all! BatchItem
   }
 end

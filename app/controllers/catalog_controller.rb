@@ -17,7 +17,7 @@ class CatalogController < ApplicationController
     ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = { 
       qt: 'search',
-      fq: '+class_name:"Item"', # return only Items
+      fq: '-class_name:"BatchItem"-class_name:"Batch"', # dont return BatchItems or Batches
       rows: 10
     }
 

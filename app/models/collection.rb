@@ -1,5 +1,6 @@
 class Collection < ActiveRecord::Base
   include Slugged
+  include SolrIndexing
 
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
@@ -7,5 +8,9 @@ class Collection < ActiveRecord::Base
   belongs_to :repository
 
   validates_presence_of :display_title
+
+  def title
+    dc_title.first
+  end
 
 end
