@@ -1,6 +1,8 @@
 en:
   activerecord:
     attributes:
+      role:
+        name: "Name"
       batch:
         name: "Name"
         notes: "Descriptive Notes"
@@ -107,6 +109,8 @@ en:
         created_at: "Created"
         updated_at: "Last Updated"
     help:
+      role:
+        name: "A descriptive name for your Role"
       batch:
         name: "Your Batch needs a unique name"
         notes: "Please describe the updates being made by this Batch operation"

@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :roles
   get 'admin/index'
 
   resources :admin, only: :index
 
   scope 'admin' do
 
-    resources :repositories, :collections, :items
+    resources :repositories, :collections, :items, :roles
 
     resources :batches do
       resources :batch_items

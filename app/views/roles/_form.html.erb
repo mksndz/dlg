@@ -1,0 +1,9 @@
+<%= bootstrap_form_for(@role) do |f| %>
+
+  <%= f.alert_message 'The record could not be saved due to the following errors:' %>
+
+  <%= f.text_field :name %>
+
+  <%= f.primary 'Save' %>
+
+<% end %>
