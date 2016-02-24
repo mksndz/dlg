@@ -1,3 +1,16 @@
+# Truncate Tables
+[
+    BatchItem,
+    Item,
+    User,
+    Role,
+    Batch,
+    Collection,
+    Repository
+].each do |m|
+    ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{m.table_name} RESTART IDENTITY CASCADE;")
+end
+
 #
 # Default Roles for app
 #
