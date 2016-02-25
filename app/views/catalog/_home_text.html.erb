@@ -1,0 +1,20 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Browse by Collection</div>
+  <div class="panel-body">
+    <ul>
+    <% Collection.all.each do |c| %>
+        <li><%= link_to c.display_title, c.dc_identifier.first  %></li>
+    <% end %>
+    </ul>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">Browse by Institution</div>
+  <div class="panel-body">
+    <ul>
+      <% Repository.all.each do |r| %>
+          <li><%= link_to r.title, r.homepage_url  %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
