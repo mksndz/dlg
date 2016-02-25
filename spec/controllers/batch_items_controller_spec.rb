@@ -40,7 +40,7 @@ RSpec.describe BatchItemsController, type: :controller do
     it 'assigns all batch_items as @batch_items' do
       batch_item = BatchItem.create! valid_attributes
       get :index, {batch_id: batch}, valid_session
-      expect(assigns(:batch_items)).to eq([batch_item])
+      expect(assigns(:batch_items)).to include(batch_item)
     end
   end
 

@@ -22,7 +22,9 @@ RSpec.describe Batch, type: :model do
   end
 
   it 'contains BatchWorks' do
-    b = Fabricate(:batch)
+    b = Fabricate(:batch) {
+      batch_items(count: 1)
+    }
     expect(b.batch_items).not_to be_empty
   end
   

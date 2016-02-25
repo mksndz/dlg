@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe BatchesController, type: :routing do
   describe 'routing' do
 
-    before(:all){
-      @batch = Fabricate(:batch)
-    }
-
     it 'routes to #index' do
       expect(get: '/admin/batches').to route_to('batches#index')
     end
@@ -16,11 +12,11 @@ RSpec.describe BatchesController, type: :routing do
     end
 
     it 'routes to #show' do
-      expect(get: "/admin/batches/#{@batch.id}").to route_to(controller: 'batches', action: 'show', id: @batch.id.to_s)
+      expect(get: '/admin/batches/1').to route_to(controller: 'batches', action: 'show', id: '1')
     end
 
     it 'routes to #edit' do
-      expect(get: "/admin/batches/#{@batch.id}/edit").to route_to(controller: 'batches', action: 'edit', id: @batch.id.to_s)
+      expect(get: '/admin/batches/1/edit').to route_to(controller: 'batches', action: 'edit', id: '1')
     end
 
     it 'routes to #create' do
@@ -28,15 +24,15 @@ RSpec.describe BatchesController, type: :routing do
     end
 
     it 'routes to #update via PUT' do
-      expect(put: "/admin/batches/#{@batch.id}").to route_to(controller: 'batches', action: 'update', id: @batch.id.to_s)
+      expect(put: '/admin/batches/1').to route_to(controller: 'batches', action: 'update', id: '1')
     end
 
     it 'routes to #update via PATCH' do
-      expect(patch: "/admin/batches/#{@batch.id}").to route_to(controller: 'batches', action: 'update', id: @batch.id.to_s)
+      expect(patch: '/admin/batches/1').to route_to(controller: 'batches', action: 'update', id: '1')
     end
 
     it 'routes to #destroy' do
-      expect(delete: "/admin/batches/#{@batch.id}").to route_to(controller: 'batches', action: 'destroy', id: @batch.id.to_s)
+      expect(delete: '/admin/batches/1').to route_to(controller: 'batches', action: 'destroy', id: '1')
     end
   end
 end

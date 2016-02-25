@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe CollectionsController, type: :routing do
   describe 'routing' do
 
-    before(:all){
-      @collection = Fabricate(:collection)
-    }
-
     it 'routes to #index' do
       expect(get: '/admin/collections').to route_to('collections#index')
     end
@@ -16,11 +12,11 @@ RSpec.describe CollectionsController, type: :routing do
     end
 
     it 'routes to #show' do
-      expect(get: "/admin/collections/#{@collection.id}").to route_to(controller: 'collections', action: 'show', id: @collection.id.to_s)
+      expect(get: '/admin/collections/1').to route_to(controller: 'collections', action: 'show', id: '1')
     end
 
     it 'routes to #edit' do
-      expect(get: "/admin/collections/#{@collection.id}/edit").to route_to(controller: 'collections', action: 'edit', id: @collection.id.to_s)
+      expect(get: '/admin/collections/1/edit').to route_to(controller: 'collections', action: 'edit', id: '1')
     end
 
     it 'routes to #create' do
@@ -28,15 +24,15 @@ RSpec.describe CollectionsController, type: :routing do
     end
 
     it 'routes to #update via PUT' do
-      expect(put: "/admin/collections/#{@collection.id}").to route_to(controller: 'collections', action: 'update', id: @collection.id.to_s)
+      expect(put: '/admin/collections/1').to route_to(controller: 'collections', action: 'update', id: '1')
     end
 
     it 'routes to #update via PATCH' do
-      expect(patch: "/admin/collections/#{@collection.id}").to route_to(controller: 'collections', action: 'update', id: @collection.id.to_s)
+      expect(patch: '/admin/collections/1').to route_to(controller: 'collections', action: 'update', id: '1')
     end
 
     it 'routes to #destroy' do
-      expect(delete: "/admin/collections/#{@collection.id}").to route_to(controller: 'collections', action: 'destroy', id: @collection.id.to_s)
+      expect(delete: '/admin/collections/1').to route_to(controller: 'collections', action: 'destroy', id: '1')
     end
 
   end

@@ -3,10 +3,6 @@ require 'rails_helper'
 RSpec.describe ItemsController, type: :routing do
   describe 'routing' do
 
-    before(:all){
-      @item = Fabricate(:item)
-    }
-
     it 'routes to #index' do
       expect(get: '/admin/items').to route_to('items#index')
     end
@@ -16,11 +12,11 @@ RSpec.describe ItemsController, type: :routing do
     end
 
     it 'routes to #show' do
-      expect(get: "/admin/items/#{@item.id}").to route_to(controller: 'items', action: 'show', id: @item.id.to_s)
+      expect(get: '/admin/items/1').to route_to(controller: 'items', action: 'show', id: '1')
     end
 
     it 'routes to #edit' do
-      expect(get: "/admin/items/#{@item.id}/edit").to route_to(controller: 'items', action: 'edit', id: @item.id.to_s)
+      expect(get: '/admin/items/1/edit').to route_to(controller: 'items', action: 'edit', id: '1')
     end
 
     it 'routes to #create' do
@@ -28,15 +24,15 @@ RSpec.describe ItemsController, type: :routing do
     end
 
     it 'routes to #update via PUT' do
-      expect(put: "/admin/items/#{@item.id}").to route_to(controller: 'items', action: 'update', id: @item.id.to_s)
+      expect(put: '/admin/items/1').to route_to(controller: 'items', action: 'update', id: '1')
     end
 
     it 'routes to #update via PATCH' do
-      expect(patch: "/admin/items/#{@item.id}").to route_to(controller: 'items', action: 'update', id: @item.id.to_s)
+      expect(patch: '/admin/items/1').to route_to(controller: 'items', action: 'update', id: '1')
     end
 
     it 'routes to #destroy' do
-      expect(delete: "/admin/items/#{@item.id}").to route_to(controller: 'items', action: 'destroy', id: @item.id.to_s)
+      expect(delete: '/admin/items/1').to route_to(controller: 'items', action: 'destroy', id: '1')
     end
 
   end

@@ -12,7 +12,9 @@ RSpec.describe Repository, type: :model do
   end
 
   it 'contains a Collection' do
-    r = Fabricate(:repository)
+    r = Fabricate(:repository) {
+      collections(count: 1)
+    }
     expect(r.collections.count).to be > 0
     expect(r.collections.first).to be_kind_of Collection
   end
@@ -28,7 +30,11 @@ RSpec.describe Repository, type: :model do
   end
 
   it 'contains Items through Collection' do
-    r = Fabricate(:repository)
+    r = Fabricate(:repository) {
+      collections { Fabricate.times(1, :collection) {
+        items(count: 1)
+      }}
+    }
     expect(r.items.first).to be_kind_of Item
   end
 

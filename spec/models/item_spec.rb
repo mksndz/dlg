@@ -13,14 +13,18 @@ RSpec.describe Item, type: :model do
 
   # duh
   it 'belongs to a Repository' do
-    r = Fabricate(:repository)
-    expect(r.items.first.repository).to be_kind_of Repository
+    i = Fabricate(:item) {
+      repository
+    }
+    expect(i.repository).to be_kind_of Repository
   end
 
   # duh
   it 'belongs to a Collection' do
-    r = Fabricate(:repository)
-    expect(r.items.first.collection).to be_kind_of Collection
+    i = Fabricate(:item) {
+      collection
+    }
+    expect(i.collection).to be_kind_of Collection
   end
 
   it 'has a String title' do

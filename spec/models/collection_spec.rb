@@ -13,7 +13,9 @@ RSpec.describe Collection, type: :model do
 
   # duh
   it 'belongs to a Repository' do
-    r = Fabricate(:repository)
+    r = Fabricate(:repository) {
+      collections(count: 1)
+    }
     expect(r.collections.first.repository).to be_kind_of Repository
   end
   
@@ -28,7 +30,9 @@ RSpec.describe Collection, type: :model do
   end
   
   it 'contains Items' do
-    c = Fabricate(:collection)
+    c = Fabricate(:collection) {
+      items(count: 1)
+    }
     expect(c.items.first).to be_kind_of Item
   end
 
