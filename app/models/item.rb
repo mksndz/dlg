@@ -11,19 +11,21 @@ class Item < ActiveRecord::Base
 
   def to_xml(options = {})
     default_options = {
+        skip_types: true,
         dasherize: false,
         # fields to not include
         except: [
-          :batch_id,
           :collection_id,
           :created_at,
-          :updated_at,
-          :other_collections
+          :updated_at
         ],
-        include: [
-            collection: { only: [ :slug ] },
-            repository: { only: [ :slug ] }
-        ]
+        include: {
+            collection: {
+                only: [
+                    :slug
+                ]
+            }
+        }
     }
     super(options.merge!(default_options))
   end
