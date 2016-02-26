@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226151842) do
+ActiveRecord::Schema.define(version: 20160226154318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,7 +77,6 @@ ActiveRecord::Schema.define(version: 20160226151842) do
     t.text      "short_description"
     t.text      "teaser"
     t.string    "color"
-    t.integer   "other_repositories", default: [],    null: false, array: true
     t.text      "dc_title",           default: [],    null: false, array: true
     t.text      "dc_format",          default: [],    null: false, array: true
     t.text      "dc_publisher",       default: [],    null: false, array: true
@@ -97,6 +96,7 @@ ActiveRecord::Schema.define(version: 20160226151842) do
     t.text      "dc_creator",         default: [],    null: false, array: true
     t.text      "dc_language",        default: [],    null: false, array: true
     t.text      "dc_relation",        default: [],    null: false, array: true
+    t.string    "other_repositories", default: [],                 array: true
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
