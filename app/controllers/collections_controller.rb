@@ -57,7 +57,9 @@ class CollectionsController < ApplicationController
 
   def update
 
-    if find_collection.update(collection_params)
+    find_collection
+
+    if @collection.update(collection_params)
       redirect_to @collection, notice: 'Collection updated'
     else
       repositories_for_select
@@ -99,6 +101,7 @@ class CollectionsController < ApplicationController
         :color,
         :other_repositories,
         :date_range,
+        :subject_ids    => [],
         :dc_title       => [],
         :dc_format      => [],
         :dc_publisher   => [],

@@ -37,6 +37,8 @@
     <%= text_field_multi @collection, :dc_language %>
     <%= text_field_multi @collection, :dc_relation %>
 
+    <%= f.collection_check_boxes :subject_ids, Subject.all, :id, :name %>
+
     <%= f.primary 'Save' %>
 
 <% end %>
