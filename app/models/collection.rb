@@ -6,6 +6,7 @@ class Collection < ActiveRecord::Base
   has_many :public_items, -> { where public: true }, class_name: 'Item'
   has_many :dpla_items, -> { where dpla: true }, class_name: 'Item'
   belongs_to :repository
+  has_and_belongs_to_many :subjects
 
   validates_presence_of :display_title
 

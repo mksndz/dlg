@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   scope 'admin' do
 
-    resources :repositories, :collections, :items, :roles, :users
+    resources :repositories, :collections, :items, :roles, :users, :subjects
 
     resources :items do
       member do
