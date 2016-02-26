@@ -73,6 +73,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'type_facet',         label: 'Type',        limit: true
     config.add_facet_field 'creator_facet',      label: 'Creator',     limit: true
     config.add_facet_field 'in_collection_ss',   label: 'Collection',  limit: true
+    config.add_facet_field 'temporal_facet',   label: 'Temporal',  limit: true
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']

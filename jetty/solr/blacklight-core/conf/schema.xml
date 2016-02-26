@@ -701,6 +701,7 @@
   <copyField source="dc_type_text" dest="type_facet" />
   <copyField source="dc_creator_text" dest="creator_facet" />
   <copyField source="dc_subject_text" dest="subject_facet" />
+  <copyField source="dc_coverage_t_text" dest="temporal_facet" />
 
   <!--<copyField source="subtitle_t" dest="subtitle_unstem_search"/>-->
   <!--<copyField source="title_addl_t" dest="title_addl_unstem_search"/>-->
