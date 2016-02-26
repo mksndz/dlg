@@ -5,7 +5,7 @@ class CreateSubjects < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    create_table :subjects_collections do |t|
+    create_table :collections_subjects do |t|
       t.integer :subject_id, index: true
       t.integer :collection_id, index: true
     end

@@ -102,6 +102,14 @@ ActiveRecord::Schema.define(version: 20160226182321) do
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
   add_index "collections", ["slug"], name: "index_collections_on_slug", unique: true, using: :btree
 
+  create_table "collections_subjects", force: :cascade do |t|
+    t.integer "subject_id"
+    t.integer "collection_id"
+  end
+
+  add_index "collections_subjects", ["collection_id"], name: "index_collections_subjects_on_collection_id", using: :btree
+  add_index "collections_subjects", ["subject_id"], name: "index_collections_subjects_on_subject_id", using: :btree
+
   create_table "items", force: :cascade do |t|
     t.string   "slug",                              null: false
     t.integer  "collection_id"
@@ -182,14 +190,6 @@ ActiveRecord::Schema.define(version: 20160226182321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "subjects_collections", force: :cascade do |t|
-    t.integer "subject_id"
-    t.integer "collection_id"
-  end
-
-  add_index "subjects_collections", ["collection_id"], name: "index_subjects_collections_on_collection_id", using: :btree
-  add_index "subjects_collections", ["subject_id"], name: "index_subjects_collections_on_subject_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
