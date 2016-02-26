@@ -7,6 +7,7 @@
 <% end %>
 
 <%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-default' %>
+<%= link_to 'Copy', copy_item_path(@item), class: 'btn btn-default', data: { confirm: 'Are you sure?' } %>
 <%= link_to 'XML', '#xml' , class: 'btn btn-default' %>
 
 

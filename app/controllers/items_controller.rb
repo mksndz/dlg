@@ -48,6 +48,32 @@ class ItemsController < ApplicationController
 
   end
 
+  def copy
+
+    # here we create a new db record then load the edit form
+    # an alternative would be to not save the entity yet, but load the new form
+    # with the attributes from the item to be 'copied'
+
+    find_item
+
+    item_attrs = @item.attributes.except('id')
+    item_attrs['slug'] << '-copy'
+
+    @copy = Item.new(item_attrs)
+
+    respond_to do |format|
+      if @copy.save
+        format.html { redirect_to edit_item_path(@copy), notice: 'Item copy was successfully created.' }
+        format.json { render :show, status: :created, location: @copy }
+      else
+        format.html { redirect_to @item, alert: @copy.errors }
+        format.json { render json: @copy.errors, status: :unprocessable_entity }
+      end
+    end
+
+
+  end
+
   def edit
 
     find_item

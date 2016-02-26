@@ -8,6 +8,12 @@ Rails.application.routes.draw do
 
     resources :repositories, :collections, :items, :roles, :users
 
+    resources :items do
+      member do
+        get 'copy'
+      end
+    end
+
     resources :batches do
       resources :batch_items
       get 'import/xml', to: 'batch_items#xml', as: :xml_input
