@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223183423) do
+ActiveRecord::Schema.define(version: 20160226151842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20160223183423) do
     t.string   "slug",                              null: false
     t.boolean  "dpla",              default: false, null: false
     t.boolean  "public",            default: false, null: false
-    t.integer  "other_collections", default: [],    null: false, array: true
     t.text     "dc_title",          default: [],    null: false, array: true
     t.text     "dc_format",         default: [],    null: false, array: true
     t.text     "dc_publisher",      default: [],    null: false, array: true
@@ -41,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160223183423) do
     t.datetime "updated_at",                        null: false
     t.integer  "batch_id",                          null: false
     t.integer  "collection_id",                     null: false
+    t.string   "other_collections", default: [],                 array: true
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
@@ -107,7 +107,6 @@ ActiveRecord::Schema.define(version: 20160223183423) do
     t.integer  "collection_id"
     t.boolean  "dpla",              default: false, null: false
     t.boolean  "public",            default: false, null: false
-    t.integer  "other_collections", default: [],    null: false, array: true
     t.text     "dc_title",          default: [],    null: false, array: true
     t.text     "dc_format",         default: [],    null: false, array: true
     t.text     "dc_publisher",      default: [],    null: false, array: true
@@ -126,6 +125,7 @@ ActiveRecord::Schema.define(version: 20160223183423) do
     t.text     "dc_creator",        default: [],    null: false, array: true
     t.text     "dc_language",       default: [],    null: false, array: true
     t.text     "dc_relation",       default: [],    null: false, array: true
+    t.string   "other_collections", default: [],                 array: true
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
