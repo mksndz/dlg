@@ -105,7 +105,7 @@ class ItemsController < ApplicationController
   private
 
   def collections_for_select
-    @collections = Collection.all
+    @collections = Collection.all.order(:display_title)
   end
 
   def find_item

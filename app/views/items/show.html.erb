@@ -23,5 +23,18 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.created_at'), value: @item.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.updated_at'), value: @item.updated_at %>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Other Collections</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @item.other_collections.each do |c| %>
+          <li><%= c %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
 <a name="xml"></a>
 <pre><%= @item.to_xml %></pre>

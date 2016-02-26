@@ -85,44 +85,46 @@ class CollectionsController < ApplicationController
   end
 
   def repositories_for_select
-    @repositories_for_select = Repository.all.collect { |r| [ "#{r.title} (#{r.slug}}", r.id ] }
+    @repositories = Repository.all.order(:title)
   end
 
   def collection_params
-    remove_blank_multi_values
+    prepare_params
     params.require(:collection).permit(
         :repository_id,
         :slug,
         :in_georgia,
         :remote,
+        :public,
         :display_title,
         :short_description,
         :teaser,
         :color,
-        :other_repositories,
         :date_range,
-        :subject_ids    => [],
-        :dc_title       => [],
-        :dc_format      => [],
-        :dc_publisher   => [],
-        :dc_identifier  => [],
-        :dc_rights      => [],
-        :dc_contributor => [],
-        :dc_coverage_s  => [],
-        :dc_coverage_t  => [],
-        :dc_date        => [],
-        :dc_source      => [],
-        :dc_subject     => [],
-        :dc_type        => [],
-        :dc_description => [],
-        :dc_creator     => [],
-        :dc_language    => [],
-        :dc_relation    => []
+        :other_repositories => [],
+        :subject_ids        => [],
+        :dc_title           => [],
+        :dc_format          => [],
+        :dc_publisher       => [],
+        :dc_identifier      => [],
+        :dc_rights          => [],
+        :dc_contributor     => [],
+        :dc_coverage_s      => [],
+        :dc_coverage_t      => [],
+        :dc_date            => [],
+        :dc_source          => [],
+        :dc_subject         => [],
+        :dc_type            => [],
+        :dc_description     => [],
+        :dc_creator         => [],
+        :dc_language        => [],
+        :dc_relation        => []
     )
   end
 
-  def remove_blank_multi_values
-    dc_fields.each do |f|
+  def prepare_params
+    array_fields = dc_fields + [:other_repositories]
+    array_fields.each do |f|
       params[:collection][f].reject! { |v| v == '' } if params[:collection][f]
     end
   end

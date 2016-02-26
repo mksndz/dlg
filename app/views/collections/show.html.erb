@@ -19,12 +19,27 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.teaser'), value: @collection.teaser %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.in_georgia'), value: @collection.in_georgia %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.remote'), value: @collection.remote %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.public'), value: @collection.public%>
+
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.color'), value: @collection.color %>
 
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @collection } %>
 
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.created_at'), value: @collection.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.updated_at'), value: @collection.updated_at %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Other Repositories</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @collection.other_repositories.each do |r| %>
+          <li><%= r %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
 <div class="panel panel-default">
   <div class="panel-heading">
