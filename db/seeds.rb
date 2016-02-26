@@ -1,5 +1,6 @@
 # Truncate Tables
 [
+    Subject,
     BatchItem,
     Item,
     User,
@@ -12,6 +13,26 @@
 end
 
 #
+# Default Subjects for app
+#
+Subject.delete_all
+Subject.create!([
+                 { name: 'The Arts' },
+                 { name: 'Business & Industry' },
+                 { name: 'Education' },
+                 { name: 'Folklife' },
+                 { name: 'Government & Politic' },
+                 { name: 'Land & Resources' },
+                 { name: 'Literature' },
+                 { name: 'Media' },
+                 { name: 'Peoples & Cultures' },
+                 { name: 'Religion' },
+                 { name: 'Science & Medicine' },
+                 { name: 'Sports & Recreation' },
+                 { name: 'Transportation' }
+             ])
+
+#
 # Default Roles for app
 #
 Role.delete_all
@@ -21,7 +42,6 @@ Role.create!([
                  { name: 'supervisor' },
                  { name: 'basic' }
              ])
-
 
 #
 # Some Seed Data for Old-School Testing and Display for Meetings, etc.
