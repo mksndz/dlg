@@ -98,7 +98,7 @@ class BatchItemsController < ApplicationController
     end
 
     def collections_for_select
-      @collections_for_select = Collection.all.collect { |c| [ "#{c.display_title} (#{c.slug})", c.id ] }
+      @collections = Collection.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -109,29 +109,30 @@ class BatchItemsController < ApplicationController
           :slug,
           :dpla,
           :public,
-          :other_collections,
           :date_range,
-          :dc_title       => [],
-          :dc_format      => [],
-          :dc_publisher   => [],
-          :dc_identifier  => [],
-          :dc_rights      => [],
-          :dc_contributor => [],
-          :dc_coverage_s  => [],
-          :dc_coverage_t  => [],
-          :dc_date        => [],
-          :dc_source      => [],
-          :dc_subject     => [],
-          :dc_type        => [],
-          :dc_description => [],
-          :dc_creator     => [],
-          :dc_language    => [],
-          :dc_relation    => []
+          :other_collections  => [],
+          :dc_title           => [],
+          :dc_format          => [],
+          :dc_publisher       => [],
+          :dc_identifier      => [],
+          :dc_rights          => [],
+          :dc_contributor     => [],
+          :dc_coverage_s      => [],
+          :dc_coverage_t      => [],
+          :dc_date            => [],
+          :dc_source          => [],
+          :dc_subject         => [],
+          :dc_type            => [],
+          :dc_description     => [],
+          :dc_creator         => [],
+          :dc_language        => [],
+          :dc_relation        => []
       )
     end
 
     def remove_blank_multi_values
-      dc_fields.each do |f|
+      array_fields = dc_fields + [:other_collections]
+      array_fields.each do |f|
         params[:batch_item][f].reject! { |v| v == '' } if params[:batch_item][f]
       end
     end

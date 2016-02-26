@@ -1,6 +1,6 @@
 <%= f.text_field :slug %>
 
-<%= f.select :collection_id, @collections_for_select, { include_blank: true }, {} %>
+<%= f.select :collection_id, @collections.collect { |c| [c.display_title, c.id] }, { include_blank: true }, {} %>
 
 <%= f.form_group :public do %>
     <%= f.check_box :public %>
@@ -10,7 +10,7 @@
     <%= f.check_box :dpla %>
 <% end %>
 
-<%= f.select :other_collections, @collections_for_select, { include_blank: true }, { multiple: true } %>
+<%= f.select :other_collections, @collections.collect { |c| [c.display_title, c.slug] }, { include_blank: true }, { multiple: true } %>
 
 <%= text_field_multi @item, :dc_title%>
 <%= text_field_multi @item, :dc_format%>

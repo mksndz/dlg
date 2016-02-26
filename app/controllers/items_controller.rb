@@ -104,48 +104,48 @@ class ItemsController < ApplicationController
 
   private
 
+  def collections_for_select
+    @collections = Collection.all
+  end
+
   def find_item
     @item = Item.find(params[:id])
   end
 
-  def collections_for_select
-    @collections_for_select = Collection.all.collect { |c| [ "#{c.display_title} (#{c.slug})", c.id ] }
-  end
-
   def item_params
-    remove_blank_multi_values
+    prepare_params
     params.require(:item).permit(
         :collection_id,
         :slug,
         :dpla,
         :public,
-        :other_collections,
         :date_range,
-        :dc_title       => [],
-        :dc_format      => [],
-        :dc_publisher   => [],
-        :dc_identifier  => [],
-        :dc_rights      => [],
-        :dc_contributor => [],
-        :dc_coverage_s  => [],
-        :dc_coverage_t  => [],
-        :dc_date        => [],
-        :dc_source      => [],
-        :dc_subject     => [],
-        :dc_type        => [],
-        :dc_description => [],
-        :dc_creator     => [],
-        :dc_language    => [],
-        :dc_relation    => []
+        :other_collections  => [],
+        :dc_title           => [],
+        :dc_format          => [],
+        :dc_publisher       => [],
+        :dc_identifier      => [],
+        :dc_rights          => [],
+        :dc_contributor     => [],
+        :dc_coverage_s      => [],
+        :dc_coverage_t      => [],
+        :dc_date            => [],
+        :dc_source          => [],
+        :dc_subject         => [],
+        :dc_type            => [],
+        :dc_description     => [],
+        :dc_creator         => [],
+        :dc_language        => [],
+        :dc_relation        => []
     )
   end
 
-  def remove_blank_multi_values
-      dc_fields.each do |f|
+  def prepare_params
+      array_fields = dc_fields + [:other_collections]
+      array_fields.each do |f|
         params[:item][f].reject! { |v| v == '' } if params[:item][f]
       end
   end
-
 
   def sort_column
     Item.column_names.include?(params[:sort]) ? params[:sort] : 'id'
