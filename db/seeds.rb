@@ -30,7 +30,6 @@ Role.create!([
 # 3 Repos
 Repository.delete_all
 r1 = Repository.create!({
-    id: 1,
     slug: 'chestatee',
     public: true,
     in_georgia: true,
@@ -41,7 +40,6 @@ r1 = Repository.create!({
  })
 
 r2 = Repository.create!({
-    id: 2,
     slug: 'foxfire',
     public: true,
     in_georgia: true,
@@ -53,7 +51,6 @@ r2 = Repository.create!({
     contact: '706-746-5828<br/>The Foxfire Fund, Inc., PO Box 541, Mountain City, Georgia 30562-0541'
  })
 r3 = Repository.create!({
-    id: 3,
     slug: 'gaarchives',
     public: true,
     in_georgia: true,
@@ -69,8 +66,7 @@ r3 = Repository.create!({
 # 5 Collections
 Collection.delete_all
 c1 = Collection.create!({
-    id: 1,
-    repository_id: 1,
+    repository_id: r1.id,
     slug: 'dahl',
     remote: false,
     display_title: '"Thar\'s gold in them thar hills": Gold and Gold Mining in Georgia, 1830s-1940s',
@@ -161,8 +157,7 @@ c1 = Collection.create!({
 })
 
 c2 = Collection.create!({
-    id: 2,
-    repository_id: 2,
+    repository_id: r2.id,
     slug: 'ffcoll',
     remote: false,
     display_title: 'Foxfire Oral Histories, 2014',
@@ -199,8 +194,7 @@ c2 = Collection.create!({
 })
 
 c3 = Collection.create!({
-    id: 3,
-    repository_id: 3,
+    repository_id: r3.id,
     slug: 'gpower',
     remote: false,
     display_title: 'Georgia Power Photograph Collection',
@@ -252,8 +246,7 @@ c3 = Collection.create!({
 })
 
 c4 = Collection.create!({
-    id: 4,
-    repository_id: 3,
+    repository_id: r3.id,
     slug: 'vang',
     remote: false,
     display_title: 'Vanishing Georgia',
@@ -460,8 +453,7 @@ c4 = Collection.create!({
 
 
 c5 = Collection.create!({
-    id: 5,
-    repository_id: 3,
+    repository_id: r3.id,
     slug: 'postcard',
     remote: false,
     display_title: 'Historic Postcard Collection',
@@ -510,8 +502,7 @@ c5 = Collection.create!({
 
 # c1
 i1 = Item.create!({
-    id: 1,
-    collection_id: 1,
+    collection_id: c1.id,
     slug: 'mka064',
     dpla: false,
     public: true,
@@ -568,8 +559,7 @@ i1 = Item.create!({
 })
 
 i2 = Item.create!({
-    id: 2,
-    collection_id: 1,
+    collection_id: c1.id,
     slug: 'mka024',
     dpla: false,
     public: true,
@@ -626,8 +616,7 @@ i2 = Item.create!({
 })
 
 i3 = Item.create!({
-    id: 3,
-    collection_id: 1,
+    collection_id: c1.id,
     slug: 'mka046',
     dpla: false,
     public: true,
@@ -685,8 +674,7 @@ i3 = Item.create!({
 })
 
 i4 = Item.create!({
-    id: 4,
-    collection_id: 1,
+    collection_id: c1.id,
     slug: 'mka043',
     dpla: false,
     public: true,
@@ -749,8 +737,7 @@ i4 = Item.create!({
 
 # c2
 i5 = Item.create!({
-    id: 5,
-    collection_id: 2,
+    collection_id: c2.id,
     slug: 'beanie-ramey',
     dpla: true,
     public: true,
@@ -819,8 +806,7 @@ i5 = Item.create!({
 })
 
 i6 = Item.create!({
-    id: 6,
-    collection_id: 2,
+    collection_id: c2.id,
     slug: 'curtis-blackwell',
     dpla: true,
     public: true,
@@ -879,8 +865,7 @@ i6 = Item.create!({
 })
 
 i7 = Item.create!({
-    id: 7,
-    collection_id: 2,
+    collection_id: c2.id,
     slug: 'dale-holland-audio',
     dpla: true,
     public: true,
@@ -940,8 +925,7 @@ i7 = Item.create!({
 })
 
 i8 = Item.create!({
-    id: 8,
-    collection_id: 2,
+    collection_id: c2.id,
     slug: 'john-roper-audio',
     dpla: true,
     public: true,
@@ -1002,8 +986,7 @@ i8 = Item.create!({
 
 # c3 van ga
 i9 = Item.create!({
-    id: 9,
-    collection_id: 4,
+    collection_id: c4.id,
     slug: 'app001',
     dpla: true,
     public: true,
@@ -1056,8 +1039,7 @@ i9 = Item.create!({
 })
 
 i10 = Item.create!({
-    id: 10,
-    collection_id: 4,
+    collection_id: c4.id,
     slug: 'bak003',
     dpla: true,
     public: true,
@@ -1116,8 +1098,7 @@ i10 = Item.create!({
 })
 
 i11 = Item.create!({
-    id: 11,
-    collection_id: 4,
+    collection_id: c4.id,
     slug: 'bak006-82',
     dpla: true,
     public: true,
@@ -1170,8 +1151,7 @@ i11 = Item.create!({
 })
 
 i12 = Item.create!({
-    id: 12,
-    collection_id: 4,
+    collection_id: c4.id,
     slug: 'bak007-82',
     dpla: true,
     public: true,
@@ -1223,8 +1203,7 @@ i12 = Item.create!({
 
 # c4 postcards
 i13 = Item.create!({
-    id: 13,
-    collection_id: 5,
+    collection_id: c5.id,
     slug: '867',
     dpla: true,
     public: true,
@@ -1275,8 +1254,7 @@ i13 = Item.create!({
 })
 
 i14 = Item.create!({
-    id: 14,
-    collection_id: 5,
+    collection_id: c5.id,
     slug: '213',
     dpla: true,
     public: true,
@@ -1328,8 +1306,7 @@ i14 = Item.create!({
 })
 
 i15 = Item.create!({
-    id: 15,
-    collection_id: 5,
+    collection_id: c5.id,
     slug: '431',
     dpla: true,
     public: true,
@@ -1382,8 +1359,7 @@ i15 = Item.create!({
 })
 
 i16 = Item.create!({
-    id: 16,
-    collection_id: 5,
+    collection_id: c5.id,
     slug: '444',
     dpla: true,
     public: true,
@@ -1434,143 +1410,6 @@ i16 = Item.create!({
     dc_rights: [
     ]
 })
-#
-# # c5 ???
-# i17 = Item.create!({
-#     id: 17,
-#     collection_id: 5,
-#     slug: 'mka064',
-#     dpla: false,
-#     public: true,
-#     dc_title: [
-#     ],
-#     dc_subject: [
-#     ],
-#     dc_description: [
-#     ],
-#     dc_publisher: [
-#     ],
-#     dc_identifier: [
-#     ],
-#     dc_date: [
-#     ],
-#     dc_coverage_t: [
-#     ],
-#     dc_coverage_s: [
-#     ],
-#     dc_contributor: [
-#     ],
-#     dc_source: [
-#     ],
-#     dc_relation: [
-#     ],
-#     dc_type: [
-#     ],
-#     dc_rights: [
-#     ]
-# })
-#
-# i18 = Item.create!({
-#     id: 18,
-#     collection_id: 5,
-#     slug: 'mka064',
-#     dpla: false,
-#     public: true,
-#     dc_title: [
-#     ],
-#     dc_subject: [
-#     ],
-#     dc_description: [
-#     ],
-#     dc_publisher: [
-#     ],
-#     dc_identifier: [
-#     ],
-#     dc_date: [
-#     ],
-#     dc_coverage_t: [
-#     ],
-#     dc_coverage_s: [
-#     ],
-#     dc_contributor: [
-#     ],
-#     dc_source: [
-#     ],
-#     dc_relation: [
-#     ],
-#     dc_type: [
-#     ],
-#     dc_rights: [
-#     ]
-# })
-#
-# i19 = Item.create!({
-#     id: 19,
-#     collection_id: 5,
-#     slug: 'mka064',
-#     dpla: false,
-#     public: true,
-#     dc_title: [
-#     ],
-#     dc_subject: [
-#     ],
-#     dc_description: [
-#     ],
-#     dc_publisher: [
-#     ],
-#     dc_identifier: [
-#     ],
-#     dc_date: [
-#     ],
-#     dc_coverage_t: [
-#     ],
-#     dc_coverage_s: [
-#     ],
-#     dc_contributor: [
-#     ],
-#     dc_source: [
-#     ],
-#     dc_relation: [
-#     ],
-#     dc_type: [
-#     ],
-#     dc_rights: [
-#     ]
-# })
-#
-# i20 = Item.create!({
-#     id: 20,
-#     collection_id: 5,
-#     slug: 'mka064',
-#     dpla: false,
-#     public: true,
-#     dc_title: [
-#     ],
-#     dc_subject: [
-#     ],
-#     dc_description: [
-#     ],
-#     dc_publisher: [
-#     ],
-#     dc_identifier: [
-#     ],
-#     dc_date: [
-#     ],
-#     dc_coverage_t: [
-#     ],
-#     dc_coverage_s: [
-#     ],
-#     dc_contributor: [
-#     ],
-#     dc_source: [
-#     ],
-#     dc_relation: [
-#     ],
-#     dc_type: [
-#     ],
-#     dc_rights: [
-#     ]
-# })
 
 Collection.reindex
 Item.reindex
