@@ -5,6 +5,8 @@ class Item < ActiveRecord::Base
   belongs_to :collection
   has_one :repository, through: :collection
 
+  validates_uniqueness_of :slug, scope: :collection_id
+
   def title
     dc_title.first
   end

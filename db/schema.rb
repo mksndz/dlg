@@ -11,13 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226195004) do
+ActiveRecord::Schema.define(version: 20160227085143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "batch_items", force: :cascade do |t|
-    t.string   "slug",                              null: false
     t.boolean  "dpla",              default: false, null: false
     t.boolean  "public",            default: false, null: false
     t.text     "dc_title",          default: [],    null: false, array: true
@@ -41,9 +40,11 @@ ActiveRecord::Schema.define(version: 20160226195004) do
     t.integer  "batch_id",                          null: false
     t.integer  "collection_id",                     null: false
     t.string   "other_collections", default: [],                 array: true
+    t.string   "slug",                              null: false
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
+  add_index "batch_items", ["slug"], name: "index_batch_items_on_slug", using: :btree
 
   create_table "batches", force: :cascade do |t|
     t.integer  "user_id",      null: false
@@ -69,7 +70,6 @@ ActiveRecord::Schema.define(version: 20160226195004) do
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
   create_table "collections", force: :cascade do |t|
-    t.string    "slug",                               null: false
     t.integer   "repository_id"
     t.boolean   "in_georgia",         default: true,  null: false
     t.boolean   "remote",             default: false, null: false
@@ -98,10 +98,11 @@ ActiveRecord::Schema.define(version: 20160226195004) do
     t.text      "dc_relation",        default: [],    null: false, array: true
     t.string    "other_repositories", default: [],                 array: true
     t.boolean   "public",             default: false, null: false
+    t.string    "slug",                               null: false
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
-  add_index "collections", ["slug"], name: "index_collections_on_slug", unique: true, using: :btree
+  add_index "collections", ["slug"], name: "index_collections_on_slug", using: :btree
 
   create_table "collections_subjects", force: :cascade do |t|
     t.integer "subject_id"
@@ -112,7 +113,6 @@ ActiveRecord::Schema.define(version: 20160226195004) do
   add_index "collections_subjects", ["subject_id"], name: "index_collections_subjects_on_subject_id", using: :btree
 
   create_table "items", force: :cascade do |t|
-    t.string   "slug",                              null: false
     t.integer  "collection_id"
     t.boolean  "dpla",              default: false, null: false
     t.boolean  "public",            default: false, null: false
@@ -135,12 +135,13 @@ ActiveRecord::Schema.define(version: 20160226195004) do
     t.text     "dc_language",       default: [],    null: false, array: true
     t.text     "dc_relation",       default: [],    null: false, array: true
     t.string   "other_collections", default: [],                 array: true
+    t.string   "slug",                              null: false
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
   add_index "items", ["dpla"], name: "index_items_on_dpla", using: :btree
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
-  add_index "items", ["slug"], name: "index_items_on_slug", unique: true, using: :btree
+  add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
 
   create_table "repositories", force: :cascade do |t|
     t.string   "slug",                              null: false

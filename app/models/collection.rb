@@ -9,6 +9,7 @@ class Collection < ActiveRecord::Base
   has_and_belongs_to_many :subjects
 
   validates_presence_of :display_title
+  validates_uniqueness_of :slug, scope: :repository_id
 
   def title
     dc_title.first
