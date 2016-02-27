@@ -32,7 +32,7 @@ module ApplicationHelper
   private
 
   def input(value = nil)
-    "<input class='form-control' type='text' value='#{value}' name='#{input_name}'>"
+    "<input class='form-control' type='text' value='#{h value}' name='#{input_name}'>"
   end
 
   def field_name
