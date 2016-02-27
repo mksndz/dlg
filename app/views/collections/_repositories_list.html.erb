@@ -2,7 +2,7 @@
   <p><strong>Repositories</strong></p>
   <ul class="list-unstyled">
     <% @repositories.each do |r| %>
-        <li><%= link_to r.title, collections_for_path(r) %></li>
+        <li><%= link_to r.title, filtered_collections_path(r) %></li>
     <% end %>
   </ul>
 </div>

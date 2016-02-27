@@ -35,5 +35,9 @@ RSpec.describe ItemsController, type: :routing do
       expect(delete: '/admin/items/1').to route_to(controller: 'items', action: 'destroy', id: '1')
     end
 
+    it 'routes to filtered Items list by Collection' do
+      expect(get: '/admin/items/for/1').to route_to(controller: 'items', action: 'index', collection_id: '1')
+    end
+
   end
 end

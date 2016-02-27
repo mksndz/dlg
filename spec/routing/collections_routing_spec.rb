@@ -35,5 +35,9 @@ RSpec.describe CollectionsController, type: :routing do
       expect(delete: '/admin/collections/1').to route_to(controller: 'collections', action: 'destroy', id: '1')
     end
 
+    it 'routes to filtered Collections list by Repository' do
+      expect(get: '/admin/collections/for/1').to route_to(controller: 'collections', action: 'index', repository_id: '1')
+    end
+
   end
 end

@@ -6,23 +6,31 @@ Rails.application.routes.draw do
 
   scope 'admin' do
 
-    resources :repositories, :collections, :items, :roles, :users, :subjects
+    resources :repositories, :collections, :roles, :users, :subjects
 
     resources :items do
+      collection do
+        get 'for/:collection_id', to: 'items#index', as: :filtered
+      end
       member do
         get 'copy'
       end
     end
 
+    resources :collections do
+      collection do
+        get 'for/:repository_id', to: 'collections#index', as: :filtered
+      end
+    end
+
     resources :batches do
+      collection do
+        get 'for/:user_id', to: 'batches#index', as: :filtered
+      end
       resources :batch_items
       get 'import/xml', to: 'batch_items#xml', as: :xml_input
       post 'import/results', to: 'batch_items#from_xml', as: :import_from_xml
     end
-
-    get 'batches/for/:user_id', to: 'batches#index', as: :batches_for
-    get 'items/for/:collection_id', to: 'items#index', as: :items_for
-    get 'collections/for/:repository_id', to: 'collections#index', as: :collections_for
 
   end
 

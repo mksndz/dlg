@@ -65,7 +65,7 @@
                 <%= link_to(collection.repository.title, collection.repository) if collection.repository %>
               </td>
               <td>
-                <%= link_to collection.items.size, items_for_path(collection) %>
+                <%= link_to collection.items.size, filtered_items_path(collection) %>
               </td>
               <td>
                 <div class="btn-group btn-group-xs">

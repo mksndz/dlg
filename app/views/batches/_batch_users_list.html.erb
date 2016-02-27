@@ -2,7 +2,7 @@
   <p><strong>Users</strong></p>
   <ul class="list-unstyled">
     <% @users.each do |u| %>
-        <li><%= link_to u.email, batches_for_path(u) %></li>
+        <li><%= link_to u.email, filtered_batches_path(u) %></li>
     <% end %>
   </ul>
 </div>
