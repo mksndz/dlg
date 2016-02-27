@@ -44,6 +44,14 @@ RSpec.describe Collection, type: :model do
     expect(Fabricate(:collection)).to respond_to :public_items
   end
 
+  it 'can have associated Subjects' do
+    c = Fabricate(:collection) {
+      subjects(count: 1)
+    }
+    expect(c).to respond_to 'subjects'
+    expect(c.subjects.first).to be_a Subject
+  end
+
   it 'indexes the item in Solr' do
     c = Fabricate(:collection)
     Sunspot.commit
