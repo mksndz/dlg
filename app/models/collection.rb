@@ -7,7 +7,6 @@ class Collection < ActiveRecord::Base
   has_many :dpla_items, -> { where dpla: true }, class_name: 'Item'
   belongs_to :repository
   has_and_belongs_to_many :subjects
-  # accepts_nested_attributes_for :subjects
 
   validates_presence_of :display_title
 

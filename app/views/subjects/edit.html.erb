@@ -1,0 +1,9 @@
+<%= content_for :admin_area_title do %>
+    Edit Subject
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @subject.name %>
+<% end %>
+
+<%= render 'form' %>

@@ -1,0 +1,26 @@
+<%= content_for :admin_area_title do %>
+    Show Subject
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @subject.name %>
+<% end %>
+
+<%= link_to 'Edit', edit_subject_path(@subject), class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.subject.name'),              value: @subject.name %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Collections for this Subject</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @subject.collections.each do |c| %>
+          <li><%= link_to c.display_title, c %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

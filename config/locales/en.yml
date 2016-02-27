@@ -1,6 +1,8 @@
 en:
   activerecord:
     attributes:
+      subject:
+        name: "Name"
       user:
         email: "Email Address"
         password: "Password"
@@ -115,6 +117,8 @@ en:
         created_at: "Created"
         updated_at: "Last Updated"
     help:
+      subject:
+        name: "Display name for the Subject"
       user:
         email: "This will also be the username"
         password: "Make it a good one"
