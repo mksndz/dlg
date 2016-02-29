@@ -12,19 +12,19 @@
 
 <%= f.select :other_collections, @collections.collect { |c| [c.display_title, c.slug] }, { include_blank: true }, { multiple: true } %>
 
-<%= text_field_multi @item, :dc_title%>
-<%= text_field_multi @item, :dc_format%>
-<%= text_field_multi @item, :dc_publisher%>
-<%= text_field_multi @item, :dc_identifier%>
-<%= text_field_multi @item, :dc_rights%>
-<%= text_field_multi @item, :dc_contributor%>
-<%= text_field_multi @item, :dc_coverage_t%>
-<%= text_field_multi @item, :dc_coverage_s%>
-<%= text_field_multi @item, :dc_date%>
-<%= text_field_multi @item, :dc_source%>
-<%= text_field_multi @item, :dc_subject%>
-<%= text_field_multi @item, :dc_type%>
-<%= text_field_multi @item, :dc_description%>
-<%= text_field_multi @item, :dc_creator%>
-<%= text_field_multi @item, :dc_language%>
-<%= text_field_multi @item, :dc_relation%>
+<%= text_field_multi @batch_item, :dc_title%>
+<%= text_field_multi @batch_item, :dc_format%>
+<%= text_field_multi @batch_item, :dc_publisher%>
+<%= text_field_multi @batch_item, :dc_identifier%>
+<%= text_field_multi @batch_item, :dc_rights%>
+<%= text_field_multi @batch_item, :dc_contributor%>
+<%= text_field_multi @batch_item, :dc_coverage_t%>
+<%= text_field_multi @batch_item, :dc_coverage_s%>
+<%= text_field_multi @batch_item, :dc_date%>
+<%= text_field_multi @batch_item, :dc_source%>
+<%= text_field_multi @batch_item, :dc_subject%>
+<%= text_field_multi @batch_item, :dc_type%>
+<%= text_field_multi @batch_item, :dc_description%>
+<%= text_field_multi @batch_item, :dc_creator%>
+<%= text_field_multi @batch_item, :dc_language%>
+<%= text_field_multi @batch_item, :dc_relation%>

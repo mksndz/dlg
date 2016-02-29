@@ -13,7 +13,6 @@ class Item < ActiveRecord::Base
 
   def to_xml(options = {})
     default_options = {
-        skip_types: true,
         dasherize: false,
         # fields to not include
         except: [

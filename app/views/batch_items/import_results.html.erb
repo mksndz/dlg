@@ -11,7 +11,7 @@
 <div class="well">
   <p>Batch Items Created:</p>
   <ul>
-    <% @items.each do |item| %>
+    <% @batch_items.each do |item| %>
       <li><%= link_to item.title, batch_batch_items_path(@batch, item) %></li>
     <% end %>
   </ul>

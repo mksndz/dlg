@@ -74,16 +74,28 @@ class BatchItemsController < ApplicationController
 
   end
 
-  def from_xml
+  def create_from_xml
 
-    @batch_items = BatchItem.create_from_xml params[:xml]
+    hash = BatchItem.create_from_xml params[:xml_text].squish
 
-    @batch_items.each do |item|
-      item.batch = @batch
-      item.save
+    if hash
+      @batch_item = hash[:batch_item]
+
+      collection = Collection.find_by_slug(hash[:parent_slug])
+
+      @batch_item.batch = @batch
+      @batch_item.collection = collection
     end
 
-    render :import_results
+    respond_to do |format|
+      if @batch_item.save
+        # format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully updated.' }
+        format.json { render :import_results, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
+      else
+        # format.html { render :edit }
+        format.json { render json: @batch_item.errors, status: :unprocessable_entity }
+      end
+    end
 
   end
 

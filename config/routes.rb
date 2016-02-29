@@ -27,9 +27,12 @@ Rails.application.routes.draw do
       collection do
         get 'for/:user_id', to: 'batches#index', as: :filtered
       end
-      resources :batch_items
-      get 'import/xml', to: 'batch_items#xml', as: :xml_input
-      post 'import/results', to: 'batch_items#from_xml', as: :import_from_xml
+      resources :batch_items do
+        collection do
+          get 'import/xml',       to: 'batch_items#xml',             as: :xml
+          post 'import/process',  to: 'batch_items#create_from_xml', as: :xml_import
+        end
+      end
     end
 
   end
