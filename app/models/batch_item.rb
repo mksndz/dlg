@@ -21,6 +21,8 @@ class BatchItem < ActiveRecord::Base
 
     object = data_hash['item']
 
+    return false unless object
+
     parent_slug = object['collection']['slug'] # hmm
 
     object.delete('id') # delete ID node so AR sets ID

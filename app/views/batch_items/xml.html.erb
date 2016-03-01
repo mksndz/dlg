@@ -17,4 +17,14 @@
 
 <% end %>
 
-<div id="results"></div>
+<div id="actions" class="hide well">
+  <div class="btn-group">
+    <%= link_to 'View Batch', batch_batch_items_path(@batch), class: 'btn btn-default' %>
+    <%= link_to 'Process More XML', xml_batch_batch_items_path(@batch), class: 'btn btn-default', data: { no_turbolink: true } %>
+  </div>
+
+</div>
+
+<div id="results">
+
+</div>

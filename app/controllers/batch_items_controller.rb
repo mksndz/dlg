@@ -76,6 +76,8 @@ class BatchItemsController < ApplicationController
 
   def create_from_xml
 
+    # todo add csrf protection
+
     hash = BatchItem.create_from_xml params[:xml_text].squish
 
     if hash
