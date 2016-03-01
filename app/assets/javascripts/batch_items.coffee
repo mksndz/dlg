@@ -5,32 +5,14 @@ $(document).ready ->
     $this = $(this)
     url = this.action
     xml_text_field_data = $("#xml_text").val()
-    # todo  xml_file_field_data = $("#xml_file").val()
-    # if file, take contents and assign to xml_text_field_data
-    if !xml_text_field_data
+    xml_file_field_data = $("#_xml_file").val()
+
+    if xml_file_field_data and !xml_text_field_data
+      handleFileSelect($this, url)
+    else if !xml_file_field_data and xml_text_field_data
+      process_xml($this, xml_text_field_data, url)
+    else
       handle_error('No file or XML text was provided.')
-      return
-
-    try $xml_doc = $( $.parseXML(xml_text_field_data) )
-    catch e then handle_error e
-    finally return
-
-    records = $xml_doc.children()[0].children
-    if !records
-      handle_error('Your XML is not well-former as we could not extract any records from it.')
-      return
-    $this.slideUp()
-    i = 1
-    interval = setInterval(
-      ->
-        if i <= records.length
-          create_record(url, i, records[i - 1])
-          i++
-        else
-          $("#actions").removeClass('hide').fadeIn()
-          clearInterval(interval)
-      , 250
-    )
   )
 
 handle_error = (e) ->
@@ -43,14 +25,47 @@ create_record = (url, number, record_node) ->
     data:
       xml_text: record_node.outerHTML,
     error: (jqXHR, textStatus, errorThrown) ->
-      $("#results").append render_error_output(jqXHR.responseText, number)
+      $(".progress-bar").addClass('progress-bar-danger')
+      $("#results").prepend render_error_output(jqXHR.responseText, number)
     success: (data, textStatus, jqXHR) ->
-      $("#results").append render_successful_output(data, number)
+      $("#results").prepend render_successful_output(data, number)
 
 render_successful_output = (response, num) ->
   return list_item_html num, "Batch Item Successfuly Created",
     "<a href='#{response.edit_url}' target='_blank'>Click here to edit record with slug #{ response.slug }</a>",
     "list-group-item-success"
+
+process_xml = ($this, xml, url) ->
+  try $xml_doc = $( $.parseXML(xml) )
+  catch e then ->
+    handle_error e
+    return
+
+  records = $xml_doc.children()[0].children
+  if !records
+    handle_error('We could not extract any records from the provided XML.')
+    return
+  $this.slideUp()
+  total_records = records.length
+  i = 1
+  interval = setInterval(
+    ->
+      if i <= total_records
+        create_record(url, i, records[i - 1])
+        update_progress_bar(i, total_records)
+        i++
+      else
+        $("#actions").removeClass('hide').fadeIn()
+        clearInterval(interval)
+  , 250
+  )
+
+update_progress_bar = (num, total) ->
+  val = (num/total) * 100
+  $pb = $(".progress-bar")
+  $pb.css('width', val + '%')
+  $pb.html("Completed #{num} of #{total}")
+  $pb.addClass('progress-bar-success') unless $pb.hasClass('progress-bar-danger') or val < 100
 
 render_error_output = (response, number) ->
   obj = JSON.parse(response)
@@ -61,7 +76,18 @@ render_error_output = (response, number) ->
 
 list_item_html = (number, title, message, context_class) ->
   return "<li class='list-group-item #{ context_class }'>" +
-    "<span class='badge'>#{ number }</span>" +
+    "<span class='badge'># #{ number }</span>" +
     "<h4>#{ title }</h4>" +
     "<p>#{ message }</p>" +
   "</li>"
+
+handleFileSelect = ($this, url) ->
+  if (!window.File || !window.FileReader || !window.FileList || !window.Blob)
+    handle_error('The File APIs are not fully supported in this browser.')
+    return
+  $input = $this.find('#_xml_file')
+  file = $input[0].files[0]
+  fr = new FileReader()
+  fr.onload = ->
+    process_xml($this, fr.result, url)
+  fr.readAsText file
