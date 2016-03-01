@@ -3,15 +3,23 @@ $(document).ready ->
   $("#xml_form").on("submit" ,(e, data, status, xhr) ->
     e.preventDefault()
     $this = $(this)
-    $this.slideUp()
     url = this.action
     xml_text_field_data = $("#xml_text").val()
     # todo  xml_file_field_data = $("#xml_file").val()
     # if file, take contents and assign to xml_text_field_data
-    $xml_doc = $( $.parseXML(xml_text_field_data) )
+    if !xml_text_field_data
+      handle_error('No file or XML text was provided.')
+      return
+
+    try $xml_doc = $( $.parseXML(xml_text_field_data) )
+    catch e then handle_error e
+    finally return
+
     records = $xml_doc.children()[0].children
     if !records
+      handle_error('Your XML is not well-former as we could not extract any records from it.')
       return
+    $this.slideUp()
     i = 1
     interval = setInterval(
       ->
@@ -24,6 +32,9 @@ $(document).ready ->
       , 250
     )
   )
+
+handle_error = (e) ->
+  alert(e)
 
 create_record = (url, number, record_node) ->
   return false if !record_node
