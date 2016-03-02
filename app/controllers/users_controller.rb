@@ -1,10 +1,8 @@
 class UsersController < ApplicationController
 
   load_and_authorize_resource
-
   layout 'admin'
-
-  helper_method :sort_column, :sort_direction
+  include Sorting
 
   def index
     @users = User
@@ -50,14 +48,6 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :role_ids => [])
-    end
-
-    def sort_column
-      User.column_names.include?(params[:sort]) ? params[:sort] : 'id'
-    end
-
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 
 end

@@ -1,14 +1,10 @@
 class BatchItemsController < ApplicationController
 
   load_and_authorize_resource
-
+  include Sorting
   include DcHelper
-
   before_action :set_batch
   before_action :collections_for_select, only: [:new, :edit]
-
-  helper_method :sort_column, :sort_direction
-
   layout 'admin'
 
   # GET /batch_items
@@ -147,13 +143,4 @@ class BatchItemsController < ApplicationController
         params[:batch_item][f].reject! { |v| v == '' } if params[:batch_item][f]
       end
     end
-
-    def sort_column
-      BatchItem.column_names.include?(params[:sort]) ? params[:sort] : 'id'
-    end
-
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-    end
-
 end

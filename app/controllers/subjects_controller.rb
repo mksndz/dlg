@@ -1,9 +1,7 @@
 class SubjectsController < ApplicationController
 
   load_and_authorize_resource
-
-  helper_method :sort_column, :sort_direction
-
+  include Sorting
   layout 'admin'
 
   # GET /subjects
@@ -54,13 +52,5 @@ class SubjectsController < ApplicationController
   private
     def subject_params
       params.require(:subject).permit(:name)
-    end
-
-    def sort_column
-      Subject.column_names.include?(params[:sort]) ? params[:sort] : 'id'
-    end
-
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 end

@@ -1,7 +1,7 @@
 class RepositoriesController < ApplicationController
 
   load_and_authorize_resource
-  helper_method :sort_direction, :sort_column
+  include Sorting
   layout 'admin'
 
   def index
@@ -57,14 +57,5 @@ class RepositoriesController < ApplicationController
         :strengths,
         :contact
       )
-    end
-
-
-    def sort_column
-      Repository.column_names.include?(params[:sort]) ? params[:sort] : 'id'
-    end
-
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 end

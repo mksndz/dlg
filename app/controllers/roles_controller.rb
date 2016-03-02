@@ -1,7 +1,7 @@
 class RolesController < ApplicationController
 
   load_and_authorize_resource
-
+  include Sorting
   layout 'admin'
 
   # GET /roles

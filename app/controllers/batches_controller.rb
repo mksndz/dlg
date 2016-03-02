@@ -1,11 +1,8 @@
 class BatchesController < ApplicationController
 
   load_and_authorize_resource
-
   before_action :check_if_committed, only: [:edit, :update, :destroy]
-
-  helper_method :sort_column, :sort_direction
-
+  include Sorting
   layout 'admin'
 
   # GET /batches
@@ -101,15 +98,6 @@ class BatchesController < ApplicationController
         :user_id
       )
     end
-
-    def sort_column
-      Batch.column_names.include?(params[:sort]) ? params[:sort] : 'id'
-    end
-
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-    end
-
 
     def check_if_committed
       if @batch.committed?

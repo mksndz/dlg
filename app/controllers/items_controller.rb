@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
 
   load_and_authorize_resource
   include DcHelper
-  helper_method :sort_column, :sort_direction
+  include Sorting
   layout 'admin'
 
   def index
@@ -112,14 +112,6 @@ class ItemsController < ApplicationController
         array_fields.each do |f|
           params[:item][f].reject! { |v| v == '' } if params[:item][f]
         end
-    end
-
-    def sort_column
-      Item.column_names.include?(params[:sort]) ? params[:sort] : 'id'
-    end
-
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 
 end
