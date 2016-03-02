@@ -32,7 +32,7 @@ module SolrIndexing
       text :dc_format
       text :dc_publisher
       text :dc_identifier
-      text :dc_rights
+      text :dc_right
       text :dc_contributor
       text :dc_coverage_temporal
       text :dc_coverage_spatial

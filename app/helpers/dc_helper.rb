@@ -6,7 +6,7 @@ module DcHelper
       dc_format
       dc_publisher
       dc_identifier
-      dc_rights
+      dc_right
       dc_contributor
       dc_coverage_temporal
       dc_coverage_spatial

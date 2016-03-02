@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302142519) do
+ActiveRecord::Schema.define(version: 20160302182115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160302142519) do
     t.text     "dc_format",            default: [],    null: false, array: true
     t.text     "dc_publisher",         default: [],    null: false, array: true
     t.text     "dc_identifier",        default: [],    null: false, array: true
-    t.text     "dc_rights",            default: [],    null: false, array: true
+    t.text     "dc_right",             default: [],    null: false, array: true
     t.text     "dc_contributor",       default: [],    null: false, array: true
     t.text     "dc_coverage_temporal", default: [],    null: false, array: true
     t.text     "dc_coverage_spatial",  default: [],    null: false, array: true
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20160302142519) do
     t.text      "dc_format",            default: [],    null: false, array: true
     t.text      "dc_publisher",         default: [],    null: false, array: true
     t.text      "dc_identifier",        default: [],    null: false, array: true
-    t.text      "dc_rights",            default: [],    null: false, array: true
+    t.text      "dc_right",             default: [],    null: false, array: true
     t.text      "dc_contributor",       default: [],    null: false, array: true
     t.text      "dc_coverage_temporal", default: [],    null: false, array: true
     t.text      "dc_coverage_spatial",  default: [],    null: false, array: true
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20160302142519) do
     t.text     "dc_format",            default: [],    null: false, array: true
     t.text     "dc_publisher",         default: [],    null: false, array: true
     t.text     "dc_identifier",        default: [],    null: false, array: true
-    t.text     "dc_rights",            default: [],    null: false, array: true
+    t.text     "dc_right",             default: [],    null: false, array: true
     t.text     "dc_contributor",       default: [],    null: false, array: true
     t.text     "dc_coverage_temporal", default: [],    null: false, array: true
     t.text     "dc_coverage_spatial",  default: [],    null: false, array: true
