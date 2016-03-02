@@ -65,6 +65,7 @@ GEM
     bootstrap_form (2.3.0)
     builder (3.2.2)
     byebug (8.2.1)
+    cancancan (1.13.1)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     coffee-rails (4.1.1)
@@ -259,6 +260,7 @@ DEPENDENCIES
   blacklight-marc
   bootstrap_form
   byebug
+  cancancan (~> 1.10)
   coffee-rails (~> 4.1.0)
   devise
   devise-guests (~> 0.3)

@@ -22,4 +22,16 @@ class User < ActiveRecord::Base
     email
   end
 
+  def admin?
+    roles.where(name: 'admin').exists?
+  end
+
+  def coordinator?
+    roles.where(name: 'coordinator').exists?
+  end
+
+  def supervisor?
+    roles.where(name: 'supervisor').exists?
+  end
+
 end

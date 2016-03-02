@@ -1,7 +1,9 @@
 class BatchItemsController < ApplicationController
+
+  load_and_authorize_resource
+
   include DcHelper
 
-  before_action :set_batch_item, only: [:show, :edit, :update, :destroy]
   before_action :set_batch
   before_action :collections_for_select, only: [:new, :edit]
 
@@ -102,11 +104,6 @@ class BatchItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_batch_item
-      @batch_item = BatchItem.find(params[:id])
-    end
-
     def set_batch
       @batch = Batch.find(params[:batch_id])
     end

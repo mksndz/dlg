@@ -1,5 +1,7 @@
 class BatchesController < ApplicationController
-  before_action :set_batch, only: [:show, :edit, :update, :destroy]
+
+  load_and_authorize_resource
+
   before_action :check_if_committed, only: [:edit, :update, :destroy]
 
   helper_method :sort_column, :sort_direction
@@ -86,10 +88,6 @@ class BatchesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_batch
-      @batch = Batch.find(params[:id])
-      end
 
     def set_user
       @batch.user = current_user
