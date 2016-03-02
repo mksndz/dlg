@@ -60,4 +60,32 @@ RSpec.describe Item, type: :model do
     expect(results).to be_empty
   end
 
+  it 'disallows creating two items with the same slug related to the same collection' do
+    c = Fabricate(:collection)
+    i1 = Fabricate(:item) {
+      collection c
+      slug 'same'
+    }
+    i2 = Fabricate.build(:item) {
+      collection c
+      slug 'same'
+    }
+    expect { i2.save! }.to raise_exception(ActiveRecord::RecordInvalid)
+    expect(i2.errors).to include(:slug)
+  end
+
+  it 'allows creating two items with the same slug related to different collection' do
+    c1 = Fabricate(:collection)
+    c2 = Fabricate(:collection)
+    i1 = Fabricate(:item) {
+      collection c1
+      slug 'same'
+    }
+    i2 = Fabricate.build(:item) {
+      collection c2
+      slug 'same'
+    }
+    expect { i2.save! }.not_to raise_exception
+  end
+
 end
