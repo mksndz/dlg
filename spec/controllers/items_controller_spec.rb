@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe ItemsController, type: :controller do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Item. As you add validations to Item, be sure to
-  # adjust the attributes here as well.
+  before(:each) do
+    sign_in Fabricate(:admin)
+  end
+
   let(:valid_attributes) {
     {
         slug: 'test-item-slug',
@@ -20,9 +21,6 @@ RSpec.describe ItemsController, type: :controller do
     }
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # ItemsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe 'GET #index' do

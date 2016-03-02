@@ -3,17 +3,14 @@ require 'devise/test_helpers'
 
 RSpec.describe BatchesController, type: :controller do
 
+  before(:each) do
+    sign_in Fabricate(:admin)
+  end
+
   let(:user) {
     Fabricate(:user)
   }
 
-  before do
-    allow(controller).to receive(:current_user).and_return user
-  end
-
-  # This should return the minimal set of attributes required to create a valid
-  # Batch. As you add validations to Batch, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) {
     {
         name: 'Test Batch',
@@ -27,9 +24,6 @@ RSpec.describe BatchesController, type: :controller do
     }
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # BatchesController. Be sure to keep this updated too.
   let(:valid_session) { { } }
 
   describe 'GET #index' do

@@ -55,6 +55,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  config.include Devise::TestHelpers, type: :controller
+
   # clean up Solr index after test suite
   config.after(:suite){
     BatchItem.destroy_all

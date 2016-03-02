@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe RepositoriesController, type: :controller do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Repository. As you add validations to Repository, be sure to
-  # adjust the attributes here as well.
+  before(:each) do
+    sign_in Fabricate(:admin)
+  end
+
   let(:valid_attributes) {
     {
         slug: 'test-controller-slug',
@@ -16,9 +17,6 @@ RSpec.describe RepositoriesController, type: :controller do
     { slug: 'invalid collection slug' }
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # RepositoriesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe 'GET #index' do

@@ -3,6 +3,10 @@ require 'devise/test_helpers'
 
 RSpec.describe BatchItemsController, type: :controller do
 
+  before(:each) do
+    sign_in Fabricate(:admin)
+  end
+
   let(:batch) {
     Fabricate(:batch)
   }
@@ -11,9 +15,6 @@ RSpec.describe BatchItemsController, type: :controller do
     Fabricate(:collection)
   }
 
-  # This should return the minimal set of attributes required to create a valid
-  # BatchItem. As you add validations to BatchItem, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) {
     {
         slug: 'test-item-slug',
@@ -31,9 +32,6 @@ RSpec.describe BatchItemsController, type: :controller do
     }
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # BatchItemsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe 'GET #index' do
