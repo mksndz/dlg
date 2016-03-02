@@ -34,8 +34,8 @@ module SolrIndexing
       text :dc_identifier
       text :dc_rights
       text :dc_contributor
-      text :dc_coverage_t
-      text :dc_coverage_s
+      text :dc_coverage_temporal
+      text :dc_coverage_spatial
       text :dc_date
       text :dc_source
       text :dc_subject

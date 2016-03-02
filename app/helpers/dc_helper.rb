@@ -8,8 +8,8 @@ module DcHelper
       dc_identifier
       dc_rights
       dc_contributor
-      dc_coverage_t
-      dc_coverage_s
+      dc_coverage_temporal
+      dc_coverage_spatial
       dc_date
       dc_source
       dc_subject
