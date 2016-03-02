@@ -5,7 +5,7 @@ class BatchItem < ActiveRecord::Base
   belongs_to :collection
   has_one :repository, through: :collection
 
-
+  validates_presence_of :collection, message: ' could not be set'
 
   def title
     dc_title.first

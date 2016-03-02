@@ -58,9 +58,9 @@ render_error_output = (response, number) ->
 
 process_xml = ($this, xml, url) ->
   try $xml_doc = $( $.parseXML(xml) )
-  catch e then ->
-    handle_error e
-    return
+  catch e then handle_error(e)
+
+  return unless $xml_doc.children()
 
   records = $xml_doc.children()[0].children
   if !records
