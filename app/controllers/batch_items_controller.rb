@@ -1,6 +1,7 @@
 class BatchItemsController < ApplicationController
 
   load_and_authorize_resource
+  include ErrorHandling
   include Sorting
   include DcHelper
   before_action :set_batch

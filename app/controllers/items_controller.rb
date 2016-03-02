@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
 
   load_and_authorize_resource
+  include ErrorHandling
   include DcHelper
   include Sorting
   layout 'admin'

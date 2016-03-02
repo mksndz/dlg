@@ -2,6 +2,7 @@ class BatchesController < ApplicationController
 
   load_and_authorize_resource
   before_action :check_if_committed, only: [:edit, :update, :destroy]
+  include ErrorHandling
   include Sorting
   layout 'admin'
 

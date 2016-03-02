@@ -1,6 +1,7 @@
 class SubjectsController < ApplicationController
 
   load_and_authorize_resource
+  include ErrorHandling
   include Sorting
   layout 'admin'
 
