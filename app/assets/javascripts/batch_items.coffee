@@ -8,7 +8,7 @@ $(document).ready ->
     xml_file_field_data = $("#_xml_file").val()
 
     if xml_file_field_data and !xml_text_field_data
-      handleFileSelect($this, url)
+      process_xml_file($this, url)
     else if !xml_file_field_data and xml_text_field_data
       process_xml($this, xml_text_field_data, url)
     else
@@ -17,6 +17,20 @@ $(document).ready ->
 
 handle_error = (e) ->
   alert(e)
+
+update_progress_bar = (num, total) ->
+  val = (num/total) * 100
+  $pb = $(".progress-bar")
+  $pb.css('width', val + '%')
+  $pb.html("Completed #{num} of #{total}")
+  $pb.addClass('progress-bar-success') unless $pb.hasClass('progress-bar-danger') or val < 100
+
+list_item_html = (number, title, message, context_class) ->
+  return "<li class='list-group-item #{ context_class }'>" +
+      "<span class='badge'># #{ number }</span>" +
+      "<h4>#{ title }</h4>" +
+      "<p>#{ message }</p>" +
+      "</li>"
 
 create_record = (url, number, record_node) ->
   return false if !record_node
@@ -34,6 +48,13 @@ render_successful_output = (response, num) ->
   return list_item_html num, "Batch Item Successfuly Created",
     "<a href='#{response.edit_url}' target='_blank'>Click here to edit record with slug #{ response.slug }</a>",
     "list-group-item-success"
+
+render_error_output = (response, number) ->
+  obj = JSON.parse(response)
+  error_messages = ''
+  for field, msg of obj
+    error_messages += field + ' ' + msg
+  return list_item_html number, "Record Failed to Import", error_messages, "list-group-item-danger"
 
 process_xml = ($this, xml, url) ->
   try $xml_doc = $( $.parseXML(xml) )
@@ -60,28 +81,7 @@ process_xml = ($this, xml, url) ->
   , 250
   )
 
-update_progress_bar = (num, total) ->
-  val = (num/total) * 100
-  $pb = $(".progress-bar")
-  $pb.css('width', val + '%')
-  $pb.html("Completed #{num} of #{total}")
-  $pb.addClass('progress-bar-success') unless $pb.hasClass('progress-bar-danger') or val < 100
-
-render_error_output = (response, number) ->
-  obj = JSON.parse(response)
-  error_messages = ''
-  for field, msg of obj
-    error_messages += field + ' ' + msg
-  return list_item_html number, "Record Failed to Import", error_messages, "list-group-item-danger"
-
-list_item_html = (number, title, message, context_class) ->
-  return "<li class='list-group-item #{ context_class }'>" +
-    "<span class='badge'># #{ number }</span>" +
-    "<h4>#{ title }</h4>" +
-    "<p>#{ message }</p>" +
-  "</li>"
-
-handleFileSelect = ($this, url) ->
+process_xml_file = ($this, url) ->
   if (!window.File || !window.FileReader || !window.FileList || !window.Blob)
     handle_error('The File APIs are not fully supported in this browser.')
     return
