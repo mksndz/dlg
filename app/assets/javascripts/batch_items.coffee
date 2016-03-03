@@ -6,7 +6,6 @@ $(document).ready ->
     url = this.action
     xml_text_field_data = $("#xml_text").val()
     xml_file_field_data = $("#_xml_file").val()
-
     if xml_file_field_data and !xml_text_field_data
       process_xml_file($this, url)
     else if !xml_file_field_data and xml_text_field_data
@@ -50,18 +49,15 @@ render_successful_output = (response, num) ->
     "list-group-item-success"
 
 render_error_output = (response, number) ->
-  obj = JSON.parse(response)
   error_messages = ''
-  for field, msg of obj
+  for field, msg of JSON.parse(response)
     error_messages += field + ' ' + msg
   return list_item_html number, "Record Failed to Import", error_messages, "list-group-item-danger"
 
 process_xml = ($this, xml, url) ->
-  try $xml_doc = $( $.parseXML(xml) )
+  try $xml_doc = $( $.parseXML( $.trim( xml ) ) )
   catch e then handle_error(e)
-
   return unless $xml_doc.children()
-
   records = $xml_doc.children()[0].children
   if !records
     handle_error('We could not extract any records from the provided XML.')
@@ -78,8 +74,7 @@ process_xml = ($this, xml, url) ->
       else
         $("#actions").removeClass('hide').fadeIn()
         clearInterval(interval)
-  , 250
-  )
+  , 250)
 
 process_xml_file = ($this, url) ->
   if (!window.File || !window.FileReader || !window.FileList || !window.Blob)

@@ -8,7 +8,12 @@ module ErrorHandling
     end
 
     rescue_from ActiveRecord::RecordNotFound do
-      redirect_to(action: 'index', alert: 'That record does not exist.')
+      redirect_to(action: 'index')
+    end
+
+    # todo handle these types of errors specifically
+    rescue_from ArgumentError do
+      redirect_to(action: 'index')
     end
 
   end

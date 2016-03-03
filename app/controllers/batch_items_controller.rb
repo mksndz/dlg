@@ -88,6 +88,8 @@ class BatchItemsController < ApplicationController
       @batch_item.collection = collection
     end
 
+    throw ArgumentError unless @batch_item
+
     respond_to do |format|
       if @batch_item.save
         # format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully updated.' }
