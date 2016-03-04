@@ -13,6 +13,8 @@
 
     <% if current_user.admin? %>
         <%= f.select :creator_id, User.all.collect! { |u| [u.email, u.id] } %>
+        <%= f.select :repository_ids, Repository.all.collect! { |r| [r.title, r.id] }, { include_blank: true }, { multiple: true } %>
+        <%= f.select :collection_ids, Collection.all.collect! { |c| [c.title, c.id] }, { include_blank: true }, { multiple: true } %>
     <% end %>
 
     <%= f.primary 'Save' %>

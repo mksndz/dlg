@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304194625) do
+ActiveRecord::Schema.define(version: 20160304212443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,14 @@ ActiveRecord::Schema.define(version: 20160304194625) do
   add_index "collections_subjects", ["collection_id"], name: "index_collections_subjects_on_collection_id", using: :btree
   add_index "collections_subjects", ["subject_id"], name: "index_collections_subjects_on_subject_id", using: :btree
 
+  create_table "collections_users", id: false, force: :cascade do |t|
+    t.integer "user_id",       null: false
+    t.integer "collection_id", null: false
+  end
+
+  add_index "collections_users", ["collection_id", "user_id"], name: "index_collections_users_on_collection_id_and_user_id", using: :btree
+  add_index "collections_users", ["user_id", "collection_id"], name: "index_collections_users_on_user_id_and_collection_id", using: :btree
+
   create_table "items", force: :cascade do |t|
     t.integer  "collection_id"
     t.boolean  "dpla",                 default: false, null: false
@@ -186,6 +194,14 @@ ActiveRecord::Schema.define(version: 20160304194625) do
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree
+
+  create_table "repositories_users", id: false, force: :cascade do |t|
+    t.integer "user_id",       null: false
+    t.integer "repository_id", null: false
+  end
+
+  add_index "repositories_users", ["repository_id", "user_id"], name: "index_repositories_users_on_repository_id_and_user_id", using: :btree
+  add_index "repositories_users", ["user_id", "repository_id"], name: "index_repositories_users_on_user_id_and_repository_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"

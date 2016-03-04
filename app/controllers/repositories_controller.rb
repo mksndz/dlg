@@ -6,7 +6,12 @@ class RepositoriesController < ApplicationController
   layout 'admin'
 
   def index
-    @repositories = Repository.page(params[:page])
+    if current_user.admin?
+      @repositories = Repository.page(params[:page])
+    else
+      @repositories = current_user.repositories.page(params[:page])
+    end
+
   end
 
   def show

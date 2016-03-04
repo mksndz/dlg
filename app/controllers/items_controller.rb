@@ -8,16 +8,28 @@ class ItemsController < ApplicationController
 
   def index
     @collections = Collection.all.order(:display_title)
-    if params[:collection_id]
-      @items = Item
-                   .where(collection_id: params[:collection_id])
-                   .order(sort_column + ' ' + sort_direction)
-                   .page(params[:page])
+
+    if current_user.admin?
+      if params[:collection_id]
+        @items = Item
+                     .where(collection_id: params[:collection_id])
+                     .order(sort_column + ' ' + sort_direction)
+                     .page(params[:page])
+      else
+        @items = Item
+                     .order(sort_column + ' ' + sort_direction)
+                     .page(params[:page])
+      end
     else
+      collection_ids = current_user.collection_ids || []
+      collection_ids += current_user.repositories.map { |r| r.collection_ids }
       @items = Item
-                   .order(sort_column + ' ' + sort_direction)
-                   .page(params[:page])
+        .includes(:collection)
+        .where(collection: collection_ids)
+        .order(sort_column + ' ' + sort_direction)
+        .page(params[:page])
     end
+
   end
 
   def show

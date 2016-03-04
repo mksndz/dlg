@@ -26,4 +26,30 @@
   </div>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Repositories Assigned</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @user.repositories.each do |r| %>
+          <li><%= r.title %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Collections Assigned</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @user.collections.each do |c| %>
+          <li><%= c.display_title %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
 

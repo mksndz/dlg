@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    delete_creator_param unless current_user.admin?
+    delete_admin_params unless current_user.admin?
     if @user.update(user_params)
         redirect_to @user, notice: 'User updated!'
     else
@@ -56,11 +56,11 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, :role_ids => [])
+      params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, role_ids: [], repository_ids: [], collection_ids: [])
     end
 
-    def delete_creator_param
-      user_params.delete(:creator_id)
+    def delete_admin_params
+      user_params.delete(:creator_id, :repository_ids, :collection_ids)
     end
 
     def set_user_creator

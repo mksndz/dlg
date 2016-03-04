@@ -10,18 +10,39 @@ class Ability
     end
 
     if user.basic?
-      # can crud designated repo(+col) or col
-      # can [:index, :new, :create, :edit, :update], [Repository, Collection, Item]
+
+      can [:index, :new, :create, :edit, :update, :copy], Repository do |repository|
+        user.repositories.include?(repository)
+      end
+
+      can [:index, :new, :create, :edit, :update, :copy], Collection do |collection|
+        user.repositories.include?(collection.repository) ||
+            user.collections.include?(collection)
+      end
+
+      can [:index, :new, :create, :edit, :update, :copy], Item do |item|
+        user.repositories.include?(item.repository) ||
+            user.collections.include?(item.collection)
+      end
+
+      can [:index, :edit, :update, :destroy], Batch, user_id: user.id
+      can [:new, :create], Batch
+      can [:index, :new, :create], BatchItem
+      can [:edit, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
+
     end
 
     if user.coordinator?
+
       can [:new, :create], User
       can [:index, :edit, :update, :destroy], User, creator_id: user.id
+
     end
 
     if user.committer?
-      # can commit their own Batches
+
       can :commit, Batch, user_id: user.id
+
     end
 
 
