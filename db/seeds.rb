@@ -43,6 +43,14 @@ Role.create!([
                  { name: 'basic' }
              ])
 
+admin = User.create!(
+                email: 'mak@uga.edu',
+                password: 'password'
+             )
+
+admin.roles << Role.find_by_name('admin')
+admin.save
+
 #
 # Some Seed Data for Old-School Testing and Display for Meetings, etc.
 #
