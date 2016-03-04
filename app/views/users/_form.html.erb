@@ -11,6 +11,10 @@
 
     <%= f.collection_check_boxes :role_ids, Role.all, :id, :name %>
 
+    <% if current_user.admin? %>
+        <%= f.select :creator_id, User.all.collect! { |u| [u.email, u.id] } %>
+    <% end %>
+
     <%= f.primary 'Save' %>
 
 <% end %>

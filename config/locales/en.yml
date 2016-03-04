@@ -8,6 +8,7 @@ en:
         password: "Password"
         password_confirmation: "Confirm Password"
         roles: "Roles"
+        creator: "Creator"
       role:
         name: "Name"
       batch:
@@ -123,6 +124,7 @@ en:
         email: "This will also be the username"
         password: "Make it a good one"
         roles: "This will control the user's ability to alter things"
+        creator_id: "Selecting a coordinator user here will allow that user to manage this User"
       role:
         name: "A descriptive name for your Role"
       batch:

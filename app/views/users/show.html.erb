@@ -11,6 +11,7 @@
 <br><br>
 
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.user.email'), value: @user.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.user.creator'), value: @user.creator.email %>
 
 <div class="panel panel-default">
   <div class="panel-heading">

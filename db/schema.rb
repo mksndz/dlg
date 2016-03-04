@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302182115) do
+ActiveRecord::Schema.define(version: 20160304194625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,30 @@ ActiveRecord::Schema.define(version: 20160302182115) do
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
 
+  create_table "permissions", force: :cascade do |t|
+    t.string   "action"
+    t.string   "class_name", null: false
+    t.integer  "entity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "permissions_roles", id: false, force: :cascade do |t|
+    t.integer "role_id",       null: false
+    t.integer "permission_id", null: false
+  end
+
+  add_index "permissions_roles", ["permission_id", "role_id"], name: "index_permissions_roles_on_permission_id_and_role_id", using: :btree
+  add_index "permissions_roles", ["role_id", "permission_id"], name: "index_permissions_roles_on_role_id_and_permission_id", using: :btree
+
+  create_table "permissions_users", id: false, force: :cascade do |t|
+    t.integer "user_id",       null: false
+    t.integer "permission_id", null: false
+  end
+
+  add_index "permissions_users", ["permission_id", "user_id"], name: "index_permissions_users_on_permission_id_and_user_id", using: :btree
+  add_index "permissions_users", ["user_id", "permission_id"], name: "index_permissions_users_on_user_id_and_permission_id", using: :btree
+
   create_table "repositories", force: :cascade do |t|
     t.string   "slug",                              null: false
     t.boolean  "public",            default: false, null: false
@@ -207,8 +231,10 @@ ActiveRecord::Schema.define(version: 20160302182115) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.boolean  "guest",                  default: false
+    t.integer  "creator_id"
   end
 
+  add_index "users", ["creator_id"], name: "index_users_on_creator_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 

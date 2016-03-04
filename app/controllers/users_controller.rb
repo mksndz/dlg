@@ -5,9 +5,16 @@ class UsersController < ApplicationController
   include Sorting
 
   def index
-    @users = User
-                 .order(sort_column + ' ' + sort_direction)
-                 .page(params[:page])
+    if current_user.coordinator?
+      @users = User.where(creator_id: current_user.id)
+                   .order(sort_column + ' ' + sort_direction)
+                   .page(params[:page])
+    else
+      @users = User
+                   .order(sort_column + ' ' + sort_direction)
+                   .page(params[:page])
+    end
+
   end
 
   def show
@@ -18,6 +25,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    set_user_creator
     @user = User.new(user_params)
     if @user.save
       redirect_to @user, notice: 'User created!'
@@ -27,6 +35,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    delete_creator_param unless current_user.admin?
     if @user.update(user_params)
         redirect_to @user, notice: 'User updated!'
     else
@@ -47,7 +56,15 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :role_ids => [])
+      params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, :role_ids => [])
+    end
+
+    def delete_creator_param
+      user_params.delete(:creator_id)
+    end
+
+    def set_user_creator
+      @user.creator = current_user
     end
 
 end
