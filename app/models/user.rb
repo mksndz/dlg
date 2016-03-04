@@ -30,8 +30,12 @@ class User < ActiveRecord::Base
     roles.where(name: 'coordinator').exists?
   end
 
-  def supervisor?
-    roles.where(name: 'supervisor').exists?
+  def committer?
+    roles.where(name: 'committer').exists?
+  end
+
+  def basic?
+    roles.where(name: 'basic').exists?
   end
 
 end

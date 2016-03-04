@@ -39,7 +39,7 @@ Role.delete_all
 Role.create!([
                  { name: 'admin' },
                  { name: 'coordinator' },
-                 { name: 'supervisor' },
+                 { name: 'committer' },
                  { name: 'basic' }
              ])
 
