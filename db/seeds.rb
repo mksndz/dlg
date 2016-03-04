@@ -127,10 +127,10 @@ c1 = Collection.create!({
     dc_date: [
         '2004'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1830/1949'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Dahlonega (Ga.)',
         'Auraria (Ga.)',
         'Lumpkin County (Ga.)',
@@ -171,7 +171,7 @@ c1 = Collection.create!({
         'Texts (document genres)',
         'Visual works'
     ],
-    dc_rights: [
+    dc_right: [
         'Cite as: [Title of document]. [Series, if applicable]. [Collection]. Chestatee Regional Library System, Lumpkin County Branch, presented in the Digital Library of Georgia'
     ]
 })
@@ -195,10 +195,10 @@ c2 = Collection.create!({
     dc_identifier: [
         'http://dlg.galileo.usg.edu/CollectionsA-Z/ffcoll_search.html'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '2014'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Rabun County (Ga.)',
         'North Carolina',
         'Georgia'
@@ -243,10 +243,10 @@ c3 = Collection.create!({
     dc_date: [
         '2006-10'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1930/1949'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Georgia'
     ],
     dc_contributor: [
@@ -260,7 +260,7 @@ c3 = Collection.create!({
         'Photographs',
         'Visual works'
     ],
-    dc_rights: [
+    dc_right: [
         'Usage Note: Users may download the images for personal or educational use--students may include images in reports, for instance, and teachers may use the images in the classroom--if the following credit line is included with the image: Courtesy of the Georgia Archives. Each image has a "Cite as" field in the Document Description. Users can form a complete citation by combining the "Business Name" and "Cite as" fields for the individual image. Copyright and Publication: Publication and other commercial use requires written permission and the payment of a use fee. For further information, contact Steve Engerrand.'
     ]
 })
@@ -294,10 +294,10 @@ c4 = Collection.create!({
     dc_date: [
         '2003'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1800/1994'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Appling County (Ga.)',
         'Bacon County (Ga.)',
         'Baker County (Ga.)',
@@ -466,7 +466,7 @@ c4 = Collection.create!({
         'Photographs',
         'Visual works'
     ],
-    dc_rights: [
+    dc_right: [
         'Cite as: [Title of the image], [date of image], [material type, i.e., slide or photograph] by [name of photographer (if given)], Vanishing Georgia Collection, Georgia Division of Archives and History, presented in the Digital Library of Georgia'
     ]
 })
@@ -499,10 +499,10 @@ c5 = Collection.create!({
     dc_date: [
         '2006-02'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1900/1977'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Georgia'
     ],
     dc_contributor: [
@@ -513,7 +513,7 @@ c5 = Collection.create!({
         'Postcards',
         'Visual works'
     ],
-    dc_rights: [
+    dc_right: [
         'Publication is prohibited. Postcards published after 1923 may be covered by copyright. This collection is provided for reference and educational purposes only. The Georgia Archives cannot provide permission to publish. Users may download the images for personal or educational use--students may include images in reports, for instance, and teachers may use the images in the classroom--if the following credit line is included with the image: Courtesy of the Georgia Archives. Each image has a "Cite as" field in the Document Description. Users can form a complete citation by combining the "Caption" and "Cite as" fields for the individual image.'
     ]
 })
@@ -551,10 +551,10 @@ i1 = Item.create!({
     dc_date: [
         '2004'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '2004'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
     ],
     dc_contributor: [
         'Chestatee Regional Library System, Lumpkin County Branch'
@@ -572,7 +572,7 @@ i1 = Item.create!({
         'Photographs',
         'StillImage'
     ],
-    dc_rights: [
+    dc_right: [
         'This work is the property of the Digital Library of Georgia. It may be used freely by individuals for research, teaching, and personal use as long as this statement of availability is included in the text.',
         'Cite as: [title of item], [title of series, if applicable], Madeleine K. Anthony Collection, Chestatee Regional Library System, Lumpkin County Branch, presented in the Digital Library of Georgia'
     ]
@@ -609,10 +609,10 @@ i2 = Item.create!({
     dc_date: [
         '2004'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1879-08-14'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Dahlonega (Ga.)',
         'Lumpkin County (Ga.)',
     ],
@@ -629,7 +629,7 @@ i2 = Item.create!({
         'Lists (document genres)',
         'Text'
     ],
-    dc_rights: [
+    dc_right: [
         'This work is the property of the Digital Library of Georgia. It may be used freely by individuals for research, teaching, and personal use as long as this statement of availability is included in the text.',
         'Cite as: [title of item], [title of series, if applicable], Madeleine K. Anthony Collection, Chestatee Regional Library System, Lumpkin County Branch, presented in the Digital Library of Georgia'
     ]
@@ -665,10 +665,10 @@ i3 = Item.create!({
     dc_date: [
         '2004'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1938'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Dahlonega (Ga.)',
         'Lumpkin County (Ga.)',
     ],
@@ -688,7 +688,7 @@ i3 = Item.create!({
         'Photographs',
         'StillImage',
     ],
-    dc_rights: [
+    dc_right: [
           'This work is the property of the Digital Library of Georgia. It may be used freely by individuals for research, teaching, and personal use as long as this statement of availability is included in the text.'
     ]
 })
@@ -725,10 +725,10 @@ i4 = Item.create!({
     dc_date: [
         '2004'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1900/1940'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Auraria (Ga.)',
         'Lumpkin County (Ga.)',
     ],
@@ -748,7 +748,7 @@ i4 = Item.create!({
         'Stock certificates',
         'Text',
     ],
-    dc_rights: [
+    dc_right: [
         'This work is the property of the Digital Library of Georgia. It may be used freely by individuals for research, teaching, and personal use as long as this statement of availability is included in the text.',
         'Cite as: [title of item], [title of series, if applicable], Madeleine K. Anthony Collection, Chestatee Regional Library System, Lumpkin County Branch, presented in the Digital Library of Georgia'
 
@@ -793,10 +793,10 @@ i5 = Item.create!({
     ],
     dc_date: [
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '2014'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Tiger (Ga.)',
         'Clayton (Ga.)',
         'Rabun County (Ga.)',
@@ -815,7 +815,7 @@ i5 = Item.create!({
         'Sound',
         'Oral histories',
     ],
-    dc_rights: [
+    dc_right: [
         '&copy; Foxfire Fund, Inc.',
         'Cite as:  [item identification], [collection name], Foxfire Museum  Heritage Center, Mountain City, Georgia.',
         'This material is protected by copyright law. (Title 17, U.S Code) Permission for use must be cleared through The Foxfire Fund, Inc. Licensing agreement may be required.',
@@ -854,10 +854,10 @@ i6 = Item.create!({
     ],
     dc_date: [
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '2014'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Macon County (N.C.)'
     ],
     dc_contributor: [
@@ -874,7 +874,7 @@ i6 = Item.create!({
         'Sound',
         'Oral histories',
     ],
-    dc_rights: [
+    dc_right: [
         '&copy; Foxfire Fund, Inc.',
         'Cite as:  [item identification], [collection name], Foxfire Museum  Heritage Center, Mountain City, Georgia.',
         'This material is protected by copyright law. (Title 17, U.S Code) Permission for use must be cleared through The Foxfire Fund, Inc. Licensing agreement may be required.',
@@ -914,10 +914,10 @@ i7 = Item.create!({
     ],
     dc_date: [
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '2014-06-18'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Macon County (N.C.)'
     ],
     dc_contributor: [
@@ -934,7 +934,7 @@ i7 = Item.create!({
         'Sound',
         'Oral histories',
     ],
-    dc_rights: [
+    dc_right: [
         '&copy; Foxfire Fund, Inc.',
         'Cite as:  [item identification], [collection name], Foxfire Museum  Heritage Center, Mountain City, Georgia.',
         'This material is protected by copyright law. (Title 17, U.S Code) Permission for use must be cleared through The Foxfire Fund, Inc. Licensing agreement may be required.',
@@ -974,10 +974,10 @@ i8 = Item.create!({
     ],
     dc_date: [
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '2014-06-19'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'North Carolina'
     ],
     dc_contributor: [
@@ -994,7 +994,7 @@ i8 = Item.create!({
         'Sound',
         'Oral histories',
     ],
-    dc_rights: [
+    dc_right: [
         '&copy; Foxfire Fund, Inc.',
         'Cite as:  [item identification], [collection name], Foxfire Museum  Heritage Center, Mountain City, Georgia.',
         'This material is protected by copyright law. (Title 17, U.S Code) Permission for use must be cleared through The Foxfire Fund, Inc. Licensing agreement may be required.',
@@ -1031,10 +1031,10 @@ i9 = Item.create!({
     dc_date: [
         '2004'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1922'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Appling County (Ga.)'
     ],
     dc_format: [
@@ -1052,7 +1052,7 @@ i9 = Item.create!({
         'Photographs',
         'StillImage',
     ],
-    dc_rights: [
+    dc_right: [
         'Held by Georgia Archives, 5800 Jonesboro Road, Morrow, GA 30260.',
         'Contact repository re: reproduction and usage.',
     ]
@@ -1089,10 +1089,10 @@ i10 = Item.create!({
     dc_date: [
         '2004'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1897'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Newton (Ga.)',
         'Baker County (Ga.)',
     ],
@@ -1111,7 +1111,7 @@ i10 = Item.create!({
         'Photographs',
         'StillImage',
     ],
-    dc_rights: [
+    dc_right: [
         'Held by Georgia Archives, 5800 Jonesboro Road, Morrow, GA 30260.',
         'Contact repository re: reproduction and usage.',
     ]
@@ -1143,10 +1143,10 @@ i11 = Item.create!({
     dc_date: [
         '2004'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1940/1941'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Baker County (Ga.)'
     ],
     dc_format: [
@@ -1164,7 +1164,7 @@ i11 = Item.create!({
         'Photographs',
         'StillImage',
     ],
-    dc_rights: [
+    dc_right: [
         'Held by Georgia Archives, 5800 Jonesboro Road, Morrow, GA 30260.',
         'Contact repository re: reproduction and usage.',
     ]
@@ -1194,10 +1194,10 @@ i12 = Item.create!({
     dc_date: [
         '2004'
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
         '1914'
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Baker County (Ga.)'
     ],
     dc_format: [
@@ -1215,7 +1215,7 @@ i12 = Item.create!({
         'Photographs',
         'StillImage',
     ],
-    dc_rights: [
+    dc_right: [
         'Held by Georgia Archives, 5800 Jonesboro Road, Morrow, GA 30260.',
         'Contact repository re: reproduction and usage.',
     ]
@@ -1246,9 +1246,9 @@ i13 = Item.create!({
     ],
     dc_date: [
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Midway (Ga.)',
         'Liberty County (Ga.)',
     ],
@@ -1269,7 +1269,7 @@ i13 = Item.create!({
     dc_type: [
         'StillImage'
     ],
-    dc_rights: [
+    dc_right: [
     ]
 })
 
@@ -1298,9 +1298,9 @@ i14 = Item.create!({
     ],
     dc_date: [
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Cordele (Ga.)',
         'Crisp County (Ga.)',
     ],
@@ -1320,7 +1320,7 @@ i14 = Item.create!({
     dc_type: [
         'StillImage'
     ],
-    dc_rights: [
+    dc_right: [
         'Postcards published after 1923 may be covered by copyright.  The Georgia Archives cannot provide permission to publish.',
     ]
 })
@@ -1351,9 +1351,9 @@ i15 = Item.create!({
     ],
     dc_date: [
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Cockspur Island (Ga.)',
         'Chatham County (Ga.)',
     ],
@@ -1373,7 +1373,7 @@ i15 = Item.create!({
     dc_type: [
         'StillImage'
     ],
-    dc_rights: [
+    dc_right: [
         'Postcards published after 1923 may be covered by copyright.  The Georgia Archives cannot provide permission to publish.',
     ]
 })
@@ -1404,9 +1404,9 @@ i16 = Item.create!({
     ],
     dc_date: [
     ],
-    dc_coverage_t: [
+    dc_coverage_temporal: [
     ],
-    dc_coverage_s: [
+    dc_coverage_spatial: [
         'Savannah (Ga.)',
         'Chatham County (Ga.)',
     ],
@@ -1427,7 +1427,7 @@ i16 = Item.create!({
     dc_type: [
         'StillImage'
     ],
-    dc_rights: [
+    dc_right: [
     ]
 })
 
