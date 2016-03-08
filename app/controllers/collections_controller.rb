@@ -21,17 +21,13 @@ class CollectionsController < ApplicationController
                            .page(params[:page])
       end
     else
-      repository_ids = current_user.repository_ids || []
       collection_ids = current_user.collection_ids
-      repository_ids += collection_ids
+      current_user.repositories.each { |r| collection_ids << r.collection_ids }
       @collections = Collection
-                   .includes(:repository)
-                   .where(repository: repository_ids)
+                   .where(id: collection_ids)
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
     end
-
-
 
   end
 
