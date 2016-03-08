@@ -2,9 +2,13 @@ require 'rails_helper'
 
 RSpec.describe ItemsController, type: :controller do
 
-  before(:each) do
-    sign_in Fabricate(:admin)
-  end
+  let(:admin_user) {
+    Fabricate(:admin)
+  }
+
+  before(:each) {
+    sign_in admin_user
+  }
 
   let(:valid_attributes) {
     {
@@ -29,6 +33,42 @@ RSpec.describe ItemsController, type: :controller do
       get :index, {}, valid_session
       expect(assigns(:items)).to eq([item])
     end
+
+    it 'assigns items connected to a user to @items' do
+      sign_out admin_user # todo
+      basic_user = Fabricate(:basic)
+      sign_in basic_user
+
+      #repo items
+      repository1 = Fabricate(:repository)
+      collection1 = Fabricate(:collection)
+      collection2 = Fabricate(:collection)
+      repository2 = Fabricate(:repository)
+      item1 = Fabricate(:item)
+      item2 = Fabricate(:item)
+
+      repository1.collections << collection1
+      collection1.items << item1
+
+      repository2.collections << collection2
+      collection2.items << item2
+
+      #collection items
+      collection3 = Fabricate(:collection)
+      collection4 = Fabricate(:collection)
+      item3 = Fabricate(:item)
+      item4 = Fabricate(:item)
+      collection3.items << item3
+      collection4.items << item4
+
+      basic_user.repositories << repository1
+      basic_user.collections << collection3
+
+      get :index, {}, valid_session
+      expect(assigns(:items)).to include(item1, item3)
+      expect(assigns(:items)).not_to include(item2, item4)
+    end
+
   end
 
   describe 'GET #show' do

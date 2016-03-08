@@ -7,3 +7,7 @@ end
 Fabricator(:admin_role, from: :role) do
   name 'admin'
 end
+
+Fabricator(:basic_role, from: :role) do
+  name 'basic'
+end

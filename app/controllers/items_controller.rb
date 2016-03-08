@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
       collection_ids += current_user.repositories.map { |r| r.collection_ids }
       @items = Item
         .includes(:collection)
-        .where(collection: collection_ids)
+        .where(collection: collection_ids.flatten)
         .order(sort_column + ' ' + sort_direction)
         .page(params[:page])
     end

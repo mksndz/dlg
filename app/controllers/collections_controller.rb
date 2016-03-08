@@ -24,7 +24,7 @@ class CollectionsController < ApplicationController
       collection_ids = current_user.collection_ids
       current_user.repositories.each { |r| collection_ids << r.collection_ids }
       @collections = Collection
-                   .where(id: collection_ids)
+                   .where(id: collection_ids.flatten)
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
     end

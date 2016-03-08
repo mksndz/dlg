@@ -2,9 +2,13 @@ require 'rails_helper'
 
 RSpec.describe CollectionsController, type: :controller do
 
-  before(:each) do
-    sign_in Fabricate(:admin)
-  end
+  let(:admin_user) {
+    Fabricate(:admin)
+  }
+
+  before(:each) {
+    sign_in admin_user
+  }
 
   let(:valid_attributes) {
     {
@@ -29,6 +33,29 @@ RSpec.describe CollectionsController, type: :controller do
       get :index, {}, valid_session
       expect(assigns(:collections)).to eq([collection])
     end
+
+    it 'assigns collections connected to a user to @collections' do
+      sign_out admin_user # todo
+      basic_user = Fabricate(:basic)
+      sign_in basic_user
+      collection1 = Fabricate(:collection)
+      collection2 = Fabricate(:collection)
+      collection3 = Fabricate(:collection)
+      collection4 = Fabricate(:collection)
+      repository1 = Fabricate(:repository)
+      repository2 = Fabricate(:repository)
+      repository3 = Fabricate(:repository)
+      repository1.collections << collection1
+      repository2.collections << collection2
+      repository2.collections << collection4
+      repository3.collections << collection3
+      basic_user.repositories << repository1
+      basic_user.collections << collection2
+      get :index, {}, valid_session
+      expect(assigns(:collections)).to include(collection1, collection2)
+      expect(assigns(:collections)).not_to include(collection3, collection4)
+    end
+
   end
 
   describe 'GET #show' do
