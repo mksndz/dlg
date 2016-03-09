@@ -94,6 +94,14 @@ RSpec.describe ItemsController, type: :controller do
     end
   end
 
+  describe 'GET #copy' do
+    it 'assigns the requested item as @item and loads the edit form' do
+      item = Item.create! valid_attributes
+      get :edit, {:id => item.to_param}, valid_session
+      expect(assigns(:item)).to eq(item)
+    end
+  end
+
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new Item' do

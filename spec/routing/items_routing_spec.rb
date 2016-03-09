@@ -15,6 +15,10 @@ RSpec.describe ItemsController, type: :routing do
       expect(get: '/admin/items/1').to route_to(controller: 'items', action: 'show', id: '1')
     end
 
+    it 'routes to #copy' do
+      expect(get: '/admin/items/1/copy').to route_to(controller: 'items', action: 'copy', id: '1')
+    end
+
     it 'routes to #edit' do
       expect(get: '/admin/items/1/edit').to route_to(controller: 'items', action: 'edit', id: '1')
     end

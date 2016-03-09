@@ -2,7 +2,7 @@
 
     <%= f.alert_message 'The Item could not be saved due to the following errors:' %>
 
-    <%= render partial: 'shared/item_form_fields', locals: { f: f } %>
+    <%= render partial: 'shared/item_form_fields', locals: { f: f, entity: @item } %>
 
     <%= f.primary 'Save' %>
 

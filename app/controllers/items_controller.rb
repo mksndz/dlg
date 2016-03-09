@@ -6,6 +6,8 @@ class ItemsController < ApplicationController
   include Sorting
   layout 'admin'
 
+  before_action :collections_for_select, only: [ :new, :copy, :edit ]
+
   def index
     @collections = Collection.all.order(:display_title)
 
@@ -37,7 +39,6 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
-    collections_for_select
   end
 
   def create
@@ -51,22 +52,10 @@ class ItemsController < ApplicationController
   end
 
   def copy
-    # todo confirm functionality
-    # here we create a new db record then load the edit form
-    # an alternative would be to not save the entity yet, but load the new form
-    # with the attributes from the item to be 'copied'
-    item_attrs = @item.attributes.except('id')
-    item_attrs['slug'] << '-copy'
-    @copy = Item.new(item_attrs)
-    if @copy.save
-      format.html { redirect_to edit_item_path(@copy), notice: 'Item copy was successfully created.' }
-    else
-      format.html { redirect_to @item, alert: @copy.errors }
-    end
+    render :edit
   end
 
   def edit
-    collections_for_select
   end
 
   def update
