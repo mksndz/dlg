@@ -42,7 +42,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new item_params
+    @item = Item.new(split_dc_params(item_params))
     if @item.save
       redirect_to @item, notice: 'Item created'
     else
@@ -59,7 +59,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update(item_params)
+    if @item.update(split_dc_params(item_params))
       redirect_to @item, notice: 'Item updated'
     else
       collections_for_select
@@ -82,38 +82,30 @@ class ItemsController < ApplicationController
     end
 
     def item_params
-      prepare_params
       params.require(:item).permit(
           :collection_id,
           :slug,
           :dpla,
           :public,
           :date_range,
+          :dc_title,
+          :dc_format,
+          :dc_publisher,
+          :dc_identifier,
+          :dc_right,
+          :dc_contributor,
+          :dc_coverage_spatial,
+          :dc_coverage_temporal,
+          :dc_date,
+          :dc_source,
+          :dc_subject,
+          :dc_type,
+          :dc_description,
+          :dc_creator,
+          :dc_language,
+          :dc_relation,
           :other_collections  => [],
-          :dc_title           => [],
-          :dc_format          => [],
-          :dc_publisher       => [],
-          :dc_identifier      => [],
-          :dc_right           => [],
-          :dc_contributor     => [],
-          :dc_coverage_spatial      => [],
-          :dc_coverage_temporal      => [],
-          :dc_date            => [],
-          :dc_source          => [],
-          :dc_subject         => [],
-          :dc_type            => [],
-          :dc_description     => [],
-          :dc_creator         => [],
-          :dc_language        => [],
-          :dc_relation        => []
       )
-    end
-
-    def prepare_params
-        array_fields = dc_fields + [:other_collections]
-        array_fields.each do |f|
-          params[:item][f].reject! { |v| v == '' } if params[:item][f]
-        end
     end
 
 end

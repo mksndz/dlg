@@ -40,14 +40,17 @@ class CollectionsController < ApplicationController
   end
 
   def create
-    @collection = Collection.new collection_params
-    if @collection.save
-      redirect_to @collection, notice: 'Collection created'
-    else
-      repositories_for_select
-      render :new, alert: 'Error creating collection'
-    end
 
+    @collection = Collection.new(split_dc_params(collection_params))
+
+    respond_to do |format|
+      if @collection.save
+        format.html { redirect_to @collection, notice: 'Collection item was successfully created.' }
+      else
+        repositories_for_select
+        format.html { render :new }
+      end
+    end
   end
 
   def edit
@@ -55,7 +58,10 @@ class CollectionsController < ApplicationController
   end
 
   def update
-    if @collection.update(collection_params)
+
+    new_params = split_dc_params(collection_params)
+
+    if @collection.update new_params
       redirect_to @collection, notice: 'Collection updated'
     else
       repositories_for_select
@@ -74,7 +80,6 @@ class CollectionsController < ApplicationController
     end
 
     def collection_params
-      prepare_params
       params.require(:collection).permit(
           :repository_id,
           :slug,
@@ -86,32 +91,25 @@ class CollectionsController < ApplicationController
           :teaser,
           :color,
           :date_range,
-          :other_repositories => [],
-          :subject_ids        => [],
-          :dc_title           => [],
-          :dc_format          => [],
-          :dc_publisher       => [],
-          :dc_identifier      => [],
-          :dc_right          => [],
-          :dc_contributor     => [],
-          :dc_coverage_spatial      => [],
-          :dc_coverage_temporal      => [],
-          :dc_date            => [],
-          :dc_source          => [],
-          :dc_subject         => [],
-          :dc_type            => [],
-          :dc_description     => [],
-          :dc_creator         => [],
-          :dc_language        => [],
-          :dc_relation        => []
+          :dc_title,
+          :dc_format,
+          :dc_publisher,
+          :dc_identifier,
+          :dc_right,
+          :dc_contributor,
+          :dc_coverage_spatial,
+          :dc_coverage_temporal,
+          :dc_date,
+          :dc_source,
+          :dc_subject,
+          :dc_type,
+          :dc_description,
+          :dc_creator,
+          :dc_language,
+          :dc_relation,
+          :subject_ids => [],
+          :other_repositories => []
       )
-    end
-
-    def prepare_params
-      array_fields = dc_fields + [:other_repositories] #ugly
-      array_fields.each do |f|
-        params[:collection][f].reject! { |v| v == '' } if params[:collection][f]
-      end
     end
 end
 

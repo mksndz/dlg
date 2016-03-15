@@ -21,4 +21,10 @@ module DcHelper
     )
   end
 
+  def split_dc_params(params)
+    params.each do |f,v| #todo refactor
+      params[f] = v.strip.split("\n") if dc_fields.include? f
+    end
+  end
+
 end

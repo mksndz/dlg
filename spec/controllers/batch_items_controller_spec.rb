@@ -18,9 +18,7 @@ RSpec.describe BatchItemsController, type: :controller do
   let(:valid_attributes) {
     {
         slug: 'test-item-slug',
-        dc_title: [
-            'Test Item DC Title'
-        ],
+        dc_title: "Test Item DC Title\Subtitle",
         collection_id: collection.id,
         batch_id: batch.id
     }
@@ -102,7 +100,8 @@ RSpec.describe BatchItemsController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         {
-            slug: 'a-new-test-item-slug'
+            slug: 'a-new-test-item-slug',
+            dc_title: "New Title\nNew Subtitle"
         }
       }
 

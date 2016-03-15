@@ -31,7 +31,7 @@ class BatchItemsController < ApplicationController
   # POST /batch_items
   # POST /batch_items.json
   def create
-    @batch_item = BatchItem.new(batch_item_params)
+    @batch_item = BatchItem.new(split_dc_params(batch_item_params))
     @batch_item.batch = @batch
 
     respond_to do |format|
@@ -49,7 +49,7 @@ class BatchItemsController < ApplicationController
   # PATCH/PUT /batch_items/1.json
   def update
     respond_to do |format|
-      if @batch_item.update(batch_item_params)
+      if @batch_item.update(split_dc_params(batch_item_params))
         format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully updated.' }
         format.json { render :show, status: :ok, location: @batch_item }
       else
@@ -113,37 +113,30 @@ class BatchItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def batch_item_params
-      remove_blank_multi_values
       params.require(:batch_item).permit(
           :collection_id,
           :slug,
           :dpla,
           :public,
           :date_range,
+          :dc_title,
+          :dc_format,
+          :dc_publisher,
+          :dc_identifier,
+          :dc_right,
+          :dc_contributor,
+          :dc_coverage_spatial,
+          :dc_coverage_temporal,
+          :dc_date,
+          :dc_source,
+          :dc_subject,
+          :dc_type,
+          :dc_description,
+          :dc_creator,
+          :dc_language,
+          :dc_relation,
           :other_collections  => [],
-          :dc_title           => [],
-          :dc_format          => [],
-          :dc_publisher       => [],
-          :dc_identifier      => [],
-          :dc_right           => [],
-          :dc_contributor     => [],
-          :dc_coverage_spatial=> [],
-          :dc_coverage_temporal=> [],
-          :dc_date            => [],
-          :dc_source          => [],
-          :dc_subject         => [],
-          :dc_type            => [],
-          :dc_description     => [],
-          :dc_creator         => [],
-          :dc_language        => [],
-          :dc_relation        => []
       )
     end
 
-    def remove_blank_multi_values
-      array_fields = dc_fields + [:other_collections]
-      array_fields.each do |f|
-        params[:batch_item][f].reject! { |v| v == '' } if params[:batch_item][f]
-      end
-    end
 end

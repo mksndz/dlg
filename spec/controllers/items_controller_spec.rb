@@ -13,9 +13,7 @@ RSpec.describe ItemsController, type: :controller do
   let(:valid_attributes) {
     {
         slug: 'test-item-slug',
-        dc_title: [
-          'Test Item DC Title'
-        ]
+        dc_title: "Test Item DC Title\nTest Subtitle"
     }
   }
 
@@ -139,9 +137,7 @@ RSpec.describe ItemsController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         {
-            dc_title: [
-                'Updated Test DC Title'
-            ]
+            dc_title: "Updated Test DC Title\nUpdated Subtitle"
         }
       }
 

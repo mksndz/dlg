@@ -13,11 +13,10 @@ RSpec.describe CollectionsController, type: :controller do
   let(:valid_attributes) {
     {
         slug: 'test-collection-slug',
+        dc_title: "Test Collection DC Title\nTest Subtitle",
         display_title: 'Test Collections Display Title',
-        dc_title: [
-            'Test Collection DC Title'
-        ]
-    }  }
+    }
+  }
 
   let(:invalid_attributes) {
     {
@@ -118,28 +117,26 @@ RSpec.describe CollectionsController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         {
-            dc_title: [
-                'Updated Test DC Title'
-            ]
+            dc_title: "Updated Test DC Title\nUpdated Subtitle"
         }
       }
 
       it 'updates the requested collection' do
         collection = Collection.create! valid_attributes
-        put :update, {:id => collection.to_param, :collection => new_attributes}, valid_session
+        put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
-        expect(assigns(:collection).dc_title).to include 'Updated Test DC Title'
+        expect(assigns(:collection).dc_title).to include 'Updated Subtitle'
       end
 
       it 'assigns the requested collection as @collection' do
         collection = Collection.create! valid_attributes
-        put :update, {:id => collection.to_param, :collection => valid_attributes}, valid_session
+        put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         expect(assigns(:collection)).to eq(collection)
       end
 
       it 'redirects to the collection' do
         collection = Collection.create! valid_attributes
-        put :update, {:id => collection.to_param, :collection => valid_attributes}, valid_session
+        put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         expect(response).to redirect_to(collection)
       end
     end
