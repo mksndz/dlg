@@ -2,24 +2,46 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
 
+  let(:admin_user) {
+    Fabricate(:admin)
+  }
+
   before(:each) do
-    sign_in Fabricate(:admin)
+    sign_in admin_user
   end
 
   let(:valid_attributes) {
     {
         email: 'test@user.com',
-        password: 'password'
+        password: 'password',
+        repository_ids: [],
+        collection_ids: []
     }
   }
 
   let(:invalid_attributes) {
-    { email: nil }
+    {
+        email: nil,
+        repository_ids: [],
+        collection_ids: []
+    }
   }
 
   let(:valid_session) { {} }
 
   describe 'GET #index' do
+
+    it 'only shows a coordinator their created users' do
+      sign_out admin_user
+      coordinator_user = Fabricate(:coordinator)
+      sign_in coordinator_user
+      created_user = Fabricate(:basic) { creator coordinator_user }
+      alien_user = Fabricate(:basic)
+      get :index, {}, valid_session
+      expect(assigns(:users)).to include created_user
+      expect(assigns(:users)).not_to include alien_user
+    end
+
     it 'assigns all users as @users' do
       user = User.create! valid_attributes
       get :index, {}, valid_session
@@ -47,6 +69,14 @@ RSpec.describe UsersController, type: :controller do
       user = User.create! valid_attributes
       get :edit, {:id => user.to_param}, valid_session
       expect(assigns(:user)).to eq(user)
+    end
+
+    it 'restricts coordinator users from editing Users they did not create' do
+      sign_out admin_user
+      sign_in Fabricate(:coordinator)
+      user = Fabricate(:user)
+      get :edit, {:id => user.to_param}, valid_session
+      expect(response).to redirect_to root_url
     end
   end
 
@@ -80,13 +110,18 @@ RSpec.describe UsersController, type: :controller do
         post :create, {:user => invalid_attributes}, valid_session
         expect(response).to render_template('new')
       end
+
     end
   end
 
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) {
-        { email: 'changed@email.com' }
+        {
+          email: 'changed@email.com',
+          repository_ids: [],
+          collection_ids: []
+        }
       }
 
       it 'updates the requested user' do
@@ -98,14 +133,33 @@ RSpec.describe UsersController, type: :controller do
 
       it 'assigns the requested user as @user' do
         user = User.create! valid_attributes
-        put :update, {:id => user.to_param, :user => valid_attributes}, valid_session
+        put :update, {:id => user.to_param, :user => new_attributes}, valid_session
         expect(assigns(:user)).to eq(user)
       end
 
       it 'redirects to the user' do
         user = User.create! valid_attributes
-        put :update, {:id => user.to_param, :user => valid_attributes}, valid_session
+        put :update, {:id => user.to_param, :user => new_attributes}, valid_session
         expect(response).to redirect_to(user)
+      end
+
+      it 'restricts coordinator users from updating Users they did not create' do
+        sign_out admin_user
+        sign_in Fabricate(:coordinator)
+        user = User.create! valid_attributes
+        post :update, {:id => user.to_param, :user => new_attributes}, valid_session
+        expect(response).to redirect_to root_url
+      end
+
+      it 'allows coordinator users to update Users they created' do
+        sign_out admin_user
+        coordinator_user = Fabricate(:coordinator)
+        sign_in coordinator_user
+        owned_user = Fabricate(:user)
+        coordinator_user.users << owned_user
+        post :update, {:id => owned_user.to_param, :user => new_attributes}, valid_session
+        owned_user.reload
+        expect(assigns(:user).email).to eq 'changed@email.com'
       end
     end
 

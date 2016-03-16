@@ -9,6 +9,8 @@ en:
         password_confirmation: "Confirm Password"
         roles: "Roles"
         creator: "Creator"
+        repository_ids: "Assigned Repositories"
+        collection_ids: "Assigned Collections"
       role:
         name: "Name"
       batch:
@@ -125,6 +127,8 @@ en:
         password: "Make it a good one"
         roles: "This will control the user's ability to alter things"
         creator_id: "Selecting a coordinator user here will allow that user to manage this User"
+        repository_ids: 'Items, Collections and metadata for the selected Repositories will be able to be altered by this user'
+        collection_ids: 'Items and metadata for the selected Collections will be able to be altered by this user'
       role:
         name: "A descriptive name for your Role"
       batch:

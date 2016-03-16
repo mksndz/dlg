@@ -11,3 +11,7 @@ end
 Fabricator(:basic_role, from: :role) do
   name 'basic'
 end
+
+Fabricator(:coordinator_role, from: :role) do
+  name 'coordinator'
+end
