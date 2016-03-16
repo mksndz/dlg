@@ -109,7 +109,7 @@ RSpec.describe BatchItemsController, type: :controller do
         batch_item = BatchItem.create! valid_attributes
         put :update, {batch_id: batch, :id => batch_item.to_param, :batch_item => new_attributes}, valid_session
         batch_item.reload
-        expect(batch_item.slug).to eq('a-new-test-item-slug')
+        expect(batch_item.dc_title).to include 'New Subtitle'
       end
 
       it 'assigns the requested batch_item as @batch_item' do

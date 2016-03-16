@@ -117,7 +117,7 @@ RSpec.describe CollectionsController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         {
-            dc_title: "Updated Test DC Title\nUpdated Subtitle"
+            dc_title: "Updated Test DC Title\nNew Subtitle"
         }
       }
 
@@ -125,7 +125,7 @@ RSpec.describe CollectionsController, type: :controller do
         collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
-        expect(assigns(:collection).dc_title).to include 'Updated Subtitle'
+        expect(assigns(:collection).dc_title).to include 'New Subtitle'
       end
 
       it 'assigns the requested collection as @collection' do

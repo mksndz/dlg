@@ -137,7 +137,7 @@ RSpec.describe ItemsController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         {
-            dc_title: "Updated Test DC Title\nUpdated Subtitle"
+            dc_title: "Updated Test DC Title\nNew Subtitle"
         }
       }
 
@@ -145,7 +145,7 @@ RSpec.describe ItemsController, type: :controller do
         item = Item.create! valid_attributes
         put :update, {:id => item.to_param, :item => new_attributes}, valid_session
         item.reload
-        expect(assigns(:item).dc_title).to include 'Updated Test DC Title'
+        expect(assigns(:item).dc_title).to include 'New Subtitle'
       end
 
       it 'assigns the requested item as @item' do
