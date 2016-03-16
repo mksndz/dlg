@@ -81,6 +81,31 @@ RSpec.describe CollectionsController, type: :controller do
   end
 
   describe 'POST #create' do
+
+    context 'basic user without repository assigned' do
+      it 'restricts user from creating a Collection' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        post :create, {:collection => valid_attributes}, valid_session
+        expect(response).to redirect_to root_url
+      end
+    end
+
+    context 'basic user with repository assigned' do
+      it 'allows creation of a collection if the user is assigned to the selected repository' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        repository = Fabricate(:repository)
+        basic_user.repositories << repository
+        collection = Fabricate.build(:collection) { repository repository }
+        collection.repository = repository
+        post :create, {:collection => collection.as_json}, valid_session
+        expect(response).to redirect_to assigns(:collection)
+      end
+    end
+
     context 'with valid params' do
       it 'creates a new Collection' do
         expect {
@@ -120,6 +145,40 @@ RSpec.describe CollectionsController, type: :controller do
             dc_title: "Updated Test DC Title\nNew Subtitle"
         }
       }
+
+      it 'fails if user is not assigned the collection or collection repository' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        collection = Collection.create! valid_attributes
+        put :update, {:id => collection.id, :collection => new_attributes}, valid_session
+        collection.reload
+        expect(response).to redirect_to root_url
+      end
+
+      it 'allows basic user to update a collection if collection is assigned' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        collection = Fabricate(:collection)
+        basic_user.collections << collection
+        put :update, {:id => collection.id, :collection => new_attributes}, valid_session
+        collection.reload
+        expect(assigns(:collection).dc_title).to include 'New Subtitle'
+      end
+
+      it 'allows basic user to update a collection if parent repository is assigned' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        repository = Fabricate(:repository)
+        basic_user.repositories << repository
+        collection = Fabricate(:collection) { repository repository }
+        collection.repository = repository
+        put :update, {:id => collection.id, :collection => new_attributes}, valid_session
+        collection.reload
+        expect(assigns(:collection).dc_title).to include 'New Subtitle'
+      end
 
       it 'updates the requested collection' do
         collection = Collection.create! valid_attributes

@@ -101,6 +101,45 @@ RSpec.describe ItemsController, type: :controller do
   end
 
   describe 'POST #create' do
+
+    context 'basic user without Repository or Collection assigned' do
+      it 'restricts user from creating an Item' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        post :create, {:item => valid_attributes}, valid_session
+        expect(response).to redirect_to root_url
+      end
+    end
+
+    context 'basic user with Repository assigned' do
+      it 'allows creation of an Item if the user is assigned to the selected Repository' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        repository = Fabricate(:repository)
+        basic_user.repositories << repository
+        collection = Fabricate(:collection) { repository repository }
+        collection.repository = repository
+        item = Fabricate.build(:item) { collection collection }
+        post :create, {:item => item.as_json}, valid_session
+        expect(response).to redirect_to assigns(:item)
+      end
+    end
+
+    context 'basic user with Collection assigned' do
+      it 'allows creation of an Item if the user is assigned to the selected Collection' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        collection = Fabricate(:collection)
+        basic_user.collections << collection
+        item = Fabricate.build(:item) { collection collection }
+        post :create, {:item => item.as_json}, valid_session
+        expect(response).to redirect_to assigns(:item)
+      end
+    end
+
     context 'with valid params' do
       it 'creates a new Item' do
         expect {
@@ -141,6 +180,41 @@ RSpec.describe ItemsController, type: :controller do
         }
       }
 
+      it 'fails if user is not assigned the Item Collection or Item Repository' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        item = Item.create! valid_attributes
+        put :update, {:id => item.id, :item => new_attributes}, valid_session
+        item.reload
+        expect(response).to redirect_to root_url
+      end
+
+      it 'allows basic user to update a Item if Collection is assigned' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        collection = Fabricate(:collection)
+        basic_user.collections << collection
+        item = Fabricate(:item) { collection collection }
+        put :update, {:id => item.id, :item => new_attributes}, valid_session
+        item.reload
+        expect(assigns(:item).dc_title).to include 'New Subtitle'
+      end
+
+      it 'allows basic user to update a Item if parent Repository is assigned' do
+        sign_out admin_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
+        repository = Fabricate(:repository)
+        collection = Fabricate(:collection) { repository repository }
+        basic_user.repositories << repository
+        item = Fabricate(:item) { collection collection}
+        put :update, {:id => item.id, :item => new_attributes}, valid_session
+        item.reload
+        expect(assigns(:item).dc_title).to include 'New Subtitle'
+      end
+      
       it 'updates the requested item' do
         item = Item.create! valid_attributes
         put :update, {:id => item.to_param, :item => new_attributes}, valid_session
