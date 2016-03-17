@@ -124,9 +124,7 @@ RSpec.describe UsersController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         {
-          email: 'changed@email.com',
-          repository_ids: [],
-          collection_ids: []
+          email: 'changed@email.com'
         }
       }
 

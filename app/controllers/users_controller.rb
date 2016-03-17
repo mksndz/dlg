@@ -93,7 +93,7 @@ class UsersController < ApplicationController
     end
 
   def set_default_roles
-    @user.roles << Role.find(name: 'basic')
+    @user.roles << Role.where(name: 'basic')
   end
 
 end
