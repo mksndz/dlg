@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304212443) do
+ActiveRecord::Schema.define(version: 20160317190000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,13 +104,13 @@ ActiveRecord::Schema.define(version: 20160304212443) do
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
   add_index "collections", ["slug"], name: "index_collections_on_slug", using: :btree
 
-  create_table "collections_subjects", force: :cascade do |t|
-    t.integer "subject_id"
-    t.integer "collection_id"
+  create_table "collections_subjects", id: false, force: :cascade do |t|
+    t.integer "collection_id", null: false
+    t.integer "subject_id",    null: false
   end
 
-  add_index "collections_subjects", ["collection_id"], name: "index_collections_subjects_on_collection_id", using: :btree
-  add_index "collections_subjects", ["subject_id"], name: "index_collections_subjects_on_subject_id", using: :btree
+  add_index "collections_subjects", ["collection_id", "subject_id"], name: "index_collections_subjects_on_collection_id_and_subject_id", using: :btree
+  add_index "collections_subjects", ["subject_id", "collection_id"], name: "index_collections_subjects_on_subject_id_and_collection_id", using: :btree
 
   create_table "collections_users", id: false, force: :cascade do |t|
     t.integer "user_id",       null: false
@@ -159,22 +159,6 @@ ActiveRecord::Schema.define(version: 20160304212443) do
     t.datetime "updated_at"
   end
 
-  create_table "permissions_roles", id: false, force: :cascade do |t|
-    t.integer "role_id",       null: false
-    t.integer "permission_id", null: false
-  end
-
-  add_index "permissions_roles", ["permission_id", "role_id"], name: "index_permissions_roles_on_permission_id_and_role_id", using: :btree
-  add_index "permissions_roles", ["role_id", "permission_id"], name: "index_permissions_roles_on_role_id_and_permission_id", using: :btree
-
-  create_table "permissions_users", id: false, force: :cascade do |t|
-    t.integer "user_id",       null: false
-    t.integer "permission_id", null: false
-  end
-
-  add_index "permissions_users", ["permission_id", "user_id"], name: "index_permissions_users_on_permission_id_and_user_id", using: :btree
-  add_index "permissions_users", ["user_id", "permission_id"], name: "index_permissions_users_on_user_id_and_permission_id", using: :btree
-
   create_table "repositories", force: :cascade do |t|
     t.string   "slug",                              null: false
     t.boolean  "public",            default: false, null: false
@@ -209,13 +193,13 @@ ActiveRecord::Schema.define(version: 20160304212443) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles_users", force: :cascade do |t|
-    t.integer "role_id"
-    t.integer "user_id"
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.integer "role_id", null: false
+    t.integer "user_id", null: false
   end
 
-  add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
-  add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
+  add_index "roles_users", ["role_id", "user_id"], name: "index_roles_users_on_role_id_and_user_id", using: :btree
+  add_index "roles_users", ["user_id", "role_id"], name: "index_roles_users_on_user_id_and_role_id", using: :btree
 
   create_table "searches", force: :cascade do |t|
     t.text     "query_params"
