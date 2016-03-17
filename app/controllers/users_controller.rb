@@ -39,6 +39,7 @@ class UsersController < ApplicationController
   def create
     confirm_restrictions
     set_user_creator
+    set_default_roles
 
     @user = User.new(user_params)
     if @user.save
@@ -79,7 +80,7 @@ class UsersController < ApplicationController
 
     def set_data
       @data ||= {}
-      @data[:roles] = Role.all
+      @data[:roles] = Role.where("name != 'basic'")
       @data[:repositories]= current_user.admin? ? Repository.all : current_user.repositories
       @data[:collections] = current_user.admin? ? Collection.all : current_user.collections
     end
@@ -88,5 +89,9 @@ class UsersController < ApplicationController
       throw UserRestrictionsError unless (user_params[:repository_ids] - current_user.repository_ids).empty?
       throw UserRestrictionsError unless (user_params[:collection_ids] - current_user.collection_ids).empty?
     end
+
+  def set_default_roles
+    @user.roles << Role.find_by_name('basic')
+  end
 
 end
