@@ -85,7 +85,6 @@ class UsersController < ApplicationController
     end
 
     def confirm_restrictions
-      z = current_user
       throw UserRestrictionsError unless (user_params[:repository_ids] - current_user.repository_ids).empty?
       throw UserRestrictionsError unless (user_params[:collection_ids] - current_user.collection_ids).empty?
     end

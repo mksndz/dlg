@@ -36,7 +36,7 @@ RSpec.describe UsersController, type: :controller do
       coordinator_user = Fabricate(:coordinator)
       sign_in coordinator_user
       created_user = Fabricate(:basic) { creator coordinator_user }
-      alien_user = Fabricate(:basic)
+      alien_user = Fabricate(:user)
       get :index, {}, valid_session
       expect(assigns(:users)).to include created_user
       expect(assigns(:users)).not_to include alien_user
@@ -78,6 +78,15 @@ RSpec.describe UsersController, type: :controller do
       get :edit, {:id => user.to_param}, valid_session
       expect(response).to redirect_to root_url
     end
+
+    it 'allow coordinator users to edit Users they created' do
+      sign_out admin_user
+      coordinator_user = Fabricate(:coordinator)
+      sign_in coordinator_user
+      user = Fabricate(:user) { creator coordinator_user }
+      get :edit, {:id => user.to_param}, valid_session
+      expect(assigns(:user)).to eq(user)
+    end
   end
 
   describe 'POST #create' do
@@ -98,6 +107,7 @@ RSpec.describe UsersController, type: :controller do
         post :create, {:user => valid_attributes}, valid_session
         expect(response).to redirect_to(User.last)
       end
+
     end
 
     context 'with invalid params' do
