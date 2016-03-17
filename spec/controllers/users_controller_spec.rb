@@ -14,16 +14,12 @@ RSpec.describe UsersController, type: :controller do
     {
         email: 'test@user.com',
         password: 'password',
-        repository_ids: [],
-        collection_ids: []
     }
   }
 
   let(:invalid_attributes) {
     {
         email: nil,
-        repository_ids: [],
-        collection_ids: []
     }
   }
 

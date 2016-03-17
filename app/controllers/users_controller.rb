@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   include ErrorHandling
 
   before_action :set_data, only: [:new, :edit]
+  before_action :confirm_restrictions, only: [:create, :update]
 
   class UserRestrictionsError < StandardError
   end
@@ -37,7 +38,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    confirm_restrictions
     set_user_creator
     set_default_roles
 
@@ -50,7 +50,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    confirm_restrictions
     if @user.update(user_params)
         redirect_to @user, notice: 'User updated!'
     else
@@ -86,12 +85,15 @@ class UsersController < ApplicationController
     end
 
     def confirm_restrictions
-      throw UserRestrictionsError unless (user_params[:repository_ids] - current_user.repository_ids).empty?
-      throw UserRestrictionsError unless (user_params[:collection_ids] - current_user.collection_ids).empty?
+      new_user_collection_ids = user_params[:collection_ids] || []
+      new_user_repository_ids = user_params[:repository_ids] || []
+      throw UserRestrictionsError unless (new_user_repository_ids - current_user.repository_ids).empty?
+      throw UserRestrictionsError unless (new_user_collection_ids - current_user.collection_ids).empty?
+      throw UserRestrictionsError if current_user.coordinator? and user_params[:role_ids]
     end
 
   def set_default_roles
-    @user.roles << Role.find_by_name('basic')
+    @user.roles << Role.find(name: 'basic')
   end
 
 end
