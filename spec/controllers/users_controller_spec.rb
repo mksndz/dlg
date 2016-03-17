@@ -6,6 +6,10 @@ RSpec.describe UsersController, type: :controller do
     Fabricate(:admin)
   }
 
+  let(:coordinator_user) {
+    Fabricate(:coordinator)
+  }
+
   before(:each) do
     sign_in admin_user
   end
@@ -29,9 +33,9 @@ RSpec.describe UsersController, type: :controller do
 
     it 'only shows a coordinator their created users' do
       sign_out admin_user
-      coordinator_user = Fabricate(:coordinator)
-      sign_in coordinator_user
-      created_user = Fabricate(:basic) { creator coordinator_user }
+      coordinator_user_2 = Fabricate(:coordinator)
+      sign_in coordinator_user_2
+      created_user = Fabricate(:basic) { creator coordinator_user_2 }
       alien_user = Fabricate(:user)
       get :index, {}, valid_session
       expect(assigns(:users)).to include created_user
@@ -69,7 +73,7 @@ RSpec.describe UsersController, type: :controller do
 
     it 'restricts coordinator users from editing Users they did not create' do
       sign_out admin_user
-      sign_in Fabricate(:coordinator)
+      sign_in coordinator_user
       user = Fabricate(:user)
       get :edit, {:id => user.to_param}, valid_session
       expect(response).to redirect_to root_url
@@ -149,7 +153,7 @@ RSpec.describe UsersController, type: :controller do
 
       it 'restricts coordinator users from updating Users they did not create' do
         sign_out admin_user
-        sign_in Fabricate(:coordinator)
+        sign_in coordinator_user
         user = User.create! valid_attributes
         post :update, {:id => user.to_param, :user => new_attributes}, valid_session
         expect(response).to redirect_to root_url

@@ -18,7 +18,7 @@ RSpec.describe Role, type: :model do
 
   it 'has an Array of Users' do
     r = Fabricate(:role) {
-      users(count: 2)
+      users(count: 2) { Fabricate(:user) }
     }
     expect(r.users.first).to be_kind_of User
   end
