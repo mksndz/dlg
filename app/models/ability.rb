@@ -25,8 +25,8 @@ class Ability
             user.collections.include?(item.collection)
       end
 
-      can [:index, :show, :edit, :update, :destroy], Batch, user_id: user.id
-      can [:new, :create], Batch
+      can [:show, :edit, :update, :destroy], Batch, user_id: user.id
+      can [:index, :new, :create], Batch
       can [:index, :show, :new, :create], BatchItem
       can [:edit, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
 
@@ -50,11 +50,4 @@ class Ability
 
   private
 
-  # def check_permissions
-  #   can do |action, subject_class, subject|
-  #     user.permissions.where(action: action).any? do |permission|
-  #       permission.class_name == subject_class.to_s && (subject.nil? || permission.entity_id.nil? || permission.entity_id == subject.id)
-  #     end
-  #   end
-  # end
 end
