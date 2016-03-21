@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe Collection, type: :model do
+RSpec.describe Admin::Collection, type: :model do
 
   it 'has none to begin with' do
-    expect(Collection.count).to eq 0
+    expect(Admin::Collection.count).to eq 0
   end
   
   it 'has one after adding one' do
     Fabricate(:collection)
-    expect(Collection.count).to eq 1
+    expect(Admin::Collection.count).to eq 1
   end
 
   # duh
@@ -16,7 +16,7 @@ RSpec.describe Collection, type: :model do
     r = Fabricate(:repository) {
       collections(count: 1)
     }
-    expect(r.collections.first.repository).to be_kind_of Repository
+    expect(r.collections.first.repository).to be_kind_of Admin::Repository
   end
   
   it 'has a title' do
@@ -33,7 +33,7 @@ RSpec.describe Collection, type: :model do
     c = Fabricate(:collection) {
       items(count: 1)
     }
-    expect(c.items.first).to be_kind_of Item
+    expect(c.items.first).to be_kind_of Admin::Item
   end
 
   it 'respond to Public Items' do
@@ -49,13 +49,13 @@ RSpec.describe Collection, type: :model do
       subjects(count: 1)
     }
     expect(c).to respond_to 'subjects'
-    expect(c.subjects.first).to be_a Subject
+    expect(c.subjects.first).to be_a Admin::Subject
   end
 
   it 'indexes the item in Solr' do
     c = Fabricate(:collection)
     Sunspot.commit
-    results = Collection.search do
+    results = Admin::Collection.search do
       fulltext c.title
     end.results
     expect(results).to include c
@@ -64,7 +64,7 @@ RSpec.describe Collection, type: :model do
   it 'deindexes the item in Solr on delete' do
     c = Fabricate(:collection)
     c.destroy
-    results = Collection.search do
+    results = Admin::Collection.search do
       fulltext c.title # todo is there a better way?
     end.results
     expect(results).to be_empty

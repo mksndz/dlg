@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe RepositoriesController, type: :controller do
+RSpec.describe Admin::RepositoriesController, type: :controller do
 
   let(:admin_user) {
     Fabricate(:admin)
@@ -25,7 +25,7 @@ RSpec.describe RepositoriesController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns all repositories as @repositories' do
-      repository = Repository.create! valid_attributes
+      repository = Admin::Repository.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:repositories)).to eq([repository])
     end
@@ -46,7 +46,7 @@ RSpec.describe RepositoriesController, type: :controller do
   describe 'GET #show' do
     it 'assigns the requested repository as @repository' do
       
-      repository = Repository.create! valid_attributes
+      repository = Admin::Repository.create! valid_attributes
       get :show, {:id => repository.to_param}, valid_session
       expect(assigns(:repository)).to eq(repository)
     end
@@ -56,14 +56,14 @@ RSpec.describe RepositoriesController, type: :controller do
     it 'assigns a new repository as @repository' do
       
       get :new, {}, valid_session
-      expect(assigns(:repository)).to be_a_new(Repository)
+      expect(assigns(:repository)).to be_a_new(Admin::Repository)
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested repository as @repository' do
       
-      repository = Repository.create! valid_attributes
+      repository = Admin::Repository.create! valid_attributes
       get :edit, {:id => repository.to_param}, valid_session
       expect(assigns(:repository)).to eq(repository)
     end
@@ -75,20 +75,20 @@ RSpec.describe RepositoriesController, type: :controller do
         
         expect {
           post :create, {:repository => valid_attributes}, valid_session
-        }.to change(Repository, :count).by(1)
+        }.to change(Admin::Repository, :count).by(1)
       end
 
       it 'assigns a newly created repository as @repository' do
         
         post :create, {:repository => valid_attributes}, valid_session
-        expect(assigns(:repository)).to be_a(Repository)
+        expect(assigns(:repository)).to be_a(Admin::Repository)
         expect(assigns(:repository)).to be_persisted
       end
 
       it 'redirects to the created repository' do
         
         post :create, {:repository => valid_attributes}, valid_session
-        expect(response).to redirect_to(Repository.last)
+        expect(response).to redirect_to(Admin::Repository.last)
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe RepositoriesController, type: :controller do
       it 'assigns a newly created but unsaved repository as @repository' do
         
         post :create, {:repository => invalid_attributes}, valid_session
-        expect(assigns(:repository)).to be_a_new(Repository)
+        expect(assigns(:repository)).to be_a_new(Admin::Repository)
       end
 
       it 're-renders the "new" template' do
@@ -117,7 +117,7 @@ RSpec.describe RepositoriesController, type: :controller do
 
       it 'updates the requested repository' do
         
-        repository = Repository.create! valid_attributes
+        repository = Admin::Repository.create! valid_attributes
         put :update, {:id => repository.to_param, :repository => new_attributes}, valid_session
         repository.reload
         expect(assigns(:repository).title).to eq 'Updated Title'
@@ -125,14 +125,14 @@ RSpec.describe RepositoriesController, type: :controller do
 
       it 'assigns the requested repository as @repository' do
         
-        repository = Repository.create! valid_attributes
+        repository = Admin::Repository.create! valid_attributes
         put :update, {:id => repository.to_param, :repository => valid_attributes}, valid_session
         expect(assigns(:repository)).to eq(repository)
       end
 
       it 'redirects to the repository' do
         
-        repository = Repository.create! valid_attributes
+        repository = Admin::Repository.create! valid_attributes
         put :update, {:id => repository.to_param, :repository => valid_attributes}, valid_session
         expect(response).to redirect_to(repository)
       end
@@ -141,14 +141,14 @@ RSpec.describe RepositoriesController, type: :controller do
     context 'with invalid params' do
       it 'assigns the repository as @repository' do
         
-        repository = Repository.create! valid_attributes
+        repository = Admin::Repository.create! valid_attributes
         put :update, {:id => repository.to_param, :repository => invalid_attributes}, valid_session
         expect(assigns(:repository)).to eq(repository)
       end
 
       it 're-renders the "edit" template' do
         
-        repository = Repository.create! valid_attributes
+        repository = Admin::Repository.create! valid_attributes
         put :update, {:id => repository.to_param, :repository => invalid_attributes}, valid_session
         expect(response).to render_template('edit')
       end
@@ -158,17 +158,17 @@ RSpec.describe RepositoriesController, type: :controller do
   describe 'DELETE #destroy' do
     it 'destroys the requested repository' do
       
-      repository = Repository.create! valid_attributes
+      repository = Admin::Repository.create! valid_attributes
       expect {
         delete :destroy, {:id => repository.to_param}, valid_session
-      }.to change(Repository, :count).by(-1)
+      }.to change(Admin::Repository, :count).by(-1)
     end
 
     it 'redirects to the repositories list' do
       
-      repository = Repository.create! valid_attributes
+      repository = Admin::Repository.create! valid_attributes
       delete :destroy, {:id => repository.to_param}, valid_session
-      expect(response).to redirect_to(repositories_url)
+      expect(response).to redirect_to(admin_repositories_url)
     end
   end
 

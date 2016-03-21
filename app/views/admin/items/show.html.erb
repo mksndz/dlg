@@ -1,0 +1,40 @@
+<%= content_for :admin_area_title do %>
+    Show Item
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @item.dc_title.first %>
+<% end %>
+
+<%= link_to 'Edit', edit_admin_item_path(@item), class: 'btn btn-default' %>
+<%= link_to 'Copy', copy_admin_item_path(@item), class: 'btn btn-default', data: { confirm: 'Are you sure?' } %>
+<%= link_to 'XML', '#xml' , class: 'btn btn-default' %>
+
+
+<br><br>
+
+<%= render('shared/show_field', field_name: t('activerecord.attributes.item.collection_id'), value: @item.collection.display_title) if @item.collection %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.slug'), value: @item.slug %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.dpla'), value: @item.dpla %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.public'), value: @item.public%>
+
+<%= render partial: 'shared/show_dc_fields', locals: { entity: @item} %>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.created_at'), value: @item.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.updated_at'), value: @item.updated_at %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Other Collections</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @item.other_collections.each do |c| %>
+          <li><%= c %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<a name="xml"></a>
+<pre><%= @item.to_xml %></pre>

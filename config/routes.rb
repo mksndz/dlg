@@ -1,10 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'admin/index'
+  namespace :admin do
 
-  resources :admin, only: :index
-
-  scope 'admin' do
+    get 'home', to: 'base#index'
 
     resources :repositories, :collections, :roles, :users, :subjects
 

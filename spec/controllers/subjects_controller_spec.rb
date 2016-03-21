@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SubjectsController, type: :controller do
+RSpec.describe Admin::SubjectsController, type: :controller do
 
   before(:each) do
     sign_in Fabricate(:admin)
@@ -18,7 +18,7 @@ RSpec.describe SubjectsController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns all subjects as @subjects' do
-      subject = Subject.create! valid_attributes
+      subject = Admin::Subject.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:subjects)).to eq([subject])
     end
@@ -26,7 +26,7 @@ RSpec.describe SubjectsController, type: :controller do
 
   describe 'GET #show' do
     it 'assigns the requested subject as @subject' do
-      subject = Subject.create! valid_attributes
+      subject = Admin::Subject.create! valid_attributes
       get :show, {:id => subject.to_param}, valid_session
       expect(assigns(:subject)).to eq(subject)
     end
@@ -35,13 +35,13 @@ RSpec.describe SubjectsController, type: :controller do
   describe 'GET #new' do
     it 'assigns a new subject as @subject' do
       get :new, {}, valid_session
-      expect(assigns(:subject)).to be_a_new(Subject)
+      expect(assigns(:subject)).to be_a_new(Admin::Subject)
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested subject as @subject' do
-      subject = Subject.create! valid_attributes
+      subject = Admin::Subject.create! valid_attributes
       get :edit, {:id => subject.to_param}, valid_session
       expect(assigns(:subject)).to eq(subject)
     end
@@ -49,28 +49,28 @@ RSpec.describe SubjectsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid params' do
-      it 'creates a new Subject' do
+      it 'creates a new Admin::Subject' do
         expect {
           post :create, {:subject => valid_attributes}, valid_session
-        }.to change(Subject, :count).by(1)
+        }.to change(Admin::Subject, :count).by(1)
       end
 
       it 'assigns a newly created subject as @subject' do
         post :create, {:subject => valid_attributes}, valid_session
-        expect(assigns(:subject)).to be_a(Subject)
+        expect(assigns(:subject)).to be_a(Admin::Subject)
         expect(assigns(:subject)).to be_persisted
       end
 
       it 'redirects to the created subject' do
         post :create, {:subject => valid_attributes}, valid_session
-        expect(response).to redirect_to(Subject.last)
+        expect(response).to redirect_to(Admin::Subject.last)
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved subject as @subject' do
         post :create, {:subject => invalid_attributes}, valid_session
-        expect(assigns(:subject)).to be_a_new(Subject)
+        expect(assigns(:subject)).to be_a_new(Admin::Subject)
       end
 
       it 're-renders the "new" template' do
@@ -87,7 +87,7 @@ RSpec.describe SubjectsController, type: :controller do
       }
 
       it 'updates the requested subject' do
-        subject = Subject.create! valid_attributes
+        subject = Admin::Subject.create! valid_attributes
         put :update, {:id => subject.to_param, :subject => new_attributes}, valid_session
         subject.reload
         expect(response).to redirect_to(subject)
@@ -95,13 +95,13 @@ RSpec.describe SubjectsController, type: :controller do
       end
 
       it 'assigns the requested subject as @subject' do
-        subject = Subject.create! valid_attributes
+        subject = Admin::Subject.create! valid_attributes
         put :update, {:id => subject.to_param, :subject => valid_attributes}, valid_session
         expect(assigns(:subject)).to eq(subject)
       end
 
       it 'redirects to the subject' do
-        subject = Subject.create! valid_attributes
+        subject = Admin::Subject.create! valid_attributes
         put :update, {:id => subject.to_param, :subject => valid_attributes}, valid_session
         expect(response).to redirect_to(subject)
       end
@@ -109,13 +109,13 @@ RSpec.describe SubjectsController, type: :controller do
 
     context 'with invalid params' do
       it 'assigns the subject as @subject' do
-        subject = Subject.create! valid_attributes
+        subject = Admin::Subject.create! valid_attributes
         put :update, {:id => subject.to_param, :subject => invalid_attributes}, valid_session
         expect(assigns(:subject)).to eq(subject)
       end
 
       it 're-renders the "edit" template' do
-        subject = Subject.create! valid_attributes
+        subject = Admin::Subject.create! valid_attributes
         put :update, {:id => subject.to_param, :subject => invalid_attributes}, valid_session
         expect(response).to render_template('edit')
       end
@@ -124,16 +124,16 @@ RSpec.describe SubjectsController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'destroys the requested subject' do
-      subject = Subject.create! valid_attributes
+      subject = Admin::Subject.create! valid_attributes
       expect {
         delete :destroy, {:id => subject.to_param}, valid_session
-      }.to change(Subject, :count).by(-1)
+      }.to change(Admin::Subject, :count).by(-1)
     end
 
     it 'redirects to the subjects list' do
-      subject = Subject.create! valid_attributes
+      subject = Admin::Subject.create! valid_attributes
       delete :destroy, {:id => subject.to_param}, valid_session
-      expect(response).to redirect_to(subjects_url)
+      expect(response).to redirect_to(admin_subjects_url)
     end
   end
 

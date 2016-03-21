@@ -1,0 +1,73 @@
+<%= content_for :admin_area_title do %>
+    Items
+<% end %>
+
+<%=
+    content_for :admin_area_subtitle do
+      if params[:collection_id]
+        @items.first.collection.display_title if @items.first && @items.first.collection
+      else
+        'All of them'
+      end
+    end
+%>
+
+<%=
+    content_for :sub_menu do
+      render 'collections_list'
+    end
+%>
+
+<%= link_to 'Add Item', new_admin_item_path, class: 'btn btn-default' %>
+
+<% if @items.empty? %>
+
+    <p>No items have been added yet.</p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+        <tr>
+          <th>
+            <%= sortable 'id', 'ID' %>
+          </th>
+          <th>
+            <%= sortable 'slug' %>
+          </th>
+          <th>
+            <%= sortable 'dc_title', 'Title' %>
+          </th>
+          <th>
+            <%= sortable 'collection_id', 'Collection' %>
+          </th>
+          <th width="185px"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @items.each do |item| %>
+          <tr class="<%= warning_highlight(item) %>">
+            <td>
+              <%= link_to item.id, item %>
+            </td>
+            <td>
+              <%= link_to item.slug, item %>
+            </td>
+            <td>
+              <%= item.title %>
+            </td>
+            <td>
+              <%= link_to(item.collection.display_title, item.collection) if item.collection %>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { entity: item, show_bl: true } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @items %>
+
+<% end %>

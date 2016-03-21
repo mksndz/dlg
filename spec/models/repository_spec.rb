@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe Repository, type: :model do
+RSpec.describe Admin::Repository, type: :model do
 
   it 'has none to begin with' do
-    expect(Repository.count).to eq 0
+    expect(Admin::Repository.count).to eq 0
   end
 
   it 'has one after adding one' do
     Fabricate(:repository)
-    expect(Repository.count).to eq 1
+    expect(Admin::Repository.count).to eq 1
   end
 
   it 'contains a Collection' do
@@ -16,7 +16,7 @@ RSpec.describe Repository, type: :model do
       collections(count: 1)
     }
     expect(r.collections.count).to be > 0
-    expect(r.collections.first).to be_kind_of Collection
+    expect(r.collections.first).to be_kind_of Admin::Collection
   end
 
   it 'has a title' do
@@ -35,7 +35,7 @@ RSpec.describe Repository, type: :model do
         items(count: 1)
       }}
     }
-    expect(r.items.first).to be_kind_of Item
+    expect(r.items.first).to be_kind_of Admin::Item
   end
 
 end

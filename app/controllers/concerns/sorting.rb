@@ -6,7 +6,7 @@ module Sorting
   end
 
   def sort_column
-    controller_name.classify.constantize.column_names.include?(params[:sort]) ? params[:sort] : 'id'
+    controller_path.classify.constantize.column_names.include?(params[:sort]) ? params[:sort] : 'id'
   end
 
   def sort_direction

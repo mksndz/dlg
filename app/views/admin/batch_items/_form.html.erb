@@ -1,0 +1,9 @@
+<%= bootstrap_form_for([@batch, @batch_item] ) do |f| %>
+
+    <%= f.alert_message 'The Batch Item could not be saved due to the following errors:' %>
+
+    <%= render partial: 'shared/item_form_fields', locals: { f: f, entity: @batch_item } %>
+
+    <%= f.primary 'Save' %>
+
+<% end %>

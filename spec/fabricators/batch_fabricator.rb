@@ -1,6 +1,6 @@
 require 'faker'
 
-Fabricator(:batch) do
+Fabricator(:batch, from: 'Admin::Batch') do
   name { Faker::Lorem.sentence(4) }
   notes { Faker::Lorem.sentence(10) }
   user { Fabricate(:user) }

@@ -59,19 +59,19 @@ RSpec.configure do |config|
 
   # clean up Solr index after test suite
   config.after(:suite){
-    BatchItem.destroy_all
-    Item.destroy_all
-    Batch.destroy_all
-    Collection.destroy_all
-    Repository.destroy_all
-    Role.destroy_all
+    Admin::BatchItem.destroy_all
+    Admin::Item.destroy_all
+    Admin::Batch.destroy_all
+    Admin::Collection.destroy_all
+    Admin::Repository.destroy_all
+    Admin::Role.destroy_all
     User.destroy_all
   }
 
   config.after(:all){
-    Sunspot.remove_all! Item
-    Sunspot.remove_all! Collection
-    Sunspot.remove_all! Batch
-    Sunspot.remove_all! BatchItem
+    Sunspot.remove_all! Admin::Item
+    Sunspot.remove_all! Admin::Collection
+    Sunspot.remove_all! Admin::Batch
+    Sunspot.remove_all! Admin::BatchItem
   }
 end

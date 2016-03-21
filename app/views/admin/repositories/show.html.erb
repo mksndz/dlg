@@ -1,0 +1,27 @@
+<%= content_for :admin_area_title do %>
+    Show Repository
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @repository.title %>
+<% end %>
+
+<%= link_to 'Edit', edit_admin_repository_path(@repository), class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render 'shared/show_field', field_name: t(:slug,              scope: [:activerecord, :attributes, :repository]), value: @repository.slug %>
+<%= render 'shared/show_field', field_name: t(:public,            scope: [:activerecord, :attributes, :repository]), value: @repository.public %>
+<%= render 'shared/show_field', field_name: t(:in_georgia,        scope: [:activerecord, :attributes, :repository]), value: @repository.in_georgia %>
+<%= render 'shared/show_field', field_name: t(:title,             scope: [:activerecord, :attributes, :repository]), value: @repository.title %>
+<%= render 'shared/show_field', field_name: t(:color,             scope: [:activerecord, :attributes, :repository]), value: @repository.color %>
+<%= render 'shared/show_field', field_name: t(:homepage_url,      scope: [:activerecord, :attributes, :repository]), value: @repository.homepage_url %>
+<%= render 'shared/show_field', field_name: t(:directions_url,    scope: [:activerecord, :attributes, :repository]), value: @repository.directions_url %>
+<%= render 'shared/show_field', field_name: t(:teaser,            scope: [:activerecord, :attributes, :repository]), value: @repository.teaser %>
+<%= render 'shared/show_field', field_name: t(:short_description, scope: [:activerecord, :attributes, :repository]), value: @repository.short_description %>
+<%= render 'shared/show_field', field_name: t(:description,       scope: [:activerecord, :attributes, :repository]), value: @repository.description %>
+<%= render 'shared/show_field', field_name: t(:address,           scope: [:activerecord, :attributes, :repository]), value: @repository.address %>
+<%= render 'shared/show_field', field_name: t(:strengths,         scope: [:activerecord, :attributes, :repository]), value: @repository.strengths %>
+<%= render 'shared/show_field', field_name: t(:contact,           scope: [:activerecord, :attributes, :repository]), value: @repository.contact %>
+<%= render 'shared/show_field', field_name: t(:created_at,        scope: [:activerecord, :attributes, :repository]), value: @repository.created_at %>
+<%= render 'shared/show_field', field_name: t(:updated_at,        scope: [:activerecord, :attributes, :repository]), value: @repository.updated_at %>

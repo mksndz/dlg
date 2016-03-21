@@ -1,0 +1,82 @@
+<%= content_for :admin_area_title do %>
+    Collections
+<% end %>
+
+<%=
+  content_for :admin_area_subtitle do
+    if params[:repository_id]
+      @collections.first.repository.title if @collections.first && @collections.first.repository
+    else
+      'All of them'
+    end
+  end
+%>
+
+<%=
+  content_for :sub_menu do
+    render 'repositories_list'
+  end
+%>
+
+<%= link_to 'Add Collection', new_admin_collection_path, class: 'btn btn-default' %>
+
+<% if @collections.empty? %>
+
+    <p>No collections have been added yet.</p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+        <tr>
+          <th>
+            <%= sortable 'id', 'ID' %>
+          </th>
+          <th>
+            <%= sortable 'slug', 'Slug' %>
+
+          </th>
+          <th>
+            <%= sortable 'display_title', 'Display Title' %>
+          </th>
+          <th>
+            <%= sortable 'repository_id', 'Repository' %>
+          </th>
+          <th>
+            Items
+          </th>
+          <th width="185px"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @collections.each do |collection| %>
+            <tr>
+              <td>
+                <%= link_to collection.id, collection %>
+              </td>
+              <td>
+                <%= link_to collection.slug, collection %>
+              </td>
+              <td>
+                <%= collection.display_title %>
+              </td>
+              <td>
+                <%= link_to(collection.repository.title, collection.repository) if collection.repository %>
+              </td>
+              <td>
+                <%= link_to collection.items.size, filtered_admin_items_path(collection) %>
+              </td>
+              <td>
+                <div class="btn-group btn-group-xs">
+                  <%= render partial: 'shared/entity_actions', locals: { entity: collection, show_bl: false } %>
+                </div>
+              </td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @collections %>
+
+<% end %>

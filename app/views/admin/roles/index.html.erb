@@ -1,0 +1,44 @@
+<%= content_for :admin_area_title do %>
+    Roles
+<% end %>
+
+<%= link_to 'Add Role', new_admin_role_path, class: 'btn btn-default' %>
+
+
+<% if @roles.empty? %>
+
+    <p>No Roles have been added yet.</p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'id', 'ID' %>
+        </th>
+        <th>
+          <%= sortable 'name', 'Name' %>
+
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @roles.each do |role| %>
+          <tr>
+            <td>
+              <%= link_to role.id, role %>
+            </td>
+            <td>
+              <%= link_to role.name, role %>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { entity: role, show_bl: false } %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>

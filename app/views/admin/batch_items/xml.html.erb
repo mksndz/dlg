@@ -1,0 +1,38 @@
+<%= content_for :admin_area_title do %>
+    XML Import for Batch
+<% end %>
+
+<%=
+  content_for :admin_area_subtitle do
+    @batch.name
+  end
+%>
+
+<%= bootstrap_form_tag url: xml_import_admin_batch_batch_items_path(@batch), html: { id: 'xml_form' } do |f| %>
+
+    <%= f.file_field :xml_file, label: 'XML File' %>
+    <%= f.text_area :xml_text, label: 'XML Text' %>
+
+    <%= f.submit 'Import' %>
+
+<% end %>
+
+<br><br>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+    <span class="sr-only">% Complete</span>
+  </div>
+</div>
+
+<div id="actions" class="hide well">
+  <div class="btn-group">
+    <%= link_to 'View Batch', admin_batch_batch_items_path(@batch), class: 'btn btn-default' %>
+    <%= link_to 'Process More XML', xml_admin_batch_batch_items_path(@batch), class: 'btn btn-default' %>
+  </div>
+
+</div>
+
+<div id="results">
+
+</div>
