@@ -11,16 +11,16 @@ class AdminAbility
 
     if user.basic?
 
-      can [:index, :show, :new, :create, :edit, :update], Admin::Repository do |repository|
+      can [:index, :show, :new, :create, :edit, :update], Repository do |repository|
         user.repositories.include?(repository)
       end
 
-      can [:index, :show, :new, :create, :edit, :update], Admin::Collection do |collection|
+      can [:index, :show, :new, :create, :edit, :update], Collection do |collection|
         user.repositories.include?(collection.repository) ||
             user.collections.include?(collection)
       end
 
-      can [:index, :show, :new, :create, :edit, :update, :copy, :destroy], Admin::Item do |item|
+      can [:index, :show, :new, :create, :edit, :update, :copy, :destroy], Item do |item|
         user.repositories.include?(item.repository) ||
             user.collections.include?(item.collection)
       end

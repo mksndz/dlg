@@ -28,7 +28,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns all collections as @collections' do
-      collection = Admin::Collection.create! valid_attributes
+      collection = Collection.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:collections)).to eq([collection])
     end
@@ -59,7 +59,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
 
   describe 'GET #show' do
     it 'assigns the requested collection as @collection' do
-      collection = Admin::Collection.create! valid_attributes
+      collection = Collection.create! valid_attributes
       get :show, {:id => collection.to_param}, valid_session
       expect(assigns(:collection)).to eq(collection)
     end
@@ -68,13 +68,13 @@ RSpec.describe Admin::CollectionsController, type: :controller do
   describe 'GET #new' do
     it 'assigns a new collection as @collection' do
       get :new, {}, valid_session
-      expect(assigns(:collection)).to be_a_new(Admin::Collection)
+      expect(assigns(:collection)).to be_a_new(Collection)
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested collection as @collection' do
-      collection = Admin::Collection.create! valid_attributes
+      collection = Collection.create! valid_attributes
       get :edit, {:id => collection.to_param}, valid_session
       expect(assigns(:collection)).to eq(collection)
     end
@@ -102,7 +102,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
         collection = Fabricate.build(:collection) { repository repository }
         collection.repository = repository
         post :create, {:collection => collection.as_json}, valid_session
-        expect(response).to redirect_to assigns(:collection)
+        expect(response).to redirect_to admin_collection_path(assigns(:collection))
       end
     end
 
@@ -110,25 +110,25 @@ RSpec.describe Admin::CollectionsController, type: :controller do
       it 'creates a new Collection' do
         expect {
           post :create, {:collection => valid_attributes}, valid_session
-        }.to change(Admin::Collection, :count).by(1)
+        }.to change(Collection, :count).by(1)
       end
 
       it 'assigns a newly created collection as @collection' do
         post :create, {:collection => valid_attributes}, valid_session
-        expect(assigns(:collection)).to be_a(Admin::Collection)
+        expect(assigns(:collection)).to be_a(Collection)
         expect(assigns(:collection)).to be_persisted
       end
 
       it 'redirects to the created collection' do
         post :create, {:collection => valid_attributes}, valid_session
-        expect(response).to redirect_to(Admin::Collection.last)
+        expect(response).to redirect_to(admin_collection_path(Collection.last))
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved collection as @collection' do
         post :create, {:collection => invalid_attributes}, valid_session
-        expect(assigns(:collection)).to be_a_new(Admin::Collection)
+        expect(assigns(:collection)).to be_a_new(Collection)
       end
 
       it 're-renders the "new" template' do
@@ -150,7 +150,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
         sign_out admin_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
-        collection = Admin::Collection.create! valid_attributes
+        collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
         expect(response).to redirect_to root_url
@@ -181,34 +181,34 @@ RSpec.describe Admin::CollectionsController, type: :controller do
       end
 
       it 'updates the requested collection' do
-        collection = Admin::Collection.create! valid_attributes
+        collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
         expect(assigns(:collection).dc_title).to include 'New Subtitle'
       end
 
       it 'assigns the requested collection as @collection' do
-        collection = Admin::Collection.create! valid_attributes
+        collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         expect(assigns(:collection)).to eq(collection)
       end
 
       it 'redirects to the collection' do
-        collection = Admin::Collection.create! valid_attributes
+        collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
-        expect(response).to redirect_to(collection)
+        expect(response).to redirect_to(admin_collection_path(collection))
       end
     end
 
     context 'with invalid params' do
       it 'assigns the collection as @collection' do
-        collection = Admin::Collection.create! valid_attributes
+        collection = Collection.create! valid_attributes
         put :update, {:id => collection.to_param, :collection => invalid_attributes}, valid_session
         expect(assigns(:collection)).to eq(collection)
       end
 
       it 're-renders the "edit" template' do
-        collection = Admin::Collection.create! valid_attributes
+        collection = Collection.create! valid_attributes
         put :update, {:id => collection.to_param, :collection => invalid_attributes}, valid_session
         expect(response).to render_template('edit')
       end
@@ -217,14 +217,14 @@ RSpec.describe Admin::CollectionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'destroys the requested collection' do
-      collection = Admin::Collection.create! valid_attributes
+      collection = Collection.create! valid_attributes
       expect {
         delete :destroy, {:id => collection.to_param}, valid_session
-      }.to change(Admin::Collection, :count).by(-1)
+      }.to change(Collection, :count).by(-1)
     end
 
     it 'redirects to the collections list' do
-      collection = Admin::Collection.create! valid_attributes
+      collection = Collection.create! valid_attributes
       delete :destroy, {:id => collection.to_param}, valid_session
       expect(response).to redirect_to(admin_collections_url)
     end

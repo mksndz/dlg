@@ -30,7 +30,7 @@ module Admin
     def create
       @subject = Subject.new(subject_params)
       if @subject.save
-        redirect_to @subject, notice: 'Subject was successfully created.'
+        redirect_to admin_subject_path(@subject), notice: 'Subject was successfully created.'
       else
         render :new
       end
@@ -39,7 +39,7 @@ module Admin
     # PATCH/PUT /subjects/1
     def update
       if @subject.update(subject_params)
-        redirect_to @subject, notice: 'Subject was successfully updated.'
+        redirect_to admin_subject_path(@subject), notice: 'Subject was successfully updated.'
       else
         render :edit
       end

@@ -45,7 +45,7 @@ module Admin
     def create
       @item = Item.new(split_dc_params(item_params))
       if @item.save
-        redirect_to @item, notice: 'Item created'
+        redirect_to admin_item_path(@item), notice: 'Item created'
       else
         collections_for_select
         render :new, alert: 'Error creating item'
@@ -61,7 +61,7 @@ module Admin
 
     def update
       if @item.update(split_dc_params(item_params))
-        redirect_to @item, notice: 'Item updated'
+        redirect_to admin_item_path(@item), notice: 'Item updated'
       else
         collections_for_select
         render :edit, alert: 'Error creating item'

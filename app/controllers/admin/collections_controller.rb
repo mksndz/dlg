@@ -48,7 +48,7 @@ module Admin
 
       respond_to do |format|
         if @collection.save
-          format.html { redirect_to @collection, notice: 'Collection item was successfully created.' }
+          format.html { redirect_to admin_collection_path(@collection), notice: 'Collection item was successfully created.' }
         else
           repositories_for_select
           format.html { render :new }
@@ -65,7 +65,7 @@ module Admin
       new_params = split_dc_params(collection_params)
 
       if @collection.update new_params
-        redirect_to @collection, notice: 'Collection updated'
+        redirect_to admin_collection_path(@collection), notice: 'Collection updated'
       else
         repositories_for_select
         render :edit, alert: 'Error creating collection'

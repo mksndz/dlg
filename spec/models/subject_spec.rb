@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Admin::Subject, type: :model do
+RSpec.describe Subject, type: :model do
   it 'has none to begin with' do
-    expect(Admin::Subject.count).to eq 0
+    expect(Subject.count).to eq 0
   end
 
   it 'has one after adding one' do
     Fabricate(:subject)
-    expect(Admin::Subject.count).to eq 1
+    expect(Subject.count).to eq 1
   end
 
   it 'has a name' do
@@ -21,7 +21,7 @@ RSpec.describe Admin::Subject, type: :model do
       collections(count: 1)
     }
     expect(s).to respond_to 'collections'
-    expect(s.collections.first).to be_a Admin::Collection
+    expect(s.collections.first).to be_a Collection
   end
 
 end

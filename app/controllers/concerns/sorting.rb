@@ -6,11 +6,21 @@ module Sorting
   end
 
   def sort_column
-    controller_path.classify.constantize.column_names.include?(params[:sort]) ? params[:sort] : 'id'
+    begin
+      check_columns_for_field(controller_name, params[:sort]) ? params[:sort] : 'id'
+    rescue NameError
+      check_columns_for_field(controller_path, params[:sort]) ? params[:sort] : 'id'
+    end
   end
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+
+  private
+
+  def check_columns_for_field(entity, field)
+    entity.classify.constantize.column_names.include?(field)
   end
 
 end

@@ -1,5 +1,5 @@
 require 'faker'
 
-Fabricator(:subject, from: 'Admin::Subject') do
+Fabricator(:subject) do
   name { Faker::Hipster.words 2 }
 end

@@ -27,13 +27,13 @@
       <% @subjects.each do |subject| %>
           <tr>
             <td>
-              <%= link_to subject.id, subject %>
+              <%= link_to subject.id, admin_subject_path(subject) %>
             </td>
             <td>
-              <%= link_to subject.name, subject %>
+              <%= link_to subject.name, admin_subject_path(subject) %>
             </td>
             <td>
-              <%= render partial: 'shared/entity_actions', locals: { entity: subject, show_bl: false } %>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: admin_subject_path(subject), edit_path: edit_admin_subject_path(subject), entity: subject, show_bl: false } %>
             </td>
           </tr>
       <% end %>

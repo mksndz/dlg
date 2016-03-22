@@ -35,7 +35,7 @@
               <%= link_to role.name, role %>
             </td>
             <td>
-              <%= render partial: 'shared/entity_actions', locals: { entity: role, show_bl: false } %>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: admin_role_path(role), edit_path: edit_admin_role_path(role), entity: role, show_bl: false } %>
             </td>
           </tr>
       <% end %>

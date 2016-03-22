@@ -1,6 +1,6 @@
 require 'faker'
 
-Fabricator(:item, from: 'Admin::Item') do
+Fabricator(:item) do
 
   slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'),'-') }
   dc_title { [

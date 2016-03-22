@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe Admin::Item, type: :model do
+RSpec.describe Item, type: :model do
 
   it 'has none to begin with' do
-    expect(Admin::Item.count).to eq 0
+    expect(Item.count).to eq 0
   end
 
   it 'has one after adding one' do
     Fabricate(:item)
-    expect(Admin::Item.count).to eq 1
+    expect(Item.count).to eq 1
   end
 
   # duh
@@ -16,7 +16,7 @@ RSpec.describe Admin::Item, type: :model do
     i = Fabricate(:item) {
       repository
     }
-    expect(i.repository).to be_kind_of Admin::Repository
+    expect(i.repository).to be_kind_of Repository
   end
 
   # duh
@@ -24,7 +24,7 @@ RSpec.describe Admin::Item, type: :model do
     i = Fabricate(:item) {
       collection
     }
-    expect(i.collection).to be_kind_of Admin::Collection
+    expect(i.collection).to be_kind_of Collection
   end
 
   it 'has a String title' do
@@ -45,7 +45,7 @@ RSpec.describe Admin::Item, type: :model do
   it 'indexes the item in Solr' do
     i = Fabricate(:item)
     Sunspot.commit
-    results = Admin::Item.search do
+    results = Item.search do
       fulltext i.title
     end.results
     expect(results).to include i
@@ -54,7 +54,7 @@ RSpec.describe Admin::Item, type: :model do
   it 'deindexes the item in Solr on delete' do
     i = Fabricate(:item)
     i.destroy
-    results = Admin::Item.search do
+    results = Item.search do
       fulltext i.title # todo is there a better way?
     end.results
     expect(results).to be_empty

@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
   has_many :users, foreign_key: 'creator_id'
 
-  has_and_belongs_to_many :repositories, class_name: 'Admin::Repository'
-  has_and_belongs_to_many :collections, class_name: 'Admin::Collection'
+  has_and_belongs_to_many :repositories
+  has_and_belongs_to_many :collections
 
   if Blacklight::Utils.needs_attr_accessible?
     attr_accessible :email, :password, :password_confirmation

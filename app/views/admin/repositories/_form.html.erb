@@ -1,4 +1,4 @@
-<%= bootstrap_form_for(@repository, inline_errors: false) do |f| %>
+<%= bootstrap_form_for([:admin, @repository], inline_errors: false) do |f| %>
 
     <%= f.alert_message 'The record could not be saved due to the following errors:' %>
 

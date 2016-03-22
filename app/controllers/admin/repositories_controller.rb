@@ -28,7 +28,7 @@ module Admin
     def create
       @repository = Repository.new repository_params
       if @repository.save
-        redirect_to @repository, notice: 'Repository created'
+        redirect_to admin_repository_path(@repository), notice: 'Repository created'
       else
         render :new, alert: 'Error creating repository'
       end
@@ -39,7 +39,7 @@ module Admin
 
     def update
       if @repository.update(repository_params)
-        redirect_to @repository, notice: 'Repository updated'
+        redirect_to admin_repository_path(@repository), notice: 'Repository updated'
       else
         render :edit, alert: 'Error creating repository'
       end

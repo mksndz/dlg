@@ -39,10 +39,10 @@
       <% @repositories.each do |repository| %>
           <tr>
             <td>
-              <%= link_to repository.id, repository %>
+              <%= link_to repository.id, admin_repository_path(repository) %>
             </td>
             <td>
-              <%= link_to repository.slug, repository %>
+              <%= link_to repository.slug, admin_repository_path(repository) %>
             </td>
             <td>
               <%= repository.title %>
@@ -52,7 +52,7 @@
             </td>
             <td>
               <div class="btn-group btn-group-xs">
-                <%= render partial: 'shared/entity_actions', locals: { entity: repository, show_bl: false } %>
+                <%= render partial: 'shared/entity_actions', locals: { base_path: admin_repository_path(repository), edit_path: edit_admin_repository_path(repository), entity: repository, show_bl: false } %>
               </div>
             </td>
           </tr>

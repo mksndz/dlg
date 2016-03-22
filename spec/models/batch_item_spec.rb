@@ -27,7 +27,7 @@ RSpec.describe Admin::BatchItem, type: :model do
 
   it 'is not an Item' do
     b = Fabricate(:batch) { batch_items(count: 1) }
-    expect(b.batch_items.first).not_to be_kind_of Admin::Item
+    expect(b.batch_items.first).not_to be_kind_of Item
   end
 
 end
