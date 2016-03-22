@@ -54,6 +54,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'rsolr'
 gem 'devise'
 gem 'devise-guests', '~> 0.3'
+gem 'devise_invitable', '~> 1.5.2'
 gem 'blacklight-marc'
 gem 'pg'
 gem 'bootstrap_form'
