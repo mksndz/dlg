@@ -1,7 +1,7 @@
 <div class="well">
   <p><strong>Collections</strong></p>
   <ul class="list-unstyled">
-    <% @collections.each do |c| %>
+    <% @search_options[:collections].each do |c| %>
         <li><%= link_to c.display_title, filtered_meta_items_path(c) %></li>
     <% end %>
   </ul>

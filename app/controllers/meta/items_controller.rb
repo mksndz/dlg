@@ -10,28 +10,45 @@ module Meta
     before_action :collections_for_select, only: [ :new, :copy, :edit ]
 
     def index
-      @collections = Collection.all.order(:display_title)
+
+      set_search_options
 
       if current_admin.super?
-        if params[:collection_id]
-          @items = Item
-                       .where(collection_id: params[:collection_id])
-                       .order(sort_column + ' ' + sort_direction)
-                       .page(params[:page])
+        if params[:search]
+          search = Item.search do
+            # todo repo and collection limits
+            with :dpla, params[:dpla] unless params[:dpla].empty?
+            with :public, params[:public] unless params[:public].empty?
+            fulltext params[:keyword]
+          end
+          @items = search.results
         else
           @items = Item
+              .order(sort_column + ' ' + sort_direction)
+              .page(params[:page])
+        end
+      else
+        if params[:search]
+          search = Item.search do
+            # todo limit by repos and collections based on Admin relationships
+            with :dpla, params[:dpla] unless params[:dpla].empty?
+            with :public, params[:public] unless params[:public].empty?
+            fulltext params[:keyword]
+          end
+          @items = search.results
+        else
+          collection_ids = current_admin.collection_ids || []
+          collection_ids += current_admin.repositories.map { |r| r.collection_ids }
+          @items = Item
+                       .includes(:collection)
+                       .where(collection: collection_ids.flatten)
                        .order(sort_column + ' ' + sort_direction)
                        .page(params[:page])
         end
-      else
-        collection_ids = current_admin.collection_ids || []
-        collection_ids += current_admin.repositories.map { |r| r.collection_ids }
-        @items = Item
-                     .includes(:collection)
-                     .where(collection: collection_ids.flatten)
-                     .order(sort_column + ' ' + sort_direction)
-                     .page(params[:page])
+
       end
+
+      @items
 
     end
 
@@ -107,6 +124,14 @@ module Meta
           :dc_relation,
           :other_collections  => [],
       )
+    end
+
+    def set_search_options
+      @search_options = {}
+      @search_options[:collections] = Collection.all
+      @search_options[:repositories] = Repository.all
+      @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']]
+      @search_options[:dpla] = [['Yes or No', ''],['Yes', '1'],['No', '0']]
     end
   end
 end
