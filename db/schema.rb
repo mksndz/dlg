@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322185032) do
+ActiveRecord::Schema.define(version: 20160323140526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,13 +40,23 @@ ActiveRecord::Schema.define(version: 20160322185032) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
+    t.integer  "creator_id"
   end
 
+  add_index "admins", ["creator_id"], name: "index_admins_on_creator_id", using: :btree
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["invitation_token"], name: "index_admins_on_invitation_token", unique: true, using: :btree
   add_index "admins", ["invitations_count"], name: "index_admins_on_invitations_count", using: :btree
   add_index "admins", ["invited_by_id"], name: "index_admins_on_invited_by_id", using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "admins_roles", id: false, force: :cascade do |t|
+    t.integer "role_id",  null: false
+    t.integer "admin_id", null: false
+  end
+
+  add_index "admins_roles", ["admin_id", "role_id"], name: "index_admins_roles_on_admin_id_and_role_id", using: :btree
+  add_index "admins_roles", ["role_id", "admin_id"], name: "index_admins_roles_on_role_id_and_admin_id", using: :btree
 
   create_table "batch_items", force: :cascade do |t|
     t.boolean  "dpla",                 default: false, null: false
@@ -225,14 +235,6 @@ ActiveRecord::Schema.define(version: 20160322185032) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles_users", id: false, force: :cascade do |t|
-    t.integer "role_id", null: false
-    t.integer "user_id", null: false
-  end
-
-  add_index "roles_users", ["role_id", "user_id"], name: "index_roles_users_on_role_id_and_user_id", using: :btree
-  add_index "roles_users", ["user_id", "role_id"], name: "index_roles_users_on_user_id_and_role_id", using: :btree
-
   create_table "searches", force: :cascade do |t|
     t.text     "query_params"
     t.integer  "user_id"
@@ -263,10 +265,8 @@ ActiveRecord::Schema.define(version: 20160322185032) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.boolean  "guest",                  default: false
-    t.integer  "creator_id"
   end
 
-  add_index "users", ["creator_id"], name: "index_users_on_creator_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
