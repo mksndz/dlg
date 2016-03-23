@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323141740) do
+ActiveRecord::Schema.define(version: 20160323144416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,15 +105,15 @@ ActiveRecord::Schema.define(version: 20160323141740) do
   add_index "batch_items", ["slug"], name: "index_batch_items_on_slug", using: :btree
 
   create_table "batches", force: :cascade do |t|
-    t.integer  "user_id",      null: false
     t.string   "name",         null: false
     t.text     "notes"
     t.datetime "committed_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "admin_id"
   end
 
-  add_index "batches", ["user_id"], name: "index_batches_on_user_id", using: :btree
+  add_index "batches", ["admin_id"], name: "index_batches_on_admin_id", using: :btree
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       null: false

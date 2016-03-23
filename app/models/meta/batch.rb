@@ -1,17 +1,17 @@
 module Meta
   class Batch < ActiveRecord::Base
 
-    belongs_to :user
+    belongs_to :admin
     has_many :batch_items, dependent: :destroy
 
-    validates_presence_of :user, :name
+    validates_presence_of :admin, :name
 
     searchable do
 
       text :name
       text :notes
 
-      integer :user_id
+      integer :admin_id
 
       time :committed_at
       time :updated_at
