@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323140526) do
+ActiveRecord::Schema.define(version: 20160323141740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,22 @@ ActiveRecord::Schema.define(version: 20160323140526) do
   add_index "admins", ["invitations_count"], name: "index_admins_on_invitations_count", using: :btree
   add_index "admins", ["invited_by_id"], name: "index_admins_on_invited_by_id", using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "admins_collections", id: false, force: :cascade do |t|
+    t.integer "collection_id", null: false
+    t.integer "admin_id",      null: false
+  end
+
+  add_index "admins_collections", ["admin_id", "collection_id"], name: "index_admins_collections_on_admin_id_and_collection_id", using: :btree
+  add_index "admins_collections", ["collection_id", "admin_id"], name: "index_admins_collections_on_collection_id_and_admin_id", using: :btree
+
+  create_table "admins_repositories", id: false, force: :cascade do |t|
+    t.integer "repository_id", null: false
+    t.integer "admin_id",      null: false
+  end
+
+  add_index "admins_repositories", ["admin_id", "repository_id"], name: "index_admins_repositories_on_admin_id_and_repository_id", using: :btree
+  add_index "admins_repositories", ["repository_id", "admin_id"], name: "index_admins_repositories_on_repository_id_and_admin_id", using: :btree
 
   create_table "admins_roles", id: false, force: :cascade do |t|
     t.integer "role_id",  null: false
@@ -154,14 +170,6 @@ ActiveRecord::Schema.define(version: 20160323140526) do
   add_index "collections_subjects", ["collection_id", "subject_id"], name: "index_collections_subjects_on_collection_id_and_subject_id", using: :btree
   add_index "collections_subjects", ["subject_id", "collection_id"], name: "index_collections_subjects_on_subject_id_and_collection_id", using: :btree
 
-  create_table "collections_users", id: false, force: :cascade do |t|
-    t.integer "user_id",       null: false
-    t.integer "collection_id", null: false
-  end
-
-  add_index "collections_users", ["collection_id", "user_id"], name: "index_collections_users_on_collection_id_and_user_id", using: :btree
-  add_index "collections_users", ["user_id", "collection_id"], name: "index_collections_users_on_user_id_and_collection_id", using: :btree
-
   create_table "items", force: :cascade do |t|
     t.integer  "collection_id"
     t.boolean  "dpla",                 default: false, null: false
@@ -220,14 +228,6 @@ ActiveRecord::Schema.define(version: 20160323140526) do
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree
-
-  create_table "repositories_users", id: false, force: :cascade do |t|
-    t.integer "user_id",       null: false
-    t.integer "repository_id", null: false
-  end
-
-  add_index "repositories_users", ["repository_id", "user_id"], name: "index_repositories_users_on_repository_id_and_user_id", using: :btree
-  add_index "repositories_users", ["user_id", "repository_id"], name: "index_repositories_users_on_user_id_and_repository_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
