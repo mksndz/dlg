@@ -61,7 +61,7 @@ module Meta
     def destroy
       # todo determine if a soft delete would be better for users
       @user.destroy
-      redirect_to admin_users_url, notice: 'User was successfully destroyed.'
+      redirect_to meta_users_url, notice: 'User was successfully destroyed.'
     end
 
     private

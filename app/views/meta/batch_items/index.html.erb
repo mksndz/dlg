@@ -8,8 +8,8 @@
   end
 %>
 
-<%= link_to 'Add Batch Item', new_admin_batch_batch_item_path(@batch), class: 'btn btn-default' %>
-<%= link_to 'Populate Batch Items via XML', xml_admin_batch_batch_items_path(@batch), class: 'btn btn-default' %>
+<%= link_to 'Add Batch Item', new_meta_batch_batch_item_path(@batch), class: 'btn btn-default' %>
+<%= link_to 'Populate Batch Items via XML', xml_meta_batch_batch_items_path(@batch), class: 'btn btn-default' %>
 
 <% if @batch_items.empty? %>
 

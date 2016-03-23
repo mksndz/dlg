@@ -18,7 +18,7 @@
     end
 %>
 
-<%= link_to 'Add Item', new_admin_item_path, class: 'btn btn-default' %>
+<%= link_to 'Add Item', new_meta_item_path, class: 'btn btn-default' %>
 
 <% if @items.empty? %>
 
@@ -49,19 +49,19 @@
         <% @items.each do |item| %>
           <tr class="<%= warning_highlight(item) %>">
             <td>
-              <%= link_to item.id, admin_item_path(item) %>
+              <%= link_to item.id, meta_item_path(item) %>
             </td>
             <td>
-              <%= link_to item.slug, admin_item_path(item) %>
+              <%= link_to item.slug, meta_item_path(item) %>
             </td>
             <td>
               <%= item.title %>
             </td>
             <td>
-              <%= link_to(item.collection.display_title, admin_collection_path(item.collection)) if item.collection %>
+              <%= link_to(item.collection.display_title, meta_collection_path(item.collection)) if item.collection %>
             </td>
             <td>
-              <%= render partial: 'shared/entity_actions', locals: { base_path: admin_item_path(item), edit_path: edit_admin_item_path(item), entity: item, show_bl: true } %>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: meta_item_path(item), edit_path: edit_meta_item_path(item), entity: item, show_bl: true } %>
             </td>
           </tr>
         <% end %>

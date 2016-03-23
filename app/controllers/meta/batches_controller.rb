@@ -81,7 +81,7 @@ module Meta
     def destroy
       @batch.destroy
       respond_to do |format|
-        format.html { redirect_to admin_batches_url, notice: 'Batch was successfully destroyed.' }
+        format.html { redirect_to meta_batches_url, notice: 'Batch was successfully destroyed.' }
         format.json { head :no_content }
       end
     end

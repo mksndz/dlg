@@ -45,7 +45,7 @@ module Meta
     def create
       @item = Item.new(split_dc_params(item_params))
       if @item.save
-        redirect_to admin_item_path(@item), notice: 'Item created'
+        redirect_to meta_item_path(@item), notice: 'Item created'
       else
         collections_for_select
         render :new, alert: 'Error creating item'
@@ -61,7 +61,7 @@ module Meta
 
     def update
       if @item.update(split_dc_params(item_params))
-        redirect_to admin_item_path(@item), notice: 'Item updated'
+        redirect_to meta_item_path(@item), notice: 'Item updated'
       else
         collections_for_select
         render :edit, alert: 'Error creating item'
@@ -70,9 +70,9 @@ module Meta
 
     def destroy
       if @item.destroy
-        redirect_to admin_items_path, notice: 'Item destroyed.'
+        redirect_to meta_items_path, notice: 'Item destroyed.'
       else
-        redirect_to admin_items_path, alert: 'Item could not be destroyed.'
+        redirect_to meta_items_path, alert: 'Item could not be destroyed.'
       end
     end
 

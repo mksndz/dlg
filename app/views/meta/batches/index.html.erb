@@ -18,7 +18,7 @@
   end
 %>
 
-<%= link_to 'Add Batch', new_admin_batch_path, class: 'btn btn-default' %>
+<%= link_to 'Add Batch', new_meta_batch_path, class: 'btn btn-default' %>
 
 <% if @batches.empty? %>
 
@@ -55,13 +55,13 @@
               <%= link_to batch.name, batch %>
             </td>
             <td>
-              <%= link_to batch.batch_items.size, admin_batch_batch_items_path(batch_id: batch.id) %>
+              <%= link_to batch.batch_items.size, meta_batch_batch_items_path(batch_id: batch.id) %>
             </td>
             <td>
               <%= batch.user.email %>
             </td>
             <td>
-              <%= render partial: 'shared/entity_actions', locals: { base_path: admin_batch_path(batch), edit_path: edit_admin_batch_path(batch), entity: batch, show_bl: false } %>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: meta_batch_path(batch), edit_path: edit_meta_batch_path(batch), entity: batch, show_bl: false } %>
             </td>
           </tr>
       <% end %>

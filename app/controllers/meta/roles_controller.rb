@@ -47,7 +47,7 @@ module Meta
     # DELETE /roles/1
     def destroy
       @role.destroy
-      redirect_to admin_roles_url, notice: 'Role was successfully destroyed.'
+      redirect_to meta_roles_url, notice: 'Role was successfully destroyed.'
     end
 
     private

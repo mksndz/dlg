@@ -28,7 +28,7 @@ module Meta
     def create
       @repository = Repository.new repository_params
       if @repository.save
-        redirect_to admin_repository_path(@repository), notice: 'Repository created'
+        redirect_to meta_repository_path(@repository), notice: 'Repository created'
       else
         render :new, alert: 'Error creating repository'
       end
@@ -39,7 +39,7 @@ module Meta
 
     def update
       if @repository.update(repository_params)
-        redirect_to admin_repository_path(@repository), notice: 'Repository updated'
+        redirect_to meta_repository_path(@repository), notice: 'Repository updated'
       else
         render :edit, alert: 'Error creating repository'
       end
@@ -47,7 +47,7 @@ module Meta
 
     def destroy
       @repository.destroy
-      redirect_to admin_repositories_path, notice: 'Repository destroyed.'
+      redirect_to meta_repositories_path, notice: 'Repository destroyed.'
     end
 
     private

@@ -48,7 +48,7 @@ module Meta
 
       respond_to do |format|
         if @collection.save
-          format.html { redirect_to admin_collection_path(@collection), notice: 'Collection item was successfully created.' }
+          format.html { redirect_to meta_collection_path(@collection), notice: 'Collection item was successfully created.' }
         else
           repositories_for_select
           format.html { render :new }
@@ -65,7 +65,7 @@ module Meta
       new_params = split_dc_params(collection_params)
 
       if @collection.update new_params
-        redirect_to admin_collection_path(@collection), notice: 'Collection updated'
+        redirect_to meta_collection_path(@collection), notice: 'Collection updated'
       else
         repositories_for_select
         render :edit, alert: 'Error creating collection'
@@ -74,7 +74,7 @@ module Meta
 
     def destroy
       @collection.destroy
-      redirect_to admin_collections_path, notice: 'Collection destroyed.'
+      redirect_to meta_collections_path, notice: 'Collection destroyed.'
     end
 
     private
