@@ -4,6 +4,7 @@
     Meta::BatchItem,
     Item,
     User,
+    Admin,
     Meta::Role,
     Meta::Batch,
     Collection,
@@ -43,6 +44,9 @@ Meta::Role.create!([
                  { name: 'basic' }
              ])
 
+#
+# Initial Admin User
+#
 admin = Admin.create!(
                 email: 'mak@uga.edu',
                 password: 'password'
