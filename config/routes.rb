@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
     resources :repositories, :collections, :roles, :admins, :subjects
 
+    resources :users, only: [:index, :show, :destroy]
+
     resources :items do
       collection do
         get 'for/:collection_id', to: 'items#index', as: :filtered
