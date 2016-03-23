@@ -40,6 +40,7 @@ module Meta
           format.html { redirect_to meta_batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully created.' }
           format.json { render :show, status: :created, location: @batch_item }
         else
+          collections_for_select
           format.html { render :new }
           format.json { render json: @batch_item.errors, status: :unprocessable_entity }
         end
@@ -54,6 +55,7 @@ module Meta
           format.html { redirect_to meta_batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully updated.' }
           format.json { render :show, status: :ok, location: @batch_item }
         else
+          collections_for_select
           format.html { render :edit }
           format.json { render json: @batch_item.errors, status: :unprocessable_entity }
         end
@@ -114,7 +116,7 @@ module Meta
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def batch_item_params
-      params.require(:batch_item).permit(
+      params.require(:meta_batch_item).permit(
           :collection_id,
           :slug,
           :dpla,
