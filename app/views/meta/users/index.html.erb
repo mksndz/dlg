@@ -1,0 +1,47 @@
+<% content_for :adminr_area_title do %>
+    Users
+<% end %>
+
+<br><br>
+
+<% if @users.empty? %>
+
+    <p>No Users have joined yet.</p>
+
+<% else %>
+
+  <table class="table table-condensed table-hover">
+    <thead>
+    <tr>
+      <th>
+        <%= sortable 'id', 'ID' %>
+      </th>
+      <th>
+        <%= sortable 'email', 'Email' %>
+      </th>
+      <th>
+        Bookmarks
+      </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @users.each do |user| %>
+        <tr>
+          <td>
+            <%= link_to user.id, meta_user_path(user) %>
+          </td>
+          <td>
+            <%= link_to user.email, meta_user_path(user) %>
+          </td>
+          <td>
+            <% user.bookmarks.length %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+    <%= paginate @users %>
+
+<% end %>

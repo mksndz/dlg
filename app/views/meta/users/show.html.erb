@@ -1,0 +1,11 @@
+<%= content_for :admin_area_title do %>
+    Show User
+<% end %>
+
+<%= content_for :admin_area_subtitle do %>
+    <%= @user.email %>
+<% end %>
+
+<br><br>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.admin.email'), value: @admin.email %>
