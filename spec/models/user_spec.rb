@@ -20,7 +20,7 @@ RSpec.describe User, type: :model do
     r = Fabricate(:user) {
       roles(count: 2)
     }
-    expect(r.roles.first).to be_kind_of Admin::Role
+    expect(r.roles.first).to be_kind_of Meta::Role
   end
 
 end

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Admin::RepositoriesController, type: :controller do
+RSpec.describe Meta::RepositoriesController, type: :controller do
 
-  let(:admin_user) {
-    Fabricate(:admin)
+  let(:super_user) {
+    Fabricate(:super)
   }
 
   before(:each) {
-    sign_in admin_user
+    sign_in super_user
   }
 
   let(:valid_attributes) {
@@ -31,7 +31,7 @@ RSpec.describe Admin::RepositoriesController, type: :controller do
     end
 
     it 'assigns a repository connected to a user to @repositories' do
-      sign_out admin_user # todo
+      sign_out super_user # todo
       basic_user = Fabricate(:basic)
       sign_in basic_user
       repository1 = Fabricate(:repository)

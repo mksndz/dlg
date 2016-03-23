@@ -3,14 +3,14 @@ require 'cancan/matchers'
 
 RSpec.describe AdminAbility, type: :model do
 
-  let(:admin_user)        { Fabricate :admin }
+  let(:super_user)        { Fabricate :super }
   let(:basic_user)        { Fabricate :basic }
   let(:coordinator_user)  { Fabricate :coordinator }
   let(:committer_user)    { Fabricate :committer }
 
   context 'for an Admin user' do
     
-    subject { AdminAbility.new admin_user }
+    subject { AdminAbility.new super_user }
 
     it 'can manage all things' do
       is_expected.to be_able_to :manage, :all

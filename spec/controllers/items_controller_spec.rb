@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Admin::ItemsController, type: :controller do
+RSpec.describe Meta::ItemsController, type: :controller do
 
-  let(:admin_user) {
-    Fabricate(:admin)
+  let(:super_user) {
+    Fabricate(:super)
   }
 
   before(:each) {
-    sign_in admin_user
+    sign_in super_user
   }
 
   let(:valid_attributes) {
@@ -33,7 +33,7 @@ RSpec.describe Admin::ItemsController, type: :controller do
     end
 
     it 'assigns items connected to a user to @items' do
-      sign_out admin_user # todo
+      sign_out super_user # todo
       basic_user = Fabricate(:basic)
       sign_in basic_user
 
@@ -104,7 +104,7 @@ RSpec.describe Admin::ItemsController, type: :controller do
 
     context 'basic user without Repository or Collection assigned' do
       it 'restricts user from creating an Item' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         post :create, {:item => valid_attributes}, valid_session
@@ -114,7 +114,7 @@ RSpec.describe Admin::ItemsController, type: :controller do
 
     context 'basic user with Repository assigned' do
       it 'allows creation of an Item if the user is assigned to the selected Repository' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         repository = Fabricate(:repository)
@@ -129,7 +129,7 @@ RSpec.describe Admin::ItemsController, type: :controller do
 
     context 'basic user with Collection assigned' do
       it 'allows creation of an Item if the user is assigned to the selected Collection' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         collection = Fabricate(:collection)
@@ -181,7 +181,7 @@ RSpec.describe Admin::ItemsController, type: :controller do
       }
 
       it 'fails if user is not assigned the Item Collection or Item Repository' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         item = Item.create! valid_attributes
@@ -191,7 +191,7 @@ RSpec.describe Admin::ItemsController, type: :controller do
       end
 
       it 'allows basic user to update a Item if Collection is assigned' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         collection = Fabricate(:collection)
@@ -203,7 +203,7 @@ RSpec.describe Admin::ItemsController, type: :controller do
       end
 
       it 'allows basic user to update a Item if parent Repository is assigned' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         repository = Fabricate(:repository)

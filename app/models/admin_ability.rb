@@ -1,47 +1,47 @@
 class AdminAbility
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(admin)
 
-    user ||= User.new # is this needed since we use devise-guests?
+    admin ||= Admin.new # is this needed since we use devise-guests?
 
-    if user.admin?
+    if admin.super?
       can :manage, :all
     end
 
-    if user.basic?
+    if admin.basic?
 
       can [:index, :show, :new, :create, :edit, :update], Repository do |repository|
-        user.repositories.include?(repository)
+        admin.repositories.include?(repository)
       end
 
       can [:index, :show, :new, :create, :edit, :update], Collection do |collection|
-        user.repositories.include?(collection.repository) ||
-            user.collections.include?(collection)
+        admin.repositories.include?(collection.repository) ||
+            admin.collections.include?(collection)
       end
 
       can [:index, :show, :new, :create, :edit, :update, :copy, :destroy], Item do |item|
-        user.repositories.include?(item.repository) ||
-            user.collections.include?(item.collection)
+        admin.repositories.include?(item.repository) ||
+            admin.collections.include?(item.collection)
       end
 
-      can [:show, :edit, :update, :destroy], Admin::Batch, user_id: user.id
-      can [:index, :new, :create], Admin::Batch
-      can [:index, :show, :new, :create], Admin::BatchItem
-      can [:edit, :update, :destroy], Admin::BatchItem, { batch: { user_id: user.id }  }
+      can [:show, :edit, :update, :destroy], Meta::Batch, admin_id: admin.id
+      can [:index, :new, :create], Meta::Batch
+      can [:index, :show, :new, :create], Meta::BatchItem
+      can [:edit, :update, :destroy], Meta::BatchItem, { batch: { admin_id: admin.id }  }
 
     end
 
-    if user.coordinator?
+    if admin.coordinator?
 
       can [:new, :create], User
-      can [:index, :show, :edit, :update, :destroy], User, creator_id: user.id
+      can [:index, :show, :edit, :update, :destroy], User, creator_id: admin.id
 
     end
 
-    if user.committer?
+    if admin.committer?
 
-      can :commit, Admin::Batch, user_id: user.id
+      can :commit, Meta::Batch, admin_id: admin.id
 
     end
 

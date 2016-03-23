@@ -1,0 +1,9 @@
+<%= bootstrap_form_for [:meta, @subject] do |f| %>
+
+    <%= f.alert_message 'The Batch could not be saved due to the following errors:' %>
+
+    <%= f.text_field :name %>
+
+    <%= f.primary 'Save' %>
+
+<% end %>

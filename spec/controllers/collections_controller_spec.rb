@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Admin::CollectionsController, type: :controller do
+RSpec.describe Meta::CollectionsController, type: :controller do
 
-  let(:admin_user) {
-    Fabricate(:admin)
+  let(:super_user) {
+    Fabricate(:super)
   }
 
   before(:each) {
-    sign_in admin_user
+    sign_in super_user
   }
 
   let(:valid_attributes) {
@@ -34,7 +34,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
     end
 
     it 'assigns collections connected to a user to @collections' do
-      sign_out admin_user # todo
+      sign_out super_user # todo
       basic_user = Fabricate(:basic)
       sign_in basic_user
       collection1 = Fabricate(:collection)
@@ -84,7 +84,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
 
     context 'basic user without repository assigned' do
       it 'restricts user from creating a Collection' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         post :create, {:collection => valid_attributes}, valid_session
@@ -94,7 +94,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
 
     context 'basic user with repository assigned' do
       it 'allows creation of a collection if the user is assigned to the selected repository' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         repository = Fabricate(:repository)
@@ -147,7 +147,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
       }
 
       it 'fails if user is not assigned the collection or collection repository' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         collection = Collection.create! valid_attributes
@@ -157,7 +157,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
       end
 
       it 'allows basic user to update a collection if collection is assigned' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         collection = Fabricate(:collection)
@@ -168,7 +168,7 @@ RSpec.describe Admin::CollectionsController, type: :controller do
       end
 
       it 'allows basic user to update a collection if parent repository is assigned' do
-        sign_out admin_user
+        sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
         repository = Fabricate(:repository)

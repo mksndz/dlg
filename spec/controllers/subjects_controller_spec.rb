@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Admin::SubjectsController, type: :controller do
+RSpec.describe Meta::SubjectsController, type: :controller do
 
   before(:each) do
-    sign_in Fabricate(:admin)
+    sign_in Fabricate(:super)
   end
 
   let(:valid_attributes) {

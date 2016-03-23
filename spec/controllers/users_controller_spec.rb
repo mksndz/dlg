@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Admin::UsersController, type: :controller do
+RSpec.describe Meta::UsersController, type: :controller do
 
-  let(:admin_user) {
-    Fabricate(:admin)
+  let(:super_user) {
+    Fabricate(:super)
   }
 
   let(:coordinator_user) {
@@ -11,7 +11,7 @@ RSpec.describe Admin::UsersController, type: :controller do
   }
 
   before(:each) do
-    sign_in admin_user
+    sign_in super_user
   end
 
   let(:valid_attributes) {
@@ -32,7 +32,7 @@ RSpec.describe Admin::UsersController, type: :controller do
   describe 'GET #index' do
 
     it 'only shows a coordinator their created users' do
-      sign_out admin_user
+      sign_out super_user
       coordinator_user_2 = Fabricate(:coordinator)
       sign_in coordinator_user_2
       created_user = Fabricate(:basic) { creator coordinator_user_2 }
@@ -72,7 +72,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
 
     it 'restricts coordinator users from editing Users they did not create' do
-      sign_out admin_user
+      sign_out super_user
       sign_in coordinator_user
       user = Fabricate(:user)
       get :edit, {:id => user.to_param}, valid_session
@@ -80,7 +80,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
 
     it 'allow coordinator users to edit Users they created' do
-      sign_out admin_user
+      sign_out super_user
       coordinator_user = Fabricate(:coordinator)
       sign_in coordinator_user
       user = Fabricate(:user) { creator coordinator_user }
@@ -152,7 +152,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       it 'restricts coordinator users from updating Users they did not create' do
-        sign_out admin_user
+        sign_out super_user
         sign_in coordinator_user
         user = User.create! valid_attributes
         post :update, {:id => user.to_param, :user => new_attributes}, valid_session
@@ -160,7 +160,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       end
 
       it 'allows coordinator users to update Users they created' do
-        sign_out admin_user
+        sign_out super_user
         coordinator_user = Fabricate(:coordinator)
         sign_in coordinator_user
         owned_user = Fabricate(:user)
