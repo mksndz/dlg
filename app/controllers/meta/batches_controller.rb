@@ -11,7 +11,7 @@ module Meta
     # GET /batches.json
     def index
 
-      @admins = User.all # all admins with batches?
+      @admins = Admin.all # all admins with batches?
 
       if params[:admin_id]
         @admin = User.find(params[:admin_id])
