@@ -1,14 +1,5 @@
 class User < ActiveRecord::Base
 
-  has_many :batches
-  has_and_belongs_to_many :roles, class_name: 'Meta::Role'
-
-  belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
-  has_many :users, foreign_key: 'creator_id'
-
-  has_and_belongs_to_many :repositories
-  has_and_belongs_to_many :collections
-
   if Blacklight::Utils.needs_attr_accessible?
     attr_accessible :email, :password, :password_confirmation
   end
@@ -26,22 +17,6 @@ class User < ActiveRecord::Base
   # the account.
   def to_s
     email
-  end
-
-  def admin?
-    roles.where(name: 'admin').exists?
-  end
-
-  def coordinator?
-    roles.where(name: 'coordinator').exists?
-  end
-
-  def committer?
-    roles.where(name: 'committer').exists?
-  end
-
-  def basic?
-    roles.where(name: 'basic').exists?
   end
 
 end
