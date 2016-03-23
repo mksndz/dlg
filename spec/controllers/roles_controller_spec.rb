@@ -132,7 +132,7 @@ RSpec.describe Meta::RolesController, type: :controller do
     it 'redirects to the roles list' do
       role = Meta::Role.create! valid_attributes
       delete :destroy, {:id => role.to_param}, valid_session
-      expect(response).to redirect_to(admin_roles_url)
+      expect(response).to redirect_to(meta_roles_url)
     end
   end
 

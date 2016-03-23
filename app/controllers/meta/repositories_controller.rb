@@ -7,13 +7,13 @@ module Meta
     layout 'admin'
 
     def index
-      if current_user.admin?
+      if current_admin.super?
         @repositories = Repository
                             .order(sort_column + ' ' + sort_direction)
                             .page(params[:page])
       else
         # todo sorting?
-        @repositories = current_user.repositories.page(params[:page])
+        @repositories = current_admin.repositories.page(params[:page])
       end
 
     end

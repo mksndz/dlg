@@ -1,7 +1,7 @@
 <div class="well">
-  <p><strong>Users</strong></p>
+  <p><strong>Admin Users</strong></p>
   <ul class="list-unstyled">
-    <% @users.each do |u| %>
+    <% @admins.each do |u| %>
         <li><%= link_to u.email, filtered_meta_batches_path(u) %></li>
     <% end %>
   </ul>

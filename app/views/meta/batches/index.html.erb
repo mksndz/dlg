@@ -4,8 +4,8 @@
 
 <%=
   content_for :admin_area_subtitle do
-    if params[:user_id] && @user
-      'For ' + @user.email
+    if params[:admin_id] && @admin
+      'For ' + @admin.email
     else
       'All of them'
     end
@@ -14,7 +14,7 @@
 
 <%=
   content_for :sub_menu do
-    render 'batch_users_list' if @users
+    render 'batch_admins_list' if @admins
   end
 %>
 
@@ -58,7 +58,7 @@
               <%= link_to batch.batch_items.size, meta_batch_batch_items_path(batch_id: batch.id) %>
             </td>
             <td>
-              <%= batch.user.email %>
+              <%= batch.admin.email %>
             </td>
             <td>
               <%= render partial: 'shared/entity_actions', locals: { base_path: meta_batch_path(batch), edit_path: edit_meta_batch_path(batch), entity: batch, show_bl: false } %>

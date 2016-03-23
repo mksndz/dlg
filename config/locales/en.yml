@@ -3,7 +3,7 @@ en:
     attributes:
       subject:
         name: "Name"
-      user:
+      admin:
         email: "Email Address"
         password: "Password"
         password_confirmation: "Confirm Password"
@@ -16,7 +16,7 @@ en:
       batch:
         name: "Name"
         notes: "Descriptive Notes"
-        user_id: "Creator"
+        admin_id: "Creator"
         committed_at: "Committed At"
         created_at: "Created At"
         updated_at: "Updated At"
@@ -123,7 +123,7 @@ en:
     help:
       subject:
         name: "Display name for the Subject"
-      user:
+      admin:
         email: "This will also be the username"
         password: "Make it a good one"
         role_ids: "This will control the user's ability to alter things. All created users have a 'basic' role by default."

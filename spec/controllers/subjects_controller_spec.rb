@@ -63,7 +63,7 @@ RSpec.describe Meta::SubjectsController, type: :controller do
 
       it 'redirects to the created subject' do
         post :create, {:subject => valid_attributes}, valid_session
-        expect(response).to redirect_to(admin_subject_path(Subject.last))
+        expect(response).to redirect_to(meta_subject_path(Subject.last))
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.describe Meta::SubjectsController, type: :controller do
         subject = Subject.create! valid_attributes
         put :update, {:id => subject.to_param, :subject => new_attributes}, valid_session
         subject.reload
-        expect(response).to redirect_to(admin_subject_path(subject))
+        expect(response).to redirect_to(meta_subject_path(subject))
         expect(subject.name).to eq 'Advanced Rspec Testing'
       end
 
@@ -103,7 +103,7 @@ RSpec.describe Meta::SubjectsController, type: :controller do
       it 'redirects to the subject' do
         subject = Subject.create! valid_attributes
         put :update, {:id => subject.to_param, :subject => valid_attributes}, valid_session
-        expect(response).to redirect_to(admin_subject_path(subject))
+        expect(response).to redirect_to(meta_subject_path(subject))
       end
     end
 
@@ -133,7 +133,7 @@ RSpec.describe Meta::SubjectsController, type: :controller do
     it 'redirects to the subjects list' do
       subject = Subject.create! valid_attributes
       delete :destroy, {:id => subject.to_param}, valid_session
-      expect(response).to redirect_to(admin_subjects_url)
+      expect(response).to redirect_to(meta_subjects_url)
     end
   end
 

@@ -3,15 +3,15 @@
 <% end %>
 
 <%= content_for :admin_area_subtitle do %>
-    <%= @user.email %>
+    <%= @admin.email %>
 <% end %>
 
-<%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-default' %>
+<%= link_to 'Edit', edit_admin_path(@admin), class: 'btn btn-default' %>
 
 <br><br>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.user.email'), value: @user.email %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.user.creator'), value: @user.creator.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.admin.email'), value: @admin.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.admin.creator'), value: @admin.creator.email %>
 
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -19,7 +19,7 @@
   </div>
   <div class="panel-body">
     <ul>
-      <% @user.roles.each do |role| %>
+      <% @admin.roles.each do |role| %>
           <li><%= role.name %></li>
       <% end %>
     </ul>
@@ -32,7 +32,7 @@
   </div>
   <div class="panel-body">
     <ul>
-      <% @user.repositories.each do |r| %>
+      <% @admin.repositories.each do |r| %>
           <li><%= r.title %></li>
       <% end %>
     </ul>
@@ -45,7 +45,7 @@
   </div>
   <div class="panel-body">
     <ul>
-      <% @user.collections.each do |c| %>
+      <% @admin.collections.each do |c| %>
           <li><%= c.display_title %></li>
       <% end %>
     </ul>

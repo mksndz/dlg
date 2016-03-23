@@ -79,7 +79,7 @@ RSpec.describe Meta::BatchItemsController, type: :controller do
 
       it 'redirects to the created batch_item' do
         post :create, {batch_id: batch, :batch_item => valid_attributes}, valid_session
-        expect(response).to redirect_to(admin_batch_batch_item_url(batch, Meta::BatchItem.last))
+        expect(response).to redirect_to(meta_batch_batch_item_url(batch, Meta::BatchItem.last))
       end
     end
 
@@ -121,7 +121,7 @@ RSpec.describe Meta::BatchItemsController, type: :controller do
       it 'redirects to the batch_item' do
         batch_item = Meta::BatchItem.create! valid_attributes
         put :update, {batch_id: batch, :id => batch_item.to_param, :batch_item => valid_attributes}, valid_session
-        expect(response).to redirect_to(admin_batch_batch_item_url(batch, batch_item))
+        expect(response).to redirect_to(meta_batch_batch_item_url(batch, batch_item))
       end
     end
 
@@ -151,7 +151,7 @@ RSpec.describe Meta::BatchItemsController, type: :controller do
     it 'redirects to the batch_items list' do
       batch_item = Meta::BatchItem.create! valid_attributes
       delete :destroy, {batch_id: batch, :id => batch_item.to_param}, valid_session
-      expect(response).to redirect_to(admin_batch_batch_items_url(batch))
+      expect(response).to redirect_to(meta_batch_batch_items_url(batch))
     end
   end
 

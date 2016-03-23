@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Meta::CollectionsController, type: :controller do
 
-  let(:super_user) {
+  let(:super_admin) {
     Fabricate(:super)
   }
 
   before(:each) {
-    sign_in super_user
+    sign_in super_admin
   }
 
   let(:valid_attributes) {
@@ -33,10 +33,10 @@ RSpec.describe Meta::CollectionsController, type: :controller do
       expect(assigns(:collections)).to eq([collection])
     end
 
-    it 'assigns collections connected to a user to @collections' do
-      sign_out super_user # todo
-      basic_user = Fabricate(:basic)
-      sign_in basic_user
+    it 'assigns collections connected to a admin to @collections' do
+      sign_out super_admin # todo
+      basic_admin = Fabricate(:basic)
+      sign_in basic_admin
       collection1 = Fabricate(:collection)
       collection2 = Fabricate(:collection)
       collection3 = Fabricate(:collection)
@@ -48,8 +48,8 @@ RSpec.describe Meta::CollectionsController, type: :controller do
       repository2.collections << collection2
       repository2.collections << collection4
       repository3.collections << collection3
-      basic_user.repositories << repository1
-      basic_user.collections << collection2
+      basic_admin.repositories << repository1
+      basic_admin.collections << collection2
       get :index, {}, valid_session
       expect(assigns(:collections)).to include(collection1, collection2)
       expect(assigns(:collections)).not_to include(collection3, collection4)
@@ -82,27 +82,27 @@ RSpec.describe Meta::CollectionsController, type: :controller do
 
   describe 'POST #create' do
 
-    context 'basic user without repository assigned' do
-      it 'restricts user from creating a Collection' do
-        sign_out super_user
-        basic_user = Fabricate(:basic)
-        sign_in basic_user
+    context 'basic admin without repository assigned' do
+      it 'restricts admin from creating a Collection' do
+        sign_out super_admin
+        basic_admin = Fabricate(:basic)
+        sign_in basic_admin
         post :create, {:collection => valid_attributes}, valid_session
         expect(response).to redirect_to root_url
       end
     end
 
-    context 'basic user with repository assigned' do
-      it 'allows creation of a collection if the user is assigned to the selected repository' do
-        sign_out super_user
-        basic_user = Fabricate(:basic)
-        sign_in basic_user
+    context 'basic admin with repository assigned' do
+      it 'allows creation of a collection if the admin is assigned to the selected repository' do
+        sign_out super_admin
+        basic_admin = Fabricate(:basic)
+        sign_in basic_admin
         repository = Fabricate(:repository)
-        basic_user.repositories << repository
+        basic_admin.repositories << repository
         collection = Fabricate.build(:collection) { repository repository }
         collection.repository = repository
         post :create, {:collection => collection.as_json}, valid_session
-        expect(response).to redirect_to admin_collection_path(assigns(:collection))
+        expect(response).to redirect_to meta_collection_path(assigns(:collection))
       end
     end
 
@@ -121,7 +121,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
 
       it 'redirects to the created collection' do
         post :create, {:collection => valid_attributes}, valid_session
-        expect(response).to redirect_to(admin_collection_path(Collection.last))
+        expect(response).to redirect_to(meta_collection_path(Collection.last))
       end
     end
 
@@ -146,33 +146,33 @@ RSpec.describe Meta::CollectionsController, type: :controller do
         }
       }
 
-      it 'fails if user is not assigned the collection or collection repository' do
-        sign_out super_user
-        basic_user = Fabricate(:basic)
-        sign_in basic_user
+      it 'fails if admin is not assigned the collection or collection repository' do
+        sign_out super_admin
+        basic_admin = Fabricate(:basic)
+        sign_in basic_admin
         collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
         expect(response).to redirect_to root_url
       end
 
-      it 'allows basic user to update a collection if collection is assigned' do
-        sign_out super_user
-        basic_user = Fabricate(:basic)
-        sign_in basic_user
+      it 'allows basic admin to update a collection if collection is assigned' do
+        sign_out super_admin
+        basic_admin = Fabricate(:basic)
+        sign_in basic_admin
         collection = Fabricate(:collection)
-        basic_user.collections << collection
+        basic_admin.collections << collection
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
         expect(assigns(:collection).dc_title).to include 'New Subtitle'
       end
 
-      it 'allows basic user to update a collection if parent repository is assigned' do
-        sign_out super_user
-        basic_user = Fabricate(:basic)
-        sign_in basic_user
+      it 'allows basic admin to update a collection if parent repository is assigned' do
+        sign_out super_admin
+        basic_admin = Fabricate(:basic)
+        sign_in basic_admin
         repository = Fabricate(:repository)
-        basic_user.repositories << repository
+        basic_admin.repositories << repository
         collection = Fabricate(:collection) { repository repository }
         collection.repository = repository
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
@@ -196,7 +196,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
       it 'redirects to the collection' do
         collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
-        expect(response).to redirect_to(admin_collection_path(collection))
+        expect(response).to redirect_to(meta_collection_path(collection))
       end
     end
 
@@ -226,7 +226,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
     it 'redirects to the collections list' do
       collection = Collection.create! valid_attributes
       delete :destroy, {:id => collection.to_param}, valid_session
-      expect(response).to redirect_to(admin_collections_url)
+      expect(response).to redirect_to(meta_collections_url)
     end
   end
 

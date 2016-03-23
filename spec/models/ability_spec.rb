@@ -3,14 +3,14 @@ require 'cancan/matchers'
 
 RSpec.describe AdminAbility, type: :model do
 
-  let(:super_user)        { Fabricate :super }
-  let(:basic_user)        { Fabricate :basic }
-  let(:coordinator_user)  { Fabricate :coordinator }
-  let(:committer_user)    { Fabricate :committer }
+  let(:super_admin)        { Fabricate :super }
+  let(:basic_admin)        { Fabricate :basic }
+  let(:coordinator_admin)  { Fabricate :coordinator }
+  let(:committer_admin)    { Fabricate :committer }
 
-  context 'for an Admin user' do
+  context 'for an Admin admin' do
     
-    subject { AdminAbility.new super_user }
+    subject { AdminAbility.new super_admin }
 
     it 'can manage all things' do
       is_expected.to be_able_to :manage, :all
@@ -18,47 +18,47 @@ RSpec.describe AdminAbility, type: :model do
 
   end
   
-  context 'for a Coordinator user' do
+  context 'for a Coordinator admin' do
     
-    subject { AdminAbility.new coordinator_user }
+    subject { AdminAbility.new coordinator_admin }
 
     it 'cannot manage all things' do
       is_expected.not_to be_able_to :manage, :all
     end
 
-    it 'can create new Users' do
-      is_expected.to be_able_to :new, User.new
-      is_expected.to be_able_to :create, User.new
+    it 'can create new Admins' do
+      is_expected.to be_able_to :new, Admin.new
+      is_expected.to be_able_to :create, Admin.new
     end
 
-    it 'can modify Users for which it is the creator' do
+    it 'can modify Admins for which it is the creator' do
 
-      user = Fabricate :user
-      user.creator = coordinator_user
+      admin = Fabricate :admin
+      admin.creator = coordinator_admin
 
-      is_expected.to be_able_to :edit, user
-      is_expected.to be_able_to :update, user
-      is_expected.to be_able_to :destroy, user
+      is_expected.to be_able_to :edit, admin
+      is_expected.to be_able_to :update, admin
+      is_expected.to be_able_to :destroy, admin
 
     end
 
-    it 'cannot modify Users for which it is not the creator' do
+    it 'cannot modify Admins for which it is not the creator' do
 
-      user = Fabricate :user
-      other_user = Fabricate :user
-      user.creator = other_user
+      admin = Fabricate :admin
+      other_admin = Fabricate :admin
+      admin.creator = other_admin
 
-      is_expected.not_to be_able_to :edit, user
-      is_expected.not_to be_able_to :update, user
-      is_expected.not_to be_able_to :destroy, user
+      is_expected.not_to be_able_to :edit, admin
+      is_expected.not_to be_able_to :update, admin
+      is_expected.not_to be_able_to :destroy, admin
 
     end
 
   end
 
-  context 'for a Basic user' do
+  context 'for a Basic admin' do
 
-    subject { AdminAbility.new basic_user }
+    subject { AdminAbility.new basic_admin }
 
     it 'cannot manage all things' do
       is_expected.not_to be_able_to :manage, :all
@@ -69,7 +69,7 @@ RSpec.describe AdminAbility, type: :model do
       let(:repository) { Fabricate :repository }
 
       it 'can modify but not destroy Repositories if the Repository is assigned' do
-        basic_user.repositories << repository
+        basic_admin.repositories << repository
         is_expected.to be_able_to :show, repository
         is_expected.to be_able_to :edit, repository
         is_expected.to be_able_to :update, repository
@@ -77,7 +77,7 @@ RSpec.describe AdminAbility, type: :model do
       end
 
       it 'can modify but not destroy Collections if the Repository is assigned' do
-        basic_user.repositories << repository
+        basic_admin.repositories << repository
         collection = repository.collections.first
         is_expected.to be_able_to :show, collection
         is_expected.to be_able_to :edit, collection
@@ -86,7 +86,7 @@ RSpec.describe AdminAbility, type: :model do
       end
 
       it 'can modify and destroy Items if the Repository is assigned' do
-        basic_user.repositories << repository
+        basic_admin.repositories << repository
         collection = repository.collections.first
         item = Fabricate :item
         collection.items << item
@@ -126,7 +126,7 @@ RSpec.describe AdminAbility, type: :model do
       let(:collection) { Fabricate :collection }
 
       it 'can modify Collections if the Collection is assigned' do
-        basic_user.collections << collection
+        basic_admin.collections << collection
         is_expected.to be_able_to :show, collection
         is_expected.to be_able_to :edit, collection
         is_expected.to be_able_to :update, collection
@@ -134,7 +134,7 @@ RSpec.describe AdminAbility, type: :model do
       end
 
       it 'can manage Items if the Collection is assigned' do
-        basic_user.collections << collection
+        basic_admin.collections << collection
         is_expected.to be_able_to :show, collection
         is_expected.to be_able_to :edit, collection
         is_expected.to be_able_to :update, collection
@@ -175,8 +175,8 @@ RSpec.describe AdminAbility, type: :model do
       end
 
       it 'cannot view or modify Batches belonging to others' do
-        other_user = Fabricate :user
-        batch.user = other_user
+        other_admin = Fabricate :admin
+        batch.admin = other_admin
         is_expected.not_to be_able_to :show, batch
         is_expected.not_to be_able_to :edit, batch
         is_expected.not_to be_able_to :update, batch
@@ -184,8 +184,8 @@ RSpec.describe AdminAbility, type: :model do
       end
 
       it 'cannot modify or destroy BatchItems belonging to others' do
-        other_user = Fabricate :user
-        batch.user = other_user
+        other_admin = Fabricate :admin
+        batch.admin = other_admin
         batch_item = batch.batch_items.first
         is_expected.not_to be_able_to :edit, batch_item
         is_expected.not_to be_able_to :update, batch_item
@@ -195,14 +195,14 @@ RSpec.describe AdminAbility, type: :model do
       context 'when Batch is owned by self' do
 
         it 'can view and modify Batch' do
-          batch.user = basic_user
+          batch.admin = basic_admin
           is_expected.to be_able_to :edit, batch
           is_expected.to be_able_to :update, batch
           is_expected.to be_able_to :destroy, batch
         end
 
         it 'can modify and destroy BatchItems in the Batch' do
-          batch.user = basic_user
+          batch.admin = basic_admin
           batch_item = batch.batch_items.first
           is_expected.to be_able_to :edit, batch_item
           is_expected.to be_able_to :update, batch_item
@@ -215,13 +215,13 @@ RSpec.describe AdminAbility, type: :model do
 
   end
 
-  context 'for a committer user' do
+  context 'for a committer admin' do
 
-    subject { AdminAbility.new committer_user }
+    subject { AdminAbility.new committer_admin }
     let(:batch) { Fabricate :batch }
 
     it 'can commit a batch owned by self' do
-      batch.user = committer_user
+      batch.admin = committer_admin
       is_expected.to be_able_to :commit, batch
     end
 

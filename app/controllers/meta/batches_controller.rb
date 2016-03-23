@@ -11,12 +11,12 @@ module Meta
     # GET /batches.json
     def index
 
-      @users = User.all # all users with batches?
+      @admins = User.all # all admins with batches?
 
-      if params[:user_id]
-        @user = User.find(params[:user_id])
+      if params[:admin_id]
+        @admin = User.find(params[:admin_id])
         @batches = Batch
-                       .where(user_id: params[:user_id])
+                       .where(admin_id: params[:admin_id])
                        .order(sort_column + ' ' + sort_direction)
                        .page(params[:page])
       else
@@ -46,7 +46,7 @@ module Meta
     def create
       @batch = Batch.new(batch_params)
 
-      set_user
+      set_admin
 
       respond_to do |format|
         if @batch.save
@@ -63,7 +63,7 @@ module Meta
     # PATCH/PUT /batches/1.json
     def update
 
-      set_user
+      set_admin
 
       respond_to do |format|
         if @batch.update(batch_params)
@@ -88,8 +88,8 @@ module Meta
 
     private
 
-    def set_user
-      @batch.user = current_user
+    def set_admin
+      @batch.admin = current_admin
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -97,7 +97,7 @@ module Meta
       params.require(:batch).permit(
           :name,
           :notes,
-          :user_id
+          :admin_id
       )
     end
 

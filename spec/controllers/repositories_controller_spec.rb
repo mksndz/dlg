@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Meta::RepositoriesController, type: :controller do
 
-  let(:super_user) {
+  let(:super_admin) {
     Fabricate(:super)
   }
 
   before(:each) {
-    sign_in super_user
+    sign_in super_admin
   }
 
   let(:valid_attributes) {
@@ -30,13 +30,13 @@ RSpec.describe Meta::RepositoriesController, type: :controller do
       expect(assigns(:repositories)).to eq([repository])
     end
 
-    it 'assigns a repository connected to a user to @repositories' do
-      sign_out super_user # todo
-      basic_user = Fabricate(:basic)
-      sign_in basic_user
+    it 'assigns a repository connected to a admin to @repositories' do
+      sign_out super_admin # todo
+      basic_admin = Fabricate(:basic)
+      sign_in basic_admin
       repository1 = Fabricate(:repository)
       repository2 = Fabricate(:repository)
-      basic_user.repositories << repository1
+      basic_admin.repositories << repository1
       get :index, {}, valid_session
       expect(assigns(:repositories)).to include(repository1)
       expect(assigns(:repositories)).not_to include(repository2)
@@ -88,7 +88,7 @@ RSpec.describe Meta::RepositoriesController, type: :controller do
       it 'redirects to the created repository' do
         
         post :create, {:repository => valid_attributes}, valid_session
-        expect(response).to redirect_to(admin_repository_path(Repository.last))
+        expect(response).to redirect_to(meta_repository_path(Repository.last))
       end
     end
 
@@ -134,7 +134,7 @@ RSpec.describe Meta::RepositoriesController, type: :controller do
         
         repository = Repository.create! valid_attributes
         put :update, {:id => repository.to_param, :repository => valid_attributes}, valid_session
-        expect(response).to redirect_to(admin_repository_path(repository))
+        expect(response).to redirect_to(meta_repository_path(repository))
       end
     end
 
@@ -168,7 +168,7 @@ RSpec.describe Meta::RepositoriesController, type: :controller do
       
       repository = Repository.create! valid_attributes
       delete :destroy, {:id => repository.to_param}, valid_session
-      expect(response).to redirect_to(admin_repositories_url)
+      expect(response).to redirect_to(meta_repositories_url)
     end
   end
 

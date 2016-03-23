@@ -5,7 +5,7 @@ Fabricator(:role, from: 'Meta::Role') do
 end
 
 Fabricator(:super_role, from: :role) do
-  name 'admin'
+  name 'super'
 end
 
 Fabricator(:basic_role, from: :role) do

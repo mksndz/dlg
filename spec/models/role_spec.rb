@@ -16,11 +16,11 @@ RSpec.describe Meta::Role, type: :model do
     expect(r.name).to be_kind_of String
   end
 
-  it 'has an Array of Users' do
+  it 'has an Array of Admins' do
     r = Fabricate(:role) {
-      users(count: 2) { Fabricate(:user) }
+      admins(count: 2) { Fabricate(:admin) }
     }
-    expect(r.users.first).to be_kind_of User
+    expect(r.admins.first).to be_kind_of Admin
   end
 
 end

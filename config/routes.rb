@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
     get 'home', to: 'base#index'
 
-    resources :repositories, :collections, :roles, :users, :subjects
+    resources :repositories, :collections, :roles, :admins, :subjects
 
     resources :items do
       collection do

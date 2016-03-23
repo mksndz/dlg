@@ -12,7 +12,7 @@ module Meta
     def index
       @repositories = Repository.all.order(:title)
 
-      if current_user.admin?
+      if current_admin.super?
         if params[:repository_id]
           @collections = Collection
                              .where(repository_id: params[:repository_id])
@@ -24,8 +24,8 @@ module Meta
                              .page(params[:page])
         end
       else
-        collection_ids = current_user.collection_ids
-        current_user.repositories.each { |r| collection_ids << r.collection_ids }
+        collection_ids = current_admin.collection_ids
+        current_admin.repositories.each { |r| collection_ids << r.collection_ids }
         @collections = Collection
                            .where(id: collection_ids.flatten)
                            .order(sort_column + ' ' + sort_direction)

@@ -2,13 +2,13 @@
     Users
 <% end %>
 
-<%= link_to 'Add User', new_user_path, class: 'btn btn-default' %>
+<%= link_to 'Add User', new_meta_admin_path, class: 'btn btn-default' %>
 
 <br><br>
 
-<% if @users.empty? %>
+<% if @admins.empty? %>
 
-    <p>No Users have been added yet. How strange!</p>
+    <p>No Users have been added yet.</p>
 
 <% else %>
 
@@ -29,27 +29,27 @@
     </thead>
 
     <tbody>
-    <% @users.each do |user| %>
+    <% @admins.each do |admin| %>
         <tr>
           <td>
-            <%= user.id %>
+            <%= admin.id %>
           </td>
           <td>
-            <%= user.email %>
+            <%= admin.email %>
           </td>
           <td>
-            <% user.roles.each do |role| %>
+            <% admin.roles.each do |role| %>
                 <%= role.name %><br />
             <% end %>
           </td>
           <td>
-            <%= render partial: 'shared/entity_actions', locals: { entity: user, show_bl: false } %>
+            <%= render partial: 'shared/entity_actions', locals: { base_path: meta_admin_path(admin), edit_path:  edit_meta_admin_path(admin), entity: admin, show_bl: false } %>
           </td>
         </tr>
     <% end %>
     </tbody>
   </table>
 
-    <%= paginate @users %>
+    <%= paginate @admins %>
 
 <% end %>

@@ -7,14 +7,14 @@ RSpec.describe Meta::BatchesController, type: :controller do
     sign_in Fabricate(:super)
   end
 
-  let(:user) {
-    Fabricate(:user)
+  let(:admin) {
+    Fabricate(:admin)
   }
 
   let(:valid_attributes) {
     {
         name: 'Test Batch',
-        user_id: user.id
+        admin_id: admin.id
     }
   }
 
@@ -144,7 +144,7 @@ RSpec.describe Meta::BatchesController, type: :controller do
     it 'redirects to the batches list' do
       batch = Meta::Batch.create! valid_attributes
       delete :destroy, {:id => batch.to_param}, valid_session
-      expect(response).to redirect_to(admin_batches_url)
+      expect(response).to redirect_to(meta_batches_url)
     end
   end
 

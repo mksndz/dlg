@@ -4,35 +4,35 @@ RSpec.describe Meta::BatchItemsController, type: :routing do
   describe 'routing' do
 
     it 'routes to #index' do
-      expect(get: '/admin/batches/1/batch_items').to route_to(controller: 'meta/batch_items', action: 'index', batch_id: '1')
+      expect(get: '/meta/batches/1/batch_items').to route_to(controller: 'meta/batch_items', action: 'index', batch_id: '1')
     end
 
     it 'routes to #new' do
-      expect(get: '/admin/batches/1/batch_items/new').to route_to(controller: 'meta/batch_items', action: 'new', batch_id: '1')
+      expect(get: '/meta/batches/1/batch_items/new').to route_to(controller: 'meta/batch_items', action: 'new', batch_id: '1')
     end
 
     it 'routes to #show' do
-      expect(get: '/admin/batches/1/batch_items/1').to route_to(controller: 'meta/batch_items', action: 'show', batch_id: '1', id: '1')
+      expect(get: '/meta/batches/1/batch_items/1').to route_to(controller: 'meta/batch_items', action: 'show', batch_id: '1', id: '1')
     end
 
     it 'routes to #edit' do
-      expect(get: '/admin/batches/1/batch_items/1/edit').to route_to(controller: 'meta/batch_items', action: 'edit', batch_id: '1', id: '1')
+      expect(get: '/meta/batches/1/batch_items/1/edit').to route_to(controller: 'meta/batch_items', action: 'edit', batch_id: '1', id: '1')
     end
 
     it 'routes to #create' do
-      expect(post: '/admin/batches/1/batch_items').to route_to(controller: 'meta/batch_items', action: 'create', batch_id: '1')
+      expect(post: '/meta/batches/1/batch_items').to route_to(controller: 'meta/batch_items', action: 'create', batch_id: '1')
     end
 
     it 'routes to #update via PUT' do
-      expect(put: '/admin/batches/1/batch_items/1').to route_to(controller: 'meta/batch_items', action: 'update', batch_id: '1', id: '1')
+      expect(put: '/meta/batches/1/batch_items/1').to route_to(controller: 'meta/batch_items', action: 'update', batch_id: '1', id: '1')
     end
 
     it 'routes to #update via PATCH' do
-      expect(patch: '/admin/batches/1/batch_items/1').to route_to(controller: 'meta/batch_items', action: 'update', batch_id: '1', id: '1')
+      expect(patch: '/meta/batches/1/batch_items/1').to route_to(controller: 'meta/batch_items', action: 'update', batch_id: '1', id: '1')
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/admin/batches/1/batch_items/1').to route_to(controller: 'meta/batch_items', action: 'destroy', batch_id: '1', id: '1')
+      expect(delete: '/meta/batches/1/batch_items/1').to route_to(controller: 'meta/batch_items', action: 'destroy', batch_id: '1', id: '1')
     end
 
   end

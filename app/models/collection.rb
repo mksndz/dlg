@@ -7,7 +7,7 @@ class Collection < ActiveRecord::Base
   has_many :dpla_items, -> { where dpla: true }, class_name: 'Item'
   belongs_to :repository
   has_and_belongs_to_many :subjects
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :admins
 
   validates_presence_of :display_title
   validates_uniqueness_of :slug, scope: :repository_id

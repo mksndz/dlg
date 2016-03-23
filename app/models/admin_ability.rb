@@ -34,8 +34,8 @@ class AdminAbility
 
     if admin.coordinator?
 
-      can [:new, :create], User
-      can [:index, :show, :edit, :update, :destroy], User, creator_id: admin.id
+      can [:new, :create], Admin
+      can [:index, :show, :edit, :update, :destroy], Admin, creator_id: admin.id
 
     end
 
