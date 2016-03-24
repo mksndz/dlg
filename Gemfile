@@ -38,6 +38,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'faker'
   gem 'fabrication'
+  gem 'sunspot_matchers'
 end
 
 group :development do
