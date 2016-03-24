@@ -1,4 +1,5 @@
 require 'rails_helper'
+include SunspotMatchers
 
 RSpec.describe Item, type: :model do
 
@@ -42,24 +43,6 @@ RSpec.describe Item, type: :model do
     expect(i.slug).not_to be_empty
   end
 
-  it 'indexes the item in Solr' do
-    i = Fabricate(:item)
-    Sunspot.commit
-    results = Item.search do
-      fulltext i.title
-    end.results
-    expect(results).to include i
-  end
-
-  it 'deindexes the item in Solr on delete' do
-    i = Fabricate(:item)
-    i.destroy
-    results = Item.search do
-      fulltext i.title # todo is there a better way?
-    end.results
-    expect(results).to be_empty
-  end
-
   it 'disallows creating two items with the same slug related to the same collection' do
     c = Fabricate(:collection)
     i1 = Fabricate(:item) {
@@ -86,6 +69,32 @@ RSpec.describe Item, type: :model do
       slug 'same'
     }
     expect { i2.save! }.not_to raise_exception
+  end
+
+  describe 'Item searchable fields' do
+    it { expect(Item).to have_searchable_field :slug }
+    it { expect(Item).to have_searchable_field :sunspot_id }
+    it { expect(Item).to have_searchable_field :collection_id }
+    it { expect(Item).to have_searchable_field :repository_id }
+    it { expect(Item).to have_searchable_field :collection_title }
+    it { expect(Item).to have_searchable_field :dpla }
+    it { expect(Item).to have_searchable_field :dc_title }
+    it { expect(Item).to have_searchable_field :dc_format }
+    it { expect(Item).to have_searchable_field :dc_publisher }
+    it { expect(Item).to have_searchable_field :dc_identifier }
+    it { expect(Item).to have_searchable_field :dc_right }
+    it { expect(Item).to have_searchable_field :dc_contributor }
+    it { expect(Item).to have_searchable_field :dc_coverage_temporal }
+    it { expect(Item).to have_searchable_field :dc_coverage_spatial }
+    it { expect(Item).to have_searchable_field :dc_date }
+    it { expect(Item).to have_searchable_field :dc_source }
+    it { expect(Item).to have_searchable_field :dc_subject }
+    it { expect(Item).to have_searchable_field :dc_type }
+    it { expect(Item).to have_searchable_field :dc_description }
+    it { expect(Item).to have_searchable_field :dc_creator }
+    it { expect(Item).to have_searchable_field :dc_language }
+    it { expect(Item).to have_searchable_field :dc_relation }
+    it { expect(Item).to have_searchable_field :format }
   end
 
 end
