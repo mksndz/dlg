@@ -20,6 +20,7 @@ module Meta
             with :dpla, params[:dpla] unless params[:dpla].empty?
             with :public, params[:public] unless params[:public].empty?
             fulltext params[:keyword]
+            paginate page: params[:page], per_page: 20
           end
           @items = search.results
         else

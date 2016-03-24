@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  include SolrIndexing
+  # include SolrIndexing
   include Slugged
 
   belongs_to :collection
@@ -19,6 +19,8 @@ class Item < ActiveRecord::Base
       ''
     end
 
+    integer :collection_id, references: Collection
+    integer :repository_id, references: Repository
 
     boolean :dpla
     boolean :public

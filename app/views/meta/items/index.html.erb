@@ -12,12 +12,6 @@
     end
 %>
 
-<%=
-    content_for :sub_menu do
-      render 'collections_list'
-    end
-%>
-
 <div class="well">
   <%= bootstrap_form_tag url: meta_items_path, method: :get do |f| %>
     <%= f.hidden_field :search, value: 1 %>
