@@ -1,6 +1,6 @@
 class Collection < ActiveRecord::Base
   include Slugged
-  include SolrIndexing
+  # include SolrIndexing
 
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'

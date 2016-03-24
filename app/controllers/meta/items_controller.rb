@@ -15,14 +15,7 @@ module Meta
 
       if current_admin.super?
         if params[:search]
-          search = Item.search do
-            # todo repo and collection limits
-            with :dpla, params[:dpla] unless params[:dpla].empty?
-            with :public, params[:public] unless params[:public].empty?
-            fulltext params[:keyword]
-            paginate page: params[:page], per_page: 20
-          end
-          @items = search.results
+          @items = Meta::ItemSearch.search params
         else
           @items = Item
               .order(sort_column + ' ' + sort_direction)
@@ -30,13 +23,8 @@ module Meta
         end
       else
         if params[:search]
-          search = Item.search do
-            # todo limit by repos and collections based on Admin relationships
-            with :dpla, params[:dpla] unless params[:dpla].empty?
-            with :public, params[:public] unless params[:public].empty?
-            fulltext params[:keyword]
-          end
-          @items = search.results
+          # todo user limits
+          @items = Meta::ItemSearch.search params
         else
           collection_ids = current_admin.collection_ids || []
           collection_ids += current_admin.repositories.map { |r| r.collection_ids }
