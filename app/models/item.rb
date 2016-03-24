@@ -7,6 +7,8 @@ class Item < ActiveRecord::Base
 
   validates_uniqueness_of :slug, scope: :collection_id
 
+  delegate :collection_title, to: :collection
+
   searchable do
 
     string :slug, stored: true
@@ -24,6 +26,8 @@ class Item < ActiveRecord::Base
 
     boolean :dpla
     boolean :public
+
+    string :collection_title, stored: true
 
     string :in_collection, stored: true do
       collection ? collection.display_title : ''

@@ -16,6 +16,9 @@ class Collection < ActiveRecord::Base
     dc_title.first
   end
 
+  # allow Items to delegate collection_title
+  alias_method :collection_title, :title
+
   def to_xml(options = {})
     default_options = {
         dasherize: false,
