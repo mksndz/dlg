@@ -11,9 +11,6 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show, :destroy]
 
     resources :items do
-      collection do
-        get 'for/:collection_id', to: 'items#index', as: :filtered
-      end
       member do
         get 'copy'
       end

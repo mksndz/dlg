@@ -37,8 +37,6 @@ module Meta
 
       end
 
-      @items
-
     end
 
     def show
@@ -120,7 +118,7 @@ module Meta
       @search_options[:collections] = Collection.all
       @search_options[:repositories] = Repository.all
       @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']]
-      @search_options[:dpla] = [['Yes or No', ''],['Yes', '1'],['No', '0']]
+      @search_options[:dpla] = [['Yes or No', ''],['Yes', 1],['No', 0]]
     end
   end
 end

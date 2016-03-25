@@ -12,17 +12,7 @@
     end
 %>
 
-<div class="well">
-  <%= bootstrap_form_tag url: meta_items_path, method: :get do |f| %>
-    <%= f.hidden_field :search, value: 1 %>
-    <%= f.text_field :keyword, value: params[:keyword] %>
-    <%= f.select :collection_id, @search_options[:collections].collect { |c| [c.title, c.id] }, { include_blank: true }, { value: params[:collection_id] } %>
-    <%= f.select :repository_id, @search_options[:repositories].collect { |r| [r.title, r.id] }, { include_blank: true }, { value: params[:repository_id] } %>
-    <%= f.select :public, @search_options[:public], {}, value: params[:public] %> <!-- todo fix -->
-    <%= f.select :dpla, @search_options[:dpla], {}, value: params[:dpla] %> <!-- todo fix -->
-    <%= f.primary %>
-  <% end %>
-</div>
+<%= render 'search' %>
 
 <%= link_to 'Add Item', new_meta_item_path, class: 'btn btn-default' %>
 

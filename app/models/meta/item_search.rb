@@ -3,21 +3,19 @@ module Meta
     def self.search(q)
       page = q.delete(:page) || 1
       per_page = q.delete(:per_page) || 10
-      pp = {}
       keyword = q[:keyword] || '*'
       keyword = keyword == '' ? '*' : keyword
-      pp[:dpla] = !!q[:dpla] unless q[:dpla] == ''
-      pp[:public] = !!q[:public] unless q[:public] == ''
-      pp[:collection_id] = q[:collection_id] unless q[:collection_id] == ''
-      pp[:repository_id] = q[:repository_id] unless q[:repository_id] == ''
-
-      # Sanitize the rest of the fields
-      q = sanitize_fields(q)
+      terms = {
+        dpla: get_form_boolean(q[:dpla]),
+        public: get_form_boolean(q[:public]),
+        collection_id: get_form_val(q[:collection_id]),
+        repository_id: get_form_val(q[:repository_id])
+      }
 
       s = Item.search do
         fulltext keyword
         all_of do
-          pp.each { |k,v| with(k, v) }
+          terms.each { |k,v| with(k, v) if v }
         end
         paginate page: page, per_page: per_page
       end
@@ -27,10 +25,12 @@ module Meta
 
     private
 
-    def self.sanitize_fields(q)
-      whitelisted_fields = Sunspot::Setup.for(Item).fields.map(&:name)
-      whitelisted_fields.push(:page, :per_page, :keyword)
-      q.slice(*whitelisted_fields).with_indifferent_access
+    def self.get_form_boolean(form_val)
+      form_val.to_i == 1 unless form_val ==''
+    end
+
+    def self.get_form_val(form_val)
+      form_val unless form_val ==''
     end
 
   end
