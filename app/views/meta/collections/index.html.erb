@@ -12,12 +12,6 @@
   end
 %>
 
-<%=
-  content_for :sub_menu do
-    render 'repositories_list'
-  end
-%>
-
 <%= link_to 'Add Collection', new_meta_collection_path, class: 'btn btn-default' %>
 
 <% if @collections.empty? %>
@@ -65,7 +59,7 @@
                 <%= link_to(collection.repository.title, meta_repository_path(collection.repository)) if collection.repository %>
               </td>
               <td>
-                <%= link_to collection.items.size, filtered_meta_items_path(collection) %>
+                <%= collection.items.size %>
               </td>
               <td>
                 <div class="btn-group btn-group-xs">

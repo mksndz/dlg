@@ -1,8 +1,0 @@
-<div class="well">
-  <p><strong>Repositories</strong></p>
-  <ul class="list-unstyled">
-    <% @repositories.each do |r| %>
-        <li><%= link_to r.title, filtered_meta_collections_path(r) %></li>
-    <% end %>
-  </ul>
-</div>

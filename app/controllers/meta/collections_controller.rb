@@ -10,7 +10,6 @@ module Meta
     before_action :set_data, only: [:new, :edit]
 
     def index
-      @repositories = Repository.all.order(:title)
 
       if current_admin.super?
         if params[:repository_id]
