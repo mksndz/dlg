@@ -3,15 +3,22 @@ module Meta
     def self.search(q)
       page = q.delete(:page) || 1
       per_page = q.delete(:per_page) || 10
+      pp = {}
+      keyword = q[:keyword] || '*'
+      keyword = keyword == '' ? '*' : keyword
+      pp[:dpla] = !!q[:dpla] unless q[:dpla] == ''
+      pp[:public] = !!q[:public] unless q[:public] == ''
+      pp[:collection_id] = q[:collection_id] unless q[:collection_id] == ''
+      pp[:repository_id] = q[:repository_id] unless q[:repository_id] == ''
 
       # Sanitize the rest of the fields
       q = sanitize_fields(q)
 
       s = Item.search do
-        # todo repo and collection limits
-        with :dpla, q[:dpla] unless q[:dpla].empty?
-        with :public, q[:public] unless q[:public].empty?
-        fulltext q[:keyword].empty? ? '*' : q[:keyword]
+        fulltext keyword
+        all_of do
+          pp.each { |k,v| with(k, v) }
+        end
         paginate page: page, per_page: per_page
       end
 

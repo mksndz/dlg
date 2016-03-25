@@ -8,6 +8,7 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :collection_id
 
   delegate :collection_title, to: :collection
+  delegate :repository_id, to: :collection
 
   searchable do
 
