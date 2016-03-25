@@ -1,4 +1,4 @@
-module Meta
+ module Meta
   class ItemsController < BaseController
 
     load_and_authorize_resource
@@ -15,7 +15,9 @@ module Meta
 
       if current_admin.super?
         if params[:search]
-          @items = Meta::ItemSearch.search params
+          s = Meta::ItemSearch.search(params)
+          @items = s.results
+          # @count = s.total
         else
           @items = Item
               .order(sort_column + ' ' + sort_direction)

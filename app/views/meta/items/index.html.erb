@@ -4,8 +4,8 @@
 
 <%=
     content_for :admin_area_subtitle do
-      if params[:collection_id]
-        @items.first.collection.display_title if @items.first && @items.first.collection
+      if params[:search]
+        'Search Results'
       else
         'All of them'
       end
@@ -18,7 +18,7 @@
 
 <% if @items.empty? %>
 
-    <p>No items have been added yet.</p>
+    <p>No items found.</p>
 
 <% else %>
 
