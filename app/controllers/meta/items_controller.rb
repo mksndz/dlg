@@ -126,10 +126,15 @@
 
     def set_search_options
       @search_options = {}
-      @search_options[:collections] = Collection.all
-      @search_options[:repositories] = Repository.all
       @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']]
       @search_options[:dpla] = [['Yes or No', ''],['Yes', 1],['No', 0]]
+      if current_admin.super?
+        @search_options[:collections] = Collection.all
+        @search_options[:repositories] = Repository.all
+      elsif current_admin.basic?
+        @search_options[:collections] = Collection.where(id: current_admin.collection_ids)
+        @search_options[:repositories] = Rpsoitory.where(id: current_admin.repository_ids)
+      end
     end
   end
 end

@@ -30,13 +30,13 @@ module Searchable
     if params[:collection_id] and params[:collection_id].empty?
       new_params[:collection_id] = current_admin.collection_ids
     else
-      unless check_basic_admin_params throw ArgumentError
+      # check_basic_admin_params
     end
 
     if params[:repository_id] and params[:repository_id].empty?
       new_params[:repository_id] = current_admin.repository_ids
     else
-      unless check_basic_admin_params throw ArgumentError
+      # check_basic_admin_params
     end
 
     new_params
