@@ -3,7 +3,7 @@
 <% end %>
 
 <%= content_for :admin_area_subtitle do %>
-    <%= @count %> found
+    <%= @data[:count] %> found
 <% end %>
 
 <%= link_to 'Search Items', search_meta_items_path, class: 'btn btn-default' %>
@@ -14,7 +14,7 @@
   <%= link_to 'Delete Selected', '', class: 'btn btn-default' %>
 <% end %>
 
-<% if @results.empty? %>
+<% if @data[:results].empty? %>
 
     <p>No results found.</p>
 
@@ -43,7 +43,7 @@
       </thead>
 
       <tbody>
-        <% @results.each do |result| %>
+        <% @data[:results].each do |result| %>
           <tr>
             <td>
               <input type="checkbox" value="ids[<%= result.id %>]">
@@ -68,6 +68,6 @@
       </tbody>
     </table>
 
-    <%= paginate @results %>
+    <%= paginate @data[:results] %>
 
 <% end %>
