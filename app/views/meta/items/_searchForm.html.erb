@@ -1,10 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h5>
-      <a class="panel-collapse">Item Search</a>
+      <a class="">Item Search</a>
     </h5>
   </div>
-  <div class="panel-body collapse <%= show_search_panel %>">
+  <div class="panel-body">
     <%= bootstrap_form_tag url: submit_path, method: :get do |f| %>
         <%= f.text_field :keyword, { value: params[:keyword], name: 'keyword' } %>
         <%= f.select :collection_id, options_for_select(@search_options[:collections].collect { |c| [c.title, c.id] }, selected: params[:collection_id] ), { include_blank: true }, { name: 'collection_id' } %>
@@ -13,6 +13,5 @@
         <%= f.select :dpla, options_for_select(@search_options[:dpla], selected: params[:dpla]), {}, { name: 'dpla' } %>
         <%= f.primary 'Search' %>
     <% end %>
-    <%# Total results: <%= @count if @count %>
   </div>
 </div>

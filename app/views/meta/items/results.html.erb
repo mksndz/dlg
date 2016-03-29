@@ -2,11 +2,17 @@
     Items
 <% end %>
 
-<%=
-    content_for :admin_area_subtitle do
-      'Search Results'
-    end
-%>
+<%= content_for :admin_area_subtitle do %>
+    <%= @count %> found
+<% end %>
+
+<%= link_to 'Search Items', search_meta_items_path, class: 'btn btn-default' %>
+
+<%= link_to 'Export XML for Selected', '', class: 'btn btn-default' %>
+
+<% if current_admin.super? %>
+  <%= link_to 'Delete Selected', '', class: 'btn btn-default' %>
+<% end %>
 
 <% if @results.empty? %>
 
@@ -40,7 +46,7 @@
         <% @results.each do |result| %>
           <tr>
             <td>
-              <input type="checkbox">
+              <input type="checkbox" value="ids[<%= result.id %>]">
             </td>
             <td>
               <%= link_to result.id, meta_item_path(result) %>
