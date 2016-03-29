@@ -2,14 +2,24 @@ Rails.application.routes.draw do
 
   devise_for :admins
 
-  concern :meta_searchable do
-    get 'search'
-    get 'results'
-  end
+
 
   namespace :meta do
 
     get 'home', to: 'base#index'
+
+    # concern :group_deleteable do
+    #   post 'deletes'
+    # end
+
+    # concern :xml_exportable do
+    #   post 'xml_export'
+    # end
+
+    concern :searchable do
+      get 'search'
+      get 'results'
+    end
 
     resources :repositories, :collections, :roles, :admins, :subjects
 
@@ -17,7 +27,9 @@ Rails.application.routes.draw do
 
     resources :items do
       collection do
-        concerns :meta_searchable
+        concerns :searchable
+        # concerns :group_deleteable
+        # concerns :xml_exportable
       end
       member do
         get 'copy'

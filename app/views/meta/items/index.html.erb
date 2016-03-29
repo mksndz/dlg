@@ -12,7 +12,10 @@
     end
 %>
 
+
 <%= link_to 'Add Item', new_meta_item_path, class: 'btn btn-default' %>
+
+<%= link_to 'Search Items', search_meta_items_path, class: 'btn btn-default' %>
 
 <% if @items.empty? %>
 
