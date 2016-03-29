@@ -1,5 +1,6 @@
 require 'rails_helper'
 include SunspotMatchers
+include Meta::DcHelper
 
 RSpec.describe Item, type: :model do
 
@@ -33,9 +34,9 @@ RSpec.describe Item, type: :model do
     expect(i.title).to be_kind_of String
   end
 
-  it 'has an Array dc_title' do
+  it 'has an Array dcterms_title' do
     i = Fabricate(:item)
-    expect(i.dc_title).to be_kind_of Array
+    expect(i.dcterms_title).to be_kind_of Array
   end
 
   it 'has a slug' do
@@ -78,23 +79,11 @@ RSpec.describe Item, type: :model do
     it { expect(Item).to have_searchable_field :repository_id }
     it { expect(Item).to have_searchable_field :collection_title }
     it { expect(Item).to have_searchable_field :dpla }
-    it { expect(Item).to have_searchable_field :dc_title }
-    it { expect(Item).to have_searchable_field :dc_format }
-    it { expect(Item).to have_searchable_field :dc_publisher }
-    it { expect(Item).to have_searchable_field :dc_identifier }
-    it { expect(Item).to have_searchable_field :dc_right }
-    it { expect(Item).to have_searchable_field :dc_contributor }
-    it { expect(Item).to have_searchable_field :dc_coverage_temporal }
-    it { expect(Item).to have_searchable_field :dc_coverage_spatial }
-    it { expect(Item).to have_searchable_field :dc_date }
-    it { expect(Item).to have_searchable_field :dc_source }
-    it { expect(Item).to have_searchable_field :dc_subject }
-    it { expect(Item).to have_searchable_field :dc_type }
-    it { expect(Item).to have_searchable_field :dc_description }
-    it { expect(Item).to have_searchable_field :dc_creator }
-    it { expect(Item).to have_searchable_field :dc_language }
-    it { expect(Item).to have_searchable_field :dc_relation }
     it { expect(Item).to have_searchable_field :format }
+
+    dc_fields.each do |f|
+      it { expect(Item).to have_searchable_field f.to_sym }
+    end
   end
 
 end

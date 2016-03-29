@@ -9,7 +9,7 @@ module Meta
     validates_presence_of :collection, message: ' could not be set'
 
     def title
-      dc_title.first
+      dcterms_title.first
     end
 
     def self.create_from_xml(xml)

@@ -3,22 +3,30 @@ module Meta
 
     def dc_fields
       %w(
-        dc_title
-        dc_format
-        dc_publisher
         dc_identifier
         dc_right
-        dc_contributor
-        dc_coverage_temporal
-        dc_coverage_spatial
-        dc_date
-        dc_source
-        dc_subject
-        dc_type
-        dc_description
-        dc_creator
-        dc_language
         dc_relation
+        dc_format
+        dc_date
+        dcterms_is_part_of
+        dcterms_contributor
+        dcterms_creator
+        dcterms_description
+        dcterms_extent
+        dcterms_medium
+        dcterms_identifier
+        dcterms_language
+        dcterms_spatial
+        dcterms_publisher
+        dcterms_access_right
+        dcterms_rights_holder
+        dcterms_subject
+        dcterms_temporal
+        dcterms_title
+        dcterms_type
+        dcterms_is_shown_at
+        dcterms_provenance
+        dcterms_license
       )
     end
 
@@ -30,3 +38,4 @@ module Meta
 
   end
 end
+

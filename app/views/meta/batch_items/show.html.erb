@@ -3,7 +3,7 @@
 <% end %>
 
 <%= content_for :admin_area_subtitle do %>
-    <%= @batch_item.dc_title.first %>
+    <%= @batch_item.title %>
 <% end %>
 
 <%= link_to 'Edit', edit_meta_batch_batch_item_path(@batch, @batch_item), class: 'btn btn-default' %>

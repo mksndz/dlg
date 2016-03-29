@@ -52,22 +52,22 @@ RSpec.describe Collection, type: :model do
     expect(c.subjects.first).to be_a Subject
   end
 
-  it 'indexes the item in Solr' do
-    c = Fabricate(:collection)
-    Sunspot.commit
-    results = Collection.search do
-      fulltext c.title
-    end.results
-    expect(results).to include c
-  end
-
-  it 'deindexes the item in Solr on delete' do
-    c = Fabricate(:collection)
-    c.destroy
-    results = Collection.search do
-      fulltext c.title # todo is there a better way?
-    end.results
-    expect(results).to be_empty
-  end
+  # it 'indexes the item in Solr' do
+  #   c = Fabricate(:collection)
+  #   Sunspot.commit
+  #   results = Collection.search do
+  #     fulltext c.title
+  #   end.results
+  #   expect(results).to include c
+  # end
+  #
+  # it 'deindexes the item in Solr on delete' do
+  #   c = Fabricate(:collection)
+  #   c.destroy
+  #   results = Collection.search do
+  #     fulltext c.title # todo is there a better way?
+  #   end.results
+  #   expect(results).to be_empty
+  # end
 
 end
