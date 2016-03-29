@@ -1,0 +1,11 @@
+<%= content_for :admin_area_title do %>
+    Items
+<% end %>
+
+<%=
+  content_for :admin_area_subtitle do
+    'Search'
+  end
+%>
+
+<%= render partial: 'searchForm', locals: { submit_path: results_meta_items_path } %>

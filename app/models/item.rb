@@ -68,7 +68,7 @@ class Item < ActiveRecord::Base
     end
 
     string :sort_title do
-      dcterms_title.first ? dc_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
+      dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
     end
 
   end

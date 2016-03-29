@@ -2,6 +2,11 @@ Rails.application.routes.draw do
 
   devise_for :admins
 
+  concern :meta_searchable do
+    get 'search'
+    get 'results'
+  end
+
   namespace :meta do
 
     get 'home', to: 'base#index'
@@ -11,6 +16,9 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show, :destroy]
 
     resources :items do
+      collection do
+        concerns :meta_searchable
+      end
       member do
         get 'copy'
       end

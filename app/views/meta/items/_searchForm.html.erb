@@ -5,8 +5,7 @@
     </h5>
   </div>
   <div class="panel-body collapse <%= show_search_panel %>">
-    <%= bootstrap_form_tag url: meta_items_path, method: :get do |f| %>
-        <%= f.hidden_field :search, { value: 1, name: 'search'} %>
+    <%= bootstrap_form_tag url: submit_path, method: :get do |f| %>
         <%= f.text_field :keyword, { value: params[:keyword], name: 'keyword' } %>
         <%= f.select :collection_id, options_for_select(@search_options[:collections].collect { |c| [c.title, c.id] }, selected: params[:collection_id] ), { include_blank: true }, { name: 'collection_id' } %>
         <%= f.select :repository_id, options_for_select(@search_options[:repositories].collect { |r| [r.title, r.id] }, selected: params[:repository_id] ), { include_blank: true }, { name: 'repository_id' } %>

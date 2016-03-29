@@ -5,6 +5,7 @@
     include ErrorHandling
     include DcHelper
     include Sorting
+    include Searchable
     layout 'admin'
 
     before_action :collections_for_select, only: [ :new, :copy, :edit ]

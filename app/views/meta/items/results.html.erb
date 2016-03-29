@@ -1,0 +1,67 @@
+<%= content_for :admin_area_title do %>
+    Items
+<% end %>
+
+<%=
+    content_for :admin_area_subtitle do
+      'Search Results'
+    end
+%>
+
+<% if @results.empty? %>
+
+    <p>No results found.</p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+        <tr>
+          <th>
+            
+          </th>
+          <th>
+            <%= sortable 'id', 'ID' %>
+          </th>
+          <th>
+            <%= sortable 'slug' %>
+          </th>
+          <th>
+            Title
+          </th>
+          <th>
+            <%= sortable 'collection_id', 'Collection' %>
+          </th>
+          <th width="185px"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @results.each do |result| %>
+          <tr>
+            <td>
+              <input type="checkbox">
+            </td>
+            <td>
+              <%= link_to result.id, meta_item_path(result) %>
+            </td>
+            <td>
+              <%= link_to result.slug, meta_item_path(result) %>
+            </td>
+            <td>
+              <%= result.title %>
+            </td>
+            <td>
+              <%= link_to(result.collection.display_title, meta_collection_path(result.collection)) if result.collection %>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: meta_item_path(result), edit_path: edit_meta_item_path(result), entity: result, show_bl: true } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @results %>
+
+<% end %>
