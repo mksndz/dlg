@@ -164,6 +164,8 @@ RSpec.describe Meta::CollectionsController, type: :controller do
         basic_admin.collections << collection
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
+        a = collection
+        b = assigns(:collection)
         expect(assigns(:collection).dc_title).to include 'New Subtitle'
       end
 

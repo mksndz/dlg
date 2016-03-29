@@ -18,7 +18,7 @@ RSpec.describe Meta::BatchItemsController, type: :controller do
   let(:valid_attributes) {
     {
         slug: 'test-item-slug',
-        dc_title: "Test Item DC Title\Subtitle",
+        dcterms_title: "Test Item DC Title\nSubtitle",
         collection_id: collection.id,
         batch_id: batch.id
     }
@@ -67,30 +67,30 @@ RSpec.describe Meta::BatchItemsController, type: :controller do
     context 'with valid params' do
       it 'creates a new BatchItem' do
         expect {
-          post :create, {batch_id: batch, :batch_item => valid_attributes}, valid_session
+          post :create, {batch_id: batch, :meta_batch_item => valid_attributes}, valid_session
         }.to change(Meta::BatchItem, :count).by(1)
       end
 
       it 'assigns a newly created batch_item as @batch_item' do
-        post :create, {batch_id: batch, :batch_item => valid_attributes}, valid_session
+        post :create, {batch_id: batch, :meta_batch_item => valid_attributes}, valid_session
         expect(assigns(:batch_item)).to be_a(Meta::BatchItem)
         expect(assigns(:batch_item)).to be_persisted
       end
 
       it 'redirects to the created batch_item' do
-        post :create, {batch_id: batch, :batch_item => valid_attributes}, valid_session
+        post :create, {batch_id: batch, :meta_batch_item => valid_attributes}, valid_session
         expect(response).to redirect_to(meta_batch_batch_item_url(batch, Meta::BatchItem.last))
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved batch_item as @batch_item' do
-        post :create, {batch_id: batch, :batch_item => invalid_attributes}, valid_session
+        post :create, {batch_id: batch, :meta_batch_item => invalid_attributes}, valid_session
         expect(assigns(:batch_item)).to be_a_new(Meta::BatchItem)
       end
 
       it 're-renders the "new" template' do
-        post :create, {batch_id: batch, :batch_item => invalid_attributes}, valid_session
+        post :create, {batch_id: batch, :meta_batch_item => invalid_attributes}, valid_session
         expect(response).to render_template('new')
       end
     end
@@ -101,26 +101,26 @@ RSpec.describe Meta::BatchItemsController, type: :controller do
       let(:new_attributes) {
         {
             slug: 'a-new-test-item-slug',
-            dc_title: "New Title\nNew Subtitle"
+            dcterms_title: "New Title\nNew Subtitle"
         }
       }
 
       it 'updates the requested batch_item' do
         batch_item = Meta::BatchItem.create! valid_attributes
-        put :update, {batch_id: batch, :id => batch_item.to_param, :batch_item => new_attributes}, valid_session
+        put :update, {batch_id: batch, :id => batch_item.to_param, :meta_batch_item => new_attributes}, valid_session
         batch_item.reload
-        expect(batch_item.dc_title).to include 'New Subtitle'
+        expect(batch_item.dcterms_title).to include 'New Subtitle'
       end
 
       it 'assigns the requested batch_item as @batch_item' do
         batch_item = Meta::BatchItem.create! valid_attributes
-        put :update, {batch_id: batch, :id => batch_item.to_param, :batch_item => valid_attributes}, valid_session
+        put :update, {batch_id: batch, :id => batch_item.to_param, :meta_batch_item => valid_attributes}, valid_session
         expect(assigns(:batch_item)).to eq(batch_item)
       end
 
       it 'redirects to the batch_item' do
         batch_item = Meta::BatchItem.create! valid_attributes
-        put :update, {batch_id: batch, :id => batch_item.to_param, :batch_item => valid_attributes}, valid_session
+        put :update, {batch_id: batch, :id => batch_item.to_param, :meta_batch_item => valid_attributes}, valid_session
         expect(response).to redirect_to(meta_batch_batch_item_url(batch, batch_item))
       end
     end
@@ -128,13 +128,13 @@ RSpec.describe Meta::BatchItemsController, type: :controller do
     context 'with invalid params' do
       it 'assigns the batch_item as @batch_item' do
         batch_item = Meta::BatchItem.create! valid_attributes
-        put :update, {batch_id: batch, :id => batch_item.to_param, :batch_item => invalid_attributes}, valid_session
+        put :update, {batch_id: batch, :id => batch_item.to_param, :meta_batch_item => invalid_attributes}, valid_session
         expect(assigns(:batch_item)).to eq(batch_item)
       end
 
       it 're-renders the "edit" template' do
         batch_item = Meta::BatchItem.create! valid_attributes
-        put :update, {batch_id: batch, :id => batch_item.to_param, :batch_item => invalid_attributes}, valid_session
+        put :update, {batch_id: batch, :id => batch_item.to_param, :meta_batch_item => invalid_attributes}, valid_session
         expect(response).to render_template('edit')
       end
     end

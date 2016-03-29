@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
   include Slugged
+  include Meta::DcHelper
 
   belongs_to :collection
   has_one :repository, through: :collection
@@ -35,36 +36,45 @@ class Item < ActiveRecord::Base
 
     # DC Fields for Searching
     # *_display fields created via copyFields
-    text :dc_title
-    text :dc_format
-    text :dc_publisher
     text :dc_identifier
     text :dc_right
-    text :dc_contributor
-    text :dc_coverage_temporal
-    text :dc_coverage_spatial
-    text :dc_date
-    text :dc_source
-    text :dc_subject
-    text :dc_type
-    text :dc_description
-    text :dc_creator
-    text :dc_language
     text :dc_relation
+    text :dc_format
+    text :dc_date
+    text :dcterms_is_part_of
+    text :dcterms_contributor
+    text :dcterms_creator
+    text :dcterms_description
+    text :dcterms_extent
+    text :dcterms_medium
+    text :dcterms_identifier
+    text :dcterms_language
+    text :dcterms_spatial
+    text :dcterms_publisher
+    text :dcterms_access_right
+    text :dcterms_rights_holder
+    text :dcterms_subject
+    text :dcterms_temporal
+    text :dcterms_title
+    text :dcterms_type
+    text :dcterms_is_shown_at
+    text :dcterms_provenance
+    text :dcterms_license
+
 
     # Fields for Faceting, etc.
     string :format, stored: true do
-      dc_type.first ? dc_type.first : ''
+      dcterms_type.first ? dcterms_type.first : ''
     end
 
     string :sort_title do
-      dc_title.first ? dc_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
+      dcterms_title.first ? dc_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
     end
 
   end
 
   def title
-    dc_title.first
+    dcterms_title.first
   end
 
   def to_xml(options = {})

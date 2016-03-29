@@ -51,30 +51,30 @@ RSpec.describe Meta::RolesController, type: :controller do
     context 'with valid params' do
       it 'creates a new Role' do
         expect {
-          post :create, {:role => valid_attributes}, valid_session
+          post :create, {:meta_role => valid_attributes}, valid_session
         }.to change(Meta::Role, :count).by(1)
       end
 
       it 'assigns a newly created role as @role' do
-        post :create, {:role => valid_attributes}, valid_session
+        post :create, {:meta_role => valid_attributes}, valid_session
         expect(assigns(:role)).to be_a(Meta::Role)
         expect(assigns(:role)).to be_persisted
       end
 
       it 'redirects to the created role' do
-        post :create, {:role => valid_attributes}, valid_session
+        post :create, {:meta_role => valid_attributes}, valid_session
         expect(response).to redirect_to(Meta::Role.last)
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved role as @role' do
-        post :create, {:role => invalid_attributes}, valid_session
+        post :create, {:meta_role => invalid_attributes}, valid_session
         expect(assigns(:role)).to be_a_new(Meta::Role)
       end
 
       it 're-renders the "new" template' do
-        post :create, {:role => invalid_attributes}, valid_session
+        post :create, {:meta_role => invalid_attributes}, valid_session
         expect(response).to render_template('new')
       end
     end
@@ -88,20 +88,20 @@ RSpec.describe Meta::RolesController, type: :controller do
 
       it 'updates the requested role' do
         role = Meta::Role.create! valid_attributes
-        put :update, {:id => role.to_param, :role => new_attributes}, valid_session
+        put :update, {:id => role.to_param, :meta_role => new_attributes}, valid_session
         role.reload
         expect(assigns(:role).name).to eq 'Revised Role Name'
       end
 
       it 'assigns the requested role as @role' do
         role = Meta::Role.create! valid_attributes
-        put :update, {:id => role.to_param, :role => valid_attributes}, valid_session
+        put :update, {:id => role.to_param, :meta_role => valid_attributes}, valid_session
         expect(assigns(:role)).to eq(role)
       end
 
       it 'redirects to the role' do
         role = Meta::Role.create! valid_attributes
-        put :update, {:id => role.to_param, :role => valid_attributes}, valid_session
+        put :update, {:id => role.to_param, :meta_role => valid_attributes}, valid_session
         expect(response).to redirect_to(role)
       end
     end
@@ -109,13 +109,13 @@ RSpec.describe Meta::RolesController, type: :controller do
     context 'with invalid params' do
       it 'assigns the role as @role' do
         role = Meta::Role.create! valid_attributes
-        put :update, {:id => role.to_param, :role => invalid_attributes}, valid_session
+        put :update, {:id => role.to_param, :meta_role => invalid_attributes}, valid_session
         expect(assigns(:role)).to eq(role)
       end
 
       it 're-renders the "edit" template' do
         role = Meta::Role.create! valid_attributes
-        put :update, {:id => role.to_param, :role => invalid_attributes}, valid_session
+        put :update, {:id => role.to_param, :meta_role => invalid_attributes}, valid_session
         expect(response).to render_template('edit')
       end
     end

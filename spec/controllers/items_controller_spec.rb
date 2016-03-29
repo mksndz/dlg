@@ -13,7 +13,7 @@ RSpec.describe Meta::ItemsController, type: :controller do
   let(:valid_attributes) {
     {
         slug: 'test-item-slug',
-        dc_title: "Test Item DC Title\nTest Subtitle"
+        dcterms_title: "Test Item DC Title\nTest Subtitle"
     }
   }
 
@@ -176,7 +176,7 @@ RSpec.describe Meta::ItemsController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         {
-            dc_title: "Updated Test DC Title\nNew Subtitle"
+            dcterms_title: "Updated Test DC Title\nNew Subtitle"
         }
       }
 
@@ -199,7 +199,7 @@ RSpec.describe Meta::ItemsController, type: :controller do
         item = Fabricate(:item) { collection collection }
         put :update, {:id => item.id, :item => new_attributes}, valid_session
         item.reload
-        expect(assigns(:item).dc_title).to include 'New Subtitle'
+        expect(assigns(:item).dcterms_title).to include 'New Subtitle'
       end
 
       it 'allows basic user to update a Item if parent Repository is assigned' do
@@ -212,14 +212,14 @@ RSpec.describe Meta::ItemsController, type: :controller do
         item = Fabricate(:item) { collection collection}
         put :update, {:id => item.id, :item => new_attributes}, valid_session
         item.reload
-        expect(assigns(:item).dc_title).to include 'New Subtitle'
+        expect(assigns(:item).dcterms_title).to include 'New Subtitle'
       end
       
       it 'updates the requested item' do
         item = Item.create! valid_attributes
         put :update, {:id => item.to_param, :item => new_attributes}, valid_session
         item.reload
-        expect(assigns(:item).dc_title).to include 'New Subtitle'
+        expect(assigns(:item).dcterms_title).to include 'New Subtitle'
       end
 
       it 'assigns the requested item as @item' do
