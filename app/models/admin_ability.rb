@@ -20,7 +20,7 @@ class AdminAbility
             admin.collections.include?(collection)
       end
 
-      can [:index, :show, :new, :create, :edit, :update, :copy, :destroy], Item do |item|
+      can [:index, :show, :new, :create, :edit, :update, :copy, :destroy, :search, :results], Item do |item|
         admin.repositories.include?(item.repository) ||
             admin.collections.include?(item.collection)
       end
