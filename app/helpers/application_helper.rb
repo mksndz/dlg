@@ -12,7 +12,7 @@ module ApplicationHelper
     request.original_url.include?('/' + key) ? 'active' : ''
   end
 
-  def text_field_multi(object, term)
+  def meta_textarea(object, term)
     klass = object.class.name.demodulize.underscore
     html = ''
     html += label_tag "#{klass}[#{term}]", t("activerecord.attributes.#{klass}.#{term}")

@@ -13,7 +13,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
   let(:valid_attributes) {
     {
         slug: 'test-collection-slug',
-        dc_title: "Test Collection DC Title\nTest Subtitle",
+        dcterms_title: "Test Collection DC Title\nTest Subtitle",
         display_title: 'Test Collections Display Title',
     }
   }
@@ -142,7 +142,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         {
-            dc_title: "Updated Test DC Title\nNew Subtitle"
+            dcterms_title: "Updated Test DC Title\nNew Subtitle"
         }
       }
 
@@ -164,9 +164,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
         basic_admin.collections << collection
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
-        a = collection
-        b = assigns(:collection)
-        expect(assigns(:collection).dc_title).to include 'New Subtitle'
+        expect(assigns(:collection).dcterms_title).to include 'New Subtitle'
       end
 
       it 'allows basic admin to update a collection if parent repository is assigned' do
@@ -179,14 +177,14 @@ RSpec.describe Meta::CollectionsController, type: :controller do
         collection.repository = repository
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
-        expect(assigns(:collection).dc_title).to include 'New Subtitle'
+        expect(assigns(:collection).dcterms_title).to include 'New Subtitle'
       end
 
       it 'updates the requested collection' do
         collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
-        expect(assigns(:collection).dc_title).to include 'New Subtitle'
+        expect(assigns(:collection).dcterms_title).to include 'New Subtitle'
       end
 
       it 'assigns the requested collection as @collection' do
