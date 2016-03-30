@@ -38,10 +38,9 @@ module Meta
     end
 
     def create
+      @admin = Admin.new(admin_params)
       set_admin_creator
       set_default_roles
-
-      @admin = Admin.new(admin_params)
       if @admin.save
         redirect_to meta_admin_path(@admin), notice: 'Admin created!'
       else
