@@ -60,6 +60,7 @@
     end
 
     def copy
+      @item = Item.new(@item.attributes.except(:id))
       render :edit
     end
 
