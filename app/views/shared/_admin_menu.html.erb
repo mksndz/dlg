@@ -9,4 +9,6 @@
   <%= link_to 'Users', meta_users_path, class: "list-group-item #{admin_active_class 'users'}" %>
   <%= link_to 'Subjects', meta_subjects_path, class: "list-group-item #{admin_active_class 'subjects'}" %>
   </strong>
+  <br>
+  <%= link_to 'Sign Out', destroy_admin_session_path %>
 </div>
