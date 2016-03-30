@@ -8,13 +8,9 @@ Rails.application.routes.draw do
 
     get 'home', to: 'base#index'
 
-    # concern :group_deleteable do
-    #   post 'deletes'
-    # end
-
-    # concern :xml_exportable do
-    #   post 'xml_export'
-    # end
+    concern :multiple_actionable do
+       post 'multiple_action'
+    end
 
     concern :searchable do
       get 'search'
@@ -28,8 +24,7 @@ Rails.application.routes.draw do
     resources :items do
       collection do
         concerns :searchable
-        # concerns :group_deleteable
-        # concerns :xml_exportable
+        concerns :multiple_actionable
       end
       member do
         get 'copy'
