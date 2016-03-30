@@ -1,12 +1,12 @@
 <%= content_for :admin_area_title do %>
-    Show User
+    Show Admin
 <% end %>
 
 <%= content_for :admin_area_subtitle do %>
     <%= @admin.email %>
 <% end %>
 
-<%= link_to 'Edit', edit_admin_path(@admin), class: 'btn btn-default' %>
+<%= link_to 'Edit', edit_meta_admin_path(@admin), class: 'btn btn-default' %>
 
 <br><br>
 

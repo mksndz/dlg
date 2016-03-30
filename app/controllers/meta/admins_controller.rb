@@ -89,11 +89,13 @@ module Meta
 
     def confirm_restrictions
       # todo test coverage for this
-      new_admin_collection_ids = admin_params[:collection_ids] || []
-      new_admin_repository_ids = admin_params[:repository_ids] || []
-      throw AdminRestrictionsError unless (new_admin_repository_ids - current_admin.repository_ids).empty?
-      throw AdminRestrictionsError unless (new_admin_collection_ids - current_admin.collection_ids).empty?
-      throw AdminRestrictionsError if current_admin.coordinator? and admin_params[:role_ids]
+      unless current_admin.super?
+        new_admin_collection_ids = admin_params[:collection_ids] || []
+        new_admin_repository_ids = admin_params[:repository_ids] || []
+        throw AdminRestrictionsError unless (new_admin_repository_ids - current_admin.repository_ids).empty?
+        throw AdminRestrictionsError unless (new_admin_collection_ids - current_admin.collection_ids).empty?
+        throw AdminRestrictionsError if current_admin.coordinator? and admin_params[:role_ids]
+      end
     end
 
     def set_default_roles
