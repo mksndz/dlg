@@ -13,7 +13,7 @@ class Collection < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :repository_id
 
   def title
-    dc_title.first
+    dcterms_title.first
   end
 
   # allow Items to delegate collection_title
