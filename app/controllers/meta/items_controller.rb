@@ -133,7 +133,7 @@
         @search_options[:repositories] = Repository.all
       elsif current_admin.basic?
         @search_options[:collections] = Collection.where(id: current_admin.collection_ids)
-        @search_options[:repositories] = Rpsoitory.where(id: current_admin.repository_ids)
+        @search_options[:repositories] = Repository.where(id: current_admin.repository_ids)
       end
     end
   end
