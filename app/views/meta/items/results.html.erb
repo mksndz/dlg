@@ -64,8 +64,9 @@
       </tbody>
     </table>
 
-    <%= f.primary 'Delete Selected' %>
-    <%= f.primary 'XML for Selected' %>
+
+    <%= f.primary 'Delete Selected' if can?(:multiple_delete, Item) %>
+    <%= f.primary 'XML for Selected' if can?(:multiple_xml, Item) %>
 
     <% end %>
 
