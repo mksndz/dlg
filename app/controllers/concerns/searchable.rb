@@ -11,13 +11,12 @@ module Searchable
   def results
     @data = {}
     if current_admin.super?
-      s = search_class.search(params)
-      @data[:results] = s.results
-      @data[:count] = s.total
+      s = search_class.search params
     else
-      # todo user limits
-      @data[:results] = search_class.search basic_user_params
+      s = search_class.search basic_admin_params
     end
+    @data[:results] = s.results
+    @data[:count] = s.total
   end
 
   def search_class
@@ -25,7 +24,7 @@ module Searchable
     search_class_name.classify.constantize
   end
 
-  def basic_user_params
+  def basic_admin_params
     new_params = params
     if params[:collection_id] and params[:collection_id].empty?
       new_params[:collection_id] = current_admin.collection_ids
@@ -45,7 +44,6 @@ module Searchable
   def basic_admin_collections
     collection_ids = current_admin.collection_ids || []
     collection_ids += current_admin.repositories.map { |r| r.collection_ids }
-    collection_ids
   end
 
   def check_basic_admin_collection_param
