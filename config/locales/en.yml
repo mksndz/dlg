@@ -52,22 +52,30 @@ en:
         dpla: "Push to DPLA"
         in_georgia: "Located in Georgia"
         subject_ids: "Subjects"
-        dc_title: "Title (DC)"
-        dc_format: "Format (DC)"
-        dc_publisher: "Publisher (DC)"
-        dc_identifier: "Identifier (DC)"
-        dc_right: "Rights (DC)"
-        dc_contributor: "Contributor (DC)"
-        dc_coverage_temporal: "Temporal Coverage (QDC)"
-        dc_coverage_spatial: "Spatial Coverage (QDC)"
-        dc_date: "Date (DC)"
-        dc_source: "Source (DC)"
-        dc_subject: "Subject (DC)"
-        dc_type: "Type (DC)"
-        dc_description: "Description (DC)"
-        dc_creator: "Creator (DC)"
-        dc_language: "Language (DC)"
-        dc_relation: "Relation (DC)"
+        dc_identifier: 'Identifier (DC)'
+        dc_right: 'Rights (DC)'
+        dc_relation: 'Relation (DC)'
+        dc_format: 'Format (DC)'
+        dc_date: 'Date (DC)'
+        dcterms_is_part_of: 'Is Part Of (QDC)'
+        dcterms_contributor: 'Contributor (QDC)'
+        dcterms_creator: 'Creator (QDC)'
+        dcterms_description: 'Description (QDC)'
+        dcterms_extent: 'Extent (QDC)'
+        dcterms_medium: 'Medium (QDC)'
+        dcterms_identifier: 'Identifier (QDC)'
+        dcterms_language: 'Language (QDC)'
+        dcterms_spatial: 'Place (QDC)'
+        dcterms_publisher: 'Original Publisher (QDC)'
+        dcterms_access_right: 'Rights (QDC)'
+        dcterms_rights_holder: 'Rights Holder (QDC)'
+        dcterms_subject: 'Subject (QDC)'
+        dcterms_temporal: 'Time Period (QDC)'
+        dcterms_title: 'Title (QDC)'
+        dcterms_type: 'Type (QDC)'
+        dcterms_is_shown_at: 'URL (QDC)'
+        dcterms_provenance: 'Location of Original (QDC)'
+        dcterms_license: 'License (QDC)'
         created_at: "Created"
         updated_at: "Last Updated"
       item:
@@ -179,22 +187,30 @@ en:
         remote: "Check this to indicate that the Collection is located remotely"
         in_georgia: "Check this to indicate the Collection is housed in Georgia"
         subject_ids: "This will classify the Collection into a Subject category"
-        dc_title: "A name given to the resource. Typically, a Title will be a name by which the resource is formally known."
-        dc_format: "The file format, physical medium, or dimensions of the resource. Examples of dimensions include size and duration. Recommended best practice is to use a controlled vocabulary such as the list of Internet Media Types."
-        dc_publisher: "An entity responsible for making the resource available. Examples of a Publisher include a person, an organization, or a service. Typically, the name of a Publisher should be used to indicate the entity."
-        dc_identifier: "An unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string conforming to a formal identification system."
-        dc_right: "Information about rights held in and over the resource. Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights."
-        dc_contributor: "An entity responsible for making contributions to the resource. An entity responsible for making contributions to the resource."
-        dc_coverage_t: "The temporal topic of the resource, or the jurisdiction under which the resource is relevant. Temporal topic may be a named period, date, or date range."
-        dc_coverage_s: "The spatial topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant. Spatial topic and spatial applicability may be a named place or a location specified by its geographic coordinates."
-        dc_date: "A point or period of time associated with an event in the lifecycle of the resource. Date may be used to express temporal information at any level of granularity. Recommended best practice is to use an encoding scheme, such as the W3CDTF profile of ISO 8601."
-        dc_source: "A related resource from which the described resource is derived. The described resource may be derived from the related resource in whole or in part. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."
-        dc_subject: "The topic of the resource. Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary."
-        dc_type: "The nature or genre of the resource. Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary. To describe the file format, physical medium, or dimensions of the resource, use the Format element."
-        dc_description: "An account of the resource. Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource."
-        dc_creator: "An entity primarily responsible for making the resource. Examples of a Creator include a person, an organization, or a service. Typically, the name of a Creator should be used to indicate the entity."
-        dc_language: "A language of the resource. Recommended best practice is to use a controlled vocabulary such as RFC 4646 ."
-        dc_relation: "A related resource. Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system."
+        dc_identifier: 'An unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string conforming to a formal identification system.'
+        dc_right: 'Information about rights held in and over the resource. 	Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights.'
+        dc_relation: 'A related resource. 	Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system.'
+        dc_format: 'The file format, physical medium, or dimensions of the resource. Examples of dimensions include size and duration. Recommended best practice is to use a controlled vocabulary such as the list of Internet Media Types.'
+        dc_date: 'A point or period of time associated with an event in the lifecycle of the resource. Date may be used to express temporal information at any level of granularity. Recommended best practice is to use an encoding scheme, such as the W3CDTF profile of ISO 8601.'
+        dcterms_is_part_of: 'A related resource in which the described resource is physically or logically included.'
+        dcterms_contributor: 'An entity responsible for making contributions to the resource. Examples of a Contributor include a person, an organization, or a service.'
+        dcterms_creator: 'An entity primarily responsible for making the resource. Examples of a Creator include a person, an organization, or a service.'
+        dcterms_description: 'An account of the resource. Description may include but is not limited to: an abstract, a table of contents, a graphical representation, or a free-text account of the resource.'
+        dcterms_extent: 'The size or duration of the resource. Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary.'
+        dcterms_medium: 'The material or physical carrier of the resource.'
+        dcterms_identifier: 'An unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string conforming to a formal identification system.'
+        dcterms_language: 'A language of the resource. Recommended best practice is to use a controlled vocabulary such as RFC 4646.'
+        dcterms_spatial: 'Spatial characteristics of the resource.'
+        dcterms_publisher: 'An entity responsible for making the resource available. Examples of a Publisher include a person, an organization, or a service.'
+        dcterms_access_right: 'Information about who can access the resource or an indication of its security status. Access Rights may include information regarding access or restrictions based on privacy, security, or other policies.'
+        dcterms_rights_holder: 'A person or organization owning or managing rights over the resource.'
+        dcterms_subject: 'The topic of the resource. Typically, the subject will be represented using keywords, key phrases, or classification codes. Recommended best practice is to use a controlled vocabulary.'
+        dcterms_temporal: 'Temporal characteristics of the resource.'
+        dcterms_title: 'A name given to the resource.'
+        dcterms_type: 'The nature or genre of the resource. Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary. To describe the file format, physical medium, or dimensions of the resource, use the Format element.'
+        dcterms_is_shown_at: 'Unambiguous URL reference to digital object in its full information context.'
+        dcterms_provenance: 'A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation. The statement may include a description of any changes successive custodians made to the resource.'
+        dcterms_license: 'A legal document giving official permission to do something with the resource.'
       item:
         slug: "This is formerly known as the Item ID"
         collection_id: "Primary Collection to which this Item belongs"
