@@ -30,9 +30,11 @@
 
   </head>
 
-  <body class="<%= render_body_class %>">
+  <body class="">
 
-    <div id="main-container" class="<%= container_classes %>">
+    <%= render partial: 'meta/shared/header_navbar' %>
+
+    <div class="container">
 
       <%= content_tag :h1, application_name, class: 'sr-only application-heading' %>
 
@@ -44,12 +46,11 @@
             <%= yield :admin_area_title %><small><%= yield :admin_area_subtitle %></small>
           </h1>
         </div>
-        <div class="col-md-3">
-          <%= render 'shared/admin_menu' %>
-          <%= yield :sub_menu %>
-        </div>
         <div class="col-md-9">
           <%= yield %>
+        </div>
+        <div class="col-md-3">
+          <%= yield :sub_menu %>
         </div>
       </div>
 
