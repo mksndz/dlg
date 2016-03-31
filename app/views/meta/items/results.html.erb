@@ -65,7 +65,7 @@
     </table>
 
 
-    <%= f.primary 'Delete Selected' if can?(:multiple_delete, Item) %>
+    <%= f.primary 'Delete Selected', data: { confirm: 'Are you sure?' } if can?(:multiple_delete, Item) %>
     <%= f.primary 'XML for Selected' if can?(:multiple_xml, Item) %>
 
     <% end %>
