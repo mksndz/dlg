@@ -9,8 +9,8 @@
         <%= f.text_field :keyword, { value: params[:keyword], name: 'keyword' } %>
         <%= f.select :collection_id, options_for_select(@search_options[:collections].collect { |c| [c.title, c.id] }, selected: params[:collection_id] ), { include_blank: true }, { name: 'collection_id' } %>
         <%= f.select :repository_id, options_for_select(@search_options[:repositories].collect { |r| [r.title, r.id] }, selected: params[:repository_id] ), { include_blank: true }, { name: 'repository_id' } %>
-        <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), {}, { name: 'public' } %>
-        <%= f.select :dpla, options_for_select(@search_options[:dpla], selected: params[:dpla]), {}, { name: 'dpla' } %>
+        <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: 'Public'}, { name: 'public' } %>
+        <%= f.select :dpla, options_for_select(@search_options[:dpla], selected: params[:dpla]), { label: 'DPLA'}, { name: 'dpla' } %>
         <%= f.primary 'Search' %>
     <% end %>
   </div>
