@@ -15,7 +15,7 @@ module Meta
       s = Item.search do
         fulltext keyword
         all_of do
-          terms.each { |k,v| with(k, v) if v }
+          terms.each { |k,v| with(k, v) unless v.nil? }
         end
         paginate page: page, per_page: per_page
       end
