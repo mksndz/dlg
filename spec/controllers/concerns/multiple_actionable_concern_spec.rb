@@ -1,9 +1,5 @@
 require 'rails_helper'
 
-# how can i make this abstract when i use controller_name?
-
-# stub controller_name method on a fake controller?
-
 class FakeController < ActionController::Base
   include MultipleActionable
 end
