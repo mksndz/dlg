@@ -13,6 +13,16 @@
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{m.table_name} RESTART IDENTITY CASCADE;")
 end
 
+# Truncate Join Tables
+%w(
+    admins_collections
+    admins_repositories
+    admins_roles
+    collections_subjects
+).each do |j|
+    ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{j} RESTART IDENTITY CASCADE;")
+end
+
 #
 # Default Subjects for app
 #
