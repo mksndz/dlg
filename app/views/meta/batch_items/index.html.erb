@@ -27,7 +27,7 @@
           <%= sortable 'slug' %>
         </th>
         <th>
-          <%= sortable 'dc_title', 'Title' %>
+          <%= sortable 'dcterms_title', 'Title' %>
         </th>
         <th>
           <%= sortable 'collection_id', 'Collection' %>
@@ -46,7 +46,7 @@
               <%= link_to item.slug, edit_meta_batch_batch_item_path(@batch, item) %>
             </td>
             <td>
-              <%= item.dc_title.first %>
+              <%= item.dcterms_title.first %>
             </td>
             <td>
               <%= link_to(item.collection.display_title, meta_collection_path(item.collection)) if item.collection %>
