@@ -26,30 +26,7 @@
 
     <%= f.select :other_repositories, @data[:repositories].collect { |r| [r.title, r.slug] }, { include_blank: true }, { multiple: true } %>
 
-    <%= meta_textarea @collection, :dc_identifier %>
-    <%= meta_textarea @collection, :dc_right %>
-    <%= meta_textarea @collection, :dc_relation %>
-    <%= meta_textarea @collection, :dc_format %>
-    <%= meta_textarea @collection, :dc_date %>
-    <%= meta_textarea @collection, :dcterms_is_part_of %>
-    <%= meta_textarea @collection, :dcterms_contributor %>
-    <%= meta_textarea @collection, :dcterms_creator %>
-    <%= meta_textarea @collection, :dcterms_description %>
-    <%= meta_textarea @collection, :dcterms_extent %>
-    <%= meta_textarea @collection, :dcterms_medium %>
-    <%= meta_textarea @collection, :dcterms_identifier %>
-    <%= meta_textarea @collection, :dcterms_language %>
-    <%= meta_textarea @collection, :dcterms_spatial %>
-    <%= meta_textarea @collection, :dcterms_publisher %>
-    <%= meta_textarea @collection, :dcterms_access_right %>
-    <%= meta_textarea @collection, :dcterms_rights_holder %>
-    <%= meta_textarea @collection, :dcterms_subject %>
-    <%= meta_textarea @collection, :dcterms_temporal %>
-    <%= meta_textarea @collection, :dcterms_title %>
-    <%= meta_textarea @collection, :dcterms_type %>
-    <%= meta_textarea @collection, :dcterms_is_shown_at %>
-    <%= meta_textarea @collection, :dcterms_provenance %>
-    <%= meta_textarea @collection, :dcterms_license %>
+    <%= render partial: 'shared/show_dc_fields', locals: { entity: @collection, form: f } %>
 
     <%= f.collection_check_boxes :subject_ids, @data[:subjects], :id, :name %>
 
