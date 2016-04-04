@@ -10,34 +10,7 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
+ *= require blacklight
+ *= require scaffolds
  *= require_self
- *= require rails_bootstrap_forms
  */
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 30px;
-}
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 30px;
-}
-
-label.required:before {
-    content: "* ";
-}
-
-a.current.asc:after {
-    content: " \25B4 ";
-}
-
-a.current.desc:after {
-    content: " \25BE ";
-}
