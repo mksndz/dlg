@@ -1,5 +1,5 @@
 module Meta
-  class SubjectsController < BaseController
+  class SubjectsController < MetaController
 
     load_and_authorize_resource
     include ErrorHandling

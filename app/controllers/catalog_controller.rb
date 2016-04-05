@@ -153,7 +153,7 @@ class CatalogController < ApplicationController
         :pf => '$title_pf'
       }
     end
-    
+
     config.add_search_field('author') do |field|
       field.solr_parameters = { :'spellcheck.dictionary' => 'author' }
       field.solr_local_parameters = {

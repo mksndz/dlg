@@ -1,5 +1,5 @@
 module Meta
-  class RolesController < BaseController
+  class RolesController < MetaController
 
     load_and_authorize_resource
     include Sorting

@@ -1,5 +1,5 @@
  module Meta
-  class ItemsController < BaseController
+  class ItemsController < MetaController
 
     load_and_authorize_resource
     include ErrorHandling

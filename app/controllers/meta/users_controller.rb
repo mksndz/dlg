@@ -1,5 +1,5 @@
 module Meta
-  class UsersController < BaseController
+  class UsersController < MetaController
 
     load_and_authorize_resource
     layout 'admin'

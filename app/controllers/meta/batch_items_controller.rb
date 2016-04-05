@@ -1,5 +1,5 @@
 module Meta
-  class BatchItemsController < BaseController
+  class BatchItemsController < MetaController
 
     load_and_authorize_resource
     include ErrorHandling
