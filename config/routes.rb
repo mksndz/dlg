@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
 
-  devise_for :admins
-
   namespace :meta do
 
     get 'home', to: 'base#index'
+
+    devise_for :admins, controllers: {
+        invitations: 'meta/invitations',
+        sessions: 'meta/sessions'
+    }
 
     concern :multiple_actionable do
        post 'multiple_action'

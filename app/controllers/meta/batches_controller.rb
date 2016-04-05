@@ -89,7 +89,7 @@ module Meta
     private
 
     def set_admin
-      @batch.admin = current_admin
+      @batch.admin = current_meta_admin
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

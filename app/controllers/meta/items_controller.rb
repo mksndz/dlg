@@ -16,7 +16,7 @@
 
       set_search_options
 
-      if current_admin.super?
+      if current_meta_admin.super?
         if params[:search]
           s = Meta::ItemSearch.search(params)
           @items = s.results
@@ -31,8 +31,8 @@
           # todo user limits
           @items = Meta::ItemSearch.search params
         else
-          collection_ids = current_admin.collection_ids || []
-          collection_ids += current_admin.repositories.map { |r| r.collection_ids }
+          collection_ids = current_meta_admin.collection_ids || []
+          collection_ids += current_meta_admin.repositories.map { |r| r.collection_ids }
           @items = Item
                        .includes(:collection)
                        .where(collection: collection_ids.flatten)
@@ -131,12 +131,12 @@
       @search_options = {}
       @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']]
       @search_options[:dpla] = [['Yes or No', ''],['Yes', 1],['No', 0]]
-      if current_admin.super?
+      if current_meta_admin.super?
         @search_options[:collections] = Collection.all
         @search_options[:repositories] = Repository.all
-      elsif current_admin.basic?
-        @search_options[:collections] = Collection.where(id: current_admin.collection_ids)
-        @search_options[:repositories] = Repository.where(id: current_admin.repository_ids)
+      elsif current_meta_admin.basic?
+        @search_options[:collections] = Collection.where(id: current_meta_admin.collection_ids)
+        @search_options[:repositories] = Repository.where(id: current_meta_admin.repository_ids)
       end
     end
   end

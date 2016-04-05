@@ -18,8 +18,8 @@
     </ul>
   </div>
 </div>
-<% unless current_admin %>
-  <%= link_to 'Admin Sign In', new_admin_session_path %>
+<% unless current_meta_admin %>
+  <%= link_to 'Admin Sign In', new_meta_admin_session_path %>
 <% else %>
   <%= link_to 'Admin Area', meta_home_path %>
 <% end %>

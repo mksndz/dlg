@@ -10,7 +10,7 @@ module Searchable
 
   def results
     @data = {}
-    if current_admin.super?
+    if current_meta_admin.super?
       s = search_class.search params
     else
       s = search_class.search basic_admin_params
@@ -27,13 +27,13 @@ module Searchable
   def basic_admin_params
     new_params = params
     if params[:collection_id] and params[:collection_id].empty?
-      new_params[:collection_id] = current_admin.collection_ids
+      new_params[:collection_id] = current_meta_admin.collection_ids
     else
       # check_basic_admin_params
     end
 
     if params[:repository_id] and params[:repository_id].empty?
-      new_params[:repository_id] = current_admin.repository_ids
+      new_params[:repository_id] = current_meta_admin.repository_ids
     else
       # check_basic_admin_params
     end
@@ -42,8 +42,8 @@ module Searchable
   end
 
   def basic_admin_collections
-    collection_ids = current_admin.collection_ids || []
-    collection_ids += current_admin.repositories.map { |r| r.collection_ids }
+    collection_ids = current_meta_admin.collection_ids || []
+    collection_ids += current_meta_admin.repositories.map { |r| r.collection_ids }
   end
 
   def check_basic_admin_collection_param
@@ -51,7 +51,7 @@ module Searchable
   end
 
   def check_basic_admin_repository_param
-    current_admin.repository_idss.includes? params[:repository_id]
+    current_meta_admin.repository_idss.includes? params[:repository_id]
   end
 
 end

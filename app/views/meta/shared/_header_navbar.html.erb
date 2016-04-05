@@ -42,12 +42,13 @@
 
       <div class="navbar-right">
         <p class="navbar-text">
-          Signed in as: <%= current_admin.email %>
+          Signed in as: <%= current_meta_admin.email %>
         </p>
         <ul class="nav navbar-nav">
-          <li><%= link_to 'Sign Out', destroy_admin_session_path %></li>
+          <li><%= link_to 'Sign Out', destroy_meta_admin_session_path %></li>
         </ul>
       </div>
+
     </div>
   </div>
 </div>

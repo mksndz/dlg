@@ -9,6 +9,18 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 30px;
 }
+
+.admin-login-form {
+  width: 400px;
+  height: 370px;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
