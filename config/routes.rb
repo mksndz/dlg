@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
   devise_for :admins
 
-
-
   namespace :meta do
 
     get 'home', to: 'base#index'
