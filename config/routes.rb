@@ -1,55 +1,48 @@
 Rails.application.routes.draw do
 
-  namespace :meta do
+  get 'home', to: 'base#index'
 
-    get 'home', to: 'base#index'
+  devise_for :admins
 
-    devise_for :admins, controllers: {
-        invitations: 'meta/invitations',
-        sessions: 'meta/sessions'
-    }
+  concern :multiple_actionable do
+     post 'multiple_action'
+  end
 
-    concern :multiple_actionable do
-       post 'multiple_action'
+  concern :ss_searchable do
+    get 'search'
+    get 'results'
+  end
+
+  resources :repositories, :collections, :roles, :admins, :subjects
+
+  resources :users, only: [:index, :show, :destroy]
+
+  resources :items do
+    collection do
+      concerns :ss_searchable
+      concerns :multiple_actionable
     end
-
-    concern :searchable do
-      get 'search'
-      get 'results'
+    member do
+      get 'copy'
     end
+  end
 
-    resources :repositories, :collections, :roles, :admins, :subjects
+  resources :collections do
+    collection do
+      get 'for/:repository_id', to: 'collections#index', as: :filtered
+    end
+  end
 
-    resources :users, only: [:index, :show, :destroy]
-
-    resources :items do
+  resources :batches do
+    collection do
+      get 'for/:user_id', to: 'batches#index', as: :filtered
+    end
+    resources :batch_items do
       collection do
-        concerns :searchable
-        concerns :multiple_actionable
-      end
-      member do
-        get 'copy'
+        get 'import/xml',       to: 'batch_items#xml',             as: :xml
+        post 'import/process',  to: 'batch_items#create_from_xml', as: :xml_import
       end
     end
-
-    resources :collections do
-      collection do
-        get 'for/:repository_id', to: 'collections#index', as: :filtered
-      end
-    end
-
-    resources :batches do
-      collection do
-        get 'for/:user_id', to: 'batches#index', as: :filtered
-      end
-      resources :batch_items do
-        collection do
-          get 'import/xml',       to: 'batch_items#xml',             as: :xml
-          post 'import/process',  to: 'batch_items#create_from_xml', as: :xml_import
-        end
-      end
-    end
-
   end
 
   mount Blacklight::Engine => '/'
