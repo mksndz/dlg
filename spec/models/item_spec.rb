@@ -1,6 +1,6 @@
 require 'rails_helper'
 include SunspotMatchers
-include Meta::DcHelper
+include DcHelper
 
 RSpec.describe Item, type: :model do
 

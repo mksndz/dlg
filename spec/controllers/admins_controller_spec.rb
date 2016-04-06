@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Meta::AdminsController, type: :controller do
+RSpec.describe AdminsController, type: :controller do
 
   let(:super_admin) {
     Fabricate(:super)
@@ -106,7 +106,7 @@ RSpec.describe Meta::AdminsController, type: :controller do
 
       it 'redirects to the created admin' do
         post :create, {:admin => valid_attributes}, valid_session
-        expect(response).to redirect_to(meta_admin_path(Admin.last))
+        expect(response).to redirect_to(admin_path(Admin.last))
       end
 
     end
@@ -149,7 +149,7 @@ RSpec.describe Meta::AdminsController, type: :controller do
       it 'redirects to the admin' do
         admin = Admin.create! valid_attributes
         put :update, {:id => admin.to_param, :admin => new_attributes}, valid_session
-        expect(response).to redirect_to(meta_admin_path(admin))
+        expect(response).to redirect_to(admin_path(admin))
       end
 
       it 'restricts coordinator admins from updating Admins they did not create' do
@@ -198,7 +198,7 @@ RSpec.describe Meta::AdminsController, type: :controller do
     it 'redirects to the admins list' do
       admin = Admin.create! valid_attributes
       delete :destroy, {:id => admin.to_param}, valid_session
-      expect(response).to redirect_to(meta_admins_url)
+      expect(response).to redirect_to(admins_url)
     end
   end
 

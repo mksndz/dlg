@@ -80,7 +80,7 @@ class BatchesController < ApplicationController
   def destroy
     @batch.destroy
     respond_to do |format|
-      format.html { redirect_to meta_batches_url, notice: 'Batch was successfully destroyed.' }
+      format.html { redirect_to batches_url, notice: 'Batch was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -88,12 +88,12 @@ class BatchesController < ApplicationController
   private
 
   def set_admin
-    @batch.admin = current_meta_admin
+    @batch.admin = current_admin
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def batch_params
-    params.require(:meta_batch).permit(
+    params.require(:batch).permit(
         :name,
         :notes,
         :admin_id

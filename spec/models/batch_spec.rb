@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe Meta::Batch, type: :model do
+RSpec.describe Batch, type: :model do
 
   it 'has none to begin with' do
-    expect(Meta::Batch.count).to eq 0
+    expect(Batch.count).to eq 0
   end
 
   it 'has one after adding one' do
     Fabricate(:batch)
-    expect(Meta::Batch.count).to eq 1
+    expect(Batch.count).to eq 1
   end
 
   it 'has a String name' do

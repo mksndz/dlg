@@ -29,7 +29,7 @@ class SubjectsController < ApplicationController
   def create
     @subject = Subject.new(subject_params)
     if @subject.save
-      redirect_to meta_subject_path(@subject), notice: 'Subject was successfully created.'
+      redirect_to subject_path(@subject), notice: 'Subject was successfully created.'
     else
       render :new
     end
@@ -38,7 +38,7 @@ class SubjectsController < ApplicationController
   # PATCH/PUT /subjects/1
   def update
     if @subject.update(subject_params)
-      redirect_to meta_subject_path(@subject), notice: 'Subject was successfully updated.'
+      redirect_to subject_path(@subject), notice: 'Subject was successfully updated.'
     else
       render :edit
     end
@@ -47,7 +47,7 @@ class SubjectsController < ApplicationController
   # DELETE /subjects/1
   def destroy
     @subject.destroy
-    redirect_to meta_subjects_url, notice: 'Subject was successfully destroyed.'
+    redirect_to subjects_url, notice: 'Subject was successfully destroyed.'
   end
 
   private

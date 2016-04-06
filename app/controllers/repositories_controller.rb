@@ -6,13 +6,13 @@ class RepositoriesController < ApplicationController
   layout 'admin'
 
   def index
-    if current_meta_admin.super?
+    if current_admin.super?
       @repositories = Repository
                           .order(sort_column + ' ' + sort_direction)
                           .page(params[:page])
     else
       # todo sorting?
-      @repositories = current_meta_admin.repositories.page(params[:page])
+      @repositories = current_admin.repositories.page(params[:page])
     end
 
   end
@@ -27,7 +27,7 @@ class RepositoriesController < ApplicationController
   def create
     @repository = Repository.new repository_params
     if @repository.save
-      redirect_to meta_repository_path(@repository), notice: 'Repository created'
+      redirect_to repository_path(@repository), notice: 'Repository created'
     else
       render :new, alert: 'Error creating repository'
     end
@@ -38,7 +38,7 @@ class RepositoriesController < ApplicationController
 
   def update
     if @repository.update(repository_params)
-      redirect_to meta_repository_path(@repository), notice: 'Repository updated'
+      redirect_to repository_path(@repository), notice: 'Repository updated'
     else
       render :edit, alert: 'Error creating repository'
     end
@@ -46,7 +46,7 @@ class RepositoriesController < ApplicationController
 
   def destroy
     @repository.destroy
-    redirect_to meta_repositories_path, notice: 'Repository destroyed.'
+    redirect_to repositories_path, notice: 'Repository destroyed.'
   end
 
   private

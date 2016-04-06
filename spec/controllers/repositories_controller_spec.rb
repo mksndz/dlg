@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Meta::RepositoriesController, type: :controller do
+RSpec.describe RepositoriesController, type: :controller do
 
   let(:super_admin) {
     Fabricate(:super)
@@ -88,7 +88,7 @@ RSpec.describe Meta::RepositoriesController, type: :controller do
       it 'redirects to the created repository' do
         
         post :create, {:repository => valid_attributes}, valid_session
-        expect(response).to redirect_to(meta_repository_path(Repository.last))
+        expect(response).to redirect_to(repository_path(Repository.last))
       end
     end
 
@@ -134,7 +134,7 @@ RSpec.describe Meta::RepositoriesController, type: :controller do
         
         repository = Repository.create! valid_attributes
         put :update, {:id => repository.to_param, :repository => valid_attributes}, valid_session
-        expect(response).to redirect_to(meta_repository_path(repository))
+        expect(response).to redirect_to(repository_path(repository))
       end
     end
 
@@ -168,7 +168,7 @@ RSpec.describe Meta::RepositoriesController, type: :controller do
       
       repository = Repository.create! valid_attributes
       delete :destroy, {:id => repository.to_param}, valid_session
-      expect(response).to redirect_to(meta_repositories_url)
+      expect(response).to redirect_to(repositories_url)
     end
   end
 

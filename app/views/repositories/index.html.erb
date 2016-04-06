@@ -6,7 +6,7 @@
     All of them
 <% end %>
 
-<%= link_to 'Add Repository', new_meta_repository_path, class: 'btn btn-default' %>
+<%= link_to 'Add Repository', new_repository_path, class: 'btn btn-default' %>
 
 <br><br>
 
@@ -39,10 +39,10 @@
       <% @repositories.each do |repository| %>
           <tr>
             <td>
-              <%= link_to repository.id, meta_repository_path(repository) %>
+              <%= link_to repository.id, repository_path(repository) %>
             </td>
             <td>
-              <%= link_to repository.slug, meta_repository_path(repository) %>
+              <%= link_to repository.slug, repository_path(repository) %>
             </td>
             <td>
               <%= repository.title %>
@@ -52,7 +52,7 @@
             </td>
             <td>
               <div class="btn-group btn-group-xs">
-                <%= render partial: 'shared/entity_actions', locals: { base_path: meta_repository_path(repository), edit_path: edit_meta_repository_path(repository), entity: repository, show_bl: false } %>
+                <%= render partial: 'shared/entity_actions', locals: { base_path: repository_path(repository), edit_path: edit_repository_path(repository), entity: repository, show_bl: false } %>
               </div>
             </td>
           </tr>

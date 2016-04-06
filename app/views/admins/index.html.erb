@@ -2,8 +2,8 @@
     Admin Users
 <% end %>
 
-<%= link_to 'Add Admin User', new_meta_admin_path, class: 'btn btn-default' %>
-<%= link_to 'Invite Admin User', new_meta_admin_invitation_path, class: 'btn btn-default' %>
+<%= link_to 'Add Admin User', new_admin_path, class: 'btn btn-default' %>
+<%= link_to 'Invite Admin User', new_admin_invitation_path, class: 'btn btn-default' %>
 
 <br><br>
 
@@ -44,7 +44,7 @@
             <% end %>
           </td>
           <td>
-            <%= render partial: 'shared/entity_actions', locals: { base_path: meta_admin_path(admin), edit_path:  edit_meta_admin_path(admin), entity: admin, show_bl: false } %>
+            <%= render partial: 'shared/entity_actions', locals: { base_path: admin_path(admin), edit_path:  edit_admin_path(admin), entity: admin, show_bl: false } %>
           </td>
         </tr>
     <% end %>

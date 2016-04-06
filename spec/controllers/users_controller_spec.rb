@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Meta::UsersController, type: :controller do
+RSpec.describe UsersController, type: :controller do
 
   let(:super_user) {
     Fabricate(:super)
@@ -47,7 +47,7 @@ RSpec.describe Meta::UsersController, type: :controller do
     it 'redirects to the users list' do
       user = User.create! valid_attributes
       delete :destroy, {:id => user.to_param}, valid_session
-      expect(response).to redirect_to(meta_users_url)
+      expect(response).to redirect_to(users_url)
     end
   end
 

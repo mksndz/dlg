@@ -29,10 +29,10 @@
     <% @users.each do |user| %>
         <tr>
           <td>
-            <%= link_to user.id, meta_user_path(user) %>
+            <%= link_to user.id, user_path(user) %>
           </td>
           <td>
-            <%= link_to user.email, meta_user_path(user) %>
+            <%= link_to user.email, user_path(user) %>
           </td>
           <td>
             <% user.bookmarks.length %>

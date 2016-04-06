@@ -15,9 +15,9 @@ class ItemsController < ApplicationController
 
     set_search_options
 
-    if current_meta_admin.super?
+    if current_admin.super?
       if params[:search]
-        s = Meta::ItemSearch.search(params)
+        s = ItemSearch.search(params)
         @items = s.results
         # @count = s.total
       else
@@ -28,10 +28,10 @@ class ItemsController < ApplicationController
     else
       if params[:search]
         # todo user limits
-        @items = Meta::ItemSearch.search params
+        @items = ItemSearch.search params
       else
-        collection_ids = current_meta_admin.collection_ids || []
-        collection_ids += current_meta_admin.repositories.map { |r| r.collection_ids }
+        collection_ids = current_admin.collection_ids || []
+        collection_ids += current_admin.repositories.map { |r| r.collection_ids }
         @items = Item
                      .includes(:collection)
                      .where(collection: collection_ids.flatten)
@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(split_dc_params(item_params))
     if @item.save
-      redirect_to meta_item_path(@item), notice: 'Item created'
+      redirect_to item_path(@item), notice: 'Item created'
     else
       collections_for_select
       render :new, alert: 'Error creating item'
@@ -70,7 +70,7 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(split_dc_params(item_params))
-      redirect_to meta_item_path(@item), notice: 'Item updated'
+      redirect_to item_path(@item), notice: 'Item updated'
     else
       collections_for_select
       render :edit, alert: 'Error creating item'
@@ -79,9 +79,9 @@ class ItemsController < ApplicationController
 
   def destroy
     if @item.destroy
-      redirect_to meta_items_path, notice: 'Item destroyed.'
+      redirect_to items_path, notice: 'Item destroyed.'
     else
-      redirect_to meta_items_path, alert: 'Item could not be destroyed.'
+      redirect_to items_path, alert: 'Item could not be destroyed.'
     end
   end
 
@@ -130,12 +130,12 @@ class ItemsController < ApplicationController
     @search_options = {}
     @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']]
     @search_options[:dpla] = [['Yes or No', ''],['Yes', 1],['No', 0]]
-    if current_meta_admin.super?
+    if current_admin.super?
       @search_options[:collections] = Collection.all
       @search_options[:repositories] = Repository.all
-    elsif current_meta_admin.basic?
-      @search_options[:collections] = Collection.where(id: current_meta_admin.collection_ids)
-      @search_options[:repositories] = Repository.where(id: current_meta_admin.repository_ids)
+    elsif current_admin.basic?
+      @search_options[:collections] = Collection.where(id: current_admin.collection_ids)
+      @search_options[:repositories] = Repository.where(id: current_admin.repository_ids)
     end
   end
 end

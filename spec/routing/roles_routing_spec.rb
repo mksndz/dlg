@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Meta::RolesController, type: :routing do
+RSpec.describe RolesController, type: :routing do
   describe 'routing' do
 
     it 'routes to #index' do

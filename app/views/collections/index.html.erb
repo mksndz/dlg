@@ -12,7 +12,7 @@
   end
 %>
 
-<%= link_to 'Add Collection', new_meta_collection_path, class: 'btn btn-default' %>
+<%= link_to 'Add Collection', new_collection_path, class: 'btn btn-default' %>
 
 <% if @collections.empty? %>
 
@@ -47,23 +47,23 @@
         <% @collections.each do |collection| %>
             <tr>
               <td>
-                <%= link_to collection.id, meta_collection_path(collection) %>
+                <%= link_to collection.id, collection_path(collection) %>
               </td>
               <td>
-                <%= link_to collection.slug, meta_collection_path(collection) %>
+                <%= link_to collection.slug, collection_path(collection) %>
               </td>
               <td>
                 <%= collection.display_title %>
               </td>
               <td>
-                <%= link_to(collection.repository.title, meta_repository_path(collection.repository)) if collection.repository %>
+                <%= link_to(collection.repository.title, repository_path(collection.repository)) if collection.repository %>
               </td>
               <td>
                 <%= collection.items.size %>
               </td>
               <td>
                 <div class="btn-group btn-group-xs">
-                  <%= render partial: 'shared/entity_actions', locals: { base_path: meta_collection_path(collection), edit_path: edit_meta_collection_path(collection), entity: collection, show_bl: false } %>
+                  <%= render partial: 'shared/entity_actions', locals: { base_path: collection_path(collection), edit_path: edit_collection_path(collection), entity: collection, show_bl: false } %>
                 </div>
               </td>
             </tr>

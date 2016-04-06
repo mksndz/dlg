@@ -12,7 +12,7 @@
   <p>Batch Items Created:</p>
   <ul>
     <% @batch_items.each do |item| %>
-      <li><%= link_to item.title, meta_batch_batch_items_path(@batch, item) %></li>
+      <li><%= link_to item.title, batch_batch_items_path(@batch, item) %></li>
     <% end %>
   </ul>
 </div>

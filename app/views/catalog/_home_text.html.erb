@@ -18,8 +18,3 @@
     </ul>
   </div>
 </div>
-<% unless current_meta_admin %>
-  <%= link_to 'Admin Sign In', new_meta_admin_session_path, data: { no_turbolink: true } %>
-<% else %>
-  <%= link_to 'Admin Area', meta_home_path, data: { no_turbolink: true } %>
-<% end %>

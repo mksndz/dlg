@@ -1,12 +1,12 @@
 # Truncate Tables
 [
     Subject,
-    Meta::BatchItem,
+    BatchItem,
     Item,
     User,
     Admin,
-    Meta::Role,
-    Meta::Batch,
+    Role,
+    Batch,
     Collection,
     Repository
 ].each do |m|
@@ -46,8 +46,8 @@ Subject.create!([
 #
 # Default Roles for app
 #
-Meta::Role.delete_all
-Meta::Role.create!([
+Role.delete_all
+Role.create!([
                  { name: 'super' },
                  { name: 'coordinator' },
                  { name: 'committer' },
@@ -62,7 +62,7 @@ admin = Admin.create!(
                 password: 'password'
              )
 
-admin.roles << Meta::Role.find_by_name('super')
+admin.roles << Role.find_by_name('super')
 admin.save
 
 #
@@ -73,7 +73,7 @@ admin = Admin.create!(
                 password: 'password'
              )
 
-admin.roles << Meta::Role.find_by_name('basic')
+admin.roles << Role.find_by_name('basic')
 admin.save
 
 #

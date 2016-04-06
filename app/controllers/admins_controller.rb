@@ -17,8 +17,8 @@ class AdminsController < ApplicationController
 
 
   def index
-    if current_meta_admin.coordinator?
-      @admins = Admin.where(creator_id: current_meta_admin.id)
+    if current_admin.coordinator?
+      @admins = Admin.where(creator_id: current_admin.id)
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
     else
@@ -41,7 +41,7 @@ class AdminsController < ApplicationController
     set_admin_creator
     set_default_roles
     if @admin.save
-      redirect_to meta_admin_path(@admin), notice: 'Admin created!'
+      redirect_to admin_path(@admin), notice: 'Admin created!'
     else
       render :new, alert: 'Admin could not be created!'
     end
@@ -52,7 +52,7 @@ class AdminsController < ApplicationController
 
   def update
     if @admin.update(admin_params)
-      redirect_to meta_admin_path(@admin), notice: 'Admin updated!'
+      redirect_to admin_path(@admin), notice: 'Admin updated!'
     else
       render :edit, alert: 'Admin could not be updated!'
     end
@@ -61,7 +61,7 @@ class AdminsController < ApplicationController
   def destroy
     # todo determine if a soft delete would be better for users
     @admin.destroy
-    redirect_to meta_admins_url, notice: 'Admin was successfully destroyed.'
+    redirect_to admins_url, notice: 'Admin was successfully destroyed.'
   end
 
   private
@@ -75,24 +75,24 @@ class AdminsController < ApplicationController
   end
 
   def set_admin_creator
-    @admin.creator = current_meta_admin
+    @admin.creator = current_admin
   end
 
   def set_data
     @data ||= {}
     @data[:roles] = Role.where("name != 'basic'")
-    @data[:repositories]= current_meta_admin.super? ? Repository.all : current_meta_admin.repositories
-    @data[:collections] = current_meta_admin.super? ? Collection.all : current_meta_admin.collections
+    @data[:repositories]= current_admin.super? ? Repository.all : current_admin.repositories
+    @data[:collections] = current_admin.super? ? Collection.all : current_admin.collections
   end
 
   def confirm_restrictions
     # todo test coverage for this
-    unless current_meta_admin.super?
+    unless current_admin.super?
       new_admin_collection_ids = admin_params[:collection_ids] || []
       new_admin_repository_ids = admin_params[:repository_ids] || []
-      throw AdminRestrictionsError unless (new_admin_repository_ids - current_meta_admin.repository_ids).empty?
-      throw AdminRestrictionsError unless (new_admin_collection_ids - current_meta_admin.collection_ids).empty?
-      throw AdminRestrictionsError if current_meta_admin.coordinator? and admin_params[:role_ids]
+      throw AdminRestrictionsError unless (new_admin_repository_ids - current_admin.repository_ids).empty?
+      throw AdminRestrictionsError unless (new_admin_collection_ids - current_admin.collection_ids).empty?
+      throw AdminRestrictionsError if current_admin.coordinator? and admin_params[:role_ids]
     end
   end
 

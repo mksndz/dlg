@@ -8,8 +8,8 @@
   end
 %>
 
-<%= link_to 'Add Batch Item', new_meta_batch_batch_item_path(@batch), class: 'btn btn-default' %>
-<%= link_to 'Populate Batch Items via XML', xml_meta_batch_batch_items_path(@batch), class: 'btn btn-default' %>
+<%= link_to 'Add Batch Item', new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
+<%= link_to 'Populate Batch Items via XML', xml_batch_batch_items_path(@batch), class: 'btn btn-default' %>
 
 <% if @batch_items.empty? %>
 
@@ -40,22 +40,22 @@
       <% @batch_items.each do |item| %>
           <tr>
             <td>
-              <%= link_to item.id, meta_batch_batch_item_path(@batch, item) %>
+              <%= link_to item.id, batch_batch_item_path(@batch, item) %>
             </td>
             <td>
-              <%= link_to item.slug, edit_meta_batch_batch_item_path(@batch, item) %>
+              <%= link_to item.slug, edit_batch_batch_item_path(@batch, item) %>
             </td>
             <td>
               <%= item.dcterms_title.first %>
             </td>
             <td>
-              <%= link_to(item.collection.display_title, meta_collection_path(item.collection)) if item.collection %>
+              <%= link_to(item.collection.display_title, collection_path(item.collection)) if item.collection %>
             </td>
             <td>
               <div class="btn-group btn-group-xs">
-                <%= link_to 'View', meta_batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
-                <%= link_to 'Edit', edit_meta_batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
-                <%= link_to 'Delete', meta_batch_batch_item_path(@batch, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+                <%= link_to 'View', batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
+                <%= link_to 'Edit', edit_batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
+                <%= link_to 'Delete', batch_batch_item_path(@batch, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
               </div>
             </td>
           </tr>

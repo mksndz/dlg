@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Meta::CollectionsController, type: :controller do
+RSpec.describe CollectionsController, type: :controller do
 
   let(:super_admin) {
     Fabricate(:super)
@@ -102,7 +102,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
         collection = Fabricate.build(:collection) { repository repository }
         collection.repository = repository
         post :create, {:collection => collection.as_json}, valid_session
-        expect(response).to redirect_to meta_collection_path(assigns(:collection))
+        expect(response).to redirect_to collection_path(assigns(:collection))
       end
     end
 
@@ -121,7 +121,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
 
       it 'redirects to the created collection' do
         post :create, {:collection => valid_attributes}, valid_session
-        expect(response).to redirect_to(meta_collection_path(Collection.last))
+        expect(response).to redirect_to(collection_path(Collection.last))
       end
     end
 
@@ -196,7 +196,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
       it 'redirects to the collection' do
         collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
-        expect(response).to redirect_to(meta_collection_path(collection))
+        expect(response).to redirect_to(collection_path(collection))
       end
     end
 
@@ -226,7 +226,7 @@ RSpec.describe Meta::CollectionsController, type: :controller do
     it 'redirects to the collections list' do
       collection = Collection.create! valid_attributes
       delete :destroy, {:id => collection.to_param}, valid_session
-      expect(response).to redirect_to(meta_collections_url)
+      expect(response).to redirect_to(collections_url)
     end
   end
 

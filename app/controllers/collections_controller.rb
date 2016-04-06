@@ -10,7 +10,7 @@ class CollectionsController < ApplicationController
 
   def index
 
-    if current_meta_admin.super?
+    if current_admin.super?
       if params[:repository_id]
         @collections = Collection
                            .where(repository_id: params[:repository_id])
@@ -22,8 +22,8 @@ class CollectionsController < ApplicationController
                            .page(params[:page])
       end
     else
-      collection_ids = current_meta_admin.collection_ids
-      current_meta_admin.repositories.each { |r| collection_ids << r.collection_ids }
+      collection_ids = current_admin.collection_ids
+      current_admin.repositories.each { |r| collection_ids << r.collection_ids }
       @collections = Collection
                          .where(id: collection_ids.flatten)
                          .order(sort_column + ' ' + sort_direction)
@@ -46,7 +46,7 @@ class CollectionsController < ApplicationController
 
     respond_to do |format|
       if @collection.save
-        format.html { redirect_to meta_collection_path(@collection), notice: 'Collection item was successfully created.' }
+        format.html { redirect_to collection_path(@collection), notice: 'Collection item was successfully created.' }
       else
         repositories_for_select
         format.html { render :new }
@@ -63,7 +63,7 @@ class CollectionsController < ApplicationController
     new_params = split_dc_params(collection_params)
 
     if @collection.update new_params
-      redirect_to meta_collection_path(@collection), notice: 'Collection updated'
+      redirect_to collection_path(@collection), notice: 'Collection updated'
     else
       repositories_for_select
       render :edit, alert: 'Error creating collection'
@@ -72,7 +72,7 @@ class CollectionsController < ApplicationController
 
   def destroy
     @collection.destroy
-    redirect_to meta_collections_path, notice: 'Collection destroyed.'
+    redirect_to collections_path, notice: 'Collection destroyed.'
   end
 
   private

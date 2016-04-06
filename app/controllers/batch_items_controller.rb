@@ -36,7 +36,7 @@ class BatchItemsController < ApplicationController
 
     respond_to do |format|
       if @batch_item.save
-        format.html { redirect_to meta_batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully created.' }
+        format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully created.' }
         format.json { render :show, status: :created, location: @batch_item }
       else
         collections_for_select
@@ -51,7 +51,7 @@ class BatchItemsController < ApplicationController
   def update
     respond_to do |format|
       if @batch_item.update(split_dc_params(batch_item_params))
-        format.html { redirect_to meta_batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully updated.' }
+        format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully updated.' }
         format.json { render :show, status: :ok, location: @batch_item }
       else
         collections_for_select
@@ -66,7 +66,7 @@ class BatchItemsController < ApplicationController
   def destroy
     @batch_item.destroy
     respond_to do |format|
-      format.html { redirect_to meta_batch_batch_items_path(@batch), notice: 'Batch item was successfully destroyed.' }
+      format.html { redirect_to batch_batch_items_path(@batch), notice: 'Batch item was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -95,7 +95,7 @@ class BatchItemsController < ApplicationController
     respond_to do |format|
       if @batch_item.save
         # format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully updated.' }
-        format.json { render :import_results, status: :ok, location: meta_batch_batch_item_path(@batch, @batch_item) }
+        format.json { render :import_results, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
       else
         # format.html { render :edit }
         format.json { render json: @batch_item.errors, status: :unprocessable_entity }
@@ -115,7 +115,7 @@ class BatchItemsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def batch_item_params
-    params.require(:meta_batch_item).permit(
+    params.require(:batch_item).permit(
         :collection_id,
         :slug,
         :dpla,

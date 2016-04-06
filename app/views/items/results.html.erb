@@ -6,7 +6,7 @@
     <%= @data[:count] %> found
 <% end %>
 
-<%= link_to 'Search Items', search_meta_items_path, class: 'btn btn-default' %>
+<%= link_to 'Search Items', search_items_path, class: 'btn btn-default' %>
 
 <% if @data[:results].empty? %>
 
@@ -14,7 +14,7 @@
 
 <% else %>
 
-    <%= bootstrap_form_tag url: multiple_action_meta_items_path do |f| %>
+    <%= bootstrap_form_tag url: multiple_action_items_path do |f| %>
 
     <table class='table table-condensed table-hover'>
       <thead>
@@ -45,19 +45,19 @@
               <input type="checkbox" name="ids[]" value="<%= result.id %>">
             </td>
             <td>
-              <%= link_to result.id, meta_item_path(result) %>
+              <%= link_to result.id, item_path(result) %>
             </td>
             <td>
-              <%= link_to result.slug, meta_item_path(result) %>
+              <%= link_to result.slug, item_path(result) %>
             </td>
             <td>
               <%= result.title %>
             </td>
             <td>
-              <%= link_to(result.collection.display_title, meta_collection_path(result.collection)) if result.collection %>
+              <%= link_to(result.collection.display_title, collection_path(result.collection)) if result.collection %>
             </td>
             <td>
-              <%= render partial: 'shared/entity_actions', locals: { base_path: meta_item_path(result), edit_path: edit_meta_item_path(result), entity: result, show_bl: true } %>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: item_path(result), edit_path: edit_item_path(result), entity: result, show_bl: true } %>
             </td>
           </tr>
         <% end %>

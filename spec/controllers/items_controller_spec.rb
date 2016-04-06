@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Meta::ItemsController, type: :controller do
+RSpec.describe ItemsController, type: :controller do
 
   let(:super_user) {
     Fabricate(:super)
@@ -123,7 +123,7 @@ RSpec.describe Meta::ItemsController, type: :controller do
         collection.repository = repository
         item = Fabricate.build(:item) { collection collection }
         post :create, {:item => item.as_json}, valid_session
-        expect(response).to redirect_to meta_item_path(assigns(:item))
+        expect(response).to redirect_to item_path(assigns(:item))
       end
     end
 
@@ -136,7 +136,7 @@ RSpec.describe Meta::ItemsController, type: :controller do
         basic_user.collections << collection
         item = Fabricate.build(:item) { collection collection }
         post :create, {:item => item.as_json}, valid_session
-        expect(response).to redirect_to meta_item_path(assigns(:item))
+        expect(response).to redirect_to item_path(assigns(:item))
       end
     end
 
@@ -155,7 +155,7 @@ RSpec.describe Meta::ItemsController, type: :controller do
 
       it 'redirects to the created item' do
         post :create, {:item => valid_attributes}, valid_session
-        expect(response).to redirect_to(meta_item_path(Item.last))
+        expect(response).to redirect_to(item_path(Item.last))
       end
     end
 
@@ -231,7 +231,7 @@ RSpec.describe Meta::ItemsController, type: :controller do
       it 'redirects to the item' do
         item = Item.create! valid_attributes
         put :update, {:id => item.to_param, :item => valid_attributes}, valid_session
-        expect(response).to redirect_to(meta_item_path(item))
+        expect(response).to redirect_to(item_path(item))
       end
     end
 
@@ -261,7 +261,7 @@ RSpec.describe Meta::ItemsController, type: :controller do
     it 'redirects to the items list' do
       item = Item.create! valid_attributes
       delete :destroy, {:id => item.to_param}, valid_session
-      expect(response).to redirect_to(meta_items_url)
+      expect(response).to redirect_to(items_url)
     end
   end
 

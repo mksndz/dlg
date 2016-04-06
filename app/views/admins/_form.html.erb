@@ -9,12 +9,12 @@
       <%= f.password_field :password_confirmation %>
     <% end %>
 
-    <% if current_meta_admin.super? %>
+    <% if current_admin.super? %>
         <%= f.collection_check_boxes :role_ids, @data[:roles], :id, :name %>
         <%= f.select :creator_id, Admin.all.collect! { |u| [u.email, u.id] } %>
     <% end %>
 
-    <% if current_meta_admin.super? or current_meta_admin.coordinator? %>
+    <% if current_admin.super? or current_admin.coordinator? %>
         <%= f.select :repository_ids, @data[:repositories].collect! { |r| [r.title, r.id] }, { include_blank: true }, { multiple: true } %>
         <%= f.select :collection_ids, @data[:collections].collect! { |c| [c.title, c.id] }, { include_blank: true }, { multiple: true } %>
     <% end %>

@@ -25,10 +25,10 @@ class AdminAbility
             admin.collections.include?(item.collection)
       end
 
-      can [:show, :edit, :update, :destroy], Meta::Batch, admin_id: admin.id
-      can [:index, :new, :create], Meta::Batch
-      can [:index, :show, :new, :create], Meta::BatchItem
-      can [:edit, :update, :destroy], Meta::BatchItem, { batch: { admin_id: admin.id }  }
+      can [:show, :edit, :update, :destroy], Batch, admin_id: admin.id
+      can [:index, :new, :create], Batch
+      can [:index, :show, :new, :create], BatchItem
+      can [:edit, :update, :destroy], BatchItem, { batch: { admin_id: admin.id }  }
 
     end
 
@@ -41,7 +41,7 @@ class AdminAbility
 
     if admin.committer?
 
-      can :commit, Meta::Batch, admin_id: admin.id
+      can :commit, Batch, admin_id: admin.id
 
     end
 

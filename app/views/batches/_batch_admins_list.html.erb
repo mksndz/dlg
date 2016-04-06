@@ -2,7 +2,7 @@
   <p><strong>Admin Users</strong></p>
   <ul class="list-unstyled">
     <% @admins.each do |u| %>
-        <li><%= link_to u.email, filtered_meta_batches_path(u) %></li>
+        <li><%= link_to u.email, filtered_batches_path(u) %></li>
     <% end %>
   </ul>
 </div>

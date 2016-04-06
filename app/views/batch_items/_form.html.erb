@@ -1,4 +1,4 @@
-<%= bootstrap_form_for([@batch, @batch_item], url: meta_batch_batch_item_path(@batch, @batch_item) ) do |f| %>
+<%= bootstrap_form_for([@batch, @batch_item], url: batch_batch_item_path(@batch, @batch_item) ) do |f| %>
 
     <%= f.alert_message 'The Batch Item could not be saved due to the following errors:' %>
 

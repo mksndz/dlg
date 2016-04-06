@@ -4,7 +4,7 @@ class FakeController < ActionController::Base
   include MultipleActionable
 end
 
-RSpec.describe Meta::ItemsController, type: :controller do
+RSpec.describe ItemsController, type: :controller do
 
 
   let(:super_user) {

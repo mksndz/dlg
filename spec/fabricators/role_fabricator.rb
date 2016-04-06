@@ -1,6 +1,6 @@
 require 'faker'
 
-Fabricator(:role, from: 'Meta::Role') do
+Fabricator(:role, from: 'Role') do
   name { Faker::Hipster.words(2) }
 end
 
