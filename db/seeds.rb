@@ -14,9 +14,9 @@ end
 
 # Truncate Join Tables
 %w(
-    users_collections
-    users_repositories
-    users_roles
+    collections_users
+    repositories_users
+    roles_users
     collections_subjects
 ).each do |j|
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{j} RESTART IDENTITY CASCADE;")
