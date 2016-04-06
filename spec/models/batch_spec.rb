@@ -16,9 +16,9 @@ RSpec.describe Batch, type: :model do
     expect(b.name).to be_kind_of String
   end
 
-  it 'has an Admin' do
+  it 'has a User' do
     b = Fabricate(:batch)
-    expect(b.admin).to be_kind_of Admin
+    expect(b.user).to be_kind_of User
   end
 
   it 'contains BatchWorks' do

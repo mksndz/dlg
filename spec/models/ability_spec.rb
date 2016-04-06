@@ -8,7 +8,7 @@ RSpec.describe Ability, type: :model do
   let(:coordinator_user)  { Fabricate :coordinator }
   let(:committer_user)    { Fabricate :committer }
 
-  context 'for an Admin admin' do
+  context 'for an User user' do
     
     subject { Ability.new super_user }
 
@@ -18,7 +18,7 @@ RSpec.describe Ability, type: :model do
 
   end
   
-  context 'for a Coordinator admin' do
+  context 'for a Coordinator user' do
     
     subject { Ability.new coordinator_user }
 
@@ -26,37 +26,37 @@ RSpec.describe Ability, type: :model do
       is_expected.not_to be_able_to :manage, :all
     end
 
-    it 'can create new Admins' do
-      is_expected.to be_able_to :new, Admin.new
-      is_expected.to be_able_to :create, Admin.new
+    it 'can create new Users' do
+      is_expected.to be_able_to :new, User.new
+      is_expected.to be_able_to :create, User.new
     end
 
-    it 'can modify Admins for which it is the creator' do
+    it 'can modify Users for which it is the creator' do
 
-      admin = Fabricate :admin
-      admin.creator = coordinator_user
+      user = Fabricate :user
+      user.creator = coordinator_user
 
-      is_expected.to be_able_to :edit, admin
-      is_expected.to be_able_to :update, admin
-      is_expected.to be_able_to :destroy, admin
+      is_expected.to be_able_to :edit, user
+      is_expected.to be_able_to :update, user
+      is_expected.to be_able_to :destroy, user
 
     end
 
-    it 'cannot modify Admins for which it is not the creator' do
+    it 'cannot modify Users for which it is not the creator' do
 
-      admin = Fabricate :admin
-      other_user = Fabricate :admin
-      admin.creator = other_user
+      user = Fabricate :user
+      other_user = Fabricate :user
+      user.creator = other_user
 
-      is_expected.not_to be_able_to :edit, admin
-      is_expected.not_to be_able_to :update, admin
-      is_expected.not_to be_able_to :destroy, admin
+      is_expected.not_to be_able_to :edit, user
+      is_expected.not_to be_able_to :update, user
+      is_expected.not_to be_able_to :destroy, user
 
     end
 
   end
 
-  context 'for a Basic admin' do
+  context 'for a Basic user' do
 
     subject { Ability.new basic_user }
 
@@ -175,8 +175,8 @@ RSpec.describe Ability, type: :model do
       end
 
       it 'cannot view or modify Batches belonging to others' do
-        other_user = Fabricate :admin
-        batch.admin = other_user
+        other_user = Fabricate :user
+        batch.user = other_user
         is_expected.not_to be_able_to :show, batch
         is_expected.not_to be_able_to :edit, batch
         is_expected.not_to be_able_to :update, batch
@@ -184,8 +184,8 @@ RSpec.describe Ability, type: :model do
       end
 
       it 'cannot modify or destroy BatchItems belonging to others' do
-        other_user = Fabricate :admin
-        batch.admin = other_user
+        other_user = Fabricate :user
+        batch.user = other_user
         batch_item = batch.batch_items.first
         is_expected.not_to be_able_to :edit, batch_item
         is_expected.not_to be_able_to :update, batch_item
@@ -195,14 +195,14 @@ RSpec.describe Ability, type: :model do
       context 'when Batch is owned by self' do
 
         it 'can view and modify Batch' do
-          batch.admin = basic_user
+          batch.user = basic_user
           is_expected.to be_able_to :edit, batch
           is_expected.to be_able_to :update, batch
           is_expected.to be_able_to :destroy, batch
         end
 
         it 'can modify and destroy BatchItems in the Batch' do
-          batch.admin = basic_user
+          batch.user = basic_user
           batch_item = batch.batch_items.first
           is_expected.to be_able_to :edit, batch_item
           is_expected.to be_able_to :update, batch_item
@@ -215,13 +215,13 @@ RSpec.describe Ability, type: :model do
 
   end
 
-  context 'for a committer admin' do
+  context 'for a committer user' do
 
     subject { Ability.new committer_user }
     let(:batch) { Fabricate :batch }
 
     it 'can commit a batch owned by self' do
-      batch.admin = committer_user
+      batch.user = committer_user
       is_expected.to be_able_to :commit, batch
     end
 

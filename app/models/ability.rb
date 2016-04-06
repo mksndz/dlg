@@ -1,47 +1,47 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(admin)
+  def initialize(user)
 
-    admin ||= Admin.new # is this needed since we use devise-guests?
+    user ||= User.new # is this needed since we use devise-guests?
 
-    if admin.super?
+    if user.super?
       can :manage, :all
     end
 
-    if admin.basic?
+    if user.basic?
 
       can [:index, :show, :new, :create, :edit, :update], Repository do |repository|
-        admin.repositories.include?(repository)
+        user.repositories.include?(repository)
       end
 
       can [:index, :show, :new, :create, :edit, :update], Collection do |collection|
-        admin.repositories.include?(collection.repository) ||
-            admin.collections.include?(collection)
+        user.repositories.include?(collection.repository) ||
+            user.collections.include?(collection)
       end
 
       can [:index, :show, :new, :create, :edit, :update, :copy, :destroy, :search, :results], Item do |item|
-        admin.repositories.include?(item.repository) ||
-            admin.collections.include?(item.collection)
+        user.repositories.include?(item.repository) ||
+            user.collections.include?(item.collection)
       end
 
-      can [:show, :edit, :update, :destroy], Batch, user_id: admin.id
+      can [:show, :edit, :update, :destroy], Batch, user_id: user.id
       can [:index, :new, :create], Batch
       can [:index, :show, :new, :create], BatchItem
-      can [:edit, :update, :destroy], BatchItem, { batch: { user_id: admin.id }  }
+      can [:edit, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
 
     end
 
-    if admin.coordinator?
+    if user.coordinator?
 
-      can [:new, :create], Admin
-      can [:index, :show, :edit, :update, :destroy], Admin, creator_id: admin.id
+      can [:new, :create], User
+      can [:index, :show, :edit, :update, :destroy], User, creator_id: user.id
 
     end
 
-    if admin.committer?
+    if user.committer?
 
-      can :commit, Batch, user_id: admin.id
+      can :commit, Batch, user_id: user.id
 
     end
 

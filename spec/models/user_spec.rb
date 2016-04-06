@@ -16,4 +16,11 @@ RSpec.describe User, type: :model do
     expect(r.email).to be_kind_of String
   end
 
+  it 'has an Array of Roles' do
+    r = Fabricate(:user) {
+      roles(count: 2)
+    }
+    expect(r.roles.first).to be_kind_of Role
+  end
+
 end
