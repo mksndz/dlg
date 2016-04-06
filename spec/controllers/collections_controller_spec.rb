@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe CollectionsController, type: :controller do
 
-  let(:super_admin) {
+  let(:super_user) {
     Fabricate(:super)
   }
 
   before(:each) {
-    sign_in super_admin
+    sign_in super_user
   }
 
   let(:valid_attributes) {
@@ -34,9 +34,9 @@ RSpec.describe CollectionsController, type: :controller do
     end
 
     it 'assigns collections connected to a admin to @collections' do
-      sign_out super_admin # todo
-      basic_admin = Fabricate(:basic)
-      sign_in basic_admin
+      sign_out super_user # todo
+      basic_user = Fabricate(:basic)
+      sign_in basic_user
       collection1 = Fabricate(:collection)
       collection2 = Fabricate(:collection)
       collection3 = Fabricate(:collection)
@@ -48,8 +48,8 @@ RSpec.describe CollectionsController, type: :controller do
       repository2.collections << collection2
       repository2.collections << collection4
       repository3.collections << collection3
-      basic_admin.repositories << repository1
-      basic_admin.collections << collection2
+      basic_user.repositories << repository1
+      basic_user.collections << collection2
       get :index, {}, valid_session
       expect(assigns(:collections)).to include(collection1, collection2)
       expect(assigns(:collections)).not_to include(collection3, collection4)
@@ -84,9 +84,9 @@ RSpec.describe CollectionsController, type: :controller do
 
     context 'basic admin without repository assigned' do
       it 'restricts admin from creating a Collection' do
-        sign_out super_admin
-        basic_admin = Fabricate(:basic)
-        sign_in basic_admin
+        sign_out super_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
         post :create, {:collection => valid_attributes}, valid_session
         expect(response).to redirect_to root_url
       end
@@ -94,11 +94,11 @@ RSpec.describe CollectionsController, type: :controller do
 
     context 'basic admin with repository assigned' do
       it 'allows creation of a collection if the admin is assigned to the selected repository' do
-        sign_out super_admin
-        basic_admin = Fabricate(:basic)
-        sign_in basic_admin
+        sign_out super_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
         repository = Fabricate(:repository)
-        basic_admin.repositories << repository
+        basic_user.repositories << repository
         collection = Fabricate.build(:collection) { repository repository }
         collection.repository = repository
         post :create, {:collection => collection.as_json}, valid_session
@@ -147,9 +147,9 @@ RSpec.describe CollectionsController, type: :controller do
       }
 
       it 'fails if admin is not assigned the collection or collection repository' do
-        sign_out super_admin
-        basic_admin = Fabricate(:basic)
-        sign_in basic_admin
+        sign_out super_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
         collection = Collection.create! valid_attributes
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
@@ -157,22 +157,22 @@ RSpec.describe CollectionsController, type: :controller do
       end
 
       it 'allows basic admin to update a collection if collection is assigned' do
-        sign_out super_admin
-        basic_admin = Fabricate(:basic)
-        sign_in basic_admin
+        sign_out super_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
         collection = Fabricate(:collection)
-        basic_admin.collections << collection
+        basic_user.collections << collection
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session
         collection.reload
         expect(assigns(:collection).dcterms_title).to include 'New Subtitle'
       end
 
       it 'allows basic admin to update a collection if parent repository is assigned' do
-        sign_out super_admin
-        basic_admin = Fabricate(:basic)
-        sign_in basic_admin
+        sign_out super_user
+        basic_user = Fabricate(:basic)
+        sign_in basic_user
         repository = Fabricate(:repository)
-        basic_admin.repositories << repository
+        basic_user.repositories << repository
         collection = Fabricate(:collection) { repository repository }
         collection.repository = repository
         put :update, {:id => collection.id, :collection => new_attributes}, valid_session

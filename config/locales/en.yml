@@ -16,7 +16,7 @@ en:
       batch:
         name: "Name"
         notes: "Descriptive Notes"
-        admin_id: "Creator"
+        user_id: "Creator"
         committed_at: "Committed At"
         created_at: "Created At"
         updated_at: "Updated At"

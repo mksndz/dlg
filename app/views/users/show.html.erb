@@ -1,11 +1,55 @@
-<%= content_for :admin_area_title do %>
+<%= content_for :user_area_title do %>
     Show User
 <% end %>
 
-<%= content_for :admin_area_subtitle do %>
+<%= content_for :user_area_subtitle do %>
     <%= @user.email %>
 <% end %>
 
+<%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-default' %>
+
 <br><br>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.admin.email'), value: @admin.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.user.email'), value: @user.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.user.creator'), value: @user.creator.email %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Roles</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @user.roles.each do |role| %>
+          <li><%= role.name %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Repositories Assigned</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @user.repositories.each do |r| %>
+          <li><%= r.title %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Collections Assigned</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @user.collections.each do |c| %>
+          <li><%= c.display_title %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+

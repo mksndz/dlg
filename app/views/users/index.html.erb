@@ -1,12 +1,15 @@
-<% content_for :admin_area_title do %>
-    Users
+<% content_for :user_area_title do %>
+    User Users
 <% end %>
+
+<%= link_to 'Add User User', new_user_path, class: 'btn btn-default' %>
+<%= link_to 'Invite User User', new_user_invitation_path, class: 'btn btn-default' %>
 
 <br><br>
 
 <% if @users.empty? %>
 
-    <p>No Users have joined yet.</p>
+    <p>No User users have been added yet.</p>
 
 <% else %>
 
@@ -20,8 +23,9 @@
         <%= sortable 'email', 'Email' %>
       </th>
       <th>
-        Bookmarks
+        Roles
       </th>
+      <th colspan="1"></th>
     </tr>
     </thead>
 
@@ -29,13 +33,18 @@
     <% @users.each do |user| %>
         <tr>
           <td>
-            <%= link_to user.id, user_path(user) %>
+            <%= user.id %>
           </td>
           <td>
-            <%= link_to user.email, user_path(user) %>
+            <%= user.email %>
           </td>
           <td>
-            <% user.bookmarks.length %>
+            <% user.roles.each do |role| %>
+                <%= role.name %><br />
+            <% end %>
+          </td>
+          <td>
+            <%= render partial: 'shared/entity_actions', locals: { base_path: user_path(user), edit_path:  edit_user_path(user), entity: user, show_bl: false } %>
           </td>
         </tr>
     <% end %>

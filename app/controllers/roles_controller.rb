@@ -3,7 +3,7 @@ class RolesController < ApplicationController
   load_and_authorize_resource
   include Sorting
   include ErrorHandling
-  layout 'admin'
+
 
   # GET /roles
   def index

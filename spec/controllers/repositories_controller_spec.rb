@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe RepositoriesController, type: :controller do
 
-  let(:super_admin) {
+  let(:super_user) {
     Fabricate(:super)
   }
 
   before(:each) {
-    sign_in super_admin
+    sign_in super_user
   }
 
   let(:valid_attributes) {
@@ -31,12 +31,12 @@ RSpec.describe RepositoriesController, type: :controller do
     end
 
     it 'assigns a repository connected to a admin to @repositories' do
-      sign_out super_admin # todo
-      basic_admin = Fabricate(:basic)
-      sign_in basic_admin
+      sign_out super_user # todo
+      basic_user = Fabricate(:basic)
+      sign_in basic_user
       repository1 = Fabricate(:repository)
       repository2 = Fabricate(:repository)
-      basic_admin.repositories << repository1
+      basic_user.repositories << repository1
       get :index, {}, valid_session
       expect(assigns(:repositories)).to include(repository1)
       expect(assigns(:repositories)).not_to include(repository2)

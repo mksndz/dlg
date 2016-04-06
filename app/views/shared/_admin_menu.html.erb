@@ -5,10 +5,9 @@
   <%= link_to 'Items', items_path, class: "list-group-item #{admin_active_class 'items'}" %>
   <%= link_to 'Batches', batches_path, class: "list-group-item #{admin_active_class 'batches'}" %>
   <%= link_to 'Roles', roles_path, class: "list-group-item #{admin_active_class 'roles'}" %>
-  <%= link_to 'Admins', admins_path, class: "list-group-item #{admin_active_class 'admins'}" %>
   <%= link_to 'Users', users_path, class: "list-group-item #{admin_active_class 'users'}" %>
   <%= link_to 'Subjects', subjects_path, class: "list-group-item #{admin_active_class 'subjects'}" %>
   </strong>
   <br>
-  <%= link_to 'Sign Out', destroy_admin_session_path %>
+  <%= link_to 'Sign Out', destroy_user_session_path %>
 </div>

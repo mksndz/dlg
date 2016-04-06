@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe AdminsController, type: :controller do
+RSpec.describe UsersController, type: :controller do
 
-  let(:super_admin) {
+  let(:super_user) {
     Fabricate(:super)
   }
 
-  let(:coordinator_admin) {
+  let(:coordinator_user) {
     Fabricate(:coordinator)
   }
 
   before(:each) do
-    sign_in super_admin
+    sign_in super_user
   end
 
   let(:valid_attributes) {
@@ -32,20 +32,20 @@ RSpec.describe AdminsController, type: :controller do
   describe 'GET #index' do
 
     it 'only shows a coordinator their created admins' do
-      sign_out super_admin
-      coordinator_admin_2 = Fabricate(:coordinator)
-      sign_in coordinator_admin_2
-      created_admin = Fabricate(:basic) { creator coordinator_admin_2 }
-      alien_admin = Fabricate(:admin)
+      sign_out super_user
+      coordinator_user_2 = Fabricate(:coordinator)
+      sign_in coordinator_user_2
+      created_user = Fabricate(:basic) { creator coordinator_user_2 }
+      alien_user = Fabricate(:admin)
       get :index, {}, valid_session
-      expect(assigns(:admins)).to include created_admin
-      expect(assigns(:admins)).not_to include alien_admin
+      expect(assigns(:users)).to include created_user
+      expect(assigns(:users)).not_to include alien_user
     end
 
     it 'assigns all admins as @admins' do
       admin = Admin.create! valid_attributes
       get :index, {}, valid_session
-      expect(assigns(:admins)).to include(admin)
+      expect(assigns(:users)).to include(admin)
     end
   end
 
@@ -72,18 +72,18 @@ RSpec.describe AdminsController, type: :controller do
     end
 
     it 'restricts coordinator admins from editing Admins they did not create' do
-      sign_out super_admin
-      sign_in coordinator_admin
+      sign_out super_user
+      sign_in coordinator_user
       admin = Fabricate(:admin)
       get :edit, {:id => admin.to_param}, valid_session
       expect(response).to redirect_to root_url
     end
 
     it 'allow coordinator admins to edit Admins they created' do
-      sign_out super_admin
-      coordinator_admin = Fabricate(:coordinator)
-      sign_in coordinator_admin
-      admin = Fabricate(:admin) { creator coordinator_admin }
+      sign_out super_user
+      coordinator_user = Fabricate(:coordinator)
+      sign_in coordinator_user
+      admin = Fabricate(:admin) { creator coordinator_user }
       get :edit, {:id => admin.to_param}, valid_session
       expect(assigns(:admin)).to eq(admin)
     end
@@ -105,7 +105,7 @@ RSpec.describe AdminsController, type: :controller do
 
       it 'redirects to the created admin' do
         post :create, {:admin => valid_attributes}, valid_session
-        expect(response).to redirect_to(admin_path(Admin.last))
+        expect(response).to redirect_to(user_path(Admin.last))
       end
 
     end
@@ -148,25 +148,25 @@ RSpec.describe AdminsController, type: :controller do
       it 'redirects to the admin' do
         admin = Admin.create! valid_attributes
         put :update, {:id => admin.to_param, :admin => new_attributes}, valid_session
-        expect(response).to redirect_to(admin_path(admin))
+        expect(response).to redirect_to(user_path(admin))
       end
 
       it 'restricts coordinator admins from updating Admins they did not create' do
-        sign_out super_admin
-        sign_in coordinator_admin
+        sign_out super_user
+        sign_in coordinator_user
         admin = Admin.create! valid_attributes
         post :update, {:id => admin.to_param, :admin => new_attributes}, valid_session
         expect(response).to redirect_to root_url
       end
 
       it 'allows coordinator admins to update Admins they created' do
-        sign_out super_admin
-        coordinator_admin = Fabricate(:coordinator)
-        sign_in coordinator_admin
-        owned_admin = Fabricate(:admin)
-        coordinator_admin.admins << owned_admin
-        post :update, {:id => owned_admin.to_param, :admin => new_attributes}, valid_session
-        owned_admin.reload
+        sign_out super_user
+        coordinator_user = Fabricate(:coordinator)
+        sign_in coordinator_user
+        owned_user = Fabricate(:admin)
+        coordinator_user.admins << owned_user
+        post :update, {:id => owned_user.to_param, :admin => new_attributes}, valid_session
+        owned_user.reload
         expect(assigns(:admin).email).to eq 'changed@email.com'
       end
     end

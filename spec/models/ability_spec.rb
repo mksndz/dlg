@@ -3,14 +3,14 @@ require 'cancan/matchers'
 
 RSpec.describe Ability, type: :model do
 
-  let(:super_admin)        { Fabricate :super }
-  let(:basic_admin)        { Fabricate :basic }
-  let(:coordinator_admin)  { Fabricate :coordinator }
-  let(:committer_admin)    { Fabricate :committer }
+  let(:super_user)        { Fabricate :super }
+  let(:basic_user)        { Fabricate :basic }
+  let(:coordinator_user)  { Fabricate :coordinator }
+  let(:committer_user)    { Fabricate :committer }
 
   context 'for an Admin admin' do
     
-    subject { Ability.new super_admin }
+    subject { Ability.new super_user }
 
     it 'can manage all things' do
       is_expected.to be_able_to :manage, :all
@@ -20,7 +20,7 @@ RSpec.describe Ability, type: :model do
   
   context 'for a Coordinator admin' do
     
-    subject { Ability.new coordinator_admin }
+    subject { Ability.new coordinator_user }
 
     it 'cannot manage all things' do
       is_expected.not_to be_able_to :manage, :all
@@ -34,7 +34,7 @@ RSpec.describe Ability, type: :model do
     it 'can modify Admins for which it is the creator' do
 
       admin = Fabricate :admin
-      admin.creator = coordinator_admin
+      admin.creator = coordinator_user
 
       is_expected.to be_able_to :edit, admin
       is_expected.to be_able_to :update, admin
@@ -45,8 +45,8 @@ RSpec.describe Ability, type: :model do
     it 'cannot modify Admins for which it is not the creator' do
 
       admin = Fabricate :admin
-      other_admin = Fabricate :admin
-      admin.creator = other_admin
+      other_user = Fabricate :admin
+      admin.creator = other_user
 
       is_expected.not_to be_able_to :edit, admin
       is_expected.not_to be_able_to :update, admin
@@ -58,7 +58,7 @@ RSpec.describe Ability, type: :model do
 
   context 'for a Basic admin' do
 
-    subject { Ability.new basic_admin }
+    subject { Ability.new basic_user }
 
     it 'cannot manage all things' do
       is_expected.not_to be_able_to :manage, :all
@@ -69,7 +69,7 @@ RSpec.describe Ability, type: :model do
       let(:repository) { Fabricate :repository }
 
       it 'can modify but not destroy Repositories if the Repository is assigned' do
-        basic_admin.repositories << repository
+        basic_user.repositories << repository
         is_expected.to be_able_to :show, repository
         is_expected.to be_able_to :edit, repository
         is_expected.to be_able_to :update, repository
@@ -77,7 +77,7 @@ RSpec.describe Ability, type: :model do
       end
 
       it 'can modify but not destroy Collections if the Repository is assigned' do
-        basic_admin.repositories << repository
+        basic_user.repositories << repository
         collection = repository.collections.first
         is_expected.to be_able_to :show, collection
         is_expected.to be_able_to :edit, collection
@@ -86,7 +86,7 @@ RSpec.describe Ability, type: :model do
       end
 
       it 'can modify and destroy Items if the Repository is assigned' do
-        basic_admin.repositories << repository
+        basic_user.repositories << repository
         collection = repository.collections.first
         item = Fabricate :item
         collection.items << item
@@ -126,7 +126,7 @@ RSpec.describe Ability, type: :model do
       let(:collection) { Fabricate :collection }
 
       it 'can modify Collections if the Collection is assigned' do
-        basic_admin.collections << collection
+        basic_user.collections << collection
         is_expected.to be_able_to :show, collection
         is_expected.to be_able_to :edit, collection
         is_expected.to be_able_to :update, collection
@@ -134,7 +134,7 @@ RSpec.describe Ability, type: :model do
       end
 
       it 'can manage Items if the Collection is assigned' do
-        basic_admin.collections << collection
+        basic_user.collections << collection
         is_expected.to be_able_to :show, collection
         is_expected.to be_able_to :edit, collection
         is_expected.to be_able_to :update, collection
@@ -175,8 +175,8 @@ RSpec.describe Ability, type: :model do
       end
 
       it 'cannot view or modify Batches belonging to others' do
-        other_admin = Fabricate :admin
-        batch.admin = other_admin
+        other_user = Fabricate :admin
+        batch.admin = other_user
         is_expected.not_to be_able_to :show, batch
         is_expected.not_to be_able_to :edit, batch
         is_expected.not_to be_able_to :update, batch
@@ -184,8 +184,8 @@ RSpec.describe Ability, type: :model do
       end
 
       it 'cannot modify or destroy BatchItems belonging to others' do
-        other_admin = Fabricate :admin
-        batch.admin = other_admin
+        other_user = Fabricate :admin
+        batch.admin = other_user
         batch_item = batch.batch_items.first
         is_expected.not_to be_able_to :edit, batch_item
         is_expected.not_to be_able_to :update, batch_item
@@ -195,14 +195,14 @@ RSpec.describe Ability, type: :model do
       context 'when Batch is owned by self' do
 
         it 'can view and modify Batch' do
-          batch.admin = basic_admin
+          batch.admin = basic_user
           is_expected.to be_able_to :edit, batch
           is_expected.to be_able_to :update, batch
           is_expected.to be_able_to :destroy, batch
         end
 
         it 'can modify and destroy BatchItems in the Batch' do
-          batch.admin = basic_admin
+          batch.admin = basic_user
           batch_item = batch.batch_items.first
           is_expected.to be_able_to :edit, batch_item
           is_expected.to be_able_to :update, batch_item
@@ -217,11 +217,11 @@ RSpec.describe Ability, type: :model do
 
   context 'for a committer admin' do
 
-    subject { Ability.new committer_admin }
+    subject { Ability.new committer_user }
     let(:batch) { Fabricate :batch }
 
     it 'can commit a batch owned by self' do
-      batch.admin = committer_admin
+      batch.admin = committer_user
       is_expected.to be_able_to :commit, batch
     end
 

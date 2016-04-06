@@ -1,0 +1,9 @@
+<%= content_for :user_area_title do %>
+    Edit User
+<% end %>
+
+<%= content_for :user_area_subtitle do %>
+    <%= @user.email %>
+<% end %>
+
+<%= render 'form' %>

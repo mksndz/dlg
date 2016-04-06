@@ -6,7 +6,7 @@ class BatchItemsController < ApplicationController
   include DcHelper
   before_action :set_batch
   before_action :collections_for_select, only: [:new, :edit]
-  layout 'admin'
+
 
   # GET /batch_items
   # GET /batch_items.json

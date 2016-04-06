@@ -1,16 +1,16 @@
 class Batch < ActiveRecord::Base
 
-  belongs_to :admin
+  belongs_to :user
   has_many :batch_items, dependent: :destroy
 
-  validates_presence_of :admin, :name
+  validates_presence_of :user, :name
 
   searchable do
 
     text :name
     text :notes
 
-    integer :admin_id
+    integer :user_id
 
     time :committed_at
     time :updated_at

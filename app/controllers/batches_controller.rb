@@ -4,7 +4,7 @@ class BatchesController < ApplicationController
   before_action :check_if_committed, only: [:edit, :update, :destroy]
   include ErrorHandling
   include Sorting
-  layout 'admin'
+
 
   # GET /batches
   # GET /batches.json
@@ -12,10 +12,10 @@ class BatchesController < ApplicationController
 
     @admins = Admin.all # all admins with batches?
 
-    if params[:admin_id]
-      @admin = User.find(params[:admin_id])
+    if params[:user_id]
+      @admin = User.find(params[:user_id])
       @batches = Batch
-                     .where(admin_id: params[:admin_id])
+                     .where(user_id: params[:user_id])
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
     else
@@ -96,7 +96,7 @@ class BatchesController < ApplicationController
     params.require(:batch).permit(
         :name,
         :notes,
-        :admin_id
+        :user_id
     )
   end
 

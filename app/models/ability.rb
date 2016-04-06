@@ -25,10 +25,10 @@ class Ability
             admin.collections.include?(item.collection)
       end
 
-      can [:show, :edit, :update, :destroy], Batch, admin_id: admin.id
+      can [:show, :edit, :update, :destroy], Batch, user_id: admin.id
       can [:index, :new, :create], Batch
       can [:index, :show, :new, :create], BatchItem
-      can [:edit, :update, :destroy], BatchItem, { batch: { admin_id: admin.id }  }
+      can [:edit, :update, :destroy], BatchItem, { batch: { user_id: admin.id }  }
 
     end
 
@@ -41,7 +41,7 @@ class Ability
 
     if admin.committer?
 
-      can :commit, Batch, admin_id: admin.id
+      can :commit, Batch, user_id: admin.id
 
     end
 

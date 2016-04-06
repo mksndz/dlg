@@ -3,16 +3,16 @@ class RepositoriesController < ApplicationController
   load_and_authorize_resource
   include ErrorHandling
   include Sorting
-  layout 'admin'
+
 
   def index
-    if current_admin.super?
+    if current_user.super?
       @repositories = Repository
                           .order(sort_column + ' ' + sort_direction)
                           .page(params[:page])
     else
       # todo sorting?
-      @repositories = current_admin.repositories.page(params[:page])
+      @repositories = current_user.repositories.page(params[:page])
     end
 
   end

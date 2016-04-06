@@ -14,7 +14,7 @@ RSpec.describe BatchesController, type: :controller do
   let(:valid_attributes) {
     {
         name: 'Test Batch',
-        admin_id: admin.id
+        user_id: admin.id
     }
   }
 

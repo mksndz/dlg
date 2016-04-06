@@ -1,5 +1,5 @@
-<div class="admin-login-form well">
-  <h1>Admin Login</h1>
+<div class="user-login-form well">
+  <h1>User Login</h1>
   <%= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= f.email_field :email, autofocus: true, help: false %>
       <%= f.password_field :password, autocomplete: 'off', help: false %>
@@ -8,6 +8,6 @@
       <% end -%>
       <%= f.primary 'Log In' %>
   <% end %>
-  <%= render 'admins/shared/links' %>
+  <%= render 'users/shared/links' %>
 </div>
 

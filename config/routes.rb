@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get 'home', to: 'base#index'
 
-  devise_for :admins
+  devise_for :users
 
   concern :multiple_actionable do
      post 'multiple_action'
@@ -13,9 +13,7 @@ Rails.application.routes.draw do
     get 'results'
   end
 
-  resources :repositories, :collections, :roles, :admins, :subjects
-
-  resources :users, only: [:index, :show, :destroy]
+  resources :repositories, :collections, :roles, :users, :subjects
 
   resources :items do
     collection do
@@ -65,8 +63,6 @@ Rails.application.routes.draw do
       delete 'clear'
     end
   end
-
-  devise_for :users
 
   root to: 'catalog#index'
 
