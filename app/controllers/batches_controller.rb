@@ -10,12 +10,12 @@ class BatchesController < ApplicationController
   # GET /batches.json
   def index
 
-    @admins = Admin.all # all admins with batches?
+    @users = User.all # all admins with batches?
 
     if params[:user_id]
-      @admin = User.find(params[:user_id])
+      @user = User.find(params[:user_id])
       @batches = Batch
-                     .where(user_id: params[:user_id])
+                     .where(user_id: @user.id)
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
     else
@@ -45,7 +45,7 @@ class BatchesController < ApplicationController
   def create
     @batch = Batch.new(batch_params)
 
-    set_admin
+    set_user
 
     respond_to do |format|
       if @batch.save
@@ -62,7 +62,7 @@ class BatchesController < ApplicationController
   # PATCH/PUT /batches/1.json
   def update
 
-    set_admin
+    set_user
 
     respond_to do |format|
       if @batch.update(batch_params)
@@ -87,8 +87,8 @@ class BatchesController < ApplicationController
 
   private
 
-  def set_admin
-    @batch.admin = current_admin
+  def set_user
+    @batch.user = current_user
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

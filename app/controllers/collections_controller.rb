@@ -1,10 +1,9 @@
 class CollectionsController < ApplicationController
-
-  load_and_authorize_resource
   include ErrorHandling
   include DcHelper
   include Sorting
 
+  load_and_authorize_resource
 
   before_action :set_data, only: [:new, :edit]
 

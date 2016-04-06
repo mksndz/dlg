@@ -7,14 +7,14 @@ RSpec.describe BatchesController, type: :controller do
     sign_in Fabricate(:super)
   end
 
-  let(:admin) {
-    Fabricate(:admin)
+  let(:super_user) {
+    Fabricate(:super)
   }
 
   let(:valid_attributes) {
     {
         name: 'Test Batch',
-        user_id: admin.id
+        user_id: super_user.id
     }
   }
 
