@@ -38,7 +38,6 @@ RSpec.describe AdminsController, type: :controller do
       created_admin = Fabricate(:basic) { creator coordinator_admin_2 }
       alien_admin = Fabricate(:admin)
       get :index, {}, valid_session
-      tst = assigns(:admins)
       expect(assigns(:admins)).to include created_admin
       expect(assigns(:admins)).not_to include alien_admin
     end

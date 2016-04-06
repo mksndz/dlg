@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'cancan/matchers'
 
-RSpec.describe AdminAbility, type: :model do
+RSpec.describe Ability, type: :model do
 
   let(:super_admin)        { Fabricate :super }
   let(:basic_admin)        { Fabricate :basic }
@@ -10,7 +10,7 @@ RSpec.describe AdminAbility, type: :model do
 
   context 'for an Admin admin' do
     
-    subject { AdminAbility.new super_admin }
+    subject { Ability.new super_admin }
 
     it 'can manage all things' do
       is_expected.to be_able_to :manage, :all
@@ -20,7 +20,7 @@ RSpec.describe AdminAbility, type: :model do
   
   context 'for a Coordinator admin' do
     
-    subject { AdminAbility.new coordinator_admin }
+    subject { Ability.new coordinator_admin }
 
     it 'cannot manage all things' do
       is_expected.not_to be_able_to :manage, :all
@@ -58,7 +58,7 @@ RSpec.describe AdminAbility, type: :model do
 
   context 'for a Basic admin' do
 
-    subject { AdminAbility.new basic_admin }
+    subject { Ability.new basic_admin }
 
     it 'cannot manage all things' do
       is_expected.not_to be_able_to :manage, :all
@@ -217,7 +217,7 @@ RSpec.describe AdminAbility, type: :model do
 
   context 'for a committer admin' do
 
-    subject { AdminAbility.new committer_admin }
+    subject { Ability.new committer_admin }
     let(:batch) { Fabricate :batch }
 
     it 'can commit a batch owned by self' do
