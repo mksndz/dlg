@@ -1,10 +1,8 @@
-module Meta
-  class Role < ActiveRecord::Base
+class Role < ActiveRecord::Base
 
-    has_and_belongs_to_many :admins
+  has_and_belongs_to_many :admins
 
-    validates_presence_of :name
+  validates_presence_of :name
 
-  end
 end
 
