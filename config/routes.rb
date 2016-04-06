@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     get 'results'
   end
 
-  resources :repositories, :collections, :roles, :users, :subjects
+  resources :repositories, :collections, :users, :roles, :subjects
 
   resources :items do
     collection do
