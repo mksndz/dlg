@@ -4,7 +4,6 @@
     BatchItem,
     Item,
     User,
-    Admin,
     Role,
     Batch,
     Collection,
@@ -15,9 +14,9 @@ end
 
 # Truncate Join Tables
 %w(
-    admins_collections
-    admins_repositories
-    admins_roles
+    users_collections
+    users_repositories
+    users_roles
     collections_subjects
 ).each do |j|
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{j} RESTART IDENTITY CASCADE;")
@@ -55,26 +54,26 @@ Role.create!([
              ])
 
 #
-# Initial Admin User
+# Initial Super User
 #
-admin = Admin.create!(
+user = User.create!(
                 email: 'mak@uga.edu',
                 password: 'password'
              )
 
-admin.roles << Role.find_by_name('super')
-admin.save
+user.roles << Role.find_by_name('super')
+user.save
 
 #
 # Initial Basic User
 #
-admin = Admin.create!(
+user = User.create!(
                 email: 'basic@uga.edu',
                 password: 'password'
              )
 
-admin.roles << Role.find_by_name('basic')
-admin.save
+user.roles << Role.find_by_name('basic')
+user.save
 
 #
 # Some Seed Data for Old-School Testing and Display for Meetings, etc.
@@ -176,7 +175,7 @@ c1 = Collection.create!({
     ],
     dcterms_type: [
         'Accounts',
-        'Administrative records',
+        'Useristrative records',
         'Affidavits',
         'Articles of incorporation',
         'Checks',
@@ -573,7 +572,7 @@ i1 = Item.create!({
     dcterms_description: [
         'Photograph of three men posed in front of the entrance to the Lockhart Mine, dated 1937.',
         'Document ID: mka064.', #wtf
-        'A project of the Digital Library of Georgia in association with the Lumpkin County Library, Chestatee Regional Library System as part of Georgia HomePLACE. This project is supported with federal LSTA funds administered by the Institute of Museum and Library Services through the Georgia Public Library Service, a unit of the Board of Regents of the University System of Georgia.'
+        'A project of the Digital Library of Georgia in association with the Lumpkin County Library, Chestatee Regional Library System as part of Georgia HomePLACE. This project is supported with federal LSTA funds useristered by the Institute of Museum and Library Services through the Georgia Public Library Service, a unit of the Board of Regents of the University System of Georgia.'
     ],
     dcterms_provenance: [
         'Athens, Ga. : Digital Library of Georgia'
@@ -631,7 +630,7 @@ i2 = Item.create!({
     dcterms_description: [
         'Ledger rendered by Ed E. Greenleaf, dated August 14, 1879. This itemized list of charges appears to have been drawn up for the court case Hand v. Hungerford, et al., in which Nathan H. Hand sues W. S. Hungerford, R. F. Williams, and the Cincinnati Mining Company.',
         'Document ID: mka024.',
-        'A project of the Digital Library of Georgia in association with the Lumpkin County Library, Chestatee Regional Library System as part of Georgia HomePLACE. This project is supported with federal LSTA funds administered by the Institute of Museum and Library Services through the Georgia Public Library Service, a unit of the Board of Regents of the University System of Georgia.',
+        'A project of the Digital Library of Georgia in association with the Lumpkin County Library, Chestatee Regional Library System as part of Georgia HomePLACE. This project is supported with federal LSTA funds useristered by the Institute of Museum and Library Services through the Georgia Public Library Service, a unit of the Board of Regents of the University System of Georgia.',
     ],
     dcterms_provenance: [
         'Athens, Ga. : Digital Library of Georgia'
@@ -687,7 +686,7 @@ i3 = Item.create!({
     dcterms_description: [
         'Photograph of Findley Mill construction, featuring the setting of the stamps in 1938.',
         'Document ID: mka046.',
-        'A project of the Digital Library of Georgia in association with the Lumpkin County Library, Chestatee Regional Library System as part of Georgia HomePLACE. This project is supported with federal LSTA funds administered by the Institute of Museum and Library Services through the Georgia Public Library Service, a unit of the Board of Regents of the University System of Georgia.'
+        'A project of the Digital Library of Georgia in association with the Lumpkin County Library, Chestatee Regional Library System as part of Georgia HomePLACE. This project is supported with federal LSTA funds useristered by the Institute of Museum and Library Services through the Georgia Public Library Service, a unit of the Board of Regents of the University System of Georgia.'
     ],
     dcterms_provenance: [
         'Athens, Ga. : Digital Library of Georgia'
@@ -747,7 +746,7 @@ i4 = Item.create!({
     dcterms_description: [
         'Blank stock certificate of the Etowah Mining Company.',
         'Document ID: mka043.',
-        'A project of the Digital Library of Georgia in association with the Lumpkin County Library, Chestatee Regional Library System as part of Georgia HomePLACE. This project is supported with federal LSTA funds administered by the Institute of Museum and Library Services through the Georgia Public Library Service, a unit of the Board of Regents of the University System of Georgia.'
+        'A project of the Digital Library of Georgia in association with the Lumpkin County Library, Chestatee Regional Library System as part of Georgia HomePLACE. This project is supported with federal LSTA funds useristered by the Institute of Museum and Library Services through the Georgia Public Library Service, a unit of the Board of Regents of the University System of Georgia.'
     ],
     dcterms_provenance: [
         'Athens, Ga. : Digital Library of Georgia'
