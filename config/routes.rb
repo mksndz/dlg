@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'home', to: 'base#index'
-
   devise_for :users
 
   concern :multiple_actionable do
@@ -64,6 +62,16 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: 'catalog#index'
+  authenticated :user do
+    root to: 'catalog#index'
+  end
+
+  devise_scope :user do
+    root to: 'devise/sessions#new', as: 'profile'
+  end
+
+  unauthenticated do
+    root to: 'devise/sessions#new', as: 'unauthenticated'
+  end
 
 end

@@ -1,8 +1,8 @@
 # -*- encoding : utf-8 -*-
-class CatalogController < ApplicationController  
-  # include Blacklight::Marc::Catalog
-
+class CatalogController < ApplicationController
   include Blacklight::Catalog
+
+  authorize_resource class: false
 
   configure_blacklight do |config|
     ## Class for sending and receiving requests from a search index

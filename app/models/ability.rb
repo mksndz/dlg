@@ -3,7 +3,7 @@ class Ability
 
   def initialize(user)
 
-    user ||= User.new # is this needed since we use devise-guests?
+    can :manage, :catalog
 
     if user.super?
       can :manage, :all
