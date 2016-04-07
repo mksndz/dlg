@@ -96,6 +96,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'dcterms_title_display', :label => 'Title'
     config.add_index_field 'dcterms_description_display', :label => 'Description'
     config.add_index_field 'in_collection_ss', :label => 'Collection', link_to_search: true
+    config.add_index_field 'dc_identifier_display', :label => 'Identifier', helper_method: 'linkify'
     config.add_index_field 'dc_creator_display', :label => 'Author'
     config.add_index_field 'dc_type_display', :label => 'Format'
 
@@ -180,6 +181,8 @@ class CatalogController < ApplicationController
       render xml: solr_to_ar.to_xml
     }
   end
+
+  add_results_document_tool :meta
 
   add_nav_action :admin
   # add_results_collection_tool :export_as_xml # todo not working
