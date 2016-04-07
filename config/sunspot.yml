@@ -12,12 +12,12 @@ development:
     hostname: localhost
     port: 8983
     log_level: INFO
-    path: /solr/blacklight-core-dev
+    path: /solr/blacklight-core
 
 test:
   solr:
     hostname: localhost
     port: 8983
     log_level: WARNING
-    path: /solr/blacklight-core-test
+    path: /solr/blacklight-core
     

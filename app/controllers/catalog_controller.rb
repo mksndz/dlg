@@ -69,11 +69,11 @@ class CatalogController < ApplicationController
     # facet bar
     config.add_facet_field 'format_ss',          label: 'Format*',     limit: true
     config.add_facet_field 'location_facet',     label: 'Location',    limit: true
-    config.add_facet_field 'subject_facet',      label: 'Subject',     limit: 20
+    config.add_facet_field 'subject_facet',      label: 'Subject',     limit: true
     config.add_facet_field 'type_facet',         label: 'Type',        limit: true
     config.add_facet_field 'creator_facet',      label: 'Creator',     limit: true
     config.add_facet_field 'in_collection_ss',   label: 'Collection',  limit: true
-    config.add_facet_field 'temporal_facet',   label: 'Temporal',  limit: true
+    config.add_facet_field 'temporal_facet',     label: 'Temporal',    limit: true
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
@@ -131,45 +131,25 @@ class CatalogController < ApplicationController
 
     # This one uses all the defaults set by the solr request handler. Which
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
-    # since we aren't specifying it otherwise. 
-    
-    config.add_search_field 'all_fields', :label => 'All Fields'
-    
+    # since we aren't specifying it otherwise.
+    # config.add_search_field 'all_fields', :label => 'All Fields'
 
-    # Now we see how to over-ride Solr request handler defaults, in this
-    # case for a BL "search field", which is really a dismax aggregate
-    # of Solr search fields. 
-    
-    config.add_search_field('title') do |field|
-      # solr_parameters hash are sent to Solr as ordinary url query params. 
-      field.solr_parameters = { :'spellcheck.dictionary' => 'title' }
-
-      # :solr_local_parameters will be sent using Solr LocalParams
-      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
-      # Solr parameter de-referencing like $title_qf.
-      # See: http://wiki.apache.org/solr/LocalParams
-      field.solr_local_parameters = { 
-        :qf => '$title_qf',
-        :pf => '$title_pf'
+    # Provide QuickSearch from main search bar for three entities having dublin core metadata
+    config.add_search_field('items') do |field|
+      field.solr_local_parameters = {
+        fq: '+class_name:"Item"'
       }
     end
 
-    config.add_search_field('author') do |field|
-      field.solr_parameters = { :'spellcheck.dictionary' => 'author' }
+    config.add_search_field('collections') do |field|
       field.solr_local_parameters = {
-        :qf => '$author_qf',
-        :pf => '$author_pf'
+          fq: '+class_name:"Collection"'
       }
     end
     
-    # Specifying a :qt only to show it's possible, and so our internal automated
-    # tests can test it. In this case it's the same as 
-    # config[:default_solr_parameters][:qt], so isn't actually neccesary. 
-    config.add_search_field('subject') do |field|
-      field.solr_parameters = { :'spellcheck.dictionary' => 'subject' }
+    config.add_search_field('batch_items') do |field|
       field.solr_local_parameters = {
-        :qf => '$subject_qf',
-        :pf => '$subject_pf'
+          fq: '+class_name:"BatchItem"'
       }
     end
 

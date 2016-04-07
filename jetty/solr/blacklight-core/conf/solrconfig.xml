@@ -6,9 +6,7 @@
  The ASF licenses this file to You under the Apache License, Version 2.0
  (the "License"); you may not use this file except in compliance with
  the License.  You may obtain a copy of the License at
-
      http://www.apache.org/licenses/LICENSE-2.0
-
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,8 +15,8 @@
 -->
 
 <!--
- This is a stripped down config file used for a simple example...  
- It is *not* a good example to work from. 
+ This is a stripped down config file used for a simple example...
+ It is *not* a good example to work from.
 -->
 <config>
   <luceneMatchVersion>LUCENE_40</luceneMatchVersion>
@@ -31,18 +29,18 @@
   <lib dir="../lib/contrib/analysis-extras/lucene-libs" />
 
   <dataDir>${solr.blacklight-core.data.dir:}</dataDir>
-  
-  <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" /> 
+
+  <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" />
 
   <requestDispatcher handleSelect="true" >
     <requestParsers enableRemoteStreaming="false" multipartUploadLimitInKB="2048" />
   </requestDispatcher>
-  
+
   <requestHandler name="standard" class="solr.StandardRequestHandler" />
   <requestHandler name="/analysis/field" startup="lazy" class="solr.FieldAnalysisRequestHandler" />
   <requestHandler name="/update" class="solr.UpdateRequestHandler"  />
   <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers" />
-     
+
   <requestHandler name="/admin/ping" class="solr.PingRequestHandler">
     <lst name="invariants">
       <str name="q">solrpingquery</str>
@@ -51,16 +49,14 @@
       <str name="echoParams">all</str>
     </lst>
   </requestHandler>
-   
-  <!-- config for the admin interface --> 
+
+  <!-- config for the admin interface -->
   <admin>
     <defaultQuery>solr</defaultQuery>
   </admin>
 
   <!-- SearchHandler
-
        http://wiki.apache.org/solr/SearchHandler
-
        For processing Search Queries, the primary Request Handler
        provided with Solr is "SearchHandler" It delegates to a sequent
        of SearchComponents (see below) and supports distributed
@@ -70,217 +66,217 @@
     <!-- default values for query parameters can be specified, these
          will be overridden by parameters in the request
       -->
-     <lst name="defaults">
-       <str name="defType">dismax</str>
-       <str name="echoParams">explicit</str>
-       <int name="rows">10</int>
+    <lst name="defaults">
+      <str name="defType">dismax</str>
+      <str name="echoParams">explicit</str>
+      <int name="rows">10</int>
 
-       <str name="q.alt">*:*</str>
-       <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
+      <str name="q.alt">*:*</str>
+      <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
 
-       <!-- this qf and pf are used by default, if not otherwise specified by
-            client. The default blacklight_config will use these for the
-            "keywords" search. See the author_qf/author_pf, title_qf, etc 
-            below, which the default blacklight_config will specify for
-            those searches. You may also be interested in:
-            http://wiki.apache.org/solr/LocalParams
-       -->
-
-       <!--
-        You use the qf parameter to tell the dismax query parser which fields you want to
-        search and their corresponding score boosts.
-        -->
-
-       <str name="qf">
-         title_unstem_search^100000
-         author_unstem_search^100000
-         sunject_unstem_search^100000
-         dc_title_text
-         dc_format_text
-         dc_publisher_text
-         dc_identifier_text
-         dc_rights_text
-         dc_contributor_text
-         dc_coverage_t_text
-         dc_coverage_s_text
-         dc_date_text
-         dc_source_text
-         dc_subject_text
-         dc_type_text
-         dc_description_text
-         dc_creator_text
-         dc_language_text
-         dc_relation_text
-         text
-         <!--title_unstem_search^100000-->
-         <!--subtitle_unstem_search^50000-->
-         <!--title_t^25000-->
-         <!--subtitle_t^10000-->
-         <!--title_addl_unstem_search^5000-->
-         <!--title_addl_t^2500-->
-         <!--title_added_entry_unstem_search^1500-->
-         <!--title_added_entry_t^1250-->
-         <!--subject_topic_unstem_search^1000-->
-         <!--subject_unstem_search^750-->
-         <!--subject_topic_facet^625-->
-         <!--subject_t^500-->
-         <!--author_unstem_search^250-->
-         <!--author_addl_unstem_search^250-->
-         <!--author_t^100-->
-         <!--author_addl_t^50-->
-         <!--subject_addl_unstem_search^250-->
-         <!--subject_addl_t^50-->
-         <!--title_series_unstem_search^25-->
-         <!--title_series_t^10-->
-         <!--isbn_t-->
-         <!--text-->
-       </str>
-
-       <!-- the pf parameter, which is an abbreviation of "phrase fields". The syntax
-            is identical to qf. You should start with the same value and then make adjustments.
-            -->
-
-       <str name="pf">
-         title_unstem_search^100000
-         author_unstem_search^100000
-         sunject_unstem_search^100000
-         dc_title_text
-         dc_format_text
-         dc_publisher_text
-         dc_identifier_text
-         dc_rights_text
-         dc_contributor_text
-         dc_coverage_t_text
-         dc_coverage_s_text
-         dc_date_text
-         dc_source_text
-         dc_subject_text
-         dc_type_text
-         dc_description_text
-         dc_creator_text
-         dc_language_text
-         dc_relation_text
-         text
-         <!--title_unstem_search^1000000-->
-         <!--subtitle_unstem_search^500000-->
-         <!--title_t^250000-->
-         <!--subtitle_t^100000-->
-         <!--title_addl_unstem_search^50000-->
-         <!--title_addl_t^25000-->
-         <!--title_added_entry_unstem_search^15000-->
-         <!--title_added_entry_t^12500-->
-         <!--subject_topic_unstem_search^10000-->
-         <!--subject_unstem_search^7500-->
-         <!--subject_topic_facet^6250-->
-         <!--subject_t^5000-->
-         <!--author_unstem_search^2500-->
-         <!--author_addl_unstem_search^2500-->
-         <!--author_t^1000-->
-         <!--author_addl_t^500-->
-         <!--subject_addl_unstem_search^2500-->
-         <!--subject_addl_t^500-->
-         <!--title_series_unstem_search^250-->
-         <!--title_series_t^100-->
-         <!--text^10-->
-       </str>
-       <str name="author_qf">
-         author_unstem_search
-         <!--author_unstem_search^200-->
-         <!--author_addl_unstem_search^50-->
-         <!--author_t^20-->
-         <!--author_addl_t-->
-       </str>
-       <str name="author_pf">
-         author_unstem_search
-         <!--author_unstem_search^2000-->
-         <!--author_addl_unstem_search^500-->
-         <!--author_t^200-->
-         <!--author_addl_t^10-->
-       </str>
-       <str name="title_qf">
-         title_unstem_search
-         <!--title_unstem_search^50000-->
-         <!--subtitle_unstem_search^25000-->
-         <!--title_addl_unstem_search^10000-->
-         <!--title_t^5000-->
-         <!--subtitle_t^2500-->
-         <!--title_addl_t^100-->
-         <!--title_added_entry_unstem_search^50-->
-         <!--title_added_entry_t^10-->
-         <!--title_series_unstem_search^5-->
-         <!--title_series_t-->
-       </str>
-       <str name="title_pf">
-         title_unstem_search
-         <!--title_unstem_search^500000-->
-         <!--subtitle_unstem_search^250000-->
-         <!--title_addl_unstem_search^100000-->
-         <!--title_t^50000-->
-         <!--subtitle_t^25000-->
-         <!--title_addl_t^1000-->
-         <!--title_added_entry_unstem_search^500-->
-         <!--title_added_entry_t^100-->
-         <!--title_series_t^50-->
-         <!--title_series_unstem_search^10-->
-       </str>
-       <str name="subject_qf">
-         subject_unstem_search
-         <!--subject_topic_unstem_search^200-->
-         <!--subject_unstem_search^125-->
-         <!--subject_topic_facet^100-->
-         <!--subject_t^50-->
-         <!--subject_addl_unstem_search^10-->
-         <!--subject_addl_t-->
-       </str>
-       <str name="subject_pf">
-         subject_unstem_search
-         <!--subject_topic_unstem_search^2000-->
-         <!--subject_unstem_search^1250-->
-         <!--subject_t^1000-->
-         <!--subject_topic_facet^500-->
-         <!--subject_addl_unstem_search^100-->
-         <!--subject_addl_t^10-->
-       </str>
-
-       <!-- phrase slop -->
-       <int name="ps">3</int>
-
-       <float name="tie">0.01</float>
-
-       <!--
-        This parameter can be used to specify a set of fields to return, limiting
-        the amount of information in the response. When returning the results to
-        the client, only fields in this list will be included.
-        The set of fields to be returned can be specified as a space (or comma)
-        separated list of field names. The string "score" can be used to
-        indicate that the score of each document for the particular query
-        should be returned as a field, and the string "*" can be used to
-        indicate all stored fields the document has.
+      <!-- this qf and pf are used by default, if not otherwise specified by
+           client. The default blacklight_config will use these for the
+           "keywords" search. See the author_qf/author_pf, title_qf, etc
+           below, which the default blacklight_config will specify for
+           those searches. You may also be interested in:
+           http://wiki.apache.org/solr/LocalParams
       -->
 
-       <!-- NOT using marc_display because it is large and will slow things down for search results -->
-       <str name="fl">
-         *,
-       </str>
+      <!--
+       You use the qf parameter to tell the dismax query parser which fields you want to
+       search and their corresponding score boosts.
+       -->
 
-       <str name="facet">true</str>
-       <str name="facet.mincount">1</str>
-       <str name="facet.limit">20</str>
-       <str name="facet.field">format_ss</str>
-       <str name="facet.field">location_facet</str>
-       <str name="facet.field">subject_facet</str>
-       <str name="facet.field">type_facet</str>
-       <str name="facet.field">creator_facet</str>
-       <str name="facet.field">in_collection_ss</str>
-       
-       <str name="spellcheck">true</str>
-       <str name="spellcheck.dictionary">default</str>
-       <str name="spellcheck.onlyMorePopular">true</str>
-       <str name="spellcheck.extendedResults">true</str>
-       <str name="spellcheck.collate">false</str>
-       <str name="spellcheck.count">5</str>
+      <str name="qf">
+        title_unstem_search^100000
+        author_unstem_search^100000
+        sunject_unstem_search^100000
+        dc_title_text
+        dc_format_text
+        dc_publisher_text
+        dc_identifier_text
+        dc_rights_text
+        dc_contributor_text
+        dc_coverage_t_text
+        dc_coverage_s_text
+        dc_date_text
+        dc_source_text
+        dc_subject_text
+        dc_type_text
+        dc_description_text
+        dc_creator_text
+        dc_language_text
+        dc_relation_text
+        text
+        <!--title_unstem_search^100000-->
+        <!--subtitle_unstem_search^50000-->
+        <!--title_t^25000-->
+        <!--subtitle_t^10000-->
+        <!--title_addl_unstem_search^5000-->
+        <!--title_addl_t^2500-->
+        <!--title_added_entry_unstem_search^1500-->
+        <!--title_added_entry_t^1250-->
+        <!--subject_topic_unstem_search^1000-->
+        <!--subject_unstem_search^750-->
+        <!--subject_topic_facet^625-->
+        <!--subject_t^500-->
+        <!--author_unstem_search^250-->
+        <!--author_addl_unstem_search^250-->
+        <!--author_t^100-->
+        <!--author_addl_t^50-->
+        <!--subject_addl_unstem_search^250-->
+        <!--subject_addl_t^50-->
+        <!--title_series_unstem_search^25-->
+        <!--title_series_t^10-->
+        <!--isbn_t-->
+        <!--text-->
+      </str>
 
-     </lst>
+      <!-- the pf parameter, which is an abbreviation of "phrase fields". The syntax
+           is identical to qf. You should start with the same value and then make adjustments.
+           -->
+
+      <str name="pf">
+        title_unstem_search^100000
+        author_unstem_search^100000
+        sunject_unstem_search^100000
+        dc_title_text
+        dc_format_text
+        dc_publisher_text
+        dc_identifier_text
+        dc_rights_text
+        dc_contributor_text
+        dc_coverage_t_text
+        dc_coverage_s_text
+        dc_date_text
+        dc_source_text
+        dc_subject_text
+        dc_type_text
+        dc_description_text
+        dc_creator_text
+        dc_language_text
+        dc_relation_text
+        text
+        <!--title_unstem_search^1000000-->
+        <!--subtitle_unstem_search^500000-->
+        <!--title_t^250000-->
+        <!--subtitle_t^100000-->
+        <!--title_addl_unstem_search^50000-->
+        <!--title_addl_t^25000-->
+        <!--title_added_entry_unstem_search^15000-->
+        <!--title_added_entry_t^12500-->
+        <!--subject_topic_unstem_search^10000-->
+        <!--subject_unstem_search^7500-->
+        <!--subject_topic_facet^6250-->
+        <!--subject_t^5000-->
+        <!--author_unstem_search^2500-->
+        <!--author_addl_unstem_search^2500-->
+        <!--author_t^1000-->
+        <!--author_addl_t^500-->
+        <!--subject_addl_unstem_search^2500-->
+        <!--subject_addl_t^500-->
+        <!--title_series_unstem_search^250-->
+        <!--title_series_t^100-->
+        <!--text^10-->
+      </str>
+      <str name="author_qf">
+        author_unstem_search
+        <!--author_unstem_search^200-->
+        <!--author_addl_unstem_search^50-->
+        <!--author_t^20-->
+        <!--author_addl_t-->
+      </str>
+      <str name="author_pf">
+        author_unstem_search
+        <!--author_unstem_search^2000-->
+        <!--author_addl_unstem_search^500-->
+        <!--author_t^200-->
+        <!--author_addl_t^10-->
+      </str>
+      <str name="title_qf">
+        title_unstem_search
+        <!--title_unstem_search^50000-->
+        <!--subtitle_unstem_search^25000-->
+        <!--title_addl_unstem_search^10000-->
+        <!--title_t^5000-->
+        <!--subtitle_t^2500-->
+        <!--title_addl_t^100-->
+        <!--title_added_entry_unstem_search^50-->
+        <!--title_added_entry_t^10-->
+        <!--title_series_unstem_search^5-->
+        <!--title_series_t-->
+      </str>
+      <str name="title_pf">
+        title_unstem_search
+        <!--title_unstem_search^500000-->
+        <!--subtitle_unstem_search^250000-->
+        <!--title_addl_unstem_search^100000-->
+        <!--title_t^50000-->
+        <!--subtitle_t^25000-->
+        <!--title_addl_t^1000-->
+        <!--title_added_entry_unstem_search^500-->
+        <!--title_added_entry_t^100-->
+        <!--title_series_t^50-->
+        <!--title_series_unstem_search^10-->
+      </str>
+      <str name="subject_qf">
+        subject_unstem_search
+        <!--subject_topic_unstem_search^200-->
+        <!--subject_unstem_search^125-->
+        <!--subject_topic_facet^100-->
+        <!--subject_t^50-->
+        <!--subject_addl_unstem_search^10-->
+        <!--subject_addl_t-->
+      </str>
+      <str name="subject_pf">
+        subject_unstem_search
+        <!--subject_topic_unstem_search^2000-->
+        <!--subject_unstem_search^1250-->
+        <!--subject_t^1000-->
+        <!--subject_topic_facet^500-->
+        <!--subject_addl_unstem_search^100-->
+        <!--subject_addl_t^10-->
+      </str>
+
+      <!-- phrase slop -->
+      <int name="ps">3</int>
+
+      <float name="tie">0.01</float>
+
+      <!--
+       This parameter can be used to specify a set of fields to return, limiting
+       the amount of information in the response. When returning the results to
+       the client, only fields in this list will be included.
+       The set of fields to be returned can be specified as a space (or comma)
+       separated list of field names. The string "score" can be used to
+       indicate that the score of each document for the particular query
+       should be returned as a field, and the string "*" can be used to
+       indicate all stored fields the document has.
+     -->
+
+      <!-- NOT using marc_display because it is large and will slow things down for search results -->
+      <str name="fl">
+        *,
+      </str>
+
+      <str name="facet">true</str>
+      <str name="facet.mincount">1</str>
+      <str name="facet.limit">20</str>
+      <str name="facet.field">format_ss</str>
+      <str name="facet.field">location_facet</str>
+      <str name="facet.field">subject_facet</str>
+      <str name="facet.field">type_facet</str>
+      <str name="facet.field">creator_facet</str>
+      <str name="facet.field">in_collection_ss</str>
+
+      <str name="spellcheck">true</str>
+      <str name="spellcheck.dictionary">default</str>
+      <str name="spellcheck.onlyMorePopular">true</str>
+      <str name="spellcheck.extendedResults">true</str>
+      <str name="spellcheck.collate">false</str>
+      <str name="spellcheck.count">5</str>
+
+    </lst>
     <!-- In addition to defaults, "appends" params can be specified
          to identify values which should be appended to the list of
          multi-val params from the query (or the existing "defaults").
@@ -289,7 +285,6 @@
          any query time fq params the user may specify, as a mechanism for
          partitioning the index, independent of any user selected filtering
          that may also be desired (perhaps as a result of faceted searching).
-
          NOTE: there is *absolutely* nothing a client can do to prevent these
          "appends" values from being used, so don't use this mechanism
          unless you are sure you always want it.
@@ -303,14 +298,12 @@
          the options available to Solr clients.  Any params values
          specified here are used regardless of what values may be specified
          in either the query, the "defaults", or the "appends" params.
-
          In this example, the facet.field and facet.query params would
          be fixed, limiting the facets clients can use.  Faceting is
          not turned on by default - but if the client does specify
          facet=true in the request, these are the only facets they
          will be able to see counts for; regardless of what other
          facet.field or facet.query params they may specify.
-
          NOTE: there is *absolutely* nothing a client can do to prevent these
          "invariants" values from being used, so don't use this mechanism
          unless you are sure you always want it.
@@ -336,7 +329,7 @@
     <arr name="last-components">
       <str>spellcheck</str>
     </arr>
-      
+
   </requestHandler>
 
   <!-- for requests to get a single document; use id=666 instead of q=id:666 -->
@@ -355,15 +348,15 @@
       <str name="defType">lucene</str>
       <str name="echoParams">explicit</str>
       <str name="sort">score desc, pub_date_sort desc, title_sort asc</str>
-      <str name="df">text</str> 
-      <str name="q.op">AND</str> 
+      <str name="df">text</str>
+      <str name="q.op">AND</str>
       <str name="qs">1</str>
 
       <!-- used for dismax query parser -->
-      <str name="mm">1</str> 
-      <str name="ps">3</str> 
+      <str name="mm">1</str>
+      <str name="ps">3</str>
       <float name="tie">0.01</float>
-      
+
       <!-- for user query terms in author text box -->
       <str name="qf_author">
         author_unstem_search^200
@@ -377,7 +370,7 @@
         author_t^200
         author_addl_t^10
       </str>
-      
+
       <!-- for user query terms in title text box -->
       <str name="qf_title">
         title_unstem_search^50000
@@ -403,7 +396,7 @@
         title_series_t^50
         title_series_unstem_search^10
       </str>
-      
+
       <!-- for user query terms in subject text box -->
       <str name="qf_subject">
         subject_topic_unstem_search^200
@@ -421,25 +414,25 @@
         subject_addl_unstem_search^100
         subject_addl_t^10
       </str>
-      
+
       <!-- for user query terms in number text box -->
       <str name="qf_number">isbn_t</str>
-      
+
       <!-- for user query terms in keyword text box -->
       <str name="qf_keyword">text</str>
       <str name="pf_keyword">text^10</str>
-      
+
       <!-- NOT using marc_display because it is large and will slow things down for search results -->
       <str name="fl">
-        id, 
+        id,
         score,
         author_display,
-        author_vern_display, 
-        format, 
-        isbn_t, 
-        language_facet, 
+        author_vern_display,
+        format,
+        isbn_t,
+        language_facet,
         lc_callnum_display,
-        material_type_display, 
+        material_type_display,
         published_display,
         published_vern_display,
         pub_date,
@@ -453,7 +446,7 @@
         url_fulltext_display,
         url_suppl_display,
       </str>
-      
+
       <str name="facet">true</str>
       <str name="facet.mincount">1</str>
       <str name="facet.limit">10</str>
@@ -466,7 +459,7 @@
       <str name="facet.field">subject_era_facet</str>
       <str name="facet.field">subject_geo_facet</str>
       <str name="facet.field">subject_topic_facet</str>
-      
+
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">subject</str>
       <str name="spellcheck.onlyMorePopular">true</str>
@@ -479,13 +472,11 @@
     </arr>
   </requestHandler>
 
-<!-- Spell Check
-
-        The spell check component can return a list of alternative spelling
-        suggestions.  
-
-        http://wiki.apache.org/solr/SpellCheckComponent
-     -->
+  <!-- Spell Check
+          The spell check component can return a list of alternative spelling
+          suggestions.
+          http://wiki.apache.org/solr/SpellCheckComponent
+       -->
   <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
 
     <str name="queryAnalyzerFieldType">textSpell</str>
@@ -537,8 +528,7 @@
        </lst>
      -->
 
-    <!-- a spellchecker that use an alternate comparator 
-
+    <!-- a spellchecker that use an alternate comparator
          comparatorClass be one of:
           1. score (default)
           2. freq (Frequency first, then score)
@@ -566,4 +556,3 @@
   </searchComponent>
 
 </config>
-
