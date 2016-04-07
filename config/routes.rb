@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, path: 'auth' # avoids collisions with user resources
 
   concern :multiple_actionable do
      post 'multiple_action'
@@ -62,16 +62,14 @@ Rails.application.routes.draw do
     end
   end
 
-  authenticated :user do
+  authenticated do
     root to: 'catalog#index'
   end
 
-  devise_scope :user do
-    root to: 'devise/sessions#new', as: 'profile'
-  end
-
   unauthenticated do
-    root to: 'devise/sessions#new', as: 'unauthenticated'
+    devise_scope :user do
+      root to: 'devise/sessions#new', as: :unauthenticated
+    end
   end
 
 end
