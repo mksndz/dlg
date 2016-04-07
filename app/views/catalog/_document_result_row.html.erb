@@ -1,0 +1,31 @@
+<%
+    d = document
+    id, title, klass = ''
+    klass, id = d[:sunspot_id_ss].split(' ') if d[:sunspot_id_ss]
+    slug = d[:slug_ss]
+    title = d[:dcterms_title_display].first if d[:dcterms_title_display]
+    collection = d[:collection_title_ss]
+%>
+
+<div class="row">
+  <div class="col-md-1">
+    <input type="checkbox" name="ids[]" value="<%= id %>">
+  </div>
+  <div class="col-md-8">
+    <dl class="result dl-horizontal">
+      <dt>Slug</dt>
+      <dd><%= slug %></dd>
+      <dt>Title</dt>
+      <dd><%= title.truncate(80) if title %></dd>
+      <!--<dt>Public?</dt>-->
+      <!--<dd><%=  %></dd>-->
+      <!--<dt>DPLA?</dt>-->
+      <!--<dd><%=  %></dd>-->
+      <dt>Collection</dt>
+      <dd><%= collection %></dd>
+    </dl>
+  </div>
+  <div class="col-md-2">
+    <%= render partial: 'results_row_actions', locals: { klass: klass, id: id, slug: slug} %>
+  </div>
+</div>
