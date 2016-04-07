@@ -191,8 +191,8 @@ class CatalogController < ApplicationController
     }
   end
 
-  # add_nav_action :admin # if admin
-  add_results_collection_tool :export_as_xml # if admin
+  add_nav_action :admin
+  # add_results_collection_tool :export_as_xml # todo not working
   # add_show_tools_partial :admin_actions # if admin
 
   private
