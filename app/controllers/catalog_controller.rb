@@ -180,13 +180,21 @@ class CatalogController < ApplicationController
     config.index.respond_to.xml = Proc.new {
       render xml: solr_to_ar.to_xml
     }
+
+    # remove citation and SMS tools
+    config.show.document_actions.delete(:citation)
+    config.show.document_actions.delete(:sms)
+
   end
 
+  # add Admin menu to navbar
+  add_nav_action :admin
+
+  # add Edit button on search results
   add_results_document_tool :meta
 
-  add_nav_action :admin
+  # add "Export as XML" button on search results
   # add_results_collection_tool :export_as_xml # todo not working
-  # add_show_tools_partial :admin_actions # if admin
 
   private
 
