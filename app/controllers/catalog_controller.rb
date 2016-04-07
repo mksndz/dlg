@@ -18,7 +18,7 @@ class CatalogController < ApplicationController
     config.default_solr_params = { 
       qt: 'search',
       # fq: '-class_name:"BatchItem"-class_name:"Batch"', # dont return BatchItems or Batches
-      rows: 10
+      rows: 20
     }
 
     config.add_facet_fields_to_solr_request!
@@ -27,7 +27,7 @@ class CatalogController < ApplicationController
     #config.solr_path = 'select' 
     
     # items to show per page, each number in the array represent another option to choose from.
-    config.per_page = [10,20,50,100]
+    config.per_page = [20,50,100,200]
 
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SearchHelper#solr_doc_params) or
     ## parameters included in the Blacklight-jetty document requestHandler.
@@ -41,11 +41,11 @@ class CatalogController < ApplicationController
     # }
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'dc_title_display'
+    config.index.title_field = 'dcterms_title_display'
     config.index.display_type_field = 'format_ss'
 
     # solr field configuration for document/show views
-    config.show.title_field = 'dc_title_display'
+    config.show.title_field = 'dcterms_title_display'
     config.show.display_type_field = 'format_ss'
 
     # solr fields that will be treated as facets by the blacklight application
@@ -93,27 +93,37 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
 
-    config.add_index_field 'dc_title_display', :label => 'Title'
-    config.add_index_field 'description_display', :label => 'Description'
+    config.add_index_field 'dcterms_title_display', :label => 'Title'
+    config.add_index_field 'dcterms_description_display', :label => 'Description'
     config.add_index_field 'in_collection_ss', :label => 'Collection'
     config.add_index_field 'dc_creator_display', :label => 'Author'
     config.add_index_field 'dc_type_display', :label => 'Format'
 
     # solr fields to be displayed in the show (single result) view
-    #   The ordering of the field names is the order of the display 
-    config.add_show_field 'dc_title_display', :label => 'Title'
-    config.add_show_field 'dc_description_display', :label => 'Description'
+    #   The ordering of the field names is the order of the display
+    config.add_show_field 'dcterms_title_display', :label => 'Title'
     config.add_show_field 'in_collection_ss', :label => 'Collection'
-    config.add_show_field 'dc_creator_display', :label => 'Author'
-    config.add_show_field 'dc_format_display', :label => 'File Type'
-    config.add_show_field 'dc_publisher_display', :label => 'Publisher'
-    config.add_show_field 'dc_contributor_display', :label => 'Contributor'
-    config.add_show_field 'dc_coverage_t_display', :label => 'Date'
-    config.add_show_field 'dc_coverage_s_display', :label => 'Location'
-    config.add_show_field 'dc_source_display', :label => 'Source'
-    config.add_show_field 'dc_rights_display', :label => 'Rights'
-    config.add_show_field 'dc_subject_display', :label => 'Subjects'
+    config.add_show_field 'dcterms_is_part_of_display', :label => 'Collection (Is Part Of)'
+    config.add_show_field 'dcterms_description_display', :label => 'Description'
+    config.add_show_field 'dc_format_display', :label => 'File Format'
     config.add_show_field 'dc_identifier_display', :label => 'Identifier'
+    config.add_show_field 'dc_right_display', :label => 'Rights'
+    config.add_show_field 'dc_date_display', :label => 'Date'
+    config.add_show_field 'dc_relation_display', :label => 'Related Materials'
+    config.add_show_field 'dcterms_publisher_display', :label => 'Publisher'
+    config.add_show_field 'dcterms_contributor_display', :label => 'Contributor'
+    config.add_show_field 'dcterms_temporal_display', :label => 'Time'
+    config.add_show_field 'dcterms_spatial_display', :label => 'Place'
+    config.add_show_field 'dcterms_provenance_display', :label => 'Location of Original'
+    config.add_show_field 'dcterms_subject_display', :label => 'Subject'
+    config.add_show_field 'dcterms_type_display', :label => 'Genre'
+    config.add_show_field 'dcterms_creator_display', :label => 'Creator'
+    config.add_show_field 'dcterms_language_display', :label => 'Language'
+    config.add_show_field 'dcterms_is_shown_at_display', :label => 'URL'
+    config.add_show_field 'dcterms_rights_holder_display', :label => 'Rights Holder'
+    config.add_show_field 'dcterms_access_right_display', :label => 'Access'
+    config.add_show_field 'dcterms_extent_display', :label => 'Extent'
+    config.add_show_field 'dcterms_medium_display', :label => 'Medium'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -132,26 +142,26 @@ class CatalogController < ApplicationController
     # This one uses all the defaults set by the solr request handler. Which
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
-    # config.add_search_field 'all_fields', :label => 'All Fields'
+    config.add_search_field 'all_fields', :label => 'All Fields'
 
     # Provide QuickSearch from main search bar for three entities having dublin core metadata
-    config.add_search_field('items') do |field|
-      field.solr_local_parameters = {
-        fq: '+class_name:"Item"'
-      }
-    end
-
-    config.add_search_field('collections') do |field|
-      field.solr_local_parameters = {
-          fq: '+class_name:"Collection"'
-      }
-    end
-    
-    config.add_search_field('batch_items') do |field|
-      field.solr_local_parameters = {
-          fq: '+class_name:"BatchItem"'
-      }
-    end
+    # config.add_search_field('items') do |field|
+    #   field.solr_local_parameters = {
+    #     fq: '+class_name:"Item"'
+    #   }
+    # end
+    #
+    # config.add_search_field('collections') do |field|
+    #   field.solr_local_parameters = {
+    #       fq: '+class_name:"Collection"'
+    #   }
+    # end
+    #
+    # config.add_search_field('batch_items') do |field|
+    #   field.solr_local_parameters = {
+    #       fq: '+class_name:"BatchItem"'
+    #   }
+    # end
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
