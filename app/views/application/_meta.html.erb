@@ -1,0 +1,4 @@
+<% if document['sunspot_id_ss'] %>
+  <% klass, id = document['sunspot_id_ss'].split(' ') %>
+  <%= link_to('Edit', url_for(controller: klass.downcase.pluralize, action: 'edit', id: id), class: 'btn btn-sm btn-default') if current_user.super? %>
+<% end %>
