@@ -1,9 +1,9 @@
-<%= content_for :admin_area_title do %>
+<%= content_for :title do %>
     Collections
 <% end %>
 
 <%=
-  content_for :admin_area_subtitle do
+  content_for :subtitle do
     if params[:repository_id]
       @collections.first.repository.title if @collections.first && @collections.first.repository
     else

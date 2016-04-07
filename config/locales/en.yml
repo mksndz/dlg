@@ -3,7 +3,7 @@ en:
     attributes:
       subject:
         name: "Name"
-      admin:
+      user:
         email: "Email Address"
         password: "Password"
         password_confirmation: "Confirm Password"
@@ -147,7 +147,7 @@ en:
     help:
       subject:
         name: "Display name for the Subject"
-      admin:
+      user:
         email: "This will also be the username"
         password: "Make it a good one"
         role_ids: "This will control the user's ability to alter things. All created users have a 'basic' role by default."

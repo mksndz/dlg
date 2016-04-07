@@ -1,9 +1,9 @@
-<%= content_for :admin_area_title do %>
+<%= content_for :title do %>
     Edit Batch
 <% end %>
 
-<%= content_for :admin_area_subtitle do %>
-    <%= @batch.name %> by <%= @batch.admin.email %>
+<%= content_for :subtitle do %>
+    <%= @batch.name %> by <%= @batch.user.email %>
 <% end %>
 
 <%= render 'form' %>

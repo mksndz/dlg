@@ -1,15 +1,15 @@
-<% content_for :user_area_title do %>
-    User Users
+<% content_for :title do %>
+    User
 <% end %>
 
-<%= link_to 'Add User User', new_user_path, class: 'btn btn-default' %>
-<%= link_to 'Invite User User', new_user_invitation_path, class: 'btn btn-default' %>
+<%= link_to 'Add User', new_user_path, class: 'btn btn-default' %>
+<%= link_to 'Invite User', new_user_invitation_path, class: 'btn btn-default' %>
 
 <br><br>
 
 <% if @users.empty? %>
 
-    <p>No User users have been added yet.</p>
+    <p>No Users have been added yet.</p>
 
 <% else %>
 
