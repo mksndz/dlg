@@ -1,5 +1,11 @@
 module ApplicationHelper
 
+  # handle linking in catalog results
+  def linkify(options={})
+    url = options[:value].first
+    link_to url, url
+  end
+
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil

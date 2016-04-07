@@ -95,7 +95,7 @@ class CatalogController < ApplicationController
 
     config.add_index_field 'dcterms_title_display', :label => 'Title'
     config.add_index_field 'dcterms_description_display', :label => 'Description'
-    config.add_index_field 'in_collection_ss', :label => 'Collection'
+    config.add_index_field 'in_collection_ss', :label => 'Collection', link_to_search: true
     config.add_index_field 'dc_creator_display', :label => 'Author'
     config.add_index_field 'dc_type_display', :label => 'Format'
 
@@ -106,7 +106,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_is_part_of_display', :label => 'Collection (Is Part Of)'
     config.add_show_field 'dcterms_description_display', :label => 'Description'
     config.add_show_field 'dc_format_display', :label => 'File Format'
-    config.add_show_field 'dc_identifier_display', :label => 'Identifier'
+    config.add_show_field 'dc_identifier_display', :label => 'Identifier', helper_method: 'linkify'
     config.add_show_field 'dc_right_display', :label => 'Rights'
     config.add_show_field 'dc_date_display', :label => 'Date'
     config.add_show_field 'dc_relation_display', :label => 'Related Materials'
