@@ -13,14 +13,20 @@
  *= require blacklight
  *= require scaffolds
  *= require_self
- */
+ 
+ *= require 'blacklight_advanced_search'
+
+*/
 
 html {
     position: relative;
     min-height: 100%;
 }
 body {
-    /* Margin bottom by footer height */
+    /* Margin bottom by footer height 
+ *= require 'blacklight_advanced_search'
+
+*/
     margin-bottom: 30px;
 }
 
