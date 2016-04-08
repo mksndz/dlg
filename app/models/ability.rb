@@ -4,6 +4,7 @@ class Ability
   def initialize(user)
 
     can :manage, :catalog
+    can :manage, :bookmarks
 
     if user.super?
       can :manage, :all
