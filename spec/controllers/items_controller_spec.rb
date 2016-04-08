@@ -6,6 +6,10 @@ RSpec.describe ItemsController, type: :controller do
     Fabricate(:super)
   }
 
+  let(:collection) {
+    Fabricate(:collection)
+  }
+
   before(:each) {
     sign_in super_user
   }
@@ -13,7 +17,8 @@ RSpec.describe ItemsController, type: :controller do
   let(:valid_attributes) {
     {
         slug: 'test-item-slug',
-        dcterms_title: "Test Item DC Title\nTest Subtitle"
+        dcterms_title: "Test Item DC Title\nTest Subtitle",
+        collection_id: collection.id
     }
   }
 

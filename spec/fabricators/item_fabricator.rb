@@ -14,5 +14,6 @@ Fabricator(:item) do
       %w(Athens Atlanta Augusta Macon).sample,
       'Georgia'
   ]}
+  collection
 
 end
