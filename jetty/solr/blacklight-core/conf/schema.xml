@@ -667,6 +667,8 @@
   <copyField source="dcterms_subject_text"  dest="subject_unstem_search" />
 
   <!-- display only fields -->
+  <copyField source="public_b" dest="public_display" />
+  <copyField source="dpla_b" dest="dpla_display" />
   <copyField source="dc_format_text" dest="dc_format_display" />
   <copyField source="dc_identifier_text" dest="dc_identifier_display" />
   <copyField source="dc_right_text" dest="dc_right_display" />
