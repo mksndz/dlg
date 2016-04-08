@@ -80,7 +80,8 @@ class UsersController < ApplicationController
 
   def set_data
     @data ||= {}
-    @data[:roles] = Role.where("name != 'basic'")
+    @data[:roles] = Role.all
+    # @data[:roles] = Role.where("name != 'basic'")
     @data[:repositories]= current_user.super? ? Repository.all : current_user.repositories
     @data[:collections] = current_user.super? ? Collection.all : current_user.collections
   end
