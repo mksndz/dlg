@@ -27,4 +27,8 @@ module ApplicationHelper
     html.html_safe
   end
 
+  def boolean_check_icon(value)
+    value ? content_tag(:span, nil, class: 'glyphicon glyphicon-ok') : ''
+  end
+
 end

@@ -34,6 +34,9 @@
             <%= sortable 'display_title', 'Display Title' %>
           </th>
           <th>
+            <%= sortable 'public' , 'Public?' %>
+          </th>
+          <th>
             <%= sortable 'repository_id', 'Repository' %>
           </th>
           <th>
@@ -54,6 +57,9 @@
               </td>
               <td>
                 <%= collection.display_title %>
+              </td>
+              <td>
+                <%= boolean_check_icon collection.public %>
               </td>
               <td>
                 <%= link_to(collection.repository.title, repository_path(collection.repository)) if collection.repository %>

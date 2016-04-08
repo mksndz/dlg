@@ -36,6 +36,9 @@
             <%= sortable 'dc_title', 'Title' %>
           </th>
           <th>
+            <%= sortable 'public', 'Public?' %>
+          </th>
+          <th>
             <%= sortable 'collection_id', 'Collection' %>
           </th>
           <th width="185px"></th>
@@ -53,6 +56,9 @@
             </td>
             <td>
               <%= item.title %>
+            </td>
+            <td>
+              <%= boolean_check_icon item.public %>
             </td>
             <td>
               <%= link_to(item.collection.display_title, collection_path(item.collection)) if item.collection %>
