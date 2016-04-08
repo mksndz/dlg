@@ -6,6 +6,7 @@ class Item < ActiveRecord::Base
   has_one :repository, through: :collection
 
   validates_uniqueness_of :slug, scope: :collection_id
+  validates_presence_of :collection
 
   delegate :collection_title, to: :collection
   delegate :repository_id, to: :collection
