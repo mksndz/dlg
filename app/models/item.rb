@@ -97,5 +97,17 @@ class Item < ActiveRecord::Base
     }
     super(options.merge!(default_options))
   end
+
+  def self.index_query(params)
+    options = {}
+    fields = %w(collection_id public).freeze
+    if params.present?
+      fields.each do |f|
+        options[f] = params[f] if params[f] && !params[f].empty?
+      end
+    end
+    options.present? ? where(options) : all
+  end
+
 end
 
