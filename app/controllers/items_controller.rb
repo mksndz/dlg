@@ -11,49 +11,19 @@ class ItemsController < ApplicationController
 
   def index
 
-    # set_search_options
-
     set_filter_options
 
     if current_user.super?
-          @items = Item.index_query(params)
-              .order(sort_column + ' ' + sort_direction)
-              .page(params[:page])
+        @items = Item.index_query(params)
+            .order(sort_column + ' ' + sort_direction)
+            .page(params[:page])
     else
-          collection_ids = current_user.collection_ids || []
-          collection_ids += current_user.repositories.map { |r| r.collection_ids }
-          @items = Item.index_query(params)
-                       .includes(:collection)
-                       .where(collection: collection_ids.flatten)
-                       .order(sort_column + ' ' + sort_direction)
-                       .page(params[:page])
+        @items = Item.index_query(params)
+                     .includes(:collection)
+                     .where(collection: user_collection_ids) # todo conflicts with filter param?
+                     .order(sort_column + ' ' + sort_direction)
+                     .page(params[:page])
     end
-
-    # if current_user.super?
-    #   if params[:search]
-    #     s = ItemSearch.search(params)
-    #     @items = s.results
-    #     # @count = s.total
-    #   else
-    #     @items = Item
-    #         .order(sort_column + ' ' + sort_direction)
-    #         .page(params[:page])
-    #   end
-    # else
-    #   if params[:search]
-    #     # todo user limits
-    #     @items = ItemSearch.search params
-    #   else
-    #     collection_ids = current_user.collection_ids || []
-    #     collection_ids += current_user.repositories.map { |r| r.collection_ids }
-    #     @items = Item
-    #                  .includes(:collection)
-    #                  .where(collection: collection_ids.flatten)
-    #                  .order(sort_column + ' ' + sort_direction)
-    #                  .page(params[:page])
-    #   end
-    #
-    # end
 
   end
 
@@ -163,5 +133,11 @@ class ItemsController < ApplicationController
       @search_options[:collections] = Collection.where(id: current_user.collection_ids)
       @search_options[:repositories] = Repository.where(id: current_user.repository_ids)
     end
+  end
+
+  def user_collection_ids
+    collection_ids = current_user.collection_ids || []
+    collection_ids += current_user.repositories.map { |r| r.collection_ids }
+    collection_ids.flatten
   end
 end
