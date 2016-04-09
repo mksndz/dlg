@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
   include MultipleActionable
   include Filterable
 
-  before_action :collections_for_select, only: [ :new, :copy, :edit ]
+  before_action :set_data, only: [ :new, :copy, :edit ]
 
   def index
 
@@ -40,7 +40,7 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to item_path(@item), notice: 'Item created'
     else
-      collections_for_select
+      set_data
       render :new, alert: 'Error creating item'
     end
   end
@@ -57,7 +57,7 @@ class ItemsController < ApplicationController
     if @item.update(split_dc_params(item_params))
       redirect_to item_path(@item), notice: 'Item updated'
     else
-      collections_for_select
+      set_data
       render :edit, alert: 'Error creating item'
     end
   end
@@ -72,8 +72,9 @@ class ItemsController < ApplicationController
 
   private
 
-  def collections_for_select
-    @collections = Collection.all.order(:display_title)
+  def set_data
+    @data = {}
+    @data[:collections] = Collection.all.order(:display_title)
   end
 
   def item_params

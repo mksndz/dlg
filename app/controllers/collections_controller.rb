@@ -1,10 +1,10 @@
 class CollectionsController < ApplicationController
+
+  load_and_authorize_resource
   include ErrorHandling
   include DcHelper
   include Sorting
   include Filterable
-
-  load_and_authorize_resource
 
   before_action :set_data, only: [:new, :edit]
 
@@ -30,7 +30,6 @@ class CollectionsController < ApplicationController
 
   def new
     @collection = Collection.new
-    repositories_for_select
   end
 
   def create
@@ -41,14 +40,13 @@ class CollectionsController < ApplicationController
       if @collection.save
         format.html { redirect_to collection_path(@collection), notice: 'Collection item was successfully created.' }
       else
-        repositories_for_select
+        set_data
         format.html { render :new }
       end
     end
   end
 
   def edit
-    repositories_for_select
   end
 
   def update
@@ -58,7 +56,7 @@ class CollectionsController < ApplicationController
     if @collection.update new_params
       redirect_to collection_path(@collection), notice: 'Collection updated'
     else
-      repositories_for_select
+      set_data
       render :edit, alert: 'Error creating collection'
     end
   end
@@ -74,10 +72,6 @@ class CollectionsController < ApplicationController
     @data = {}
     @data[:subjects] = Subject.all.order(:name)
     @data[:repositories] = Repository.all.order(:title)
-  end
-
-  def repositories_for_select
-    @repositories = Repository.all.order(:title)
   end
 
   def collection_params
