@@ -4,15 +4,17 @@ class RepositoriesController < ApplicationController
   include ErrorHandling
   include Sorting
 
-
   def index
+
     if current_user.super?
       @repositories = Repository
                           .order(sort_column + ' ' + sort_direction)
                           .page(params[:page])
     else
-      # todo sorting?
-      @repositories = current_user.repositories.page(params[:page])
+      @repositories = Repository
+                          .where(id: current_user.repository_ids)
+                          .order(sort_column + ' ' + sort_direction)
+                          .page(params[:page])
     end
 
   end
@@ -50,6 +52,7 @@ class RepositoriesController < ApplicationController
   end
 
   private
+
   def repository_params
     params.require(:repository).permit(
         :slug,
@@ -67,4 +70,5 @@ class RepositoriesController < ApplicationController
         :contact
     )
   end
+
 end
