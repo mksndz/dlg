@@ -6,12 +6,13 @@ class ItemsController < ApplicationController
   include Sorting
   include Searchable
   include MultipleActionable
+  include Filterable
 
   before_action :collections_for_select, only: [ :new, :copy, :edit ]
 
   def index
 
-    set_filter_options
+    set_filter_options [:repository, :collection]
 
     if current_user.super?
         @items = Item.index_query(params)
@@ -110,34 +111,4 @@ class ItemsController < ApplicationController
     )
   end
 
-  # def set_search_options
-  #   @search_options = {}
-  #   @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']]
-  #   @search_options[:dpla] = [['Yes or No', ''],['Yes', 1],['No', 0]]
-  #   if current_user.super?
-  #     @search_options[:collections] = Collection.all
-  #     @search_options[:repositories] = Repository.all
-  #   elsif current_user.basic?
-  #     @search_options[:collections] = Collection.where(id: current_user.collection_ids)
-  #     @search_options[:repositories] = Repository.where(id: current_user.repository_ids)
-  #   end
-  # end
-
-  def set_filter_options
-    @search_options = {}
-    @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']]
-    if current_user.super?
-      @search_options[:collections] = Collection.all
-      @search_options[:repositories] = Repository.all
-    elsif current_user.basic?
-      @search_options[:collections] = Collection.where(id: current_user.collection_ids)
-      @search_options[:repositories] = Repository.where(id: current_user.repository_ids)
-    end
-  end
-
-  def user_collection_ids
-    collection_ids = current_user.collection_ids || []
-    collection_ids += current_user.repositories.map { |r| r.collection_ids }
-    collection_ids.flatten
-  end
 end

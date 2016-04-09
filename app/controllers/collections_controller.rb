@@ -2,6 +2,7 @@ class CollectionsController < ApplicationController
   include ErrorHandling
   include DcHelper
   include Sorting
+  include Filterable
 
   load_and_authorize_resource
 
@@ -9,7 +10,7 @@ class CollectionsController < ApplicationController
 
   def index
 
-    set_filter_options
+    set_filter_options [:repository]
 
     if current_user.super?
       @collections = Collection.index_query(params)
@@ -120,20 +121,5 @@ class CollectionsController < ApplicationController
     )
   end
 
-  def set_filter_options
-    @search_options = {}
-    @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']]
-    if current_user.super?
-      @search_options[:repositories] = Repository.all
-    elsif current_user.basic?
-      @search_options[:repositories] = Repository.where(id: current_user.repository_ids)
-    end
-  end
-
-    def user_collection_ids
-      collection_ids = current_user.collection_ids || []
-      collection_ids += current_user.repositories.map { |r| r.collection_ids }
-      collection_ids.flatten
-    end
 end
 
