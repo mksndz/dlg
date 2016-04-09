@@ -14,9 +14,20 @@
 
 <%= link_to 'Add Collection', new_collection_path, class: 'btn btn-default' %>
 
+<br><br>
+
+<div class="well well-sm">
+  <%= bootstrap_form_tag url: collections_path, method: :get, layout: :horizontal, label_col: 'col-sm-1', control_col: 'col-sm-11' do |f| %>
+      <%= f.select :repository_id, options_for_select(@search_options[:repositories].collect { |c| [c.title, c.id] }, selected: params[:repository_id] ), { include_blank: true }, { name: 'repository_id' } %>
+      <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: 'Public'}, { name: 'public' } %>
+      <%= f.primary 'Filter' %>
+      <%# f.primary 'Reset' %>
+  <% end %>
+</div>
+
 <% if @collections.empty? %>
 
-    <p>No collections have been added yet.</p>
+    <p>No collections found.</p>
 
 <% else %>
 

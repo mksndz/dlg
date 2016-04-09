@@ -15,12 +15,12 @@ class ItemsController < ApplicationController
 
     if current_user.super?
         @items = Item.index_query(params)
-            .order(sort_column + ' ' + sort_direction)
-            .page(params[:page])
+                     .order(sort_column + ' ' + sort_direction)
+                     .page(params[:page])
     else
         @items = Item.index_query(params)
                      .includes(:collection)
-                     .where(collection: user_collection_ids) # todo conflicts with filter param?
+                     .where(collection: user_collection_ids)
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
     end

@@ -9,24 +9,17 @@ class CollectionsController < ApplicationController
 
   def index
 
+    set_filter_options
+
     if current_user.super?
-      if params[:repository_id]
-        @collections = Collection
-                           .where(repository_id: params[:repository_id])
-                           .order(sort_column + ' ' + sort_direction)
-                           .page(params[:page])
-      else
-        @collections = Collection
-                           .order(sort_column + ' ' + sort_direction)
-                           .page(params[:page])
-      end
+      @collections = Collection.index_query(params)
+                               .order(sort_column + ' ' + sort_direction)
+                               .page(params[:page])
     else
-      collection_ids = current_user.collection_ids
-      current_user.repositories.each { |r| collection_ids << r.collection_ids }
-      @collections = Collection
-                         .where(id: collection_ids.flatten)
-                         .order(sort_column + ' ' + sort_direction)
-                         .page(params[:page])
+      @collections = Collection.index_query(params)
+                               .where(id: user_collection_ids)
+                               .order(sort_column + ' ' + sort_direction)
+                               .page(params[:page])
     end
 
   end
@@ -126,5 +119,21 @@ class CollectionsController < ApplicationController
         :other_repositories => []
     )
   end
+
+  def set_filter_options
+    @search_options = {}
+    @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']]
+    if current_user.super?
+      @search_options[:repositories] = Repository.all
+    elsif current_user.basic?
+      @search_options[:repositories] = Repository.where(id: current_user.repository_ids)
+    end
+  end
+
+    def user_collection_ids
+      collection_ids = current_user.collection_ids || []
+      collection_ids += current_user.repositories.map { |r| r.collection_ids }
+      collection_ids.flatten
+    end
 end
 
