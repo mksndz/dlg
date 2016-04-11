@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :repositories
   has_and_belongs_to_many :collections
 
+  before_create :set_default_role
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :lockable,
@@ -36,6 +38,12 @@ class User < ActiveRecord::Base
 
   def basic?
     roles.where(name: 'basic').exists?
+  end
+
+  private
+
+  def set_default_role
+    self.roles << Role.where(name: 'basic')
   end
 
 end

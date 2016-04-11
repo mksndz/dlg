@@ -39,7 +39,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     set_user_creator
-    set_default_roles
     if @user.save
       redirect_to user_path(@user), notice: 'User created!'
     else
@@ -95,10 +94,6 @@ class UsersController < ApplicationController
       throw UserRestrictionsError unless (new_user_collection_ids - current_user.collection_ids).empty?
       throw UserRestrictionsError if current_user.coordinator? and user_params[:role_ids]
     end
-  end
-
-  def set_default_roles
-    @user.roles << Role.where(name: 'basic')
   end
 
 end
