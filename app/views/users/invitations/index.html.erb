@@ -1,0 +1,47 @@
+<%= content_for :title do %>
+  Pending Invitations
+<% end %>
+
+<% if @pending_invitations.empty? %>
+
+    <p>No pending invitations at this time.</p>
+
+<% else %>
+
+    <table class="table tale-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          Email Address
+        </th>
+        <th>
+          Invited On
+        </th>
+        <th>
+          Invited By
+        </th>
+        <th>
+
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+        <% @pending_invitations.each do |i| %>
+        <tr>
+          <td>
+            <%= i.email %>
+          </td>
+          <td>
+            <%= i.invitation_created_at %>
+          </td>
+          <td>
+            <%= link_to i.invited_by.email, user_path(i.invited_by) %>
+          </td>
+          <td>
+            <%= link_to 'Delete Invitation', user_path(i), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default btn-xs' %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+<% end %>

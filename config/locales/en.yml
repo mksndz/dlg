@@ -11,6 +11,7 @@ en:
         creator: "Creator"
         repository_ids: "Assigned Repositories"
         collection_ids: "Assigned Collections"
+        invited_by: "Invited By"
       role:
         name: "Name"
       batch:

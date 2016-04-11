@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  devise_for :users, path: 'auth' # avoids collisions with user resources
+  devise_for :users, path: 'auth'
+
+  devise_scope :user do
+    get 'auth/invitations', to: 'invitations#index'
+  end
 
   concern :multiple_actionable do
      post 'multiple_action'
