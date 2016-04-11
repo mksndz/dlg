@@ -64,13 +64,9 @@ Rails.application.routes.draw do
   end
 
   authenticated do
-    root to: 'catalog#index'
+    root to: 'catalog#index', as: :authenticated_root
   end
 
-  unauthenticated do
-    devise_scope :user do
-      root to: 'devise/sessions#new', as: :unauthenticated
-    end
-  end
+  root to: redirect('auth/sign_in')
 
 end
