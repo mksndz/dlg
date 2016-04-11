@@ -48,6 +48,10 @@ body {
     height: 320px;
 }
 
+.resend-unlock-form {
+    height: 300px;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
