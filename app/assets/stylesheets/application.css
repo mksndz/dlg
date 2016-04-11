@@ -30,15 +30,22 @@ body {
     margin-bottom: 30px;
 }
 
-.user-login-form {
+.devise-simple-form {
     width: 400px;
-    height: 370px;
     position: absolute;
     top:0;
     bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
+}
+
+.user-login-form {
+    height: 370px;
+}
+
+.forgot-password-form {
+    height: 320px;
 }
 
 .footer {

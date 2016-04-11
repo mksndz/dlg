@@ -1,4 +1,4 @@
-<div class="user-login-form">
+<div class="devise-simple-form user-login-form">
   <h1>User Login</h1>
   <%= bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= f.email_field :email, autofocus: true, help: false %>
