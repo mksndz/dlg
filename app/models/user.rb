@@ -11,6 +11,11 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :repositories
   has_and_belongs_to_many :collections
 
+  scope :pending_invitation_response, -> { where('invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL') }
+  scope :admin_created,               -> { where('invitation_sent_at IS NOT NULL') }
+  scope :invited,                     -> { where('invitation_accepted_at IS NOT NULL') }
+  scope :active,                      -> { where('(invitation_sent_at IS NOT NULL and invitation_accepted_at IS NOT NULL) OR invitation_sent_at IS NULL') }
+
   before_create :set_default_role
 
   # Include default devise modules. Others available are:

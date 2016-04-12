@@ -4,7 +4,7 @@ class InvitationsController < Devise::InvitationsController
 
   # show all pending invitations
   def index
-    @pending_invitations = User.where('invitation_sent_at IS NOT NULL AND invitation_accepted_at IS NULL')
+    @pending_invitations = User.pending_invitation_response
     render 'index'
   end
 

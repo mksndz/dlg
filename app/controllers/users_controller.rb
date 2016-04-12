@@ -18,11 +18,13 @@ class UsersController < ApplicationController
 
   def index
     if current_user.coordinator?
-      @users = User.where(creator_id: current_user.id)
+      @users = User.active
+                   .where(creator_id: current_user.id)
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
     else
-      @users = User
+      @users = User.active
+                   .where('invitation_sent_at IS NULL')
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
     end
