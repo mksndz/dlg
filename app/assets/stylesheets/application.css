@@ -48,6 +48,10 @@ body {
     height: 320px;
 }
 
+.invitation-accept-form {
+    height: 300px;
+}
+
 .resend-unlock-form {
     height: 300px;
 }

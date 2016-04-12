@@ -24,7 +24,6 @@ class UsersController < ApplicationController
                    .page(params[:page])
     else
       @users = User.active
-                   .where('invitation_sent_at IS NULL')
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
     end

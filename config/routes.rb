@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  devise_for :users, path: 'auth'
+  devise_for :users, path: 'auth', controllers: {
+      invitations: 'invitations'
+  }
 
   devise_scope :user do
     get 'auth/invitations', to: 'invitations#index'
