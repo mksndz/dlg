@@ -4,6 +4,7 @@ class Item < ActiveRecord::Base
 
   belongs_to :collection
   has_one :repository, through: :collection
+  has_many :batch_items
 
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection

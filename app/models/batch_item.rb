@@ -4,6 +4,7 @@ class BatchItem < ActiveRecord::Base
   belongs_to :batch
   belongs_to :collection
   has_one :repository, through: :collection
+  has_one :item
 
   validates_presence_of :collection, message: ' could not be set'
 
