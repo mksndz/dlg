@@ -12,9 +12,9 @@
  *
  *= require blacklight
  *= require scaffolds
- *= require_self
- 
  *= require 'blacklight_advanced_search'
+ *= require_tree
+ *= require_self
 
 */
 

@@ -18,3 +18,4 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require blacklight/blacklight
+//= require_tree
