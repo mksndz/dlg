@@ -11,12 +11,12 @@ class BatchItemImport
     @raw_xml = xml
     hash = Hash.from_trusted_xml(xml.squish)
     @hash = hash[TARGET]
-    @replace_id = @hash.delete('id')
+    @replace_id = @hash.delete('id') if @hash['id']
     @parent_slug = @hash.delete(PARENT) if has_parent
   end
 
   def process
-    if @replace_id and entity_exists_in_meta @replace_id['id']
+    if @replace_id and entity_exists_in_meta @replace_id
       replace
     else
       create_new
@@ -32,7 +32,9 @@ class BatchItemImport
   end
 
   def replace
-    @batch_item = PRODUCT.camelize.constantize.new(@hash.merge!(@replace_id))
+    @batch_item = PRODUCT.camelize.constantize.new(@hash)
+    target = TARGET.camelize.constantize.find(@replace_id)
+    @batch_item["#{TARGET}_id".to_sym] = target.id
   end
 
   def set_additional_attributes
