@@ -1,6 +1,10 @@
 $(document).ready ->
 
-  $("#xml_form").on("submit" ,(e, data, status, xhr) ->
+  $form = $("#xml_form")
+
+  $form.find("input[type='submit']").removeClass('hide')
+
+  $form.on("submit" ,(e, data, status, xhr) ->
     e.preventDefault()
     $this = $(this)
     url = this.action
