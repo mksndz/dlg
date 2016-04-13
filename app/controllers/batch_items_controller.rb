@@ -79,25 +79,15 @@ class BatchItemsController < ApplicationController
 
     # todo add csrf protection
 
-    hash = BatchItem.create_from_xml params[:xml_text].squish
+    importer = BatchItemImport.new(params[:xml_text], @batch, true)
+    @batch_item = importer.process
 
-    if hash
-      @batch_item = hash[:batch_item]
-
-      collection = Collection.find_by_slug(hash[:parent_slug])
-
-      @batch_item.batch = @batch
-      @batch_item.collection = collection
-    end
-
-    throw ArgumentError unless @batch_item
+    throw ArgumentError unless @batch_item # todo throw a better exception
 
     respond_to do |format|
       if @batch_item.save
-        # format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: 'Batch item was successfully updated.' }
         format.json { render :import_results, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
       else
-        # format.html { render :edit }
         format.json { render json: @batch_item.errors, status: :unprocessable_entity }
       end
     end
