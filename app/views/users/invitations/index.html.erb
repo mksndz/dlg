@@ -2,6 +2,10 @@
   Pending Invitations
 <% end %>
 
+<%= link_to 'New Invitation', new_user_invitation_path, class: 'btn btn-default' %>
+
+<br><br>
+
 <% if @pending_invitations.empty? %>
 
     <p>No pending invitations at this time.</p>

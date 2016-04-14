@@ -1,11 +1,9 @@
 <% content_for :title do %>
-    User
+    Users
 <% end %>
 
 <%= link_to 'Add User', new_user_path, class: 'btn btn-default' %>
-<%= link_to 'Invite User', new_user_invitation_path, class: 'btn btn-default' %>
-<%= link_to 'Pending Invites', auth_invitations_path, class: 'btn btn-default' %>
-
+<%= link_to 'Invites', auth_invitations_path, class: 'btn btn-default' %>
 
 <br><br>
 
