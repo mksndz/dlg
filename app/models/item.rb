@@ -1,6 +1,7 @@
 class Item < ActiveRecord::Base
   include Slugged
   include DcHelper
+  include IndexFilterable
 
   belongs_to :collection
   has_one :repository, through: :collection
@@ -75,6 +76,10 @@ class Item < ActiveRecord::Base
 
   end
 
+  def self.index_query_fields
+    %w(collection_id public).freeze
+  end
+
   def title
     dcterms_title.first
   end
@@ -97,17 +102,6 @@ class Item < ActiveRecord::Base
         }
     }
     super(options.merge!(default_options))
-  end
-
-  def self.index_query(params)
-    options = {}
-    fields = %w(collection_id public).freeze
-    if params.present?
-      fields.each do |f|
-        options[f] = params[f] if params[f] && !params[f].empty?
-      end
-    end
-    options.present? ? where(options) : all
   end
 
 end

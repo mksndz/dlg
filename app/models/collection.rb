@@ -1,5 +1,6 @@
 class Collection < ActiveRecord::Base
   include Slugged
+  include IndexFilterable
   # include SolrIndexing
 
   has_many :items, dependent: :destroy
@@ -11,6 +12,10 @@ class Collection < ActiveRecord::Base
 
   validates_presence_of :display_title
   validates_uniqueness_of :slug, scope: :repository_id
+
+  def self.index_query_fields
+    %w(repository_id public).freeze
+  end
 
   def title
     dcterms_title.first
@@ -37,17 +42,5 @@ class Collection < ActiveRecord::Base
 
     super(options.merge!(default_options))
   end
-
-  def self.index_query(params)
-    options = {}
-    fields = %w(repository_id public).freeze
-    if params.present?
-      fields.each do |f|
-        options[f] = params[f] if params[f] && !params[f].empty?
-      end
-    end
-    options.present? ? where(options) : all
-  end
-
 end
 
