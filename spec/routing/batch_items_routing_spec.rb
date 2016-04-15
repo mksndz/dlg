@@ -35,5 +35,9 @@ RSpec.describe BatchItemsController, type: :routing do
       expect(delete: '/batches/1/batch_items/1').to route_to(controller: 'batch_items', action: 'destroy', batch_id: '1', id: '1')
     end
 
+    it 'routes to #commit' do
+      expect(get: '/batches/1/batch_items/1/commit').to route_to(controller: 'batch_items', action: 'commit', batch_id: '1', id: '1')
+    end
+
   end
 end

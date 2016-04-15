@@ -35,6 +35,10 @@ RSpec.describe BatchesController, type: :routing do
       expect(delete: '/batches/1').to route_to(controller: 'batches', action: 'destroy', id: '1')
     end
 
+    it 'routes to #commit' do
+      expect(get: '/batches/1/commit').to route_to(controller: 'batches', action: 'commit', id: '1')
+    end
+
     it 'routes to filtered Batches list by User' do
       expect(get: '/batches/for/1').to route_to(controller: 'batches', action: 'index', user_id: '1')
     end
