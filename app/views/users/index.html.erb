@@ -5,6 +5,8 @@
 <%= link_to 'Add User', new_user_path, class: 'btn btn-default' %>
 <%= link_to 'Invites', auth_invitations_path, class: 'btn btn-default' %>
 
+<%= render 'shared/per_pager' %>
+
 <br><br>
 
 <% if @users.empty? %>

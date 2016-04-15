@@ -1,0 +1,8 @@
+<div class="per-page-control pull-right">
+  <span class="per-page-label"><strong>Per Page: </strong></span>
+  <div class="btn-group" role="group">
+    <% per_page_values.each do |pp| %>
+        <%= link_to pp, params.merge(per_page: pp), class: "btn btn-sm #{per_page_selected(pp)}" %>
+    <% end %>
+  </div>
+</div>

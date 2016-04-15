@@ -4,24 +4,30 @@
 
 <%=
     content_for :subtitle do
-      if params[:collection_id]
-        "For #{@items.first.collection.display_title}"
+      if @items.empty?
+        'None'
+      elsif params[:collection_id] && !params[:collection_id].empty?
+         "For #{@items.first.collection.display_title}"
       else
         'All of them'
       end
     end
 %>
 
-
 <%= link_to 'Add Item', new_item_path, class: 'btn btn-default' %>
 
 <%= link_to 'Search Items', search_items_path, class: 'btn btn-default' %>
+
+<%= render 'shared/per_pager' %>
 
 <br><br>
 
 <div class="well well-sm">
   <%= bootstrap_form_tag url: items_path, method: :get, layout: :horizontal, label_col: 'col-sm-1', control_col: 'col-sm-11' do |f| %>
-      <%= f.select :collection_id, options_for_select(@search_options[:collections].collect { |c| [c.title, c.id] }, selected: params[:collection_id] ), { include_blank: true }, { name: 'collection_id' } %>
+      <%= f.hidden_field :direction, { value: params[:direction], name: 'direction' } if params[:direction] %>
+      <%= f.hidden_field :sort, { value: params[:sort], name: 'sort' } if params[:sort] %>
+      <%= f.hidden_field :per_page, { value: params[:per_page], name: 'per_page' } if params[:per_page] %>
+      <%= f.select :collection_id, options_for_select(@search_options[:collections].collect { |c| [c.display_title, c.id] }, selected: params[:collection_id] ), { include_blank: true }, { name: 'collection_id' } %>
       <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: 'Public'}, { name: 'public' } %>
       <%= f.primary 'Filter' %>
       <%# f.primary 'Reset' %>

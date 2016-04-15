@@ -18,10 +18,12 @@ class BatchesController < ApplicationController
                      .where(user_id: @user.id)
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
+                     .per(params[:per_page])
     else
       @batches = Batch
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
+                     .per(params[:per_page])
     end
 
   end

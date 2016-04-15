@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   resources :collections do
     collection do
-      get 'for/:repository_id', to: 'collections#index', as: :filtered
+      # get 'for/:repository_id', to: 'collections#index', as: :filtered
     end
   end
 

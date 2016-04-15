@@ -10,11 +10,13 @@ class RepositoriesController < ApplicationController
       @repositories = Repository
                           .order(sort_column + ' ' + sort_direction)
                           .page(params[:page])
+                          .per(params[:per_page])
     else
       @repositories = Repository
                           .where(id: current_user.repository_ids)
                           .order(sort_column + ' ' + sort_direction)
                           .page(params[:page])
+                          .per(params[:per_page])
     end
 
   end

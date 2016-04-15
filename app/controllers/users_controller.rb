@@ -22,10 +22,12 @@ class UsersController < ApplicationController
                    .where(creator_id: current_user.id)
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
+                   .per(params[:per_page])
     else
       @users = User.active
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
+                   .per(params[:per_page])
     end
   end
 

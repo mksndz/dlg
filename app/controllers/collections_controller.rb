@@ -16,11 +16,13 @@ class CollectionsController < ApplicationController
       @collections = Collection.index_query(params)
                                .order(sort_column + ' ' + sort_direction)
                                .page(params[:page])
+                               .per(params[:per_page])
     else
       @collections = Collection.index_query(params)
                                .where(id: user_collection_ids)
                                .order(sort_column + ' ' + sort_direction)
                                .page(params[:page])
+                               .per(params[:per_page])
     end
 
   end

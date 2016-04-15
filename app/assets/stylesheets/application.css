@@ -23,10 +23,7 @@ html {
     min-height: 100%;
 }
 body {
-    /* Margin bottom by footer height 
- *= require 'blacklight_advanced_search'
-
-*/
+    /* Margin bottom by footer height */
     margin-bottom: 30px;
 }
 
@@ -61,6 +58,10 @@ body {
     bottom: 0;
     width: 100%;
     height: 30px;
+}
+
+a.btn-primary {
+    color: white;
 }
 
 label.required:before {

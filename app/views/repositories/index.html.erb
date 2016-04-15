@@ -8,6 +8,8 @@
 
 <%= link_to 'Add Repository', new_repository_path, class: 'btn btn-default' %>
 
+<%= render 'shared/per_pager' %>
+
 <br><br>
 
 <% if @repositories.empty? %>

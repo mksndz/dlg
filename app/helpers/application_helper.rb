@@ -31,4 +31,12 @@ module ApplicationHelper
     value ? content_tag(:span, nil, class: 'glyphicon glyphicon-ok') : ''
   end
 
+  def per_page_values
+    [20, 50, 100, 250]
+  end
+
+  def per_page_selected(pp)
+    params[:per_page].to_i == pp ? 'btn-primary' : 'btn-default'
+  end
+
 end
