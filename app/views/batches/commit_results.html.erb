@@ -1,0 +1,52 @@
+<%= content_for :title do %>
+    Batch Commit Results
+<% end %>
+
+<br><br>
+
+<% if @results.empty? %>
+
+    <p>No results.</p>
+
+<% else %>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th>
+          Batch Item
+        </th>
+        <th>
+          Item Title
+        </th>
+        <th>
+          Collection
+        </th>
+        <th>
+          Outcome
+        </th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @results.each do |r| %>
+          <tr>
+            <td>
+              <%= r[:batch_item].id %>
+            </td>
+            <td>
+              <%= r[:item].title if r[:item] %>
+            </td>
+            <td>
+              <%= r[:item].collection.display_title if r[:item] %>
+            </td>
+            <td>
+              <%= boolean_check_icon(r[:item]) %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+<% end %>
+

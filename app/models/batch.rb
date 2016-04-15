@@ -22,5 +22,13 @@ class Batch < ActiveRecord::Base
     !!committed_at
   end
 
+  def commit
+    batch_items.map do |bi|
+      i = bi.commit
+      i.save
+      {batch_item: bi, item: i }
+    end
+  end
+
 end
 

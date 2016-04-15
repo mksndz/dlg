@@ -27,5 +27,14 @@ RSpec.describe Batch, type: :model do
     }
     expect(b.batch_items).not_to be_empty
   end
-  
+
+  it 'commits the batch_items return array of results' do
+    b = Fabricate(:batch){ batch_items(count: 2)}
+    r = b.commit
+    expect(r).to be_an Array
+    expect(r.first).to be_a Hash
+    expect(r.first[:batch_item]).to be_a BatchItem
+    expect(r.first[:item]).to be_a Item
+    expect(b.committed_at).to be
+  end
 end
