@@ -12,5 +12,17 @@ class BatchItem < ActiveRecord::Base
     dcterms_title.first
   end
 
+  def commit
+    scrub_attributes = %w(id created_at updated_at batch_id)
+    attributes = self.attributes.except(*scrub_attributes)
+    item_id = attributes.delete('item_id')
+    if item_id
+      # replace existing
+      self.item.update attributes
+      self.item
+    else
+      Item.new attributes
+    end
+  end
 
 end

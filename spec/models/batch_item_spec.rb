@@ -30,4 +30,21 @@ RSpec.describe BatchItem, type: :model do
     expect(b.batch_items.first).not_to be_kind_of Item
   end
 
+  it 'creates an Item copy of itself using commit' do
+    b = Fabricate(:batch) { batch_items(count: 1) }
+    i = b.batch_items.first.commit
+    expect(i).to be_an Item
+  end
+
+  it 'replaces an existing Item with its attributes using commit' do
+    i = Fabricate(:item)
+    b = Fabricate(:batch) { batch_items(count: 1) }
+    bi = b.batch_items.first
+    bi.item = i
+    bi.save
+    ni = bi.commit
+    expect(ni).to be_an Item
+    expect(ni.slug).to eq bi.slug
+  end
+
 end
