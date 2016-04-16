@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   resources :batches do
     collection do
       get 'for/:user_id', to: 'batches#index', as: :filtered
+      get 'committed', to: 'batches#committed'
     end
     member do
       get 'commit', to: 'batches#commit', as: :commit

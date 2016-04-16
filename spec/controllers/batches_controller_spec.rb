@@ -156,4 +156,15 @@ RSpec.describe BatchesController, type: :controller do
     end
   end
 
+  describe 'GET #committed' do
+    it 'lists committed batches' do
+      batch = Fabricate(:batch){ batch_items(count: 1)}
+      batch.commit
+      batch.committed_at = Time.now
+      batch.save
+      get :committed
+      expect(assigns(:batches)).to eq [batch]
+    end
+  end
+
 end

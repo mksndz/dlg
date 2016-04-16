@@ -3,6 +3,9 @@ class Batch < ActiveRecord::Base
   belongs_to :user
   has_many :batch_items, dependent: :destroy
 
+  scope :committed, -> { where('committed_at IS NOT NULL' ) }
+  scope :pending, -> { where('committed_at IS NULL' ) }
+
   validates_presence_of :user, :name
 
   searchable do

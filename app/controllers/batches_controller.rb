@@ -14,13 +14,13 @@ class BatchesController < ApplicationController
 
     if params[:user_id]
       @user = User.find(params[:user_id])
-      @batches = Batch
+      @batches = Batch.pending
                      .where(user_id: @user.id)
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
                      .per(params[:per_page])
     else
-      @batches = Batch
+      @batches = Batch.pending
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
                      .per(params[:per_page])
@@ -100,6 +100,24 @@ class BatchesController < ApplicationController
         format.json { head :no_content }
       end
     end
+  end
+
+  def committed
+    @users = User.all # all admins with committed batches?
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+      @batches = Batch.committed
+                     .where(user_id: @user.id)
+                     .order(sort_column + ' ' + sort_direction)
+                     .page(params[:page])
+                     .per(params[:per_page])
+    else
+      @batches = Batch.committed
+                     .order(sort_column + ' ' + sort_direction)
+                     .page(params[:page])
+                     .per(params[:per_page])
+    end
+
   end
 
   private

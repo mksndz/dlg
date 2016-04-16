@@ -42,5 +42,9 @@ RSpec.describe BatchesController, type: :routing do
     it 'routes to filtered Batches list by User' do
       expect(get: '/batches/for/1').to route_to(controller: 'batches', action: 'index', user_id: '1')
     end
+
+    it 'routes to #committed' do
+      expect(get: '/batches/committed').to route_to('batches#committed')
+    end
   end
 end
