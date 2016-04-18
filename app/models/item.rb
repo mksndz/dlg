@@ -33,7 +33,7 @@ class Item < ActiveRecord::Base
 
     string :collection_title, stored: true
 
-    string :in_collection, stored: true do
+    string :parent_name, stored: true do
       collection ? collection.display_title : ''
     end
 
@@ -63,7 +63,6 @@ class Item < ActiveRecord::Base
     text :dcterms_is_shown_at
     text :dcterms_provenance
     text :dcterms_license
-
 
     # Fields for Faceting, etc.
     string :format, stored: true do
