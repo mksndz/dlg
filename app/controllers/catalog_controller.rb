@@ -80,7 +80,8 @@ class CatalogController < ApplicationController
     config.add_facet_field 'subject_facet',      label: 'Subject',     limit: true
     config.add_facet_field 'type_facet',         label: 'Type',        limit: true
     config.add_facet_field 'creator_facet',      label: 'Creator',     limit: true
-    config.add_facet_field 'in_collection_ss',   label: 'Collection',  limit: true
+    config.add_facet_field 'collection_name_ss', label: 'Collection',  limit: true
+    config.add_facet_field 'repository_name_ss', label: 'Repository',  limit: true
     config.add_facet_field 'temporal_facet',     label: 'Temporal',    limit: true
 
     #
@@ -101,9 +102,12 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
 
+    # todo NOTE these don't function as expected since i've overriden the default index partial
+
     config.add_index_field 'dcterms_title_display', :label => 'Title'
     config.add_index_field 'dcterms_description_display', :label => 'Description'
-    config.add_index_field 'in_collection_ss', :label => 'Collection', link_to_search: true
+    config.add_index_field 'collection_name_ss', :label => 'Collection', link_to_search: true
+    config.add_index_field 'repository_name_ss', :label => 'Repository', link_to_search: true
     config.add_index_field 'dc_identifier_display', :label => 'Identifier', helper_method: 'linkify'
     config.add_index_field 'dc_creator_display', :label => 'Author'
     config.add_index_field 'dc_type_display', :label => 'Format'
@@ -111,8 +115,8 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'dcterms_title_display', :label => 'Title'
-    config.add_show_field 'in_collection_ss', :label => 'Collection'
-    config.add_show_field 'dcterms_is_part_of_display', :label => 'Collection (Is Part Of)'
+    config.add_show_field 'collection_name_ss', :label => 'Collection'
+    config.add_show_field 'dcterms_is_part_of_display', :label => 'Is Part Of'
     config.add_show_field 'dcterms_description_display', :label => 'Description'
     config.add_show_field 'dc_format_display', :label => 'File Format'
     config.add_show_field 'dc_identifier_display', :label => 'Identifier', helper_method: 'linkify'
@@ -159,7 +163,7 @@ class CatalogController < ApplicationController
     #     fq: '+class_name:"Item"'
     #   }
     # end
-    #
+
     # config.add_search_field('collections') do |field|
     #   field.solr_local_parameters = {
     #       fq: '+class_name:"Collection"'
