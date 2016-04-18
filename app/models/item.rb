@@ -33,8 +33,12 @@ class Item < ActiveRecord::Base
 
     string :collection_title, stored: true
 
-    string :parent_name, stored: true do
+    string :collection_name, stored: true do
       collection ? collection.display_title : ''
+    end
+
+    string :repository_name, stored: true do
+      repository ? repository.title : ''
     end
 
     # DC Fields for Searching

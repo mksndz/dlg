@@ -40,7 +40,7 @@ class Collection < ActiveRecord::Base
 
     boolean :public
 
-    string :parent_name, stored: true do
+    string :repository_name, stored: true do
       repository ? repository.title : ''
     end
 
