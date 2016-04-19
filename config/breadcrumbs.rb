@@ -26,8 +26,14 @@ crumb :subjects do
   link 'Subjects', subjects_path
 end
 
-crumb :batches do
+crumb :batches_pending do
   link 'Batches', batches_path
+  link 'Pending'
+end
+
+crumb :batches_committed do
+  link 'Batches', batches_path
+  link 'Committed'
 end
 
 crumb :repository do |repository|

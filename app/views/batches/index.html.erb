@@ -12,9 +12,10 @@
   end
 %>
 
-<% breadcrumb :batches %>
+<% breadcrumb :batches_pending %>
 
 <%= link_to 'Add Batch', new_batch_path, class: 'btn btn-default' %>
+<%= link_to 'Committed Batches', committed_batches_path, class: 'btn btn-default' %>
 
 <%= render 'shared/per_pager' %>
 
