@@ -6,4 +6,6 @@
     <%= @batch.name %> by <%= @batch.user.email %>
 <% end %>
 
+<% breadcrumb :batch, @batch %>
+
 <%= render 'form' %>

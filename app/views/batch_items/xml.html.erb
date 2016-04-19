@@ -8,6 +8,8 @@
   end
 %>
 
+<% breadcrumb :batch_item, @batch_item %>
+
 <%= bootstrap_form_tag url: xml_import_batch_batch_items_path(@batch), html: { id: 'xml_form' } do |f| %>
 
     <%= f.file_field :xml_file, label: 'XML File' %>

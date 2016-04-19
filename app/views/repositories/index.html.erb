@@ -6,6 +6,8 @@
     All of them
 <% end %>
 
+<% breadcrumb :repositories %>
+
 <%= link_to 'Add Repository', new_repository_path, class: 'btn btn-default' %>
 
 <%= render 'shared/per_pager' %>

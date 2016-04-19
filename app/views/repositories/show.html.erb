@@ -6,6 +6,8 @@
     <%= @repository.title %>
 <% end %>
 
+<% breadcrumb :repository, @repository %>
+
 <%= link_to 'Edit', edit_repository_path(@repository), class: 'btn btn-default' %>
 
 <br><br>

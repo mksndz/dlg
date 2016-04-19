@@ -49,11 +49,11 @@
             <%= yield :title %><small><%= yield :subtitle %></small>
           </h1>
         </div>
+        <%= breadcrumbs style: :bootstrap %>
         <div class="col-md-12">
           <%= yield %>
         </div>
       </div>
-
     </div>
 
     <%= render partial: 'shared/footer' %>

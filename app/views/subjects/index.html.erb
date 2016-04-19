@@ -2,6 +2,8 @@
     Subjects
 <% end %>
 
+<% breadcrumb :subjects %>
+
 <%= link_to 'Add Subject', new_subject_path, class: 'btn btn-default' %>
 
 <% if @subjects.empty? %>
