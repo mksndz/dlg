@@ -83,6 +83,15 @@ class Item < ActiveRecord::Base
     %w(collection_id public).freeze
   end
 
+  def item_id
+    if self.repository
+      "#{self.repository.slug}_#{self.collection.slug}_#{self.slug}"
+    else
+      false
+    end
+
+  end
+
   def title
     dcterms_title.first
   end
