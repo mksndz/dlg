@@ -71,10 +71,6 @@ class BatchItemsController < ApplicationController
     end
   end
 
-  def xml
-
-  end
-
   def create_from_xml
 
     # todo add csrf protection

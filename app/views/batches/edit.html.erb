@@ -8,4 +8,9 @@
 
 <% breadcrumb :batch, @batch %>
 
+<%= link_to 'Add Batch Item', new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
+<%= link_to 'Populate Batch Items via XML', xml_batch_path(@batch), class: 'btn btn-default' %>
+
+<br><br>
+
 <%= render 'form' %>

@@ -46,5 +46,9 @@ RSpec.describe BatchesController, type: :routing do
     it 'routes to #committed' do
       expect(get: '/batches/committed').to route_to('batches#committed')
     end
+
+    it 'routes to #xml' do
+      expect(get: '/batches/1/import_items').to route_to(controller: 'batches', action: 'xml', id: '1')
+    end
   end
 end

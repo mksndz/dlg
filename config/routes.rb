@@ -41,17 +41,19 @@ Rails.application.routes.draw do
       get 'committed', to: 'batches#committed'
     end
     member do
+      get 'import_items', to: 'batches#xml', as: :xml
       get 'commit', to: 'batches#commit', as: :commit
     end
+
     resources :batch_items do
       collection do
-        get 'import/xml',       to: 'batch_items#xml',             as: :xml
         post 'import/process',  to: 'batch_items#create_from_xml', as: :xml_import
       end
       member do
         get 'commit', to: 'batch_items#commit', as: :commit
       end
     end
+
   end
 
   mount Blacklight::Engine => '/'

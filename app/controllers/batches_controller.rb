@@ -120,6 +120,10 @@ class BatchesController < ApplicationController
 
   end
 
+  def xml
+
+  end
+
   private
 
   def set_user
