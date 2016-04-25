@@ -10,6 +10,7 @@ class Collection < ActiveRecord::Base
   has_and_belongs_to_many :subjects
   has_and_belongs_to_many :users
 
+  validates_presence_of :repository
   validates_presence_of :display_title
   validates_uniqueness_of :slug, scope: :repository_id
 
