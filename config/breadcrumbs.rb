@@ -22,6 +22,11 @@ crumb :users do
   link 'Users', users_path
 end
 
+crumb :invitations do
+  link 'Invitations', auth_invitations_path
+  parent :users
+end
+
 crumb :roles do
   link 'Roles', roles_path
 end
@@ -82,6 +87,15 @@ crumb :user do |user|
     link 'New'
   end
   parent :users
+end
+
+crumb :invitation do |user|
+  if user.persisted?
+    link user.email
+  else
+    link 'New'
+  end
+  parent :invitations
 end
 
 crumb :role do |role|

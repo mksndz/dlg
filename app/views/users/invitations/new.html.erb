@@ -2,6 +2,8 @@
   <%= t 'devise.invitations.new.header' %>
 <% end %>
 
+<% breadcrumb :invitation, resource %>
+
 <%= bootstrap_form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
   <%= devise_error_messages! %>
   <% resource.class.invite_key_fields.each do |field| -%>
