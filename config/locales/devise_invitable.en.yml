@@ -10,17 +10,17 @@ en:
       no_invitations_remaining: "No invitations remaining"
       invitation_removed: "Your invitation was removed."
       new:
-        header: "Send invitation"
-        submit_button: "Send an invitation"
+        header: "Send Invitation"
+        submit_button: "Send an Invitation"
       edit:
-        header: "Set your password"
-        submit_button: "Set my password"
+        header: "Set your Password"
+        submit_button: "Set my Password"
     mailer:
       invitation_instructions:
         subject: "Invitation instructions"
         hello: "Hello %{email}"
-        someone_invited_you: "Someone has invited you to %{url}, you can accept it through the link below."
-        accept: "Accept invitation"
+        someone_invited_you: "Someone has invited you to DLG Meta, you can accept it through the link below."
+        accept: "Accept Invitation"
         accept_until: "This invitation will be due in %{due_date}."
         ignore: "If you don't want to accept the invitation, please ignore this email.<br />Your account won't be created until you access the link above and set your password."
   time:
