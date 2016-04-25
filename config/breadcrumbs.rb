@@ -36,7 +36,7 @@ crumb :subjects do
 end
 
 crumb :batches_pending do
-  link 'Pending Batches', pending_batches_path
+  link 'Pending Batches', batches_path
 end
 
 crumb :batches_committed do
@@ -119,12 +119,16 @@ end
 crumb :batch do |batch|
   if batch.persisted?
     link batch.name if batch.name
-    parent :batches_committed, batch
+    if batch.committed?
+      parent :batches_committed, batch
+    else
+      parent :batches_pending, batch
+    end
+
   else
     link 'New'
     parent :batches_pending, batch
   end
-
 end
 
 crumb :batch_item do |batch_item|
