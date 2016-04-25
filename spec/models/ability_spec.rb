@@ -66,7 +66,7 @@ RSpec.describe Ability, type: :model do
 
     context 'with Repository assigned' do
       
-      let(:repository) { Fabricate :repository }
+      let(:repository) { Fabricate(:repository) { collections(count: 1)} }
 
       it 'can modify but not destroy Repositories if the Repository is assigned' do
         basic_user.repositories << repository

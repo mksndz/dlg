@@ -6,6 +6,10 @@ RSpec.describe CollectionsController, type: :controller do
     Fabricate(:super)
   }
 
+  let (:repository) {
+    Fabricate(:repository)
+  }
+
   before(:each) {
     sign_in super_user
   }
@@ -15,6 +19,7 @@ RSpec.describe CollectionsController, type: :controller do
         slug: 'test-collection-slug',
         dcterms_title: "Test Collection DC Title\nTest Subtitle",
         display_title: 'Test Collections Display Title',
+        repository_id: repository.id
     }
   }
 
