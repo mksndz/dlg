@@ -13,6 +13,8 @@
 <%= link_to 'Add Batch Item', new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
 <%= link_to 'Populate Batch Items via XML', xml_batch_batch_items_path(@batch), class: 'btn btn-default' %>
 
+<%= render 'shared/per_pager' %>
+
 <% if @batch_items.empty? %>
 
     <p>No Batch Items have been added yet.</p>
