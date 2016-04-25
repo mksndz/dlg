@@ -94,6 +94,7 @@ class BatchItemsController < ApplicationController
 
   end
 
+  # not in use
   def commit
     @item = @batch_item.commit
     respond_to do |format|

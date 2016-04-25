@@ -96,7 +96,7 @@ class BatchesController < ApplicationController
         @results = @batch.commit
         @batch.committed_at = Time.now
         @batch.save
-        format.html { render :commit_results, notice: 'Batch was successfully commited.' }
+        format.html { render :commit_results, notice: 'Batch was successfully committed.' }
         format.json { head :no_content }
       end
     end
