@@ -2,6 +2,10 @@ crumb :root do
   link 'Home', root_path
 end
 
+crumb :advanced_search do
+  link 'Advanced Search'
+end
+
 crumb :repositories do
   link 'Repositories', repositories_path
 end

@@ -80,9 +80,9 @@ class CatalogController < ApplicationController
     config.add_facet_field 'subject_facet',      label: 'Subject',     limit: true
     config.add_facet_field 'type_facet',         label: 'Type',        limit: true
     config.add_facet_field 'creator_facet',      label: 'Creator',     limit: true
+    config.add_facet_field 'temporal_facet',     label: 'Temporal',    limit: true
     config.add_facet_field 'collection_name_ss', label: 'Collection',  limit: true
     config.add_facet_field 'repository_name_ss', label: 'Repository',  limit: true
-    config.add_facet_field 'temporal_facet',     label: 'Temporal',    limit: true
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
@@ -157,24 +157,22 @@ class CatalogController < ApplicationController
     # since we aren't specifying it otherwise.
     config.add_search_field 'all_fields', :label => 'All Fields'
 
-    # Provide QuickSearch from main search bar for three entities having dublin core metadata
-    # config.add_search_field('items') do |field|
-    #   field.solr_local_parameters = {
-    #     fq: '+class_name:"Item"'
-    #   }
-    # end
-
-    # config.add_search_field('collections') do |field|
-    #   field.solr_local_parameters = {
-    #       fq: '+class_name:"Collection"'
-    #   }
-    # end
-    #
-    # config.add_search_field('batch_items') do |field|
-    #   field.solr_local_parameters = {
-    #       fq: '+class_name:"BatchItem"'
-    #   }
-    # end
+    # dummy demo fields
+    config.add_search_field('Description/Abstract') do |field|
+      field.solr_local_parameters = {
+        fq: ''
+      }
+    end
+    config.add_search_field('Rights') do |field|
+      field.solr_local_parameters = {
+        fq: ''
+      }
+    end
+    config.add_search_field('Any field or Combo of Fields') do |field|
+      field.solr_local_parameters = {
+        fq: ''
+      }
+    end
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
