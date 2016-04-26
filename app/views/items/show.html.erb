@@ -12,8 +12,16 @@
 <%= link_to 'Copy', copy_item_path(@item), class: 'btn btn-default', data: { confirm: 'Are you sure?' } %>
 <%= link_to 'XML', '#xml' , class: 'btn btn-default' %>
 
-
 <br><br>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Thumbnail</strong>
+  </div>
+  <div class="panel-body">
+    <%= legacy_thumbnail_tag @item %>
+  </div>
+</div>
 
 <%= render('shared/show_field', field_name: t('activerecord.attributes.item.collection_id'), value: @item.collection.display_title) if @item.collection %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.slug'), value: @item.slug %>
