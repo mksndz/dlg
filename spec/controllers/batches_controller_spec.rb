@@ -153,6 +153,7 @@ RSpec.describe BatchesController, type: :controller do
       batch = Fabricate(:batch){ batch_items(count: 1)}
       get :commit, { id: batch.id }
       expect(assigns(:batch).committed?).to be true
+      expect(response).to redirect_to results_batch_url
     end
   end
 
@@ -160,10 +161,17 @@ RSpec.describe BatchesController, type: :controller do
     it 'lists committed batches' do
       batch = Fabricate(:batch){ batch_items(count: 1)}
       batch.commit
-      batch.committed_at = Time.now
-      batch.save
       get :committed
       expect(assigns(:batches)).to eq [batch]
+    end
+  end
+
+  describe 'GET #results' do
+    it 'displays results of a committed batch' do
+      batch = Fabricate(:batch){ batch_items(count: 1)}
+      batch.commit
+      get :results, { id: batch.id }
+      expect(response).to render_template('results')
     end
   end
 
