@@ -27,11 +27,21 @@ class Batch < ActiveRecord::Base
 
   def commit
     self.committed_at = Time.now
-    batch_items.map do |bi|
+    successes = []
+    failures = []
+    batch_items.each do |bi|
       i = bi.commit
       i.save
-      {batch_item: bi, item: i }
+      if i.errors.empty?
+        # item properly committed, save Item  and BI ids
+        successes << { batch_item: bi.id, item: i.id, slug: bi.slug }
+      else
+        # item did not properly get built, add errors to array with BI id
+        failures << { batch_item: bi.id, errors: i.errors, slug: bi.slug }
+      end
     end
+    self.commit_results = { items: successes, errors: failures }
+    self.save
   end
 
 end

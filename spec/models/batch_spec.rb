@@ -28,15 +28,22 @@ RSpec.describe Batch, type: :model do
     expect(b.batch_items).not_to be_empty
   end
 
-  it 'commits the batch_items return array of results' do
+  it 'commits the batch and saves itself with results as JSON' do
     b = Fabricate(:batch){ batch_items(count: 2)}
-    r = b.commit
-    b.committed_at = Time.now
-    b.save
-    expect(r).to be_an Array
-    expect(r.first).to be_a Hash
-    expect(r.first[:batch_item]).to be_a BatchItem
-    expect(r.first[:item]).to be_a Item
-    expect(b.committed_at).to be
+    b.commit
+    expect(b).to be_persisted
+    expect(b.commit_results).to be_a Hash
+    expect(b.commit_results['items']).to be_an Array
+    expect(b.commit_results['items'].first).to be_a Hash
+  end
+
+  it 'commits the batch and saves itself with results as JSON including errors' do
+    b = Fabricate(:batch){ batch_items(count: 2)}
+    bi = b.batch_items.first
+    bi.update_attributes(slug: nil) # update record so that it will error
+    b.commit
+    error = b.commit_results['errors'].first
+    expect(error['batch_item']).to be_a Integer
+    expect(error['errors']).to be_a Hash
   end
 end

@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     member do
       get 'import_items', to: 'batches#xml', as: :xml
       get 'commit', to: 'batches#commit', as: :commit
+      get 'results', to: 'batches#results', as: :results
     end
 
     resources :batch_items do
