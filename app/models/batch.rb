@@ -26,6 +26,7 @@ class Batch < ActiveRecord::Base
   end
 
   def commit
+    self.committed_at = Time.now
     batch_items.map do |bi|
       i = bi.commit
       i.save
