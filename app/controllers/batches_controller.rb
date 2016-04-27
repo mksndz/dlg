@@ -121,6 +121,18 @@ class BatchesController < ApplicationController
   def xml
   end
 
+  def recreate
+    recreated_batch = @batch.recreate
+    recreated_batch.user = current_user
+    respond_to do |format|
+      if recreated_batch.save
+        format.html { redirect_to recreated_batch, notice: 'Batch was successfully recreated.' }
+      else
+        format.html { redirect_to @batch, notice: 'Batch could not be recreated.' }
+      end
+    end
+  end
+
   private
 
   def set_user

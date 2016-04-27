@@ -8,8 +8,9 @@
 
 <% breadcrumb :batch, @batch %>
 
-<%= link_to 'Edit', edit_batch_path(@batch), class: 'btn btn-default' %>
-<%= link_to 'Commit', commit_batch_path(@batch), class: 'btn btn-warning' %>
+<%= link_to 'Edit', edit_batch_path(@batch), class: 'btn btn-default' unless @batch.committed? %>
+<%= link_to 'Commit', commit_batch_path(@batch), class: 'btn btn-warning' unless @batch.committed? %>
+<%= link_to 'Recreate', recreate_batch_path(@batch), class: 'btn btn-warning' if @batch.committed?  %>
 <%= link_to 'Batch Items', batch_batch_items_path(@batch), class: 'btn btn-primary' %>
 
 <br><br>

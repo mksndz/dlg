@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       get 'import_items', to: 'batches#xml', as: :xml
       get 'commit', to: 'batches#commit', as: :commit
       get 'results', to: 'batches#results', as: :results
+      get 'recreate', to: 'batches#recreate', as: :recreate
     end
 
     resources :batch_items do

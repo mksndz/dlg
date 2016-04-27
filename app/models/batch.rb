@@ -46,14 +46,13 @@ class Batch < ActiveRecord::Base
 
   # create a new batch and populate with batch_items that are copied from the
   # current state of the items that were created when the batch was committed
+  # todo only for committed batches? consider
   def recreate
     batch = Batch.new
     # batch.user = current_user
     batch.name = "RECREATED #{self.name}"
-
     item_ids = get_created_item_ids
     batch.batch_items << batch_items_from_items(item_ids)
-    batch.save
     batch
   end
 

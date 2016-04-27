@@ -58,5 +58,9 @@ RSpec.describe BatchesController, type: :routing do
     it 'routes to #results' do
       expect(get: '/batches/1/results').to route_to(controller: 'batches', action: 'results', id: '1')
     end
+
+    it 'routes to #recreate' do
+      expect(get: '/batches/1/recreate').to route_to(controller: 'batches', action: 'recreate', id: '1')
+    end
   end
 end
