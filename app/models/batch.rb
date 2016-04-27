@@ -44,5 +44,37 @@ class Batch < ActiveRecord::Base
     self.save
   end
 
+  # create a new batch and populate with batch_items that are copied from the
+  # current state of the items that were created when the batch was committed
+  def recreate
+    batch = Batch.new
+    # batch.user = current_user
+    batch.name = "RECREATED #{self.name}"
+
+    item_ids = get_created_item_ids
+    batch.batch_items << batch_items_from_items(item_ids)
+    batch.save
+    batch
+  end
+
+  private
+
+  def get_created_item_ids
+    self.commit_results['items'].map do |r|
+      r['item']
+    end
+  end
+
+  def batch_items_from_items(item_ids)
+    Item.find(item_ids).map do |item|
+      scrub_attributes = %w(created_at updated_at)
+      attributes = item.attributes.except(*scrub_attributes)
+      item_id = attributes.delete('id')
+      batch_item = BatchItem.new attributes
+      batch_item.item_id = item_id
+      batch_item
+    end
+  end
+
 end
 

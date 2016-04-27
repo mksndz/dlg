@@ -46,4 +46,13 @@ RSpec.describe Batch, type: :model do
     expect(error['batch_item']).to be_a Integer
     expect(error['errors']).to be_a Hash
   end
+
+  it 'recreates itself as a fresh batch referencing the current state of Items' do
+    b = Fabricate(:batch){ batch_items(count: 2)}
+    b.commit
+    recreated = b.recreate
+    expect(recreated.batch_items.length).to eq b.batch_items.length
+    expect(recreated.batch_items.first.slug).to eq b.batch_items.first.slug
+    expect(recreated.batch_items.first.item).to be_an Item
+  end
 end
