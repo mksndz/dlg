@@ -6,7 +6,7 @@ module ItemsHelper
     begin
       open(thumbnail_url)
       image_tag(thumbnail_url, class: 'img-thumbnail')
-    rescue OpenURI::HTTPError => e
+    rescue OpenURI::HTTPError
       image_tag('no_thumb_stolen.png', class: 'img-thumbnail')
     end
   end
