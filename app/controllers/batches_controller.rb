@@ -5,7 +5,6 @@ class BatchesController < ApplicationController
   include ErrorHandling
   include Sorting
 
-
   # GET /batches
   # GET /batches.json
   def index
@@ -13,9 +12,8 @@ class BatchesController < ApplicationController
     @users = User.all # all admins with batches?
 
     if params[:user_id]
-      @user = User.find(params[:user_id])
       @batches = Batch.pending
-                     .where(user_id: @user.id)
+                     .where(user_id: params[:user_id])
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
                      .per(params[:per_page])
@@ -105,9 +103,8 @@ class BatchesController < ApplicationController
   def committed
     @users = User.all # all admins with committed batches?
     if params[:user_id]
-      @user = User.find(params[:user_id])
       @batches = Batch.committed
-                     .where(user_id: @user.id)
+                     .where(user_id: params[:user_id])
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
                      .per(params[:per_page])
@@ -121,7 +118,6 @@ class BatchesController < ApplicationController
   end
 
   def xml
-
   end
 
   private
