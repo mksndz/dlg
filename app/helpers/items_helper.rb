@@ -1,14 +1,6 @@
 require 'open-uri'
 
 module ItemsHelper
-  def warning_highlight(item)
-    item.collection ? '' : 'warning'
-  end
-
-  def show_search_panel
-    params[:search] ? 'in' : ''
-  end
-
   def legacy_thumbnail_tag(item)
     thumbnail_url = "http://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
     begin
