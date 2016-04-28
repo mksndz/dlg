@@ -72,18 +72,6 @@ RSpec.describe Item, type: :model do
     expect { i2.save! }.not_to raise_exception
   end
 
-  describe 'Item searchable fields' do
-    it { expect(Item).to have_searchable_field :slug }
-    it { expect(Item).to have_searchable_field :sunspot_id }
-    it { expect(Item).to have_searchable_field :collection_id }
-    it { expect(Item).to have_searchable_field :repository_id }
-    it { expect(Item).to have_searchable_field :collection_title }
-    it { expect(Item).to have_searchable_field :dpla }
-    it { expect(Item).to have_searchable_field :format }
 
-    dc_fields.each do |f|
-      it { expect(Item).to have_searchable_field f.to_sym }
-    end
-  end
 
 end
