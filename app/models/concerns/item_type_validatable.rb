@@ -4,13 +4,35 @@ module ItemTypeValidatable
   included do
 
     validates_presence_of :collection, message: ' could not be set'
-    validates_presence_of :dcterms_temporal
-    validates_presence_of :dcterms_spatial
-    validates_presence_of :dc_right
-    validates_presence_of :dcterms_contributor
-    # dcterms_temporal contains only (0-9, / or -)
-    # dc_type(?) contains one of (Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text)
+    validates_presence_of :dcterms_temporal, :dcterms_spatial, :dc_right, :dcterms_contributor
+    validate :dcterms_temporal_characters, :dcterms_type_required_value
 
+  end
+
+  private
+
+  def dcterms_temporal_characters
+    valid = false
+    dcterms_temporal.each do |v|
+      if v =~ //
+        valid = true
+      end
+    end
+    unless valid
+      errors.add(:dcterms_temporal, "DC Terms Temporal field contains an invalid character. Only 0-9, '/' and '-' allowed.")
+    end
+  end
+
+  def dcterms_type_required_value
+    valid = false
+    dcterms_type.each do |v|
+      if %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text).include?(v) and !valid
+        valid = true
+      end
+    end
+    unless valid
+      errors.add(:dcterms_type, 'DC Terms Type field does not contain any required values.')
+    end
   end
 
 end
