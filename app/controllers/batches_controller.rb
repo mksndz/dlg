@@ -12,6 +12,7 @@ class BatchesController < ApplicationController
     @users = User.all # all admins with batches?
 
     if params[:user_id]
+      @user = User.find(params[:user_id])
       @batches = Batch.pending
                      .where(user_id: params[:user_id])
                      .order(sort_column + ' ' + sort_direction)
@@ -104,6 +105,7 @@ class BatchesController < ApplicationController
   def committed
     @users = User.all # all admins with committed batches?
     if params[:user_id]
+      @user = User.find(params[:user_id])
       @batches = Batch.committed
                      .where(user_id: params[:user_id])
                      .order(sort_column + ' ' + sort_direction)
