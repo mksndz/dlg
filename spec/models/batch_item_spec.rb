@@ -47,4 +47,48 @@ RSpec.describe BatchItem, type: :model do
     expect(ni.slug).to eq bi.slug
   end
 
+  # validations
+
+  it 'should require a Collection' do
+    i = Fabricate.build(:item, collection: nil)
+    i.valid?
+    expect(i.errors).to have_key :collection
+  end
+
+  it 'should require a dcterms_temporal value' do
+    i = Fabricate.build(:item, dcterms_temporal: nil)
+    i.valid?
+    expect(i.errors).to have_key :dcterms_temporal
+  end
+
+  it 'should require a dcterms_spatial value' do
+    i = Fabricate.build(:item, dcterms_spatial: nil)
+    i.valid?
+    expect(i.errors).to have_key :dcterms_spatial
+  end
+
+  it 'should require a dc_right value' do
+    i = Fabricate.build(:item, dc_right: nil)
+    i.valid?
+    expect(i.errors).to have_key :dc_right
+  end
+
+  it 'should require a dcterms_contributor value' do
+    i = Fabricate.build(:item, dcterms_contributor: nil)
+    i.valid?
+    expect(i.errors).to have_key :dcterms_contributor
+  end
+
+  it 'should require one of the dcterms_type values to be in a standardized set' do
+    i = Fabricate.build(:item, dcterms_type: ['Some Random Silly Type'])
+    i.valid?
+    expect(i.errors).to have_key :dcterms_type
+  end
+
+  it 'should require each of the dcterms_temporal values use a limited character set' do
+    i = Fabricate.build(:item, dcterms_temporal: ['Text'])
+    i.valid?
+    expect(i.errors).to have_key :dcterms_temporal
+  end
+
 end

@@ -12,6 +12,7 @@ module ItemTypeValidatable
   private
 
   def dcterms_temporal_characters
+    return unless dcterms_temporal
     dcterms_temporal.each do |v|
       if v =~ /([^0-9\/-])/
         errors.add(:dcterms_temporal, " contains an invalid character. Only 0-9, '/' and '-' allowed.")
@@ -21,6 +22,7 @@ module ItemTypeValidatable
   end
 
   def dcterms_type_required_value
+    return unless dcterms_type
     dcterms_type.each do |v|
       unless %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text).include?(v)
         errors.add(:dcterms_type, ' does not contain any required values.')
