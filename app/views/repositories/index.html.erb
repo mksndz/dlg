@@ -52,7 +52,7 @@
               <%= repository.title %>
             </td>
             <td>
-              <%= repository.collections.count %>
+              <%= link_to(repository.collections.count, collections_path(repository_id: repository.id)) %>
             </td>
             <td>
               <div class="btn-group btn-group-xs">
