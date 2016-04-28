@@ -12,26 +12,20 @@ module ItemTypeValidatable
   private
 
   def dcterms_temporal_characters
-    valid = false
     dcterms_temporal.each do |v|
-      if v =~ // #todo determine RegExp
-        valid = true
+      if v =~ /([^0-9\/-])/
+        errors.add(:dcterms_temporal, " contains an invalid character. Only 0-9, '/' and '-' allowed.")
+        return
       end
-    end
-    unless valid
-      errors.add(:dcterms_temporal, " contains an invalid character. Only 0-9, '/' and '-' allowed.")
     end
   end
 
   def dcterms_type_required_value
-    valid = false
     dcterms_type.each do |v|
-      if %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text).include?(v) and !valid
-        valid = true
+      unless %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text).include?(v)
+        errors.add(:dcterms_type, ' does not contain any required values.')
+        return
       end
-    end
-    unless valid
-      errors.add(:dcterms_type, ' does not contain any required values.')
     end
   end
 
