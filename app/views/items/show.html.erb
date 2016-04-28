@@ -46,5 +46,18 @@
   </div>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Committed Batch Items for this Item</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @item.batch_items.each do |bi| %>
+          <li>Batch <em><%= bi.batch.name %></em>: <%= link_to bi.batch.committed_at, batch_batch_item_path(bi.batch, bi) if bi.batch.committed? %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
 <a name="xml"></a>
 <pre><%= @item.to_xml %></pre>
