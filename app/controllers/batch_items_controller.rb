@@ -22,6 +22,7 @@ class BatchItemsController < ApplicationController
   # GET /batch_items/new
   def new
     @batch_item = BatchItem.new
+    @batch_item.batch = @batch
   end
 
   # GET /batch_items/1/edit
