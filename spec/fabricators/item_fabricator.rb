@@ -14,6 +14,18 @@ Fabricator(:item) do
       %w(Athens Atlanta Augusta Macon).sample,
       'Georgia'
   ]}
+  dcterms_temporal { [
+      '1999-2000'
+  ]}
+  dc_right { [
+      'CC NA'
+  ]}
+  dcterms_contributor { [
+      'DLG'
+  ]}
+  dcterms_spatial { [
+      %w(Athens Atlanta Augusta Macon).sample,
+  ]}
   collection
 
 end
