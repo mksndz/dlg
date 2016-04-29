@@ -41,10 +41,7 @@
         <th>
           Creator
         </th>
-        <th>
-          Results
-        </th>
-        <th width="185px"></th>
+        <th width="135px"></th>
       </tr>
       </thead>
 
@@ -64,10 +61,10 @@
               <%= batch.user.email %>
             </td>
             <td>
-              <%= link_to 'Results', results_batch_path(batch)  %>
-            </td>
-            <td>
-              <%= render partial: 'shared/entity_actions', locals: { base_path: batch_path(batch), edit_path: edit_batch_path(batch), entity: batch, show_bl: false } %>
+              <%= content_tag :div, class: 'btn-group btn-group-xs', role: 'group' do %>
+                <%= link_to 'View', batch, class: 'btn btn-default' %>
+                <%= link_to 'Results', results_batch_path(batch), class: 'btn btn-default'  %>
+              <% end %>
             </td>
           </tr>
       <% end %>

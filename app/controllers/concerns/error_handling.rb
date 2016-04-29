@@ -12,7 +12,7 @@ module ErrorHandling
     end
 
     rescue_from StandardError do |e|
-      redirect_to({action: 'index'}, alert: e.message )
+      redirect_to({action: 'index'}, alert: e.message)
     end
 
   end
