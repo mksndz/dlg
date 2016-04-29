@@ -26,7 +26,7 @@ class Ability
             user.collections.include?(item.collection)
       end
 
-      can [:show, :edit, :update, :destroy], Batch, user_id: user.id
+      can [:show, :edit, :update, :destroy, :recreate], Batch, user_id: user.id
       can [:index, :new, :create], Batch
       can [:index, :show, :new, :create], BatchItem
       can [:edit, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
@@ -35,13 +35,17 @@ class Ability
 
     if user.coordinator?
 
+      # User with Coordinator Role can create new Users
       can [:new, :create], User
+
+      # can also manage Users they created
       can [:index, :show, :edit, :update, :destroy], User, creator_id: user.id
 
     end
 
     if user.committer?
 
+      # User with Committer Role can commit their own Batches
       can :commit, Batch, user_id: user.id
 
     end
