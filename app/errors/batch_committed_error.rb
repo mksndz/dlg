@@ -1,0 +1,2 @@
+class BatchCommittedError < StandardError
+end

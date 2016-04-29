@@ -1,9 +1,14 @@
 class BatchesController < ApplicationController
 
   load_and_authorize_resource
-  before_action :check_if_committed, only: [:edit, :update, :destroy]
   include ErrorHandling
   include Sorting
+
+  before_action :check_if_committed, only: [:edit, :update, :destroy, :commit]
+
+  rescue_from BatchCommittedError do
+    redirect_to({ action: 'committed' }, alert: 'Batch has already been committed')
+  end
 
   # GET /batches
   # GET /batches.json
@@ -151,9 +156,7 @@ class BatchesController < ApplicationController
   end
 
   def check_if_committed
-    if @batch.committed?
-      # TODO raise BatchWorksHelper::BatchCommittedException
-    end
+    raise BatchCommittedError.new if @batch.committed?
   end
 
 end
