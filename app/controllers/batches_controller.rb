@@ -93,14 +93,9 @@ class BatchesController < ApplicationController
 
   def commit
     respond_to do |format|
-      if @batch.committed?
-        format.html { redirect_to @batch, notice: "Batch was already committed at #{@batch.committed_at}" }
-        format.json { head :no_content }
-      else
-        @batch.commit
-        format.html { redirect_to results_batch_path(@batch), notice: 'Batch was successfully committed.' }
-        format.json { head :no_content }
-      end
+      @batch.commit
+      format.html { redirect_to results_batch_path(@batch), notice: 'Batch was successfully committed.' }
+      format.json { head :no_content }
     end
   end
 
