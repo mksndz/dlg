@@ -6,7 +6,11 @@ class BatchItemsController < ApplicationController
   include DcHelper
   before_action :set_batch
   before_action :collections_for_select, only: [:new, :edit]
+  before_action :check_if_committed, except: [:index, :show]
 
+  rescue_from BatchCommittedError do
+    redirect_to({ action: 'index' }, alert: 'Batch has already been committed')
+  end
 
   # GET /batch_items
   # GET /batch_items.json
@@ -146,6 +150,10 @@ class BatchItemsController < ApplicationController
         :dcterms_license,
         :other_collections  => [],
     )
+  end
+
+  def check_if_committed
+    raise BatchCommittedError.new if @batch.committed?
   end
 
 end
