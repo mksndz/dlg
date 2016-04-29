@@ -19,7 +19,7 @@ class Collection < ActiveRecord::Base
   end
 
   def title
-    dcterms_title.first
+    dcterms_title.first || 'No Title'
   end
 
   # allow Items to delegate collection_title
