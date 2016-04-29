@@ -6,51 +6,10 @@ crumb :advanced_search do
   link 'Advanced Search'
 end
 
+# REPOSITORY
+
 crumb :repositories do
   link 'Repositories', repositories_path
-end
-
-crumb :collections do
-  link 'Collections', collections_path
-end
-
-crumb :items do
-  link 'Items', items_path
-end
-
-crumb :users do
-  link 'Users', users_path
-end
-
-crumb :invitations do
-  link 'Invitations', auth_invitations_path
-  parent :users
-end
-
-crumb :roles do
-  link 'Roles', roles_path
-end
-
-crumb :subjects do
-  link 'Subjects', subjects_path
-end
-
-crumb :batches_pending do
-  link 'Pending Batches', batches_path
-end
-
-crumb :batches_committed do
-  link 'Committed Batches', committed_batches_path
-end
-
-crumb :batch_items do |batch|
-  link batch.name, batch
-  link 'Batch Items', batch_batch_items_path(batch)
-  if batch.committed?
-    parent :batches_committed
-  else
-    parent :batches_pending
-  end
 end
 
 crumb :repository do |repository|
@@ -62,6 +21,12 @@ crumb :repository do |repository|
   parent :repositories
 end
 
+# COLLECTION
+
+crumb :collections do
+  link 'Collections', collections_path
+end
+
 crumb :collection do |collection|
   if collection.persisted?
     link collection.display_title
@@ -69,6 +34,12 @@ crumb :collection do |collection|
     link 'New'
   end
   parent :collections
+end
+
+# ITEM
+
+crumb :items do
+  link 'Items', items_path
 end
 
 crumb :item do |item|
@@ -80,12 +51,25 @@ crumb :item do |item|
   parent :items
 end
 
+# USER
+
+crumb :users do
+  link 'Users', users_path
+end
+
 crumb :user do |user|
   if user.persisted?
     link user.email
   else
     link 'New'
   end
+  parent :users
+end
+
+# INVITATION
+
+crumb :invitations do
+  link 'Invitations', auth_invitations_path
   parent :users
 end
 
@@ -98,6 +82,12 @@ crumb :invitation do |user|
   parent :invitations
 end
 
+# ROLE
+
+crumb :roles do
+  link 'Roles', roles_path
+end
+
 crumb :role do |role|
   if role.persisted?
     link role.name
@@ -107,13 +97,14 @@ crumb :role do |role|
   parent :roles
 end
 
-crumb :subject do |subject|
-  if subject.persisted?
-    link subject.name
-  else
-    link 'New'
-  end
-  parent :subjects
+# BATCH
+
+crumb :batches_pending do
+  link 'Pending Batches', batches_path
+end
+
+crumb :batches_committed do
+  link 'Committed Batches', committed_batches_path
 end
 
 crumb :batch do |batch|
@@ -124,21 +115,46 @@ crumb :batch do |batch|
     else
       parent :batches_pending, batch
     end
-
   else
     link 'New'
     parent :batches_pending, batch
   end
 end
 
-crumb :batch_item do |batch_item|
-  if batch_item.batch.committed?
-    link batch_item.batch.name, batch_item.batch
+# BATCH ITEM
+
+crumb :batch_items do |batch|
+  link batch.name, batch
+  link 'Batch Items', batch_batch_items_path(batch)
+  if batch.committed?
     parent :batches_committed
   else
-    link batch_item.batch.name, batch_item.batch
     parent :batches_pending
   end
-  link batch_item.title
 end
 
+crumb :batch_item do |batch_item|
+if batch_item.batch.committed?
+  link batch_item.batch.name, batch_item.batch
+  parent :batches_committed
+else
+  link batch_item.batch.name, batch_item.batch
+  parent :batches_pending
+end
+link batch_item.title
+end
+
+# SUBJECT
+
+crumb :subjects do
+  link 'Subjects', subjects_path
+end
+
+crumb :subject do |subject|
+  if subject.persisted?
+    link subject.name
+  else
+    link 'New'
+  end
+  parent :subjects
+end
