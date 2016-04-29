@@ -134,14 +134,18 @@ crumb :batch_items do |batch|
 end
 
 crumb :batch_item do |batch_item|
-if batch_item.batch.committed?
-  link batch_item.batch.name, batch_item.batch
-  parent :batches_committed
-else
-  link batch_item.batch.name, batch_item.batch
-  parent :batches_pending
-end
-link batch_item.title
+  if batch_item.batch.committed?
+    link batch_item.batch.name, batch_item.batch
+    parent :batches_committed
+  else
+    link batch_item.batch.name, batch_item.batch
+    parent :batches_pending
+  end
+  if batch_item.id
+    link batch_item.title
+  else
+    link 'New'
+  end
 end
 
 # SUBJECT
