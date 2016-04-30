@@ -12,7 +12,7 @@ class ItemsController < ApplicationController
 
   def index
 
-    set_filter_options [:repository, :collection]
+    set_filter_options [:repository, :collection, :public]
 
     if current_user.super?
         @items = Item.index_query(params)

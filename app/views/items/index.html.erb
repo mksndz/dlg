@@ -18,8 +18,6 @@
 
 <%= link_to 'Add Item', new_item_path, class: 'btn btn-default' %>
 
-<%# link_to 'Search Items', search_items_path, class: 'btn btn-default' %>
-
 <%= render 'shared/per_pager' %>
 
 <br><br>
@@ -32,7 +30,6 @@
       <%= f.select :collection_id, options_for_select(@search_options[:collections].collect { |c| [c.display_title, c.id] }, selected: params[:collection_id] ), { include_blank: true }, { name: 'collection_id' } %>
       <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: 'Public'}, { name: 'public' } %>
       <%= f.primary 'Filter' %>
-      <%# f.primary 'Reset' %>
   <% end %>
 </div>
 

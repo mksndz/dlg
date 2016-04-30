@@ -99,25 +99,17 @@ end
 
 # BATCH
 
-crumb :batches_pending do
-  link 'Pending Batches', batches_path
-end
-
-crumb :batches_committed do
-  link 'Committed Batches', committed_batches_path
+crumb :batches do
+  link 'Batches', batches_path
 end
 
 crumb :batch do |batch|
   if batch.persisted?
     link batch.name if batch.name
-    if batch.committed?
-      parent :batches_committed, batch
-    else
-      parent :batches_pending, batch
-    end
+    parent :batches, batch
   else
     link 'New'
-    parent :batches_pending, batch
+    parent :batches, batch
   end
 end
 
@@ -126,21 +118,12 @@ end
 crumb :batch_items do |batch|
   link batch.name, batch
   link 'Batch Items', batch_batch_items_path(batch)
-  if batch.committed?
-    parent :batches_committed
-  else
-    parent :batches_pending
-  end
+  parent :batches
 end
 
 crumb :batch_item do |batch_item|
-  if batch_item.batch.committed?
-    link batch_item.batch.name, batch_item.batch
-    parent :batches_committed
-  else
-    link batch_item.batch.name, batch_item.batch
-    parent :batches_pending
-  end
+  link batch_item.batch.name, batch_item.batch
+  parent :batches
   if batch_item.id
     link batch_item.title
   else

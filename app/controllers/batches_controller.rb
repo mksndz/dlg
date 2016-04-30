@@ -3,33 +3,42 @@ class BatchesController < ApplicationController
   load_and_authorize_resource
   include ErrorHandling
   include Sorting
+  include Filterable
 
   before_action :check_if_committed, only: [:edit, :update, :destroy, :commit]
 
   rescue_from BatchCommittedError do
-    redirect_to({ action: 'committed' }, alert: 'Batch has already been committed')
+    redirect_to({ action: 'index' }, alert: 'Batch has already been committed')
   end
 
   # GET /batches
   # GET /batches.json
   def index
 
-    @users = User.all # all admins with batches?
+    set_filter_options [:user, :status]
 
-    if params[:user_id]
-      @user = User.find(params[:user_id])
+    @user = User.find(params[:user_id]) unless !params[:user_id] or params[:user_id].empty?
+
+    # todo i need this conditional block since the index query doesn't support IS NOT NULL querying
+    if params[:status] == 'committed'
+      @batches = Batch.committed
+                      .index_query(params)
+                      .order(sort_column + ' ' + sort_direction)
+                      .page(params[:page])
+                      .per(params[:per_page])
+    elsif params[:status] == 'pending'
       @batches = Batch.pending
-                     .where(user_id: params[:user_id])
-                     .order(sort_column + ' ' + sort_direction)
-                     .page(params[:page])
-                     .per(params[:per_page])
+                      .index_query(params)
+                      .order(sort_column + ' ' + sort_direction)
+                      .page(params[:page])
+                      .per(params[:per_page])
     else
-      @batches = Batch.pending
-                     .order(sort_column + ' ' + sort_direction)
-                     .page(params[:page])
-                     .per(params[:per_page])
+      @batches = Batch
+                      .index_query(params)
+                      .order(sort_column + ' ' + sort_direction)
+                      .page(params[:page])
+                      .per(params[:per_page])
     end
-
   end
 
   # GET /batches/1
@@ -100,24 +109,6 @@ class BatchesController < ApplicationController
   end
 
   def results
-  end
-
-  def committed
-    @users = User.all # all admins with committed batches?
-    if params[:user_id]
-      @user = User.find(params[:user_id])
-      @batches = Batch.committed
-                     .where(user_id: params[:user_id])
-                     .order(sort_column + ' ' + sort_direction)
-                     .page(params[:page])
-                     .per(params[:per_page])
-    else
-      @batches = Batch.committed
-                     .order(sort_column + ' ' + sort_direction)
-                     .page(params[:page])
-                     .per(params[:per_page])
-    end
-
   end
 
   def xml
