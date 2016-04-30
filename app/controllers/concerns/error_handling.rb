@@ -11,10 +11,6 @@ module ErrorHandling
       redirect_to({action: 'index'}, alert: 'Record not found.')
     end
 
-    rescue_from StandardError do |e|
-      redirect_to root_url, alert: e.message
-    end
-
   end
 
 end
