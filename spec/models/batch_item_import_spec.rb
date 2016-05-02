@@ -31,4 +31,16 @@ RSpec.describe BatchItemImport, type: :model do
     expect(batch_item.item).to be_nil
   end
 
+  it 'throws an exception if xml is invalid' do
+    expect { BatchItemImport.new('gibberish', batch, true) }.to raise_error(ImportFailedError, /invalid/)
+  end
+
+  it 'throws an exception if the replace item id is not found' do
+    hash = collection.items.first.attributes
+    collection.items.first.destroy
+    new_item = Item.new(hash)
+    batch_item_importer = BatchItemImport.new(new_item.to_xml, batch, true)
+    expect { batch_item_importer.process }.to raise_error(ImportFailedError, /not be found/)
+  end
+
 end

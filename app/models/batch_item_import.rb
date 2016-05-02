@@ -9,16 +9,24 @@ class BatchItemImport
     # receive single xml node
     @batch = batch if batch
     @raw_xml = xml
-    hash = Hash.from_trusted_xml(xml.squish)
+    begin
+      hash = Hash.from_trusted_xml(xml.squish)
+    rescue REXML::ParseException
+      raise ImportFailedError.new(' : xml invalid')
+    end
     @hash = hash[TARGET]
     @replace_id = @hash.delete('id') if @hash['id']
     @parent_slug = @hash.delete(PARENT) if has_parent
   end
 
   def process
-    entity_exists_in_meta ? replace : create_new
+    if @replace_id
+      raise ImportFailedError.new(" : Item to replace (ID: #{@replace_id}) could not be found") unless replace_entity_exists_in_meta
+      replace
+    else
+      create_new
+    end
     set_additional_attributes
-    throw ImportFailedError unless @batch_item
     @batch_item
   end
 
@@ -42,9 +50,8 @@ class BatchItemImport
     end
   end
 
-  def entity_exists_in_meta
-    return false unless @replace_id
-    TARGET.camelize.constantize.exists? @replace_id
+  def replace_entity_exists_in_meta
+    @replace_id && TARGET.camelize.constantize.exists?(@replace_id)
   end
 
 end

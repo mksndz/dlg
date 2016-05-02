@@ -80,8 +80,8 @@ class BatchItemsController < ApplicationController
     importer = BatchItemImport.new(params[:xml_text], @batch, true)
     begin
       @batch_item = importer.process
-    rescue ImportFailedError
-      errors = { batch_item: ' creation failed' }
+    rescue ImportFailedError => e
+      errors = { batch_item: e.message }
     end
     respond_to do |format|
       if @batch_item.save
