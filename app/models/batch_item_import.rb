@@ -16,12 +16,9 @@ class BatchItemImport
   end
 
   def process
-    if @replace_id and entity_exists_in_meta @replace_id
-      replace
-    else
-      create_new
-    end
+    entity_exists_in_meta ? replace : create_new
     set_additional_attributes
+    throw ImportFailedError unless @batch_item
     @batch_item
   end
 
@@ -45,8 +42,9 @@ class BatchItemImport
     end
   end
 
-  def entity_exists_in_meta(id)
-    TARGET.camelize.constantize.find(id)
+  def entity_exists_in_meta
+    return false unless @replace_id
+    TARGET.camelize.constantize.exists? @replace_id
   end
 
 end

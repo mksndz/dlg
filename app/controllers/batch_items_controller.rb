@@ -77,22 +77,20 @@ class BatchItemsController < ApplicationController
   end
 
   def create_from_xml
-
-    # todo add csrf protection
-
     importer = BatchItemImport.new(params[:xml_text], @batch, true)
-    @batch_item = importer.process
-
-    throw ArgumentError unless @batch_item # todo throw a better exception
-
+    begin
+      @batch_item = importer.process
+    rescue ImportFailedError
+      errors = { batch_item: ' creation failed' }
+    end
     respond_to do |format|
       if @batch_item.save
         format.json { render :import_results, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
       else
-        format.json { render json: @batch_item.errors, status: :unprocessable_entity }
+        errors ||= @batch_item.errors
+        format.json { render json: errors, status: :unprocessable_entity }
       end
     end
-
   end
 
   # not in use
@@ -109,7 +107,7 @@ class BatchItemsController < ApplicationController
 
   private
   def set_batch
-    @batch = Batch.find(params[:batch_id])
+    @batch = Batch.where(id: params[:batch_id]).first
   end
 
   def collections_for_select
