@@ -27,10 +27,10 @@ Rails.application.routes.draw do
 
   resources :batches do
     member do
+      post 'commit', to: 'batches#commit'
+      post 'recreate', to: 'batches#recreate'
       get 'import', to: 'batches#import'
-      get 'commit', to: 'batches#commit'
       get 'results', to: 'batches#results'
-      get 'recreate', to: 'batches#recreate'
     end
 
     resources :batch_items do

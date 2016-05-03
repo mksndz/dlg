@@ -39,7 +39,7 @@ RSpec.describe BatchItemsController, type: :routing do
       expect(post: '/batches/1/batch_items/1/commit').to route_to(controller: 'batch_items', action: 'commit', batch_id: '1', id: '1')
     end
 
-    it 'routes to #create_from_xml' do
+    it 'routes to #import' do
       expect(post: '/batches/1/batch_items/import').to route_to(controller: 'batch_items', action: 'import', batch_id: '1')
     end
 

@@ -36,7 +36,7 @@ RSpec.describe BatchesController, type: :routing do
     end
 
     it 'routes to #commit' do
-      expect(get: '/batches/1/commit').to route_to(controller: 'batches', action: 'commit', id: '1')
+      expect(post: '/batches/1/commit').to route_to(controller: 'batches', action: 'commit', id: '1')
     end
 
     it 'routes to #xml' do
@@ -44,7 +44,7 @@ RSpec.describe BatchesController, type: :routing do
     end
 
     it 'routes to #commit' do
-      expect(get: '/batches/1/commit').to route_to(controller: 'batches', action: 'commit', id: '1')
+      expect(post: '/batches/1/commit').to route_to(controller: 'batches', action: 'commit', id: '1')
     end
 
     it 'routes to #results' do
@@ -52,7 +52,7 @@ RSpec.describe BatchesController, type: :routing do
     end
 
     it 'routes to #recreate' do
-      expect(get: '/batches/1/recreate').to route_to(controller: 'batches', action: 'recreate', id: '1')
+      expect(post: '/batches/1/recreate').to route_to(controller: 'batches', action: 'recreate', id: '1')
     end
   end
 end

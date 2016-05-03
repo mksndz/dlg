@@ -148,10 +148,10 @@ RSpec.describe BatchesController, type: :controller do
     end
   end
 
-  describe 'GET #commit' do
+  describe 'POST #commit' do
     it 'commits the requested batch' do
       batch = Fabricate(:batch){ batch_items(count: 1)}
-      get :commit, { id: batch.id }
+      post :commit, { id: batch.id }
       expect(assigns(:batch).committed?).to be true
       expect(response).to redirect_to results_batch_url
     end
