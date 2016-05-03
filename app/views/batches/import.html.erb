@@ -10,7 +10,7 @@
 
 <% breadcrumb :batch, @batch %>
 
-<%= bootstrap_form_tag url: xml_import_batch_batch_items_path(@batch), html: { id: 'xml_form' } do |f| %>
+<%= bootstrap_form_tag url: import_batch_batch_items_path(@batch), html: { id: 'xml_form' } do |f| %>
 
     <%= f.file_field :xml_file, label: 'XML File' %>
     <%= f.text_area :xml_text, label: 'XML Text' %>
@@ -30,7 +30,7 @@
 <div id="actions" class="hide well">
   <div class="btn-group">
     <%= link_to 'View Batch', batch_batch_items_path(@batch), class: 'btn btn-default' %>
-    <%= link_to 'Process More XML', xml_batch_path(@batch), class: 'btn btn-default' %>
+    <%= link_to 'Process More XML', import_batch_path(@batch), class: 'btn btn-default' %>
   </div>
 
 </div>

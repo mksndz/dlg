@@ -12,7 +12,7 @@
 
 <% unless @batch.committed? %>
   <%= link_to 'Add Batch Item', new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
-  <%= link_to 'Populate Batch Items via XML', xml_batch_path(@batch), class: 'btn btn-default' %>
+  <%= link_to 'Populate Batch Items via XML', import_batch_path(@batch), class: 'btn btn-default' %>
 <% end %>
 
 <%= render 'shared/per_pager' %>

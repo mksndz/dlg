@@ -53,11 +53,12 @@ render_successful_output = (response, num) ->
     "list-group-item-success"
 
 render_error_output = (response, number) ->
+  obj = JSON.parse(response)
   error_messages = '<ol>'
-  for field, msg of JSON.parse(response)
-    error_messages += '<li>' + field + ' ' + msg + '</li>'
+  for field, msg of  obj.errors
+    error_messages += '<li>' + msg + '</li>'
   error_messages += '</ol>'
-  return list_item_html number, "Record Failed to Import", error_messages, "list-group-item-danger"
+  return list_item_html number, 'Record '+ obj.slug + ' Failed to Import', error_messages, "list-group-item-danger"
 
 process_xml = ($this, xml, url) ->
   try $xml_doc = $( $.parseXML( $.trim( xml ) ) )

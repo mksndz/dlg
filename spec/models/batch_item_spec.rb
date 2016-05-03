@@ -47,7 +47,9 @@ RSpec.describe BatchItem, type: :model do
     expect(ni.slug).to eq bi.slug
   end
 
-  # validations
+  #
+  # VALIDATIONS
+  #
 
   it 'should require a Collection' do
     i = Fabricate.build(:item, collection: nil)

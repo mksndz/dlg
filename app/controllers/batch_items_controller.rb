@@ -76,24 +76,24 @@ class BatchItemsController < ApplicationController
     end
   end
 
-  def create_from_xml
+  def import
     importer = BatchItemImport.new(params[:xml_text], @batch, true)
     begin
       @batch_item = importer.process
     rescue ImportFailedError => e
-      errors = { batch_item: e.message }
+      @errors = { batch_item: e.message }
     end
     respond_to do |format|
       if @batch_item.save
-        format.json { render :import_results, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
+        format.json { render :success_result, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
       else
-        errors ||= @batch_item.errors
-        format.json { render json: errors, status: :unprocessable_entity }
+        @errors ||= @batch_item.errors
+        @slug = @batch_item.slug
+        format.json { render :error_result, status: :unprocessable_entity }
       end
     end
   end
 
-  # not in use
   def commit
     @item = @batch_item.commit
     respond_to do |format|

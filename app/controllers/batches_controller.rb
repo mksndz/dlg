@@ -111,7 +111,7 @@ class BatchesController < ApplicationController
   def results
   end
 
-  def xml
+  def import
   end
 
   def recreate
