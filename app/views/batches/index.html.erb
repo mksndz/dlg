@@ -47,7 +47,7 @@
         <th>
           Committed
         </th>
-        <th width="185px"></th>
+        <th width="140px"></th>
       </tr>
       </thead>
 
@@ -70,7 +70,16 @@
               <%= batch.committed? ? batch.committed_at : 'Not Yet'  %>
             </td>
             <td>
-              <%= render partial: 'shared/entity_actions', locals: { base_path: batch_path(batch), edit_path: edit_batch_path(batch), entity: batch, show_bl: false } %>
+              <div class="btn-group btn-group-xs">
+                <%= link_to 'View', batch, class: 'btn btn-default' %>
+                <% if batch.committed? %>
+                    <%= link_to 'Results', results_batch_path(batch), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+                <% else %>
+                    <%= link_to 'Edit', edit_batch_path(batch), class: 'btn btn-default' %>
+                    <%= link_to 'Delete', batch, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+                <% end %>
+              </div>
+
             </td>
           </tr>
       <% end %>
