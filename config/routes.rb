@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :users, path: 'auth', controllers: {
-      invitations: 'invitations'
+    invitations: 'invitations'
   }
 
   devise_scope :user do
@@ -12,16 +12,10 @@ Rails.application.routes.draw do
      post 'multiple_action'
   end
 
-  concern :ss_searchable do
-    get 'search'
-    get 'results'
-  end
-
   resources :repositories, :collections, :users, :roles, :subjects
 
   resources :items do
     collection do
-      concerns :ss_searchable
       concerns :multiple_actionable
     end
     member do
@@ -29,29 +23,22 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :collections do
-    collection do
-      # get 'for/:repository_id', to: 'collections#index', as: :filtered
-    end
-  end
+  resources :collections
 
   resources :batches do
-    collection do
-      get 'for/:user_id', to: 'batches#index', as: :filtered
-    end
     member do
-      get 'import_items', to: 'batches#xml', as: :xml
-      get 'commit', to: 'batches#commit', as: :commit
-      get 'results', to: 'batches#results', as: :results
-      get 'recreate', to: 'batches#recreate', as: :recreate
+      get 'import', to: 'batches#import'
+      get 'commit', to: 'batches#commit'
+      get 'results', to: 'batches#results'
+      get 'recreate', to: 'batches#recreate'
     end
 
     resources :batch_items do
       collection do
-        post 'import/process',  to: 'batch_items#create_from_xml', as: :xml_import
+        post 'import',  to: 'batch_items#import', constraints: { format: :json }
       end
       member do
-        get 'commit', to: 'batch_items#commit', as: :commit
+        post 'commit', to: 'batch_items#commit', constraints: { format: :json }
       end
     end
 
