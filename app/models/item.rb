@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Item < ActiveRecord::Base
   include Slugged
   include DcHelper
@@ -40,6 +42,10 @@ class Item < ActiveRecord::Base
 
     string :repository_name, stored: true do
       repository ? repository.title : ''
+    end
+
+    string :thumbnail_url, stored: true do
+      thumbnail_url
     end
 
     # DC Fields for Searching
@@ -90,7 +96,10 @@ class Item < ActiveRecord::Base
     else
       false
     end
+  end
 
+  def thumbnail_url
+    "http://dlg.galileo.usg.edu/#{repository.slug}/#{collection.slug}/do-th:#{slug}"
   end
 
   def title

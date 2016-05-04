@@ -56,6 +56,9 @@ class CatalogController < ApplicationController
     config.show.title_field = 'dcterms_title_display'
     config.show.display_type_field = 'format_ss'
 
+    # show thumbnails on search results
+    config.view.list.thumbnail_field = :thumbnail_url_ss
+
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
     #
@@ -102,8 +105,6 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
 
-    # todo NOTE these don't function as expected since i've overriden the default index partial
-
     config.add_index_field 'dcterms_title_display', :label => 'Title'
     config.add_index_field 'dcterms_description_display', :label => 'Description'
     config.add_index_field 'collection_name_ss', :label => 'Collection', link_to_search: true
@@ -144,7 +145,7 @@ class CatalogController < ApplicationController
     # Search fields will inherit the :qt solr request handler from
     # config[:default_solr_parameters], OR can specify a different one
     # with a :qt key/value. Below examples inherit, except for subject
-    # that specifies the same :qt as default for our own internal
+    # that specifies the same:qt as default for our own internal
     # testing purposes.
     #
     # The :key is what will be used to identify this BL search field internally,
