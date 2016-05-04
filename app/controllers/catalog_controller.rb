@@ -158,21 +158,21 @@ class CatalogController < ApplicationController
     config.add_search_field 'all_fields', :label => 'All Fields'
 
     # dummy demo fields
-    config.add_search_field('Description/Abstract') do |field|
-      field.solr_local_parameters = {
-        fq: ''
-      }
-    end
-    config.add_search_field('Rights') do |field|
-      field.solr_local_parameters = {
-        fq: ''
-      }
-    end
-    config.add_search_field('Any field or Combo of Fields') do |field|
-      field.solr_local_parameters = {
-        fq: ''
-      }
-    end
+    # config.add_search_field('Description/Abstract') do |field|
+    #   field.solr_local_parameters = {
+    #     fq: ''
+    #   }
+    # end
+    # config.add_search_field('Rights') do |field|
+    #   field.solr_local_parameters = {
+    #     fq: ''
+    #   }
+    # end
+    # config.add_search_field('Any field or Combo of Fields') do |field|
+    #   field.solr_local_parameters = {
+    #     fq: ''
+    #   }
+    # end
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
