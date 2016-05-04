@@ -158,6 +158,66 @@ class CatalogController < ApplicationController
     # since we aren't specifying it otherwise.
     config.add_search_field 'all_fields', :label => 'All Fields'
 
+    config.add_search_field('rights') do |field|
+      field.label = 'Rights Fields'
+      field.if = false
+      field.solr_local_parameters = {
+          qf: 'dc_right_text^50000 dcterms_access_right_text^40000 dcterms_rights_holder_text^30000',
+          pf: 'dc_right_text^50000 dcterms_access_right_text^40000 dcterms_rights_holder_text^30000'
+      }
+    end
+
+    config.add_search_field('description') do |field|
+      field.label = 'Description'
+      field.solr_local_parameters = {
+          qf: 'dcterms_description_text^50000',
+          pf: 'dcterms_description_text^50000'
+      }
+    end
+
+    config.add_search_field('title') do |field|
+      field.label = 'Title'
+      field.if = false
+      field.solr_local_parameters = {
+          qf: 'dcterms_title_text^50000',
+          pf: 'dcterms_title_text^50000'
+      }
+    end
+
+    config.add_search_field('publisher') do |field|
+      field.label = 'Publisher'
+      field.if = false
+      field.solr_local_parameters = {
+          qf: 'dcterms_publisher_text^50000',
+          pf: 'dcterms_publisher_text^50000'
+      }
+    end
+
+    config.add_search_field('contributor') do |field|
+      field.label = 'Contributor'
+      field.if = false
+      field.solr_local_parameters = {
+          qf: 'dcterms_contributor_text^50000',
+          pf: 'dcterms_contributor_text^50000'
+      }
+    end
+
+    config.add_search_field('place') do |field|
+      field.label = 'Place'
+      field.solr_local_parameters = {
+          qf: 'dcterms_spatial_text^50000',
+          pf: 'dcterms_spatial_text^50000'
+      }
+    end
+
+    config.add_search_field('subject') do |field|
+      field.label = 'Subject'
+      field.solr_local_parameters = {
+          qf: 'dcterms_subject_text^50000',
+          pf: 'dcterms_subject_text^50000'
+      }
+    end
+
     # dummy demo fields
     # config.add_search_field('Description/Abstract') do |field|
     #   field.solr_local_parameters = {
