@@ -94,17 +94,6 @@ class BatchItemsController < ApplicationController
     end
   end
 
-  def commit
-    @item = @batch_item.commit
-    respond_to do |format|
-      if @item.save
-        format.json { render :commit_results, status: :ok, location: item_path(@item) }
-      else
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   private
   def set_batch
     @batch = Batch.where(id: params[:batch_id]).first

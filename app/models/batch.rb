@@ -38,7 +38,7 @@ class Batch < ActiveRecord::Base
       i = bi.commit
       i.save
       if i.errors.empty?
-        # item properly committed, save Item  and BI ids
+        # item properly committed, save Item and BI ids
         successes << { batch_item: bi.id, item: i.id, slug: bi.slug }
       else
         # item did not properly get built, add errors to array with BI id

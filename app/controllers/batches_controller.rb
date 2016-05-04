@@ -100,6 +100,9 @@ class BatchesController < ApplicationController
     end
   end
 
+  def commit_form
+  end
+
   def commit
     respond_to do |format|
       @batch.commit

@@ -4,7 +4,7 @@
 
 <% breadcrumb :batch, @batch %>
 
-<% unless @batch.commit_results['errors'].empty? %>
+<% unless @batch.commit_results['errors'].nil? %>
 
   <h3>Could not Commit</h3>
 
@@ -27,7 +27,7 @@
     </thead>
 
     <tbody>
-    <% i = 0 %>
+    <% i = 1 %>
     <% @batch.commit_results['errors'].each do |e| %>
       <tr class="warning">
         <td>
@@ -55,44 +55,50 @@
   </table>
 <% end %>
 
-<h3>Successfully Committed</h3>
+<% z = @batch.commit_results %>
 
-<table class="table table-condensed table-hover">
-  <thead>
-  <tr>
-    <th>
-      #
-    </th>
-    <th>
-      Slug
-    </th>
-    <th>
-      Batch Item
-    </th>
-    <th>
-      Item
-    </th>
-  </tr>
-  </thead>
+<% unless @batch.commit_results['items'].empty? %>
 
-  <tbody>
-  <% i = 1 %>
-  <% @batch.commit_results['items'].each do |r| %>
-      <tr>
-        <td>
-          <%= i %>
-        </td>
-        <td>
-          <%= r['slug'] %>
-        </td>
-        <td>
-          <%= link_to 'View', batch_batch_item_path(@batch.id, r['batch_item']) %>
-        </td>
-        <td>
-          <%= link_to 'View', item_path(r['item']) %>
-        </td>
-      </tr>
-  <% i += 1 %>
-  <% end %>
-  </tbody>
-</table>
+  <h3>Successfully Committed</h3>
+
+  <table class="table table-condensed table-hover">
+    <thead>
+    <tr>
+      <th>
+        #
+      </th>
+      <th>
+        Slug
+      </th>
+      <th>
+        Batch Item
+      </th>
+      <th>
+        Item
+      </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% i = 1 %>
+    <% @batch.commit_results['items'].each do |r| %>
+        <tr>
+          <td>
+            <%= i %>
+          </td>
+          <td>
+            <%= r['slug'] %>
+          </td>
+          <td>
+            <%= link_to 'View', batch_batch_item_path(@batch.id, r['batch_item']) %>
+          </td>
+          <td>
+            <%= link_to 'View', item_path(r['item']) %>
+          </td>
+        </tr>
+    <% i += 1 %>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>

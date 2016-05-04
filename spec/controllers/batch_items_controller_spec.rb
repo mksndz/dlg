@@ -156,12 +156,4 @@ RSpec.describe BatchItemsController, type: :controller do
     end
   end
 
-  describe 'POST #commit' do
-    it 'returns JSON response' do
-      batch_item = Fabricate(:batch_item, batch: batch)
-      post :commit, { format: :json, batch_id: batch.id, id: batch_item.id }
-      expect(response.header['Content-Type']).to include Mime::JSON.to_s
-    end
-  end
-
 end

@@ -27,8 +27,9 @@ Rails.application.routes.draw do
 
   resources :batches do
     member do
-      post 'commit', to: 'batches#commit'
       post 'recreate', to: 'batches#recreate'
+      post 'commit', to: 'batches#commit'
+      get 'commit_form', to: 'batches#commit_form'
       get 'import', to: 'batches#import'
       get 'results', to: 'batches#results'
     end
@@ -36,9 +37,6 @@ Rails.application.routes.draw do
     resources :batch_items do
       collection do
         post 'import',  to: 'batch_items#import', constraints: { format: :json }
-      end
-      member do
-        post 'commit', to: 'batch_items#commit', constraints: { format: :json }
       end
     end
 

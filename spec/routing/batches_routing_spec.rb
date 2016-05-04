@@ -43,6 +43,10 @@ RSpec.describe BatchesController, type: :routing do
       expect(get: '/batches/1/import').to route_to(controller: 'batches', action: 'import', id: '1')
     end
 
+    it 'routes to #commit_form' do
+      expect(get: '/batches/1/commit_form').to route_to(controller: 'batches', action: 'commit_form', id: '1')
+    end
+
     it 'routes to #commit' do
       expect(post: '/batches/1/commit').to route_to(controller: 'batches', action: 'commit', id: '1')
     end

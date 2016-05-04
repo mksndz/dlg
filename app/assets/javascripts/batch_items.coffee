@@ -1,10 +1,10 @@
 $(document).ready ->
 
-  $form = $("#xml_form")
+  $import_form = $("#xml_form")
 
-  $form.find("input[type='submit']").removeClass('hide')
+  $import_form.find("input[type='submit']").removeClass('hide')
 
-  $form.on("submit" ,(e, data, status, xhr) ->
+  $import_form.on("submit" ,(e, data, status, xhr) ->
     e.preventDefault()
     $this = $(this)
     url = this.action
@@ -16,6 +16,20 @@ $(document).ready ->
       process_xml($this, xml_text_field_data, url)
     else
       handle_error('No file or XML text was provided.')
+  )
+
+#  $('#commit_form').on("submit", (e, data, status, xhr) ->
+#    e.preventDefault()
+#    $this = $(this)
+#    url = this.action
+#    records = $('#records').val().split(' ')
+#    commit_records($this, records, url)
+#  )
+
+  $('#commit_form').on("submit", (e, data, status, xhr) ->
+    $pb = $(".progress-bar")
+    $pb.removeClass('hide').addClass('active')
+    $pb.html("Working Hard...")
   )
 
 handle_error = (e) ->
@@ -46,6 +60,16 @@ create_record = (url, number, record_node) ->
       $("#results").prepend render_error_output(jqXHR.responseText, number)
     success: (data, textStatus, jqXHR) ->
       $("#results").prepend render_successful_output(data, number)
+
+commit_record = (url, number) ->
+  return $.ajax url,
+    type: "POST",
+    error: (jqXHR, textStatus, errorThrown) ->
+      $(".progress-bar").addClass('progress-bar-danger')
+      $("#results").prepend render_error_output(jqXHR.responseText, number)
+    success: (data, textStatus, jqXHR) ->
+      $("#results").prepend render_successful_output(data, number)
+
 
 render_successful_output = (response, num) ->
   return list_item_html num, "Batch Item Successfuly Created",
@@ -92,3 +116,23 @@ process_xml_file = ($this, url) ->
   fr.onload = ->
     process_xml($this, fr.result, url)
   fr.readAsText file
+
+commit_records = ($this, records, url) ->
+  if !records
+    handle_error('No items to commit!')
+    return
+  $this.slideUp()
+  total_records = records.length
+  i = 1
+  interval = setInterval(
+    ->
+      if i <= total_records
+        id = records[i - 1]
+        url = url.replace(records[0], id)
+        commit_record(url, i)
+        update_progress_bar(i, total_records)
+        i++
+      else
+        $("#actions").removeClass('hide').fadeIn()
+        clearInterval(interval)
+  , 250)
