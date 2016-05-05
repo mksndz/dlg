@@ -39,5 +39,9 @@ RSpec.describe ItemsController, type: :routing do
       expect(delete: '/items/1').to route_to(controller: 'items', action: 'destroy', id: '1')
     end
 
+    it 'routes to #multiple_destroy' do
+      expect(delete: '/items/multiple_destroy').to route_to('items#multiple_destroy')
+    end
+
   end
 end
