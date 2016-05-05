@@ -1,0 +1,22 @@
+<% if current_user.super? %>
+<div id="action-dropdown" class="btn-group">
+  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    Actions <span class="caret"></span>
+  </button>
+
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">
+      Checked Items...
+    </li>
+    <li>
+      <%= link_to 'Delete', '', method: :post, class: 'delete-action', data: { confirm: 'Are you sure?' } %>
+    </li>
+    <li>
+      <%= link_to 'Add to XML', '', method: :post, class: 'add-to-xml-action'  %>
+    </li>
+    <li>
+      <%= link_to 'Add to Batch', '', method: :post, class: 'add-to-batch-action' %>
+    </li>
+  </ul>
+</div>
+<% end %>
