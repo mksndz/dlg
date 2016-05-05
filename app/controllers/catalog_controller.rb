@@ -84,6 +84,8 @@ class CatalogController < ApplicationController
     config.add_facet_field 'type_facet',         label: 'Type',        limit: true
     config.add_facet_field 'creator_facet',      label: 'Creator',     limit: true
     config.add_facet_field 'temporal_facet',     label: 'Temporal',    limit: true
+    config.add_facet_field 'public_b',           label: 'Public?',     limit: true, helper_method: :boolean_facet_labels
+    config.add_facet_field 'dpla_b',             label: 'DPLA?',       limit: true, helper_method: :boolean_facet_labels
     config.add_facet_field 'collection_name_ss', label: 'Collection',  limit: true
     config.add_facet_field 'repository_name_ss', label: 'Repository',  limit: true
 

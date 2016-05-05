@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def boolean_facet_labels(value)
+    value == 'true' ? 'Yes' : 'No'
+  end
+
   # handle linking in catalog results
   def linkify(options={})
     url = options[:value].first
