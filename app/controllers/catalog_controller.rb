@@ -135,7 +135,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_type_display', :label => 'Genre'
     config.add_show_field 'dcterms_creator_display', :label => 'Creator'
     config.add_show_field 'dcterms_language_display', :label => 'Language'
-    config.add_show_field 'dcterms_is_shown_at_display', :label => 'URL'
+    config.add_show_field 'dcterms_is_shown_at_display', :label => 'URL', helper_method: 'linkify'
     config.add_show_field 'dcterms_rights_holder_display', :label => 'Rights Holder'
     config.add_show_field 'dcterms_access_right_display', :label => 'Access'
     config.add_show_field 'dcterms_extent_display', :label => 'Extent'
