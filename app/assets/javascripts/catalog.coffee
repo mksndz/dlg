@@ -47,6 +47,16 @@ $(document).ready ->
           alert('success')
   )
 
+  $("a.select-all-action").on("click", (e, data, status, xhr) ->
+    e.preventDefault()
+    $(".action-item").prop('checked', true)
+  )
+
+  $("a.deselect-all-action").on("click", (e, data, status, xhr) ->
+    e.preventDefault()
+    $(".action-item:checked").prop('checked', false)
+  )
+
 get_checked_items = ->
   checkedArray = []
   $(".action-item:checked").each( ->
