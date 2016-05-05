@@ -267,7 +267,7 @@ class CatalogController < ApplicationController
   add_results_document_tool :meta
 
   # add "Export as XML" button on search results
-  # add_results_collection_tool :export_as_xml # todo not working
+  add_results_collection_tool :action_widget
 
   private
 
