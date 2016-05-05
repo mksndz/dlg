@@ -72,6 +72,14 @@ class ItemsController < ApplicationController
     end
   end
 
+  def multiple_destroy
+    Item.destroy(multiple_destroy_params[:entities].split(','))
+    Sunspot.commit
+    respond_to do |format|
+      format.json { render json: {}, status: :ok  }
+    end
+  end
+
   private
 
   def set_data
@@ -112,6 +120,10 @@ class ItemsController < ApplicationController
         :dcterms_license,
         :other_collections  => [],
     )
+  end
+
+  def multiple_destroy_params
+    params.permit(:entities)
   end
 
 end

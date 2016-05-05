@@ -9,13 +9,13 @@
       Checked Items...
     </li>
     <li>
-      <%= link_to 'Delete', '', method: :post, class: 'delete-action', data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Delete', '#', class: 'delete-action', data: { url: multiple_destroy_items_path } %>
     </li>
     <li>
-      <%= link_to 'Add to XML', '', method: :post, class: 'add-to-xml-action'  %>
+      <%= link_to 'Add to XML', '#', class: 'add-to-xml-action', data: { url: '' }  %>
     </li>
     <li>
-      <%= link_to 'Add to Batch', '', method: :post, class: 'add-to-batch-action' %>
+      <%= link_to 'Add to Batch', '#', class: 'add-to-batch-action', data: { url: '' }  %>
     </li>
   </ul>
 </div>

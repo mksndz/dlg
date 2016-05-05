@@ -3,9 +3,10 @@
   <%= link_to('Edit', url_for(controller: klass.downcase.pluralize, action: 'edit', id: id)) if current_user.super? %>
     <br>
   <%= link_to('Meta View', url_for(controller: klass.downcase.pluralize, action: 'show', id: id)) if current_user.super? %>
+  <% if klass == 'Item' %>
     <br>
-    <label for="action">
-      <%= check_box_tag(:action, document['sunspot_id_ss'], false, { class: 'action'}) %>
-      Action
+    <label for="action_item">
+      <%= check_box_tag(:action_item, id, false, { class: 'action-item'}) %> Action
     </label>
+  <% end %>
 <% end %>

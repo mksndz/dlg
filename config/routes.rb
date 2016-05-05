@@ -8,15 +8,11 @@ Rails.application.routes.draw do
     get 'auth/invitations', to: 'invitations#index'
   end
 
-  concern :multiple_actionable do
-     post 'multiple_action'
-  end
-
   resources :repositories, :collections, :users, :roles, :subjects
 
   resources :items do
     collection do
-      concerns :multiple_actionable
+      delete 'multiple_destroy', constraints: { format: :json }
     end
     member do
       get 'copy'
