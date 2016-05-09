@@ -73,10 +73,17 @@ class ItemsController < ApplicationController
   end
 
   def multiple_destroy
-    Item.destroy(multiple_destroy_params[:entities].split(','))
+    Item.destroy(multiple_action_params[:entities].split(','))
     Sunspot.commit
     respond_to do |format|
       format.json { render json: {}, status: :ok  }
+    end
+  end
+
+  def xml
+    @items = Item.where id: multiple_action_params[:entities].split(',')
+    respond_to do |format|
+      format.xml { render xml: @items }
     end
   end
 
@@ -122,7 +129,7 @@ class ItemsController < ApplicationController
     )
   end
 
-  def multiple_destroy_params
+  def multiple_action_params
     params.permit(:entities)
   end
 

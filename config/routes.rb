@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :items do
     collection do
       delete 'multiple_destroy', constraints: { format: :json }
+      get 'xml', constraints: { format: :xml }
     end
     member do
       get 'copy'

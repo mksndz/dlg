@@ -19,17 +19,9 @@ $(document).ready ->
 
   $("a.add-to-xml-action").on("click", (e, data, status, xhr) ->
     e.preventDefault()
-    entities = get_checked_items()
-    url = $(this).data('url')
-    if entities
-      $.ajax url,
-        type: "GET",
-        data:
-          entities: entities,
-        error: (jqXHR, textStatus, errorThrown) ->
-          alert('arror')
-        success: (data, textStatus, jqXHR) ->
-          alert('success')
+    if entities = get_checked_items()
+      url = $(this).data('url') + '.xml' + '?entities=' + entities
+      window.location.href = url
   )
 
   $("a.add-to-batch-action").on("click", (e, data, status, xhr) ->

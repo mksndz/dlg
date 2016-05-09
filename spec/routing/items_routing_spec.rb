@@ -43,5 +43,9 @@ RSpec.describe ItemsController, type: :routing do
       expect(delete: '/items/multiple_destroy').to route_to('items#multiple_destroy')
     end
 
+    it 'routes to #xml' do
+      expect(get: '/items/xml').to route_to('items#xml')
+    end
+
   end
 end

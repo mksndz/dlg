@@ -271,4 +271,14 @@ RSpec.describe ItemsController, type: :controller do
     end
   end
 
+  describe 'GET #xml' do
+    it 'return xml for the requested items' do
+      item = Fabricate(:item)
+      item2 = Fabricate(:item)
+      get :xml, { entities: "#{item.id},#{item2.id}", format: :xml }
+      expect(response.content_type).to eq 'application/xml'
+      expect(response.body).to include item.slug
+    end
+  end
+
 end
