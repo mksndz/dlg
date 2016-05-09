@@ -2,10 +2,10 @@ $(document).ready ->
 
   $("a.delete-action").on("click", (e, data, status, xhr) ->
     e.preventDefault()
-    return unless window.confirm("Are you sure?")
     entities = get_checked_items()
     url = $(this).data('url')
     if entities
+      return unless window.confirm("Are you sure?")
       $.ajax url,
         type: "DELETE",
         data:
