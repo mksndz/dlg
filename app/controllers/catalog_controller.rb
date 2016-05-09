@@ -33,9 +33,12 @@ class CatalogController < ApplicationController
     
     # solr path which will be added to solr base url before the other solr params.
     #config.solr_path = 'select' 
-    
+
+    # set maximum results per page (experimental)
+    config.max_per_page = 20000
+
     # items to show per page, each number in the array represent another option to choose from.
-    config.per_page = [20,50,100,200]
+    config.per_page = [20,50,100,1000]
 
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SearchHelper#solr_doc_params) or
     ## parameters included in the Blacklight-jetty document requestHandler.
