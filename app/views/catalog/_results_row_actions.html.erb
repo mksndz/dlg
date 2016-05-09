@@ -1,5 +1,0 @@
-<div class="btn-group-vertical" role="group" aria-label="Result Actions">
-  <%= link_to('Edit', url_for(controller: klass.pluralize.downcase, action: :edit, id: id, only_path: true), class: 'btn btn-link btn-sm') if klass and id %>
-  <%= link_to('Meta View', url_for(controller: klass.pluralize.downcase, action: :show, id: id, only_path: true), class: 'btn btn-link btn-sm') if klass and id %>
-  <%= link_to('Public View', url_for(controller: :catalog, action: :show, id: slug, only_path: true), class: 'btn btn-link btn-sm') if slug %>
-</div>
