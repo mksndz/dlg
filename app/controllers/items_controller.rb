@@ -87,6 +87,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  def validation_report
+    @items = Item.page(params[:page])
+                 .per(params[:per_page])
+    @items.each { |i| i.valid? }
+  end
+
   private
 
   def set_data

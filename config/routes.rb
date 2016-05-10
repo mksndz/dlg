@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     collection do
       delete 'multiple_destroy', constraints: { format: :json }
       get 'xml', constraints: { format: :xml }
+      get 'validation_report'
     end
     member do
       get 'copy'

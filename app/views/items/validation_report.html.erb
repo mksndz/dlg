@@ -1,0 +1,79 @@
+<%= content_for :title do %>
+    Items Validation Report
+<% end %>
+
+<% breadcrumb :items %>
+
+<%= render 'shared/per_pager' %>
+
+<br><br>
+
+<% if @items.empty? %>
+
+    <p>No items found.</p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'id', 'ID' %>
+        </th>
+        <th>
+          <%= sortable 'slug' %>
+        </th>
+        <th>
+          <%= sortable 'dc_title', 'Title' %>
+        </th>
+        <th>
+          Valid?
+        </th>
+        <th>
+          Errors
+        </th>
+        <th>
+          <%= sortable 'collection_id', 'Collection' %>
+        </th>
+        <th width="45px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @items.each do |item| %>
+          <tr>
+            <td>
+              <%= link_to item.id, item_path(item) %>
+            </td>
+            <td>
+              <%= link_to item.slug, item_path(item) %>
+            </td>
+            <td>
+              <%= item.title %>
+            </td>
+            <td>
+              <%= boolean_check_icon item.errors.empty? %>
+            </td>
+            <td>
+              <% if item.errors.any? %>
+                <ul>
+                <% item.errors.each do |field, message| %>
+                  <li><%= field.to_s + ' ' + message %></li>
+                <% end %>
+                </ul>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to(item.collection.display_title, collection_path(item.collection)) if item.collection %>
+            </td>
+            <td>
+              <%= link_to 'Edit', edit_item_path(item), class: 'btn btn-default' %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @items %>
+
+<% end %>
