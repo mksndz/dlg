@@ -1,4 +1,5 @@
 $(document).ready ->
-#  $(".panel-collapse").on("click" , ->
-#    $('.panel-body').collapse('toggle')
-#  )
+  $(".validation-errors").popover {
+    html: true,
+    title: 'Validation Errors'
+  }

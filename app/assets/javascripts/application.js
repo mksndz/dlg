@@ -18,4 +18,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require blacklight/blacklight
+//= require bootstrap/tooltip
+//= require bootstrap/popover
 //= require_tree

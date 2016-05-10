@@ -87,19 +87,6 @@ class ItemsController < ApplicationController
     end
   end
 
-  def validation_report
-
-    set_filter_options [:collection]
-
-    @items = Item.index_query(params)
-                 .order(sort_column + ' ' + sort_direction)
-                 .page(params[:page])
-                 .per(params[:per_page])
-
-    @items.each { |i| i.valid? }
-
-  end
-
   private
 
   def set_data
