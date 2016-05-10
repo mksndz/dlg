@@ -10,7 +10,7 @@ class CollectionsController < ApplicationController
 
   def index
 
-    set_filter_options [:repository]
+    set_filter_options [:repository, :public]
 
     if current_user.super?
       @collections = Collection.index_query(params)
