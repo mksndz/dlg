@@ -1,6 +1,8 @@
 module ItemTypeValidatable
   extend ActiveSupport::Concern
 
+  TYPE_REQUIRED_VALUES = %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text)
+
   included do
 
     validates_presence_of :collection, message: ' must be selected'
@@ -12,22 +14,25 @@ module ItemTypeValidatable
   private
 
   def dcterms_temporal_characters
-    return unless dcterms_temporal
+    unless dcterms_temporal
+      errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.blank'))
+      return
+    end
     dcterms_temporal.each do |v|
       if v =~ /([^0-9\/-])/
-        errors.add(:dcterms_temporal, " contains an invalid character. Only 0-9, '/' and '-' allowed.")
+        errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.temporal_invalid_character'))
         return
       end
     end
   end
 
   def dcterms_type_required_value
-    return unless dcterms_type
-    dcterms_type.each do |v|
-      unless %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text).include?(v)
-        errors.add(:dcterms_type, ' does not contain any required values.')
-        return
-      end
+    unless dcterms_type
+      errors.add(:dcterms_type, I18n.t('activerecord.errors.messages.blank'))
+      return
+    end
+    if (dcterms_type & TYPE_REQUIRED_VALUES).empty?
+      errors.add(:dcterms_type, I18n.t('activerecord.errors.messages.type_required_value'))
     end
   end
 
