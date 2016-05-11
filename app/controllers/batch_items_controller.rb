@@ -84,7 +84,7 @@ class BatchItemsController < ApplicationController
       @errors = { batch_item: e.message }
     end
     respond_to do |format|
-      if @batch_item.save
+      if @batch_item.save(validate: validate?)
         format.json { render :success_result, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
       else
         @errors ||= @batch_item.errors
@@ -141,6 +141,10 @@ class BatchItemsController < ApplicationController
 
   def check_if_committed
     raise BatchCommittedError.new if @batch.committed?
+  end
+
+  def validate?
+    params[:bypass] == 'true' ? false : true
   end
 
 end

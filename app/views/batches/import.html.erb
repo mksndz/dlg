@@ -14,6 +14,9 @@
 
     <%= f.file_field :xml_file, label: 'XML File' %>
     <%= f.text_area :xml_text, label: 'XML Text' %>
+    <%= f.form_group :bypass_validation do %>
+      <%= f.check_box :bypass_validation, label: 'Bypass Validations' %>
+    <% end %>
 
     <%= f.primary 'Import', class: 'hide' %>
 

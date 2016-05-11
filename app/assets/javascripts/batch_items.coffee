@@ -10,26 +10,13 @@ $(document).ready ->
     url = this.action
     xml_text_field_data = $("#xml_text").val()
     xml_file_field_data = $("#_xml_file").val()
+    bypass = $("#_bypass_validation").is(":checked")
     if xml_file_field_data and !xml_text_field_data
-      process_xml_file($this, url)
+      process_xml_file($this, url, bypass)
     else if !xml_file_field_data and xml_text_field_data
-      process_xml($this, xml_text_field_data, url)
+      process_xml($this, xml_text_field_data, url, bypass)
     else
       handle_error('No file or XML text was provided.')
-  )
-
-#  $('#commit_form').on("submit", (e, data, status, xhr) ->
-#    e.preventDefault()
-#    $this = $(this)
-#    url = this.action
-#    records = $('#records').val().split(' ')
-#    commit_records($this, records, url)
-#  )
-
-  $('#commit_form').on("submit", (e, data, status, xhr) ->
-    $pb = $(".progress-bar")
-    $pb.removeClass('hide').addClass('active')
-    $pb.html("Working Hard...")
   )
 
 handle_error = (e) ->
@@ -49,32 +36,28 @@ list_item_html = (number, title, message, context_class) ->
       "<p>#{ message }</p>" +
       "</li>"
 
-create_record = (url, number, record_node) ->
+create_record = (url, number, record_node, bypass) ->
   return false if !record_node
   return $.ajax url,
     type: "POST",
     data:
       xml_text: record_node.outerHTML,
+      bypass: bypass
     error: (jqXHR, textStatus, errorThrown) ->
       $(".progress-bar").addClass('progress-bar-danger')
       $("#results").prepend render_error_output(jqXHR.responseText, number)
     success: (data, textStatus, jqXHR) ->
       $("#results").prepend render_successful_output(data, number)
-
-commit_record = (url, number) ->
-  return $.ajax url,
-    type: "POST",
-    error: (jqXHR, textStatus, errorThrown) ->
-      $(".progress-bar").addClass('progress-bar-danger')
-      $("#results").prepend render_error_output(jqXHR.responseText, number)
-    success: (data, textStatus, jqXHR) ->
-      $("#results").prepend render_successful_output(data, number)
-
 
 render_successful_output = (response, num) ->
-  return list_item_html num, "Batch Item Successfuly Created",
-    "<a href='#{response.edit_url}' target='_blank'>Click here to edit record with slug #{ response.slug }</a>",
-    "list-group-item-success"
+  if response.valid
+    return list_item_html num, "Batch Item Successfuly Created",
+      "<a href='#{response.edit_url}' target='_blank'>Click here to edit record with slug #{ response.slug }</a>",
+      "list-group-item-success"
+  else
+    return list_item_html num, "Invalid Batch Item Created",
+      "<a href='#{response.edit_url}' target='_blank'>Click here to edit record with slug #{ response.slug }</a>",
+      "list-group-item-warning"
 
 render_error_output = (response, number) ->
   obj = JSON.parse(response)
@@ -84,7 +67,7 @@ render_error_output = (response, number) ->
   error_messages += '</ol>'
   return list_item_html number, 'Record '+ obj.slug + ' Failed to Import', error_messages, "list-group-item-danger"
 
-process_xml = ($this, xml, url) ->
+process_xml = ($this, xml, url, bypass) ->
   try $xml_doc = $( $.parseXML( $.trim( xml ) ) )
   catch e then handle_error(e)
   return unless $xml_doc.children()
@@ -98,15 +81,15 @@ process_xml = ($this, xml, url) ->
   interval = setInterval(
     ->
       if i <= total_records
-        create_record(url, i, records[i - 1])
+        create_record(url, i, records[i - 1], bypass)
         update_progress_bar(i, total_records)
         i++
       else
         $("#actions").removeClass('hide').fadeIn()
         clearInterval(interval)
-  , 250)
+  , 200)
 
-process_xml_file = ($this, url) ->
+process_xml_file = ($this, url, bypass) ->
   if (!window.File || !window.FileReader || !window.FileList || !window.Blob)
     handle_error('The File APIs are not fully supported in this browser.')
     return
@@ -114,25 +97,5 @@ process_xml_file = ($this, url) ->
   file = $input[0].files[0]
   fr = new FileReader()
   fr.onload = ->
-    process_xml($this, fr.result, url)
+    process_xml($this, fr.result, url, bypass)
   fr.readAsText file
-
-commit_records = ($this, records, url) ->
-  if !records
-    handle_error('No items to commit!')
-    return
-  $this.slideUp()
-  total_records = records.length
-  i = 1
-  interval = setInterval(
-    ->
-      if i <= total_records
-        id = records[i - 1]
-        url = url.replace(records[0], id)
-        commit_record(url, i)
-        update_progress_bar(i, total_records)
-        i++
-      else
-        $("#actions").removeClass('hide').fadeIn()
-        clearInterval(interval)
-  , 250)
