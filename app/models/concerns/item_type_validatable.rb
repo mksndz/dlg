@@ -6,8 +6,10 @@ module ItemTypeValidatable
   included do
 
     validates_presence_of :collection, message: ' must be selected'
-    validates_presence_of :dcterms_temporal, :dcterms_spatial, :dc_right, :dcterms_contributor
-    validate :dcterms_temporal_characters, :dcterms_type_required_value
+    validates_presence_of :dcterms_temporal, :dcterms_spatial, :dcterms_contributor
+    validate :dcterms_temporal_characters
+    validate :dcterms_type_required_value
+    validate :has_rights_information
 
   end
 
@@ -33,6 +35,12 @@ module ItemTypeValidatable
     end
     if (dcterms_type & TYPE_REQUIRED_VALUES).empty?
       errors.add(:dcterms_type, I18n.t('activerecord.errors.messages.type_required_value'))
+    end
+  end
+
+  def has_rights_information
+    if dc_right.empty? and dcterms_rights_holder.empty? and dcterms_access_right.empty? and dcterms_license.empty?
+      errors.add(:entity, I18n.t('activerecord.errors.messages.no_rights_information'))
     end
   end
 
