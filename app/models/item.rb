@@ -6,7 +6,7 @@ class Item < ActiveRecord::Base
   include IndexFilterable
   include ItemTypeValidatable
 
-  belongs_to :collection
+  belongs_to :collection, counter_cache: true
   has_one :repository, through: :collection
   has_many :batch_items
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160505154027) do
+ActiveRecord::Schema.define(version: 20160511142752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(version: 20160505154027) do
     t.text      "dcterms_is_shown_at",   default: [],    null: false, array: true
     t.text      "dcterms_provenance",    default: [],    null: false, array: true
     t.text      "dcterms_license",       default: [],    null: false, array: true
+    t.integer   "items_count",           default: 0
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
