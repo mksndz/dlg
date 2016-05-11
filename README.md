@@ -1,6 +1,6 @@
-# Digital Library of Georgia
+# GLG Meta
 
-A [Blacklight](https://github.com/projectblacklight/blacklight)-based app for the [Digital Library of Georgia](http://dlg.galileo.usg.edu/). Currently a work in progress!
+A [Blacklight](https://github.com/projectblacklight/blacklight)-based administration app for the [Digital Library of Georgia](http://dlg.galileo.usg.edu/). Currently a work in progress!
 
 ### Developer Information
 
