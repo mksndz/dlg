@@ -36,7 +36,10 @@
           <%= sortable 'dcterms_title', 'Title' %>
         </th>
         <th>
-          <%= sortable 'collection_id', 'Collection' %>
+          Valid?
+        </th>
+        <th>
+          Collection
         </th>
         <th width="185px"></th>
       </tr>
@@ -53,6 +56,9 @@
             </td>
             <td>
               <%= item.dcterms_title.first %>
+            </td>
+            <td>
+              <%= item_validation_status item %>
             </td>
             <td>
               <%= link_to(item.collection.display_title, collection_path(item.collection)) if item.collection %>

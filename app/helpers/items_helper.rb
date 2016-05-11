@@ -16,7 +16,7 @@ module ItemsHelper
       content_tag(:span, nil, class: 'glyphicon glyphicon-ok', aria: { hidden: true } )
     else
       content_tag(:span, nil, class: 'glyphicon glyphicon-remove validation-errors', aria: { hidden: true }, data: { content: errors_html(item.errors), toggle: 'popover' } ) +
-          content_tag(:sup, item.errors.count)
+        content_tag(:sup, item.errors.count)
     end
   end
 
