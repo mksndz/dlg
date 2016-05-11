@@ -12,6 +12,9 @@
 !/log/.keep
 /tmp
 
+# ignore data folder
+/data
+
 # ignore uninteresting jetty/solr config files
 jetty/*
 !jetty/solr/blacklight-core/conf/schema.xml
