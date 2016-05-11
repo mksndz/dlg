@@ -281,4 +281,14 @@ RSpec.describe ItemsController, type: :controller do
     end
   end
 
+  describe 'DELETE #multiple_destroy' do
+    it 'destroy the requested items' do
+      item = Fabricate(:item)
+      item2 = Fabricate(:item)
+      expect {
+        delete :multiple_destroy, { entities: "#{item.id},#{item2.id}", format: :json }
+      }.to change(Item, :count).by(-2)
+    end
+  end
+
 end
