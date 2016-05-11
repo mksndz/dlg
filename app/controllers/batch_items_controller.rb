@@ -15,7 +15,9 @@ class BatchItemsController < ApplicationController
   # GET /batch_items
   # GET /batch_items.json
   def index
-    @batch_items = BatchItem.where(batch_id: @batch.id).page(params[:page])
+    @batch_items = BatchItem.where(batch_id: @batch.id)
+                       .page(params[:page])
+                       .per(params[:per_page])
   end
 
   # GET /batch_items/1
