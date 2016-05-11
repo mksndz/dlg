@@ -2,7 +2,7 @@ class BatchItem < ActiveRecord::Base
   include Slugged
   include ItemTypeValidatable
 
-  belongs_to :batch
+  belongs_to :batch, counter_cache: true
   belongs_to :collection
   belongs_to :item
   has_one :repository, through: :collection
