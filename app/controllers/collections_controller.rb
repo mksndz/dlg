@@ -17,12 +17,14 @@ class CollectionsController < ApplicationController
                                .order(sort_column + ' ' + sort_direction)
                                .page(params[:page])
                                .per(params[:per_page])
+                               .includes(:repository)
     else
       @collections = Collection.index_query(params)
                                .where(id: user_collection_ids)
                                .order(sort_column + ' ' + sort_direction)
                                .page(params[:page])
                                .per(params[:per_page])
+                               .includes(:repository)
     end
 
   end
@@ -52,10 +54,7 @@ class CollectionsController < ApplicationController
   end
 
   def update
-
-    new_params = split_dc_params(collection_params)
-
-    if @collection.update new_params
+    if @collection.update split_dc_params(collection_params)
       redirect_to collection_path(@collection), notice: 'Collection updated'
     else
       set_data
