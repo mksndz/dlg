@@ -52,12 +52,10 @@
               <%= repository.title %>
             </td>
             <td>
-              <%= link_to(repository.collections.count, collections_path(repository_id: repository.id)) %>
+              <%= link_to(repository.collections.size, collections_path(repository_id: repository.id)) %>
             </td>
             <td>
-              <div class="btn-group btn-group-xs">
-                <%= render partial: 'shared/entity_actions', locals: { base_path: repository_path(repository), edit_path: edit_repository_path(repository), entity: repository, show_bl: false } %>
-              </div>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: repository_path(repository), edit_path: edit_repository_path(repository), entity: repository, show_bl: false } %>
             </td>
           </tr>
       <% end %>
