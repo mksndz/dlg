@@ -19,6 +19,7 @@ class ItemsController < ApplicationController
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
                      .per(params[:per_page])
+                     .includes(:collection)
     else
         @items = Item.index_query(params)
                      .includes(:collection)
@@ -26,6 +27,7 @@ class ItemsController < ApplicationController
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
                      .per(params[:per_page])
+                     .includes(:collection)
     end
 
   end
