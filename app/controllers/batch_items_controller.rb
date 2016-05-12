@@ -79,10 +79,9 @@ class BatchItemsController < ApplicationController
   end
 
   def import
-    importer = BatchItemImport.new(params[:xml_text], @batch, true)
     begin
-      @batch_item = importer.process
-    rescue ImportFailedError => e
+      @batch_item = BatchItemImport.new(params[:xml_text], @batch, true).process
+    rescue StandardError => e
       @errors = { batch_item: e.message }
     end
     respond_to do |format|

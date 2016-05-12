@@ -33,11 +33,11 @@ class BatchItemImport
   private
 
   def create_new
-    @batch_item = PRODUCT.camelize.constantize.new(@hash)
+    @batch_item = PRODUCT.camelize.constantize.new(processed_hash)
   end
 
   def replace
-    @batch_item = PRODUCT.camelize.constantize.new(@hash)
+    @batch_item = PRODUCT.camelize.constantize.new(processed_hash)
     target = TARGET.camelize.constantize.find(@replace_id)
     @batch_item["#{TARGET}_id".to_sym] = target.id
   end
@@ -52,6 +52,16 @@ class BatchItemImport
 
   def replace_entity_exists_in_meta
     @replace_id && TARGET.camelize.constantize.exists?(@replace_id)
+  end
+
+  def permitted_attributes_for entity
+    entity.camelize.constantize.column_names
+  end
+
+  def processed_hash
+    @hash.reject do |k,v|
+      permitted_attributes_for(PRODUCT).exclude? k
+    end
   end
 
 end
