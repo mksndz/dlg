@@ -83,7 +83,7 @@
               <%= item_validation_status item %>
             </td>
             <td>
-              <%= link_to(item.collection.display_title, collection_path(item.collection)) if item.collection %>
+              <%= link_to item.collection.display_title, collection_path(item.collection) %>
             </td>
             <td>
               <%= render partial: 'shared/entity_actions', locals: { base_path: item_path(item), edit_path: edit_item_path(item), entity: item, show_bl: true } %>
