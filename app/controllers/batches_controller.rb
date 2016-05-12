@@ -105,8 +105,8 @@ class BatchesController < ApplicationController
 
   def commit
     respond_to do |format|
-      @batch.commit
-      format.html { redirect_to results_batch_path(@batch), notice: 'Batch was successfully committed.' }
+      @batch.delay.commit
+      format.html { redirect_to @batch, notice: 'This batch has been queued for committing.' }
       format.json { head :no_content }
     end
   end
