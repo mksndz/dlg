@@ -37,11 +37,11 @@ class Item < ActiveRecord::Base
     string :collection_title, stored: true
 
     string :collection_name, stored: true do
-      collection ? collection.display_title : ''
+      collection.display_title
     end
 
     string :repository_name, stored: true do
-      repository ? repository.title : ''
+      repository.title
     end
 
     string :thumbnail_url, stored: true do

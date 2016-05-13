@@ -23,7 +23,7 @@ task import_items: :environment do
   end
 
   def set_array_field_value(field, value = nil)
-    set_field_value field, value.strip.split("\n")
+    set_field_value field, value.strip.split("\n").map!(&:strip)
   end
 
   def set_boolean_field_value(field, value = nil)
