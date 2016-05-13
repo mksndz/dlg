@@ -98,7 +98,7 @@ task import_repositories: :environment do
   finish_time = Time.now
 
   puts 'File processing complete!'
-  puts "Processing took #{finish_time - start_time} milliseconds!"
+  puts "Processing took #{finish_time - start_time} seconds!"
   puts "Repositories processed: #{@repos_created}"
   puts "Collections processed: #{@collections_created}"
   puts "Repositories unsaved due to issues: #{@problem_repos}"
