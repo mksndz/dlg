@@ -91,7 +91,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'dpla_b',             label: 'DPLA?',       limit: true, helper_method: :boolean_facet_labels
     config.add_facet_field 'collection_name_ss', label: 'Collection',  limit: true
     config.add_facet_field 'repository_name_ss', label: 'Repository',  limit: true
-    config.add_facet_field 'class_name',   label: 'Class', limit: true
+    config.add_facet_field 'class_name',         label: 'Class',       limit: true
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
@@ -102,48 +102,41 @@ class CatalogController < ApplicationController
     #   :years_25 => { :label => 'within 25 Years', :fq => "pub_date:[#{Time.zone.now.year - 25 } TO *]" }
     # }
 
-
-    # Have BL send all facet field names to Solr, which has been the default
-    # previously. Simply remove these lines if you'd rather use Solr request
-    # handler defaults, or have no facets.
-    # config.add_facet_fields_to_solr_request!
-
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-
-    config.add_index_field 'dcterms_title_display', :label => 'Title'
-    config.add_index_field 'dcterms_description_display', :label => 'Description'
-    config.add_index_field 'collection_name_ss', :label => 'Collection', link_to_search: true
-    config.add_index_field 'repository_name_ss', :label => 'Repository', link_to_search: true
-    config.add_index_field 'dc_identifier_display', :label => 'Identifier', helper_method: 'linkify'
-    config.add_index_field 'dc_creator_display', :label => 'Author'
-    config.add_index_field 'dc_type_display', :label => 'Format'
+    config.add_index_field 'dcterms_title_display', label: 'Title'
+    config.add_index_field 'dcterms_description_display', label: 'Description'
+    config.add_index_field 'collection_name_ss', label: 'Collection', link_to_search: true
+    config.add_index_field 'repository_name_ss', label: 'Repository', link_to_search: true
+    config.add_index_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
+    config.add_index_field 'dc_creator_display', label: 'Author'
+    config.add_index_field 'dc_type_display', label: 'Format'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field 'dcterms_title_display', :label => 'Title'
-    config.add_show_field 'collection_name_ss', :label => 'Collection'
-    config.add_show_field 'dcterms_is_part_of_display', :label => 'Is Part Of'
-    config.add_show_field 'dcterms_description_display', :label => 'Description'
-    config.add_show_field 'dc_format_display', :label => 'File Format'
-    config.add_show_field 'dc_identifier_display', :label => 'Identifier', helper_method: 'linkify'
-    config.add_show_field 'dc_right_display', :label => 'Rights'
-    config.add_show_field 'dc_date_display', :label => 'Date'
-    config.add_show_field 'dc_relation_display', :label => 'Related Materials'
-    config.add_show_field 'dcterms_publisher_display', :label => 'Publisher'
-    config.add_show_field 'dcterms_contributor_display', :label => 'Contributor'
-    config.add_show_field 'dcterms_temporal_display', :label => 'Time'
-    config.add_show_field 'dcterms_spatial_display', :label => 'Place'
-    config.add_show_field 'dcterms_provenance_display', :label => 'Location of Original'
-    config.add_show_field 'dcterms_subject_display', :label => 'Subject'
-    config.add_show_field 'dcterms_type_display', :label => 'Genre'
-    config.add_show_field 'dcterms_creator_display', :label => 'Creator'
-    config.add_show_field 'dcterms_language_display', :label => 'Language'
-    config.add_show_field 'dcterms_is_shown_at_display', :label => 'URL', helper_method: 'linkify'
-    config.add_show_field 'dcterms_rights_holder_display', :label => 'Rights Holder'
-    config.add_show_field 'dcterms_access_right_display', :label => 'Access'
-    config.add_show_field 'dcterms_extent_display', :label => 'Extent'
-    config.add_show_field 'dcterms_medium_display', :label => 'Medium'
+    config.add_show_field 'dcterms_title_display', label: 'Title'
+    config.add_show_field 'collection_name_ss', label: 'Collection', link_to_search: true
+    config.add_show_field 'dcterms_is_part_of_display', label: 'Is Part Of'
+    config.add_show_field 'dcterms_description_display', label: 'Description'
+    config.add_show_field 'dc_format_display', label: 'File Format'
+    config.add_show_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
+    config.add_show_field 'dc_right_display', label: 'Rights'
+    config.add_show_field 'dc_date_display', label: 'Date'
+    config.add_show_field 'dc_relation_display', label: 'Related Materials'
+    config.add_show_field 'dcterms_publisher_display', label: 'Publisher'
+    config.add_show_field 'dcterms_contributor_display', label: 'Contributor'
+    config.add_show_field 'dcterms_temporal_display', label: 'Time'
+    config.add_show_field 'dcterms_spatial_display', label: 'Place'
+    config.add_show_field 'dcterms_provenance_display', label: 'Location of Original'
+    config.add_show_field 'dcterms_subject_display', label: 'Subject'
+    config.add_show_field 'dcterms_type_display', label: 'Genre'
+    config.add_show_field 'dcterms_creator_display', label: 'Creator'
+    config.add_show_field 'dcterms_language_display', label: 'Language'
+    config.add_show_field 'dcterms_is_shown_at_display', label: 'URL', helper_method: 'linkify'
+    config.add_show_field 'dcterms_rights_holder_display', label: 'Rights Holder'
+    config.add_show_field 'dcterms_access_right_display', label: 'Access'
+    config.add_show_field 'dcterms_extent_display', label: 'Extent'
+    config.add_show_field 'dcterms_medium_display', label: 'Medium'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -162,7 +155,7 @@ class CatalogController < ApplicationController
     # This one uses all the defaults set by the solr request handler. Which
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
-    config.add_search_field 'all_fields', :label => 'All Fields'
+    config.add_search_field 'all_fields', label: 'All Fields'
 
     config.add_search_field('rights') do |field|
       field.label = 'Rights Fields'
@@ -224,39 +217,17 @@ class CatalogController < ApplicationController
       }
     end
 
-    # dummy demo fields
-    # config.add_search_field('Description/Abstract') do |field|
-    #   field.solr_local_parameters = {
-    #     fq: ''
-    #   }
-    # end
-    # config.add_search_field('Rights') do |field|
-    #   field.solr_local_parameters = {
-    #     fq: ''
-    #   }
-    # end
-    # config.add_search_field('Any field or Combo of Fields') do |field|
-    #   field.solr_local_parameters = {
-    #     fq: ''
-    #   }
-    # end
-
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    config.add_sort_field 'score desc, sort_title_s asc', :label => 'relevance'
+    config.add_sort_field 'score desc, sort_title_s asc', label: 'relevance'
     # config.add_sort_field 'pub_date_sort desc, title_sort asc', :label => 'year'
-    config.add_sort_field 'sort_title_s asc', :label => 'title'
+    config.add_sort_field 'sort_title_s asc', label: 'title'
 
     # If there are more than this many search results, no spelling ("did you 
     # mean") suggestion is offered.
     config.spell_max = 5
-
-    # enable XML output for search results
-    config.index.respond_to.xml = Proc.new {
-      render xml: solr_to_ar.to_xml
-    }
 
     # remove citation and SMS tools
     config.show.document_actions.delete(:citation)
@@ -272,14 +243,5 @@ class CatalogController < ApplicationController
 
   # add "Export as XML" button on search results
   add_results_collection_tool :action_widget
-
-  private
-
-  def solr_to_ar
-    @response['response']['docs'].map do |d|
-      klass, id = d['sunspot_id_ss'].split(' ')
-      klass.constantize.find(id)
-    end
-  end
 
 end
