@@ -77,7 +77,7 @@ class Item < ActiveRecord::Base
 
     # Fields for Faceting, etc.
     string :format, stored: true do
-      dcterms_type.first ? dcterms_type.first : ''
+      dcterms_type.first ? dcterms_type.first : 'Unknown'
     end
 
     string :sort_title do
