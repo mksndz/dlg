@@ -36,7 +36,7 @@ feature 'Users Management' do
 
   end
 
-  scenario 'Basic User cannot administer ny user stuff' do
+  scenario 'Basic User cannot administer any user stuff' do
 
   end
 
