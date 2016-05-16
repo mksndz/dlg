@@ -1,4 +1,6 @@
 require 'rails_helper'
+include Warden::Test::Helpers
+Warden.test_mode!
 
 feature 'Logging In and Out' do
 
@@ -33,6 +35,18 @@ feature 'Logging In and Out' do
     click_button 'Log In'
 
     expect(page).to have_text 'Log Out'
+
+  end
+
+  scenario 'Logged in user Logs Out' do
+
+    login_as Fabricate(:basic), scope: :user
+
+    visit '/'
+
+    click_link 'Log Out'
+
+    expect(page).to have_text 'Signed out successfully'
 
   end
 
