@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Collections' do
+feature 'Collections Management' do
 
 
 

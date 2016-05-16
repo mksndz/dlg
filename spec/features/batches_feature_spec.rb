@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Batches' do
+feature 'Batches Management' do
 
 
 

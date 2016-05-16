@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Repositories' do
+feature 'Repositories Management' do
 
 
 

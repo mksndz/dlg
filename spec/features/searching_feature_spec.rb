@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Searching' do
+feature 'Searching' do
 
 
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Importing' do
+feature 'Importing from XML' do
 
 
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Items' do
+feature 'Item Management' do
 
 
 
