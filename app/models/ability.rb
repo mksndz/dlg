@@ -32,8 +32,16 @@ class Ability
 
         can [:show, :edit, :update, :destroy, :recreate], Batch, user_id: user.id
         can [:index, :new, :create], Batch
-        can [:index, :show, :new, :create], BatchItem
-        can [:edit, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
+
+
+        can [:index, :new], BatchItem
+
+        can [:show, :create, :update], BatchItem do |batch_item|
+          user.repositories.include?(batch_item.collection.repository) ||
+              user.collections.include?(batch_item.collection)
+        end
+
+        can [:show, :edit, :create, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
 
       end
 
@@ -55,8 +63,6 @@ class Ability
       end
 
     end
-
-
 
   end
 
