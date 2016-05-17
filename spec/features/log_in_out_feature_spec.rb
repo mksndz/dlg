@@ -8,18 +8,18 @@ feature 'Logging In and Out' do
 
     visit '/'
 
-    expect(page).to have_text('User Login')
+    expect(page).to have_text I18n.t('activerecord.attributes.user.email')
 
   end
 
-  scenario 'User provides a username but no password' do
+  scenario 'User provides invalid credentials' do
 
     visit '/'
 
-    fill_in 'Email Address', with: 'blahblah@blah.org'
+    fill_in I18n.t('activerecord.attributes.user.email'), with: 'blahblah@blah.org'
     click_button 'Log In'
 
-    expect(page).to have_text('Invalid')
+    expect(page).to have_text I18n.t('devise.failure.invalid', authentication_keys: 'email')
 
   end
 
@@ -30,11 +30,11 @@ feature 'Logging In and Out' do
 
     visit '/'
 
-    fill_in 'Email Address', with: user.email
-    fill_in 'Password', with: password
+    fill_in I18n.t('activerecord.attributes.user.email'), with: user.email
+    fill_in I18n.t('activerecord.attributes.user.password'), with: password
     click_button 'Log In'
 
-    expect(page).to have_text 'Log Out'
+    expect(page).to have_text I18n.t('devise.sessions.signed_in')
 
   end
 
@@ -46,7 +46,7 @@ feature 'Logging In and Out' do
 
     click_link 'Log Out'
 
-    expect(page).to have_text 'Signed out successfully'
+    expect(page).to have_text I18n.t('devise.sessions.signed_out')
 
   end
 
