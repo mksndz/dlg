@@ -3,12 +3,12 @@
 <% end %>
 
 <%= content_for :subtitle do %>
-    All of them
+    <%= t('meta.defaults.labels.unfiltered_index_subtitle') %>
 <% end %>
 
 <% breadcrumb :repositories %>
 
-<%= link_to 'Add Repository', new_repository_path, class: 'btn btn-default' %>
+<%= link_to t('meta.repository.actions.add'), new_repository_path, class: 'btn btn-default' %>
 
 <%= render 'shared/per_pager' %>
 
@@ -16,7 +16,7 @@
 
 <% if @repositories.empty? %>
 
-    <p>No repositories have been added yet.</p>
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Items') %></p>
 
 <% else %>
 
@@ -24,16 +24,16 @@
       <thead>
       <tr>
         <th>
-          <%= sortable 'id', 'ID' %>
+          <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'slug', 'Slug' %>
+          <%= sortable 'slug', t('meta.defaults.labels.columns.slug') %>
         </th>
         <th>
-          <%= sortable 'title', 'Title' %>
+          <%= sortable 'title', t('meta.defaults.labels.columns.title') %>
         </th>
         <th>
-          <%= sortable 'collections_count', 'Collections' %>
+          <%= sortable 'collections_count', t('meta.defaults.labels.columns.collections_count') %>
         </th>
         <th width="185px"></th>
       </tr>

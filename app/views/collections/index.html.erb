@@ -5,16 +5,16 @@
 <%=
   content_for :subtitle do
     if params[:repository_id] && !params[:repository_id].blank?
-      @collections.first.repository.title if @collections.first && @collections.first.repository
+      t('meta.defaults.labels.filtered_by_subtitle', title: @collections.first.repository.title) if @collections.first && @collections.first.repository
     else
-      'All of them'
+      t('meta.defaults.labels.unfiltered_index_subtitle')
     end
   end
 %>
 
 <% breadcrumb :collections %>
 
-<%= link_to 'Add Collection', new_collection_path, class: 'btn btn-default' %>
+<%= link_to t('meta.collection.actions.add'), new_collection_path, class: 'btn btn-default' %>
 
 <%= render 'shared/per_pager' %>
 
@@ -25,35 +25,34 @@
       <%= f.hidden_field :direction, { value: params[:direction], name: 'direction' } if params[:direction] %>
       <%= f.hidden_field :sort, { value: params[:sort], name: 'sort' } if params[:sort] %>
       <%= f.hidden_field :per_page, { value: params[:per_page], name: 'per_page' } if params[:per_page] %>
-      <%= f.select :repository_id, options_for_select(@search_options[:repositories].collect { |c| [c.title, c.id] }, selected: params[:repository_id] ), { include_blank: true }, { name: 'repository_id' } %>
-      <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: 'Public'}, { name: 'public' } %>
+      <%= f.select :repository_id, options_for_select(@search_options[:repositories].collect { |c| [c.title, c.id] }, selected: params[:repository_id] ), { label: t('meta.defaults.labels.filter.repository'), include_blank: true }, { name: 'repository_id' } %>
+      <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: t('meta.defaults.labels.filter.public')}, { name: 'public' } %>
       <%= f.primary 'Filter' %>
   <% end %>
 </div>
 
 <% if @collections.empty? %>
 
-    <p>No collections found.</p>
-
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Collections') %></p>
 <% else %>
 
     <table class="table table-condensed table-hover">
       <thead>
         <tr>
           <th>
-            <%= sortable 'id', 'ID' %>
+            <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
           </th>
           <th>
-            <%= sortable 'slug', 'Slug' %>
+            <%= sortable 'slug', t('meta.defaults.labels.columns.slug') %>
           </th>
           <th>
-            <%= sortable 'display_title', 'Display Title' %>
+            <%= sortable 'display_title', t('meta.defaults.labels.columns.title') %>
           </th>
           <th>
-            <%= sortable 'public' , 'Public?' %>
+            <%= sortable 'public' , t('meta.defaults.labels.columns.public') %>
           </th>
           <th>
-            Repository
+            <%= t('meta.collection.labels.columns.repository') %>
           </th>
           <th>
             <%= sortable 'items_count', 'Items' %>

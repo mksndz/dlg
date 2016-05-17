@@ -1,10 +1,42 @@
 en:
   meta:
-    actions:
-      defaults:
+    defaults:
+      actions:
         view: 'View'
         blacklight_view: 'BL View'
         edit: 'Edit'
         destroy: 'Delete'
-      item:
+      labels:
+        unfiltered_index_subtitle: 'All of Them'
+        filtered_by_subtitle: 'For %{title}'
+        filtered_empty_subtitle: 'None'
+        no_records_found: 'No %{entity} found.'
+        per_page: 'Per Page'
+        filter:
+          repository: 'Repository'
+          collection: 'Collection'
+          public: 'Public'
+          filter_button: 'Filter'
+        columns:
+          id: 'ID'
+          slug: 'Slug'
+          title: 'Title'
+          public: 'Public?'
+          collections_count: 'Collections'
+          itemss_count: 'Items'
+    item:
+      actions:
         add: 'New Item'
+      labels:
+        columns:
+          collection: 'Collection'
+    collection:
+      actions:
+        add: 'New Collection'
+      labels:
+        columns:
+          repository: 'Repository'
+          items: 'Items'
+    repository:
+      actions:
+        add: 'New Repository'

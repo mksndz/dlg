@@ -5,18 +5,18 @@
 <%=
     content_for :subtitle do
       if @items.empty?
-        'None'
+        t('meta.defaults.labels.filtered_empty_subtitle')
       elsif params[:collection_id] && !params[:collection_id].empty?
-         "For #{@items.first.collection.display_title}"
+         t('meta.defaults.labels.filtered_by_subtitle', title: @items.first.collection.display_title)
       else
-        'All of them'
+        t('meta.defaults.labels.unfiltered_index_subtitle')
       end
     end
 %>
 
 <% breadcrumb :items %>
 
-<%= link_to 'Add Item', new_item_path, class: 'btn btn-default' %>
+<%= link_to t('meta.item.actions.add'), new_item_path, class: 'btn btn-default' %>
 
 <%= render 'shared/per_pager' %>
 
@@ -27,15 +27,15 @@
       <%= f.hidden_field :direction, { value: params[:direction], name: 'direction' } if params[:direction] %>
       <%= f.hidden_field :sort, { value: params[:sort], name: 'sort' } if params[:sort] %>
       <%= f.hidden_field :per_page, { value: params[:per_page], name: 'per_page' } if params[:per_page] %>
-      <%= f.select :collection_id, options_for_select(@search_options[:collections].collect { |c| [c.display_title, c.id] }, selected: params[:collection_id] ), { include_blank: true }, { name: 'collection_id' } %>
-      <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: 'Public'}, { name: 'public' } %>
-      <%= f.primary 'Filter' %>
+      <%= f.select :collection_id, options_for_select(@search_options[:collections].collect { |c| [c.display_title, c.id] }, selected: params[:collection_id] ), { label: t('meta.defaults.labels.filter.collection'), include_blank: true }, { name: 'collection_id' } %>
+      <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: t('meta.defaults.labels.filter.public')}, { name: 'public' } %>
+      <%= f.primary t('meta.defaults.labels.filter.filter_button') %>
   <% end %>
 </div>
 
 <% if @items.empty? %>
 
-    <p>No items found.</p>
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Items') %></p>
 
 <% else %>
 
@@ -43,22 +43,22 @@
       <thead>
         <tr>
           <th>
-            <%= sortable 'id', 'ID' %>
+            <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
           </th>
           <th>
-            <%= sortable 'slug' %>
+            <%= sortable 'slug', t('meta.defaults.labels.columns.slug') %>
           </th>
           <th>
-            <%= sortable 'dc_title', 'Title' %>
+            <%= sortable 'dc_title', t('meta.defaults.labels.columns.title') %>
           </th>
-          <th>
-            <%= sortable 'public', 'Public?' %>
+          <th >
+            <%= sortable 'public', t('meta.defaults.labels.columns.public') %>
           </th>
           <th>
             Valid?
           </th>
           <th>
-            <%= sortable 'collection_id', 'Collection' %>
+            Collection
           </th>
           <th width="185px"></th>
         </tr>
