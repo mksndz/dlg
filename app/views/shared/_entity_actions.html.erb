@@ -1,6 +1,6 @@
 <div class="btn-group btn-group-xs">
-  <%= link_to 'View', base_path, class: 'btn btn-default' %>
-  <%= link_to('BL View', solr_document_path(entity.slug), class: 'btn btn-default') if show_bl %>
-  <%= link_to 'Edit', edit_path, class: 'btn btn-default' %>
-  <%= link_to 'Delete', base_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+  <%= link_to t('meta.actions.defaults.view'), base_path, class: 'btn btn-default' %>
+  <%= link_to(t('meta.actions.defaults.blacklight_view'), solr_document_path(entity.slug), class: 'btn btn-default') if show_bl %>
+  <%= link_to t('meta.actions.defaults.edit'), edit_path, class: 'btn btn-default' %>
+  <%= link_to t('meta.actions.defaults.destroy'), base_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
 </div>
