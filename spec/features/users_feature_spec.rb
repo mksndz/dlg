@@ -12,13 +12,11 @@ feature 'Users Management' do
 
     login_as super_user, scope: :user
 
-    users = Fabricate.times(10, :user)
+    user = Fabricate :user
 
     visit users_path
 
-    users.each do |user|
-      expect(page).to have_text user.email
-    end
+    expect(page).to have_text user.email
     expect(page).to have_link I18n.t('meta.defaults.actions.view')
     expect(page).to have_link I18n.t('meta.defaults.actions.edit')
     expect(page).to have_link I18n.t('meta.defaults.actions.destroy')
@@ -36,10 +34,11 @@ feature 'Users Management' do
 
     visit users_path
 
-    expect(page).to have_text user1.email
-    expect(page).not_to have_text user2.email
     expect(page).to have_link I18n.t('meta.user.actions.invites')
     expect(page).to have_link I18n.t('meta.user.actions.add')
+
+    expect(page).to have_text user1.email
+    expect(page).not_to have_text user2.email
 
   end
 
@@ -76,6 +75,32 @@ feature 'Users Management' do
     click_link I18n.t('meta.user.actions.add')
 
     page.has_no_css?('#user_role_ids_1')
+
+  end
+
+  scenario 'Super User clicks the Edit button for an existing user and sees a form to modify user info' do
+
+    login_as super_user, scope: :user
+
+    visit users_path
+
+    click_link I18n.t('meta.defaults.actions.edit')
+
+    expect(page).to have_current_path(edit_user_path(super_user))
+
+    if super_user.creator_id
+      expect(find_field(I18n.t('activerecord.attributes.user.creator')).value).to eq super_user.creator_id
+    else
+      expect(find_field(I18n.t('activerecord.attributes.user.creator')).value).to be_empty
+    end
+
+    super_user.roles.each do |r|
+      expect(page).to have_checked_field r.name
+    end
+
+    expect(find_field(I18n.t('activerecord.attributes.user.email')).value).to eq super_user.email
+    expect(find_field(I18n.t('activerecord.attributes.user.repository_ids')).value).to eq super_user.repository_ids
+    expect(find_field(I18n.t('activerecord.attributes.user.collection_ids')).value).to eq super_user.collection_ids
 
   end
 

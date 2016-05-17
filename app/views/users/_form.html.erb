@@ -11,7 +11,7 @@
 
     <% if current_user.super? %>
         <%= f.collection_check_boxes :role_ids, @data[:roles], :id, :name %>
-        <%= f.select :creator_id, User.all.collect! { |u| [u.email, u.id] } %>
+        <%= f.select :creator_id, User.all.collect! { |u| [u.email, u.id] }, { include_blank: true } %>
     <% end %>
 
     <% if current_user.super? or current_user.coordinator? %>
