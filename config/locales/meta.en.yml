@@ -1,0 +1,10 @@
+en:
+  meta:
+    actions:
+      defaults:
+        view: 'View'
+        blacklight_view: 'BL View'
+        edit: 'Edit'
+        destroy: 'Delete'
+      item:
+        add: 'New Item'
