@@ -40,3 +40,11 @@ en:
     repository:
       actions:
         add: 'New Repository'
+    user:
+      actions:
+        add: 'Create User'
+        invites: 'Invitations'
+      labels:
+        columns:
+          email: 'Email'
+          roles: 'Roles'

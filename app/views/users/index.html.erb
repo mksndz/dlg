@@ -4,8 +4,8 @@
 
 <% breadcrumb :users %>
 
-<%= link_to 'Add User', new_user_path, class: 'btn btn-default' %>
-<%= link_to 'Invites', auth_invitations_path, class: 'btn btn-default' %>
+<%= link_to t('meta.user.actions.add'), new_user_path, class: 'btn btn-default' %>
+<%= link_to t('meta.user.actions.invites'), auth_invitations_path, class: 'btn btn-default' %>
 
 <%= render 'shared/per_pager' %>
 
@@ -13,7 +13,7 @@
 
 <% if @users.empty? %>
 
-    <p>No Users have been added yet.</p>
+    <%= t('meta.defaults.labels.no_records_found', entity: 'Users') %>
 
 <% else %>
 
@@ -21,13 +21,13 @@
     <thead>
     <tr>
       <th>
-        <%= sortable 'id', 'ID' %>
+        <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
       </th>
       <th>
-        <%= sortable 'email', 'Email' %>
+        <%= sortable 'email', t('meta.user.labels.columns.email') %>
       </th>
       <th>
-        Roles
+        <%= t('meta.user.labels.columns.roles') %>
       </th>
       <th colspan="1"></th>
     </tr>
