@@ -5,7 +5,6 @@ class ItemsController < ApplicationController
   include DcHelper
   include Sorting
   include Searchable
-  include MultipleActionable
   include Filterable
 
   before_action :set_data, only: [ :new, :copy, :edit ]
@@ -42,10 +41,10 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(split_dc_params(item_params))
     if @item.save
-      redirect_to item_path(@item), notice: 'Item created'
+      redirect_to item_path(@item), notice: t('meta.defaults.labels.messages.success.created', entity: 'Item')
     else
       set_data
-      render :new, alert: 'Error creating item'
+      render :new, alert: t('meta.defaults.labels.messages.errors.not_created', entity: 'Item')
     end
   end
 
@@ -59,19 +58,16 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(split_dc_params(item_params))
-      redirect_to item_path(@item), notice: 'Item updated'
+      redirect_to item_path(@item), notice: t('meta.defaults.labels.messages.success.updated', entity: 'Item')
     else
       set_data
-      render :edit, alert: 'Error creating item'
+      render :edit, alert: t('meta.defaults.labels.messages.errors.not_updated', entity: 'Item')
     end
   end
 
   def destroy
-    if @item.destroy
-      redirect_to items_path, notice: 'Item destroyed.'
-    else
-      redirect_to items_path, alert: 'Item could not be destroyed.'
-    end
+    @item.destroy
+    redirect_to items_path, notice: t('meta.defaults.labels.messages.success.destroyed', entity: 'Item')
   end
 
   def multiple_destroy
@@ -127,7 +123,7 @@ class ItemsController < ApplicationController
         :dcterms_is_shown_at,
         :dcterms_provenance,
         :dcterms_license,
-        :other_collections  => [],
+        :other_collections => [],
     )
   end
 
