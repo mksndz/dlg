@@ -20,6 +20,7 @@ en:
           filter_button: 'Filter'
         columns:
           id: 'ID'
+          name: 'Name'
           slug: 'Slug'
           title: 'Title'
           public: 'Public?'
@@ -74,3 +75,9 @@ en:
         errors:
           not_recreated: 'Batch could not be recreated.'
           batch_already_committed: 'Batch has already been committed'
+    subject:
+      actions:
+        add: 'Create Subject'
+      labels:
+        view:
+          collections_for: 'Collections for this Subject'

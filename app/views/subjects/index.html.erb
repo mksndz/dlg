@@ -4,11 +4,11 @@
 
 <% breadcrumb :subjects %>
 
-<%= link_to 'Add Subject', new_subject_path, class: 'btn btn-default' %>
+<%= link_to t('meta.subject.actions.add'), new_subject_path, class: 'btn btn-default' %>
 
 <% if @subjects.empty? %>
 
-    <p>No Subjects have been added yet.</p>
+    <p><%=  %></p>
 
 <% else %>
 
@@ -16,10 +16,10 @@
       <thead>
       <tr>
         <th>
-          <%= sortable 'id', 'ID' %>
+          <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'name' %>
+          <%= sortable 'name', t('meta.defaults.labels.columns.name') %>
         </th>
         <th width="185px"></th>
       </tr>
