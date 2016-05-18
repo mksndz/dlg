@@ -24,9 +24,17 @@ en:
           title: 'Title'
           public: 'Public?'
           collections_count: 'Collections'
-          itemss_count: 'Items'
+          items_count: 'Items'
+        messages:
+          errors:
+            invalid_on_save: 'The %{entity} could not be saved due to the following errors:'
+            not_created: '%{entity} could not be created!'
+            not_updated: '%{entity} could not be updated!'
+          success:
+            created: '%{entity} created'
+            updated: '%{entity} updated'
+            destroyed: '%{entity} deleted'
       errors:
-        invalid_on_save: 'The %{entity} could not be saved due to the following errors:'
     item:
       actions:
         add: 'New Item'
@@ -55,4 +63,6 @@ en:
           roles: 'Roles'
           assigned_repositories: 'Repositories Assigned'
           assigned_collections: 'Collections Assigned'
-
+      messages:
+        errors:
+          user_restriction_error: 'You have attempted to give a User rights that you do not have.'

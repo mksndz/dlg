@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   rescue_from UserRestrictionsError do
-    redirect_to :back, alert: 'You have attempted to give a user rights that you do not have.'
+    redirect_to :back, alert: I18n.t('meta.user.messages.errors.user_restriction_error')
   end
 
 
@@ -43,9 +43,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     set_user_creator
     if @user.save
-      redirect_to user_path(@user), notice: 'User created!'
+      redirect_to user_path(@user), notice: I18n.t('meta.defaults.labels.messages.success.created', entity: 'User')
     else
-      render :new, alert: 'User could not be created!'
+      render :new, alert: I18n.t('meta.defaults.labels.messages.errors.not_created', entity: 'User')
     end
   end
 
@@ -54,16 +54,16 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to user_path(@user), notice: 'User updated!'
+      redirect_to user_path(@user), notice: I18n.t('meta.defaults.labels.messages.success.updated', entity: 'User')
     else
-      render :edit, alert: 'User could not be updated!'
+      render :edit, alert: I18n.t('meta.defaults.labels.messages.errors.not_updated', entity: 'User')
     end
   end
 
   def destroy
     # todo determine if a soft delete would be better for users
     @user.destroy
-    redirect_to users_url, notice: 'User was successfully destroyed.'
+    redirect_to users_url, notice: I18n.t('meta.defaults.labels.messages.success.destroyed', entity: 'User')
   end
 
   private
