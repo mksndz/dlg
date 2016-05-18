@@ -51,4 +51,8 @@ en:
         columns:
           email: 'Email'
           roles: 'Roles'
+        view:
+          roles: 'Roles'
+          assigned_repositories: 'Repositories Assigned'
+          assigned_collections: 'Collections Assigned'
 
