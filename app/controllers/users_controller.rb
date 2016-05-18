@@ -35,7 +35,6 @@ class UsersController < ApplicationController
   end
 
   def new
-    set_data
     @user = User.new
   end
 
@@ -45,6 +44,7 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to user_path(@user), notice: I18n.t('meta.defaults.labels.messages.success.created', entity: 'User')
     else
+      set_data
       render :new, alert: I18n.t('meta.defaults.labels.messages.errors.not_created', entity: 'User')
     end
   end
@@ -56,6 +56,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to user_path(@user), notice: I18n.t('meta.defaults.labels.messages.success.updated', entity: 'User')
     else
+      set_data
       render :edit, alert: I18n.t('meta.defaults.labels.messages.errors.not_updated', entity: 'User')
     end
   end
@@ -83,7 +84,6 @@ class UsersController < ApplicationController
   def set_data
     @data ||= {}
     @data[:roles] = Role.all
-    # @data[:roles] = Role.where("name != 'basic'")
     @data[:repositories]= current_user.super? ? Repository.all : current_user.repositories
     @data[:collections] = current_user.super? ? Collection.all : current_user.collections
   end

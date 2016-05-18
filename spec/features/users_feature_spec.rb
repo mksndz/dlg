@@ -54,7 +54,7 @@ feature 'Users Management' do
 
   end
 
-  scenario 'Super User clicks on Add User button and is displayed the New User form with Role fields' do
+  scenario 'Super User clicks on Add User button and is displayed the New User form with Role fields and with Password fields' do
 
     login_as super_user, scope: :user
 
@@ -62,11 +62,13 @@ feature 'Users Management' do
 
     click_link I18n.t('meta.user.actions.add')
 
-    page.has_css?('#user_role_ids_1')
+    expect(page).to have_field(super_user.roles.first.name)
+    expect(page).to have_field(I18n.t('activerecord.attributes.user.password'))
+    expect(page).to have_field(I18n.t('activerecord.attributes.user.password_confirmation'))
 
   end
 
-  scenario 'Super User clicks on Add User button and is displayed the New User form without Role fields' do
+  scenario 'Super User clicks on Add User button and is displayed the New User form without Role fields and with Password fields' do
 
     login_as super_user, scope: :user
 
@@ -74,11 +76,13 @@ feature 'Users Management' do
 
     click_link I18n.t('meta.user.actions.add')
 
-    page.has_no_css?('#user_role_ids_1')
+    expect(page).to have_field(super_user.roles.first.name)
+    expect(page).to have_field(I18n.t('activerecord.attributes.user.password'))
+    expect(page).to have_field(I18n.t('activerecord.attributes.user.password_confirmation'))
 
   end
 
-  scenario 'Super User clicks the Edit button for an existing user and sees a form to modify user info' do
+  scenario 'Super User clicks the Edit button for an existing user and sees a form to modify user info without password fields' do
 
     login_as super_user, scope: :user
 
@@ -93,14 +97,43 @@ feature 'Users Management' do
     else
       expect(find_field(I18n.t('activerecord.attributes.user.creator')).value).to be_empty
     end
-
+    expect(page).to have_no_field(I18n.t('activerecord.attributes.user.password'))
+    expect(page).to have_no_field(I18n.t('activerecord.attributes.user.password_confirmation'))
     super_user.roles.each do |r|
       expect(page).to have_checked_field r.name
     end
-
     expect(find_field(I18n.t('activerecord.attributes.user.email')).value).to eq super_user.email
     expect(find_field(I18n.t('activerecord.attributes.user.repository_ids')).value).to eq super_user.repository_ids
     expect(find_field(I18n.t('activerecord.attributes.user.collection_ids')).value).to eq super_user.collection_ids
+
+  end
+
+  scenario 'Super User saves an Edit form and is redirected to the view page' do
+
+    login_as super_user, scope: :user
+
+    user = Fabricate :user
+
+    visit edit_user_path(user)
+
+    click_button I18n.t('meta.defaults.actions.save')
+
+    expect(page).to have_current_path(user_path(user))
+    expect(page).to have_text I18n.t('meta.defaults.labels.messages.success.updated', entity: 'User')
+
+  end
+
+  scenario 'Super User saves an invalid New form and is redirected back to the new form' do
+
+    login_as super_user, scope: :user
+
+    r = Role.all.length
+
+    visit new_user_path
+
+    click_button I18n.t('meta.defaults.actions.save')
+
+    expect(page).to have_text I18n.t('meta.defaults.labels.messages.errors.invalid_on_save', entity: 'User')
 
   end
 
