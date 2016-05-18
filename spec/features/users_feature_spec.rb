@@ -127,8 +127,6 @@ feature 'Users Management' do
 
     login_as super_user, scope: :user
 
-    r = Role.all.length
-
     visit new_user_path
 
     click_button I18n.t('meta.defaults.actions.save')
