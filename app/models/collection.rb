@@ -18,7 +18,7 @@ class Collection < ActiveRecord::Base
   end
 
   def title
-    dcterms_title.first || 'No Title'
+    display_title || 'No Title'
   end
 
   # allow Items to delegate collection_title

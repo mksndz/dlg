@@ -1,6 +1,6 @@
 <%= bootstrap_form_for(@user) do |f| %>
 
-    <%= f.alert_message 'The Batch could not be saved due to the following errors:' %>
+    <%= f.alert_message t('meta.defaults.errors.invalid_on_save', entity: 'User') %>
 
     <%= f.email_field :email %>
 
@@ -19,6 +19,6 @@
         <%= f.select :collection_ids, @data[:collections].collect! { |c| [c.title, c.id] }, { include_blank: true }, { multiple: true } %>
     <% end %>
 
-    <%= f.primary 'Save' %>
+    <%= f.primary t('meta.defaults.actions.save') %>
 
 <% end %>
