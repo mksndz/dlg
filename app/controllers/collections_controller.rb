@@ -42,7 +42,7 @@ class CollectionsController < ApplicationController
 
     respond_to do |format|
       if @collection.save
-        format.html { redirect_to collection_path(@collection), notice: 'Collection item was successfully created.' }
+        format.html { redirect_to collection_path(@collection), notice: t('meta.defaults.labels.messages.success.created', entity: 'Collection') }
       else
         set_data
         format.html { render :new }
@@ -55,10 +55,10 @@ class CollectionsController < ApplicationController
 
   def update
     if @collection.update split_dc_params(collection_params)
-      redirect_to collection_path(@collection), notice: 'Collection updated'
+      redirect_to collection_path(@collection), notice: t('meta.defaults.labels.messages.success.updated', entity: ('Collection'))
     else
       set_data
-      render :edit, alert: 'Error creating collection'
+      render :edit, alert: t('meta.defaults.labels.messages.errors.not_updated', entity: 'Collection')
     end
   end
 
