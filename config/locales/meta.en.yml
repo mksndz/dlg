@@ -84,3 +84,6 @@ en:
       labels:
         view:
           collections_for: 'Collections for this Subject'
+    role:
+      action:
+        add: 'Create Role'

@@ -4,12 +4,12 @@
 
 <% breadcrumb :roles %>
 
-<%= link_to 'Add Role', new_role_path, class: 'btn btn-default' %>
+<%= link_to t('meta.role.action.add'), new_role_path, class: 'btn btn-default' %>
 
 
 <% if @roles.empty? %>
 
-    <p>No Roles have been added yet.</p>
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Roles') %></p>
 
 <% else %>
 
@@ -17,10 +17,10 @@
       <thead>
       <tr>
         <th>
-          <%= sortable 'id', 'ID' %>
+          <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'name', 'Name' %>
+          <%= sortable 'name', t('meta.defaults.labels.columns.name') %>
 
         </th>
         <th width="185px"></th>
