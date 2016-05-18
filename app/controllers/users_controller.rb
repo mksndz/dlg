@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   rescue_from UserRestrictionsError do
-    redirect_to :back, alert: I18n.t('meta.user.messages.errors.user_restriction_error')
+    redirect_to :back, alert: t('meta.user.messages.errors.user_restriction_error')
   end
 
 
@@ -42,10 +42,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     set_user_creator
     if @user.save
-      redirect_to user_path(@user), notice: I18n.t('meta.defaults.labels.messages.success.created', entity: 'User')
+      redirect_to user_path(@user), notice: t('meta.defaults.labels.messages.success.created', entity: 'User')
     else
       set_data
-      render :new, alert: I18n.t('meta.defaults.labels.messages.errors.not_created', entity: 'User')
+      render :new, alert: t('meta.defaults.labels.messages.errors.not_created', entity: 'User')
     end
   end
 
@@ -54,17 +54,17 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to user_path(@user), notice: I18n.t('meta.defaults.labels.messages.success.updated', entity: 'User')
+      redirect_to user_path(@user), notice: t('meta.defaults.labels.messages.success.updated', entity: 'User')
     else
       set_data
-      render :edit, alert: I18n.t('meta.defaults.labels.messages.errors.not_updated', entity: 'User')
+      render :edit, alert: t('meta.defaults.labels.messages.errors.not_updated', entity: 'User')
     end
   end
 
   def destroy
     # todo determine if a soft delete would be better for users
     @user.destroy
-    redirect_to users_url, notice: I18n.t('meta.defaults.labels.messages.success.destroyed', entity: 'User')
+    redirect_to users_url, notice: t('meta.defaults.labels.messages.success.destroyed', entity: 'User')
   end
 
   private
