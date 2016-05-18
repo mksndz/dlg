@@ -1,5 +1,8 @@
 en:
   meta:
+    footer:
+      left: '© 2016 Digital Library of Georgia'
+      to_top: 'Return to Top'
     defaults:
       actions:
         view: 'View'
