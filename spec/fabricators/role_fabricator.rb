@@ -1,7 +1,7 @@
 require 'faker'
 
 Fabricator(:role) do
-  name { Faker::Hipster.words(2) }
+  name { Faker::Hipster.word }
 end
 
 Fabricator(:super_role, from: :role) do
