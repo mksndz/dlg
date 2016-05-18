@@ -25,15 +25,15 @@ en:
           public: 'Public?'
           collections_count: 'Collections'
           items_count: 'Items'
-        messages:
-          errors:
-            invalid_on_save: 'The %{entity} could not be saved due to the following errors:'
-            not_created: '%{entity} could not be created!'
-            not_updated: '%{entity} could not be updated!'
-          success:
-            created: '%{entity} created'
-            updated: '%{entity} updated'
-            destroyed: '%{entity} deleted'
+      messages:
+        errors:
+          invalid_on_save: 'The %{entity} could not be saved due to the following errors:'
+          not_created: '%{entity} could not be created!'
+          not_updated: '%{entity} could not be updated!'
+        success:
+          created: '%{entity} created'
+          updated: '%{entity} updated'
+          destroyed: '%{entity} deleted'
       errors:
     item:
       actions:
@@ -66,3 +66,11 @@ en:
       messages:
         errors:
           user_restriction_error: 'You have attempted to give a User rights that you do not have.'
+    batch:
+      messages:
+        success:
+          recreated: 'Batch was successfully recreated.'
+          committed: 'This batch has been queued for committing.'
+        errors:
+          not_recreated: 'Batch could not be recreated.'
+          batch_already_committed: 'Batch has already been committed'

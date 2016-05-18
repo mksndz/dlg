@@ -41,10 +41,10 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(split_dc_params(item_params))
     if @item.save
-      redirect_to item_path(@item), notice: t('meta.defaults.labels.messages.success.created', entity: 'Item')
+      redirect_to item_path(@item), notice: t('meta.defaults.messages.success.created', entity: 'Item')
     else
       set_data
-      render :new, alert: t('meta.defaults.labels.messages.errors.not_created', entity: 'Item')
+      render :new, alert: t('meta.defaults.messages.errors.not_created', entity: 'Item')
     end
   end
 
@@ -58,16 +58,16 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(split_dc_params(item_params))
-      redirect_to item_path(@item), notice: t('meta.defaults.labels.messages.success.updated', entity: 'Item')
+      redirect_to item_path(@item), notice: t('meta.defaults.messages.success.updated', entity: 'Item')
     else
       set_data
-      render :edit, alert: t('meta.defaults.labels.messages.errors.not_updated', entity: 'Item')
+      render :edit, alert: t('meta.defaults.messages.errors.not_updated', entity: 'Item')
     end
   end
 
   def destroy
     @item.destroy
-    redirect_to items_path, notice: t('meta.defaults.labels.messages.success.destroyed', entity: 'Item')
+    redirect_to items_path, notice: t('meta.defaults.messages.success.destroyed', entity: 'Item')
   end
 
   def multiple_destroy

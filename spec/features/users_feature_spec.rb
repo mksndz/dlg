@@ -119,7 +119,7 @@ feature 'Users Management' do
     click_button I18n.t('meta.defaults.actions.save')
 
     expect(page).to have_current_path(user_path(user))
-    expect(page).to have_text I18n.t('meta.defaults.labels.messages.success.updated', entity: 'User')
+    expect(page).to have_text I18n.t('meta.defaults.messages.success.updated', entity: 'User')
 
   end
 
@@ -131,7 +131,7 @@ feature 'Users Management' do
 
     click_button I18n.t('meta.defaults.actions.save')
 
-    expect(page).to have_text I18n.t('meta.defaults.labels.messages.errors.invalid_on_save', entity: 'User')
+    expect(page).to have_text I18n.t('meta.defaults.messages.errors.invalid_on_save', entity: 'User')
 
   end
 
