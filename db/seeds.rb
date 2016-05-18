@@ -28,7 +28,6 @@ end
 #
 # Default Subjects for app
 #
-Subject.delete_all
 Subject.create!([
                  { name: 'The Arts' },
                  { name: 'Business & Industry' },
@@ -48,7 +47,6 @@ Subject.create!([
 #
 # Default Roles for app
 #
-Role.delete_all
 Role.create!([
                  { name: 'super' },
                  { name: 'coordinator' },
