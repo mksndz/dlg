@@ -4,7 +4,6 @@ class RolesController < ApplicationController
   include Sorting
   include ErrorHandling
 
-
   # GET /roles
   def index
     @roles = Role.all
@@ -28,7 +27,7 @@ class RolesController < ApplicationController
     @role = Role.new(role_params)
 
     if @role.save
-      redirect_to @role, notice: 'Role was successfully created.'
+      redirect_to @role, notice: t('meta.defaults.labels.messages.success.created', entity: 'Role')
     else
       render :new
     end
@@ -37,7 +36,7 @@ class RolesController < ApplicationController
   # PATCH/PUT /roles/1
   def update
     if @role.update(role_params)
-      redirect_to @role, notice: 'Role was successfully updated.'
+      redirect_to @role, notice: t('meta.defaults.labels.messages.success.updated', entity: 'Role')
     else
       render :edit
     end
@@ -46,7 +45,7 @@ class RolesController < ApplicationController
   # DELETE /roles/1
   def destroy
     @role.destroy
-    redirect_to roles_url, notice: 'Role was successfully destroyed.'
+    redirect_to roles_url, notice: t('meta.defaults.labels.messages.success.destroyed', entity: 'Role')
   end
 
   private
