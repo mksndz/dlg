@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Time Periods</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start</th>
+      <th>End</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @time_periods.each do |time_period| %>
+      <tr>
+        <td><%= time_period.name %></td>
+        <td><%= time_period.start %></td>
+        <td><%= time_period.end %></td>
+        <td><%= link_to 'Show', time_period %></td>
+        <td><%= link_to 'Edit', edit_time_period_path(time_period) %></td>
+        <td><%= link_to 'Destroy', time_period, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Time period', new_time_period_path %>

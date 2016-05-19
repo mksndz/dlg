@@ -18,6 +18,7 @@ en:
         roles: 'Roles'
         users: 'Users'
         subjects: 'Subjects'
+        time_periods: 'Time Periods'
       result_actions:
         edit: 'Edit'
         meta_view: 'Meta View'

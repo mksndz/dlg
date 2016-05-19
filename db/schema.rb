@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512173700) do
+ActiveRecord::Schema.define(version: 20160519205618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,14 @@ ActiveRecord::Schema.define(version: 20160512173700) do
   add_index "collections_subjects", ["collection_id", "subject_id"], name: "index_collections_subjects_on_collection_id_and_subject_id", using: :btree
   add_index "collections_subjects", ["subject_id", "collection_id"], name: "index_collections_subjects_on_subject_id_and_collection_id", using: :btree
 
+  create_table "collections_time_periods", id: false, force: :cascade do |t|
+    t.integer "time_period_id", null: false
+    t.integer "collection_id",  null: false
+  end
+
+  add_index "collections_time_periods", ["collection_id", "time_period_id"], name: "idx_col_time_per_on_coll_and_time_per", using: :btree
+  add_index "collections_time_periods", ["time_period_id", "collection_id"], name: "idx_col_time_per_on_time_per_and_coll", using: :btree
+
   create_table "collections_users", id: false, force: :cascade do |t|
     t.integer "collection_id", null: false
     t.integer "user_id",       null: false
@@ -197,14 +205,6 @@ ActiveRecord::Schema.define(version: 20160512173700) do
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
 
-  create_table "permissions", force: :cascade do |t|
-    t.string   "action"
-    t.string   "class_name", null: false
-    t.integer  "entity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "repositories", force: :cascade do |t|
     t.string   "slug",                              null: false
     t.boolean  "public",            default: false, null: false
@@ -261,6 +261,14 @@ ActiveRecord::Schema.define(version: 20160512173700) do
 
   create_table "subjects", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "time_periods", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "start"
+    t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

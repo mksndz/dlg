@@ -7,6 +7,7 @@ class Collection < ActiveRecord::Base
   has_many :dpla_items, -> { where dpla: true }, class_name: 'Item'
   belongs_to :repository, counter_cache: true
   has_and_belongs_to_many :subjects
+  has_and_belongs_to_many :time_periods
   has_and_belongs_to_many :users
 
   validates_presence_of :repository

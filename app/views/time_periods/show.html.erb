@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @time_period.name %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @time_period.start %>
+</p>
+
+<p>
+  <strong>End:</strong>
+  <%= @time_period.end %>
+</p>
+
+<%= link_to 'Edit', edit_time_period_path(@time_period) %> |
+<%= link_to 'Back', time_periods_path %>

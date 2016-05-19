@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'auth/invitations', to: 'invitations#index'
   end
 
-  resources :repositories, :collections, :users, :roles, :subjects
+  resources :repositories, :collections, :users, :roles, :subjects, :time_periods
 
   resources :items do
     collection do
