@@ -1,12 +1,12 @@
 <% if document['sunspot_id_ss'] && current_user.super? %>
   <% klass, id = document['sunspot_id_ss'].split(' ') %>
-  <%= link_to('Edit', url_for(controller: klass.downcase.pluralize, action: 'edit', id: id)) %>
+  <%= link_to(t('meta.app.result_actions.edit'), url_for(controller: klass.downcase.pluralize, action: 'edit', id: id)) %>
     <br>
-  <%= link_to('Meta View', url_for(controller: klass.downcase.pluralize, action: 'show', id: id)) %>
+  <%= link_to(t('meta.app.result_actions.meta_view'), url_for(controller: klass.downcase.pluralize, action: 'show', id: id)) %>
   <% if klass == 'Item' %>
     <br>
     <label for="action_item">
-      <%= check_box_tag(:action_item, id, false, { class: 'action-item'}) %> Action
+      <%= check_box_tag(:action_item, id, false, { class: 'action-item'}) %><%= t('meta.app.result_actions.action') %>
     </label>
   <% end %>
 <% end %>

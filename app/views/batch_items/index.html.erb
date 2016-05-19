@@ -11,15 +11,15 @@
 <% breadcrumb :batch_items, @batch %>
 
 <% unless @batch.committed? %>
-  <%= link_to 'Add Batch Item', new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
-  <%= link_to 'Populate Batch Items via XML', import_batch_path(@batch), class: 'btn btn-default' %>
+  <%= link_to t('meta.batch_item.action.add'), new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
+  <%= link_to t('meta.batch.actions.populate_with_xml'), import_batch_path(@batch), class: 'btn btn-default' %>
 <% end %>
 
 <%= render 'shared/per_pager' %>
 
 <% if @batch_items.empty? %>
 
-    <p>No Batch Items have been added yet.</p>
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Batch Items') %></p>
 
 <% else %>
 
@@ -27,19 +27,19 @@
       <thead>
       <tr>
         <th>
-          <%= sortable 'id', 'ID' %>
+          <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'slug' %>
+          <%= sortable 'slug', t('meta.defaults.labels.columns.slug') %>
         </th>
         <th>
-          <%= sortable 'dcterms_title', 'Title' %>
+          <%= sortable 'dcterms_title', t('meta.defaults.labels.columns.title') %>
         </th>
         <th>
-          Valid?
+          <%= t('meta.defaults.labels.columns.valid') %>
         </th>
         <th>
-          Collection
+          <%= t('meta.batch_item.labels.columns.collection') %>
         </th>
         <th width="185px"></th>
       </tr>
@@ -65,10 +65,10 @@
             </td>
             <td>
               <div class="btn-group btn-group-xs">
-                <%= link_to 'View', batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.view'), batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
                 <% unless @batch.committed? %>
-                  <%= link_to 'Edit', edit_batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
-                  <%= link_to 'Delete', batch_batch_item_path(@batch, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+                  <%= link_to t('meta.defaults.actions.edit'), edit_batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
+                  <%= link_to t('meta.defaults.actions.destroy'), batch_batch_item_path(@batch, item), method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
                 <% end %>
               </div>
             </td>

@@ -1,27 +1,27 @@
 <% if current_user.super? %>
 <div id="action-dropdown" class="btn-group">
   <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    Actions <span class="caret"></span>
+    <%= t('meta.app.action_widget.name') %> <span class="caret"></span>
   </button>
 
   <ul class="dropdown-menu" role="menu">
     <li>
-      <%= link_to 'Select All on Page', '#', class: 'select-all-action' %>
+      <%= link_to t('meta.app.action_widget.select_all'), '#', class: 'select-all-action' %>
     </li>
     <li>
-      <%= link_to 'Deselect All on Page', '#', class: 'deselect-all-action' %>
+      <%= link_to t('meta.app.action_widget.deselect_all'), '#', class: 'deselect-all-action' %>
     </li>
     <li class="dropdown-header">
-      Checked Items...
+      <%= t('meta.app.action_widget.divider') %>
     </li>
     <li>
-      <%= link_to 'Delete', '#', class: 'delete-action', data: { url: multiple_destroy_items_path } %>
+      <%= link_to t('meta.app.action_widget.delete'), '#', class: 'delete-action', data: { url: multiple_destroy_items_path } %>
     </li>
     <li>
-      <%= link_to 'Add to XML', '#', class: 'add-to-xml-action', data: { url: xml_items_path }  %>
+      <%= link_to t('meta.app.action_widget.xml'), '#', class: 'add-to-xml-action', data: { url: xml_items_path }  %>
     </li>
     <li>
-      <%= link_to 'Add to Batch', '#', class: 'add-to-batch-action', data: { url: '' }  %>
+      <%= link_to t('meta.app.action_widget.batch'), '#', class: 'add-to-batch-action', data: { url: '' }  %>
     </li>
   </ul>
 </div>

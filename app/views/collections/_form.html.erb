@@ -1,6 +1,6 @@
 <%= bootstrap_form_for(@collection) do |f| %>
 
-    <%= f.alert_message 'The record could not be saved due to the following errors:' %>
+    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Collection') %>
 
     <%= f.text_field :slug %>
 
@@ -30,6 +30,6 @@
 
     <%= f.collection_check_boxes :subject_ids, @data[:subjects], :id, :name %>
 
-    <%= f.primary 'Save' %>
+    <%= f.primary t('meta.defaults.actions.save') %>
 
 <% end %>

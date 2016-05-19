@@ -1,6 +1,6 @@
 <%= bootstrap_form_for(@item) do |f| %>
 
-    <%= f.alert_message 'The Item could not be saved due to the following errors:' %>
+    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Item') %>
 
     <%= f.text_field :slug %>
 

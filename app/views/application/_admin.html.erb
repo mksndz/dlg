@@ -1,11 +1,11 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
 <ul class="dropdown-menu">
-  <%= content_tag :li, link_to('Search', blacklight_advanced_search_engine.advanced_search_path(params.except(:controller, :action))) %>
-  <%= content_tag :li, link_to('Repositories', repositories_path) if can? :index, Repository %>
-  <%= content_tag :li, link_to('Collections', collections_path) if can? :index, Collection%>
-  <%= content_tag :li, link_to('Items', items_path) if can? :index, Item %>
-  <%= content_tag :li, link_to('Batches', batches_path) if can? :index, Batch %>
-  <%= content_tag :li, link_to('Roles', roles_path) if can? :index, Role %>
-  <%= content_tag :li, link_to('Users', users_path) if can? :index, current_user %>
-  <%= content_tag :li, link_to('Subjects', subjects_path) if can? :index, Subject %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.search'), blacklight_advanced_search_engine.advanced_search_path(params.except(:controller, :action))) %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.repositories'), repositories_path) if can? :index, Repository %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.collections'), collections_path) if can? :index, Collection%>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.items'), items_path) if can? :index, Item %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.batches'), batches_path) if can? :index, Batch %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.roles'), roles_path) if can? :index, Role %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.roles'), users_path) if can? :index, current_user %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.subjects'), subjects_path) if can? :index, Subject %>
 </ul>

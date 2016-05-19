@@ -6,22 +6,22 @@
 
 <% unless @batch.commit_results['errors'].nil? %>
 
-  <h3>Could not Commit</h3>
+  <h3><%= t('meta.batch.labels.failed') %></h3>
 
   <table class="table table-condensed table-hover">
     <thead>
     <tr>
       <th>
-        #
+        <%= t('meta.batch.labels.columns.number') %>
       </th>
       <th>
-        Slug
+        <%= t('meta.defaults.labels.columns.slug') %>
       </th>
       <th>
-        Batch Item
+        <%= t('meta.batch.labels.columns.batch_item') %>
       </th>
       <th>
-        Errors
+        <%= t('meta.batch.labels.columns.errors') %>
       </th>
     </tr>
     </thead>
@@ -59,22 +59,22 @@
 
 <% unless @batch.commit_results['items'].empty? %>
 
-  <h3>Successfully Committed</h3>
+  <h3><%= t('meta.batch.labels.successful') %></h3>
 
   <table class="table table-condensed table-hover">
     <thead>
     <tr>
       <th>
-        #
+        <%= t('meta.batch.labels.columns.number') %>
       </th>
       <th>
-        Slug
+        <%= t('meta.defaults.labels.columns.slug') %>
       </th>
       <th>
-        Batch Item
+        <%= t('meta.batch.labels.columns.batch_item') %>
       </th>
       <th>
-        Item
+        <%= t('meta.batch.labels.columns.item') %>
       </th>
     </tr>
     </thead>

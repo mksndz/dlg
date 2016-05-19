@@ -1,6 +1,6 @@
 <%= bootstrap_form_for(@subject) do |f| %>
 
-    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save') %>
+    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Subject' %>
 
     <%= f.text_field :name %>
 

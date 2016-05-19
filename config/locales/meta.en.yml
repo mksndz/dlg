@@ -1,5 +1,27 @@
 en:
   meta:
+    app:
+      action_widget:
+        name: 'Actions'
+        select_all: 'Select All on Page'
+        deselect_all: 'Deselect All on Page'
+        divider: 'Checked Items...'
+        delete: 'Delete'
+        xml: 'Add to XML'
+        batch: 'Add to Batch'
+      admin_menu:
+        search: 'Search'
+        repositories: 'Repositories'
+        collections: 'Collections'
+        items: 'Items'
+        batches: 'Batches'
+        roles: 'Roles'
+        users: 'Users'
+        subjects: 'Subjects'
+      result_actions:
+        edit: 'Edit'
+        meta_view: 'Meta View'
+        action: ' Action'
     footer:
       left: '© 2016 Digital Library of Georgia'
       to_top: 'Return to Top'
@@ -10,12 +32,14 @@ en:
         edit: 'Edit'
         destroy: 'Delete'
         save: 'Save'
+        filter: 'Filter'
       labels:
         unfiltered_index_subtitle: 'All of Them'
         filtered_by_subtitle: 'For %{title}'
         filtered_empty_subtitle: 'None'
         no_records_found: 'No %{entity} found.'
         per_page: 'Per Page'
+        confirm: 'Are you sure?'
         filter:
           repository: 'Repository'
           collection: 'Collection'
@@ -27,6 +51,7 @@ en:
           slug: 'Slug'
           title: 'Title'
           public: 'Public?'
+          valid: 'Valid?'
           collections_count: 'Collections'
           items_count: 'Items'
       messages:
@@ -42,22 +67,33 @@ en:
     item:
       actions:
         add: 'New Item'
+        copy: 'Copy Item'
+        xml: 'XML for Item'
       labels:
         columns:
           collection: 'Collection'
+        view:
+          other_collections: 'Other Collections'
+          committed_batch_items: 'Committed Batch Items for this Item'
+          thumbnail: 'Thumbnail'
     collection:
       actions:
         add: 'New Collection'
+        collection_xml: 'Collection XML'
+        item_xml: 'Item XML'
       labels:
         columns:
           repository: 'Repository'
           items: 'Items'
+        view:
+          other_repositories: 'Other Repositories'
+          subjects: 'Subjects'
     repository:
       actions:
         add: 'New Repository'
     user:
       actions:
-        add: 'Create User'
+        add: 'New User'
         invites: 'Invitations'
       labels:
         columns:
@@ -71,6 +107,34 @@ en:
         errors:
           user_restriction_error: 'You have attempted to give a User rights that you do not have.'
     batch:
+      actions:
+        add: 'New Batch'
+        add_batch_items: 'Add Batch Item'
+        populate_with_xml: 'Populate Batch Items via XML'
+        import: 'Import'
+        view_batch: 'View Batch'
+        process_more: 'Process More XML'
+        results: 'Results'
+        commit: 'Commit'
+        recreate: 'Recreate'
+        batch_items: 'Manage Batch Items'
+      labels:
+        failed: 'Could not Commit'
+        successful: 'Successfully Committed'
+        not_yet_committed: 'Not Yet'
+        to_commit: 'You will be committing #{count} records in this action.'
+        progress_remaining: '% Complete'
+        import:
+          xml_file: 'XML File'
+          xml_text: 'XML Text'
+          bypass_validations: 'Bypass Validations'
+        columns:
+          creator: 'Creator'
+          committed: 'Committed'
+          errors: 'Errors'
+          batch_item: 'Batch Item'
+          number: '#'
+          item: 'Item'
       messages:
         success:
           recreated: 'Batch was successfully recreated.'
@@ -87,3 +151,9 @@ en:
     role:
       action:
         add: 'Create Role'
+    batch_item:
+      action:
+        add: 'Create Batch Item'
+      labels:
+        columns:
+          collection: 'Collection'

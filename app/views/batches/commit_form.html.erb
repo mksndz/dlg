@@ -11,7 +11,7 @@
 <% breadcrumb :batch, @batch %>
 
 <h3>
-  You will be committing <%= @batch.batch_items.length %> records in this action.
+  <%= t('meta.batch.labels.to_commit', count: @batch.batch_items.length) %>
 </h3>
 
 <%= bootstrap_form_tag url: commit_batch_path(@batch), html: { id: 'commit_form' } do |f| %>

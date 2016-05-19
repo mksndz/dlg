@@ -8,15 +8,15 @@
 
 <% breadcrumb :item, @item %>
 
-<%= link_to 'Edit', edit_item_path(@item), class: 'btn btn-default' %>
-<%= link_to 'Copy', copy_item_path(@item), class: 'btn btn-default', data: { confirm: 'Are you sure?' } %>
-<%= link_to 'XML', '#xml' , class: 'btn btn-default' %>
+<%= link_to t('meta.defaults.actions.edit'), edit_item_path(@item), class: 'btn btn-default' %>
+<%= link_to t('meta.item.actions.copy'), copy_item_path(@item), class: 'btn btn-default', data: { confirm: 'Are you sure?' } %>
+<%= link_to t('meta.item.actions.xml'), '#xml' , class: 'btn btn-default' %>
 
 <br><br>
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong>Thumbnail</strong>
+    <strong><%= t('meta.item.labels.view.thumbnail') %></strong>
   </div>
   <div class="panel-body">
     <%= legacy_thumbnail_tag @item %>
@@ -35,7 +35,7 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong>Other Collections</strong>
+    <strong><%= t('meta.item.labels.view.other_collections') %></strong>
   </div>
   <div class="panel-body">
     <ul>
@@ -48,7 +48,7 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong>Committed Batch Items for this Item</strong>
+    <strong><%= t('meta.item.labels.view.committed_batch_items') %></strong>
   </div>
   <div class="panel-body">
     <ul>

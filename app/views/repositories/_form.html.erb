@@ -1,6 +1,6 @@
 <%= bootstrap_form_for(@repository, inline_errors: false) do |f| %>
 
-    <%= f.alert_message 'The record could not be saved due to the following errors:' %>
+    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Repository') %>
 
     <%= f.text_field :slug %>
     <%= f.text_field :title %>

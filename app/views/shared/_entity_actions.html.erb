@@ -2,5 +2,5 @@
   <%= link_to t('meta.defaults.actions.view'), base_path, class: 'btn btn-default' %>
   <%= link_to(t('meta.defaults.actions.blacklight_view'), solr_document_path(entity.slug), class: 'btn btn-default') if show_bl %>
   <%= link_to t('meta.defaults.actions.edit'), edit_path, class: 'btn btn-default' %>
-  <%= link_to t('meta.defaults.actions.destroy'), base_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+  <%= link_to t('meta.defaults.actions.destroy'), base_path, method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
 </div>

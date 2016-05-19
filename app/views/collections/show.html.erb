@@ -8,9 +8,9 @@
 
 <% breadcrumb :collection, @collection %>
 
-<%= link_to 'Edit', edit_collection_path(@collection), class: 'btn btn-default' %>
-<%= link_to 'Collection XML', '#xml' , class: 'btn btn-default' %>
-<%= link_to 'XML For Included Items', '#item_xml' , class: 'btn btn-default' %>
+<%= link_to t('meta.defaults.actions.edit'), edit_collection_path(@collection), class: 'btn btn-default' %>
+<%= link_to t('meta.collection.actions.collection_xml'), '#xml' , class: 'btn btn-default' %>
+<%= link_to t('meta.collection.actions.item_xml'), '#item_xml' , class: 'btn btn-default' %>
 
 <br><br>
 
@@ -32,7 +32,7 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong>Other Repositories</strong>
+    <strong><%= t('meta.collection.labels.view.other_repositories') %></strong>
   </div>
   <div class="panel-body">
     <ul>
@@ -45,7 +45,7 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong>Subjects</strong>
+    <strong><%= t('meta.collection.labels.view.subjects') %></strong>
   </div>
   <div class="panel-body">
     <ul>

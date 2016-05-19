@@ -12,13 +12,13 @@
 
 <%= bootstrap_form_tag url: import_batch_batch_items_path(@batch), html: { id: 'xml_form' } do |f| %>
 
-    <%= f.file_field :xml_file, label: 'XML File' %>
-    <%= f.text_area :xml_text, label: 'XML Text' %>
+    <%= f.file_field :xml_file, label: t('meta.batch.labels.import.xml_file') %>
+    <%= f.text_area :xml_text, label: t('meta.batch.labels.import.xml_text') %>
     <%= f.form_group :bypass_validation do %>
-      <%= f.check_box :bypass_validation, label: 'Bypass Validations' %>
+      <%= f.check_box :bypass_validation, label: t('meta.batch.labels.import.bypass_validations') %>
     <% end %>
 
-    <%= f.primary 'Import', class: 'hide' %>
+    <%= f.primary t('meta.batch.actions.import'), class: 'hide' %>
 
 <% end %>
 
@@ -26,14 +26,14 @@
 
 <div class="progress">
   <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
-    <span class="sr-only">% Complete</span>
+    <span class="sr-only"><%= t('meta.batch.labels.progress_remaining') %></span>
   </div>
 </div>
 
 <div id="actions" class="hide well">
   <div class="btn-group">
-    <%= link_to 'View Batch', batch_batch_items_path(@batch), class: 'btn btn-default' %>
-    <%= link_to 'Process More XML', import_batch_path(@batch), class: 'btn btn-default' %>
+    <%= link_to t('meta.batch.actions.view_batch'), batch_batch_items_path(@batch), class: 'btn btn-default' %>
+    <%= link_to t('meta.batch.actions.process_more'), import_batch_path(@batch), class: 'btn btn-default' %>
   </div>
 
 </div>

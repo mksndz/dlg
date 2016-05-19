@@ -1,6 +1,6 @@
 <%= bootstrap_form_for([@batch, @batch_item]) do |f| %>
 
-    <%= f.alert_message 'The Batch Item could not be saved due to the following errors:' %>
+    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Batch Item') %>
 
     <%= f.text_field :slug, label: t('activerecord.attributes.batch_item.slug'), help: t('activerecord.help.batch_item.slug')  %>
 
@@ -18,6 +18,6 @@
 
     <%= render partial: 'shared/edit_dc_fields', locals: { f: f, entity: @batch_item } %>
 
-    <%= f.primary 'Save' %>
+    <%= f.primary t('meta.defaults.actions.save') %>
 
 <% end %>

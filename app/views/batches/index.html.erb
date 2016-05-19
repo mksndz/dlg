@@ -4,7 +4,7 @@
 
 <% breadcrumb :batches %>
 
-<%= link_to 'Add Batch', new_batch_path, class: 'btn btn-default' %>
+<%= link_to t('meta.batch.actions.add'), new_batch_path, class: 'btn btn-default' %>
 
 <%= render 'shared/per_pager' %>
 
@@ -18,14 +18,14 @@
         <%= f.hidden_field :per_page, { value: params[:per_page], name: 'per_page' } if params[:per_page] %>
         <%= f.select :user_id, options_for_select(@search_options[:users].collect { |c| [c.email, c.id] }, selected: params[:user_id] ), { include_blank: true }, { name: 'user_id' } %>
         <%= f.select :status, options_for_select(@search_options[:status], selected: params[:status]), { include_blank: true }, { name: 'status' } %>
-        <%= f.primary 'Filter' %>
+        <%= f.primary t('meta.defaults.actions.filter') %>
     <% end %>
   </div>
 <% end %>
 
 <% if @batches.empty? %>
 
-    <p>No Batches found.</p>
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Batches') %></p>
 
 <% else %>
 
@@ -33,19 +33,19 @@
       <thead>
       <tr>
         <th>
-          <%= sortable 'id', 'ID' %>
+          <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'name' %>
+          <%= sortable 'name', t('meta.defaults.labels.columns.name') %>
         </th>
         <th>
-          Item Count
+          <%= t('meta.defaults.labels.columns.items_count') %>
         </th>
         <th>
-          Creator
+          <%= t('meta.batch.labels.columns.creator') %>
         </th>
         <th>
-          Committed
+          <%= t('meta.batch.labels.columns.committed') %>
         </th>
         <th width="140px"></th>
       </tr>
@@ -67,16 +67,16 @@
               <%= batch.user.email %>
             </td>
             <td>
-              <%= batch.committed? ? batch.committed_at : 'Not Yet'  %>
+              <%= batch.committed? ? batch.committed_at : t('meta.batch.labels.not_yet_committed')  %>
             </td>
             <td>
               <div class="btn-group btn-group-xs">
-                <%= link_to 'View', batch, class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.view'), batch, class: 'btn btn-default' %>
                 <% if batch.committed? %>
-                    <%= link_to 'Results', results_batch_path(batch), class: 'btn btn-default' %>
+                    <%= link_to t('meta.batch.actions.results'), results_batch_path(batch), class: 'btn btn-default' %>
                 <% else %>
-                    <%= link_to 'Edit', edit_batch_path(batch), class: 'btn btn-default' %>
-                    <%= link_to 'Delete', batch, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+                    <%= link_to t('meta.defaults.actions.edit'), edit_batch_path(batch), class: 'btn btn-default' %>
+                    <%= link_to t('meta.defaults.actions.destroy'), batch, method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
                 <% end %>
               </div>
 
