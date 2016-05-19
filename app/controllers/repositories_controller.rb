@@ -31,9 +31,9 @@ class RepositoriesController < ApplicationController
   def create
     @repository = Repository.new repository_params
     if @repository.save
-      redirect_to repository_path(@repository), notice: t('meta.defaults.messages.success.created', entity: 'Repository')
+      redirect_to repository_path(@repository), notice: I18n.t('meta.defaults.messages.success.created', entity: 'Repository')
     else
-      render :new, alert: t('meta.defaults.messages.errors.not_created', entity: 'Repository')
+      render :new, alert: I18n.t('meta.defaults.messages.errors.not_created', entity: 'Repository')
     end
   end
 
@@ -42,15 +42,15 @@ class RepositoriesController < ApplicationController
 
   def update
     if @repository.update(repository_params)
-      redirect_to repository_path(@repository), notice: t('meta.defaults.messages.success.updated', entity: 'Repository')
+      redirect_to repository_path(@repository), notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Repository')
     else
-      render :edit, alert: t('meta.defaults.messages.errors.not_updated', entity: 'Repository')
+      render :edit, alert: I18n.t('meta.defaults.messages.errors.not_updated', entity: 'Repository')
     end
   end
 
   def destroy
     @repository.destroy
-    redirect_to repositories_path, notice: t('meta.defaults.messages.success.destroyed', entity: 'Repository')
+    redirect_to repositories_path, notice: I18n.t('meta.defaults.messages.success.destroyed', entity: 'Repository')
   end
 
   private

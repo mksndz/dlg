@@ -28,7 +28,7 @@ class SubjectsController < ApplicationController
   def create
     @subject = Subject.new(subject_params)
     if @subject.save
-      redirect_to subject_path(@subject), notice: t('meta.defaults.messages.success.created', entity: 'Subject')
+      redirect_to subject_path(@subject), notice: I18n.t('meta.defaults.messages.success.created', entity: 'Subject')
     else
       render :new
     end
@@ -37,7 +37,7 @@ class SubjectsController < ApplicationController
   # PATCH/PUT /subjects/1
   def update
     if @subject.update(subject_params)
-      redirect_to subject_path(@subject), notice: t('meta.defaults.messages.success.updated', entity: 'Subject')
+      redirect_to subject_path(@subject), notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Subject')
     else
       render :edit
     end
@@ -46,7 +46,7 @@ class SubjectsController < ApplicationController
   # DELETE /subjects/1
   def destroy
     @subject.destroy
-    redirect_to subjects_url, notice: t('meta.defaults.messages.success.destroyed', entity: 'Subject')
+    redirect_to subjects_url, notice: I18n.t('meta.defaults.messages.success.destroyed', entity: 'Subject')
   end
 
   private

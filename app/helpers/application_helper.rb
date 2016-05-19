@@ -43,8 +43,4 @@ module ApplicationHelper
     params[:per_page].to_i == pp ? 'btn-primary' : 'btn-default'
   end
 
-  def t(msg, *opts)
-    I18n.t(msg, *opts)
-  end
-
 end

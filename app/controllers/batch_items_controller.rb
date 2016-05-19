@@ -9,7 +9,7 @@ class BatchItemsController < ApplicationController
   before_action :check_if_committed, except: [:index, :show]
 
   rescue_from BatchCommittedError do
-    redirect_to({ action: 'index' }, alert: t('meta.batch.messages.errors.batch_already_committed'))
+    redirect_to({ action: 'index' }, alert: I18n.t('meta.batch.messages.errors.batch_already_committed'))
   end
 
   # GET /batch_items
@@ -43,7 +43,7 @@ class BatchItemsController < ApplicationController
 
     respond_to do |format|
       if @batch_item.save
-        format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: t('meta.defaults.messages.success.created', entity: 'Batch Item') }
+        format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: I18n.t('meta.defaults.messages.success.created', entity: 'Batch Item') }
         format.json { render :show, status: :created, location: @batch_item }
       else
         collections_for_select
@@ -58,7 +58,7 @@ class BatchItemsController < ApplicationController
   def update
     respond_to do |format|
       if @batch_item.update(split_dc_params(batch_item_params))
-        format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: t('meta.defaults.messages.success.updated', entity: 'Batch Item') }
+        format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Batch Item') }
         format.json { render :show, status: :ok, location: @batch_item }
       else
         collections_for_select
@@ -73,7 +73,7 @@ class BatchItemsController < ApplicationController
   def destroy
     @batch_item.destroy
     respond_to do |format|
-      format.html { redirect_to batch_batch_items_path(@batch), notice: t('meta.defaults.messages.success.destroyed') }
+      format.html { redirect_to batch_batch_items_path(@batch), notice: I18n.t('meta.defaults.messages.success.destroyed') }
       format.json { head :no_content }
     end
   end

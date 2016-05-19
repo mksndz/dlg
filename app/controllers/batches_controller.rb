@@ -8,7 +8,7 @@ class BatchesController < ApplicationController
   before_action :check_if_committed, only: [:edit, :update, :destroy, :commit]
 
   rescue_from BatchCommittedError do
-    redirect_to({ action: 'index' }, alert: t('meta.batch.messages.errors.batch_already_committed'))
+    redirect_to({ action: 'index' }, alert: I18n.t('meta.batch.messages.errors.batch_already_committed'))
   end
 
   # GET /batches
@@ -64,7 +64,7 @@ class BatchesController < ApplicationController
 
     respond_to do |format|
       if @batch.save
-        format.html { redirect_to @batch, notice: t('meta.defaults.messages.success.created', entity: 'Batch') }
+        format.html { redirect_to @batch, notice: I18n.t('meta.defaults.messages.success.created', entity: 'Batch') }
         format.json { render :show, status: :created, location: @batch }
       else
         format.html { render :new }
@@ -81,7 +81,7 @@ class BatchesController < ApplicationController
 
     respond_to do |format|
       if @batch.update(batch_params)
-        format.html { redirect_to @batch, notice: t('meta.defaults.messages.success.updated') }
+        format.html { redirect_to @batch, notice: I18n.t('meta.defaults.messages.success.updated') }
         format.json { render :show, status: :ok, location: @batch }
       else
         format.html { render :edit }
@@ -95,7 +95,7 @@ class BatchesController < ApplicationController
   def destroy
     @batch.destroy
     respond_to do |format|
-      format.html { redirect_to batches_url, notice: t('meta.defaults.messages.success.destroyed')}
+      format.html { redirect_to batches_url, notice: I18n.t('meta.defaults.messages.success.destroyed')}
       format.json { head :no_content }
     end
   end
@@ -106,7 +106,7 @@ class BatchesController < ApplicationController
   def commit
     respond_to do |format|
       @batch.delay.commit
-      format.html { redirect_to @batch, notice: t('meta.batch.messages.success.committed') }
+      format.html { redirect_to @batch, notice: I18n.t('meta.batch.messages.success.committed') }
       format.json { head :no_content }
     end
   end
@@ -122,9 +122,9 @@ class BatchesController < ApplicationController
     recreated_batch.user = current_user
     respond_to do |format|
       if recreated_batch.save
-        format.html { redirect_to recreated_batch, notice: t('meta.batch.messages.success.recreated')}
+        format.html { redirect_to recreated_batch, notice: I18n.t('meta.batch.messages.success.recreated')}
       else
-        format.html { redirect_to @batch, notice: t('meta.batch.messages.errors.not_recreated') }
+        format.html { redirect_to @batch, notice: I18n.t('meta.batch.messages.errors.not_recreated') }
       end
     end
   end

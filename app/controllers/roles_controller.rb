@@ -27,7 +27,7 @@ class RolesController < ApplicationController
     @role = Role.new(role_params)
 
     if @role.save
-      redirect_to @role, notice: t('meta.defaults.messages.success.created', entity: 'Role')
+      redirect_to @role, notice: I18n.t('meta.defaults.messages.success.created', entity: 'Role')
     else
       render :new
     end
@@ -36,7 +36,7 @@ class RolesController < ApplicationController
   # PATCH/PUT /roles/1
   def update
     if @role.update(role_params)
-      redirect_to @role, notice: t('meta.defaults.messages.success.updated', entity: 'Role')
+      redirect_to @role, notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Role')
     else
       render :edit
     end
@@ -45,7 +45,7 @@ class RolesController < ApplicationController
   # DELETE /roles/1
   def destroy
     @role.destroy
-    redirect_to roles_url, notice: t('meta.defaults.messages.success.destroyed', entity: 'Role')
+    redirect_to roles_url, notice: I18n.t('meta.defaults.messages.success.destroyed', entity: 'Role')
   end
 
   private
