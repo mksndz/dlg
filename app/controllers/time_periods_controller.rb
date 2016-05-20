@@ -5,13 +5,13 @@ class TimePeriodsController < ApplicationController
   include Sorting
 
   # GET /time_periods
-  # GET /time_periods.json
   def index
-    @time_periods = TimePeriod.all
+    @time_periods = TimePeriod
+                    .order(sort_column + ' ' + sort_direction)
+                    .page(params[:page])
   end
 
   # GET /time_periods/1
-  # GET /time_periods/1.json
   def show
   end
 
@@ -25,48 +25,33 @@ class TimePeriodsController < ApplicationController
   end
 
   # POST /time_periods
-  # POST /time_periods.json
   def create
     @time_period = TimePeriod.new(time_period_params)
-
-    respond_to do |format|
-      if @time_period.save
-        format.html { redirect_to @time_period, notice: 'Time period was successfully created.' }
-        format.json { render :show, status: :created, location: @time_period }
-      else
-        format.html { render :new }
-        format.json { render json: @time_period.errors, status: :unprocessable_entity }
-      end
+    if @time_period.save
+      redirect_to time_period_path(@time_period), notice: I18n.t('meta.defaults.messages.success.created', entity: 'Time Period')
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /time_periods/1
-  # PATCH/PUT /time_periods/1.json
   def update
-    respond_to do |format|
-      if @time_period.update(time_period_params)
-        format.html { redirect_to @time_period, notice: 'Time period was successfully updated.' }
-        format.json { render :show, status: :ok, location: @time_period }
-      else
-        format.html { render :edit }
-        format.json { render json: @time_period.errors, status: :unprocessable_entity }
-      end
+    if @time_period.update(time_period_params)
+      redirect_to time_period_path(@time_period), notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Time Period')
+    else
+      render :edit
     end
   end
 
   # DELETE /time_periods/1
-  # DELETE /time_periods/1.json
   def destroy
     @time_period.destroy
-    respond_to do |format|
-      format.html { redirect_to time_periods_url, notice: 'Time period was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to time_periods_url, notice: I18n.t('meta.defaults.messages.success.destroyed', entity: 'Time Period')
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def time_period_params
-      params.require(:time_period).permit(:name, :start, :end)
-    end
+  def time_period_params
+    params.require(:timePeriod).permit(:name)
+  end
 end
+
