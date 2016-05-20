@@ -51,7 +51,7 @@ class TimePeriodsController < ApplicationController
 
   private
   def time_period_params
-    params.require(:timePeriod).permit(:name)
+    params.require(:time_period).permit(:name, :begin, :finish)
   end
 end
 
