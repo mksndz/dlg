@@ -29,6 +29,7 @@
     <%= render partial: 'shared/edit_dc_fields', locals: { entity: @collection, form: f } %>
 
     <%= f.collection_check_boxes :subject_ids, @data[:subjects], :id, :name %>
+    <%= f.collection_check_boxes :time_period_ids, @data[:time_periods], :id, :name %>
 
     <%= f.primary t('meta.defaults.actions.save') %>
 

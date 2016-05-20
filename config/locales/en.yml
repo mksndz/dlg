@@ -62,6 +62,7 @@ en:
         dpla: "Push to DPLA"
         in_georgia: "Located in Georgia"
         subject_ids: "Subjects"
+        time_period_ids: "Time Periods"
         dc_identifier: 'Identifier (DC)'
         dc_right: 'Rights (DC)'
         dc_relation: 'Relation (DC)'
@@ -197,6 +198,7 @@ en:
         remote: "Check this to indicate that the Collection is located remotely"
         in_georgia: "Check this to indicate the Collection is housed in Georgia"
         subject_ids: "This will classify the Collection into a Subject category"
+        time_period_ids: "This will classify the Collection into a Time Period"
         dc_identifier: 'An unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string conforming to a formal identification system.'
         dc_right: 'Information about rights held in and over the resource. 	Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights.'
         dc_relation: 'A related resource. 	Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system.'

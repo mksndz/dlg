@@ -56,6 +56,19 @@
   </div>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong><%= t('meta.collection.labels.view.time_periods') %></strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @collection.time_periods.each do |t| %>
+          <li><%= t.name %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
 <a name="item_xml"></a>
 <pre><%= @collection.items.to_xml %></pre>
 

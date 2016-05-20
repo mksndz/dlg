@@ -72,6 +72,7 @@ class CollectionsController < ApplicationController
   def set_data
     @data = {}
     @data[:subjects] = Subject.all.order(:name)
+    @data[:time_periods] = TimePeriod.all.order(:name)
     @data[:repositories] = Repository.all.order(:title)
   end
 
@@ -112,6 +113,7 @@ class CollectionsController < ApplicationController
         :dcterms_provenance,
         :dcterms_license,
         :subject_ids => [],
+        :time_period_ids => [],
         :other_repositories => []
     )
   end
