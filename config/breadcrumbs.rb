@@ -145,3 +145,18 @@ crumb :subject do |subject|
   end
   parent :subjects
 end
+
+# TIME PERIOD
+
+crumb :time_periods do
+  link 'Time Periods', time_periods_path
+end
+
+crumb :time_period do |time_period|
+  if time_period.persisted?
+    link time_period.name
+  else
+    link 'New'
+  end
+  parent :time_periods
+end
