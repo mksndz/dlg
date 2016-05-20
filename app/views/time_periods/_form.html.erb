@@ -1,29 +1,11 @@
-<%= form_for(@time_period) do |f| %>
-  <% if @time_period.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@time_period.errors.count, "error") %> prohibited this time_period from being saved:</h2>
+<%= bootstrap_form_for(@time_period) do |f| %>
 
-      <ul>
-      <% @time_period.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Time Period' %>
 
-  <div class="field">
-    <%= f.label :name %><br>
     <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :start %><br>
-    <%= f.datetime_select :start %>
-  </div>
-  <div class="field">
-    <%= f.label :end %><br>
-    <%= f.datetime_select :end %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <%= f.number_field :start %>
+    <%= f.number_field :finish %>
+
+    <%= f.primary t('meta.defaults.actions.save') %>
+
 <% end %>

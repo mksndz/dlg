@@ -89,6 +89,7 @@ en:
         view:
           other_repositories: 'Other Repositories'
           subjects: 'Subjects'
+          time_periods: 'Time Periods'
     repository:
       actions:
         add: 'New Repository'
@@ -149,6 +150,15 @@ en:
       labels:
         view:
           collections_for: 'Collections for this Subject'
+    time_period:
+      actions:
+        add: 'Create Time Period'
+      labels:
+        columns:
+          start: 'Begin Year'
+          finish: 'End Year'
+        view:
+          collections_for: 'Collections for this Time Period'
     role:
       action:
         add: 'Create Role'

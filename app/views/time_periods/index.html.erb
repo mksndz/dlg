@@ -1,31 +1,63 @@
-<p id="notice"><%= notice %></p>
+<%= content_for :title do %>
+    Time Period
+<% end %>
 
-<h1>Listing Time Periods</h1>
+<% breadcrumb :time_periods %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Start</th>
-      <th>End</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= link_to t('meta.time_period.actions.add'), new_time_period_path, class: 'btn btn-default' %>
 
-  <tbody>
-    <% @time_periods.each do |time_period| %>
+<br><br>
+
+<% if @time_periods.empty? %>
+
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Time Period') %></p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
       <tr>
-        <td><%= time_period.name %></td>
-        <td><%= time_period.start %></td>
-        <td><%= time_period.end %></td>
-        <td><%= link_to 'Show', time_period %></td>
-        <td><%= link_to 'Edit', edit_time_period_path(time_period) %></td>
-        <td><%= link_to 'Destroy', time_period, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>
+          <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
+        </th>
+        <th>
+          <%= sortable 'name', t('meta.defaults.labels.columns.name') %>
+        </th>
+        <th>
+          <%= sortable 'start', t('meta.time_period.labels.columns.start') %>
+        </th>
+        <th>
+          <%= sortable 'finish', t('meta.time_period.labels.columns.finish') %>
+        </th>
+        <th width="185px"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>
+      <tbody>
+      <% @time_periods.each do |time_period| %>
+          <tr>
+            <td>
+              <%= link_to time_period.id, time_period_path(time_period) %>
+            </td>
+            <td>
+              <%= link_to time_period.name, time_period_path(time_period) %>
+            </td>
+            <td>
+              <%= time_period.start %>
+            </td>
+            <td>
+              <%= time_period.finish %>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: time_period_path(time_period), edit_path: edit_time_period_path(time_period), entity: time_period, show_bl: false } %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'New Time period', new_time_period_path %>
+    <%= paginate @time_periods %>
+
+<% end %>
+
+

@@ -8,6 +8,10 @@ en:
     attributes:
       subject:
         name: "Name"
+      time_period:
+        name: "Name"
+        begin: "Start"
+        finish: "End"
       user:
         email: "Email Address"
         password: "Password"
