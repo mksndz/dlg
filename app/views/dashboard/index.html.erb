@@ -9,13 +9,27 @@
 <% end %>
 
 <% if current_user.coordinator? %>
-    <% users = User.active.where(creator: current_user).length %>
-    <p>You have <%= users %> supervised <%= link_to pluralize(batches, 'User', 'Users'), users_path %>.</p>
+    <% users = User.active.where(creator: current_user) %>
+    <p>You have <%= users.length %> supervised <%= link_to pluralize(users.length, 'User', 'Users'), users_path %>.</p>
+    <% if users.present? %>
+      <ul>
+        <% users.each do |u| %>
+          <li><%= link_to u.email, user_path(u) %></li>
+        <% end %>
+      </ul>
+    <% end %>
 <% end %>
 
 <% if current_user.committer? %>
-    <% batches = Batch.pending.where(user: current_user).length %>
-  <p>You have <%= batches %> pending <%= link_to pluralize(batches, 'Batch', 'Batches'), batches_path %>.</p>
+    <% batches = Batch.pending.where(user: current_user) %>
+  <p>You have <%= batches.length %> pending <%= link_to pluralize(batches.length, 'Batch', 'Batches'), batches_path %>.</p>
+    <% if batches.present? %>
+        <ul>
+          <% batches.each do |b| %>
+              <li><%= link_to b.name, batch_path(b) %></li>
+          <% end %>
+        </ul>
+    <% end %>
 <% end %>
 
 <% unless current_user.super? %>
