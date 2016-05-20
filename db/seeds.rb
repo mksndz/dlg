@@ -1,5 +1,6 @@
 # Truncate Tables
 [
+    TimePeriod,
     Subject,
     BatchItem,
     Item,
@@ -26,7 +27,7 @@ end
 end
 
 #
-# Default Subjects for app
+# Default Subjects
 #
 Subject.create!([
                  { name: 'The Arts' },
@@ -42,6 +43,21 @@ Subject.create!([
                  { name: 'Science & Medicine' },
                  { name: 'Sports & Recreation' },
                  { name: 'Transportation' }
+             ])
+
+#
+# Default Time Periods
+#
+TimePeriod.create!([
+                 { name: 'Archaeology & Early History' },
+                 { name: 'Colonial Era', start: 1733, finish: 1775 },
+                 { name: 'Revolution & Early Republic', start: 1775, finish: 1800 },
+                 { name: 'Antebellum Era', start: 1800, finish: 1860 },
+                 { name: 'Civil War & Reconstruction', start: 1861, finish: 1877 },
+                 { name: 'Late Nineteenth Century', start: 1877, finish: 1900 },
+                 { name: 'Progressive Era to World War II', start: 1900, finish: 1945 },
+                 { name: 'Civil Rights & Sunbelt Georgia', start: 1945, finish: 1980 },
+                 { name: 'Georgia at the Turn of the Millennium', start: 1990 },
              ])
 
 #
