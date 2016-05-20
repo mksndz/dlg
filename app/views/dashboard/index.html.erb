@@ -1,0 +1,40 @@
+<%= content_for :title do %>
+  DLG Meta Dashboard
+<% end %>
+
+<p>Welcome!</p>
+
+<% if current_user.super? %>
+  <p>You have all the power, Super user!</p>
+<% end %>
+
+<% if current_user.coordinator? %>
+    <% users = User.active.where(creator: current_user).length %>
+    <p>You have <%= users %> supervised <%= link_to pluralize(batches, 'User', 'Users'), users_path %>.</p>
+<% end %>
+
+<% if current_user.committer? %>
+    <% batches = Batch.pending.where(user: current_user).length %>
+  <p>You have <%= batches %> pending <%= link_to pluralize(batches, 'Batch', 'Batches'), batches_path %>.</p>
+<% end %>
+
+<% unless current_user.super? %>
+  <% if current_user.repositories %>
+    <p>
+      You have rights to modify these Repositories:
+    </p>
+    <ul>
+    <% current_user.repositories.each do |repository| %>
+      <li><%= link_to repository.title, repository_path(repository) %></li>
+    <% end %>
+    </ul>
+  <% end %>
+  <% if current_user.collections %>
+    You have rights to modify these Collections:
+    <ul>
+    <% current_user.collections.each do |collection| %>
+      <li><%= link_to collection.display_title, collection_path(collection) %></li>
+    <% end %>
+    </ul>
+  <% end %>
+<% end %>
