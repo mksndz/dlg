@@ -9,19 +9,6 @@ class Batch < ActiveRecord::Base
 
   validates_presence_of :user, :name
 
-  searchable do
-
-    text :name
-    text :notes
-
-    integer :user_id
-
-    time :committed_at
-    time :updated_at
-    time :created_at
-
-  end
-
   def self.index_query_fields
     %w(user_id committed_at).freeze
   end
