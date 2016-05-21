@@ -8,6 +8,7 @@ task reindex_everything: :environment do
 
   INDEXED_MODELS.each do |model|
     if model.constantize.respond_to? :reindex
+      puts "Found #{model.all.length} DB entries to Reindex"
       puts "Reindexing #{model}"
       model_start_time = Time.now
       model.constantize.reindex

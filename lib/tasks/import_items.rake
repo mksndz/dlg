@@ -49,11 +49,12 @@ task import_items: :environment do
     items = @data.css('item')
     items_in_file = items.length
     puts "File has #{items_in_file} records"
-    processed = 0
+    total_items_created = 0
+    items_failed = 0
+    items_created = 0
 
     items.each do |item|
       puts "Importing Item #{item.css('slug').first.inner_text}"
-      processed += 1
       @new_item = Item.new
       Item.column_types.each do |k,v|
         # puts 'field: ' + k
@@ -73,9 +74,14 @@ task import_items: :environment do
         end
       end
       @new_item.collection = collection
-      @new_item.save(validate: false)
+      if @new_item.save(validate: false)
+        items_created += 1
+      else
+        items_failed += 1
+      end
       # puts @new_item.inspect
-      puts "Processed #{processed} of #{items_in_file}"
+      puts "Processed #{items_created} of #{items_in_file}"
+      total_items_created += items_created
     end
     collection_finish_time = Time.now
     puts "Importing #{xml_url} took #{collection_finish_time - collection_start_time} seconds!"
