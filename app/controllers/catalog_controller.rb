@@ -81,17 +81,17 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'format_ss',          label: 'Format*',     limit: true
-    config.add_facet_field 'location_facet',     label: 'Location',    limit: true
-    config.add_facet_field 'subject_facet',      label: 'Subject',     limit: true
-    config.add_facet_field 'type_facet',         label: 'Type',        limit: true
-    config.add_facet_field 'creator_facet',      label: 'Creator',     limit: true
-    config.add_facet_field 'temporal_facet',     label: 'Temporal',    limit: true
-    config.add_facet_field 'public_b',           label: 'Public?',     limit: true, helper_method: :boolean_facet_labels
-    config.add_facet_field 'dpla_b',             label: 'DPLA?',       limit: true, helper_method: :boolean_facet_labels
-    config.add_facet_field 'collection_name_ss', label: 'Collection',  limit: true
-    config.add_facet_field 'repository_name_ss', label: 'Repository',  limit: true
-    config.add_facet_field 'class_name',         label: 'Class',       limit: true
+    config.add_facet_field 'format_ss',          label: 'Format*',     limit: 10
+    config.add_facet_field 'location_facet',     label: 'Location',    limit: 10
+    config.add_facet_field 'subject_facet',      label: 'Subject',     limit: 10
+    config.add_facet_field 'type_facet',         label: 'Type',        limit: 10
+    config.add_facet_field 'creator_facet',      label: 'Creator',     limit: 10
+    config.add_facet_field 'temporal_facet',     label: 'Temporal',    limit: 10
+    config.add_facet_field 'public_b',           label: 'Public?',     limit: 10, helper_method: :boolean_facet_labels
+    config.add_facet_field 'dpla_b',             label: 'DPLA?',       limit: 10, helper_method: :boolean_facet_labels
+    config.add_facet_field 'collection_name_ss', label: 'Collection',  limit: 10
+    config.add_facet_field 'repository_name_ss', label: 'Repository',  limit: 10
+    config.add_facet_field 'class_name',         label: 'Class',       limit: 10
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']

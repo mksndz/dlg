@@ -4,6 +4,4 @@ Warden.test_mode!
 
 feature 'Searching' do
 
-
-
 end
