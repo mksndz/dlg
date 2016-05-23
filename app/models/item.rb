@@ -13,12 +13,11 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection
 
-  delegate :collection_title, to: :collection
-  delegate :repository_id, to: :collection
-
   searchable do
 
     string :slug, stored: true
+
+    text :slug # for debugging
 
     # set empty proxy id field so sunspot knows about it
     # value is set prior to save
@@ -28,13 +27,16 @@ class Item < ActiveRecord::Base
       ''
     end
 
-    integer :collection_id, references: Collection
-    integer :repository_id, references: Collection
+    integer :collection_id, stored: true do
+      collection.id
+    end
+
+    integer :repository_id, stored: true do
+      repository.id
+    end
 
     boolean :dpla
     boolean :public
-
-    string :collection_title, stored: true
 
     string :collection_name, stored: true do
       collection.display_title
