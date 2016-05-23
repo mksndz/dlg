@@ -82,6 +82,7 @@ task import_items: :environment do
       # puts @new_item.inspect
       puts "Processed #{items_created} of #{items_in_file}"
       total_items_created += items_created
+      Sunspot.commit
     end
     collection_finish_time = Time.now
     puts "Importing #{xml_url} took #{collection_finish_time - collection_start_time} seconds!"
