@@ -4,30 +4,40 @@ require 'nokogiri'
 
 task import_items: :environment do
 
+  @logger = Logger.new('./log/item_import.log')
+
   start_time = Time.now
 
-  puts 'Clearing out old Items...'
+  @logger.info 'Clearing out old Items...'
   Item.destroy_all
-  Sunspot.commit_if_dirty
-  puts 'Items destroyed!'
+  Sunspot.commit_if_delete_dirty
+  @logger.info 'Items destroyed!'
+
+  s = Item.search do
+    adjust_solr_params do |params|
+      params[:q] = ''
+    end
+  end
+
+  @logger.info "Starting Item Count: #{Item.all.length}"
+  @logger.info "Starting Solr Count: #{s.total}"
 
   meta_xml_root_url = 'http://dlg.galileo.usg.edu/xml/dcq/'
 
   def exit_with_error(msg = nil)
-    puts msg || 'Something unexpected happened...'
+    @logger.info msg || 'Something unexpected happened...'
     abort
   end
 
-  def set_field_value(field, value = nil)
-    @new_item[field.to_sym] = value
-  end
+  def get_solr_hits_for_collection(collection)
+    s = Item.search do
+      with(:collection_id, collection.id)
 
-  def set_array_field_value(field, value = nil)
-    set_field_value field, value.strip.split("\n").map!(&:strip)
-  end
-
-  def set_boolean_field_value(field, value = nil)
-    set_field_value field, value == 'true' ? true : false
+      adjust_solr_params do |params|
+        params[:q] = ''
+      end
+    end
+    s.total
   end
 
   exit_with_error 'No Repositories yet in the system!' unless Repository.first
@@ -35,10 +45,12 @@ task import_items: :environment do
 
   Collection.all.each do |collection|
 
+    items_created = 0
+
     collection_start_time = Time.now
 
     xml_url = "#{meta_xml_root_url}#{collection.repository.slug}_#{collection.slug}.xml"
-    puts "Importing Items from XML: #{xml_url}"
+    @logger.info "Importing Items from XML: #{xml_url}"
 
     @data = Nokogiri::HTML(open(xml_url))
 
@@ -47,52 +59,44 @@ task import_items: :environment do
     end
 
     items = @data.css('item')
-    items_in_file = items.length
-    puts "File has #{items_in_file} records"
-    total_items_created = 0
-    items_failed = 0
-    items_created = 0
 
     items.each do |item|
-      puts "Importing Item #{item.css('slug').first.inner_text}"
-      @new_item = Item.new
-      Item.column_types.each do |k,v|
-        # puts 'field: ' + k
-        if item.css(k).first
-          val = item.css(k).first.inner_text
-        else
-          val =  ''
-        end
-        # puts 'node: ' + item.css(k).inspect
-        # puts 'val: ' + val
-        if v.is_a? ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Array
-          set_array_field_value(k, val)
-        elsif v.is_a? ActiveRecord::Type::Boolean
-          set_boolean_field_value(k, val)
-        else
-          set_field_value k, val
-        end
-      end
-      @new_item.collection = collection
-      if @new_item.save(validate: false)
-        items_created += 1
-      else
-        items_failed += 1
-      end
-      # puts @new_item.inspect
-      puts "Processed #{items_created} of #{items_in_file}"
-      total_items_created += items_created
-      Sunspot.commit
-    end
-    collection_finish_time = Time.now
-    puts "Importing #{xml_url} took #{collection_finish_time - collection_start_time} seconds!"
-  end
 
-  Sunspot.commit
+      hash = Hash.from_xml(item.to_s)
+
+      item_hash = hash['item']
+
+      item_hash.delete('collection')
+      item_hash.delete('dc_identifier_label')
+      other_collections = item_hash.delete('other_collection')
+
+      i = Item.new(item_hash)
+      i.collection = collection
+
+      # i.other_collections = other_collections.map do |k, oc|
+      #   oc_c = Collection.find_by_slug(oc).id
+      # end if other_collections
+
+      i.save(validate: false)
+
+      items_created += 1
+
+    end
+
+    Sunspot.commit_if_dirty
+
+    @logger.info "Collection #{collection.title} Items Created: #{items_created}"
+    @logger.info "Collection #{collection.title} Items In XML: #{items.length}"
+    @logger.info "Solr now has #{get_solr_hits_for_collection collection} records for this collection"
+
+    collection_finish_time = Time.now
+
+    @logger.info "Importing #{xml_url} took #{collection_finish_time - collection_start_time} seconds!"
+  end
 
   finish_time = Time.now
 
-  puts 'Item importing complete!'
-  puts "Processing took #{finish_time - start_time} seconds!"
+  @logger.info 'Item importing complete!'
+  @logger.info "Processing took #{finish_time - start_time} seconds!"
 
 end
