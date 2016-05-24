@@ -29,6 +29,8 @@ class Collection < ActiveRecord::Base
 
     string :slug, stored: true
 
+    string :record_id, stored: true
+
     # set empty proxy id field so sunspot knows about it
     # value is set prior to save
     # sunspot search will not work without this, but indexing will
@@ -81,6 +83,10 @@ class Collection < ActiveRecord::Base
       dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
     end
 
+  end
+
+  def record_id
+    "#{repository.slug}_#{self.slug}"
   end
 
   def to_xml(options = {})

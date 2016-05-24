@@ -4,7 +4,7 @@ class Item < ActiveRecord::Base
   include Slugged
   include DcHelper
   include IndexFilterable
-  include ItemTypeValidatable
+  # include ItemTypeValidatable
 
   belongs_to :collection, counter_cache: true
   has_one :repository, through: :collection
@@ -16,6 +16,8 @@ class Item < ActiveRecord::Base
   searchable do
 
     string :slug, stored: true
+
+    string :record_id, stored: true
 
     text :slug # for debugging
 
@@ -92,12 +94,8 @@ class Item < ActiveRecord::Base
     %w(collection_id public).freeze
   end
 
-  def item_id
-    if self.repository
-      "#{self.repository.slug}_#{self.collection.slug}_#{self.slug}"
-    else
-      false
-    end
+  def record_id
+    "#{self.repository.slug}_#{self.collection.slug}_#{self.slug}"
   end
 
   def thumbnail_url
