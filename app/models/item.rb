@@ -4,7 +4,7 @@ class Item < ActiveRecord::Base
   include Slugged
   include DcHelper
   include IndexFilterable
-  # include ItemTypeValidatable
+  include ItemTypeValidatable
 
   belongs_to :collection, counter_cache: true
   has_one :repository, through: :collection
@@ -19,8 +19,6 @@ class Item < ActiveRecord::Base
 
     string :record_id, stored: true
 
-    text :slug # for debugging
-
     # set empty proxy id field so sunspot knows about it
     # value is set prior to save
     # sunspot search will not work without this, but indexing will
@@ -29,19 +27,19 @@ class Item < ActiveRecord::Base
       ''
     end
 
-    integer :collection_id, stored: true do
+    integer :collection_id do
       collection.id
     end
 
-    integer :repository_id, stored: true do
+    integer :repository_id do
       repository.id
     end
 
     boolean :dpla
     boolean :public
 
-    string :collection_name, stored: true do
-      collection.display_title
+    string :collection_name, stored: true, multiple: true do
+      collection_titles
     end
 
     string :repository_name, stored: true do
@@ -94,6 +92,10 @@ class Item < ActiveRecord::Base
     %w(collection_id public).freeze
   end
 
+  def collection_titles
+    other_collection_titles << collection.title
+  end
+
   def record_id
     "#{self.repository.slug}_#{self.collection.slug}_#{self.slug}"
   end
@@ -124,6 +126,14 @@ class Item < ActiveRecord::Base
         }
     }
     super(options.merge!(default_options))
+  end
+
+  private
+
+  def other_collection_titles
+    other_collections.map do |oc|
+      Collection.find(oc).title
+    end
   end
 
 end

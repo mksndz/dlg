@@ -2,27 +2,9 @@ require 'rake'
 require 'open-uri'
 require 'nokogiri'
 
-task import_items: :environment do
+task :import_items, [:collection_slug] => [:environment] do |t, args|
 
   @logger = Logger.new('./log/item_import.log')
-
-  start_time = Time.now
-
-  @logger.info 'Clearing out old Items...'
-  Item.destroy_all
-  Sunspot.commit_if_delete_dirty
-  @logger.info 'Items destroyed!'
-
-  s = Item.search do
-    adjust_solr_params do |params|
-      params[:q] = ''
-    end
-  end
-
-  @logger.info "Starting Item Count: #{Item.all.length}"
-  @logger.info "Starting Solr Count: #{s.total}"
-
-  meta_xml_root_url = 'http://dlg.galileo.usg.edu/xml/dcq/'
 
   def exit_with_error(msg = nil)
     @logger.info msg || 'Something unexpected happened...'
@@ -40,10 +22,40 @@ task import_items: :environment do
     s.total
   end
 
+  start_time = Time.now
+
+  if defined?(args) && args[:collection_slug]
+    collection = Collection.find_by_slug(args[:collection_slug])
+    if collection
+      collections = [collection]
+      @logger.info "Designated Collection to load: #{collections.first.slug}"
+    else
+      exit_with_error('Error loading the Collection you specified')
+    end
+  else
+    collections = Collection.all
+  end
+
+  @logger.info 'Clearing out old Items...'
+  Item.destroy_all
+  Sunspot.commit_if_delete_dirty
+  @logger.info 'Items destroyed!'
+
+  s = Item.search do
+    adjust_solr_params do |params|
+      params[:q] = ''
+    end
+  end
+
+  @logger.info "Starting Item Count: #{Item.all.length}"
+  @logger.info "Starting Solr Count: #{s.total}"
+
+  meta_xml_root_url = 'http://dlg.galileo.usg.edu/xml/dcq/'
+
   exit_with_error 'No Repositories yet in the system!' unless Repository.first
   exit_with_error 'No Collection yet in the system!' unless Collection.first
 
-  Collection.all.each do |collection|
+  collections.each do |collection|
 
     items_created = 0
 
@@ -73,9 +85,14 @@ task import_items: :environment do
       i = Item.new(item_hash)
       i.collection = collection
 
-      # i.other_collections = other_collections.map do |k, oc|
-      #   oc_c = Collection.find_by_slug(oc).id
-      # end if other_collections
+      if other_collections
+        other_collections.each do |oc|
+          i.other_collections << Collection.find_by_slug(oc).id
+        end
+      end
+
+      @logger.info other_collections.inspect
+      @logger.info i.other_collections.inspect
 
       i.save(validate: false)
 

@@ -89,7 +89,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'temporal_facet',     label: 'Temporal',    limit: 10
     config.add_facet_field 'public_b',           label: 'Public?',     limit: 10, helper_method: :boolean_facet_labels
     config.add_facet_field 'dpla_b',             label: 'DPLA?',       limit: 10, helper_method: :boolean_facet_labels
-    config.add_facet_field 'collection_name_ss', label: 'Collection',  limit: 10
+    config.add_facet_field 'collection_name_sms', label: 'Collection',  limit: 10
     config.add_facet_field 'repository_name_ss', label: 'Repository',  limit: 10
     config.add_facet_field 'class_name',         label: 'Class',       limit: 10
 
@@ -106,7 +106,7 @@ class CatalogController < ApplicationController
     #   The ordering of the field names is the order of the display
     config.add_index_field 'dcterms_title_display', label: 'Title'
     config.add_index_field 'dcterms_description_display', label: 'Description'
-    config.add_index_field 'collection_name_ss', label: 'Collection', link_to_search: true
+    config.add_index_field 'collection_name_sms', label: 'Collection', link_to_search: true
     config.add_index_field 'repository_name_ss', label: 'Repository', link_to_search: true
     config.add_index_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
     config.add_index_field 'dc_creator_display', label: 'Author'
@@ -115,7 +115,7 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'dcterms_title_display', label: 'Title'
-    config.add_show_field 'collection_name_ss', label: 'Collection', link_to_search: true
+    config.add_show_field 'collection_name_sms', label: 'Collection', link_to_search: true
     config.add_show_field 'dcterms_is_part_of_display', label: 'Is Part Of'
     config.add_show_field 'dcterms_description_display', label: 'Description'
     config.add_show_field 'dc_format_display', label: 'File Format'
