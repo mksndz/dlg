@@ -1,5 +1,5 @@
 require 'rails_helper'
-include SunspotMatchers
+# include SunspotMatchers
 include DcHelper
 
 RSpec.describe Item, type: :model do
@@ -42,6 +42,36 @@ RSpec.describe Item, type: :model do
   it 'has a slug' do
     i = Fabricate(:item)
     expect(i.slug).not_to be_empty
+  end
+
+  it 'has a record_id' do
+    i = Fabricate(:item)
+    expect(i.record_id).not_to be_empty
+  end
+
+  it 'has a thumbnail_url that is a url' do
+    i = Fabricate(:item)
+    expect { URI.parse(i.thumbnail_url) }.not_to raise_exception
+  end
+
+  it 'has a facet_years value that is an Array of years taken from dc_date' do
+    i = Fabricate(:item) {
+      dc_date { %w(text 991 1802 2001 1776-1791 1900/1901) }
+    }
+    expect(i.facet_years).to eq %w(1802 2001 1776 1791 1900 1901)
+  end
+
+  it 'has an array of collection titles including the titles of other_collections, if set' do
+    c1 = Fabricate(:collection)
+    c2 = Fabricate(:collection)
+    c3 = Fabricate(:collection)
+    i = Fabricate(:item) {
+      collection c1
+      other_collections { [c2.id, c3.id] }
+    }
+    expect(i.collection_titles).to include c1.title
+    expect(i.collection_titles).to include c2.title
+    expect(i.collection_titles).to include c3.title
   end
 
   it 'disallows creating two items with the same slug related to the same collection' do
