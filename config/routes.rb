@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'auth/invitations', to: 'invitations#index'
   end
 
-  resources :dashboard, only: [:index]
+  # resources :dashboard, only: [:index]
 
   resources :repositories, :collections, :users, :roles, :subjects, :time_periods
 
@@ -64,7 +64,7 @@ Rails.application.routes.draw do
   end
 
   authenticated do
-    root to: 'dashboard#index', as: :authenticated_root
+    root to: 'catalog#index', as: :authenticated_root
   end
 
   root to: redirect('auth/sign_in')
