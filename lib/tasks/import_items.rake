@@ -87,8 +87,8 @@ task :import_items, [:collection_slug] => [:environment] do |t, args|
 
       if other_collections
         other_collections.each do |oc|
-          other_collections = Collection.find_by_slug(oc)
-          if other_collections
+          other_collection = Collection.find_by_slug(oc)
+          if other_collection
             i.other_collections << other_collection.id
           else
             @logger.error "No Collection with slug #{oc} found to add to other_collection array."
