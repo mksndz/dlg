@@ -81,25 +81,28 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'format_ss',          label: 'Format*',     limit: 10
-    config.add_facet_field 'location_facet',     label: 'Location',    limit: 10
-    config.add_facet_field 'subject_facet',      label: 'Subject',     limit: 10
-    config.add_facet_field 'type_facet',         label: 'Type',        limit: 10
-    config.add_facet_field 'creator_facet',      label: 'Creator',     limit: 10
-    config.add_facet_field 'temporal_facet',     label: 'Temporal',    limit: 10
-    config.add_facet_field 'public_b',           label: 'Public?',     limit: 10, helper_method: :boolean_facet_labels
-    config.add_facet_field 'dpla_b',             label: 'DPLA?',       limit: 10, helper_method: :boolean_facet_labels
+    config.add_facet_field 'location_facet',      label: 'Location',    limit: 10
+    config.add_facet_field 'subject_facet',       label: 'Subject',     limit: 10
+    config.add_facet_field 'type_facet',          label: 'Type',        limit: 10
+    config.add_facet_field 'format_facet',        label: 'Format',      limit: 10
+    config.add_facet_field 'genre_facet',         label: 'Genre',       limit: 10
+    config.add_facet_field 'creator_facet',       label: 'Creator',     limit: 10
+    config.add_facet_field 'temporal_facet',      label: 'Temporal',    limit: 10
+    config.add_facet_field 'medium_facet',        label: 'Medium',      limit: 10
+    config.add_facet_field 'public_b',            label: 'Public?',     limit: 10, helper_method: :boolean_facet_labels
+    config.add_facet_field 'dpla_b',              label: 'DPLA?',       limit: 10, helper_method: :boolean_facet_labels
     config.add_facet_field 'collection_name_sms', label: 'Collection',  limit: 10
-    config.add_facet_field 'repository_name_ss', label: 'Repository',  limit: 10
-    config.add_facet_field 'class_name',         label: 'Class',       limit: 10
+    config.add_facet_field 'repository_name_ss',  label: 'Repository',  limit: 10
+    config.add_facet_field 'class_name',          label: 'Class',       limit: 10
+    config.add_facet_field 'year_facet_itms',     label: 'Year',        limit: 10
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
     #
-    # config.add_facet_field 'example_query_facet_field', :label => 'Publish Date', :query => {
-    #   :years_5 => { :label => 'within 5 Years', :fq => "pub_date:[#{Time.zone.now.year - 5 } TO *]" },
-    #   :years_10 => { :label => 'within 10 Years', :fq => "pub_date:[#{Time.zone.now.year - 10 } TO *]" },
-    #   :years_25 => { :label => 'within 25 Years', :fq => "pub_date:[#{Time.zone.now.year - 25 } TO *]" }
+    # config.add_facet_field 'year_facet_sms', :label => 'Year (Query)', :query => {
+    #   :years_25 => { :label => 'within 25 Years', :fq => "year_facet_sms:[#{Time.zone.now.year - 25 } TO *]" },
+    #   :years_50 => { :label => 'within 50 Years', :fq => "year_facet_sms:[#{Time.zone.now.year - 50 } TO *]" },
+    #   :years_100 => { :label => 'within 100 Years', :fq => "year_facet_sms:[#{Time.zone.now.year - 100 } TO *]" }
     # }
 
     # solr fields to be displayed in the index (search results) view
@@ -111,6 +114,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
     config.add_index_field 'dc_creator_display', label: 'Author'
     config.add_index_field 'dc_type_display', label: 'Format'
+    config.add_index_field 'sort_date_ss', label: 'Date Sort'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -221,9 +225,13 @@ class CatalogController < ApplicationController
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    config.add_sort_field 'score desc, sort_title_s asc', label: 'relevance'
-    config.add_sort_field 'sort_date_ss asc', :label => 'date'
-    config.add_sort_field 'sort_title_s asc', label: 'title'
+    config.add_sort_field 'score desc, sort_title_s asc', label: 'Relevance'
+    config.add_sort_field 'sort_year_its asc', :label => 'Year'
+    config.add_sort_field 'sort_title_ss asc', label: 'DC Title'
+    config.add_sort_field 'sort_collection_ss asc', label: 'Collection'
+    config.add_sort_field 'sort_creator_ss asc', label: 'DC Creator'
+    config.add_sort_field 'created_at_dts asc', label: 'Created'
+    config.add_sort_field 'updated_at_dts asc', label: 'Updated'
 
     # If there are more than this many search results, no spelling ("did you 
     # mean") suggestion is offered.

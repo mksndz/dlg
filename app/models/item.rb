@@ -15,6 +15,8 @@ class Item < ActiveRecord::Base
 
   searchable do
 
+    # todo remove unnecessarily stored fields when indexing is ready, remembering to alter solr field names where applicable
+
     string :slug, stored: true
 
     string :record_id, stored: true
@@ -27,10 +29,12 @@ class Item < ActiveRecord::Base
       ''
     end
 
+    # use case?
     integer :collection_id do
       collection.id
     end
 
+    # use case?
     integer :repository_id do
       repository.id
     end
@@ -38,10 +42,12 @@ class Item < ActiveRecord::Base
     boolean :dpla
     boolean :public
 
+    # multivalued to hold names of 'other collections'
     string :collection_name, stored: true, multiple: true do
       collection_titles
     end
 
+    # todo this could be multivalued if the other collection is in another repo
     string :repository_name, stored: true do
       repository.title
     end
@@ -77,20 +83,34 @@ class Item < ActiveRecord::Base
     text :dcterms_provenance
     text :dcterms_license
 
-    # Fields for Faceting, etc.
-    string :format, stored: true do
-      dcterms_type.first ? dcterms_type.first : 'Unknown'
+    # required for Blacklight - a single valued format field
+    # 'format' field name in solr is created from this via a copyField
+    string :format do
+      dc_format.first ? dc_format.first : ''
     end
 
-    string :sort_title do
+    # Fields for Faceting, etc.
+    string :sort_collection, stored: true do
+      collection.title.downcase.gsub(/^(an?|the)\b/, '')
+    end
+
+    string :sort_title, stored: true do
       dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
     end
 
-    time :created_at, stored: true
-    time :updated_at, stored: true
+    string :sort_creator, stored: true do
+      dcterms_creator.first ? dcterms_creator.first.downcase.gsub(/^(an?|the)\b/, '') : ''
+    end
 
-    string :sort_date, stored: true do
-      dc_date.first ? dc_date.first : ''
+    time :created_at, stored: true, trie: true
+    time :updated_at, stored: true, trie: true
+
+    integer :sort_year, stored: true, trie: true do
+      facet_years.first
+    end
+
+    integer :year_facet, multiple: true, stored: true, trie: true do
+      facet_years
     end
 
   end
@@ -99,8 +119,16 @@ class Item < ActiveRecord::Base
     %w(collection_id public).freeze
   end
 
+  def facet_years
+    all_years = []
+    dc_date.each do |date|
+      all_years << date.scan(/[0-2][0-9][0-9][0-9]/)
+    end
+    all_years.flatten.uniq
+  end
+
   def collection_titles
-    other_collection_titles << collection.title
+    (other_collection_titles << collection.title).reverse
   end
 
   def record_id
@@ -138,9 +166,7 @@ class Item < ActiveRecord::Base
   private
 
   def other_collection_titles
-    other_collections.map do |oc|
-      Collection.find(oc).title
-    end
+    Collection.find(other_collections).map(&:title)
   end
 
 end
