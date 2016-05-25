@@ -12,8 +12,12 @@ $logo_image: 'dlg_logo_red.png';
 
 // Blacklight CSS Overrides
 
+#q {
+  width: 400px;
+}
+
 #header-navbar {
-  .navbar-brand {  /* The main logo image for the Blacklight instance */
+  .navbar-brand {
     width: 283px;
     height: 45px;
     background:transparent image_url($logo_image) no-repeat top left;
@@ -23,6 +27,7 @@ $logo_image: 'dlg_logo_red.png';
     overflow: hidden;
     padding: 0;
     margin-right:20px;
+    margin-top:8px;
   }
 }
 
