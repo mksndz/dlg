@@ -86,6 +86,13 @@ class Item < ActiveRecord::Base
       dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
     end
 
+    time :created_at, stored: true
+    time :updated_at, stored: true
+
+    string :sort_date, stored: true do
+      dc_date.first ? dc_date.first : ''
+    end
+
   end
 
   def self.index_query_fields

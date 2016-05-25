@@ -222,7 +222,7 @@ class CatalogController < ApplicationController
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
     config.add_sort_field 'score desc, sort_title_s asc', label: 'relevance'
-    # config.add_sort_field 'pub_date_sort desc, title_sort asc', :label => 'year'
+    config.add_sort_field 'sort_date_ss asc', :label => 'date'
     config.add_sort_field 'sort_title_s asc', label: 'title'
 
     # If there are more than this many search results, no spelling ("did you 
