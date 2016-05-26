@@ -136,10 +136,10 @@ class CatalogController < ApplicationController
     config.add_show_field 'dc_relation_display', label: 'Related Materials'
     config.add_show_field 'dcterms_publisher_display', label: 'Publisher'
     config.add_show_field 'dcterms_contributor_display', label: 'Contributor'
-    config.add_show_field 'dcterms_temporal_display', label: 'Time'
-    config.add_show_field 'dcterms_spatial_display', label: 'Place'
+    config.add_show_field 'dcterms_temporal_display', label: 'Time', link_to_search: true
+    config.add_show_field 'dcterms_spatial_display', label: 'Place', link_to_search: true
     config.add_show_field 'dcterms_provenance_display', label: 'Location of Original'
-    config.add_show_field 'dcterms_subject_display', label: 'Subject'
+    config.add_show_field 'dcterms_subject_display', label: 'Subject', link_to_search: true
     config.add_show_field 'dcterms_type_display', label: 'Genre'
     config.add_show_field 'dcterms_creator_display', label: 'Creator'
     config.add_show_field 'dcterms_language_display', label: 'Language'
