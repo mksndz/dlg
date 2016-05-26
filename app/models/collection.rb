@@ -74,10 +74,18 @@ class Collection < ActiveRecord::Base
     text :dcterms_provenance
     text :dcterms_license
 
-    # Fields for Faceting, etc.
-    string :format, stored: true do
-      dcterms_type.first ? dcterms_type.first : ''
+    string :subjects, stored: true, multiple: true do
+      subjects.map(&:name)
     end
+
+    string :time_periods, stored: true, multiple: true do
+      time_periods.map(&:name)
+    end
+
+    # Fields for Faceting, etc.
+    # string :format, stored: true do
+    #   dcterms_type.first ? dcterms_type.first : ''
+    # end
 
     string :sort_title do
       dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
