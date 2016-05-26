@@ -99,10 +99,17 @@ class CatalogController < ApplicationController
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
     #
-    # config.add_facet_field 'year_facet_sms', :label => 'Year (Query)', :query => {
-    #   :years_25 => { :label => 'within 25 Years', :fq => "year_facet_sms:[#{Time.zone.now.year - 25 } TO *]" },
-    #   :years_50 => { :label => 'within 50 Years', :fq => "year_facet_sms:[#{Time.zone.now.year - 50 } TO *]" },
-    #   :years_100 => { :label => 'within 100 Years', :fq => "year_facet_sms:[#{Time.zone.now.year - 100 } TO *]" }
+    # config.add_facet_field 'updated_at_dts', :label => 'Updated', :query => {
+    #   :day => { :label => 'within 1 day', :fq => "updated_at_dts:[#{Time.zone.now.day - 1 } TO *]" },
+    #   :week => { :label => 'within 1 week', :fq => "updated_at_dts:[#{Time.zone.now.day - 7 } TO *]" },
+    #   :month => { :label => 'within 1 month', :fq => "updated_at_dts:[#{Time.zone.now.month - 1 } TO *]" },
+    #   :year => { :label => 'within 1 year', :fq => "updated_at_dts:[#{Time.zone.now.year - 1 } TO *]" }
+    # }
+    # config.add_facet_field 'created_at_dts', :label => 'Created', :query => {
+    #   :day => { :label => 'within 1 day', :fq => "created_at_dts:[#{Time.zone.now.day - 1.day } TO *]" },
+    #   :week => { :label => 'within 1 week', :fq => "created_at_dts:[#{Time.zone.now.day - 7.days } TO *]" },
+    #   :month => { :label => 'within 1 month', :fq => "created_at_dts:[#{Time.zone.now.month - 1.month } TO *]" },
+    #   :year => { :label => 'within 1 year', :fq => "created_at_dts:[#{Time.zone.now.year - 1.year } TO *]" }
     # }
 
     # solr fields to be displayed in the index (search results) view
@@ -112,9 +119,9 @@ class CatalogController < ApplicationController
     config.add_index_field 'collection_name_sms', label: 'Collection', link_to_search: true
     config.add_index_field 'repository_name_ss', label: 'Repository', link_to_search: true
     config.add_index_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
-    config.add_index_field 'dc_creator_display', label: 'Author'
-    config.add_index_field 'dc_type_display', label: 'Format'
-    config.add_index_field 'sort_date_ss', label: 'Date Sort'
+    config.add_index_field 'dcterms_creator_display', label: 'Author'
+    config.add_index_field 'dc_format_display', label: 'Format'
+    config.add_index_field 'sort_year_its', label: 'Date Sort'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -141,6 +148,8 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_access_right_display', label: 'Access'
     config.add_show_field 'dcterms_extent_display', label: 'Extent'
     config.add_show_field 'dcterms_medium_display', label: 'Medium'
+    config.add_show_field 'created_at_dts', label: 'Created'
+    config.add_show_field 'updated_at_dts', label: 'Updated'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
