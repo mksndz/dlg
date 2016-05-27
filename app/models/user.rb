@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def self.get_version_author(version)
-    find(version.terminator)
+    find(version.terminator) if version.terminator
   end
 
   # Method added by Blacklight; Blacklight uses #to_s on your

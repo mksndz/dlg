@@ -94,7 +94,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params[:item]['other_collections'].reject!{ |e| e.empty? }
+    params[:item]['other_collections'].reject!{ |e| e.empty? } if params[:item]['other_collections']
     params.require(:item).permit(
         :collection_id,
         :slug,

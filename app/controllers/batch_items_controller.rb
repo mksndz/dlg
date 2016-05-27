@@ -106,7 +106,6 @@ class BatchItemsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def batch_item_params
-    params[:item]['other_collections'].reject!{ |e| e.empty? }
     params.require(:batch_item).permit(
         :collection_id,
         :slug,
