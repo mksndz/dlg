@@ -165,6 +165,10 @@ GEM
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
+    paper_trail (4.0.2)
+      activerecord (>= 3.0, < 6.0)
+      activesupport (>= 3.0, < 6.0)
+      request_store (~> 1.1)
     parslet (1.7.1)
       blankslate (>= 2.0, <= 4.0)
     pg (0.18.4)
@@ -314,6 +318,7 @@ DEPENDENCIES
   jettywrapper (>= 2.0)
   jquery-rails
   jquery-turbolinks
+  paper_trail
   pg
   rails (= 4.2.5)
   rsolr
