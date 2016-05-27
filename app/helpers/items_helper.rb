@@ -25,6 +25,14 @@ module ItemsHelper
     user ? user.email : ''
   end
 
+  def diff(version1, version2)
+    changes = Diffy::Diff.new(version1, version2,
+                              include_plus_and_minus_in_html: true,
+                              include_diff_info: true
+    )
+    changes.to_s.present? ? changes.to_s(:html).html_safe : 'No Changes'
+  end
+
   private
 
   def errors_html(errors)

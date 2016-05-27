@@ -20,7 +20,7 @@
         <td><%= version.created_at %></td>
         <td><%= version_author_name(version) %></td>
         <td><%= version.event.humanize %></td>
-        <td><%= link_to 'Diff', '' %></td>
+        <td><%= link_to 'Diff', diff_item_version_path(entity, version) %></td>
         <td><%= link_to 'Rollback', rollback_item_version_path(entity, version), method: :patch %></td>
       </tr>
   <% end %>

@@ -1,0 +1,21 @@
+<div class='row mt'>
+  <div class='col-sm-12'>
+    <h2><%= "Diff between Version #{@version.id} and Current Version" %></h2>
+    <style><%= Diffy::CSS %></style>
+    <div class='well diff'>
+      <% dc_fields.each do |dc_term| %>
+        <p>
+          <strong><%= t("activerecord.attributes.item.#{dc_term}") %></strong>
+          <%= diff(@version.reify[dc_term], @item[dc_term]) %>
+        </p>
+      <% end %>
+    </div>
+    <p>
+      <%= "Version authored by #{version_author_name(@version)} on #{@version.created_at} by '#{@version.event.humanize}'." %>
+    </p>
+  </div>
+</div>
+<div class='fr'>
+  <%= link_to 'Back', edit_item_path(@item), class: 'btn btn-danger' %>
+  <%= link_to 'Rollback to This Version', rollback_item_version_path(@item, @version), class: 'btn btn-primary', method: :patch %>
+</div>
