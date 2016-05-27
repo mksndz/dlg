@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
   include Searchable
   include Filterable
 
+  before_action :set_paper_trail_whodunnit
   before_action :set_data, only: [ :new, :copy, :edit ]
 
   def index
@@ -93,6 +94,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
+    params[:item]['other_collections'].reject!{ |e| e.empty? }
     params.require(:item).permit(
         :collection_id,
         :slug,
