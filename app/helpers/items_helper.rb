@@ -20,6 +20,11 @@ module ItemsHelper
     end
   end
 
+  def version_author_name(version)
+    user = User.get_version_author(version)
+    user ? user.email : ''
+  end
+
   private
 
   def errors_html(errors)

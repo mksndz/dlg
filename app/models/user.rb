@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :lockable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  def self.get_version_author(version)
+    find(version.terminator)
+  end
+
   # Method added by Blacklight; Blacklight uses #to_s on your
   # user class to get a user-displayable login/identifier for
   # the account.

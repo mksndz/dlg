@@ -11,6 +11,8 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection
 
+  has_paper_trail
+
   searchable do
 
     # todo remove unnecessarily stored fields when indexing is ready, remembering to alter solr field names where applicable
