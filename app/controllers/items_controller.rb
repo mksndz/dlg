@@ -86,6 +86,10 @@ class ItemsController < ApplicationController
     end
   end
 
+  def deleted
+    @item_versions = ItemVersion.where(item_type: 'Item', event: 'destroy')
+  end
+
   private
 
   def set_data

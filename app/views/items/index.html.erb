@@ -17,6 +17,7 @@
 <% breadcrumb :items %>
 
 <%= link_to t('meta.item.actions.add'), new_item_path, class: 'btn btn-default' %>
+<%= link_to 'Deleted Items', deleted_items_path, class: 'btn btn-default' %>
 
 <%= render 'shared/per_pager' %>
 

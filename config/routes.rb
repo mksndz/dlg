@@ -12,17 +12,27 @@ Rails.application.routes.draw do
 
   resources :repositories, :collections, :users, :roles, :subjects, :time_periods
 
+  resources :versions, only: [] do
+    member do
+      patch :restore
+    end
+  end
+
   resources :items do
+
     resources :versions, only: [:destroy] do
       member do
         get :diff, to: 'versions#diff'
         patch :rollback, to: 'versions#rollback'
       end
     end
+
     collection do
       delete 'multiple_destroy', constraints: { format: :json }
       get 'xml', constraints: { format: :xml }
+      get 'deleted'
     end
+
     member do
       get 'copy'
     end

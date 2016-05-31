@@ -1,16 +1,21 @@
 class VersionsController < ApplicationController
-  # before_action :require_user
-  before_action :set_item_and_version, only: [:diff, :rollback, :destroy]
 
-  def diff
-  end
+  authorize_resource
+
+  before_action :set_item_and_version, only: [:diff, :rollback]
 
   def rollback
-    # change the current item to the specified version
-    # reify gives you the object of this version
     item = @version.reify
     item.save
     redirect_to edit_item_path(item), alert: 'Item rolled back to selected version'
+  end
+
+  def restore
+    version = ItemVersion.find(params[:id])
+    @document = version.reify
+    @document.save
+    version.delete
+    redirect_to item_path(@document), notice: 'The deleted Item was restored'
   end
 
   private

@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection
 
-  has_paper_trail
+  has_paper_trail class_name: 'ItemVersion'
 
   searchable do
 
