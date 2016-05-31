@@ -3,25 +3,43 @@
 <table class='table'>
   <thead>
   <tr>
-    <th>Index</th>
-    <th>Date</th>
-    <th>Author</th>
-    <th>Event</th>
-    <th></th>
-    <th></th>
+    <th>
+      Index
+    </th>
+    <th>
+      Date
+    </th>
+    <th>
+      Author
+    </th>
+    <th>
+      Event
+    </th>
     <th></th>
   </tr>
   </thead>
 
   <tbody>
-  <%- entity.versions.reverse.each do |version| %>
+  <% entity.versions.reverse.each do |version| %>
       <tr>
-        <td><%= version.index %></td>
-        <td><%= version.created_at %></td>
-        <td><%= version_author_name(version) %></td>
-        <td><%= version.event.humanize %></td>
-        <td><%= link_to 'Diff', diff_item_version_path(entity, version) %></td>
-        <td><%= link_to 'Rollback', rollback_item_version_path(entity, version), method: :patch %></td>
+        <td>
+          <%= version.index %>
+        </td>
+        <td>
+          <%= version.created_at %>
+        </td>
+        <td>
+          <%= version_author_name(version) %>
+        </td>
+        <td>
+          <%= version.event.humanize %>
+        </td>
+        <td>
+          <%= link_to 'Diff', diff_item_version_path(entity, version) %>
+        </td>
+        <td>
+          <%= link_to 'Rollback', rollback_item_version_path(entity, version), method: :patch %>
+        </td>
       </tr>
   <% end %>
   </tbody>

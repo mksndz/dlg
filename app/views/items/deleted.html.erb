@@ -1,22 +1,24 @@
-<h1>Restore deleted Items</h1>
+<% content_for :title do %>
+    Deleted Items
+<% end %>
 <table class='table'>
   <thead>
   <tr>
     <th>ID</th>
-    <th>Name</th>
-    <th>Description</th>
+    <th>Slug</th>
+    <th>Title</th>
     <th>Deleted by</th>
     <th>At</th>
-    <th colspan="3"></th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
   <% @item_versions.each do |item_version| %>
-      <%- item = item_version.reify %>
+      <% item = item_version.reify %>
       <tr>
         <td><%= item.id %></td>
+        <td><%= item.slug %></td>
         <td><%= item.title %></td>
-        <td><%= item.inspect %></td>
         <td><%= version_author_name(item_version) %></td>
         <td><%= item.created_at %></td>
         <td><%= link_to 'Restore', restore_version_path(item_version), method: :patch %></td>
