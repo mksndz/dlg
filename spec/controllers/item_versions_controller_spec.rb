@@ -44,7 +44,6 @@ RSpec.describe ItemVersionsController, type: :controller do
     with_versioning do
 
       it 'restores the deleted item from the ItemVersion' do
-
         i1 = Fabricate(:item)
         id = i1.id
         i1.destroy
@@ -52,7 +51,6 @@ RSpec.describe ItemVersionsController, type: :controller do
         patch :restore, { id: v1.id }
         expect(assigns(:item).id).to eq id
         expect(response).to redirect_to item_path(i1)
-
       end
 
     end
