@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531203827) do
+ActiveRecord::Schema.define(version: 20160601224020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20160531203827) do
     t.datetime "updated_at",                            null: false
     t.integer  "batch_id",                              null: false
     t.integer  "collection_id",                         null: false
-    t.string   "other_collections",     default: [],                 array: true
     t.string   "slug",                                  null: false
     t.text     "dcterms_is_part_of",    default: [],    null: false, array: true
     t.text     "dcterms_contributor",   default: [],    null: false, array: true
@@ -51,10 +50,12 @@ ActiveRecord::Schema.define(version: 20160531203827) do
     t.text     "dcterms_provenance",    default: [],    null: false, array: true
     t.text     "dcterms_license",       default: [],    null: false, array: true
     t.integer  "item_id"
+    t.integer  "other_collections",     default: [],                 array: true
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
   add_index "batch_items", ["item_id"], name: "index_batch_items_on_item_id", using: :btree
+  add_index "batch_items", ["other_collections"], name: "index_batch_items_on_other_collections", using: :btree
   add_index "batch_items", ["slug"], name: "index_batch_items_on_slug", using: :btree
 
   create_table "batches", force: :cascade do |t|
@@ -188,7 +189,6 @@ ActiveRecord::Schema.define(version: 20160531203827) do
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
     t.text     "dc_relation",           default: [],    null: false, array: true
-    t.string   "other_collections",     default: [],                 array: true
     t.string   "slug",                                  null: false
     t.text     "dcterms_is_part_of",    default: [],    null: false, array: true
     t.text     "dcterms_contributor",   default: [],    null: false, array: true
@@ -209,10 +209,12 @@ ActiveRecord::Schema.define(version: 20160531203827) do
     t.text     "dcterms_is_shown_at",   default: [],    null: false, array: true
     t.text     "dcterms_provenance",    default: [],    null: false, array: true
     t.text     "dcterms_license",       default: [],    null: false, array: true
+    t.integer  "other_collections",     default: [],                 array: true
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
   add_index "items", ["dpla"], name: "index_items_on_dpla", using: :btree
+  add_index "items", ["other_collections"], name: "index_items_on_other_collections", using: :btree
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
 
