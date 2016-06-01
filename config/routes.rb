@@ -20,8 +20,8 @@ Rails.application.routes.draw do
 
     resources :item_versions, only: [] do
       member do
-        get :diff, to: 'versions#diff'
-        patch :rollback, to: 'versions#rollback'
+        get :diff, to: 'item_versions#diff'
+        patch :rollback, to: 'item_versions#rollback'
       end
     end
 

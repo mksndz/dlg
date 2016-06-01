@@ -18,6 +18,9 @@ class ItemVersionsController < ApplicationController
     redirect_to item_path(@document), notice: 'The deleted Item was restored'
   end
 
+  def diff
+  end
+
   private
 
   def set_item_and_version

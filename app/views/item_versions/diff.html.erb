@@ -1,0 +1,22 @@
+<% content_for :title do %>
+  <%= "Diff between Version #{@version.index + 1} and Current Version" %>
+<% end %>
+
+<p>Current version changes are highlighted in green.</p>
+<p><%= "Version authored by #{version_author_name(@version)} on #{@version.created_at}." %></p>
+<style><%= Diffy::CSS %></style>
+
+<% @item.attributes.symbolize_keys.except(:id, :created_at, :updated_at).each do |attr,val| %>
+  <% diff = diff(@version.reify[attr], @item[attr]) %>
+  <% if diff %>
+      <div class='well diff'>
+        <p>
+          <strong><%= t("activerecord.attributes.item.#{attr}") %></strong>
+          <%= diff %>
+        </p>
+      </div>
+  <% end %>
+<% end %>
+
+<%= link_to 'Back', item_path(@item), class: 'btn btn-default' %>
+<%= link_to 'Rollback to This Version', rollback_item_item_version_path(@item, @version), class: 'btn btn-primary', method: :patch %>
