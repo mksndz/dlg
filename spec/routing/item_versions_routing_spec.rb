@@ -11,5 +11,9 @@ RSpec.describe ItemVersionsController, type: :routing do
       expect(patch: '/items/1/item_versions/1/rollback').to route_to(controller: 'item_versions', action: 'rollback', item_id: '1', id: '1')
     end
 
+    it 'routes to #restore' do
+      expect(patch: '/item_versions/1/restore').to route_to(controller: 'item_versions', action: 'restore', id: '1')
+    end
+
   end
 end
