@@ -60,4 +60,14 @@ RSpec.describe Collection, type: :model do
     expect(c.time_periods.first).to be_a TimePeriod
   end
 
+  it 'prevents items with other_collection arrays containing a collection id from persisting after a collection is destroyed' do
+    c = Fabricate(:collection)
+    i = Fabricate(:item)
+    i.other_collections << c.id.to_s
+    i.save
+    c.destroy
+    i.reload
+    expect(i.other_collections).to be_empty
+  end
+
 end

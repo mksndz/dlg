@@ -14,6 +14,8 @@ class Collection < ActiveRecord::Base
   validates_presence_of :display_title
   validates_uniqueness_of :slug, scope: :repository_id
 
+  before_destroy :clear_from_other_collections
+
   def self.index_query_fields
     %w(repository_id public).freeze
   end
@@ -115,5 +117,16 @@ class Collection < ActiveRecord::Base
 
     super(options.merge!(default_options))
   end
+
+  private
+
+  def clear_from_other_collections
+    is = Item.where "#{self.id} = ANY (other_collections)"
+    is.each do |i|
+      i.other_collections = i.other_collections - [self.id]
+      i.save(validate: false)
+    end
+  end
+
 end
 
