@@ -15,10 +15,10 @@ class ItemVersionsController < ApplicationController
 
   def restore
     version = ItemVersion.find(params[:id])
-    @document = version.reify
-    @document.save
+    @item = version.reify
+    @item.save
     version.delete
-    redirect_to item_path(@document), notice: 'The deleted Item was restored'
+    redirect_to item_path(@item), notice: 'The deleted Item was restored'
   end
 
   def diff
