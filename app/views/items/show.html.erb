@@ -11,6 +11,7 @@
 <%= link_to t('meta.defaults.actions.edit'), edit_item_path(@item), class: 'btn btn-default' %>
 <%= link_to t('meta.item.actions.copy'), copy_item_path(@item), class: 'btn btn-default', data: { confirm: 'Are you sure?' } %>
 <%= link_to t('meta.item.actions.xml'), '#xml' , class: 'btn btn-default' %>
+<%= link_to t('meta.item.actions.versions'), '#versions' , class: 'btn btn-default' %>
 
 <br><br>
 
@@ -62,4 +63,5 @@
 <a name="xml"></a>
 <pre><%= @item.to_xml %></pre>
 
+<a name="versions"></a>
 <%= render 'shared/versions', entity: @item %>

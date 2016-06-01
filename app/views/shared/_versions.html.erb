@@ -4,16 +4,16 @@
   <thead>
   <tr>
     <th>
-      Index
+      <%= t('meta.versions.labels.columns.version') %>
     </th>
     <th>
-      Date
+      <%= t('meta.versions.labels.columns.date') %>
     </th>
     <th>
-      Author
+      <%= t('meta.versions.labels.columns.author') %>
     </th>
     <th>
-      Event
+      <%= t('meta.versions.labels.columns.event') %>
     </th>
     <th></th>
   </tr>
@@ -23,7 +23,7 @@
   <% entity.versions.reverse.each do |version| %>
       <tr>
         <td>
-          <%= version.index %>
+          <%= version.index + 1 %>
         </td>
         <td>
           <%= version.created_at %>
@@ -35,10 +35,10 @@
           <%= version.event.humanize %>
         </td>
         <td>
-          <%= link_to 'Diff', diff_item_version_path(entity, version) %>
-        </td>
-        <td>
-          <%= link_to 'Rollback', rollback_item_version_path(entity, version), method: :patch %>
+          <div class="btn-group">
+            <%= link_to t('meta.versions.action.diff'), diff_item_item_version_path(entity, version), class: 'btn btn-xs btn-default' %>
+            <%= link_to t('meta.versions.action.rollback'), rollback_item_item_version_path(entity, version), method: :patch, class: 'btn btn-xs btn-default' %>
+          </div>
         </td>
       </tr>
   <% end %>

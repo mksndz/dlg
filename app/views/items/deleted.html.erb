@@ -38,7 +38,7 @@
       <th>
         <%= t('meta.defaults.labels.columns.title') %>
       </th>
-      <th><%= sortable 'whodunnit', t('meta.item.labels.columns.deleted_at')  %></th>
+      <th><%= sortable 'whodunnit', t('meta.item.labels.columns.deleted_by')  %></th>
       <th><%= sortable 'created_at', t('meta.item.labels.columns.deleted_at') %></th>
       <th></th>
     </tr>
@@ -52,7 +52,7 @@
           <td><%= item.title %></td>
           <td><%= version_author_name(item_version) %></td>
           <td><%= item_version.created_at %></td>
-          <td><%= link_to 'Restore', restore_version_path(item_version), method: :patch, class: 'btn btn-xs btn-default' %></td>
+          <td><%= link_to t('meta.item.actions.restore'), restore_item_version_path(item_version), method: :patch, class: 'btn btn-xs btn-default' %></td>
         </tr>
     <% end %>
     </tbody>

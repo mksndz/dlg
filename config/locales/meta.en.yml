@@ -71,6 +71,8 @@ en:
         add: 'New Item'
         copy: 'Copy Item'
         xml: 'XML for Item'
+        versions: 'Previous Versions'
+        restore: 'Restore'
       labels:
         columns:
           collection: 'Collection'
@@ -171,3 +173,14 @@ en:
       labels:
         columns:
           collection: 'Collection'
+    versions:
+      action:
+        diff: 'Diff'
+        rollback: 'Rollback'
+      labels:
+        columns:
+          version: 'Version'
+          date: 'Date Modified'
+          author: 'Modified By'
+          event: 'Modification Type'
+
