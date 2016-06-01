@@ -6,8 +6,11 @@ class ItemVersionsController < ApplicationController
 
   def rollback
     item = @version.reify
-    item.save
-    redirect_to edit_item_path(item), alert: 'Item rolled back to selected version'
+    if item.save(validate: false)
+      redirect_to edit_item_path(item), notice: 'Item rolled back to selected version'
+    else
+      redirect_to item_path(item), alert: 'Item could not be rolled back'
+    end
   end
 
   def restore
