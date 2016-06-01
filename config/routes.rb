@@ -8,11 +8,9 @@ Rails.application.routes.draw do
     get 'auth/invitations', to: 'invitations#index'
   end
 
-  # resources :dashboard, only: [:index]
-
   resources :repositories, :collections, :users, :roles, :subjects, :time_periods
 
-  resources :versions, only: [] do
+  resources :item_versions, only: [] do
     member do
       patch :restore
     end
@@ -20,7 +18,7 @@ Rails.application.routes.draw do
 
   resources :items do
 
-    resources :versions, only: [:destroy] do
+    resources :item_versions, only: [:destroy] do
       member do
         get :diff, to: 'versions#diff'
         patch :rollback, to: 'versions#rollback'

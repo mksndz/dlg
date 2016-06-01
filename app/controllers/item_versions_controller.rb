@@ -1,4 +1,4 @@
-class VersionsController < ApplicationController
+class ItemVersionsController < ApplicationController
 
   authorize_resource
 
