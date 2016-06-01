@@ -42,6 +42,11 @@ crumb :items do
   link 'Items', items_path
 end
 
+crumb :deleted_items do
+  link 'Deleted'
+  parent :items
+end
+
 crumb :item do |item|
   if item.persisted?
     link(item.title) if item.title # todo item can not have a title...

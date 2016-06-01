@@ -46,6 +46,7 @@ en:
           collection: 'Collection'
           public: 'Public'
           filter_button: 'Filter'
+          user: 'User'
         columns:
           id: 'ID'
           name: 'Name'
@@ -73,6 +74,8 @@ en:
       labels:
         columns:
           collection: 'Collection'
+          deleted_by: 'Deleted By'
+          deleted_at: 'At'
         view:
           other_collections: 'Other Collections'
           committed_batch_items: 'Committed Batch Items for this Item'

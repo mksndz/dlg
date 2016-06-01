@@ -7,7 +7,6 @@ class ItemsController < ApplicationController
   include Searchable
   include Filterable
 
-  before_action :set_paper_trail_whodunnit
   before_action :set_data, only: [ :new, :copy, :edit ]
 
   def index
@@ -27,7 +26,6 @@ class ItemsController < ApplicationController
                      .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
                      .per(params[:per_page])
-                     .includes(:collection)
     end
 
   end
@@ -87,7 +85,15 @@ class ItemsController < ApplicationController
   end
 
   def deleted
-    @item_versions = ItemVersion.where(item_type: 'Item', event: 'destroy')
+
+    set_filter_options [:user]
+
+    @item_versions = ItemVersion
+                         .index_query(params)
+                         .where(item_type: 'Item', event: 'destroy')
+                         .order(sort_column + ' ' + sort_direction)
+                         .page(params[:page])
+                         .per(params[:per_page])
   end
 
   private

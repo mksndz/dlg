@@ -1,30 +1,60 @@
 <% content_for :title do %>
     Deleted Items
 <% end %>
-<table class='table'>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Slug</th>
-    <th>Title</th>
-    <th>Deleted by</th>
-    <th>At</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @item_versions.each do |item_version| %>
-      <% item = item_version.reify %>
-      <tr>
-        <td><%= item.id %></td>
-        <td><%= item.slug %></td>
-        <td><%= item.title %></td>
-        <td><%= version_author_name(item_version) %></td>
-        <td><%= item.created_at %></td>
-        <td><%= link_to 'Restore', restore_version_path(item_version), method: :patch %></td>
-      </tr>
+
+<% breadcrumb :deleted_items %>
+
+<%= render 'shared/per_pager' %>
+
+<br><br><br>
+
+<div class="well well-sm">
+  <%= bootstrap_form_tag url: deleted_items_path, method: :get, layout: :horizontal, label_col: 'col-sm-1', control_col: 'col-sm-11' do |f| %>
+      <%= f.hidden_field :direction, { value: params[:direction], name: 'direction' } if params[:direction] %>
+      <%= f.hidden_field :sort, { value: params[:sort], name: 'sort' } if params[:sort] %>
+      <%= f.hidden_field :per_page, { value: params[:per_page], name: 'per_page' } if params[:per_page] %>
+      <%= f.select :whodunnit, options_for_select(@search_options[:users].collect { |c| [c.email, c.id] }, selected: params[:whodunnit] ), { label: t('meta.defaults.labels.filter.user') , include_blank: true }, { name: 'whodunnit' } %>
+      <%= f.primary t('meta.defaults.labels.filter.filter_button') %>
   <% end %>
-  </tbody>
-</table>
-<br>
-<%= link_to 'Back', items_path %>
+</div>
+
+<br><br>
+
+<% if @item_versions.empty? %>
+
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Deleted Items') %></p>
+
+<% else %>
+
+  <table class='table'>
+    <thead>
+    <tr>
+      <th>
+        <%= t('meta.defaults.labels.columns.id') %>
+      </th>
+      <th>
+        <%= t('meta.defaults.labels.columns.slug') %>
+      </th>
+      <th>
+        <%= t('meta.defaults.labels.columns.title') %>
+      </th>
+      <th><%= sortable 'whodunnit', t('meta.item.labels.columns.deleted_at')  %></th>
+      <th><%= sortable 'created_at', t('meta.item.labels.columns.deleted_at') %></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @item_versions.each do |item_version| %>
+        <% item = item_version.reify %>
+        <tr>
+          <td><%= item.id %></td>
+          <td><%= item.slug %></td>
+          <td><%= item.title %></td>
+          <td><%= version_author_name(item_version) %></td>
+          <td><%= item_version.created_at %></td>
+          <td><%= link_to 'Restore', restore_version_path(item_version), method: :patch, class: 'btn btn-xs btn-default' %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
