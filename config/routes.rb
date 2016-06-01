@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   resources :items do
 
-    resources :item_versions, only: [:destroy] do
+    resources :item_versions, only: [] do
       member do
         get :diff, to: 'versions#diff'
         patch :rollback, to: 'versions#rollback'
