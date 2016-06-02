@@ -6,7 +6,7 @@ module ItemTypeValidatable
   included do
 
     validates_presence_of :collection, message: ' must be selected'
-    validates_presence_of :dcterms_temporal, :dcterms_spatial, :dcterms_contributor
+    validates_presence_of :dcterms_temporal, :dcterms_spatial
     validate :dcterms_temporal_characters
     validate :dcterms_type_required_value
     validate :has_rights_information
