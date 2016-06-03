@@ -1,6 +1,6 @@
 require 'rake'
 
-task :all_items, [:collection_slug] => [:environment] do |t, args|
+task :all_solr_items, [:collection_slug] => [:environment] do |t, args|
 
   @logger = Logger.new('./log/all_items.log')
 
