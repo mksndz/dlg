@@ -106,12 +106,16 @@ class Item < ActiveRecord::Base
     time :updated_at, stored: true, trie: true
 
     integer :sort_year, stored: true, trie: true do
-      facet_years.first
+      DateIndexer.new.get_sort_date(dc_date)
     end
 
     integer :year_facet, multiple: true, stored: true, trie: true do
-      facet_years
+      DateIndexer.new.get_valid_years_for(dc_date)
     end
+
+    # date :date_facet, multiple: true, stored: true, trie: true do
+
+    # end
 
   end
 
@@ -168,6 +172,29 @@ class Item < ActiveRecord::Base
   def other_collection_titles
     Collection.find(other_collections).map(&:title)
   end
+
+  # def date_facet
+  #
+  #   # check if dc_date contains a well-formatted date range
+  #   dc_date.each do |date|
+  #
+  #     if date.scan(/\//).size == 1
+  #
+  #       # we likely have a date range here
+  #       # try and get two dates, ISO style
+  #       iso_dates = date.scan(/[0-2][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/)
+  #       if iso_dates.size == 2
+  #
+  #         # we have a likely date range!
+  #         # so now we want to get all years in between....
+  #         iso_dates.map { |d| Date.strptime(s, '%Y-%m-%d') }.sort
+  #
+  #
+  #       end
+  #     end
+  #   end
+  #
+  # end
 
 end
 
