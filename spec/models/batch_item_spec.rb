@@ -67,12 +67,6 @@ RSpec.describe BatchItem, type: :model do
     expect(i.errors).to have_key :dcterms_spatial
   end
 
-  it 'should require a dcterms_contributor value' do
-    i = Fabricate.build(:item, dcterms_contributor: [])
-    i.valid?
-    expect(i.errors).to have_key :dcterms_contributor
-  end
-
   it 'should require one of the dcterms_type values to be in a standardized set' do
     i = Fabricate.build(:item, dcterms_type: ['Some Random Silly Type'])
     i.valid?
