@@ -61,6 +61,12 @@
           <th>
             <%= t('meta.item.labels.columns.collection') %>
           </th>
+          <th>
+            <%= sortable 'created_at', t('activerecord.attributes.item.created_at')  %>
+          </th>
+          <th>
+            <%= sortable 'updated_at', t('activerecord.attributes.item.updated_at')  %>
+          </th>
           <th width="185px"></th>
         </tr>
       </thead>
@@ -85,6 +91,12 @@
             </td>
             <td>
               <%= link_to item.collection.display_title, collection_path(item.collection) %>
+            </td>
+            <td>
+              <%= time_tag item.created_at %>
+            </td>
+            <td>
+              <%= time_ago_in_words item.updated_at %> ago
             </td>
             <td>
               <%= render partial: 'shared/entity_actions', locals: { base_path: item_path(item), edit_path: edit_item_path(item), entity: item, show_bl: true } %>
