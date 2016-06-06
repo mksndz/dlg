@@ -37,6 +37,11 @@ RSpec.describe DateIndexer, type: :model do
     expect(date_indexer.get_valid_years_for(dc_dates)).to eq %w(1732 1921)
   end
 
+  it 'returns an array of years given an array of values containing nonsense days that do not exist' do
+    dc_dates = %w(1732-02-31 1921-03-32)
+    expect(date_indexer.get_valid_years_for(dc_dates)).to eq %w(1732 1921)
+  end
+
   it 'returns an array of years given an array of values containing legit single dates as strings' do
     dc_dates = %w(garbage 3000 0123)
     expect(date_indexer.get_valid_years_for(dc_dates)).to eq []
@@ -45,6 +50,11 @@ RSpec.describe DateIndexer, type: :model do
   it 'returns an array of years given an array of values containing dates with some common errors' do
     dc_dates = %w(1999-00-00 2001--07-09 2004-03-00)
     expect(date_indexer.get_valid_years_for(dc_dates)).to eq %w(1999 2001 2004)
+  end
+
+  it 'returns an array of years given an array of values containing dates in the ugly format' do
+    dc_dates = %w(02/03/1732 2/3/1776)
+    expect(date_indexer.get_valid_years_for(dc_dates)).to eq %w(1732 1776)
   end
 
   it 'returns an array of years given an array of values containing an ugly date range and some text' do

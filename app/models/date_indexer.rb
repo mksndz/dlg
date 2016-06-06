@@ -41,7 +41,7 @@ class DateIndexer
          # UGLY DATE
 
          if has_ugly_date? date
-           item_dates << process(date.scan(UGLY_DATE))
+           item_dates << process_ugly(date.scan(UGLY_DATE))
            next
          end
 
@@ -157,6 +157,17 @@ class DateIndexer
     y + '-01-01'
   end
 
+  def process_ugly(dates)
+    dates.map do |date|
+      begin
+        Date.strptime(date, '%d/%m/%Y')
+      rescue StandardError => e
+        @logger.error "Ugly Date could not be objectified: #{date}"
+        return
+      end
+    end
+  end
+
   def process_y(y_dates)
     y_dates.map do |d|
       get_date_obj_using_yyyy_mm_dd dateify_y(d)
@@ -181,7 +192,7 @@ class DateIndexer
 
   def get_date_obj_using_yyyy_mm_dd(date)
     unless date.scan(YYYY_MM_DD).present?
-      @logger.error "Object attempted but no proper date found."
+      @logger.error 'Object attempted but no proper date found.'
       @logger.error "Problem value: #{date}"
       return
     end
