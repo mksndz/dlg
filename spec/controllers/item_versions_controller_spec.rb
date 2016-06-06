@@ -32,7 +32,7 @@ RSpec.describe ItemVersionsController, type: :controller do
         v1 = i1.versions.last
         patch :rollback, { item_id: i1.id, id: v1.id }
         expect(assigns(:item)).to eq v1.reify
-        expect(response).to redirect_to edit_item_path(i1)
+        expect(response).to redirect_to item_path(i1)
       end
 
     end
