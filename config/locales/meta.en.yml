@@ -177,6 +177,7 @@ en:
       action:
         diff: 'Diff'
         rollback: 'Rollback'
+        restore: 'Restore'
       labels:
         columns:
           version: 'Version'
