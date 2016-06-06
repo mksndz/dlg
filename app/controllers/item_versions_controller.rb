@@ -7,9 +7,9 @@ class ItemVersionsController < ApplicationController
   def rollback
     item = @version.reify
     if item.save(validate: false)
-      redirect_to item_path(item), notice: 'Item rolled back to selected version'
+      redirect_to item_path(item), notice: I18n.t('meta.versions.messages.success.rollback')
     else
-      redirect_to item_path(item), alert: 'Item could not be rolled back'
+      redirect_to item_path(item), alert: I18n.t('meta.versions.messages.errors.rollback')
     end
   end
 
@@ -18,7 +18,7 @@ class ItemVersionsController < ApplicationController
     @item = version.reify
     @item.save
     version.delete
-    redirect_to item_path(@item), notice: 'The deleted Item was restored'
+    redirect_to item_path(@item), notice: I18n.t('meta.versions.messages.success.restore')
   end
 
   def diff

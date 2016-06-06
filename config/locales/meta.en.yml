@@ -183,4 +183,11 @@ en:
           date: 'Date Modified'
           author: 'Modified By'
           event: 'Modification Type'
+      messages:
+        success:
+          rollback: 'Item rolled back to selected version'
+          restore: 'The deleted Item was restored'
+        errors:
+          rollback: 'Item could not be rolled back'
+
 
