@@ -1,5 +1,6 @@
 # Truncate Tables
 [
+    ItemVersion,
     TimePeriod,
     Subject,
     BatchItem,
