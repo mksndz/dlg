@@ -1,11 +1,18 @@
 class DateIndexer
 
+
+  # todo this should be a module
+
   YYYY_MM_DD = /[1-2][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
   YYYY_MM = /[1-2][0-9][0-9][0-9]-[0-9][0-9]/
   YYYY = /[1-2][0-9][0-9][0-9]/
 
   UGLY_DATE = /[0-9]{1,2}\/[0-9]{1,2}\/[1-2][0-9]{3}/
   UGLY_RANGE = /[0-2][0-9][0-9][0-9]-[0-2][0-9][0-9][0-9]/
+
+  def initialize
+    @logger = Logger.new('./log/date_indexer_debug.log')
+  end
 
   def get_valid_years_for(dc_date)
     item_dates = []
@@ -83,7 +90,7 @@ class DateIndexer
 
     item_dates.each do |e|
 
-      if e[0].is_a? Array
+      if e[0].is_a? Array and e[0].length == 2
         item_years << range_dates(e[0])
       elsif e[0].is_a? Date
         item_years << e[0].strftime('%Y')
@@ -98,6 +105,7 @@ class DateIndexer
     dc_date.each do |d|
       return d.scan(YYYY).first if d.scan(YYYY).present?
     end
+    return
   end
 
   private
@@ -142,7 +150,7 @@ class DateIndexer
   end
 
   def dateify_ym(ym)
-    ym + '-01-01'
+    ym + '-01'
   end
 
   def dateify_y(y)
@@ -172,12 +180,22 @@ class DateIndexer
   end
 
   def get_date_obj_using_yyyy_mm_dd(date)
-    return unless date.scan(YYYY_MM_DD).present?
+    unless date.scan(YYYY_MM_DD).present?
+      @logger.error "Object attempted but no proper date found."
+      @logger.error "Problem value: #{date}"
+      return
+    end
+    tries = 0
     begin
+      tries += 1
       date_obj = Date.strptime(date, '%Y-%m-%d')
     rescue StandardError => e
-      # todo swallowing exception
-      return
+      @logger.error "Date object creation failed: #{e}"
+      @logger.error "Problem value: #{date}"
+      date = date.scan(YYYY_MM).first
+      date = dateify_ym(date)
+      @logger.error "Retrying with: #{date}"
+      retry unless tries == 2
     end
     date_obj
   end
