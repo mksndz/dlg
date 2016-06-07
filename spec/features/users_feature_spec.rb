@@ -48,8 +48,6 @@ feature 'Users Management' do
 
     visit users_path
 
-    p = page.html
-
     expect(page).to have_text I18n.t('unauthorized.index.user')
 
   end
