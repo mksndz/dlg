@@ -3,6 +3,8 @@ class Ability
 
   def initialize(user)
 
+    user ||= User.new
+
     roles = user.roles.pluck(:name)
 
     can :manage, :catalog
@@ -52,6 +54,8 @@ class Ability
 
         # can also manage Users they created
         can [:index, :show, :edit, :update, :destroy], User, creator_id: user.id
+
+        can [:index, :new, :create], :invitation
 
       end
 

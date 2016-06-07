@@ -1,12 +1,20 @@
 class InvitationsController < Devise::InvitationsController
 
+  authorize_resource class: false, except: [:edit, :update]
+
+  include ErrorHandling
+
   after_action :set_user_creator, only: [:create]
   before_action :set_data, only: [:new, :create]
   before_action :configure_permitted_parameters, only: [:create]
 
   # show all pending invitations
   def index
-    @pending_invitations = User.pending_invitation_response
+    if current_user.super?
+      @pending_invitations = User.pending_invitation_response
+    elsif current_user.coordinator?
+      @pending_invitations = User.pending_invitation_response.where(invited_by: current_user)
+    end
     render 'index'
   end
 

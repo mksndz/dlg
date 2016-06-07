@@ -4,3 +4,4 @@ en:
       all: 'You do not have rights to %{action} %{subject}'
     index:
       user: 'You do not have sufficient rights to manage Users'
+      invitation: 'You do not have sufficient rights to manage Invitations'

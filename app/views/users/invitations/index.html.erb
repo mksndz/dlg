@@ -4,13 +4,13 @@
 
 <% breadcrumb :invitations %>
 
-<%= link_to 'New Invitation', new_user_invitation_path, class: 'btn btn-default' %>
+<%= link_to t('meta.invitations.action.add'), new_user_invitation_path, class: 'btn btn-default' %>
 
 <br><br>
 
 <% if @pending_invitations.empty? %>
 
-    <p>No pending invitations at this time.</p>
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'pending invitations') %></p>
 
 <% else %>
 
@@ -18,13 +18,13 @@
       <thead>
       <tr>
         <th>
-          Email Address
+          <%= t('meta.invitations.labels.columns.email') %>
         </th>
         <th>
-          Invited On
+          <%= t('meta.invitations.labels.columns.invited_on') %>
         </th>
         <th>
-          Invited By
+          <%= t('meta.invitations.labels.columns.invited_by') %>
         </th>
         <th>
 
@@ -38,13 +38,13 @@
             <%= i.email %>
           </td>
           <td>
-            <%= i.invitation_created_at %>
+            <%= time_ago_in_words i.invitation_created_at %> ago
           </td>
           <td>
             <%= link_to i.invited_by.email, user_path(i.invited_by) %>
           </td>
           <td>
-            <%= link_to 'Delete Invitation', user_path(i), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default btn-xs' %>
+            <%= link_to t('meta.defaults.actions.destroy'), user_path(i), method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default btn-xs' %>
           </td>
         </tr>
         <% end %>

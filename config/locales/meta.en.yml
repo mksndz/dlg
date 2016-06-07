@@ -190,5 +190,13 @@ en:
           restore: 'The deleted Item was restored'
         errors:
           rollback: 'Item could not be rolled back'
+    invitations:
+      action:
+        add: 'New Invitation'
+      labels:
+        columns:
+          email: 'Email Address/Username'
+          invited_on: 'Invited'
+          invited_by: 'Invited By'
 
 

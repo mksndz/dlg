@@ -14,7 +14,7 @@ en:
         submit_button: "Send an Invitation"
       edit:
         header: "Set your Password"
-        submit_button: "Set my Password"
+        submit_button: 'Set My Password'
     mailer:
       invitation_instructions:
         subject: "Invitation instructions"

@@ -1,6 +1,5 @@
 class DateIndexer
 
-
   # todo this should be a module
 
   YYYY_MM_DD = /[1-2][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
