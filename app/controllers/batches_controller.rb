@@ -1,9 +1,11 @@
 class BatchesController < ApplicationController
 
   load_and_authorize_resource
+
   include ErrorHandling
   include Sorting
   include Filterable
+  include UserHelper
 
   before_action :check_if_committed, only: [:edit, :update, :destroy, :commit]
 
@@ -19,26 +21,27 @@ class BatchesController < ApplicationController
 
     @user = User.find(params[:user_id]) unless !params[:user_id] or params[:user_id].empty?
 
-    # todo i need this conditional block since the index query doesn't support IS NOT NULL querying
-    if params[:status] == 'committed'
-      @batches = Batch.committed
-                      .index_query(params)
-                      .order(sort_column + ' ' + sort_direction)
-                      .page(params[:page])
-                      .per(params[:per_page])
-    elsif params[:status] == 'pending'
-      @batches = Batch.pending
-                      .index_query(params)
-                      .order(sort_column + ' ' + sort_direction)
-                      .page(params[:page])
-                      .per(params[:per_page])
-    else
-      @batches = Batch
-                      .index_query(params)
-                      .order(sort_column + ' ' + sort_direction)
-                      .page(params[:page])
-                      .per(params[:per_page])
+    bq = Batch.index_query(params)
+              .order(sort_column + ' ' + sort_direction)
+              .page(params[:page])
+              .per(params[:per_page])
+
+    unless current_user.super?
+      if current_user.coordinator?
+        bq = bq.where(user: users_managed_by_and(current_user))
+      elsif current_user.basic?
+        bq = bq.where(user: current_user)
+      end
     end
+
+    if params[:status] == 'committed'
+      @batches = bq.committed
+    elsif params[:status] == 'pending'
+      @batches = bq.pending
+    else
+      @batches = bq
+    end
+
   end
 
   # GET /batches/1

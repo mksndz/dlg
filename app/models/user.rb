@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
     roles.where(name: 'basic').exists?
   end
 
+  def manages?(user)
+    users.include? user
+  end
+
   private
 
   def set_default_role

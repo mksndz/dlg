@@ -55,6 +55,10 @@ class Ability
         # can also manage Users they created
         can [:index, :show, :edit, :update, :destroy], User, creator_id: user.id
 
+        can [:index, :show, :edit, :update, :destroy], Batch do |batch|
+          user.manages? batch.user
+        end
+
         can [:index, :new, :create], :invitation
 
       end
