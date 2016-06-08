@@ -47,6 +47,7 @@ en:
           public: 'Public'
           filter_button: 'Filter'
           user: 'User'
+          status: 'Status'
         columns:
           id: 'ID'
           name: 'Name'

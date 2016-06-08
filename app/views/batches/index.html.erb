@@ -16,8 +16,8 @@
         <%= f.hidden_field :direction, { value: params[:direction], name: 'direction' } if params[:direction] %>
         <%= f.hidden_field :sort, { value: params[:sort], name: 'sort' } if params[:sort] %>
         <%= f.hidden_field :per_page, { value: params[:per_page], name: 'per_page' } if params[:per_page] %>
-        <%= f.select :user_id, options_for_select(@search_options[:users].collect { |c| [c.email, c.id] }, selected: params[:user_id] ), { include_blank: true }, { name: 'user_id' } %>
-        <%= f.select :status, options_for_select(@search_options[:status], selected: params[:status]), { include_blank: true }, { name: 'status' } %>
+        <%= f.select :user_id, options_for_select(@search_options[:users].collect { |c| [c.email, c.id] }, selected: params[:user_id] ), { include_blank: true, label: t('meta.defaults.labels.filter.user') }, { name: 'user_id' } %>
+        <%= f.select :status, options_for_select(@search_options[:status], selected: params[:status]), { include_blank: true, label: t('meta.defaults.labels.filter.status') }, { name: 'status' } %>
         <%= f.primary t('meta.defaults.actions.filter') %>
     <% end %>
   </div>
