@@ -61,7 +61,7 @@
               <%= link_to batch.name, batch %>
             </td>
             <td>
-              <%= link_to batch.batch_items.size, batch_batch_items_path(batch_id: batch.id) %>
+              <%= link_to batch.batch_items.size, batch_batch_items_path(batch_id: batch.id), class: 'count-link' %>
             </td>
             <td>
               <%= batch.user.email %>

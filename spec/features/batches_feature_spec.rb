@@ -230,13 +230,36 @@ feature 'Batches Management' do
 
   scenario 'committing an empty batch will display an error' do
 
+    login_as super_user, scope: :user
 
+    batch = Fabricate :batch
+
+    visit batch_path batch
+
+    expect(page).to have_link I18n.t('meta.batch.actions.commit')
+
+    click_on I18n.t('meta.batch.actions.commit')
+
+    expect(page).to have_current_path batch_path batch
+    expect(page).to have_text I18n.t('meta.batch.labels.empty_batch_commit')
 
   end
 
   scenario 'batches list will display number of batch items in a batch' do
 
+    login_as super_user, scope: :user
 
+    count = 5
+
+    batch = Fabricate :batch do
+      batch_items(count: count)
+    end
+
+    visit batches_path
+
+    within('.count-link') do
+      expect(page).to have_text count
+    end
 
   end
 
