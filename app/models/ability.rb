@@ -38,7 +38,7 @@ class Ability
 
         can [:index, :new, :create], BatchItem
 
-        can [:show, :update], BatchItem do |batch_item|
+        can [:show, :edit, :update], BatchItem do |batch_item|
           if batch_item.persisted?
             user.repositories.include?(batch_item.collection.repository) ||
                 user.collections.include?(batch_item.collection)
