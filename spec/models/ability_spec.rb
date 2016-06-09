@@ -229,20 +229,18 @@ RSpec.describe Ability, type: :model do
 
       end
 
-      it 'cannot create or modify BatchItems for Collections that have not been assigned' do
+      it 'cannot modify BatchItems for Collections that have not been assigned' do
 
         batch_item = batch.batch_items.first
 
-        is_expected.not_to be_able_to :create, batch_item
         is_expected.not_to be_able_to :update, batch_item
 
       end
 
-      it 'cannot create or update BatchItems for Collections in Repositories that have not been assigned' do
+      it 'cannot update BatchItems for Collections in Repositories that have not been assigned' do
 
         batch_item = batch.batch_items.first
 
-        is_expected.not_to be_able_to :create, batch_item
         is_expected.not_to be_able_to :update, batch_item
 
       end

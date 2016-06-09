@@ -117,7 +117,7 @@ en:
     batch:
       actions:
         add: 'New Batch'
-        add_batch_items: 'Add Batch Item'
+        add_batch_item: 'Add Batch Item'
         populate_with_xml: 'Populate Batch Items via XML'
         import: 'Import'
         view_batch: 'View Batch'
