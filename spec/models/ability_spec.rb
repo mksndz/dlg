@@ -54,6 +54,22 @@ RSpec.describe Ability, type: :model do
 
     end
 
+    context 'working with Batches' do
+
+      it 'can view, modify and delete Batches created by users they manage' do
+
+        user = Fabricate :user
+        user.creator = coordinator_user
+
+        batch = Fabricate :batch
+        batch.user = user
+
+        is_expected.to be_able_to :manage, batch
+
+      end
+
+    end
+
   end
 
   context 'for a Basic user' do
