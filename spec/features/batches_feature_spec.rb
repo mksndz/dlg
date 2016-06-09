@@ -113,19 +113,60 @@ feature 'Batches Management' do
 
   scenario 'basic user can create a batch' do
 
+    login_as basic_user, scope: :user
 
+    visit batches_path
 
-  end
+    click_on I18n.t('meta.batch.actions.add')
 
-  scenario 'super user can create a batch' do
+    expect(page).to have_field I18n.t('activerecord.attributes.batch.name')
+    expect(page).to have_field I18n.t('activerecord.attributes.batch.notes')
 
+    name = 'Test Batch'
+    notes = 'Some Notes'
 
+    fill_in I18n.t('activerecord.attributes.batch.name'), with: name
+    fill_in I18n.t('activerecord.attributes.batch.notes'), with: notes
+    click_on I18n.t('meta.defaults.actions.save')
+
+    expect(page).to have_current_path batch_path(Batch.last)
+    expect(page).to have_text name
+    expect(page).to have_text notes
 
   end
 
   scenario 'basic user can edit a batch they created' do
 
+    login_as basic_user, scope: :user
 
+    batch = Fabricate :batch
+    batch.user = basic_user
+    batch.save
+
+    other_batch = Fabricate :batch
+
+    visit edit_batch_path(other_batch)
+
+    p = page.html
+
+    expect(page).to have_text I18n.t('unauthorized.edit.batch')
+    expect(page).to have_current_path root_path  # todo change to batch_path?
+
+    visit edit_batch_path(batch)
+
+    expect(find_field(I18n.t('activerecord.attributes.batch.name')).value).to eq batch.name
+    expect(find_field(I18n.t('activerecord.attributes.batch.notes')).value).to eq batch.notes
+
+    name = 'Changed Batch Name'
+    notes = 'Changed Batch Notes'
+
+    fill_in I18n.t('activerecord.attributes.batch.name'), with: name
+    fill_in I18n.t('activerecord.attributes.batch.notes'), with: notes
+    click_on I18n.t('meta.defaults.actions.save')
+
+    expect(page).to have_current_path batch_path(batch)
+    expect(page).to have_text name
+    expect(page).to have_text notes
 
   end
 

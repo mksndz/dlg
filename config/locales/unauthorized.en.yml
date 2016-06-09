@@ -5,3 +5,5 @@ en:
     index:
       user: 'You do not have sufficient rights to manage Users'
       invitation: 'You do not have sufficient rights to manage Invitations'
+    edit:
+      batch: 'You cannot edit this Batch'
