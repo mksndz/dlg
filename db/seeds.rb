@@ -68,6 +68,7 @@ Role.create!([
                  { name: 'super' },
                  { name: 'coordinator' },
                  { name: 'committer' },
+                 { name: 'uploader' },
                  { name: 'basic' }
              ])
 
