@@ -104,13 +104,23 @@ class BatchesController < ApplicationController
   end
 
   def commit_form
+    if @batch.batch_items.count > 0
+      render :commit_form
+    else
+      redirect_to @batch, alert: I18n.t('meta.batch.labels.empty_batch_commit')
+    end
   end
 
   def commit
     respond_to do |format|
-      @batch.delay.commit
-      format.html { redirect_to @batch, notice: I18n.t('meta.batch.messages.success.committed') }
-      format.json { head :no_content }
+      if @batch.batch_items.count == 0
+        format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.empty_batch_commit') }
+        format.json { head :no_content }
+      else
+        @batch.delay.commit
+        format.html { redirect_to @batch, notice: I18n.t('meta.batch.messages.success.committed') }
+        format.json { head :no_content }
+      end
     end
   end
 

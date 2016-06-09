@@ -131,6 +131,7 @@ en:
         successful: 'Successfully Committed'
         not_yet_committed: 'Not Yet'
         to_commit: 'You will be committing %{count} records in this action.'
+        empty_batch_commit: 'You cannot commit an empty Batch'
         progress_remaining: '% Complete'
         import:
           xml_file: 'XML File'
