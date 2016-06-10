@@ -282,15 +282,17 @@ feature 'Batches Management' do
 
     login_as uploader_user, scope: :user
 
-    Fabricate :batch
+    batch = Fabricate :batch
+    batch.user = uploader_user
+    batch.save
 
-    visit edit_batch_path(Batch.last)
+    visit edit_batch_path(batch)
 
     expect(page).to have_link I18n.t('meta.batch.actions.populate_with_xml')
 
-    click_on I18n.t('meta.batch.actions.import')
+    click_on I18n.t('meta.batch.actions.populate_with_xml')
 
-    expect(page).to have_field I18n.t('meta.batch.labels.import.xml_file')
+    expect(page).to have_text I18n.t('meta.batch.labels.import.xml_file') # todo
     expect(page).to have_field I18n.t('meta.batch.labels.import.xml_text')
     expect(page).to have_field I18n.t('meta.batch.labels.import.bypass_validations')
 
@@ -306,9 +308,9 @@ feature 'Batches Management' do
 
     expect(page).to have_link I18n.t('meta.batch.actions.populate_with_xml')
 
-    click_on I18n.t('meta.batch.actions.import')
+    click_on I18n.t('meta.batch.actions.populate_with_xml')
 
-    expect(page).to have_field I18n.t('meta.batch.labels.import.xml_file')
+    expect(page).to have_text I18n.t('meta.batch.labels.import.xml_file') # todo
     expect(page).to have_field I18n.t('meta.batch.labels.import.xml_text')
     expect(page).to have_field I18n.t('meta.batch.labels.import.bypass_validations')
 

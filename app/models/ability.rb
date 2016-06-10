@@ -60,8 +60,6 @@ class Ability
         # can also manage Users they created
         can [:index, :show, :edit, :update, :destroy], User, creator_id: user.id
 
-        can :index, Batch # todo this should be covered by basic role, which all users should have
-
         can [:show, :edit, :update, :destroy], Batch do |batch|
           user.manages? batch.user
         end
