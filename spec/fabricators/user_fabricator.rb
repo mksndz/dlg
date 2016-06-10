@@ -17,6 +17,10 @@ Fabricator(:committer, from: :user) do
   roles { [Fabricate(:committer_role)] }
 end
 
+Fabricator(:uploader, from: :user) do
+  roles { [Fabricate(:uploader_role)] }
+end
+
 Fabricator(:super, from: :user) do
   roles { [Fabricate(:super_role)] }
 end
