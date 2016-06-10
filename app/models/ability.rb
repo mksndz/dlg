@@ -60,7 +60,7 @@ class Ability
         # can also manage Users they created
         can [:index, :show, :edit, :update, :destroy], User, creator_id: user.id
 
-        can [:index, :show, :edit, :update, :destroy], Batch do |batch|
+        can [:show, :edit, :update, :destroy], Batch do |batch|
           user.manages? batch.user
         end
 
@@ -72,6 +72,13 @@ class Ability
 
         # User with Committer Role can commit their own Batches
         can :commit, Batch, user_id: user.id
+
+      end
+
+      if roles.include? 'uploader'
+
+        # User with Uploader Role can upload XML
+        can [:import], Batch, user_id: user.id
 
       end
 

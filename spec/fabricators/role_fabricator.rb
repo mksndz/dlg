@@ -20,6 +20,6 @@ Fabricator(:committer_role, from: :role) do
   name 'committer'
 end
 
-Fabricator(:committer_role, from: :role) do
+Fabricator(:uploader_role, from: :role) do
   name 'uploader'
 end

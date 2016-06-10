@@ -46,6 +46,10 @@ class User < ActiveRecord::Base
     roles.where(name: 'committer').exists?
   end
 
+  def uploader?
+    roles.where(name: 'uploader').exists?
+  end
+
   def basic?
     roles.where(name: 'basic').exists?
   end

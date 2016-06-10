@@ -7,6 +7,7 @@ RSpec.describe Ability, type: :model do
   let(:basic_user)        { Fabricate :basic }
   let(:coordinator_user)  { Fabricate :coordinator }
   let(:committer_user)    { Fabricate :committer }
+  let(:uploader_user)    { Fabricate :uploader }
 
   context 'for a Super user' do
     
@@ -60,11 +61,15 @@ RSpec.describe Ability, type: :model do
 
         user = Fabricate :user
         user.creator = coordinator_user
+        user.save
 
         batch = Fabricate :batch
         batch.user = user
 
-        is_expected.to be_able_to :manage, batch
+        is_expected.to be_able_to :show, batch
+        is_expected.to be_able_to :edit, batch
+        is_expected.to be_able_to :update, batch
+        is_expected.to be_able_to :destroy, batch
 
       end
 
@@ -332,6 +337,28 @@ RSpec.describe Ability, type: :model do
     it 'cannot commit a batch not owned by self' do
 
       is_expected.not_to be_able_to :commit, batch
+
+    end
+
+  end
+
+  context 'for a uploader user' do
+
+    subject { Ability.new uploader_user }
+
+    let(:batch) { Fabricate :batch }
+
+    it 'can upload to a batch owned by self' do
+
+      batch.user = uploader_user
+
+      is_expected.to be_able_to :import, batch
+
+    end
+
+    it 'cannot upload to a batch not owned by self' do
+
+      is_expected.not_to be_able_to :import, batch
 
     end
 
