@@ -4,10 +4,13 @@ Warden.test_mode!
 
 feature 'Batches Management' do
 
+  # todo recreate batches, commit results views
+
   let(:super_user) { Fabricate :super }
   let(:basic_user) { Fabricate :basic }
   let(:coordinator_user) { Fabricate :coordinator }
   let(:committer_user) { Fabricate :committer }
+  let(:uploader_user) { Fabricate :uploader}
 
   scenario 'super user sees a list of all batches and action buttons' do
 
@@ -251,7 +254,7 @@ feature 'Batches Management' do
 
     count = 5
 
-    batch = Fabricate :batch do
+    Fabricate :batch do
       batch_items(count: count)
     end
 
@@ -265,13 +268,49 @@ feature 'Batches Management' do
 
   scenario 'basic user does not see the button for or have the ability to upload XML' do
 
+    login_as basic_user, scope: :user
 
+    Fabricate :batch
+
+    visit edit_batch_path(Batch.last)
+
+    expect(page).not_to have_button I18n.t('meta.batch.actions.import')
+
+  end
+
+  scenario 'uploader user sees a button to import XML and can load the form' do
+
+    login_as uploader_user, scope: :user
+
+    Fabricate :batch
+
+    visit edit_batch_path(Batch.last)
+
+    expect(page).to have_link I18n.t('meta.batch.actions.populate_with_xml')
+
+    click_on I18n.t('meta.batch.actions.import')
+
+    expect(page).to have_field I18n.t('meta.batch.labels.import.xml_file')
+    expect(page).to have_field I18n.t('meta.batch.labels.import.xml_text')
+    expect(page).to have_field I18n.t('meta.batch.labels.import.bypass_validations')
 
   end
 
   scenario 'super user sees a button to import XML and can load the form' do
 
+    login_as super_user, scope: :user
 
+    Fabricate :batch
+
+    visit edit_batch_path(Batch.last)
+
+    expect(page).to have_link I18n.t('meta.batch.actions.populate_with_xml')
+
+    click_on I18n.t('meta.batch.actions.import')
+
+    expect(page).to have_field I18n.t('meta.batch.labels.import.xml_file')
+    expect(page).to have_field I18n.t('meta.batch.labels.import.xml_text')
+    expect(page).to have_field I18n.t('meta.batch.labels.import.bypass_validations')
 
   end
 
