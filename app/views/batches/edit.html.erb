@@ -9,7 +9,7 @@
 <% breadcrumb :batch, @batch %>
 
 <%= link_to t('meta.batch.actions.add_batch_item'), new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
-<%= link_to t('meta.batch.actions.populate_with_xml'), import_batch_path(@batch), class: 'btn btn-default' %>
+<%= link_to(t('meta.batch.actions.populate_with_xml'), import_batch_path(@batch), class: 'btn btn-default') if can? :import, @batch %>
 
 <br><br>
 
