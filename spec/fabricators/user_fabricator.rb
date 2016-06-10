@@ -10,17 +10,17 @@ Fabricator(:basic, from: :user) do
 end
 
 Fabricator(:coordinator, from: :user) do
-  roles { [Fabricate(:coordinator_role)] }
+  roles { [Fabricate(:coordinator_role), Fabricate(:basic_role)] }
 end
 
 Fabricator(:committer, from: :user) do
-  roles { [Fabricate(:committer_role)] }
+  roles { [Fabricate(:committer_role), Fabricate(:basic_role)] }
 end
 
 Fabricator(:uploader, from: :user) do
-  roles { [Fabricate(:uploader_role)] }
+  roles { [Fabricate(:uploader_role), Fabricate(:basic_role)] }
 end
 
 Fabricator(:super, from: :user) do
-  roles { [Fabricate(:super_role)] }
+  roles { [Fabricate(:super_role), Fabricate(:basic_role)] }
 end
