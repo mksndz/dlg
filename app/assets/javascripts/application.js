@@ -12,12 +12,17 @@
 //
 //= require jquery
 //= require 'blacklight_advanced_search'
-
-
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
 //= require blacklight/blacklight
 //= require bootstrap/tooltip
 //= require bootstrap/popover
+//= require multi-select
 //= require_tree
+
+$(document).ready(function() {
+    $('select.fancy-multiselect').multiSelect({
+        cssClass: 'fancy-multiselect-container'
+    })
+});

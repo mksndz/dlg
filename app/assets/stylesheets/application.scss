@@ -9,6 +9,7 @@ $logo_image: 'dlg_logo_red.png';
 @import 'blacklight';
 @import 'scaffolds';
 @import 'blacklight_advanced_search';
+@import 'multi-select';
 
 // Blacklight CSS Overrides
 
@@ -89,4 +90,8 @@ a.current.asc:after {
 
 a.current.desc:after {
   content: " \25BE ";
+}
+
+.fancy-multiselect-container {
+  width: 100%;
 }

@@ -84,8 +84,8 @@ class UsersController < ApplicationController
   def set_data
     @data ||= {}
     @data[:roles] = Role.all
-    @data[:repositories]= current_user.super? ? Repository.all : current_user.repositories
-    @data[:collections] = current_user.super? ? Collection.all : current_user.collections
+    @data[:repositories]= current_user.super? ? Repository.all.order('title') : current_user.repositories
+    @data[:collections] = current_user.super? ? Collection.all.order('display_title') : current_user.collections
   end
 
   def confirm_restrictions

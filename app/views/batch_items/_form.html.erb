@@ -14,7 +14,7 @@
         <%= f.check_box :dpla, label: t('activerecord.attributes.batch_item.dpla') %>
     <% end %>
 
-    <%= f.select :other_collections, @collections.collect { |c| [c.display_title, c.slug] }, { include_blank: true, label: t('activerecord.attributes.batch_item.other_collections'), help: t('activerecord.help.batch_item.other_collections') }, { multiple: true } %>
+    <%= f.select :other_collections, @collections.collect { |c| [c.display_title, c.slug] }, { include_blank: true, label: t('activerecord.attributes.batch_item.other_collections'), help: t('activerecord.help.batch_item.other_collections') }, { multiple: true,  class: 'fancy-multiselect' } %>
 
     <%= render partial: 'shared/edit_dc_fields', locals: { f: f, entity: @batch_item } %>
 

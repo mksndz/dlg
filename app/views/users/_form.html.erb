@@ -15,8 +15,8 @@
     <% end %>
 
     <% if current_user.super? or current_user.coordinator? %>
-        <%= f.select :repository_ids, @data[:repositories].collect! { |r| [r.title, r.id] }, { include_blank: true }, { multiple: true } %>
-        <%= f.select :collection_ids, @data[:collections].collect! { |c| [c.title, c.id] }, { include_blank: true }, { multiple: true } %>
+        <%= f.select :repository_ids, @data[:repositories].collect! { |r| [r.title, r.id] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
+        <%= f.select :collection_ids, @data[:collections].collect! { |c| [c.title, c.id] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
     <% end %>
 
     <%= f.primary t('meta.defaults.actions.save') %>

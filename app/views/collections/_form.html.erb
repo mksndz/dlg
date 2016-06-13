@@ -24,7 +24,7 @@
       <%= f.check_box :in_georgia %>
     <% end %>
 
-    <%= f.select :other_repositories, @data[:repositories].collect { |r| [r.title, r.slug] }, { include_blank: true }, { multiple: true } %>
+    <%= f.select :other_repositories, @data[:repositories].collect { |r| [r.title, r.slug] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
 
     <%= render partial: 'shared/edit_dc_fields', locals: { entity: @collection, form: f } %>
 
