@@ -45,11 +45,11 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:invite).concat [
+    devise_parameter_sanitizer.permit(:invite, keys: [
        { role_ids: [] },
        { repository_ids: [] },
        { collection_ids: [] }
-     ]
+    ])
   end
 
 end

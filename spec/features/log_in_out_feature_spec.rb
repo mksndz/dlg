@@ -19,7 +19,7 @@ feature 'Logging In and Out' do
     fill_in I18n.t('activerecord.attributes.user.email'), with: 'blahblah@blah.org'
     click_button 'Log In'
 
-    expect(page).to have_text I18n.t('devise.failure.invalid', authentication_keys: 'email')
+    expect(page).to have_text I18n.t('devise.failure.invalid', authentication_keys: 'Email Address')
 
   end
 
