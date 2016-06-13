@@ -16,11 +16,9 @@ feature 'Item Management' do
 
     click_on I18n.t('meta.defaults.actions.edit')
 
-    # select c2.display_title, from: I18n.t('activerecord.attributes.item.other_collections')
     fill_in I18n.t('activerecord.attributes.item.slug'),                  with: 'test'
     fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'),      with: '2000'
     fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'),       with: 'Georgia'
-    fill_in I18n.t('activerecord.attributes.item.dcterms_contributor'),   with: 'DLG'
     fill_in I18n.t('activerecord.attributes.item.dcterms_type'),          with: 'Text'
     fill_in I18n.t('activerecord.attributes.item.dc_right'),              with: 'None'
 
@@ -44,7 +42,6 @@ feature 'Item Management' do
     fill_in I18n.t('activerecord.attributes.item.slug'),                  with: 'test'
     fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'),      with: '2000'
     fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'),       with: 'Georgia'
-    fill_in I18n.t('activerecord.attributes.item.dcterms_contributor'),   with: 'DLG'
     fill_in I18n.t('activerecord.attributes.item.dcterms_type'),          with: 'Text'
     fill_in I18n.t('activerecord.attributes.item.dc_right'),              with: 'None'
 
@@ -74,7 +71,6 @@ feature 'Item Management' do
     fill_in I18n.t('activerecord.attributes.item.slug'),                  with: 'test'
     fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'),      with: '2000'
     fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'),       with: 'Georgia'
-    fill_in I18n.t('activerecord.attributes.item.dcterms_contributor'),   with: 'DLG'
     fill_in I18n.t('activerecord.attributes.item.dcterms_type'),          with: 'Text'
     fill_in I18n.t('activerecord.attributes.item.dc_right'),              with: 'None'
 
@@ -83,6 +79,31 @@ feature 'Item Management' do
     click_button I18n.t('meta.defaults.actions.save')
 
     expect(page).to have_current_path item_path(c1.items.first)
+
+  end
+
+  scenario 'user sorts items by title then sees items properly listed' do
+
+    login_as super_user, scope: :user
+
+    Fabricate(:item) { dcterms_title [ 'L' ] }
+    Fabricate(:item) { dcterms_title [ 'F' ] }
+    Fabricate(:item) { dcterms_title [ 'A' ] }
+    Fabricate(:item) { dcterms_title [ 'Z' ] }
+    Fabricate(:item) { dcterms_title [ 'Q' ] }
+    Fabricate(:item) { dcterms_title [ '2' ] }
+
+    visit items_path
+
+    click_on I18n.t('meta.defaults.labels.columns.title')
+
+    titles = []
+
+    page.all('table tbody tr').each do |row|
+      titles << row.all('td')[2].text
+    end
+
+    expect(titles).to eq %w(2 A F L Q Z)
 
   end
 
