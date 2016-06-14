@@ -125,10 +125,14 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with invalid things selected' do
 
-      it 'shows an error message when an invalid collection is passed' do
-
+      before :each do
         sign_out super_user
         sign_in coordinator_user
+      end
+
+      it 'shows an error message when an invalid collection is passed' do
+
+
         collection = Fabricate :collection
         attributes = valid_attributes
         attributes[:collection_ids] = [collection.id]
@@ -141,8 +145,6 @@ RSpec.describe UsersController, type: :controller do
 
       it 'shows an error message when an invalid repository is passed' do
 
-        sign_out super_user
-        sign_in coordinator_user
         repository = Fabricate :repository
         attributes = valid_attributes
         attributes[:repository_ids] = [repository.id]
@@ -155,8 +157,6 @@ RSpec.describe UsersController, type: :controller do
 
       it 'shows an error message when a role is passed' do
 
-        sign_out super_user
-        sign_in coordinator_user
         role = Fabricate :role
         attributes = valid_attributes
         attributes[:role_ids] = [role.id]
