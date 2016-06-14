@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   class UserRestrictionsError < StandardError
   end
 
-  rescue_from UserRestrictionsError do
+  rescue_from UserRestrictionsError do |e|
     redirect_to :back, alert: I18n.t('meta.user.messages.errors.user_restriction_error')
   end
 
@@ -96,12 +96,18 @@ class UsersController < ApplicationController
 
   def confirm_restrictions
     # todo test coverage for this
+    # todo refactor
     unless current_user.super?
       new_user_collection_ids = user_params[:collection_ids] || []
       new_user_repository_ids = user_params[:repository_ids] || []
-      raise UserRestrictionsError unless (new_user_repository_ids - current_user.repository_ids).empty?
-      raise UserRestrictionsError unless (new_user_collection_ids - current_user.collection_ids).empty?
-      raise UserRestrictionsError if current_user.coordinator? and user_params[:role_ids]
+      new_user_role_ids = user_params[:role_ids] || []
+      super_user_collection_ids = current_user.repository_ids || []
+      super_user_repository_ids = current_user.collection_ids || []
+      new_user_collection_ids.reject! { |i| i.empty? }
+      new_user_repository_ids.reject! { |i| i.empty? }
+      raise UserRestrictionsError unless (new_user_repository_ids - super_user_repository_ids).empty?
+      raise UserRestrictionsError unless (new_user_collection_ids - super_user_collection_ids).empty?
+      raise UserRestrictionsError unless new_user_role_ids.empty?
     end
   end
 

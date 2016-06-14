@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   private
 
   def set_default_role
-    self.roles << Role.where(name: 'basic')
+    self.roles << Role.where(name: 'basic') unless self.basic?
   end
 
 end

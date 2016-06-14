@@ -142,7 +142,43 @@ feature 'Users Management' do
 
       expect(page).to have_current_path user_path(user)
       expect(user.roles.size).to be 1
-      expect(user.basic?).to be_true
+      expect(user.basic?).to be true
+
+    end
+    
+    scenario 'Coordinator User can assign repositories and collections to users' do
+
+      collection = Fabricate :collection
+      repository = Fabricate :repository
+
+      unassigned_collection = Fabricate :collection
+      unassigned_repository = Fabricate :repository
+
+      coordinator_user.repositories << repository
+      coordinator_user.collections << collection
+      
+      visit new_user_path
+
+      expect(page).to have_field I18n.t('activerecord.attributes.user.collection_ids')
+      expect(page).to have_field I18n.t('activerecord.attributes.user.repository_ids')
+
+      expect(page.find_field(I18n.t('activerecord.attributes.user.collection_ids'))).to have_xpath(".//option[text() = '#{collection.title}']")
+      expect(page.find_field(I18n.t('activerecord.attributes.user.repository_ids'))).to have_xpath(".//option[text() = '#{repository.title}']")
+
+      expect(page.find_field(I18n.t('activerecord.attributes.user.collection_ids'))).not_to have_xpath(".//option[text() = '#{unassigned_collection.title}']")
+      expect(page.find_field(I18n.t('activerecord.attributes.user.repository_ids'))).not_to have_xpath(".//option[text() = '#{unassigned_repository.title}']")
+
+      password = Faker::Internet.password
+
+      fill_in I18n.t('activerecord.attributes.user.email'), with: Faker::Internet.email
+      fill_in I18n.t('activerecord.attributes.user.password'), with: password
+      fill_in I18n.t('activerecord.attributes.user.password_confirmation'), with: password
+
+      click_on I18n.t('meta.defaults.actions.save')
+
+      user = User.last
+
+      expect(page).to have_current_path user_path(user)
 
     end
 
