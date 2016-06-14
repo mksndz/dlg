@@ -122,6 +122,52 @@ RSpec.describe UsersController, type: :controller do
       end
 
     end
+
+    context 'with invalid things selected' do
+
+      it 'shows an error message when an invalid collection is passed' do
+
+        sign_out super_user
+        sign_in coordinator_user
+        collection = Fabricate :collection
+        attributes = valid_attributes
+        attributes[:collection_ids] = [collection.id]
+        request.env['HTTP_REFERER'] = new_user_url
+        post :create, { user: attributes }
+
+        expect(response).to redirect_to new_user_path
+
+      end
+
+      it 'shows an error message when an invalid repository is passed' do
+
+        sign_out super_user
+        sign_in coordinator_user
+        repository = Fabricate :repository
+        attributes = valid_attributes
+        attributes[:repository_ids] = [repository.id]
+        request.env['HTTP_REFERER'] = new_user_url
+        post :create, { user: attributes }
+
+        expect(response).to redirect_to new_user_path
+
+      end
+
+      it 'shows an error message when a role is passed' do
+
+        sign_out super_user
+        sign_in coordinator_user
+        role = Fabricate :role
+        attributes = valid_attributes
+        attributes[:role_ids] = [role.id]
+        request.env['HTTP_REFERER'] = new_user_url
+        post :create, { user: attributes }
+
+        expect(response).to redirect_to new_user_path
+
+      end
+
+    end
   end
 
   describe 'PUT #update' do
