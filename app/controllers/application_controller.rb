@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def user_for_paper_trail
-    current_user
+    current_user ? current_user.id : nil;
   end
 
 end
