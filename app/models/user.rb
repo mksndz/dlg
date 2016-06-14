@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   scope :invited,                     -> { where('invitation_accepted_at IS NOT NULL') }
   scope :active,                      -> { where('(invitation_sent_at IS NOT NULL and invitation_accepted_at IS NOT NULL) OR invitation_sent_at IS NULL') }
 
-  before_create :set_default_role
+  after_initialize :set_default_role
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
