@@ -17,6 +17,10 @@ class Batch < ActiveRecord::Base
     !!committed_at
   end
 
+  def pending?
+    !!queued_for_commit_at and not committed_at
+  end
+
   def commit
     self.committed_at = Time.now
     successes = []

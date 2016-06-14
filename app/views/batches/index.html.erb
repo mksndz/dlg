@@ -67,7 +67,7 @@
               <%= batch.user.email %>
             </td>
             <td>
-              <%= batch.committed? ? batch.committed_at : t('meta.batch.labels.not_yet_committed')  %>
+              <%= commit_status_for batch %>
             </td>
             <td>
               <div class="btn-group btn-group-xs">

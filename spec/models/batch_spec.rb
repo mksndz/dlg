@@ -28,6 +28,31 @@ RSpec.describe Batch, type: :model do
     expect(b.batch_items).not_to be_empty
   end
 
+  it 'responds with false for commit status when batch is not committed' do
+    b = Fabricate :batch
+    expect(b.committed?).to be false
+  end
+
+  it 'responds with true for commit status when batch has been committed' do
+    b = Fabricate :batch
+    b.committed_at = Time.now
+    expect(b.committed?).to be true
+  end
+
+  it 'responds with boolean for pending status' do
+    b = Fabricate :batch
+    b.queued_for_commit_at = Time.now
+    expect(b.pending?).to be true
+  end
+
+  it 'responds with boolean for pending status after batch is committed' do
+    b = Fabricate :batch
+    b.queued_for_commit_at = Time.now
+    b.committed_at = Time.now
+    expect(b.pending?).to be false
+    expect(b.committed?).to be true
+  end
+
   it 'commits the batch and saves itself with results as JSON' do
     b = Fabricate(:batch){ batch_items(count: 2)}
     b.commit
