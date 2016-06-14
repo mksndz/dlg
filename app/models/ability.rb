@@ -71,7 +71,7 @@ class Ability
       if roles.include? 'committer'
 
         # User with Committer Role can commit their own Batches
-        can :commit, Batch, user_id: user.id
+        can [:commit, :commit_form], Batch, user_id: user.id
 
       end
 

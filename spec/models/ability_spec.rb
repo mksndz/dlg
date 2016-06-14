@@ -331,6 +331,7 @@ RSpec.describe Ability, type: :model do
       batch.user = committer_user
 
       is_expected.to be_able_to :commit, batch
+      is_expected.to be_able_to :commit_form, batch
 
     end
 
