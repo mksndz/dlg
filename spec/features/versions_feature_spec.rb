@@ -6,11 +6,13 @@ feature 'Versions' do
 
   let(:super_user) { Fabricate :super }
 
+  before :each do
+    login_as super_user, scope: :user
+  end
+
   with_versioning do
 
     scenario 'super user views an item and should see versions listed' do
-
-      login_as super_user, scope: :user
 
       item = Fabricate :item
       item.update(slug: 'NewSlug')
@@ -23,8 +25,6 @@ feature 'Versions' do
     end
 
     scenario 'super user rolls back to previous version of an item and is redirected to the item show page with a success message' do
-
-      login_as super_user, scope: :user
 
       item = Fabricate :item
       original_slug = item.slug
@@ -42,8 +42,6 @@ feature 'Versions' do
 
     scenario 'deleted items are listed with restore link when super user visits deleted item page' do
 
-      login_as super_user, scope: :user
-
       item = Fabricate :item
       original_slug = item.slug
       item.destroy
@@ -56,8 +54,6 @@ feature 'Versions' do
     end
 
     scenario 'super user restores a deleted item and is taken to the restored item show page' do
-
-      login_as super_user, scope: :user
 
       item = Fabricate :item
       item = item.destroy
