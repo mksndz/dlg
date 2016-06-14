@@ -163,10 +163,17 @@ feature 'Users Management' do
       expect(page).to have_field I18n.t('activerecord.attributes.user.repository_ids')
 
       expect(page.find_field(I18n.t('activerecord.attributes.user.collection_ids'))).to have_xpath(".//option[text() = '#{collection.title}']")
-      expect(page.find_field(I18n.t('activerecord.attributes.user.repository_ids'))).to have_xpath(".//option[text() = '#{repository.title}']")
-
       expect(page.find_field(I18n.t('activerecord.attributes.user.collection_ids'))).not_to have_xpath(".//option[text() = '#{unassigned_collection.title}']")
-      expect(page.find_field(I18n.t('activerecord.attributes.user.repository_ids'))).not_to have_xpath(".//option[text() = '#{unassigned_repository.title}']")
+
+      within(find_field(I18n.t('activerecord.attributes.user.repository_ids'))) do
+        expect(page).to have_xpath(".//option[text() = '#{repository.title}']")
+        expect(page).not_to have_xpath(".//option[text() = '#{unassigned_repository.title}']")
+      end
+
+      within(find_field(I18n.t('activerecord.attributes.user.repository_ids'))) do
+        expect(page).to have_xpath(".//option[text() = '#{repository.title}']")
+        expect(page).not_to have_xpath(".//option[text() = '#{unassigned_repository.title}']")
+      end
 
       password = Faker::Internet.password
 
@@ -188,7 +195,6 @@ feature 'Users Management' do
 
     before :each do
       login_as basic_user, scope: :user
-
     end
 
     scenario 'Basic User should be restricted from User area' do
