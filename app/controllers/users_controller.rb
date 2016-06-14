@@ -84,8 +84,14 @@ class UsersController < ApplicationController
   def set_data
     @data ||= {}
     @data[:roles] = Role.all
-    @data[:repositories]= current_user.super? ? Repository.all.order('title') : current_user.repositories
-    @data[:collections] = current_user.super? ? Collection.all.order('display_title') : current_user.collections
+    if current_user.super?
+      @data[:repositories]= Repository.all.order('title')
+      @data[:collections] = Collection.all.order('display_title')
+    else
+      @data[:repositories]= current_user.repositories.order('title')
+      @data[:collections] = current_user.collections.order('display_title')
+    end
+
   end
 
   def confirm_restrictions
@@ -93,9 +99,9 @@ class UsersController < ApplicationController
     unless current_user.super?
       new_user_collection_ids = user_params[:collection_ids] || []
       new_user_repository_ids = user_params[:repository_ids] || []
-      throw UserRestrictionsError unless (new_user_repository_ids - current_user.repository_ids).empty?
-      throw UserRestrictionsError unless (new_user_collection_ids - current_user.collection_ids).empty?
-      throw UserRestrictionsError if current_user.coordinator? and user_params[:role_ids]
+      raise UserRestrictionsError unless (new_user_repository_ids - current_user.repository_ids).empty?
+      raise UserRestrictionsError unless (new_user_collection_ids - current_user.collection_ids).empty?
+      raise UserRestrictionsError if current_user.coordinator? and user_params[:role_ids]
     end
   end
 
