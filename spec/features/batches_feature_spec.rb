@@ -136,12 +136,6 @@ feature 'Batches Management' do
 
     end
 
-    scenario 'super user can upload some xml' do
-
-      # todo
-
-    end
-
   end
 
   context :coordinator_user do
