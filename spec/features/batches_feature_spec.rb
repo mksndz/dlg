@@ -4,7 +4,7 @@ Warden.test_mode!
 
 feature 'Batches Management' do
 
-  # todo recreate batches, commit results views
+  # todo recreate batches
 
   let(:super_user) { Fabricate :super }
   let(:basic_user) { Fabricate :basic }
@@ -177,7 +177,6 @@ feature 'Batches Management' do
 
     end
 
-
   end
 
   context :committer_user do
@@ -213,8 +212,38 @@ feature 'Batches Management' do
 
       expect(page).to have_text I18n.t('meta.batch.labels.commit_pending', time: batch.queued_for_commit_at)
 
-      # work job
-      # Delayed::Worker.new.work_off
+    end
+
+    scenario 'committer user can commit a valid batch (run background jobs) and can view the results' do
+
+      batch_items = 1
+
+      batch = Fabricate :batch do
+        batch_items(count: batch_items)
+      end
+
+      batch.user = committer_user
+      batch.save
+
+      visit batch_path batch
+
+      click_on I18n.t('meta.batch.actions.commit')
+      click_on I18n.t('meta.batch.actions.commit')
+
+      Delayed::Worker.new.work_off
+
+      visit batches_path
+
+      click_on I18n.t('meta.batch.actions.results')
+
+      expect(page).to have_current_path(results_batch_path(batch))
+
+      expect(page).to have_text batch.batch_items.first.slug
+      expect(page).not_to have_text I18n.t('meta.batch.labels.failed')
+      within 'table.successfully-committed-results-table tbody' do
+        expect(all('tr').length).to eq 1
+      end
+      expect(page).to have_link I18n.t('meta.batch.actions.view_item')
 
     end
 

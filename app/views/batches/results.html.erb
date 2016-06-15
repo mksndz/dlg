@@ -4,11 +4,11 @@
 
 <% breadcrumb :batch, @batch %>
 
-<% unless @batch.commit_results['errors'].nil? %>
+<% if @batch.commit_results['errors'].present? %>
 
   <h3><%= t('meta.batch.labels.failed') %></h3>
 
-  <table class="table table-condensed table-hover">
+  <table class="table table-condensed table-hover failed-commit-results-table">
     <thead>
     <tr>
       <th>
@@ -55,13 +55,11 @@
   </table>
 <% end %>
 
-<% z = @batch.commit_results %>
-
-<% unless @batch.commit_results['items'].empty? %>
+<% if @batch.commit_results['items'].present? %>
 
   <h3><%= t('meta.batch.labels.successful') %></h3>
 
-  <table class="table table-condensed table-hover">
+  <table class="table table-condensed table-hover successfully-committed-results-table">
     <thead>
     <tr>
       <th>
@@ -70,12 +68,7 @@
       <th>
         <%= t('meta.defaults.labels.columns.slug') %>
       </th>
-      <th>
-        <%= t('meta.batch.labels.columns.batch_item') %>
-      </th>
-      <th>
-        <%= t('meta.batch.labels.columns.item') %>
-      </th>
+      <th></th>
     </tr>
     </thead>
 
@@ -90,10 +83,7 @@
             <%= r['slug'] %>
           </td>
           <td>
-            <%= link_to 'View', batch_batch_item_path(@batch.id, r['batch_item']) %>
-          </td>
-          <td>
-            <%= link_to 'View', item_path(r['item']) %>
+            <%= link_to 'View Item', item_path(r['item']), class: 'btn btn-default' %>
           </td>
         </tr>
     <% i += 1 %>

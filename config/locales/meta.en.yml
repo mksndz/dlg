@@ -121,6 +121,7 @@ en:
         populate_with_xml: 'Populate Batch Items via XML'
         import: 'Import'
         view_batch: 'View Batch'
+        view_item: 'View Item'
         process_more: 'Process More XML'
         results: 'Results'
         commit: 'Commit'
@@ -144,7 +145,6 @@ en:
           errors: 'Errors'
           batch_item: 'Batch Item'
           number: '#'
-          item: 'Item'
       messages:
         success:
           recreated: 'Batch was successfully recreated.'
