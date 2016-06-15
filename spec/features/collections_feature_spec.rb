@@ -80,7 +80,23 @@ feature 'Collections Management' do
 
     scenario 'index page allows sorting by item count' do
 
-      # todo
+      Fabricate(:collection) { display_title { 'A' } }
+      Fabricate(:collection) { display_title { '1' } }
+      Fabricate(:collection) { display_title { 'Z' } }
+      Fabricate(:collection) { display_title { 'F' } }
+      Fabricate(:collection) { display_title { '"The"' } }
+
+      visit collections_path
+
+      click_on I18n.t('meta.defaults.labels.columns.title')
+
+      titles = []
+
+      page.all('table tbody tr').each do |row|
+        titles << row.all('td')[2].text
+      end
+
+      expect(titles).to eq %w(1 A F "The" Z)
 
     end
 
