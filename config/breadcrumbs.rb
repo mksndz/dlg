@@ -118,6 +118,12 @@ crumb :batch do |batch|
   end
 end
 
+crumb :batch_results do |batch|
+    link batch.name, batch_path(batch) if batch.name
+    link 'Results'
+    parent :batches, batch
+end
+
 # BATCH ITEM
 
 crumb :batch_items do |batch|
