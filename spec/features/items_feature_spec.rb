@@ -8,6 +8,10 @@ feature 'Item Management' do
 
   context 'for super user' do
 
+    before :each do
+      login_as super_user, scope: :user
+    end
+
     scenario 'super user saves a new item with no other_collection value' do
 
       c1 = Fabricate(:collection) { items(count:1) }
