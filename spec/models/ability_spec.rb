@@ -335,6 +335,12 @@ RSpec.describe Ability, type: :model do
 
     end
 
+    it 'can view results of any batch commit' do
+
+      is_expected.to be_able_to :results, Batch
+
+    end
+
     it 'cannot commit a batch not owned by self' do
 
       is_expected.not_to be_able_to :commit, batch

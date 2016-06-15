@@ -73,6 +73,9 @@ class Ability
         # User with Committer Role can commit their own Batches
         can [:commit, :commit_form], Batch, user_id: user.id
 
+        # User with Committer Role can view results of any commit
+        can [:results], Batch
+
       end
 
       if roles.include? 'uploader'
