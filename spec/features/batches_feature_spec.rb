@@ -345,6 +345,18 @@ feature 'Batches Management' do
 
     end
 
+    scenario 'basic user sees a recreate button for a committed batch they created' do
+
+      batch = Fabricate :committed_batch
+      batch.user = basic_user
+      batch.save
+
+      visit batch_path batch
+
+      expect(page).to have_link I18n.t('meta.batch.actions.recreate')
+
+    end
+
     scenario 'basic user cannot edit a batch they did not create' do
 
       Fabricate :batch
