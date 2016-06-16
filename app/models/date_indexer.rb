@@ -13,8 +13,11 @@ class DateIndexer
     @logger = Logger.new('./log/date_indexer_debug.log')
   end
 
-  def get_valid_years_for(dc_date)
+  def get_valid_years_for(dc_date, item = nil)
     item_dates = []
+
+    @item = item
+
     dc_date.each do |date|
 
        date = date.to_s
@@ -89,11 +92,22 @@ class DateIndexer
 
     item_dates.each do |e|
 
-      if e[0].is_a? Array and e[0].length == 2
-        item_years << range_dates(e[0])
-      elsif e[0].is_a? Date
-        item_years << e[0].strftime('%Y')
+      next if e.nil?
+
+      begin
+        if e[0].is_a? Array and e[0].length == 2
+          item_years << range_dates(e[0])
+        elsif e[0].is_a? Date
+          item_years << e[0].strftime('%Y')
+        end
+      rescue NoMethodError => e
+        @logger.error 'No Method error!' + e.message
+        @logger.error "Item: #{@item.dc_date}" if @item
+        @logger.error "item_dates: #{item_dates}"
+        next
       end
+
+
     end
 
     item_years.flatten.uniq
@@ -161,8 +175,12 @@ class DateIndexer
       begin
         Date.strptime(date, '%d/%m/%Y')
       rescue StandardError => e
-        @logger.error "Ugly Date could not be objectified: #{date}"
-        return
+        @logger.error "Ugly Date could not be objectified: #{date}. See: #{get_url_for_xml}"
+      end
+      begin
+        Date.strptime(date, '%m/%d/%Y')
+      rescue StandardError => e
+        @logger.error "Ugly Date tried again ut still could not be objectified: #{date}."
       end
     end
   end
@@ -192,7 +210,7 @@ class DateIndexer
   def get_date_obj_using_yyyy_mm_dd(date)
     unless date.scan(YYYY_MM_DD).present?
       @logger.error 'Object attempted but no proper date found.'
-      @logger.error "Problem value: #{date}"
+      @logger.error "Problem value: #{date}. See: #{get_url_for_xml}"
       return
     end
     tries = 0
@@ -201,13 +219,18 @@ class DateIndexer
       date_obj = Date.strptime(date, '%Y-%m-%d')
     rescue StandardError => e
       @logger.error "Date object creation failed: #{e}"
-      @logger.error "Problem value: #{date}"
+      @logger.error "Problem value: #{date}. See #{get_url_for_xml}"
       date = date.scan(YYYY_MM).first
       date = dateify_ym(date)
       @logger.error "Retrying with: #{date}"
       retry unless tries == 2
     end
     date_obj
+  end
+
+  def get_url_for_xml
+    return '' unless @item
+    "http://dlg.galileo.usg.edu/xml/dcq/#{@item.repository.slug}_#{@item.collection.slug}.xml##{@item.slug}"
   end
 
 end

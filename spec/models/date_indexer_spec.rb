@@ -53,8 +53,8 @@ RSpec.describe DateIndexer, type: :model do
   end
 
   it 'returns an array of years given an array of values containing dates in the ugly format' do
-    dc_dates = %w(02/03/1732 2/3/1776)
-    expect(date_indexer.get_valid_years_for(dc_dates)).to eq %w(1732 1776)
+    dc_dates = %w(02/03/1732 2/3/1776 11/25/1916 9/15/2016)
+    expect(date_indexer.get_valid_years_for(dc_dates)).to eq %w(1732 1776 1916 2016)
   end
 
   it 'returns an array of years given an array of values containing an ugly date range and some text' do

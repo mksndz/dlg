@@ -110,7 +110,7 @@ class Item < ActiveRecord::Base
     end
 
     integer :year_facet, multiple: true, stored: true, trie: true do
-      DateIndexer.new.get_valid_years_for(dc_date)
+      DateIndexer.new.get_valid_years_for(dc_date, self)
     end
 
     # date :date_facet, multiple: true, stored: true, trie: true do
