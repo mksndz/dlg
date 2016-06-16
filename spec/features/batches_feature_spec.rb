@@ -4,8 +4,6 @@ Warden.test_mode!
 
 feature 'Batches Management' do
 
-  # todo recreate batches
-
   let(:super_user) { Fabricate :super }
   let(:basic_user) { Fabricate :basic }
   let(:coordinator_user) { Fabricate :coordinator }
