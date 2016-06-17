@@ -30,7 +30,10 @@ class DateIndexer
          next
        end
 
-       next if has_alpha? date
+       if has_alpha? date
+         @logger.info "Alpha chars in date: #{date}: See #{get_url_for_xml}"
+         next
+       end
 
        if has_semicolons? date or has_commas? date
          # ex: 1999; 1989;
@@ -65,6 +68,9 @@ class DateIndexer
          end
 
          # be done
+         if item_dates.empty?
+           @logger.info "No dates could be extracted from: #{date}. See #{get_url_for_xml}"
+         end
          next
 
        end
@@ -178,9 +184,11 @@ class DateIndexer
         @logger.error "Ugly Date could not be objectified: #{date}. See: #{get_url_for_xml}"
       end
       begin
-        Date.strptime(date, '%m/%d/%Y')
+        date_obj = Date.strptime(date, '%m/%d/%Y')
+        @logger.error "Ugly Date objectified using MM/DD/YYY instead: #{date}."
+        date_obj
       rescue StandardError => e
-        @logger.error "Ugly Date tried again ut still could not be objectified: #{date}."
+        @logger.error "Ugly Date tried again but still could not be objectified: #{date}."
       end
     end
   end
