@@ -14,23 +14,19 @@
  limitations under the License.
 -->
 
-<!--
- This is a stripped down config file used for a simple example...
- It is *not* a good example to work from.
--->
+<!-- NOTE: various comments and unused configuration possibilities have been purged
+ from this file.  Please refer to http://wiki.apache.org/solr/SolrConfigXml -->
+
 <config>
+
   <luceneMatchVersion>LUCENE_40</luceneMatchVersion>
-  <!--  The DirectoryFactory to use for indexes.
-        solr.StandardDirectoryFactory, the default, is filesystem based.
-        solr.RAMDirectoryFactory is memory based, not persistent, and doesn't work with replication. -->
+
   <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.StandardDirectoryFactory}"/>
 
   <lib dir="../lib/contrib/analysis-extras/lib" />
   <lib dir="../lib/contrib/analysis-extras/lucene-libs" />
 
   <dataDir>${solr.blacklight-core.data.dir:}</dataDir>
-
-  <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" />
 
   <requestDispatcher handleSelect="true" >
     <requestParsers enableRemoteStreaming="false" multipartUploadLimitInKB="2048" />
@@ -177,13 +173,15 @@
       <str name="facet">true</str>
       <str name="facet.mincount">1</str>
       <str name="facet.limit">20</str>
-      <str name="facet.field">format_ss</str>
-      <str name="facet.field">location_facet</str>
-      <str name="facet.field">subject_facet</str>
-      <str name="facet.field">type_facet</str>
-      <str name="facet.field">creator_facet</str>
-      <str name="facet.field">collection_name_ss</str>
-      <str name="facet.field">repository_name_ss</str>
+
+      <!-- do i need these defined here? -->
+      <!--<str name="facet.field">format_ss</str>-->
+      <!--<str name="facet.field">location_facet</str>-->
+      <!--<str name="facet.field">subject_facet</str>-->
+      <!--<str name="facet.field">type_facet</str>-->
+      <!--<str name="facet.field">creator_facet</str>-->
+      <!--<str name="facet.field">collection_name_ss</str>-->
+      <!--<str name="facet.field">repository_name_ss</str>-->
 
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">default</str>
@@ -377,7 +375,7 @@
       <str name="facet.field">subject_topic_facet</str>
 
       <str name="spellcheck">true</str>
-      <str name="spellcheck.dictionary">subject</str>
+      <str name="spellcheck.dictionary">default</str>
       <str name="spellcheck.onlyMorePopular">true</str>
       <str name="spellcheck.extendedResults">true</str>
       <str name="spellcheck.collate">false</str>
@@ -397,40 +395,34 @@
 
     <str name="queryAnalyzerFieldType">textSpell</str>
 
-    <!-- Multiple "Spell Checkers" can be declared and used by this
-         component
-      -->
-
-    <!-- a spellchecker built from a field of the main index, and
-         written to disk
-      -->
     <lst name="spellchecker">
       <str name="name">default</str>
-      <str name="field">spell</str>
+      <str name="field">textSpell</str>
       <str name="spellcheckIndexDir">./spell</str>
       <str name="buildOnOptimize">true</str>
     </lst>
-    <lst name="spellchecker">
-      <str name="name">author</str>
-      <str name="field">author_spell</str>
-      <str name="spellcheckIndexDir">./spell_author</str>
-      <str name="accuracy">0.7</str>
-      <str name="buildOnOptimize">true</str>
-    </lst>
-    <lst name="spellchecker">
-      <str name="name">subject</str>
-      <str name="field">subject_spell</str>
-      <str name="spellcheckIndexDir">./spell_subject</str>
-      <str name="accuracy">0.7</str>
-      <str name="buildOnOptimize">true</str>
-    </lst>
-    <lst name="spellchecker">
-      <str name="name">title</str>
-      <str name="field">title_spell</str>
-      <str name="spellcheckIndexDir">./spell_title</str>
-      <str name="accuracy">0.7</str>
-      <str name="buildOnOptimize">true</str>
-    </lst>
+
+    <!--<lst name="spellchecker">-->
+      <!--<str name="name">author</str>-->
+      <!--<str name="field">author_spell</str>-->
+      <!--<str name="spellcheckIndexDir">./spell_author</str>-->
+      <!--<str name="accuracy">0.7</str>-->
+      <!--<str name="buildOnOptimize">true</str>-->
+    <!--</lst>-->
+    <!--<lst name="spellchecker">-->
+      <!--<str name="name">subject</str>-->
+      <!--<str name="field">subject_spell</str>-->
+      <!--<str name="spellcheckIndexDir">./spell_subject</str>-->
+      <!--<str name="accuracy">0.7</str>-->
+      <!--<str name="buildOnOptimize">true</str>-->
+    <!--</lst>-->
+    <!--<lst name="spellchecker">-->
+      <!--<str name="name">title</str>-->
+      <!--<str name="field">title_spell</str>-->
+      <!--<str name="spellcheckIndexDir">./spell_title</str>-->
+      <!--<str name="accuracy">0.7</str>-->
+      <!--<str name="buildOnOptimize">true</str>-->
+    <!--</lst>-->
 
     <!-- a spellchecker that uses a different distance measure -->
     <!--

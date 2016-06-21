@@ -235,7 +235,7 @@ class CatalogController < ApplicationController
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
     config.add_sort_field 'score desc, sort_title_ss asc', label: 'Relevance'
-    config.add_sort_field 'sort_year_its asc', :label => 'Year'
+    config.add_sort_field 'sort_year_its asc', label: 'Year'
     config.add_sort_field 'sort_title_ss asc', label: 'DC Title'
     config.add_sort_field 'sort_collection_ss asc', label: 'Collection'
     config.add_sort_field 'sort_creator_ss asc', label: 'DC Creator'
