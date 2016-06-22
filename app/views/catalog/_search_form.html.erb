@@ -1,4 +1,4 @@
-<div class="well well-sm">
+<div class="well well-sm basic-search-well">
   <%= bootstrap_form_tag layout: :inline, url: search_action_url, method: :get, class: '', role: 'search' do |f| %>
       <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :qt, :page, :utf8)) %>
       <% if search_fields.length > 1 %>
