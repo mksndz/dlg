@@ -84,10 +84,10 @@
        -->
 
       <str name="qf">
-        title_unstem_search^1000,
-        subject_unstem_search^1000,
-        creator_unstem_search^1000,
-        dcterms_description_text^250,
+        title_unstem_search,
+        subject_unstem_search,
+        creator_unstem_search,
+        dcterms_description_text,
         dcterms_publisher_text,
         dcterms_contributor_text,
         dcterms_temporal_text,
@@ -102,10 +102,10 @@
            -->
 
       <str name="pf">
-        title_unstem_search^1000,
-        subject_unstem_search^1000,
-        creator_unstem_search^1000,
-        dcterms_description_text^250,
+        title_unstem_search,
+        subject_unstem_search,
+        creator_unstem_search,
+        dcterms_description_text,
         dcterms_publisher_text,
         dcterms_contributor_text,
         dcterms_temporal_text,
