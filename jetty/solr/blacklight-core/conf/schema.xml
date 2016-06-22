@@ -132,15 +132,6 @@
 
   </fields>
 
-  <!-- Field to use to determine and enforce document uniqueness.
-      Unless this field is marked with required="false", it will be a required field
-   -->
-  <uniqueKey>id</uniqueKey>
-  <!-- field for the QueryParser to use when an explicit fieldname is absent -->
-  <defaultSearchField>text</defaultSearchField>
-  <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
-  <solrQueryParser defaultOperator="AND"/>
-
   <!-- copyField commands copy one field to another at the time a document
         is added to the index.  It's used either to index the same field differently,
         or to add multiple fields to the same field for easier/faster
@@ -154,7 +145,7 @@
 
   <!-- unstemmed fields -->
   <copyField source="dcterms_title_text"    dest="title_unstem_search" />
-  <copyField source="dcterms_creator_text"  dest="author_unstem_search" />
+  <copyField source="dcterms_creator_text"  dest="creator_unstem_search" />
   <copyField source="dcterms_subject_text"  dest="subject_unstem_search" />
 
   <!-- special blacklight required field -->
@@ -218,9 +209,11 @@
   <!--<copyField source="addl_titles_t" dest="title_spell"/>-->
   <!--<copyField source="title_added_entry_t" dest="title_spell"/>-->
   <!--<copyField source="title_series_t" dest="title_spell"/>-->
+
   <!-- author spell check; should match fields for author request handler -->
   <!--<copyField source="author_t" dest="author_spell"/>-->
   <!--<copyField source="author_addl_t" dest="author_spell"/>-->
+
   <!-- subject spell check; should match fields for subject request handler -->
   <!--<copyField source="subject_topic_facet" dest="subject_spell"/>-->
   <!--<copyField source="subject_t" dest="subject_spell"/>-->
@@ -263,6 +256,14 @@
   </similarity>
   -->
 
+  <!-- Field to use to determine and enforce document uniqueness.
+      Unless this field is marked with required="false", it will be a required field
+   -->
+  <uniqueKey>id</uniqueKey>
+  <!-- field for the QueryParser to use when an explicit fieldname is absent -->
+  <defaultSearchField>text</defaultSearchField>
+  <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
+  <solrQueryParser defaultOperator="AND"/>
 
   <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>

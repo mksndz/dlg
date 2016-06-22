@@ -84,26 +84,17 @@
        -->
 
       <str name="qf">
-        title_unstem_search^100000
-        author_unstem_search^100000
-        sunject_unstem_search^100000
-        dc_title_text
-        dc_format_text
-        dc_publisher_text
-        dc_identifier_text
-        dc_rights_text
-        dc_contributor_text
-        dc_coverage_t_text
-        dc_coverage_s_text
-        dc_date_text
-        dc_source_text
-        dc_subject_text
-        dc_type_text
-        dc_description_text
-        dc_creator_text
-        dc_language_text
-        dc_relation_text
-        text
+        title_unstem_search^1000,
+        subject_unstem_search^1000,
+        creator_unstem_search^1000,
+        dcterms_description_text^250,
+        dcterms_publisher_text,
+        dcterms_contributor_text,
+        dcterms_temporal_text,
+        dcterms_spatial_text,
+        dcterms_provenance_text,
+        dcterms_creator_text,
+        dcterms_rights_holder_text,
       </str>
 
       <!-- the pf parameter, which is an abbreviation of "phrase fields". The syntax
@@ -111,37 +102,33 @@
            -->
 
       <str name="pf">
-        title_unstem_search^100000
-        author_unstem_search^100000
-        sunject_unstem_search^100000
-        dc_title_text
-        dc_format_text
-        dc_publisher_text
-        dc_identifier_text
-        dc_rights_text
-        dc_contributor_text
-        dc_coverage_t_text
-        dc_coverage_s_text
-        dc_date_text
-        dc_source_text
-        dc_subject_text
-        dc_type_text
-        dc_description_text
-        dc_creator_text
-        dc_language_text
-        dc_relation_text
-        text
+        title_unstem_search^1000,
+        subject_unstem_search^1000,
+        creator_unstem_search^1000,
+        dcterms_description_text^250,
+        dcterms_publisher_text,
+        dcterms_contributor_text,
+        dcterms_temporal_text,
+        dcterms_spatial_text,
+        dcterms_provenance_text,
+        dcterms_creator_text,
+        dcterms_rights_holder_text,
       </str>
-      <str name="author_qf">
+
+      <str name="creator_qf">
+        creator_unstem_search
       </str>
-      <str name="author_pf">
+      <str name="creator_pf">
+        creator_unstem_search
       </str>
+
       <str name="title_qf">
         title_unstem_search
       </str>
       <str name="title_pf">
         title_unstem_search
       </str>
+
       <str name="subject_qf">
         subject_unstem_search
       </str>
@@ -165,9 +152,9 @@
        indicate all stored fields the document has.
      -->
 
-      <!-- NOT using marc_display because it is large and will slow things down for search results -->
       <str name="fl">
         *,
+        score
       </str>
 
       <str name="facet">true</str>
@@ -271,108 +258,79 @@
       <str name="ps">3</str>
       <float name="tie">0.01</float>
 
-      <!-- for user query terms in author text box -->
-      <str name="qf_author">
-        author_unstem_search^200
-        author_addl_unstem_search^50
-        author_t^20
-        author_addl_t
-      </str>
-      <str name="pf_author">
-        author_unstem_search^2000
-        author_addl_unstem_search^500
-        author_t^200
-        author_addl_t^10
-      </str>
+      <!--&lt;!&ndash; for user query terms in author text box &ndash;&gt;-->
+      <!--<str name="qf_author">-->
+        <!--author_unstem_search^200-->
+        <!--author_addl_unstem_search^50-->
+        <!--author_t^20-->
+        <!--author_addl_t-->
+      <!--</str>-->
+      <!--<str name="pf_author">-->
+        <!--author_unstem_search^2000-->
+        <!--author_addl_unstem_search^500-->
+        <!--author_t^200-->
+        <!--author_addl_t^10-->
+      <!--</str>-->
 
-      <!-- for user query terms in title text box -->
-      <str name="qf_title">
-        title_unstem_search^50000
-        subtitle_unstem_search^25000
-        title_addl_unstem_search^10000
-        title_t^5000
-        subtitle_t^2500
-        title_addl_t^100
-        title_added_entry_unstem_search^50
-        title_added_entry_t^10
-        title_series_unstem_search^5
-        title_series_t
-      </str>
-      <str name="pf_title">
-        title_unstem_search^500000
-        subtitle_unstem_search^250000
-        title_addl_unstem_search^100000
-        title_t^50000
-        subtitle_t^25000
-        title_addl_t^1000
-        title_added_entry_unstem_search^500
-        title_added_entry_t^100
-        title_series_t^50
-        title_series_unstem_search^10
-      </str>
+      <!--&lt;!&ndash; for user query terms in title text box &ndash;&gt;-->
+      <!--<str name="qf_title">-->
+        <!--title_unstem_search^50000-->
+        <!--subtitle_unstem_search^25000-->
+        <!--title_addl_unstem_search^10000-->
+        <!--title_t^5000-->
+        <!--subtitle_t^2500-->
+        <!--title_addl_t^100-->
+        <!--title_added_entry_unstem_search^50-->
+        <!--title_added_entry_t^10-->
+        <!--title_series_unstem_search^5-->
+        <!--title_series_t-->
+      <!--</str>-->
+      <!--<str name="pf_title">-->
+        <!--title_unstem_search^500000-->
+        <!--subtitle_unstem_search^250000-->
+        <!--title_addl_unstem_search^100000-->
+        <!--title_t^50000-->
+        <!--subtitle_t^25000-->
+        <!--title_addl_t^1000-->
+        <!--title_added_entry_unstem_search^500-->
+        <!--title_added_entry_t^100-->
+        <!--title_series_t^50-->
+        <!--title_series_unstem_search^10-->
+      <!--</str>-->
 
-      <!-- for user query terms in subject text box -->
-      <str name="qf_subject">
-        subject_topic_unstem_search^200
-        subject_unstem_search^125
-        subject_topic_facet^100
-        subject_t^50
-        subject_addl_unstem_search^10
-        subject_addl_t
-      </str>
-      <str name="pf_subject">
-        subject_topic_unstem_search^2000
-        subject_unstem_search^1250
-        subject_t^1000
-        subject_topic_facet^500
-        subject_addl_unstem_search^100
-        subject_addl_t^10
-      </str>
+      <!--&lt;!&ndash; for user query terms in subject text box &ndash;&gt;-->
+      <!--<str name="qf_subject">-->
+        <!--subject_topic_unstem_search^200-->
+        <!--subject_unstem_search^125-->
+        <!--subject_topic_facet^100-->
+        <!--subject_t^50-->
+        <!--subject_addl_unstem_search^10-->
+        <!--subject_addl_t-->
+      <!--</str>-->
+      <!--<str name="pf_subject">-->
+        <!--subject_topic_unstem_search^2000-->
+        <!--subject_unstem_search^1250-->
+        <!--subject_t^1000-->
+        <!--subject_topic_facet^500-->
+        <!--subject_addl_unstem_search^100-->
+        <!--subject_addl_t^10-->
+      <!--</str>-->
 
-      <!-- for user query terms in number text box -->
-      <str name="qf_number">isbn_t</str>
+      <!--&lt;!&ndash; for user query terms in number text box &ndash;&gt;-->
+      <!--<str name="qf_number">isbn_t</str>-->
 
-      <!-- for user query terms in keyword text box -->
-      <str name="qf_keyword">text</str>
-      <str name="pf_keyword">text^10</str>
+      <!--&lt;!&ndash; for user query terms in keyword text box &ndash;&gt;-->
+      <!--<str name="qf_keyword">text</str>-->
+      <!--<str name="pf_keyword">text^10</str>-->
 
-      <!-- NOT using marc_display because it is large and will slow things down for search results -->
       <str name="fl">
-        id,
-        score,
-        author_display,
-        author_vern_display,
-        format,
-        isbn_t,
-        language_facet,
-        lc_callnum_display,
-        material_type_display,
-        published_display,
-        published_vern_display,
-        pub_date,
-        title_display,
-        title_vern_display,
-        subject_topic_facet,
-        subject_geo_facet,
-        subject_era_facet,
-        subtitle_display,
-        subtitle_vern_display,
-        url_fulltext_display,
-        url_suppl_display,
+        *,
+        score
       </str>
 
       <str name="facet">true</str>
       <str name="facet.mincount">1</str>
       <str name="facet.limit">10</str>
-      <str name="facet.field">format</str>
-      <str name="facet.field">lc_1letter_facet</str>
-      <str name="facet.field">lc_alpha_facet</str>
-      <str name="facet.field">lc_b4cutter_facet</str>
-      <str name="facet.field">language_facet</str>
-      <str name="facet.field">pub_date</str>
-      <str name="facet.field">subject_era_facet</str>
-      <str name="facet.field">subject_geo_facet</str>
-      <str name="facet.field">subject_topic_facet</str>
 
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">default</str>
