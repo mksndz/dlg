@@ -116,6 +116,7 @@ en:
         dcterms_type: 'Type (QDC)'
         dcterms_is_shown_at: 'URL (QDC)'
         dcterms_provenance: 'Location of Original (QDC)'
+        dlg_local_right: 'Local Rights (DLG)'
         created_at: "Created"
         updated_at: "Last Updated"
       batch_item:
@@ -147,6 +148,7 @@ en:
         dcterms_type: 'Type (QDC)'
         dcterms_is_shown_at: 'URL (QDC)'
         dcterms_provenance: 'Location of Original (QDC)'
+        dlg_local_right: 'Local Rights (DLG)'
         created_at: "Created"
         updated_at: "Last Updated"
     help:
@@ -244,6 +246,7 @@ en:
         dcterms_type: 'The nature or genre of the resource. Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary. To describe the file format, physical medium, or dimensions of the resource, use the Format element.'
         dcterms_is_shown_at: 'Unambiguous URL reference to digital object in its full information context.'
         dcterms_provenance: 'A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation. The statement may include a description of any changes successive custodians made to the resource.'
+        dlg_local_right: 'Any rights-related information not appropriate for inclusion in the DC Right field or DCQ Rights Holder field.'
       batch_item:
         slug: "This is formerly known as the Item ID"
         collection_id: "Primary Collection to which this Item belongs"
@@ -273,6 +276,7 @@ en:
         dcterms_type: 'The nature or genre of the resource. Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary. To describe the file format, physical medium, or dimensions of the resource, use the Format element.'
         dcterms_is_shown_at: 'Unambiguous URL reference to digital object in its full information context.'
         dcterms_provenance: 'A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation. The statement may include a description of any changes successive custodians made to the resource.'
+        dlg_local_right: 'Any rights-related information not appropriate for inclusion in the DC Right field or DCQ Rights Holder field.'
     errors:
       messages:
         temporal_invalid_character: "contains an invalid character. Only 0-9, '/' and '-' allowed."

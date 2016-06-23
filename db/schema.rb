@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623183618) do
+ActiveRecord::Schema.define(version: 20160623184409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20160623183618) do
     t.text     "dcterms_provenance",    default: [],    null: false, array: true
     t.integer  "item_id"
     t.integer  "other_collections",     default: [],                 array: true
+    t.text     "dlg_local_right",       default: [],    null: false, array: true
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
@@ -207,6 +208,7 @@ ActiveRecord::Schema.define(version: 20160623183618) do
     t.text     "dcterms_is_shown_at",   default: [],    null: false, array: true
     t.text     "dcterms_provenance",    default: [],    null: false, array: true
     t.integer  "other_collections",     default: [],                 array: true
+    t.text     "dlg_local_right",       default: [],    null: false, array: true
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree

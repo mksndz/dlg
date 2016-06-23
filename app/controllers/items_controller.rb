@@ -126,7 +126,6 @@ class ItemsController < ApplicationController
         :dcterms_language,
         :dcterms_spatial,
         :dcterms_publisher,
-        :dcterms_access_right,
         :dcterms_rights_holder,
         :dcterms_subject,
         :dcterms_temporal,
@@ -134,7 +133,7 @@ class ItemsController < ApplicationController
         :dcterms_type,
         :dcterms_is_shown_at,
         :dcterms_provenance,
-        :dcterms_license,
+        :dlg_local_right,
         :other_collections => [],
     )
   end

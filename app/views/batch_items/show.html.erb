@@ -19,5 +19,7 @@
 
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @batch_item} %>
 
+<%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.item.dlg_local_right'), values: @batch_item.dlg_local_right %>
+
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.created_at'), value: @batch_item.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.updated_at'), value: @batch_item.updated_at %>

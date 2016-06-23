@@ -58,6 +58,7 @@ class Item < ActiveRecord::Base
 
     # DC Fields for Searching
     # *_display fields created via copyFields
+    text :dlg_local_right
     text :dc_identifier
     text :dc_right
     text :dc_relation
