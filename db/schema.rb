@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623180750) do
+ActiveRecord::Schema.define(version: 20160623183618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 20160623180750) do
     t.text     "dcterms_language",      default: [],    null: false, array: true
     t.text     "dcterms_spatial",       default: [],    null: false, array: true
     t.text     "dcterms_publisher",     default: [],    null: false, array: true
-    t.text     "dcterms_access_right",  default: [],    null: false, array: true
     t.text     "dcterms_rights_holder", default: [],    null: false, array: true
     t.text     "dcterms_subject",       default: [],    null: false, array: true
     t.text     "dcterms_temporal",      default: [],    null: false, array: true
@@ -200,7 +199,6 @@ ActiveRecord::Schema.define(version: 20160623180750) do
     t.text     "dcterms_language",      default: [],    null: false, array: true
     t.text     "dcterms_spatial",       default: [],    null: false, array: true
     t.text     "dcterms_publisher",     default: [],    null: false, array: true
-    t.text     "dcterms_access_right",  default: [],    null: false, array: true
     t.text     "dcterms_rights_holder", default: [],    null: false, array: true
     t.text     "dcterms_subject",       default: [],    null: false, array: true
     t.text     "dcterms_temporal",      default: [],    null: false, array: true
