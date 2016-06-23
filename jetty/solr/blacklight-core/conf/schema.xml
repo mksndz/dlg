@@ -137,11 +137,11 @@
         or to add multiple fields to the same field for easier/faster
         searching.  -->
 
-  <!-- Use copyField to copy the fields you want to run spell checking
-       on into one field. For example: -->
-
-  <!-- for spellcheck, use title field only (for now) -->
-  <copyField source="dcterms_title_display"  dest="textSpell" />
+  <!-- for spellcheck, use chosen fields only -->
+  <copyField source="dcterms_title_text"  dest="textSpell" />
+  <copyField source="dcterms_creator_text"  dest="textSpell" />
+  <copyField source="dcterms_subject_text"  dest="textSpell" />
+  <copyField source="dcterms_description_text"  dest="textSpell" />
 
   <!-- unstemmed fields -->
   <copyField source="dcterms_title_text"    dest="title_unstem_search" />
@@ -252,7 +252,7 @@
   -->
   <!--
   <similarity class="com.example.solr.CustomSimilarityFactory">
-    <str name="paramkey">param value</str>
+    <str name="paramkey">param value</str>rak
   </similarity>
   -->
 

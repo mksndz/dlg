@@ -84,17 +84,17 @@
        -->
 
       <str name="qf">
-        title_unstem_search,
-        subject_unstem_search,
-        creator_unstem_search,
-        dcterms_description_text,
-        dcterms_publisher_text,
-        dcterms_contributor_text,
-        dcterms_temporal_text,
-        dcterms_spatial_text,
-        dcterms_provenance_text,
-        dcterms_creator_text,
-        dcterms_rights_holder_text,
+        title_unstem_search^100
+        subject_unstem_search^100
+        creator_unstem_search^100
+        dcterms_description_text^25
+        dcterms_publisher_text
+        dcterms_contributor_text
+        dcterms_temporal_text
+        dcterms_spatial_text
+        dcterms_provenance_text
+        dcterms_creator_text
+        dcterms_rights_holder_text
       </str>
 
       <!-- the pf parameter, which is an abbreviation of "phrase fields". The syntax
@@ -102,17 +102,17 @@
            -->
 
       <str name="pf">
-        title_unstem_search,
-        subject_unstem_search,
-        creator_unstem_search,
-        dcterms_description_text,
-        dcterms_publisher_text,
-        dcterms_contributor_text,
-        dcterms_temporal_text,
-        dcterms_spatial_text,
-        dcterms_provenance_text,
-        dcterms_creator_text,
-        dcterms_rights_holder_text,
+        title_unstem_search^100
+        subject_unstem_search^100
+        creator_unstem_search^100
+        dcterms_description_text^25
+        dcterms_publisher_text
+        dcterms_contributor_text
+        dcterms_temporal_text
+        dcterms_spatial_text
+        dcterms_provenance_text
+        dcterms_creator_text
+        dcterms_rights_holder_text
       </str>
 
       <str name="creator_qf">
