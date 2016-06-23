@@ -25,7 +25,6 @@ module DcHelper
       dcterms_type
       dcterms_is_shown_at
       dcterms_provenance
-      dcterms_license
     )
   end
 

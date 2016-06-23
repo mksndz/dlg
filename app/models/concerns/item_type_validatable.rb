@@ -39,7 +39,7 @@ module ItemTypeValidatable
   end
 
   def has_rights_information
-    if dc_right.empty? and dcterms_rights_holder.empty? and dcterms_access_right.empty? and dcterms_license.empty?
+    if dc_right.empty? and dcterms_rights_holder.empty? and dcterms_access_right.empty?
       errors.add(:entity, I18n.t('activerecord.errors.messages.no_rights_information'))
     end
   end

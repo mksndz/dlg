@@ -86,7 +86,6 @@ en:
         dcterms_type: 'Type (QDC)'
         dcterms_is_shown_at: 'URL (QDC)'
         dcterms_provenance: 'Location of Original (QDC)'
-        dcterms_license: 'License (QDC)'
         created_at: "Created"
         updated_at: "Last Updated"
       item:
@@ -119,7 +118,6 @@ en:
         dcterms_type: 'Type (QDC)'
         dcterms_is_shown_at: 'URL (QDC)'
         dcterms_provenance: 'Location of Original (QDC)'
-        dcterms_license: 'License (QDC)'
         created_at: "Created"
         updated_at: "Last Updated"
       batch_item:
@@ -152,7 +150,6 @@ en:
         dcterms_type: 'Type (QDC)'
         dcterms_is_shown_at: 'URL (QDC)'
         dcterms_provenance: 'Location of Original (QDC)'
-        dcterms_license: 'License (QDC)'
         created_at: "Created"
         updated_at: "Last Updated"
     help:
@@ -222,7 +219,6 @@ en:
         dcterms_type: 'The nature or genre of the resource. Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary. To describe the file format, physical medium, or dimensions of the resource, use the Format element.'
         dcterms_is_shown_at: 'Unambiguous URL reference to digital object in its full information context.'
         dcterms_provenance: 'A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation. The statement may include a description of any changes successive custodians made to the resource.'
-        dcterms_license: 'A legal document giving official permission to do something with the resource.'
       item:
         slug: "This is formerly known as the Item ID"
         collection_id: "Primary Collection to which this Item belongs"
@@ -253,7 +249,6 @@ en:
         dcterms_type: 'The nature or genre of the resource. Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary. To describe the file format, physical medium, or dimensions of the resource, use the Format element.'
         dcterms_is_shown_at: 'Unambiguous URL reference to digital object in its full information context.'
         dcterms_provenance: 'A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation. The statement may include a description of any changes successive custodians made to the resource.'
-        dcterms_license: 'A legal document giving official permission to do something with the resource.'
       batch_item:
         slug: "This is formerly known as the Item ID"
         collection_id: "Primary Collection to which this Item belongs"
@@ -284,7 +279,6 @@ en:
         dcterms_type: 'The nature or genre of the resource. Recommended best practice is to use a controlled vocabulary such as the DCMI Type Vocabulary. To describe the file format, physical medium, or dimensions of the resource, use the Format element.'
         dcterms_is_shown_at: 'Unambiguous URL reference to digital object in its full information context.'
         dcterms_provenance: 'A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation. The statement may include a description of any changes successive custodians made to the resource.'
-        dcterms_license: 'A legal document giving official permission to do something with the resource.'
     errors:
       messages:
         temporal_invalid_character: "contains an invalid character. Only 0-9, '/' and '-' allowed."
