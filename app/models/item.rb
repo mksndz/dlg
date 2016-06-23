@@ -81,7 +81,6 @@ class Item < ActiveRecord::Base
     text :dcterms_type
     text :dcterms_is_shown_at
     text :dcterms_provenance
-    text :dcterms_license
 
     # required for Blacklight - a single valued format field
     # 'format' field name in solr is created from this via a copyField
