@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
 
   load_and_authorize_resource
   include ErrorHandling
-  include DcHelper
+  include MetadataHelper
   include Sorting
   include Searchable
   include Filterable
@@ -38,7 +38,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(split_dc_params(item_params))
+    @item = Item.new(split_multivalued_params(item_params))
     if @item.save
       redirect_to item_path(@item), notice: I18n.t('meta.defaults.messages.success.created', entity: 'Item')
     else
@@ -56,7 +56,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update(split_dc_params(item_params))
+    if @item.update(split_multivalued_params(item_params))
       redirect_to item_path(@item), notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Item')
     else
       set_data

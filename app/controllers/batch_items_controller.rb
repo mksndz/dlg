@@ -3,7 +3,7 @@ class BatchItemsController < ApplicationController
   load_and_authorize_resource
   include ErrorHandling
   include Sorting
-  include DcHelper
+  include MetadataHelper
   before_action :set_batch
   before_action :collections_for_select, only: [:new, :edit]
   before_action :check_if_committed, except: [:index, :show]
@@ -38,7 +38,7 @@ class BatchItemsController < ApplicationController
   # POST /batch_items
   # POST /batch_items.json
   def create
-    @batch_item = BatchItem.new(split_dc_params(batch_item_params))
+    @batch_item = BatchItem.new(split_multivalued_params(batch_item_params))
     @batch_item.batch = @batch
 
     respond_to do |format|
@@ -57,7 +57,7 @@ class BatchItemsController < ApplicationController
   # PATCH/PUT /batch_items/1.json
   def update
     respond_to do |format|
-      if @batch_item.update(split_dc_params(batch_item_params))
+      if @batch_item.update(split_multivalued_params(batch_item_params))
         format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Batch Item') }
         format.json { render :show, status: :ok, location: @batch_item }
       else

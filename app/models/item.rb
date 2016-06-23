@@ -1,6 +1,6 @@
 class Item < ActiveRecord::Base
   include Slugged
-  include DcHelper
+  include MetadataHelper
   include IndexFilterable
   include ItemTypeValidatable
 

@@ -1,5 +1,5 @@
 require 'rails_helper'
-include DcHelper
+include MetadataHelper
 
 RSpec.describe Item, type: :model do
 

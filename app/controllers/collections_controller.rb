@@ -2,7 +2,7 @@ class CollectionsController < ApplicationController
 
   load_and_authorize_resource
   include ErrorHandling
-  include DcHelper
+  include MetadataHelper
   include Sorting
   include Filterable
 
@@ -38,7 +38,7 @@ class CollectionsController < ApplicationController
 
   def create
 
-    @collection = Collection.new(split_dc_params(collection_params))
+    @collection = Collection.new(split_multivalued_params(collection_params))
 
     respond_to do |format|
       if @collection.save
@@ -54,7 +54,7 @@ class CollectionsController < ApplicationController
   end
 
   def update
-    if @collection.update split_dc_params(collection_params)
+    if @collection.update split_multivalued_params(collection_params)
       redirect_to collection_path(@collection), notice: I18n.t('meta.defaults.messages.success.updated', entity: ('Collection'))
     else
       set_data

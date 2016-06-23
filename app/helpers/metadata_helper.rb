@@ -1,6 +1,6 @@
-module DcHelper
+module MetadataHelper
 
-  def dc_fields
+  def multivalued_fields
     %w(
       dc_identifier
       dc_right
@@ -24,12 +24,13 @@ module DcHelper
       dcterms_type
       dcterms_is_shown_at
       dcterms_provenance
+      dlg_local_right
     )
   end
 
-  def split_dc_params(params)
+  def split_multivalued_params(params)
     params.each do |f,v| #todo refactor
-      params[f] = v.strip.split("\n") if dc_fields.include? f
+      params[f] = v.strip.split("\n") if multivalued_fields.include? f
     end
   end
 
