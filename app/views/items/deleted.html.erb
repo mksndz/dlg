@@ -10,9 +10,9 @@
 
 <div class="well well-sm">
   <%= bootstrap_form_tag url: deleted_items_path, method: :get, layout: :horizontal, label_col: 'col-sm-1', control_col: 'col-sm-11' do |f| %>
-      <%= f.hidden_field :direction, { value: params[:direction], name: 'direction' } if params[:direction] %>
-      <%= f.hidden_field :sort, { value: params[:sort], name: 'sort' } if params[:sort] %>
-      <%= f.hidden_field :per_page, { value: params[:per_page], name: 'per_page' } if params[:per_page] %>
+      <%= f.hidden_field :direction, { value: h(params[:direction]), name: 'direction' } if params[:direction] %>
+      <%= f.hidden_field :sort, { value: h(params[:sort]), name: 'sort' } if params[:sort] %>
+      <%= f.hidden_field :per_page, { value: h(params[:per_page]), name: 'per_page' } if params[:per_page] %>
       <%= f.select :whodunnit, options_for_select(@search_options[:users].collect { |c| [c.email, c.id] }, selected: params[:whodunnit] ), { label: t('meta.defaults.labels.filter.user') , include_blank: true }, { name: 'whodunnit' } %>
       <%= f.primary t('meta.defaults.labels.filter.filter_button') %>
   <% end %>
