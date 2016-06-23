@@ -145,7 +145,6 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_language_display', label: 'Language'
     config.add_show_field 'dcterms_is_shown_at_display', label: 'URL', helper_method: 'linkify'
     config.add_show_field 'dcterms_rights_holder_display', label: 'Rights Holder'
-    config.add_show_field 'dcterms_access_right_display', label: 'Access'
     config.add_show_field 'dcterms_extent_display', label: 'Extent'
     config.add_show_field 'dcterms_medium_display', label: 'Medium'
     config.add_show_field 'created_at_dts', label: 'Created'
@@ -174,8 +173,8 @@ class CatalogController < ApplicationController
       field.label = 'Rights Fields'
       field.if = false
       field.solr_local_parameters = {
-          qf: 'dc_right_text^50000 dcterms_access_right_text^40000 dcterms_rights_holder_text^30000',
-          pf: 'dc_right_text^50000 dcterms_access_right_text^40000 dcterms_rights_holder_text^30000'
+          qf: 'dc_right_text^50000 dcterms_rights_holder_text^30000',
+          pf: 'dc_right_text^50000 dcterms_rights_holder_text^30000'
       }
     end
 

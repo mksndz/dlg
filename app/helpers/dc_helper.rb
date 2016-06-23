@@ -17,7 +17,6 @@ module DcHelper
       dcterms_language
       dcterms_spatial
       dcterms_publisher
-      dcterms_access_right
       dcterms_rights_holder
       dcterms_subject
       dcterms_temporal

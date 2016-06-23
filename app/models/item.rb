@@ -73,7 +73,6 @@ class Item < ActiveRecord::Base
     text :dcterms_language
     text :dcterms_spatial
     text :dcterms_publisher
-    text :dcterms_access_right
     text :dcterms_rights_holder
     text :dcterms_subject
     text :dcterms_temporal
