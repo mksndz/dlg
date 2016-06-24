@@ -135,6 +135,7 @@ en:
         commit_pending: 'Queued at #{time}'
         to_commit: 'You will be committing %{count} records in this action.'
         empty_batch_commit: 'You cannot commit an empty Batch'
+        has_invalid_batch_items: 'You cannot commit a Batch with invalid items'
         progress_remaining: '% Complete'
         import:
           xml_file: 'XML File'

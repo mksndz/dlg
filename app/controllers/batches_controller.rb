@@ -104,17 +104,22 @@ class BatchesController < ApplicationController
   end
 
   def commit_form
-    if @batch.batch_items.count > 0
-      render :commit_form
+    e = check_if_batch_is_not_ready
+    if e
+      redirect_to @batch, alert: e
     else
-      redirect_to @batch, alert: I18n.t('meta.batch.labels.empty_batch_commit')
+      render :commit_form
     end
   end
 
   def commit
     respond_to do |format|
+      # todo do i need these checks here when i also do them before displaying the commit form?
       if @batch.batch_items.count == 0
         format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.empty_batch_commit') }
+        format.json { head :no_content }
+      elsif !@batch.has_invalid_batch_items?
+        format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.has_invalid_batch_items') }
         format.json { head :no_content }
       else
         @batch.queued_for_commit_at = Time.now
@@ -161,6 +166,11 @@ class BatchesController < ApplicationController
 
   def check_if_committed
     raise BatchCommittedError.new if @batch.committed?
+  end
+
+  def check_if_batch_is_not_ready
+    return I18n.t('meta.batch.labels.empty_batch_commit') if @batch.batch_items.count == 0
+    I18n.t('meta.batch.labels.has_invalid_batch_items') unless @batch.has_invalid_batch_items?
   end
 
 end

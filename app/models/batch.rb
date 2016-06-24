@@ -13,6 +13,10 @@ class Batch < ActiveRecord::Base
     %w(user_id committed_at).freeze
   end
 
+  def has_invalid_batch_items?
+    !batch_items.where(valid_item: false).exists?
+  end
+
   def committed?
     !!committed_at
   end

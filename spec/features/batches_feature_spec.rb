@@ -102,6 +102,29 @@ feature 'Batches Management' do
 
     end
 
+    scenario 'super user committing a batch with invalid batch_items will display an error' do
+
+      batch = Fabricate(:batch) {
+        batch_items(count: 2)
+      }
+
+      i = batch.batch_items.first
+      i.valid_item = false
+      i.save(validate: false)
+
+      visit batch_path batch
+
+      expect(page).to have_link I18n.t('meta.batch.actions.commit')
+
+      click_on I18n.t('meta.batch.actions.commit')
+
+      p = page.html
+
+      expect(page).to have_current_path batch_path batch
+      expect(page).to have_text I18n.t('meta.batch.labels.has_invalid_batch_items')
+
+    end
+
     scenario 'super user visiting batches list will display number of batch items in a batch' do
 
       count = 5
