@@ -5,6 +5,7 @@ module Sorting
     helper_method :sort_column, :sort_direction
   end
 
+  # this is injection safe because if ensures the params value is in the column_names array from the entity
   def sort_column
     begin
       check_columns_for_field(controller_name, params[:sort]) ? params[:sort] : 'id'
