@@ -15,14 +15,7 @@
 
 <br><br>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <strong><%= t('meta.item.labels.view.thumbnail') %></strong>
-  </div>
-  <div class="panel-body">
-    <%= legacy_thumbnail_tag @item %>
-  </div>
-</div>
+<%= render 'shared/show_field', field_name: t('meta.item.labels.view.thumbnail'), value: legacy_thumbnail_tag(@item) %>
 
 <%= render('shared/show_field', field_name: t('activerecord.attributes.item.collection_id'), value: @item.collection.display_title) if @item.collection %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.slug'), value: @item.slug %>
