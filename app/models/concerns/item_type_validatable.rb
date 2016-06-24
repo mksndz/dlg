@@ -5,6 +5,8 @@ module ItemTypeValidatable
 
   included do
 
+    after_validation :set_validation_cache
+
     validates_presence_of :collection, message: ' must be selected'
     validates_presence_of :dcterms_temporal, :dcterms_spatial
     validate :dcterms_temporal_characters
@@ -42,6 +44,10 @@ module ItemTypeValidatable
     if dc_right.empty? and dcterms_rights_holder.empty?
       errors.add(:entity, I18n.t('activerecord.errors.messages.no_rights_information'))
     end
+  end
+
+  def set_validation_cache
+    self.valid_item = errors.empty?
   end
 
 end

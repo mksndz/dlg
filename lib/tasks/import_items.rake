@@ -101,6 +101,8 @@ task :import_items, [:collection_slug] => [:environment] do |t, args|
 
       i.save(validate: false)
 
+      i.valid_item = i.valid?
+
       items_created += 1
 
     end

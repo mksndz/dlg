@@ -12,9 +12,10 @@ module ItemsHelper
   end
 
   def item_validation_status(item)
-    if item.valid?
+    if item.valid_item
       content_tag(:span, nil, class: 'glyphicon glyphicon-ok', aria: { hidden: true } )
     else
+      item.validate
       content_tag(:span, nil, class: 'glyphicon glyphicon-remove validation-errors', aria: { hidden: true }, data: { content: errors_html(item.errors), toggle: 'popover' } ) +
         content_tag(:sup, item.errors.count)
     end

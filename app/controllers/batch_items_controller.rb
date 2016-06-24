@@ -86,6 +86,7 @@ class BatchItemsController < ApplicationController
     end
     respond_to do |format|
       if @batch_item.save(validate: validate?)
+        @batch_item.valid_item = @batch_item.valid? unless validate?
         format.json { render :success_result, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
       else
         @errors ||= @batch_item.errors

@@ -119,7 +119,7 @@ class Item < ActiveRecord::Base
   end
 
   def self.index_query_fields
-    %w(collection_id public).freeze
+    %w(collection_id public valid_item).freeze
   end
 
   def facet_years

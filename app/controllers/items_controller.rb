@@ -11,21 +11,18 @@ class ItemsController < ApplicationController
 
   def index
 
-    set_filter_options [:repository, :collection, :public]
+    set_filter_options [:repository, :collection, :public, :valid_item]
+
+    item_query = Item.index_query(params)
+                     .order(sort_column + ' ' + sort_direction)
+                     .page(params[:page])
+                     .per(params[:per_page])
+                     .includes(:collection)
 
     if current_user.super?
-        @items = Item.index_query(params)
-                     .order(sort_column + ' ' + sort_direction)
-                     .page(params[:page])
-                     .per(params[:per_page])
-                     .includes(:collection)
+        @items = item_query
     else
-        @items = Item.index_query(params)
-                     .includes(:collection)
-                     .where(collection: user_collection_ids)
-                     .order(sort_column + ' ' + sort_direction)
-                     .page(params[:page])
-                     .per(params[:per_page])
+        @items = item_query.where(collection: user_collection_ids)
     end
 
   end

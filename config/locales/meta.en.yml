@@ -48,6 +48,7 @@ en:
           filter_button: 'Filter'
           user: 'User'
           status: 'Status'
+          valid_item: 'Valid'
         columns:
           id: 'ID'
           name: 'Name'

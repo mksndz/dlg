@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623184409) do
+ActiveRecord::Schema.define(version: 20160624122620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,12 +50,14 @@ ActiveRecord::Schema.define(version: 20160623184409) do
     t.integer  "item_id"
     t.integer  "other_collections",     default: [],                 array: true
     t.text     "dlg_local_right",       default: [],    null: false, array: true
+    t.boolean  "valid_item",            default: false, null: false
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
   add_index "batch_items", ["item_id"], name: "index_batch_items_on_item_id", using: :btree
   add_index "batch_items", ["other_collections"], name: "index_batch_items_on_other_collections", using: :btree
   add_index "batch_items", ["slug"], name: "index_batch_items_on_slug", using: :btree
+  add_index "batch_items", ["valid_item"], name: "index_batch_items_on_valid_item", using: :btree
 
   create_table "batches", force: :cascade do |t|
     t.string   "name",                              null: false
@@ -209,6 +211,7 @@ ActiveRecord::Schema.define(version: 20160623184409) do
     t.text     "dcterms_provenance",    default: [],    null: false, array: true
     t.integer  "other_collections",     default: [],                 array: true
     t.text     "dlg_local_right",       default: [],    null: false, array: true
+    t.boolean  "valid_item",            default: false, null: false
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
@@ -216,6 +219,7 @@ ActiveRecord::Schema.define(version: 20160623184409) do
   add_index "items", ["other_collections"], name: "index_items_on_other_collections", using: :btree
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
+  add_index "items", ["valid_item"], name: "index_items_on_valid_item", using: :btree
 
   create_table "repositories", force: :cascade do |t|
     t.string   "slug",                              null: false

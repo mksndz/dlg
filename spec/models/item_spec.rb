@@ -101,6 +101,11 @@ RSpec.describe Item, type: :model do
     expect { i2.save! }.not_to raise_exception
   end
 
+  it 'caches validation status as a boolean' do
+    i1 = Fabricate :item
+    expect(i1.valid_item).to be true
+  end
+
   # validations
 
   it 'should require a Collection' do
