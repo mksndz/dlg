@@ -249,6 +249,10 @@ class CatalogController < ApplicationController
     config.show.document_actions.delete(:citation)
     config.show.document_actions.delete(:sms)
 
+    # AUTOCOMPLETE CONFIG
+    config.autocomplete_enabled = true
+    config.autocomplete_path = 'suggest'
+
   end
 
   # add Admin menu to navbar

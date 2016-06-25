@@ -44,6 +44,8 @@
 
     <field name="textSpell" stored="false" type="textSpell" multiValued="true" indexed="true"/>
 
+    <dynamicField name="*suggest" type="textSuggest" indexed="true" stored="false" multiValued="true" />
+
     <!-- required by Solr 5 -->
     <!--<field name="_version_" type="tlong" indexed="true" stored="true" multiValued="false" />-->
 
@@ -142,6 +144,10 @@
   <copyField source="dcterms_creator_text"  dest="textSpell" />
   <copyField source="dcterms_subject_text"  dest="textSpell" />
   <copyField source="dcterms_description_text"  dest="textSpell" />
+
+  <!-- for Autocomplete -->
+  <copyField source="dcterms_title_text"  dest="suggest" />
+  <copyField source="dcterms_subject_text"  dest="suggest" />
 
   <!-- unstemmed fields -->
   <copyField source="dcterms_title_text"    dest="title_unstem_search" />
@@ -432,6 +438,14 @@
     <fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_d"/>
     <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
     <fieldtype name="geohash" class="solr.GeoHashField"/>
+    <fieldType class="solr.TextField" name="textSuggest" positionIncrementGap="100">
+      <analyzer>
+        <tokenizer class="solr.KeywordTokenizerFactory"/>
+        <filter class="solr.StandardFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+      </analyzer>
+    </fieldType>
   </types>
 
 
