@@ -143,11 +143,10 @@
   <copyField source="dcterms_title_text"  dest="textSpell" />
   <copyField source="dcterms_creator_text"  dest="textSpell" />
   <copyField source="dcterms_subject_text"  dest="textSpell" />
-  <copyField source="dcterms_description_text"  dest="textSpell" />
 
   <!-- for Autocomplete -->
-  <copyField source="dcterms_title_text"  dest="suggest" />
   <copyField source="dcterms_subject_text"  dest="suggest" />
+  <copyField source="dcterms_spatial_text"  dest="suggest" />
 
   <!-- unstemmed fields -->
   <copyField source="dcterms_title_text"    dest="title_unstem_search" />
@@ -191,6 +190,7 @@
   <copyField source="dcterms_medium_text" dest="medium_facet" />
   <copyField source="dcterms_genre_text" dest="genre_facet" />
   <copyField source="dc_format_text" dest="format_facet" />
+  <copyField source="year_facet_itms" dest="year_facet" />
 
   <!--<copyField source="subtitle_t" dest="subtitle_unstem_search"/>-->
   <!--<copyField source="title_addl_t" dest="title_addl_unstem_search"/>-->

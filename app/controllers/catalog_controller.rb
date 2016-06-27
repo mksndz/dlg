@@ -19,13 +19,12 @@ class CatalogController < ApplicationController
     ## Class for converting Blacklight's url parameters to into request parameters for the search index
     # config.search_builder_class = ::SearchBuilder
     #
-    ## Model that maps search index responses to the blacklight response model
+    ## Model that maps search index responses to the blacklight reponse model
     # config.response_model = Blacklight::Solr::Response
 
     ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = { 
       qt: 'search',
-      # fq: '-class_name:"BatchItem"-class_name:"Batch"', # dont return BatchItems or Batches
       rows: 20
     }
 
@@ -94,7 +93,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'collection_name_sms', label: 'Collection',  limit: 10
     config.add_facet_field 'repository_name_ss',  label: 'Repository',  limit: 10
     config.add_facet_field 'class_name',          label: 'Class',       limit: 10
-    config.add_facet_field 'year_facet_itms',     label: 'Year',        limit: 10
+    config.add_facet_field 'year_facet',          label: 'Year',        limit: 10
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
