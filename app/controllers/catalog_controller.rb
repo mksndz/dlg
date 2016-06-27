@@ -117,7 +117,8 @@ class CatalogController < ApplicationController
     config.add_index_field 'dcterms_description_display', label: 'Description'
     config.add_index_field 'collection_name_sms', label: 'Collection', link_to_search: true
     config.add_index_field 'repository_name_ss', label: 'Repository', link_to_search: true
-    config.add_index_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
+    config.add_index_field 'dc_identifier_sms', label: 'Identifier', helper_method: 'linkify'
+    config.add_index_field 'dcterms_is_shown_at_sms', label: 'URL', helper_method: 'linkify'
     config.add_index_field 'dcterms_creator_display', label: 'Author'
     config.add_index_field 'dc_format_display', label: 'Format'
     config.add_index_field 'sort_year_its', label: 'Date Sort'
@@ -142,7 +143,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_type_display', label: 'Genre'
     config.add_show_field 'dcterms_creator_display', label: 'Creator'
     config.add_show_field 'dcterms_language_display', label: 'Language'
-    config.add_show_field 'dcterms_is_shown_at_display', label: 'URL', helper_method: 'linkify'
+    config.add_show_field 'dcterms_is_shown_at_sms', label: 'URL', helper_method: 'linkify'
     config.add_show_field 'dcterms_rights_holder_display', label: 'Rights Holder'
     config.add_show_field 'dcterms_extent_display', label: 'Extent'
     config.add_show_field 'dcterms_medium_display', label: 'Medium'

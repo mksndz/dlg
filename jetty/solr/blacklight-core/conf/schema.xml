@@ -160,7 +160,6 @@
   <copyField source="public_b" dest="public_display" />
   <copyField source="dpla_b" dest="dpla_display" />
   <copyField source="dc_format_text" dest="dc_format_display" />
-  <copyField source="dc_identifier_text" dest="dc_identifier_display" />
   <copyField source="dc_right_text" dest="dc_right_display" />
   <copyField source="dc_date_text" dest="dc_date_display" />
   <copyField source="dc_relation_text" dest="dc_relation_display" />
@@ -176,7 +175,6 @@
   <copyField source="dcterms_creator_text" dest="dcterms_creator_display" />
   <copyField source="dcterms_language_text" dest="dcterms_language_display" />
   <copyField source="dcterms_is_part_of_text" dest="dcterms_is_part_of_display" />
-  <copyField source="dcterms_is_shown_at_text" dest="dcterms_is_shown_at_display" />
   <copyField source="dcterms_rights_holder_text" dest="dcterms_rights_holder_display" />
   <copyField source="dcterms_extent_text" dest="dcterms_extent_display" />
   <copyField source="dcterms_medium_text" dest="dcterms_medium_display" />
