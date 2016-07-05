@@ -173,7 +173,6 @@ class CatalogController < ApplicationController
     # primary search fields
     config.add_search_field('title') do |field|
       field.label = 'Title'
-      field.if = false
       field.solr_local_parameters = {
           qf: 'title_unstem_search^100 dcterms_title_text^50',
           pf: 'title_unstem_search^100 dcterms_title_text^50'
@@ -206,7 +205,6 @@ class CatalogController < ApplicationController
 
     config.add_search_field('publisher') do |field|
       field.label = 'Publisher'
-      field.if = false
       field.solr_local_parameters = {
           qf: 'publisher_unstem_search^100 dcterms_publisher_text^50',
           pf: 'publisher_unstem_search^100 dcterms_publisher_text^50'
@@ -215,7 +213,6 @@ class CatalogController < ApplicationController
 
     config.add_search_field('contributor') do |field|
       field.label = 'Contributor'
-      field.if = false
       field.solr_local_parameters = {
           qf: 'contributor_unstem_search^100 dcterms_contributor_text^50',
           pf: 'contributor_unstem_search^100 dcterms_contributor_text^50'

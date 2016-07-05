@@ -411,16 +411,21 @@
 
       <str name="qf">
         title_unstem_search^100
-        subject_unstem_search^100
+        title_unstem_search^100
+        description_unstem_search^100
         creator_unstem_search^100
-        dcterms_description_text^25
-        dcterms_publisher_text
-        dcterms_contributor_text
-        dcterms_temporal_text
-        dcterms_spatial_text
-        dcterms_provenance_text
-        dcterms_creator_text
-        dcterms_rights_holder_text
+        subject_unstem_search^100
+        description_unstem_search^100
+        publisher_unstem_search^100
+        spatial_unstem_search^100
+        contributor_unstem_search^100
+        dcterms_title
+        dcterms_description
+        dcterms_subject
+        dcterms_spatial
+        dcterms_publisher
+        dcterms_contributor
+        dcterms_creator
       </str>
 
       <!-- the pf parameter, which is an abbreviation of "phrase fields". The syntax
@@ -429,37 +434,57 @@
 
       <str name="pf">
         title_unstem_search^100
-        subject_unstem_search^100
+        description_unstem_search^100
         creator_unstem_search^100
-        dcterms_description_text^25
-        dcterms_publisher_text
-        dcterms_contributor_text
-        dcterms_temporal_text
-        dcterms_spatial_text
-        dcterms_provenance_text
-        dcterms_creator_text
-        dcterms_rights_holder_text
+        subject_unstem_search^100
+        description_unstem_search^100
+        publisher_unstem_search^100
+        spatial_unstem_search^100
+        contributor_unstem_search^100
+        dcterms_title
+        dcterms_description
+        dcterms_subject
+        dcterms_spatial
+        dcterms_publisher
+        dcterms_contributor
+        dcterms_creator
       </str>
 
-      <str name="creator_qf">
-        creator_unstem_search
-      </str>
-      <str name="creator_pf">
-        creator_unstem_search
-      </str>
 
       <str name="title_qf">
-        title_unstem_search
+        title_unstem_search^100
+        dcterms_title
       </str>
       <str name="title_pf">
-        title_unstem_search
+        title_unstem_search^100
+        dcterms_title
+      </str>
+
+      <str name="description_qf">
+        description_unstem_search^100
+        dcterms_description
+      </str>
+      <str name="description_pf">
+        description_unstem_search^100
+        dcterms_description
       </str>
 
       <str name="subject_qf">
-        subject_unstem_search
+        subject_unstem_search^100
+        dcterms_subject
       </str>
       <str name="subject_pf">
-        subject_unstem_search
+        subject_unstem_search^100
+        dcterms_subject
+      </str>
+
+      <str name="creator_qf">
+        creator_unstem_search^100
+        dcterms_creator
+      </str>
+      <str name="creator_pf">
+        creator_unstem_search^100
+        dcterms_creator
       </str>
 
       <!-- phrase slop -->
