@@ -20,7 +20,7 @@ $(document).ready(function() {
         $el.typeahead({
                 hint: true,
                 highlight: true,
-                minLength: 2
+                minLength: 5
             },
             {
                 name: 'terms',
