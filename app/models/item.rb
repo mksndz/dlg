@@ -18,7 +18,6 @@ class Item < ActiveRecord::Base
     # todo remove unnecessarily stored fields when indexing is ready, remembering to alter solr field names where applicable
 
     string :slug, stored: true
-
     string :record_id, stored: true
 
     # set empty proxy id field so sunspot knows about it
@@ -29,12 +28,10 @@ class Item < ActiveRecord::Base
       ''
     end
 
-    # use case?
     integer :collection_id do
       collection.id
     end
 
-    # use case?
     integer :repository_id do
       repository.id
     end
@@ -42,90 +39,127 @@ class Item < ActiveRecord::Base
     boolean :dpla
     boolean :public
 
-    # multivalued to hold names of 'other collections'
     string :collection_name, stored: true, multiple: true do
       collection_titles
     end
 
-    # todo this could be multivalued if the other collection is in another repo
-    string :repository_name, stored: true do
-      repository.title
+    string :repository_name, stored: true, multiple: true do
+      repository_titles
     end
 
-    string :thumbnail_url, stored: true do
-      thumbnail_url
-    end
+    string :thumbnail_url, as: 'thumbnail_url'
 
-    # DC Fields for Searching
-    # *_display fields created via copyFields
-    text :dlg_local_right
-    text :dc_right
-    text :dc_relation
-    text :dc_format
-    text :dc_date
-    text :dcterms_is_part_of
-    text :dcterms_contributor
-    text :dcterms_creator
+    # *_display (not indexed, stored, multivalued)
+    string :dlg_local_right,        as: 'dlg_local_right_display',        multiple: true
+    string :dc_date,                as: 'dc_date_display',                multiple: true
+    string :dc_format,              as: 'dc_format_display',              multiple: true
+    string :dc_relation,            as: 'dc_relation_display',            multiple: true
+    string :dc_right,               as: 'dc_right_display',               multiple: true
+    string :dcterms_contributor,    as: 'dcterms_contributor_display',    multiple: true
+    string :dcterms_creator,        as: 'dcterms_creator_display',        multiple: true
+    string :dcterms_description,    as: 'dcterms_description_display',    multiple: true
+    string :dcterms_extent,         as: 'dcterms_extent_display',         multiple: true
+    string :dcterms_identifier,     as: 'dcterms_identifier_display',     multiple: true
+    string :dcterms_is_part_of,     as: 'dcterms_is_part_of_display',     multiple: true
+    string :dcterms_is_shown_at,    as: 'dcterms_is_shown_at_display',    multiple: true
+    string :dcterms_language,       as: 'dcterms_language_display',       multiple: true
+    string :dcterms_medium,         as: 'dcterms_medium_display',         multiple: true
+    string :dcterms_provenance,     as: 'dcterms_provenance_display',     multiple: true
+    string :dcterms_publisher,      as: 'dcterms_publisher_display',      multiple: true
+    string :dcterms_rights_holder,  as: 'dcterms_rights_holder_display',  multiple: true
+    string :dcterms_subject,        as: 'dcterms_subject_display',        multiple: true
+    string :dcterms_spatial,        as: 'dcterms_spatial_display',        multiple: true
+    string :dcterms_temporal,       as: 'dcterms_temporal_display',       multiple: true
+    string :dcterms_title,          as: 'dcterms_title_display',          multiple: true
+    string :dcterms_type,           as: 'dcterms_type_display',           multiple: true
+
+    # Primary Search Fields (multivalued, indexed)
+    text :dcterms_title
     text :dcterms_description
-    text :dcterms_extent
-    text :dcterms_medium
-    text :dcterms_identifier
-    text :dcterms_language
+    text :dcterms_subject
     text :dcterms_spatial
     text :dcterms_publisher
-    text :dcterms_rights_holder
-    text :dcterms_subject
-    text :dcterms_temporal
-    text :dcterms_title
-    text :dcterms_type
-    text :dcterms_provenance
+    text :dcterms_contributor
+    text :dcterms_creator
 
-    # identifiers (url)
-    string :dc_identifier, multiple: true, stored: true do
-      dc_identifier
-    end
-    string :dcterms_is_shown_at, multiple: true, stored: true do
-      dcterms_is_shown_at
+    string :title, as: 'title' do
+      dcterms_title.first ? dcterms_title.first : slug
     end
 
     # required for Blacklight - a single valued format field
-    # 'format' field name in solr is created from this via a copyField
-    string :format do
+    string :format, as: 'format' do
       dc_format.first ? dc_format.first : ''
     end
 
-    # Fields for Faceting, etc.
-    string :sort_collection, stored: true do
+    # sort fields
+    string :collection_sort, as: 'collection_sort' do
       collection.title.downcase.gsub(/^(an?|the)\b/, '')
     end
 
-    string :sort_title, stored: true do
+    string :title_sort, as: 'title_sort' do
       dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
     end
 
-    string :sort_creator, stored: true do
+    string :creator_sort, as: 'creator_sort' do
       dcterms_creator.first ? dcterms_creator.first.downcase.gsub(/^(an?|the)\b/, '') : ''
     end
 
-    time :created_at, stored: true, trie: true
-    time :updated_at, stored: true, trie: true
-
-    integer :sort_year, stored: true, trie: true do
+    integer :pub_year, as: 'pub_year', trie: true do
       DateIndexer.new.get_sort_date(dc_date)
     end
 
-    integer :year_facet, multiple: true, stored: true, trie: true do
+    # facet fields
+    integer :year_facet, multiple: true, trie: true, as: 'year_facet' do
       DateIndexer.new.get_valid_years_for(dc_date, self)
     end
 
-    # date :date_facet, multiple: true, stored: true, trie: true do
+    # datetimes
+    time :created_at, stored: true, trie: true
+    time :updated_at, stored: true, trie: true
 
-    # end
+    # spatial coordinates
+    string :coordinates, as: 'coordinates' do
+      coordinates_text
+    end
+
+    # geojson
+    string :geojson, as: 'geojson'
+
+    # spatial placename
+    string :placename, as: 'placename'
 
   end
 
   def self.index_query_fields
     %w(collection_id public valid_item).freeze
+  end
+
+  def geojson
+    if coordinates
+      "{'type':'Feature','geometry':{'type':'Point','coordinates':[#{coordinates_text}]},'properties':{'placename':'#{placename}'}}"
+    else
+      "{'type':'Feature','geometry':{'type':'Point','coordinates':[#{coordinates_text}]},'properties':{'placename':'No Specific Location Data'}}"
+    end
+  end
+
+  def latitude
+    coordinates[1] || ''
+  end
+
+  def longitude
+    coordinates[2] || ''
+  end
+
+  def coordinates_text
+    coordinates ? "#{latitude}, #{longitude}" : '31.066399, -80.394617'
+  end
+
+  def placename
+    dcterms_spatial.first.gsub('United States, Georgia, ','').gsub(/(-?\d+\.\d+), (-?\d+\.\d+)/,'').chop.chop
+  end
+
+  def coordinates
+    dcterms_spatial.first.match(/(-?\d+\.\d+), (-?\d+\.\d+)/) ? dcterms_spatial.first.match(/(-?\d+\.\d+), (-?\d+\.\d+)/) : nil
   end
 
   def facet_years
@@ -138,6 +172,10 @@ class Item < ActiveRecord::Base
 
   def collection_titles
     (other_collection_titles << collection.title).reverse
+  end
+
+  def repository_titles
+    (other_repository_titles << repository.title).reverse
   end
 
   def record_id
@@ -176,6 +214,11 @@ class Item < ActiveRecord::Base
 
   def other_collection_titles
     Collection.find(other_collections).map(&:title)
+  end
+
+  def other_repository_titles
+    Collection.find(other_collections).map(&:repository_title)
+
   end
 
   # def date_facet

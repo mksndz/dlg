@@ -105,6 +105,10 @@ class Collection < ActiveRecord::Base
     "#{repository.slug}_#{self.slug}"
   end
 
+  def repository_title
+    repository.title
+  end
+
   def to_xml(options = {})
     default_options = {
         dasherize: false,

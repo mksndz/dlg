@@ -6,6 +6,7 @@ class CatalogController < ApplicationController
   authorize_resource class: false
 
   configure_blacklight do |config|
+
     # default advanced config values
     config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
     # config.advanced_search[:qt] ||= 'advanced'
@@ -51,15 +52,15 @@ class CatalogController < ApplicationController
     # }
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'dcterms_title_display'
-    config.index.display_type_field = 'format_ss'
+    config.index.title_field = 'title'
+    config.index.display_type_field = 'format'
 
     # solr field configuration for document/show views
-    config.show.title_field = 'dcterms_title_display'
-    config.show.display_type_field = 'format_ss'
+    config.show.title_field = 'title'
+    config.show.display_type_field = 'format'
 
     # show thumbnails on search results
-    config.view.list.thumbnail_field = :thumbnail_url_ss
+    config.view.list.thumbnail_field = :thumbnail_url
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -115,18 +116,18 @@ class CatalogController < ApplicationController
     #   The ordering of the field names is the order of the display
     config.add_index_field 'dcterms_title_display', label: 'Title'
     config.add_index_field 'dcterms_description_display', label: 'Description'
-    config.add_index_field 'collection_name_sms', label: 'Collection', link_to_search: true
-    config.add_index_field 'repository_name_ss', label: 'Repository', link_to_search: true
-    config.add_index_field 'dc_identifier_sms', label: 'Identifier', helper_method: 'linkify'
-    config.add_index_field 'dcterms_is_shown_at_sms', label: 'URL', helper_method: 'linkify'
+    config.add_index_field 'collection_name_sms', label: 'Collection', link_to_search: true # search works as intended?
+    config.add_index_field 'repository_name_sms', label: 'Repository', link_to_search: true # search works as intended?
+    config.add_index_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
+    config.add_index_field 'dcterms_is_shown_at_display', label: 'URL', helper_method: 'linkify'
     config.add_index_field 'dcterms_creator_display', label: 'Author'
     config.add_index_field 'dc_format_display', label: 'Format'
-    config.add_index_field 'sort_year_its', label: 'Date Sort'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'dcterms_title_display', label: 'Title'
-    config.add_show_field 'collection_name_sms', label: 'Collection', link_to_search: true
+    config.add_show_field 'collection_name_sms', label: 'Collection', link_to_search: true # search works as intended?
+    config.add_show_field 'repository_name_sms', label: 'Repository', link_to_search: true # search works as intended?
     config.add_show_field 'dcterms_is_part_of_display', label: 'Is Part Of'
     config.add_show_field 'dcterms_description_display', label: 'Description'
     config.add_show_field 'dc_format_display', label: 'File Format'
@@ -136,14 +137,14 @@ class CatalogController < ApplicationController
     config.add_show_field 'dc_relation_display', label: 'Related Materials'
     config.add_show_field 'dcterms_publisher_display', label: 'Publisher'
     config.add_show_field 'dcterms_contributor_display', label: 'Contributor'
-    config.add_show_field 'dcterms_temporal_display', label: 'Time', link_to_search: true
-    config.add_show_field 'dcterms_spatial_display', label: 'Place', link_to_search: true
+    config.add_show_field 'dcterms_temporal_display', label: 'Time', link_to_search: true # search works as intended?
+    config.add_show_field 'dcterms_spatial_display', label: 'Place', link_to_search: true # search works as intended?
     config.add_show_field 'dcterms_provenance_display', label: 'Location of Original'
-    config.add_show_field 'dcterms_subject_display', label: 'Subject', link_to_search: true
+    config.add_show_field 'dcterms_subject_display', label: 'Subject', link_to_search: true # search works as intended?
     config.add_show_field 'dcterms_type_display', label: 'Genre'
     config.add_show_field 'dcterms_creator_display', label: 'Creator'
     config.add_show_field 'dcterms_language_display', label: 'Language'
-    config.add_show_field 'dcterms_is_shown_at_sms', label: 'URL', helper_method: 'linkify'
+    config.add_show_field 'dcterms_is_shown_at_display', label: 'URL', helper_method: 'linkify'
     config.add_show_field 'dcterms_rights_holder_display', label: 'Rights Holder'
     config.add_show_field 'dcterms_extent_display', label: 'Extent'
     config.add_show_field 'dcterms_medium_display', label: 'Medium'
@@ -169,29 +170,37 @@ class CatalogController < ApplicationController
     # since we aren't specifying it otherwise.
     config.add_search_field 'all_fields', label: 'All Fields'
 
-    config.add_search_field('rights') do |field|
-      field.label = 'Rights Fields'
+    # primary search fields
+    config.add_search_field('title') do |field|
+      field.label = 'Title'
       field.if = false
       field.solr_local_parameters = {
-          qf: 'dc_right_text^50000 dcterms_rights_holder_text^30000',
-          pf: 'dc_right_text^50000 dcterms_rights_holder_text^30000'
+          qf: 'title_unstem_search^100 dcterms_title_text^50',
+          pf: 'title_unstem_search^100 dcterms_title_text^50'
       }
     end
 
     config.add_search_field('description') do |field|
       field.label = 'Description'
       field.solr_local_parameters = {
-          qf: 'dcterms_description_text^50000',
-          pf: 'dcterms_description_text^50000'
+          qf: 'description_unstem_search^100 dcterms_description_text^50',
+          pf: 'description_unstem_search^100 dcterms_description_text^50'
       }
     end
 
-    config.add_search_field('title') do |field|
-      field.label = 'Title'
-      field.if = false
+    config.add_search_field('subject') do |field|
+      field.label = 'Subject'
       field.solr_local_parameters = {
-          qf: 'dcterms_title_text^50000',
-          pf: 'dcterms_title_text^50000'
+          qf: 'subject_unstem_search^100 dcterms_subject_text^50',
+          pf: 'subject_unstem_search^100 dcterms_subject_text^50'
+      }
+    end
+
+    config.add_search_field('place') do |field|
+      field.label = 'Place'
+      field.solr_local_parameters = {
+          qf: 'spatial_unstem_search^100 dcterms_spatial_text^50',
+          pf: 'spatial_unstem_search^100 dcterms_spatial_text^50'
       }
     end
 
@@ -199,8 +208,8 @@ class CatalogController < ApplicationController
       field.label = 'Publisher'
       field.if = false
       field.solr_local_parameters = {
-          qf: 'dcterms_publisher_text^50000',
-          pf: 'dcterms_publisher_text^50000'
+          qf: 'publisher_unstem_search^100 dcterms_publisher_text^50',
+          pf: 'publisher_unstem_search^100 dcterms_publisher_text^50'
       }
     end
 
@@ -208,36 +217,30 @@ class CatalogController < ApplicationController
       field.label = 'Contributor'
       field.if = false
       field.solr_local_parameters = {
-          qf: 'dcterms_contributor_text^50000',
-          pf: 'dcterms_contributor_text^50000'
+          qf: 'contributor_unstem_search^100 dcterms_contributor_text^50',
+          pf: 'contributor_unstem_search^100 dcterms_contributor_text^50'
       }
     end
 
-    config.add_search_field('place') do |field|
-      field.label = 'Place'
+    config.add_search_field('creator') do |field|
+      field.label = 'Creator'
       field.solr_local_parameters = {
-          qf: 'dcterms_spatial_text^50000',
-          pf: 'dcterms_spatial_text^50000'
+          qf: 'creator_unstem_search^100 dcterms_creator_text^50',
+          pf: 'creator_unstem_search^100 dcterms_creator_text^50'
       }
     end
 
-    config.add_search_field('subject') do |field|
-      field.label = 'Subject'
-      field.solr_local_parameters = {
-          qf: 'dcterms_subject_text^50000',
-          pf: 'dcterms_subject_text^50000'
-      }
-    end
+    #secondary search fields (no unstemmed fields)
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    config.add_sort_field 'score desc, sort_title_ss asc', label: 'Relevance'
-    config.add_sort_field 'sort_year_its asc', label: 'Year'
-    config.add_sort_field 'sort_title_ss asc', label: 'DC Title'
-    config.add_sort_field 'sort_collection_ss asc', label: 'Collection'
-    config.add_sort_field 'sort_creator_ss asc', label: 'DC Creator'
+    config.add_sort_field 'score desc, title_sort asc', label: 'Relevance'
+    config.add_sort_field 'pub_year asc', label: 'Year'
+    config.add_sort_field 'title_sort asc', label: 'DC Title'
+    config.add_sort_field 'collection_sort asc', label: 'Collection'
+    config.add_sort_field 'creator_sort asc', label: 'DC Creator'
     config.add_sort_field 'created_at_dts desc', label: 'Latest Created'
     config.add_sort_field 'updated_at_dts desc', label: 'Latest Updated'
 

@@ -4,27 +4,33 @@
 
   <fields>
 
+    <field name="_version_" type="tlong" indexed="true" stored="true" multiValued="false" />
+
     <field name="id"             type="string" indexed="true"  stored="true"   multiValued="false" required="true" />
     <field name="text"           type="string" indexed="true"  stored="false"  multiValued="true" />
     <field name="timestamp"      type="date"   indexed="true"  stored="true"   multiValued="false" default="NOW" />
 
     <!-- sunspot required fields -->
     <field name="type"           type="string" indexed="true"  stored="false"  multiValued="true" />
+    <field name="title"          type="string" indexed="false" stored="true"   multiValued="false" />
     <field name="class_name"     type="string" indexed="true"  stored="false"  multiValued="false" />
 
+    <!-- blacklight required fields -->
+    <field name="format"         type="string" indexed="false" stored="true"  multiValued="false" />
+    <field name="thumbnail_url"  type="string" indexed="false" stored="true"  multiValued="false" />
+    <field name="pub_year"       type="tint"   indexed="false" stored="false" multiValued="false" />
+
+    <!-- maps related fields -->
+    <field name="coordinates"    type="location_rpt" indexed="true" stored="true" />
+    <field name="geojson"        type="string"       indexed="true" stored="true" />
+    <field name="placename"      type="string"       indexed="true" stored="true" />
+
     <!-- sunspot hack field -->
-    <field name="sunspot_id_ss"  type="string" indexed="true"  stored="true" />
+    <field name="sunspot_id_ss"  type="string" indexed="false"  stored="true" />
 
-    <!-- Sunspot geo fields, use these one day -->
-    <!--<field name="lat" stored="true" type="tdouble" multiValued="false" indexed="true"/>-->
-    <!--<field name="lng" stored="true" type="tdouble" multiValued="false" indexed="true"/>-->
-
-    <field name="textSpell" stored="false" type="textSpell" multiValued="true" indexed="true"/>
+    <field name="textSpell"     stored="false" type="textSpell" multiValued="true" indexed="true"/>
 
     <dynamicField name="*suggest" type="textSuggest" indexed="true" stored="false" multiValued="true" />
-
-    <!-- required by Solr 5 -->
-    <field name="_version_" type="tlong" indexed="true" stored="true" multiValued="false" />
 
     <!-- sunspot dynamic fields -->
     <dynamicField name="_local*"   stored="false"  type="tdouble"  multiValued="false"   indexed="true"/>
@@ -59,6 +65,8 @@
     <dynamicField name="*_sm"      stored="false"  type="string"   multiValued="true"    indexed="true"/>
     <dynamicField name="*_ss"      stored="true"   type="string"   multiValued="false"   indexed="true"/>
     <dynamicField name="*_sms"     stored="true"   type="string"   multiValued="true"    indexed="true"/>
+
+    <dynamicField name="*_stored_string" type="string" indexed="false" multiValued="true" stored="true" />
 
     <dynamicField name="*_it"      stored="false"  type="tint"     multiValued="false"   indexed="true"/>
     <dynamicField name="*_itm"     stored="false"  type="tint"     multiValued="true"    indexed="true"/>
@@ -105,10 +113,6 @@
     <dynamicField name="*_facet"   type="string"         indexed="true"  stored="false"  multiValued="true" />
     <dynamicField name="*_sort"    type="alphaOnlySort"  indexed="true"  stored="false"  multiValued="false" />
 
-    <!-- SPECIAL BLACKLIGHT REQUIRED FIELD -->
-    <!-- format is used for facet, display, and choosing which partial to use for the show view, so it must be stored and indexed -->
-    <field name="format" type="string" indexed="true" stored="true"/>
-
   </fields>
 
   <!-- copyField commands copy one field to another at the time a document
@@ -117,7 +121,7 @@
         searching.  -->
 
   <!-- for spellcheck, use chosen fields only -->
-  <copyField source="dcterms_title_text"  dest="textSpell" />
+  <copyField source="dcterms_title_text"    dest="textSpell" />
   <copyField source="dcterms_creator_text"  dest="textSpell" />
   <copyField source="dcterms_subject_text"  dest="textSpell" />
 
@@ -126,46 +130,26 @@
   <copyField source="dcterms_spatial_text"  dest="suggest" />
 
   <!-- unstemmed fields -->
-  <copyField source="dcterms_title_text"    dest="title_unstem_search" />
-  <copyField source="dcterms_creator_text"  dest="creator_unstem_search" />
-  <copyField source="dcterms_subject_text"  dest="subject_unstem_search" />
+  <copyField source="dcterms_title_text"        dest="title_unstem_search" />
+  <copyField source="dcterms_description_text"  dest="description_unstem_search" />
+  <copyField source="dcterms_creator_text"      dest="creator_unstem_search" />
+  <copyField source="dcterms_subject_text"      dest="subject_unstem_search" />
+  <copyField source="dcterms_description_text"  dest="description_unstem_search" />
+  <copyField source="dcterms_publisher_text"    dest="publisher_unstem_search" />
+  <copyField source="dcterms_spatial_text"      dest="spatial_unstem_search" />
+  <copyField source="dcterms_contributor_text"  dest="contributor_unstem_search" />
 
-  <!-- special blacklight required field -->
-  <copyField source="format_s" dest="format" />
-
-  <!-- display only fields -->
-  <copyField source="public_b" dest="public_display" />
-  <copyField source="dpla_b" dest="dpla_display" />
-  <copyField source="dc_format_text" dest="dc_format_display" />
-  <copyField source="dc_right_text" dest="dc_right_display" />
-  <copyField source="dc_date_text" dest="dc_date_display" />
-  <copyField source="dc_relation_text" dest="dc_relation_display" />
-  <copyField source="dcterms_title_text" dest="dcterms_title_display" />
-  <copyField source="dcterms_publisher_text" dest="dcterms_publisher_display" />
-  <copyField source="dcterms_contributor_text" dest="dcterms_contributor_display" />
-  <copyField source="dcterms_temporal_text" dest="dcterms_temporal_display" />
-  <copyField source="dcterms_spatial_text" dest="dcterms_spatial_display" />
-  <copyField source="dcterms_provenance_text" dest="dcterms_provenance_display" />
-  <copyField source="dcterms_subject_text" dest="dcterms_subject_display" />
-  <copyField source="dcterms_type_text" dest="dcterms_type_display" />
-  <copyField source="dcterms_description_text" dest="dcterms_description_display" />
-  <copyField source="dcterms_creator_text" dest="dcterms_creator_display" />
-  <copyField source="dcterms_language_text" dest="dcterms_language_display" />
-  <copyField source="dcterms_is_part_of_text" dest="dcterms_is_part_of_display" />
-  <copyField source="dcterms_rights_holder_text" dest="dcterms_rights_holder_display" />
-  <copyField source="dcterms_extent_text" dest="dcterms_extent_display" />
-  <copyField source="dcterms_medium_text" dest="dcterms_medium_display" />
 
   <!-- facet fields -->
-  <copyField source="dcterms_spatial_text" dest="location_facet" />
-  <copyField source="dcterms_type_text" dest="type_facet" />
-  <copyField source="dcterms_creator_text" dest="creator_facet" />
-  <copyField source="dcterms_subject_text" dest="subject_facet" />
+  <copyField source="dcterms_spatial_text"  dest="location_facet" />
+  <copyField source="dcterms_type_text"     dest="type_facet" />
+  <copyField source="dcterms_creator_text"  dest="creator_facet" />
+  <copyField source="dcterms_subject_text"  dest="subject_facet" />
   <copyField source="dcterms_temporal_text" dest="temporal_facet" />
-  <copyField source="dcterms_medium_text" dest="medium_facet" />
-  <copyField source="dcterms_genre_text" dest="genre_facet" />
-  <copyField source="dc_format_text" dest="format_facet" />
-  <copyField source="year_facet_itms" dest="year_facet" />
+  <copyField source="dcterms_medium_text"   dest="medium_facet" />
+  <copyField source="dcterms_genre_text"    dest="genre_facet" />
+  <copyField source="dc_format_text"        dest="format_facet" />
+  <copyField source="year_facet"            dest="year_facet" />
 
   <!-- Similarity is the scoring routine for each document vs. a query.
        A custom similarity may be specified here, but the default is fine
@@ -205,12 +189,12 @@
     <fieldType name="date" class="solr.TrieDateField" omitNorms="true" precisionStep="0" positionIncrementGap="0"/>
     <fieldType name="tdate" class="solr.TrieDateField" omitNorms="true" precisionStep="6" positionIncrementGap="0"/>
     <fieldType name="rand" class="solr.RandomSortField" omitNorms="true"/>
+
     <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
       <analyzer>
         <tokenizer class="solr.StandardTokenizerFactory"/>
-        <!-- <filter class="solr.ICUFoldingFilterFactory" /> -->
-       <!--  <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" /> -->
-        <filter class="solr.SnowballPorterFilterFactory" language="English" />
+         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+         <filter class="solr.SnowballPorterFilterFactory" language="English" />
       </analyzer>
     </fieldType>
     <fieldType name="text_ws" class="solr.TextField" positionIncrementGap="100">
@@ -353,6 +337,11 @@
     <fieldtype name="ignored" stored="false" indexed="false" multiValued="true" class="solr.StrField" />
     <fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_d"/>
     <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
+    <fieldType name="location_rpt"
+               class="solr.SpatialRecursivePrefixTreeFieldType"
+               distErrPct="0.025"
+               maxDistErr="0.001"
+               distanceUnits="miles" />
     <fieldtype name="geohash" class="solr.GeoHashField"/>
     <fieldType class="solr.TextField" name="textSuggest" positionIncrementGap="100">
       <analyzer>
