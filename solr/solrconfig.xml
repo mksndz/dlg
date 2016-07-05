@@ -453,11 +453,11 @@
 
       <str name="title_qf">
         title_unstem_search^100
-        dcterms_title
+        dcterms_title_text
       </str>
       <str name="title_pf">
         title_unstem_search^100
-        dcterms_title
+        dcterms_title_text
       </str>
 
       <str name="description_qf">
@@ -466,25 +466,25 @@
       </str>
       <str name="description_pf">
         description_unstem_search^100
-        dcterms_description
+        dcterms_description_text
       </str>
 
       <str name="subject_qf">
         subject_unstem_search^100
-        dcterms_subject
+        dcterms_subject_text
       </str>
       <str name="subject_pf">
         subject_unstem_search^100
-        dcterms_subject
+        dcterms_subject_text
       </str>
 
       <str name="creator_qf">
         creator_unstem_search^100
-        dcterms_creator
+        dcterms_creator_text
       </str>
       <str name="creator_pf">
         creator_unstem_search^100
-        dcterms_creator
+        dcterms_creator_text
       </str>
 
       <!-- phrase slop -->
