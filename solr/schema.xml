@@ -18,7 +18,7 @@
     <!-- blacklight required fields -->
     <field name="format"         type="string" indexed="false" stored="true"  multiValued="false" />
     <field name="thumbnail_url"  type="string" indexed="false" stored="true"  multiValued="false" />
-    <field name="pub_year"       type="tint"   indexed="false" stored="false" multiValued="false" />
+    <field name="year"           type="tint"   indexed="true"  stored="true"  multiValued="false" />
 
     <!-- maps related fields -->
     <field name="coordinates"    type="location_rpt" indexed="true" stored="true" />

@@ -104,7 +104,7 @@ class Item < ActiveRecord::Base
       dcterms_creator.first ? dcterms_creator.first.downcase.gsub(/^(an?|the)\b/, '') : ''
     end
 
-    integer :pub_year, as: 'pub_year', trie: true do
+    integer :year, as: 'year', trie: true do
       DateIndexer.new.get_sort_date(dc_date)
     end
 
