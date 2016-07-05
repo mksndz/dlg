@@ -488,13 +488,16 @@
       <str name="facet.limit">20</str>
 
       <!-- do i need these defined here? -->
-      <str name="facet.field">format_ss</str>
       <str name="facet.field">location_facet</str>
       <str name="facet.field">subject_facet</str>
       <str name="facet.field">type_facet</str>
+      <str name="facet.field">format_facet</str>
+      <str name="facet.field">genre_facet</str>
       <str name="facet.field">creator_facet</str>
-      <str name="facet.field">collection_name_ss</str>
-      <str name="facet.field">repository_name_ss</str>
+      <str name="facet.field">medium_facet</str>
+      <str name="facet.field">year_facet</str>
+      <str name="facet.field">collection_name_sms</str>
+      <str name="facet.field">repository_name_sms</str>
 
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">default</str>

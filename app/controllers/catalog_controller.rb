@@ -92,7 +92,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'public_b',            label: 'Public?',     limit: 10, helper_method: :boolean_facet_labels
     config.add_facet_field 'dpla_b',              label: 'DPLA?',       limit: 10, helper_method: :boolean_facet_labels
     config.add_facet_field 'collection_name_sms', label: 'Collection',  limit: 10
-    config.add_facet_field 'repository_name_ss',  label: 'Repository',  limit: 10
+    config.add_facet_field 'repository_name_sms', label: 'Repository',  limit: 10
     config.add_facet_field 'class_name',          label: 'Class',       limit: 10
     config.add_facet_field 'year_facet',          label: 'Year',        limit: 10
 
@@ -120,8 +120,8 @@ class CatalogController < ApplicationController
     config.add_index_field 'repository_name_sms', label: 'Repository', link_to_search: true # search works as intended?
     config.add_index_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
     config.add_index_field 'dcterms_is_shown_at_display', label: 'URL', helper_method: 'linkify'
-    config.add_index_field 'dcterms_creator_display', label: 'Author'
-    config.add_index_field 'dc_format_display', label: 'Format'
+    config.add_index_field 'dcterms_creator_display', label: 'Author', link_to_search: :creator_facet
+    config.add_index_field 'dc_format_display', label: 'Format', link_to_search: :format_facet
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -137,12 +137,12 @@ class CatalogController < ApplicationController
     config.add_show_field 'dc_relation_display', label: 'Related Materials'
     config.add_show_field 'dcterms_publisher_display', label: 'Publisher'
     config.add_show_field 'dcterms_contributor_display', label: 'Contributor'
-    config.add_show_field 'dcterms_temporal_display', label: 'Time', link_to_search: true # search works as intended?
-    config.add_show_field 'dcterms_spatial_display', label: 'Place', link_to_search: true # search works as intended?
+    config.add_show_field 'dcterms_temporal_display', label: 'Time'
+    config.add_show_field 'dcterms_spatial_display', label: 'Place', link_to_search: :location_facet
     config.add_show_field 'dcterms_provenance_display', label: 'Location of Original'
-    config.add_show_field 'dcterms_subject_display', label: 'Subject', link_to_search: true # search works as intended?
+    config.add_show_field 'dcterms_subject_display', label: 'Subject', link_to_search: :subject_facet
     config.add_show_field 'dcterms_type_display', label: 'Genre'
-    config.add_show_field 'dcterms_creator_display', label: 'Creator'
+    config.add_show_field 'dcterms_creator_display', label: 'Creator', link_to_search: :creator_facet
     config.add_show_field 'dcterms_language_display', label: 'Language'
     config.add_show_field 'dcterms_is_shown_at_display', label: 'URL', helper_method: 'linkify'
     config.add_show_field 'dcterms_rights_holder_display', label: 'Rights Holder'
