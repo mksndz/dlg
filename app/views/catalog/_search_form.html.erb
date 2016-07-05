@@ -1,14 +1,13 @@
 <div class="well well-sm basic-search-well">
-  <%= bootstrap_form_tag layout: :inline, url: search_action_url, method: :get, class: '', role: 'search' do |f| %>
+  <%= bootstrap_form_tag layout: :inline, url: search_action_url, method: :get, role: 'search' do |f| %>
       <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :qt, :page, :utf8)) %>
       <% if search_fields.length > 1 %>
-          <label for="search_field" class="sr-only"><%= t('blacklight.search.form.search_field.label') %></label>
           <%= f.select(:search_field, options_for_select(search_fields, h(params[:search_field])), title: t('blacklight.search.form.search_field.title'), id: 'search_field', hide_label: true) %>
       <% elsif search_fields.length == 1 %>
           <%= hidden_field_tag :search_field, search_fields.first.last %>
       <% end %>
       <label for="q" class="sr-only"><%= t('blacklight.search.form.search.label') %></label>
-      <%= f.text_field(:q, { hide_label: true, value: params[:q], placeholder: t('blacklight.search.form.search.placeholder'), id: 'q', autofocus: should_autofocus_on_search_box?, data: { autocomplete_enabled: autocomplete_enabled?, autocomplete_path: blacklight.suggest_index_path } } ) %>
+      <%= f.text_field(:q, { hide_label: true, value: params[:q], placeholder: t('blacklight.search.form.search.placeholder'), id: 'q', class: 'q search_q', autofocus: should_autofocus_on_search_box?, data: { autocomplete_enabled: autocomplete_enabled?, autocomplete_path: blacklight.suggest_index_path } } ) %>
       <%= f.submit t('blacklight.search.form.submit') %>
   <% end %>
 </div>
