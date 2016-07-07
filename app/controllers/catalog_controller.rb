@@ -257,9 +257,8 @@ class CatalogController < ApplicationController
     # MAPS CONFIG
     config.add_facet_field 'geojson', label: 'Coordinates', limit: -2, show: false
     config.view.maps.geojson_field = "geojson"
-    config.view.maps.placename_property = "placename"
+    config.view.maps.placename_field = "placename"
     config.view.maps.coordinates_field = "coordinates"
-    # config.view.maps.coordinates_facet_field = "coordinates_facet"
     config.view.maps.search_mode = "placename"
     config.view.maps.facet_mode = "geojson"
     config.view.maps.maxzoom = 18
