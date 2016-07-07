@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection
 
-  has_paper_trail class_name: 'ItemVersion'
+  has_paper_trail class_name: "ItemVersion"
 
   searchable do
 
@@ -25,7 +25,7 @@ class Item < ActiveRecord::Base
     # sunspot search will not work without this, but indexing will
     # see monkeypatch @ config/initializers/sunspot_indexer_id.rb
     string :sunspot_id, stored: true do
-      ''
+      ""
     end
 
     integer :collection_id do
@@ -47,31 +47,31 @@ class Item < ActiveRecord::Base
       repository_titles
     end
 
-    string :thumbnail_url, as: 'thumbnail_url'
+    string :thumbnail_url, as: "thumbnail_url"
 
     # *_display (not indexed, stored, multivalued)
-    string :dlg_local_right,        as: 'dlg_local_right_display',        multiple: true
-    string :dc_date,                as: 'dc_date_display',                multiple: true
-    string :dc_format,              as: 'dc_format_display',              multiple: true
-    string :dc_relation,            as: 'dc_relation_display',            multiple: true
-    string :dc_right,               as: 'dc_right_display',               multiple: true
-    string :dcterms_contributor,    as: 'dcterms_contributor_display',    multiple: true
-    string :dcterms_creator,        as: 'dcterms_creator_display',        multiple: true
-    string :dcterms_description,    as: 'dcterms_description_display',    multiple: true
-    string :dcterms_extent,         as: 'dcterms_extent_display',         multiple: true
-    string :dcterms_identifier,     as: 'dcterms_identifier_display',     multiple: true
-    string :dcterms_is_part_of,     as: 'dcterms_is_part_of_display',     multiple: true
-    string :dcterms_is_shown_at,    as: 'dcterms_is_shown_at_display',    multiple: true
-    string :dcterms_language,       as: 'dcterms_language_display',       multiple: true
-    string :dcterms_medium,         as: 'dcterms_medium_display',         multiple: true
-    string :dcterms_provenance,     as: 'dcterms_provenance_display',     multiple: true
-    string :dcterms_publisher,      as: 'dcterms_publisher_display',      multiple: true
-    string :dcterms_rights_holder,  as: 'dcterms_rights_holder_display',  multiple: true
-    string :dcterms_subject,        as: 'dcterms_subject_display',        multiple: true
-    string :dcterms_spatial,        as: 'dcterms_spatial_display',        multiple: true
-    string :dcterms_temporal,       as: 'dcterms_temporal_display',       multiple: true
-    string :dcterms_title,          as: 'dcterms_title_display',          multiple: true
-    string :dcterms_type,           as: 'dcterms_type_display',           multiple: true
+    string :dlg_local_right,        as: "dlg_local_right_display",        multiple: true
+    string :dc_date,                as: "dc_date_display",                multiple: true
+    string :dc_format,              as: "dc_format_display",              multiple: true
+    string :dc_relation,            as: "dc_relation_display",            multiple: true
+    string :dc_right,               as: "dc_right_display",               multiple: true
+    string :dcterms_contributor,    as: "dcterms_contributor_display",    multiple: true
+    string :dcterms_creator,        as: "dcterms_creator_display",        multiple: true
+    string :dcterms_description,    as: "dcterms_description_display",    multiple: true
+    string :dcterms_extent,         as: "dcterms_extent_display",         multiple: true
+    string :dcterms_identifier,     as: "dcterms_identifier_display",     multiple: true
+    string :dcterms_is_part_of,     as: "dcterms_is_part_of_display",     multiple: true
+    string :dcterms_is_shown_at,    as: "dcterms_is_shown_at_display",    multiple: true
+    string :dcterms_language,       as: "dcterms_language_display",       multiple: true
+    string :dcterms_medium,         as: "dcterms_medium_display",         multiple: true
+    string :dcterms_provenance,     as: "dcterms_provenance_display",     multiple: true
+    string :dcterms_publisher,      as: "dcterms_publisher_display",      multiple: true
+    string :dcterms_rights_holder,  as: "dcterms_rights_holder_display",  multiple: true
+    string :dcterms_subject,        as: "dcterms_subject_display",        multiple: true
+    string :dcterms_spatial,        as: "dcterms_spatial_display",        multiple: true
+    string :dcterms_temporal,       as: "dcterms_temporal_display",       multiple: true
+    string :dcterms_title,          as: "dcterms_title_display",          multiple: true
+    string :dcterms_type,           as: "dcterms_type_display",           multiple: true
 
     # Primary Search Fields (multivalued, indexed)
     text :dcterms_title
@@ -82,34 +82,34 @@ class Item < ActiveRecord::Base
     text :dcterms_contributor
     text :dcterms_creator
 
-    string :title, as: 'title' do
+    string :title, as: "title" do
       dcterms_title.first ? dcterms_title.first : slug
     end
 
     # required for Blacklight - a single valued format field
-    string :format, as: 'format' do
-      dc_format.first ? dc_format.first : ''
+    string :format, as: "format" do
+      dc_format.first ? dc_format.first : ""
     end
 
     # sort fields
-    string :collection_sort, as: 'collection_sort' do
-      collection.title.downcase.gsub(/^(an?|the)\b/, '')
+    string :collection_sort, as: "collection_sort" do
+      collection.title.downcase.gsub(/^(an?|the)\b/, "")
     end
 
-    string :title_sort, as: 'title_sort' do
-      dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
+    string :title_sort, as: "title_sort" do
+      dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, "") : ""
     end
 
-    string :creator_sort, as: 'creator_sort' do
-      dcterms_creator.first ? dcterms_creator.first.downcase.gsub(/^(an?|the)\b/, '') : ''
+    string :creator_sort, as: "creator_sort" do
+      dcterms_creator.first ? dcterms_creator.first.downcase.gsub(/^(an?|the)\b/, "") : ""
     end
 
-    integer :year, as: 'year', trie: true do
+    integer :year, as: "year", trie: true do
       DateIndexer.new.get_sort_date(dc_date)
     end
 
     # facet fields
-    integer :year_facet, multiple: true, trie: true, as: 'year_facet' do
+    integer :year_facet, multiple: true, trie: true, as: "year_facet" do
       DateIndexer.new.get_valid_years_for(dc_date, self)
     end
 
@@ -118,15 +118,15 @@ class Item < ActiveRecord::Base
     time :updated_at, stored: true, trie: true
 
     # spatial coordinates
-    string :coordinates, as: 'coordinates' do
+    string :coordinates, as: "coordinates" do
       coordinates_text
     end
 
     # geojson
-    string :geojson, as: 'geojson'
+    string :geojson, as: "geojson"
 
     # spatial placename
-    string :placename, as: 'placename'
+    string :placename, as: "placename"
 
   end
 
@@ -136,26 +136,26 @@ class Item < ActiveRecord::Base
 
   def geojson
     if coordinates
-      "{'type':'Feature','geometry':{'type':'Point','coordinates':[#{coordinates_text}]},'properties':{'placename':'#{placename}'}}"
+      %|{"type":"Feature","geometry":{"type":"Point","coordinates":[#{coordinates_text}]},"properties":{"name":"#{placename}"}}|
     else
-      "{'type':'Feature','geometry':{'type':'Point','coordinates':[#{coordinates_text}]},'properties':{'placename':'No Specific Location Data'}}"
+      %|{"type":"Feature","geometry":{"type":"Point","coordinates":[#{coordinates_text}]},"properties":{"name":"No Specific Location Data"}}|
     end
   end
 
   def latitude
-    coordinates[1] || ''
+    coordinates[1] || ""
   end
 
   def longitude
-    coordinates[2] || ''
+    coordinates[2] || ""
   end
 
   def coordinates_text
-    coordinates ? "#{latitude}, #{longitude}" : '31.066399, -80.394617'
+    coordinates ? "#{latitude}, #{longitude}" : "31.066399, -80.394617"
   end
 
   def placename
-    dcterms_spatial.first.gsub('United States, Georgia, ','').gsub(/(-?\d+\.\d+), (-?\d+\.\d+)/,'').chop.chop
+    dcterms_spatial.first.gsub("United States, Georgia, ","").gsub(/(-?\d+\.\d+), (-?\d+\.\d+)/,"").chop.chop
   end
 
   def coordinates
@@ -187,7 +187,7 @@ class Item < ActiveRecord::Base
   end
 
   def title
-    dcterms_title.first || 'No Title'
+    dcterms_title.first || "No Title"
   end
 
   def to_xml(options = {})
@@ -235,7 +235,7 @@ class Item < ActiveRecord::Base
   #
   #         # we have a likely date range!
   #         # so now we want to get all years in between....
-  #         iso_dates.map { |d| Date.strptime(s, '%Y-%m-%d') }.sort
+  #         iso_dates.map { |d| Date.strptime(s, "%Y-%m-%d") }.sort
   #
   #
   #       end
