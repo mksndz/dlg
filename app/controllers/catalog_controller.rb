@@ -2,6 +2,8 @@
 class CatalogController < ApplicationController
   include BlacklightAdvancedSearch::Controller
   include Blacklight::Catalog
+  include BlacklightMaps::ControllerOverride
+
 
   authorize_resource class: false
 
