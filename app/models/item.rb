@@ -134,20 +134,20 @@ class Item < ActiveRecord::Base
     %w(collection_id public valid_item).freeze
   end
 
-  def geojson
+  def geojson # TODO CLEANUP THESE COORDINATE RELATED FIELDS THEY ARE UGLYYYYYY (but work)
     if coordinates
-      %|{"type":"Feature","geometry":{"type":"Point","coordinates":[#{coordinates_text}]},"properties":{"name":"#{placename}"}}|
+      %|{"type":"Feature","geometry":{"type":"Point","coordinates":[#{longitude}, #{latitude}]},"properties":{"placename":"#{placename}"}}|
     else
-      %|{"type":"Feature","geometry":{"type":"Point","coordinates":[#{coordinates_text}]},"properties":{"name":"No Specific Location Data"}}|
+      %|{"type":"Feature","geometry":{"type":"Point","coordinates":[#{longitude}, #{latitude}]},"properties":{"placename":"No Specific Location Data"}}|
     end
   end
 
   def latitude
-    coordinates[1] || ""
+    coordinates ? coordinates[1] : '31.066399'
   end
 
   def longitude
-    coordinates[2] || ""
+    coordinates ? coordinates[2] : '-80.394617'
   end
 
   def coordinates_text
@@ -155,11 +155,11 @@ class Item < ActiveRecord::Base
   end
 
   def placename
-    dcterms_spatial.first.gsub("United States, Georgia, ","").gsub(/(-?\d+\.\d+), (-?\d+\.\d+)/,"").chop.chop
+    dcterms_spatial.first ? dcterms_spatial.first.gsub('United States, ','').gsub(/(-?\d+\.\d+), (-?\d+\.\d+)/,'').chop.chop : 'No Specific Location Data'
   end
 
   def coordinates
-    dcterms_spatial.first.match(/(-?\d+\.\d+), (-?\d+\.\d+)/) ? dcterms_spatial.first.match(/(-?\d+\.\d+), (-?\d+\.\d+)/) : nil
+    dcterms_spatial.first ? dcterms_spatial.first.match(/(-?\d+\.\d+), (-?\d+\.\d+)/) : nil
   end
 
   def facet_years
