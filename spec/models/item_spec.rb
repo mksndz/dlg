@@ -87,7 +87,7 @@ RSpec.describe Item, type: :model do
       dcterms_spatial { ['United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123'] }
     }
     expect(i.geojson).to eq %Q|{"type":"Feature","geometry":{"type":"Point","coordinates":[-84.2963123, 33.7748275]},"properties":{"placename":"Georgia, DeKalb County, Decatur"}}|
-
+    expect(JSON.parse(i.geojson)).to be_a Hash
   end
 
 
@@ -103,6 +103,19 @@ RSpec.describe Item, type: :model do
     expect(i.collection_titles).to include c1.title
     expect(i.collection_titles).to include c2.title
     expect(i.collection_titles).to include c3.title
+  end
+
+  it 'has an array of repository titles including the repository titles associated with other_collections, if set' do
+    c1 = Fabricate(:collection)
+    c2 = Fabricate(:collection)
+    c3 = Fabricate(:collection)
+    i = Fabricate(:item) {
+      collection c1
+      other_collections { [c2.id, c3.id] }
+    }
+    expect(i.repository_titles).to include c1.repository.title
+    expect(i.repository_titles).to include c2.repository.title
+    expect(i.repository_titles).to include c3.repository.title
   end
 
   it 'disallows creating two items with the same slug related to the same collection' do
