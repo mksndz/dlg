@@ -21,9 +21,9 @@
     <field name="year"           type="tint"   indexed="true"  stored="true"  multiValued="false" />
 
     <!-- maps related fields -->
-    <field name="coordinates"    type="location_rpt" indexed="true" stored="true" />
-    <field name="geojson"        type="string"       indexed="true" stored="true" />
-    <field name="placename"      type="string"       indexed="true" stored="true" />
+    <field name="coordinates"    type="location_rpt" indexed="true" stored="true" multiValued="true" />
+    <field name="geojson"        type="string"       indexed="true" stored="true" multiValued="true" />
+    <field name="placename"      type="string"       indexed="true" stored="true" multiValued="true" />
 
     <!-- sunspot hack field -->
     <field name="sunspot_id_ss"  type="string" indexed="false"  stored="true" />
@@ -148,7 +148,8 @@
   <copyField source="dcterms_medium_display"  dest="medium_facet" />
   <copyField source="dcterms_genre_display"   dest="genre_facet" />
   <copyField source="dc_format_display"       dest="format_facet" />
-  <copyField source="year_facet"              dest="year_facet" />
+  <copyField source="year"                    dest="year_facet" />
+  <copyField source="coordinates"             dest="coordinates_facet" />
 
   <!-- Similarity is the scoring routine for each document vs. a query.
        A custom similarity may be specified here, but the default is fine

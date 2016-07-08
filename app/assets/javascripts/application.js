@@ -15,11 +15,14 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
+//
+// Required by Blacklight-Maps
+//= require blacklight-maps
 //= require blacklight/blacklight
 //= require bootstrap/tooltip
 //= require bootstrap/popover
 //= require multi-select
-//= require_tree
+//= require_tree .
 
 $(document).ready(function() {
     $('select.fancy-multiselect').multiSelect({

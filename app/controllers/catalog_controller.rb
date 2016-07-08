@@ -2,6 +2,7 @@
 class CatalogController < ApplicationController
   include BlacklightAdvancedSearch::Controller
   include Blacklight::Catalog
+  include BlacklightMaps::ControllerOverride
 
   authorize_resource class: false
 
@@ -253,6 +254,16 @@ class CatalogController < ApplicationController
     config.autocomplete_enabled = true
     config.autocomplete_path = 'suggest'
 
+    # MAPS CONFIG
+    config.add_facet_field 'geojson', label: 'Coordinates', limit: -2, show: false
+    config.view.maps.geojson_field = "geojson"
+    config.view.maps.placename_field = "placename"
+    config.view.maps.coordinates_field = "coordinates"
+    config.view.maps.search_mode = "placename"
+    config.view.maps.facet_mode = "geojson"
+    config.view.maps.maxzoom = 12
+    config.view.maps.show_initial_zoom = 9
+    config.show.partials << :show_maplet
   end
 
   # add Admin menu to navbar
