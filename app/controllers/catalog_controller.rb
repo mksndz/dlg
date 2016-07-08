@@ -60,8 +60,8 @@ class CatalogController < ApplicationController
     config.show.title_field = 'title'
     config.show.display_type_field = 'format'
 
-    # show thumbnails on search results
-    config.view.list.thumbnail_field = :thumbnail_url
+    # show thumbnails on search results for most view types
+    config.index.thumbnail_field = :thumbnail_url
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -264,6 +264,16 @@ class CatalogController < ApplicationController
     config.view.maps.maxzoom = 12
     config.view.maps.show_initial_zoom = 9
     config.show.partials << :show_maplet
+
+    # GALLERY CONFIG
+    config.view.gallery.partials = [:index_header, :index]
+    config.view.masonry.partials = [:index]
+    config.view.slideshow.partials = [:index]
+    config.view.tile_source_field = :thumbnail_url
+
+    config.show.tile_source_field = :thumbnail_url
+    config.show.partials.insert(1, :openseadragon)
+
   end
 
   # add Admin menu to navbar

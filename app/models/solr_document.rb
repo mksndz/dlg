@@ -1,7 +1,9 @@
 # -*- encoding : utf-8 -*-
 class SolrDocument 
 
-  include Blacklight::Solr::Document    
+  include Blacklight::Solr::Document
+  include Blacklight::Gallery::OpenseadragonSolrDocument
+    
 
   field_semantics.merge!(    
                          :title => "title_display",
