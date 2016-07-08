@@ -60,6 +60,38 @@ RSpec.describe Item, type: :model do
     expect(i.facet_years).to eq %w(1802 2001 1776 1791 1900 1901)
   end
 
+  it 'returns string coordinates if one is found present in the dcterms_spatial field' do
+    i = Fabricate(:item) {
+      dcterms_spatial { ['United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123'] }
+    }
+    expect(i.coordinates).to eq '33.7748275, -84.2963123'
+  end
+
+  it 'returns string coordinates in alternate form if one is found present in the dcterms_spatial field' do
+    i = Fabricate(:item) {
+      dcterms_spatial { ['United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123'] }
+    }
+    expect(i.coordinates(true)).to eq '-84.2963123 33.7748275'
+  end
+
+  it 'returns string placename if one is found present in the dcterms_spatial field' do
+    i = Fabricate(:item) {
+      dcterms_spatial { ['United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123'] }
+    }
+    expect(i.placename).to eq 'United States, Georgia, DeKalb County, Decatur'
+  end
+
+
+  it 'returns parseable JSON string geojson if coordinates are found present in the dcterms_spatial field' do
+    i = Fabricate(:item) {
+      dcterms_spatial { ['United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123'] }
+    }
+    expect(i.geojson).to eq %Q|{"type":"Feature","geometry":{"type":"Point","coordinates":[-84.2963123, 33.7748275]},"properties":{"placename":"Georgia, DeKalb County, Decatur"}}|
+
+  end
+
+
+
   it 'has an array of collection titles including the titles of other_collections, if set' do
     c1 = Fabricate(:collection)
     c2 = Fabricate(:collection)
