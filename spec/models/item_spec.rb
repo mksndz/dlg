@@ -71,26 +71,39 @@ RSpec.describe Item, type: :model do
     i = Fabricate(:item) {
       dcterms_spatial { ['United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123'] }
     }
-    expect(i.coordinates(true)).to eq '-84.2963123 33.7748275'
+    expect(i.coordinates(true)).to eq '-84.2963123, 33.7748275'
   end
 
-  it 'returns string placename if one is found present in the dcterms_spatial field' do
+  it 'returns string placename with coordinates stripped if one is found present in the dcterms_spatial field' do
     i = Fabricate(:item) {
       dcterms_spatial { ['United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123'] }
     }
     expect(i.placename).to eq 'United States, Georgia, DeKalb County, Decatur'
   end
 
-
   it 'returns parseable JSON string geojson if coordinates are found present in the dcterms_spatial field' do
     i = Fabricate(:item) {
       dcterms_spatial { ['United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123'] }
     }
-    expect(i.geojson).to eq %Q|{"type":"Feature","geometry":{"type":"Point","coordinates":[-84.2963123, 33.7748275]},"properties":{"placename":"Georgia, DeKalb County, Decatur"}}|
+    expect(i.geojson).to eq '{"type":"Feature","geometry":{"type":"Point","coordinates":[-84.2963123, 33.7748275]},"properties":{"placename":"United States, Georgia, DeKalb County, Decatur"}}'
     expect(JSON.parse(i.geojson)).to be_a Hash
   end
 
+  it 'returns parseable JSON string geojson if no coordinates are found present in the dcterms_spatial field with default data' do
+    i = Fabricate(:item) {
+      dcterms_spatial { ['United States, Georgia, Tree That Owns Itself'] }
+    }
+    expect(i.geojson).to eq '{"type":"Feature","geometry":{"type":"Point","coordinates":[-80.394617, 31.066399]},"properties":{"placename":"United States, Georgia, Tree That Owns Itself"}}'
+    expect(JSON.parse(i.geojson)).to be_a Hash
+  end
 
+  it 'returns parseable JSON string geojson with default data if no dcterms_spatial field is present' do
+    i = Fabricate(:item) {
+      dcterms_spatial { ['United States, Georgia, Tree That Owns Itself'] }
+    }
+    expect(i.geojson).to eq '{"type":"Feature","geometry":{"type":"Point","coordinates":[-80.394617, 31.066399]},"properties":{"placename":"United States, Georgia, Tree That Owns Itself"}}'
+    expect(JSON.parse(i.geojson)).to be_a Hash
+  end
 
   it 'has an array of collection titles including the titles of other_collections, if set' do
     c1 = Fabricate(:collection)
