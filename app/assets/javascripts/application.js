@@ -22,7 +22,7 @@
 //= require bootstrap/tooltip
 //= require bootstrap/popover
 //= require multi-select
-//= require_tree
+//= require_tree .
 
 $(document).ready(function() {
     $('select.fancy-multiselect').multiSelect({

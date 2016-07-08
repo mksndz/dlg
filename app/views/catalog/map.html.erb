@@ -1,0 +1,9 @@
+<%= content_for :title do %>
+    <%= t('blacklight.maps.title') %>
+<% end %>
+
+<%= t('blacklight.maps.leader') %>
+<%= render 'search_results' %>
+
+<%# have to put this at the end so it overrides 'catalog/search_results' %>
+<% @page_title = t('blacklight.maps.title', :application_name => application_name) %>
