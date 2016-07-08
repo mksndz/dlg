@@ -261,8 +261,8 @@ class CatalogController < ApplicationController
     config.view.maps.coordinates_field = "coordinates"
     config.view.maps.search_mode = "placename"
     config.view.maps.facet_mode = "geojson"
-    config.view.maps.maxzoom = 18
-    config.view.maps.show_initial_zoom = 5
+    config.view.maps.maxzoom = 12
+    config.view.maps.show_initial_zoom = 9
     config.show.partials << :show_maplet
   end
 
