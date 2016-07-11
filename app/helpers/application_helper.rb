@@ -45,9 +45,11 @@ module ApplicationHelper
 
   def valid_url?(url)
     begin
-      open url
+      open url do |r|
+        return false if r.status.include? '404'
+      end
     rescue OpenURI::HTTPError
-      false
+      return false
     end
     true
   end

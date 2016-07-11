@@ -1,4 +1,5 @@
 module ItemTypeValidatable
+  include ApplicationHelper
   extend ActiveSupport::Concern
 
   TYPE_REQUIRED_VALUES = %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text)
@@ -11,7 +12,8 @@ module ItemTypeValidatable
     validates_presence_of :dcterms_temporal, :dcterms_spatial
     validate :dcterms_temporal_characters
     validate :dcterms_type_required_value
-    validate :has_rights_information
+    validate :url_in_dc_identifier
+    validate :url_in_dcterms_is_shown_at
 
   end
 
@@ -40,9 +42,27 @@ module ItemTypeValidatable
     end
   end
 
-  def has_rights_information
-    if dc_right.empty? and dcterms_rights_holder.empty?
-      errors.add(:entity, I18n.t('activerecord.errors.messages.no_rights_information'))
+  # def has_rights_information
+  #   if dc_right.empty? and dcterms_rights_holder.empty?
+  #     errors.add(:entity, I18n.t('activerecord.errors.messages.no_rights_information'))
+  #   end
+  # end
+
+  def url_in_dc_identifier
+    dc_identifier.each do |v|
+      unless valid_url? v
+        errors.add(:dc_identifier, I18n.t('activerecord.errors.messages.invalid_url_provided'))
+        return
+      end
+    end
+  end
+
+  def url_in_dcterms_is_shown_at
+    dcterms_is_shown_at.each do |v|
+      unless valid_url? v
+        errors.add(:dcterms_is_shown_at, I18n.t('activerecord.errors.messages.invalid_url_provided'))
+        return
+      end
     end
   end
 

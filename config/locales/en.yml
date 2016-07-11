@@ -282,6 +282,7 @@ en:
         temporal_invalid_character: "contains an invalid character. Only 0-9, '/' and '-' allowed."
         type_required_value: 'does not contain any required values.'
         no_rights_information: 'has no rights information set.'
+        invalid_url_provided: 'contains an unresolvable URL. '
         blank: "cannot be blank"
         taken: "must be unique"
       models:

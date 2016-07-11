@@ -199,10 +199,34 @@ RSpec.describe Item, type: :model do
     expect(i.errors).to have_key :dcterms_temporal
   end
 
-  it 'should require rights information of some sort be set' do
-    i = Fabricate.build(:item, dc_right: [])
+  # it 'should require rights information of some sort be set' do
+  #   i = Fabricate.build(:item, dc_right: [])
+  #   i.valid?
+  #   expect(i.errors).to have_key :entity
+  # end
+
+  it 'should have a valid (resolvable) URL in dc_identifier' do
+    i = Fabricate.build(:item, dc_identifier: ['http://dlg.galileo.usg.edu/items/do:4321'])
     i.valid?
-    expect(i.errors).to have_key :entity
+    expect(i.errors).to have_key :dc_identifier
+  end
+
+  it 'should validate if the item has a valid (resolvable) URL in dc_identifier' do
+    i = Fabricate.build(:item, dc_identifier: ['http://dlg.galileo.usg.edu'])
+    i.valid?
+    expect(i.errors).not_to have_key :dc_identifier
+  end
+
+  it 'should have a valid (resolvable) URL in dcterms_is_shown_at' do
+    i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu/items/do:4321'])
+    i.valid?
+    expect(i.errors).to have_key :dcterms_is_shown_at
+  end
+
+  it 'should validate if the item has a valid (resolvable) URL in dcterms_is_shown_at' do
+    i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu'])
+    i.valid?
+    expect(i.errors).not_to have_key :dcterms_is_shown_at
   end
 
 end
