@@ -79,10 +79,4 @@ RSpec.describe BatchItem, type: :model do
     expect(i.errors).to have_key :dcterms_temporal
   end
 
-  it 'should require rights information of some sort be set' do
-    i = Fabricate.build(:item, dc_right: [])
-    i.valid?
-    expect(i.errors).to have_key :entity
-  end
-
 end
