@@ -1,4 +1,5 @@
 class Item < ActiveRecord::Base
+  include ApplicationHelper
   include Slugged
   include MetadataHelper
   include IndexFilterable
@@ -12,6 +13,8 @@ class Item < ActiveRecord::Base
   validates_presence_of :collection
 
   has_paper_trail class_name: "ItemVersion"
+
+  after_save :check_for_thumbnail
 
   searchable do
 
@@ -244,7 +247,11 @@ class Item < ActiveRecord::Base
 
   def other_repository_titles
     Collection.find(other_collections).map(&:repository_title)
+  end
 
+  def check_for_thumbnail
+    update_column(:has_thumbnail, valid_url?(thumbnail_url) )
+    true
   end
 
   # def date_facet

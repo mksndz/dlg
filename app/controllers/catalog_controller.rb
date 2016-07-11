@@ -269,7 +269,7 @@ class CatalogController < ApplicationController
     config.view.gallery.partials = [:index_header, :index]
     config.view.masonry.partials = [:index]
     config.view.slideshow.partials = [:index]
-    config.view.tile_source_field = :thumbnail_url
+    # config.view.tile_source_field = :thumbnail_url
 
     config.show.tile_source_field = :thumbnail_url
     config.show.partials.insert(1, :openseadragon)
