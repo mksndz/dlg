@@ -43,4 +43,13 @@ module ApplicationHelper
     params[:per_page].to_i == pp ? 'btn-primary' : 'btn-default'
   end
 
+  def valid_url?(item)
+    begin
+      open item.thumbnail_url
+    rescue OpenURI::HTTPError
+      false
+    end
+    true
+  end
+
 end
