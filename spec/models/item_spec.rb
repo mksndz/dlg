@@ -12,7 +12,6 @@ RSpec.describe Item, type: :model do
     expect(Item.count).to eq 1
   end
 
-  # duh
   it 'belongs to a Repository' do
     i = Fabricate(:item) {
       repository
@@ -20,7 +19,6 @@ RSpec.describe Item, type: :model do
     expect(i.repository).to be_kind_of Repository
   end
 
-  # duh
   it 'belongs to a Collection' do
     i = Fabricate(:item) {
       collection
@@ -162,6 +160,11 @@ RSpec.describe Item, type: :model do
   it 'caches validation status as a boolean' do
     i1 = Fabricate :item
     expect(i1.valid_item).to be true
+  end
+
+  it 'has a boolean method has_thumbnail' do
+    i = Fabricate :item
+    expect(i.has_thumbnail?).to be false
   end
 
   # validations

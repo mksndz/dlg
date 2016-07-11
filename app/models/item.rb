@@ -134,6 +134,10 @@ class Item < ActiveRecord::Base
     %w(collection_id public valid_item).freeze
   end
 
+  def has_thumbnail?
+    has_thumbnail
+  end
+
   def geojson
     %|{"type":"Feature","geometry":{"type":"Point","coordinates":[#{coordinates(true)}]},"properties":{"placename":"#{placename}"}}|
   end
