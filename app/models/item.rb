@@ -50,7 +50,13 @@ class Item < ActiveRecord::Base
       repository_titles
     end
 
-    string :thumbnail_url, as: 'thumbnail_url'
+    string :thumbnail_url, as: 'thumbnail_url' do
+      if has_thumbnail?
+        thumbnail_url
+      else
+        'no-thumb.png'
+      end
+    end
 
     # *_display (not indexed, stored, multivalued)
     string :dlg_local_right,        as: 'dlg_local_right_display',        multiple: true
