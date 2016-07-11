@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711120543) do
+ActiveRecord::Schema.define(version: 20160711172925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160711120543) do
     t.integer  "other_collections",     default: [],                 array: true
     t.text     "dlg_local_right",       default: [],    null: false, array: true
     t.boolean  "valid_item",            default: false, null: false
+    t.boolean  "has_thumbnail",         default: false, null: false
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
