@@ -14,7 +14,7 @@ class Item < ActiveRecord::Base
 
   has_paper_trail class_name: "ItemVersion"
 
-  after_save :check_for_thumbnail
+  # after_save :check_for_thumbnail
 
   searchable do
 
@@ -51,11 +51,12 @@ class Item < ActiveRecord::Base
     end
 
     string :thumbnail_url, as: 'thumbnail_url' do
-      if has_thumbnail?
-        thumbnail_url
-      else
-        'no-thumb.png'
-      end
+      # if has_thumbnail?
+      #   thumbnail_url
+      # else
+      #   'no-thumb.png'
+      # end
+      thumbnail_url
     end
 
     # *_display (not indexed, stored, multivalued)
