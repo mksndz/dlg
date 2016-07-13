@@ -30,7 +30,7 @@ task :import_items, [:collection_slug] => [:environment] do |t, args|
       collections = [collection]
       @logger.info "Designated Collection to load: #{collections.first.slug}"
     else
-      exit_with_error('Error loading the Collection you specified')
+      exit_with_error('Error loading the Collection you specified: ' + args[:collection_slug])
     end
   else
     collections = Collection.all
@@ -99,11 +99,14 @@ task :import_items, [:collection_slug] => [:environment] do |t, args|
       # @logger.info other_collections.inspect
       # @logger.info i.other_collections.inspect
 
-      i.save(validate: false)
+      begin
+        i.save(validate: false)
+        i.valid_item = i.valid?
+        items_created += 1
+      rescue => e
+        @logger.error "Item #{i.record_id} could not be saved: #{e.message}"
+      end
 
-      i.valid_item = i.valid?
-
-      items_created += 1
 
     end
 
