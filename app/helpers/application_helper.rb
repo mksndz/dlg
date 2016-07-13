@@ -50,6 +50,14 @@ module ApplicationHelper
       end
     rescue OpenURI::HTTPError
       return false
+    rescue RuntimeError
+      begin
+        open url.gsub('http','https') do |r|
+          return false if r.status.include? '404'
+        end
+      rescue OpenURI::HTTPError
+        return false
+      end
     end
     true
   end
