@@ -1,8 +1,9 @@
 require 'rake'
 require 'open-uri'
 require 'nokogiri'
-
 task :import_items, [:collection_slug] => [:environment] do |t, args|
+
+  importer = LegacyImporter.new
 
   @logger = Logger.new('./log/item_import.log')
 
@@ -57,68 +58,13 @@ task :import_items, [:collection_slug] => [:environment] do |t, args|
 
   collections.each do |collection|
 
-    items_created = 0
-
-    collection_start_time = Time.now
-
     xml_url = "#{meta_xml_root_url}#{collection.repository.slug}_#{collection.slug}.xml"
-    @logger.info "Importing Items from XML: #{xml_url}"
 
-    @data = Nokogiri::HTML(open(xml_url))
+    # queue Collection for Adding and Indexing
+    LegacyImporter.delay.collection(collection, xml_url)
 
-    unless @data.is_a? Nokogiri::HTML::Document
-      exit_with_error "Could'nt get valid XML from #{data_source}"
-    end
+    @logger.info "Collection #{collection.display_title} quered for loading."
 
-    items = @data.css('item')
-
-    items.each do |item|
-
-      hash = Hash.from_xml(item.to_s)
-
-      item_hash = hash['item']
-
-      item_hash.delete('collection')
-      item_hash.delete('dc_identifier_label')
-      other_collections = item_hash.delete('other_collection')
-
-      i = Item.new(item_hash)
-      i.collection = collection
-
-      if other_collections
-        other_collections.each do |oc|
-          other_collection = Collection.find_by_slug(oc)
-          if other_collection
-            i.other_collections << other_collection.id
-          else
-            @logger.error "No Collection with slug #{oc} found to add to other_collection array."
-          end
-        end
-      end
-
-      # @logger.info other_collections.inspect
-      # @logger.info i.other_collections.inspect
-
-      begin
-        i.save(validate: false)
-        i.valid_item = i.valid?
-        items_created += 1
-      rescue => e
-        @logger.error "Item #{i.record_id} could not be saved: #{e.message}"
-      end
-
-
-    end
-
-    Sunspot.commit_if_dirty
-
-    @logger.info "Collection #{collection.title} Items Created: #{items_created}"
-    @logger.info "Collection #{collection.title} Items In XML: #{items.length}"
-    @logger.info "Solr now has #{get_solr_hits_for_collection collection} records for this collection"
-
-    collection_finish_time = Time.now
-
-    @logger.info "Importing #{xml_url} took #{collection_finish_time - collection_start_time} seconds!"
   end
 
   finish_time = Time.now
