@@ -1,3 +1,5 @@
+# require 'open-uri'
+
 class LegacyImporter
 
   @logger = Logger.new('./log/item_import.log')
@@ -23,7 +25,9 @@ class LegacyImporter
 
     @logger.info "Importing Items from XML: #{xml_url}"
 
-    @data = Nokogiri::HTML(open(xml_url))
+    xml_file = open(xml_url)
+
+    @data = Nokogiri::HTML(xml_file)
 
     unless @data.is_a? Nokogiri::HTML::Document
       @logger.error "Could'nt get valid XML from #{data_source}"
@@ -36,7 +40,11 @@ class LegacyImporter
 
     @logger.info "XML for #{collection.display_title} has #{items.length} to add"
 
+    item_counter = 0
+
     items.each do |item|
+
+      item_counter += 1
 
       hash = Hash.from_xml(item.to_s)
 
@@ -62,8 +70,15 @@ class LegacyImporter
 
       begin
         i.save(validate: false)
+        @logger.info "#{collection.display_title}: #{items_counter} of #{items_to_add}" if items_created % 50 == 0
       rescue => e
         @logger.error "Item #{i.record_id} could not be saved: #{e.message}"
+      end
+
+      # run GC fdor every 10000 records? maybe this will help :/
+      if item_counter % 10000 == 0
+        @logger.info 'Cleaning up...'
+        GC.start
       end
 
     end
@@ -72,6 +87,10 @@ class LegacyImporter
 
     @logger.info "Collection #{collection.title} Items Created: #{items_created}"
     @logger.info "Collection #{collection.title} Items In XML: #{items.length}"
+
+    # clean up file XML file from memory
+    xml_file.close
+    xml_file.unlink
 
     collection_finish_time = Time.now
 
