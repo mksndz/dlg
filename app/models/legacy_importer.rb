@@ -70,7 +70,7 @@ class LegacyImporter
 
       begin
         i.save(validate: false)
-        @logger.info "#{collection.display_title}: #{item_counter} of #{items_to_add}" if items_created % 50 == 0
+        @logger.info "#{collection.display_title}: #{item_counter} of #{items_to_add}" if item_counter % 50 == 0
       rescue => e
         @logger.error "Item #{i.record_id} could not be saved: #{e.message}"
       end
