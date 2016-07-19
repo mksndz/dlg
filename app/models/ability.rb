@@ -10,6 +10,8 @@ class Ability
     can :manage, :catalog
     can :manage, :bookmarks
 
+    can :manage, :profile, user: user
+
     if roles.include? 'super'
 
       can :manage, :all

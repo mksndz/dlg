@@ -1,0 +1,10 @@
+<%= bootstrap_form_tag url: update_profile_path, method: :patch do |f| %>
+
+  <%= f.alert_message I18n.t('meta.defaults.messages.errors.invalid_on_save', entity: 'profile') %>
+
+  <%= f.password_field :password, label: t('activerecord.attributes.user.password') %>
+  <%= f.password_field :password_confirmation, label: t('activerecord.attributes.user.password_confirmation') %>
+
+  <%= f.primary t('meta.defaults.actions.save') %>
+
+<% end %>

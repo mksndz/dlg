@@ -19,6 +19,9 @@ en:
         users: 'Users'
         subjects: 'Subjects'
         time_periods: 'Time Periods'
+      user_menu:
+        profile: 'User Info'
+        change_password: 'Change Password'
       result_actions:
         edit: 'Edit'
         meta_view: 'Meta View'
@@ -203,5 +206,9 @@ en:
           email: 'Email Address/Username'
           invited_on: 'Invited'
           invited_by: 'Invited By'
+    profile:
+      messages:
+        success:
+          password_changed: 'Your password has been updated'
 
 

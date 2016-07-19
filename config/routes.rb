@@ -8,6 +8,13 @@ Rails.application.routes.draw do
     get 'auth/invitations', to: 'invitations#index'
   end
 
+  resource :profile, only: [:show, :edit], controller: 'profile' do
+    collection do
+      patch 'update', as: 'update'
+    end
+  end
+
+
   resources :repositories, :collections, :users, :roles, :subjects, :time_periods
 
   resources :item_versions, only: [] do

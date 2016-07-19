@@ -1,0 +1,13 @@
+<%= content_for :title do %>
+  Change Password
+<% end %>
+
+<% breadcrumb :change_password %>
+
+<% if @user.errors[:password].any? %>
+  <div class="alert alert-danger">
+    Your new password <%= @user.errors.messages[:password].join(' and ') %>
+  </div>
+<% end %>
+
+<%= render 'form' %>

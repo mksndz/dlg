@@ -1,0 +1,44 @@
+<%= content_for :title do %>
+  Profile
+<% end %>
+
+<%= content_for :subtitle do %>
+  for <%= @user.email %>
+<% end %>
+
+<% breadcrumb :profile %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong><%= t('meta.user.labels.view.assigned_repositories') %></strong>
+  </div>
+  <div class="panel-body">
+    <% if @user.super? %>
+        All
+    <% else %>
+      <ul>
+        <% @user.repositories.each do |r| %>
+            <li><%= r.title %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong><%= t('meta.user.labels.view.assigned_collections') %></strong>
+  </div>
+  <div class="panel-body">
+    <% if @user.super? %>
+        All
+    <% else %>
+        <ul>
+          <% @user.collections.each do |c| %>
+              <li><%= c.display_title %></li>
+          <% end %>
+        </ul>
+    <% end %>
+
+  </div>
+</div>

@@ -6,6 +6,16 @@ crumb :advanced_search do
   link 'Advanced Search'
 end
 
+# PROFILE
+
+crumb :profile do
+  link 'Profile'
+end
+
+crumb :change_password do
+  link 'Change Password'
+end
+
 # REPOSITORY
 
 crumb :repositories do
