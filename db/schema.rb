@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711172925) do
+ActiveRecord::Schema.define(version: 20160720135522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -318,6 +318,10 @@ ActiveRecord::Schema.define(version: 20160711172925) do
     t.integer  "failed_attempts",        default: 0,     null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.boolean  "is_super",               default: false, null: false
+    t.boolean  "is_coordinator",         default: false, null: false
+    t.boolean  "is_committer",           default: false, null: false
+    t.boolean  "is_uploader",            default: false, null: false
   end
 
   add_index "users", ["creator_id"], name: "index_users_on_creator_id", using: :btree

@@ -5,7 +5,7 @@ class Ability
 
     user ||= User.new
 
-    roles = user.roles.pluck(:name)
+    roles = user.new_roles
 
     can :manage, :catalog
     can :manage, :bookmarks
