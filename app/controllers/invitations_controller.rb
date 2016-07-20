@@ -39,7 +39,6 @@ class InvitationsController < Devise::InvitationsController
   # todo this is identical to that in UserController
   def set_data
     @data ||= {}
-    @data[:roles] = Role.all
     @data[:repositories]= current_user.super? ? Repository.all : current_user.repositories
     @data[:collections] = current_user.super? ? Collection.all : current_user.collections
   end

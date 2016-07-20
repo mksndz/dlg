@@ -61,7 +61,7 @@ feature 'Users Management' do
       expect(page).to have_no_field(I18n.t('activerecord.attributes.user.password'))
       expect(page).to have_no_field(I18n.t('activerecord.attributes.user.password_confirmation'))
       super_user.roles.each do |r|
-        expect(page).to have_checked_field r.name
+        expect(page).to have_checked_field r.humanize
       end
       expect(find_field(I18n.t('activerecord.attributes.user.email')).value).to eq super_user.email
       expect(find_field(I18n.t('activerecord.attributes.user.repository_ids')).value).to eq super_user.repository_ids

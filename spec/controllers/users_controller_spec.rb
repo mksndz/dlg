@@ -158,7 +158,7 @@ RSpec.describe UsersController, type: :controller do
       it 'shows an error message if a role is specified' do
 
         attributes = valid_attributes
-        attributes[:is_super] = 1
+        attributes[:is_super] = '1'
         request.env['HTTP_REFERER'] = new_user_url
         post :create, { user: attributes }
 
