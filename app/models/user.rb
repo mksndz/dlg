@@ -60,8 +60,6 @@ class User < ActiveRecord::Base
   def basic?
     # user is 'basic' if they are not a coordinator or super user
     puts 'BASIC USER MODEL CALL!!'
-    is = is_super
-    ic = is_coordinator
     is_super || is_coordinator ? false : true
   end
 
