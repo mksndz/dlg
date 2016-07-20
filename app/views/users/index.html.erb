@@ -43,9 +43,7 @@
             <%= user.email %>
           </td>
           <td>
-            <% user.roles.each do |role| %>
-                <%= role.name %><br />
-            <% end %>
+            <%= user.new_roles.join('<br>') %>
           </td>
           <td>
             <%= render partial: 'shared/entity_actions', locals: { base_path: user_path(user), edit_path:  edit_user_path(user), entity: user, show_bl: false } %>
