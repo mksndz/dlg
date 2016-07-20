@@ -8,9 +8,16 @@
 
 <% breadcrumb :profile %>
 
+<% if @user.basic? and @user.creator %>
+  <%= render 'shared/show_field',
+             field_name: t('meta.profile.labels.coordinator'),
+             value: @user.creator.email
+  %>
+<% end %>
+
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong><%= t('meta.user.labels.view.assigned_repositories') %></strong>
+    <strong><%= t('meta.profile.labels.repositories') %></strong>
   </div>
   <div class="panel-body">
     <% if @user.super? %>
@@ -27,7 +34,7 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong><%= t('meta.user.labels.view.assigned_collections') %></strong>
+    <strong><%= t('meta.profile.labels.collections') %></strong>
   </div>
   <div class="panel-body">
     <% if @user.super? %>

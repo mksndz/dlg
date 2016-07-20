@@ -42,4 +42,22 @@ feature 'Item Management' do
 
   end
 
+  context 'Basic User' do
+
+    before :each do
+      login_as basic_user, scope: :user
+    end
+
+    scenario 'Basic User sees a panel showing their assigned coordinator user, if applicable' do
+
+      basic_user.creator = coordinator_user
+
+      visit profile_path
+
+      expect(page).to have_text coordinator_user.email
+
+    end
+
+  end
+
 end

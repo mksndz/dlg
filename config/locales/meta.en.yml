@@ -207,6 +207,10 @@ en:
           invited_on: 'Invited'
           invited_by: 'Invited By'
     profile:
+      labels:
+        coordinator: 'My Coordinator'
+        repositories: 'My Repositories'
+        collections: 'My Collections'
       messages:
         success:
           password_changed: 'Your password has been updated'
