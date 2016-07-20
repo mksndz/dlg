@@ -36,7 +36,10 @@ feature 'Users Management' do
 
       click_link I18n.t('meta.user.actions.add')
 
-      expect(page).to have_field(super_user.roles.first.name)
+      expect(page).to have_field(I18n.t('activerecord.attributes.user.is_super'))
+      expect(page).to have_field(I18n.t('activerecord.attributes.user.is_coordinator'))
+      expect(page).to have_field(I18n.t('activerecord.attributes.user.is_uploader'))
+      expect(page).to have_field(I18n.t('activerecord.attributes.user.is_committer'))
       expect(page).to have_field(I18n.t('activerecord.attributes.user.password'))
       expect(page).to have_field(I18n.t('activerecord.attributes.user.password_confirmation'))
 
@@ -120,13 +123,13 @@ feature 'Users Management' do
 
       click_link I18n.t('meta.user.actions.add')
 
-      expect(page).not_to have_field(coordinator_user.roles.first.name)
+      expect(page).not_to have_field(I18n.t('activerecord.attributes.user.is_super'))
       expect(page).to have_field(I18n.t('activerecord.attributes.user.password'))
       expect(page).to have_field(I18n.t('activerecord.attributes.user.password_confirmation'))
 
     end
 
-    scenario 'Coordinator User creates a user that has the basic role and no others' do
+    scenario 'Coordinator User creates a user that has no roles' do
 
       visit new_user_path
 
@@ -141,7 +144,10 @@ feature 'Users Management' do
       user = User.last
 
       expect(page).to have_current_path user_path(user)
-      expect(user.roles.size).to be 1
+      expect(user.super?).to be false
+      expect(user.coordinator?).to be false
+      expect(user.uploader?).to be false
+      expect(user.committer?).to be false
       expect(user.basic?).to be true
 
     end

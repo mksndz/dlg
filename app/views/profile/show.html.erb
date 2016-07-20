@@ -8,7 +8,7 @@
 
 <% breadcrumb :profile %>
 
-<% if @user.basic? and @user.creator %>
+<% if @user.basic? %>
   <%= render 'shared/show_field',
              field_name: t('meta.profile.labels.coordinator'),
              value: @user.creator.email

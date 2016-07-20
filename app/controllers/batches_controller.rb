@@ -29,7 +29,7 @@ class BatchesController < ApplicationController
     unless current_user.super?
       if current_user.coordinator?
         bq = bq.where(user: users_managed_by_and(current_user))
-      elsif current_user.basic?
+      else
         bq = bq.where(user: current_user)
       end
     end
