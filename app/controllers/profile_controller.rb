@@ -12,7 +12,7 @@ class ProfileController < ApplicationController
 
   def update
     if @user.update user_params
-      sign_in @user, bypass: true
+      bypass_sign_in @user, bypass: true
       redirect_to root_path, notice: I18n.t('meta.profile.messages.success.password_changed')
     else
       render :edit
