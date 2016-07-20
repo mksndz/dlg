@@ -7,52 +7,11 @@ class Ability
 
     roles = user.new_roles
 
-    can :manage, :catalog
-    can :manage, :bookmarks
-
-    can :manage, :profile
-
     if roles.include? 'super'
 
       can :manage, :all
 
     else
-
-      if roles.include? 'basic'
-
-        can [:index, :show, :new, :create, :edit, :update], Repository do |repository|
-          user.repositories.include?(repository)
-        end
-
-        can [:index, :show, :new, :create, :edit, :update], Collection do |collection|
-          user.repositories.include?(collection.repository) ||
-              user.collections.include?(collection)
-        end
-
-        can [:index, :show, :new, :create, :edit, :update, :copy, :destroy], Item do |item|
-          user.repositories.include?(item.repository) ||
-              user.collections.include?(item.collection)
-        end
-
-        can [:show, :edit, :update, :destroy, :recreate], Batch, user_id: user.id
-        can [:index, :new, :create], Batch
-
-
-        can [:index, :new, :create], BatchItem
-
-        can [:show, :edit, :update], BatchItem do |batch_item|
-          if batch_item.persisted?
-            user.repositories.include?(batch_item.collection.repository) ||
-                user.collections.include?(batch_item.collection)
-          else
-            false
-          end
-
-        end
-
-        can [:show, :edit, :create, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
-
-      end
 
       if roles.include? 'coordinator'
 
@@ -88,6 +47,42 @@ class Ability
       end
 
     end
+
+    can [:index, :show, :new, :create, :edit, :update], Repository do |repository|
+      user.repositories.include?(repository)
+    end
+
+    can [:index, :show, :new, :create, :edit, :update], Collection do |collection|
+      user.repositories.include?(collection.repository) ||
+          user.collections.include?(collection)
+    end
+
+    can [:index, :show, :new, :create, :edit, :update, :copy, :destroy], Item do |item|
+      user.repositories.include?(item.repository) ||
+          user.collections.include?(item.collection)
+    end
+
+    can [:show, :edit, :update, :destroy, :recreate], Batch, user_id: user.id
+    can [:index, :new, :create], Batch
+
+
+    can [:index, :new, :create], BatchItem
+
+    can [:show, :edit, :update], BatchItem do |batch_item|
+      if batch_item.persisted?
+        user.repositories.include?(batch_item.collection.repository) ||
+            user.collections.include?(batch_item.collection)
+      else
+        false
+      end
+
+    end
+
+    can [:show, :edit, :create, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
+
+    can :manage, :catalog
+    can :manage, :bookmarks
+    can :manage, :profile
 
   end
 
