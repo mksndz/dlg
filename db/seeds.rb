@@ -6,7 +6,6 @@
     BatchItem,
     Item,
     User,
-    Role,
     Batch,
     Collection,
     Repository
@@ -18,7 +17,6 @@ end
 %w(
     collections_users
     repositories_users
-    roles_users
     collections_subjects
     searches
     delayed_jobs
@@ -62,34 +60,18 @@ TimePeriod.create!([
              ])
 
 #
-# Default Roles for app
-#
-Role.create!([
-                 { name: 'super' },
-                 { name: 'coordinator' },
-                 { name: 'committer' },
-                 { name: 'uploader' },
-                 { name: 'basic' }
-             ])
-
-#
 # Initial Super User
 #
-user = User.create!(
-                email: 'mak@uga.edu',
-                password: 'password'
+User.create!(
+                email: 'super@uga.edu',
+                password: 'password',
+                is_super: true
              )
-
-user.roles << Role.find_by_name('super')
-user.save
 
 #
 # Initial Basic User
 #
-user = User.create!(
+User.create!(
                 email: 'basic@uga.edu',
                 password: 'password'
              )
-
-user.roles << Role.find_by_name('basic')
-user.save
