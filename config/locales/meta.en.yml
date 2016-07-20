@@ -108,6 +108,9 @@ en:
         add: 'New User'
         invites: 'Invitations'
       labels:
+        form:
+          roles: 'Roles'
+          roles_help: 'Enable special functionality within the site. Choose carefully!'
         columns:
           email: 'Email'
           roles: 'Roles'
