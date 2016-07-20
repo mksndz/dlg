@@ -270,7 +270,7 @@ class CatalogController < ApplicationController
     config.view.masonry.partials = [:index]
     config.view.slideshow.partials = [:index]
     config.show.tile_source_field = :thumbnail_url
-    config.show.partials.insert(1, :openseadragon)
+    # config.show.partials.insert(1, :openseadragon) # todo fix this
 
     # remove standard blacklight navbar links (they are in user tools menu now)
     config.navbar.partials.delete(:bookmark)
