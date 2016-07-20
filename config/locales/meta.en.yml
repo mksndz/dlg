@@ -9,8 +9,11 @@ en:
         delete: 'Delete'
         xml: 'Add to XML'
         batch: 'Add to Batch'
+      search_menu:
+        basic: 'Basic Search'
+        advanced: 'Advanced Search'
+        map: 'Map Search'
       admin_menu:
-        search: 'Search'
         repositories: 'Repositories'
         collections: 'Collections'
         items: 'Items'
@@ -22,6 +25,9 @@ en:
       user_menu:
         profile: 'User Info'
         change_password: 'Change Password'
+        bookmarks: 'Bookmarks'
+        saved_searches: 'Saved Searches'
+        search_history: 'Search History'
       result_actions:
         edit: 'Edit'
         meta_view: 'Meta View'

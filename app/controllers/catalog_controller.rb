@@ -272,9 +272,14 @@ class CatalogController < ApplicationController
     config.show.tile_source_field = :thumbnail_url
     config.show.partials.insert(1, :openseadragon)
 
+    # remove standard blacklight navbar links (they are in user tools menu now)
+    config.navbar.partials.delete(:bookmark)
+    config.navbar.partials.delete(:saved_searches)
+    config.navbar.partials.delete(:search_history)
   end
 
-  # add Admin menu to navbar
+  # add Admin and Search menu to navbar
+  add_nav_action :search
   add_nav_action :admin
 
   # add Edit button on search results
