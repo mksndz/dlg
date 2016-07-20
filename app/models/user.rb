@@ -4,7 +4,6 @@ class User < ActiveRecord::Base
   include Blacklight::User
 
   has_many :batches
-  has_and_belongs_to_many :roles, class_name: 'Role'
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
   belongs_to :invited_by, class_name: 'User'
   has_many :users, foreign_key: 'creator_id'
@@ -15,8 +14,6 @@ class User < ActiveRecord::Base
   scope :admin_created,               -> { where('invitation_sent_at IS NOT NULL') }
   scope :invited,                     -> { where('invitation_accepted_at IS NOT NULL') }
   scope :active,                      -> { where('(invitation_sent_at IS NOT NULL and invitation_accepted_at IS NOT NULL) OR invitation_sent_at IS NULL') }
-
-  # after_initialize :set_default_role
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -35,7 +32,7 @@ class User < ActiveRecord::Base
   end
 
   # return array of role names
-  def new_roles
+  def roles
     roles = []
     roles << 'super' if is_super
     roles << 'coordinator' if is_coordinator
@@ -46,28 +43,23 @@ class User < ActiveRecord::Base
 
   def super?
     is_super
-    # roles.where(name: 'super').exists?
   end
 
   def coordinator?
     is_coordinator
-    # roles.where(name: 'coordinator').exists?
   end
 
   def committer?
     is_committer
-    # roles.where(name: 'committer').exists?
   end
 
   def uploader?
     is_uploader
-    # roles.where(name: 'uploader').exists?
   end
 
   def basic?
     # user is 'basic' if they are not a coordinator or super user
     puts 'BASIC USER MODEL CALL!!'
-    # roles.where(name: 'basic').exists?
     is = is_super
     ic = is_coordinator
     is_super || is_coordinator ? false : true
@@ -75,12 +67,6 @@ class User < ActiveRecord::Base
 
   def manages?(user)
     users.include? user
-  end
-
-  private
-
-  def set_default_role
-    self.roles << Role.where(name: 'basic') unless self.basic?
   end
 
 end

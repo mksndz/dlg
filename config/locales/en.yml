@@ -16,7 +16,6 @@ en:
         email: "Email Address"
         password: "Password"
         password_confirmation: "Confirm Password"
-        role_ids: "Roles"
         is_super: "Super"
         is_coordinator: "Coordinator"
         is_uploader: "Uploader"
@@ -25,8 +24,6 @@ en:
         repository_ids: "Assigned Repositories"
         collection_ids: "Assigned Collections"
         invited_by: "Invited By"
-      role:
-        name: "Name"
       batch:
         name: "Name"
         notes: "Descriptive Notes"
@@ -161,12 +158,9 @@ en:
       user:
         email: "This will also be the username"
         password: "Make it a good one"
-        role_ids: "This will control the user's ability to alter things. All created users have a 'basic' role by default."
         creator_id: "Selecting a coordinator user here will allow that user to manage this User"
         repository_ids: 'Items, Collections and metadata for the selected Repositories will be able to be altered by this user'
         collection_ids: 'Items and metadata for the selected Collections will be able to be altered by this user'
-      role:
-        name: "A descriptive name for your Role"
       batch:
         name: "Your Batch needs a unique name"
         notes: "Please describe the updates being made by this Batch operation"

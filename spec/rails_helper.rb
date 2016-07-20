@@ -67,7 +67,6 @@ RSpec.configure do |config|
     Item.destroy_all
     Collection.destroy_all
     Repository.destroy_all
-    Role.destroy_all
     User.destroy_all
   }
 

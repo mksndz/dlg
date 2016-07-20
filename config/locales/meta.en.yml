@@ -175,9 +175,6 @@ en:
           finish: 'End Year'
         view:
           collections_for: 'Collections for this Time Period'
-    role:
-      action:
-        add: 'Create Role'
     batch_item:
       action:
         add: 'Create Batch Item'

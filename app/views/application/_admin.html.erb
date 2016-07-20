@@ -5,7 +5,6 @@
   <%= content_tag :li, link_to(t('meta.app.admin_menu.collections'), collections_path) if can? :index, Collection%>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.items'), items_path) if can? :index, Item %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.batches'), batches_path) if can? :index, Batch %>
-  <%= content_tag :li, link_to(t('meta.app.admin_menu.roles'), roles_path) if can? :index, Role %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.users'), users_path) if can? :index, User %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.subjects'), subjects_path) if can? :index, Subject %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.time_periods'), time_periods_path) if can? :index, TimePeriod %>

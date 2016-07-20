@@ -1,9 +1,0 @@
-<%= bootstrap_form_for(@role) do |f| %>
-
-  <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Role') %>
-
-  <%= f.text_field :name %>
-
-  <%= f.primary t('meta.defaults.actions.save') %>
-
-<% end %>

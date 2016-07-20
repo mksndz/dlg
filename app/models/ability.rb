@@ -5,7 +5,7 @@ class Ability
 
     user ||= User.new
 
-    roles = user.new_roles
+    roles = user.roles
 
     if roles.include? 'super'
 

@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   before_action :set_data, only: [:new, :edit]
   before_action :confirm_restrictions, only: [:create, :update]
 
+  # todo put into its own file with other bespoke exceptions
   class UserRestrictionsError < StandardError
   end
 
@@ -69,12 +70,23 @@ class UsersController < ApplicationController
 
   private
 
-  def set_roles
-    @roles = Role.all
+  def tf_checkbox(value)
+    value === '1' ? true : false
+  end
+
+  def params_contain_role_info
+    if (tf_checkbox(user_params[:is_super]) ||
+      tf_checkbox(user_params[:is_coordinator]) ||
+      tf_checkbox(user_params[:is_uploader]) ||
+      tf_checkbox(user_params[:is_committer]))
+      true
+    else
+      false
+    end
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, role_ids: [], repository_ids: [], collection_ids: [])
+    params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, :is_super, :is_coordinator, :is_uploader, :is_committer, repository_ids: [], collection_ids: [])
   end
 
   def set_user_creator
@@ -83,7 +95,6 @@ class UsersController < ApplicationController
 
   def set_data
     @data ||= {}
-    @data[:roles] = Role.all
     if current_user.super?
       @data[:repositories]= Repository.all.order('title')
       @data[:collections] = Collection.all.order('display_title')
@@ -95,19 +106,16 @@ class UsersController < ApplicationController
   end
 
   def confirm_restrictions
-    # todo test coverage for this
-    # todo refactor
     unless current_user.super?
       new_user_collection_ids = user_params[:collection_ids] || []
       new_user_repository_ids = user_params[:repository_ids] || []
-      new_user_role_ids = user_params[:role_ids] || []
       super_user_collection_ids = current_user.repository_ids || []
       super_user_repository_ids = current_user.collection_ids || []
       new_user_collection_ids.reject! { |i| i.empty? }
       new_user_repository_ids.reject! { |i| i.empty? }
       raise UserRestrictionsError unless (new_user_repository_ids - super_user_repository_ids).empty?
       raise UserRestrictionsError unless (new_user_collection_ids - super_user_collection_ids).empty?
-      raise UserRestrictionsError unless new_user_role_ids.empty?
+      raise UserRestrictionsError if params_contain_role_info
     end
   end
 

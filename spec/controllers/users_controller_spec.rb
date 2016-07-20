@@ -155,11 +155,10 @@ RSpec.describe UsersController, type: :controller do
 
       end
 
-      it 'shows an error message when a role is passed' do
+      it 'shows an error message if a role is specified' do
 
-        role = Fabricate :role
         attributes = valid_attributes
-        attributes[:role_ids] = [role.id]
+        attributes[:is_super] = 1
         request.env['HTTP_REFERER'] = new_user_url
         post :create, { user: attributes }
 

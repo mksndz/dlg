@@ -10,10 +10,6 @@ RSpec.describe InvitationsController, type: :controller do
     Fabricate(:coordinator)
   }
 
-  let(:basic_role) {
-    Fabricate(:basic_role)
-  }
-
   let(:repository) {
     Fabricate(:repository)
   }
@@ -30,7 +26,6 @@ RSpec.describe InvitationsController, type: :controller do
   let(:valid_attributes) {
     {
         email: 'test@user.com',
-        role_ids: [basic_role.id],
         collection_ids: [collection.id],
         repository_ids: [repository.id]
     }
@@ -73,9 +68,9 @@ RSpec.describe InvitationsController, type: :controller do
         expect(assigns(:user)).to be_persisted
       end
 
-      it 'assigns a newly created user as @user with basic role' do
+      it 'assigns a newly created user as @user with no roles' do
         post :create, {:user => valid_attributes}, valid_session
-        expect(assigns(:user).roles).not_to be_empty
+        expect(assigns(:user).roles).to be_empty
       end
 
       it 'assigns a newly created user as @user with assigned entities' do
