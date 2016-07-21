@@ -80,6 +80,7 @@ class Ability
 
     can [:show, :edit, :create, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
 
+    can :manage, :advanced
     can :manage, :catalog
     can :manage, :bookmarks
     can :manage, :profile

@@ -12,18 +12,16 @@ feature 'Searching' do
       login_as super_user, scope: :user
     end
 
-    scenario 'super user does a basic search and results are returned' do
+    scenario 'super user does a search and results are returned' do
 
       Fabricate(:collection) { items(count:10 )}
       Sunspot.commit
 
       visit root_path
 
-      fill_in 'q', with: ''
+      fill_in 'all_fields', with: ''
 
-      within '.basic-search-well' do
-        click_on 'Search'
-      end
+      click_button 'Search'
 
       expect(page).to have_css('.document')
 
