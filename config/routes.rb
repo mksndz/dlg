@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  concern :searchable, Blacklight::Routes::Searchable.new
+  concern :exportable, Blacklight::Routes::Exportable.new
+
   devise_for :users, path: 'auth', controllers: {
     invitations: 'invitations'
   }
@@ -62,17 +65,11 @@ Rails.application.routes.draw do
 
   end
 
-  mount Blacklight::Engine => '/'
-  mount BlacklightAdvancedSearch::Engine => '/'
-
-  concern :searchable, Blacklight::Routes::Searchable.new
-  concern :exportable, Blacklight::Routes::Exportable.new
-
-  resource :catalog, only: [:index], controller: 'catalog' do
+  resource :catalog, only: [:index], controller: 'catalog', constraints: { id: /.*/, format: false } do
     concerns :searchable
   end
 
-  resources :solr_documents, only: [:show], controller: 'catalog' do
+  resources :solr_documents, only: [:show], controller: 'catalog', constraints: { id: /.*/, format: false } do
     concerns :exportable
   end
 
@@ -83,6 +80,9 @@ Rails.application.routes.draw do
       delete 'clear'
     end
   end
+
+  mount Blacklight::Engine => '/'
+  mount BlacklightAdvancedSearch::Engine => '/'
 
   authenticated do
     root to: 'advanced#index', as: :authenticated_root
