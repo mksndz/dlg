@@ -126,6 +126,7 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
+    config.add_show_field 'id', label: 'Record ID'
     config.add_show_field 'dcterms_title_display', label: 'Title'
     config.add_show_field 'collection_name_sms', label: 'Collection', link_to_search: true # search works as intended?
     config.add_show_field 'repository_name_sms', label: 'Repository', link_to_search: true # search works as intended?

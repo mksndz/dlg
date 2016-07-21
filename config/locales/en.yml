@@ -90,6 +90,7 @@ en:
         updated_at: "Last Updated"
       item:
         slug: "Slug"
+        record_id: "Record ID"
         collection_id: "Collection"
         public: "Display to Public"
         dpla: "Push to DPLA"
