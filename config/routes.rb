@@ -85,7 +85,7 @@ Rails.application.routes.draw do
   end
 
   authenticated do
-    root to: 'catalog#index', as: :authenticated_root
+    root to: 'advanced#index', as: :authenticated_root
   end
 
   root to: redirect('auth/sign_in')

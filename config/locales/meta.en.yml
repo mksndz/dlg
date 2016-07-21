@@ -1,6 +1,8 @@
 en:
   meta:
     app:
+      advanced_search:
+        title: 'Advanced Search'
       action_widget:
         name: 'Actions'
         select_all: 'Select All on Page'
