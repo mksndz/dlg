@@ -30,7 +30,9 @@ class CatalogController < ApplicationController
       rows: 20
     }
 
-    config.add_facet_fields_to_solr_request!
+    # facets are defined in query handler so this is not needed
+    # makes debugging solr calls easier
+    # config.add_facet_fields_to_solr_request!
     
     # solr path which will be added to solr base url before the other solr params.
     #config.solr_path = 'select' 
@@ -82,20 +84,25 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'location_facet',      label: 'Location',    limit: 10
-    config.add_facet_field 'subject_facet',       label: 'Subject',     limit: 10
-    config.add_facet_field 'type_facet',          label: 'Type',        limit: 10
-    config.add_facet_field 'format_facet',        label: 'Format',      limit: 10
-    config.add_facet_field 'genre_facet',         label: 'Genre',       limit: 10
-    config.add_facet_field 'creator_facet',       label: 'Creator',     limit: 10
-    config.add_facet_field 'temporal_facet',      label: 'Temporal',    limit: 10
-    config.add_facet_field 'medium_facet',        label: 'Medium',      limit: 10
-    config.add_facet_field 'public_b',            label: 'Public?',     limit: 10, helper_method: :boolean_facet_labels
-    config.add_facet_field 'dpla_b',              label: 'DPLA?',       limit: 10, helper_method: :boolean_facet_labels
-    config.add_facet_field 'collection_name_sms', label: 'Collection',  limit: 10
-    config.add_facet_field 'repository_name_sms', label: 'Repository',  limit: 10
-    config.add_facet_field 'class_name',          label: 'Class',       limit: 10
-    config.add_facet_field 'year_facet',          label: 'Year',        limit: 10
+    config.add_facet_field 'public_b',            label: I18n.t('meta.search.facets.public'), limit: 10, helper_method: :boolean_facet_labels
+    config.add_facet_field 'dpla_b',              label: I18n.t('meta.search.facets.dpla'), limit: 10, helper_method: :boolean_facet_labels
+    config.add_facet_field 'provenance_facet',    label: I18n.t('meta.search.facets.provenance'), limit: 10
+    config.add_facet_field 'creator_facet',       label: I18n.t('meta.search.facets.creator'), limit: 10
+    config.add_facet_field 'contributor_facet',   label: I18n.t('meta.search.facets.contributor'), limit: 10
+    config.add_facet_field 'subject_facet',       label: I18n.t('meta.search.facets.subject'), limit: 10
+    config.add_facet_field 'year_facet',          label: I18n.t('meta.search.facets.year'), limit: 10
+    config.add_facet_field 'temporal_facet',      label: I18n.t('meta.search.facets.temporal'), limit: 10
+    config.add_facet_field 'location_facet',      label: I18n.t('meta.search.facets.location'), limit: 10
+    config.add_facet_field 'format_facet',        label: I18n.t('meta.search.facets.format'), limit: 10
+    config.add_facet_field 'rights_facet',        label: I18n.t('meta.search.facets.rights'), limit: 10
+    config.add_facet_field 'rights_holder_facet', label: I18n.t('meta.search.facets.rights_holder'), limit: 10
+    config.add_facet_field 'relation_facet',      label: I18n.t('meta.search.facets.relation'), limit: 10
+    config.add_facet_field 'type_facet',          label: I18n.t('meta.search.facets.type'), limit: 10
+    config.add_facet_field 'medium_facet',        label: I18n.t('meta.search.facets.medium'), limit: 10
+    config.add_facet_field 'language_facet',      label: I18n.t('meta.search.facets.language'), limit: 10
+    config.add_facet_field 'repository_name_sms', label: I18n.t('meta.search.facets.repository'), limit: 10
+    config.add_facet_field 'collection_name_sms', label: I18n.t('meta.search.facets.collection'), limit: 10
+    config.add_facet_field 'class_name',          label: I18n.t('meta.search.facets.class'), limit: 10
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
@@ -115,43 +122,45 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field 'dcterms_title_display', label: 'Title'
-    config.add_index_field 'dcterms_description_display', label: 'Description'
-    config.add_index_field 'collection_name_sms', label: 'Collection', link_to_search: true # search works as intended?
-    config.add_index_field 'repository_name_sms', label: 'Repository', link_to_search: true # search works as intended?
-    config.add_index_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
-    config.add_index_field 'dcterms_is_shown_at_display', label: 'URL', helper_method: 'linkify'
-    config.add_index_field 'dcterms_creator_display', label: 'Author', link_to_search: :creator_facet
-    config.add_index_field 'dc_format_display', label: 'Format', link_to_search: :format_facet
+    config.add_index_field 'dcterms_title_display',       label: I18n.t('meta.search.labels.dcterms_title')
+    config.add_index_field 'dcterms_description_display', label: I18n.t('meta.search.labels.dcterms_description')
+    config.add_index_field 'collection_name_sms',         label: I18n.t('meta.search.labels.collection'), link_to_search: true
+    config.add_index_field 'repository_name_sms',         label: I18n.t('meta.search.labels.repository'), link_to_search: true
+    config.add_index_field 'dc_identifier_display',       label: I18n.t('meta.search.labels.dc_identifier'), helper_method: 'linkify'
+    config.add_index_field 'dcterms_is_shown_at_display', label: I18n.t('meta.search.labels.dcterms_is_shown_at'), helper_method: 'linkify'
+    config.add_index_field 'dcterms_creator_display',     label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
+    config.add_index_field 'dc_format_display',           label: I18n.t('meta.search.labels.dc_format'), link_to_search: :format_facet
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field 'id', label: 'Record ID'
-    config.add_show_field 'dcterms_title_display', label: 'Title'
-    config.add_show_field 'collection_name_sms', label: 'Collection', link_to_search: true # search works as intended?
-    config.add_show_field 'repository_name_sms', label: 'Repository', link_to_search: true # search works as intended?
-    config.add_show_field 'dcterms_is_part_of_display', label: 'Is Part Of'
-    config.add_show_field 'dcterms_description_display', label: 'Description'
-    config.add_show_field 'dc_format_display', label: 'File Format'
-    config.add_show_field 'dc_identifier_display', label: 'Identifier', helper_method: 'linkify'
-    config.add_show_field 'dc_right_display', label: 'Rights'
-    config.add_show_field 'dc_date_display', label: 'Date'
-    config.add_show_field 'dc_relation_display', label: 'Related Materials'
-    config.add_show_field 'dcterms_publisher_display', label: 'Publisher'
-    config.add_show_field 'dcterms_contributor_display', label: 'Contributor'
-    config.add_show_field 'dcterms_temporal_display', label: 'Time'
-    config.add_show_field 'dcterms_spatial_display', label: 'Place', link_to_search: :location_facet
-    config.add_show_field 'dcterms_provenance_display', label: 'Location of Original'
-    config.add_show_field 'dcterms_subject_display', label: 'Subject', link_to_search: :subject_facet
-    config.add_show_field 'dcterms_type_display', label: 'Genre'
-    config.add_show_field 'dcterms_creator_display', label: 'Creator', link_to_search: :creator_facet
-    config.add_show_field 'dcterms_language_display', label: 'Language'
-    config.add_show_field 'dcterms_is_shown_at_display', label: 'URL', helper_method: 'linkify'
-    config.add_show_field 'dcterms_rights_holder_display', label: 'Rights Holder'
-    config.add_show_field 'dcterms_extent_display', label: 'Extent'
-    config.add_show_field 'dcterms_medium_display', label: 'Medium'
-    config.add_show_field 'created_at_dts', label: 'Created'
-    config.add_show_field 'updated_at_dts', label: 'Updated'
+    config.add_show_field 'slug_ss',                        label: I18n.t('meta.search.labels.item_id')
+    config.add_show_field 'id',                             label: I18n.t('meta.search.labels.record_id')
+    config.add_show_field 'dcterms_title_display',          label: I18n.t('meta.search.labels.dcterms_title')
+    config.add_show_field 'collection_name_sms',            label: I18n.t('meta.search.labels.collection'), link_to_search: true
+    config.add_show_field 'repository_name_sms',            label: I18n.t('meta.search.labels.repository'), link_to_search: true
+    config.add_show_field 'dcterms_is_part_of_display',     label: I18n.t('meta.search.labels.dcterms_is_part_of')
+    config.add_show_field 'dcterms_description_display',    label: I18n.t('meta.search.labels.dcterms_description')
+    config.add_show_field 'dc_format_display',              label: I18n.t('meta.search.labels.dc_format')
+    config.add_show_field 'dc_identifier_display',          label: I18n.t('meta.search.labels.dc_identifier'), helper_method: 'linkify'
+    config.add_show_field 'dc_right_display',               label: I18n.t('meta.search.labels.dc_right')
+    config.add_show_field 'dc_date_display',                label: I18n.t('meta.search.labels.dc_date')
+    config.add_show_field 'dc_relation_display',            label: I18n.t('meta.search.labels.dc_relation')
+    config.add_show_field 'dcterms_publisher_display',      label: I18n.t('meta.search.labels.dcterms_publisher')
+    config.add_show_field 'dcterms_contributor_display',    label: I18n.t('meta.search.labels.dcterms_contributor')
+    config.add_show_field 'dcterms_temporal_display',       label: I18n.t('meta.search.labels.dcterms_temporal')
+    config.add_show_field 'dcterms_spatial_display',        label: I18n.t('meta.search.labels.dcterms_spatial'), link_to_search: :location_facet
+    config.add_show_field 'dcterms_provenance_display',     label: I18n.t('meta.search.labels.dcterms_provenance')
+    config.add_show_field 'dcterms_subject_display',        label: I18n.t('meta.search.labels.dcterms_subject'), link_to_search: :subject_facet
+    config.add_show_field 'dcterms_type_display',           label: I18n.t('meta.search.labels.dcterms_type')
+    config.add_show_field 'dcterms_creator_display',        label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
+    config.add_show_field 'dcterms_language_display',       label: I18n.t('meta.search.labels.dcterms_language')
+    config.add_show_field 'dcterms_is_shown_at_display',    label: I18n.t('meta.search.labels.dcterms_is_shown_at'), helper_method: 'linkify'
+    config.add_show_field 'dcterms_rights_holder_display',  label: I18n.t('meta.search.labels.dcterms_rights_holder')
+    config.add_show_field 'dcterms_bibliographic_citation', label: I18n.t('meta.search.labels.dcterms_bibliographic_citation')
+    config.add_show_field 'dcterms_extent_display',         label: I18n.t('meta.search.labels.dcterms_extent')
+    config.add_show_field 'dcterms_medium_display',         label: I18n.t('meta.search.labels.dcterms_medium')
+    config.add_show_field 'created_at_dts',                 label: I18n.t('meta.search.labels.created_at')
+    config.add_show_field 'updated_at_dts',                 label: I18n.t('meta.search.labels.updated_at')
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -172,7 +181,11 @@ class CatalogController < ApplicationController
     # since we aren't specifying it otherwise.
     config.add_search_field 'all_fields', label: 'All Fields'
 
-    # primary search fields
+    #
+    # PRIMARY SEARCH FIELDS
+    #
+
+    # title
     config.add_search_field('title') do |field|
       field.label = 'Title'
       field.solr_local_parameters = {
@@ -181,46 +194,7 @@ class CatalogController < ApplicationController
       }
     end
 
-    config.add_search_field('description') do |field|
-      field.label = 'Description'
-      field.solr_local_parameters = {
-          qf: 'description_unstem_search^100 dcterms_description_text^50',
-          pf: 'description_unstem_search^100 dcterms_description_text^50'
-      }
-    end
-
-    config.add_search_field('subject') do |field|
-      field.label = 'Subject'
-      field.solr_local_parameters = {
-          qf: 'subject_unstem_search^100 dcterms_subject_text^50',
-          pf: 'subject_unstem_search^100 dcterms_subject_text^50'
-      }
-    end
-
-    config.add_search_field('place') do |field|
-      field.label = 'Place'
-      field.solr_local_parameters = {
-          qf: 'spatial_unstem_search^100 dcterms_spatial_text^50',
-          pf: 'spatial_unstem_search^100 dcterms_spatial_text^50'
-      }
-    end
-
-    config.add_search_field('publisher') do |field|
-      field.label = 'Publisher'
-      field.solr_local_parameters = {
-          qf: 'publisher_unstem_search^100 dcterms_publisher_text^50',
-          pf: 'publisher_unstem_search^100 dcterms_publisher_text^50'
-      }
-    end
-
-    config.add_search_field('contributor') do |field|
-      field.label = 'Contributor'
-      field.solr_local_parameters = {
-          qf: 'contributor_unstem_search^100 dcterms_contributor_text^50',
-          pf: 'contributor_unstem_search^100 dcterms_contributor_text^50'
-      }
-    end
-
+    # creator
     config.add_search_field('creator') do |field|
       field.label = 'Creator'
       field.solr_local_parameters = {
@@ -229,7 +203,95 @@ class CatalogController < ApplicationController
       }
     end
 
-    #secondary search fields (no unstemmed fields)
+    # contributor
+    config.add_search_field('contributor') do |field|
+      field.label = 'Contributor'
+      field.solr_local_parameters = {
+          qf: 'contributor_unstem_search^100 dcterms_contributor_text^50',
+          pf: 'contributor_unstem_search^100 dcterms_contributor_text^50'
+      }
+    end
+
+    # subject
+    config.add_search_field('subject') do |field|
+      field.label = 'Subject'
+      field.solr_local_parameters = {
+          qf: 'subject_unstem_search^100 dcterms_subject_text^50',
+          pf: 'subject_unstem_search^100 dcterms_subject_text^50'
+      }
+    end
+
+    # description
+    config.add_search_field('description') do |field|
+      field.label = 'Description'
+      field.solr_local_parameters = {
+          qf: 'description_unstem_search^100 dcterms_description_text^50',
+          pf: 'description_unstem_search^100 dcterms_description_text^50'
+      }
+    end
+
+    # publisher
+    config.add_search_field('publisher') do |field|
+      field.label = 'Publisher'
+      field.solr_local_parameters = {
+          qf: 'publisher_unstem_search^100 dcterms_publisher_text^50',
+          pf: 'publisher_unstem_search^100 dcterms_publisher_text^50'
+      }
+    end
+
+    # date
+    config.add_search_field('date') do |field|
+      field.label = 'Date'
+      field.solr_local_parameters = {
+          qf: 'date_unstem_search^100 dc_date_text^50',
+          pf: 'date_unstem_search^100 dc_date_text^50'
+      }
+    end
+
+    # temporal / dcterms_temporal
+    config.add_search_field('temporal') do |field|
+      field.label = 'Temporal'
+      field.solr_local_parameters = {
+          qf: 'temporal_unstem_search^100 dcterms_temporal_text^50',
+          pf: 'temporal_unstem_search^100 dcterms_temporal_text^50'
+      }
+    end
+
+    # place / dcterms_spatial
+    config.add_search_field('spatial') do |field|
+      field.label = 'Spatial'
+      field.solr_local_parameters = {
+          qf: 'spatial_unstem_search^100 dcterms_spatial_text^50',
+          pf: 'spatial_unstem_search^100 dcterms_spatial_text^50'
+      }
+    end
+
+    # is part of
+    config.add_search_field('is_part_of') do |field|
+      field.label = 'Is Part Of'
+      field.solr_local_parameters = {
+          qf: 'is_part_of_unstem_search^100 dcterms_is_part_of__text^50',
+          pf: 'is_part_of_unstem_search^100 dcterms_is_part_of__text^50'
+      }
+    end
+
+    # is shown at
+    config.add_search_field('is_shown_at') do |field|
+      field.label = 'Is Shown At (URL)'
+      field.solr_local_parameters = {
+          qf: 'dcterms_is_shown_at_text^100',
+          pf: 'dcterms_is_shown_at_text^100'
+      }
+    end
+
+    # identifier
+    config.add_search_field('identifier') do |field|
+      field.label = 'Identifier'
+      field.solr_local_parameters = {
+          qf: 'identifier_unstem_search^100 dc_identifier_text^50',
+          pf: 'identifier_unstem_search^100 dc_identifier_text^50'
+      }
+    end
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and

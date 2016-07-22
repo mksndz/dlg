@@ -112,7 +112,7 @@ en:
         dcterms_is_part_of: 'Original Collection'
         dc_right: 'Standardized Rights Statement'
         dcterms_rights_holder: 'Rights Holder'
-        dcterms_bibliographicCitation: 'Bibliographic Citation (Cite as)'
+        dcterms_bibliographic_citation: 'Bibliographic Citation (Cite as)'
         dlg_local_right: 'Local Rights Statement'
         dc_relation: 'Intermediate Contributor (e.g. Deeply Rooted)'
         dcterms_type: 'DCMI Type'
