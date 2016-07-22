@@ -95,6 +95,8 @@ task import_repositories: :environment do
 
   set_collection_titles
 
+  Sunspot.commit
+
   finish_time = Time.now
 
   puts 'File processing complete!'
