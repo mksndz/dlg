@@ -411,21 +411,27 @@
 
       <str name="qf">
         title_unstem_search^100
-        title_unstem_search^100
-        description_unstem_search^100
         creator_unstem_search^100
+        contributor_unstem_search^100
         subject_unstem_search^100
         description_unstem_search^100
         publisher_unstem_search^100
+        date_unstem_search^100
+        temporal_unstem_search^100
         spatial_unstem_search^100
-        contributor_unstem_search^100
-        dcterms_title
-        dcterms_description
-        dcterms_subject
-        dcterms_spatial
-        dcterms_publisher
-        dcterms_contributor
-        dcterms_creator
+        is_part_of_unstem_search^100
+        identifier_unstem_search^100
+        dcterms_is_shown_at_text^100
+        dcterms_title_text
+        dcterms_creator_text
+        dcterms_contributor_text
+        dcterms_subject_text
+        dcterms_description_text
+        dcterms_publisher_text
+        dcterms_temporal_text
+        dcterms_spatial_text
+        dcterms_is_part_of_text
+        dc_identifier_text
       </str>
 
       <!-- the pf parameter, which is an abbreviation of "phrase fields". The syntax
@@ -434,20 +440,27 @@
 
       <str name="pf">
         title_unstem_search^100
-        description_unstem_search^100
         creator_unstem_search^100
+        contributor_unstem_search^100
         subject_unstem_search^100
         description_unstem_search^100
         publisher_unstem_search^100
+        date_unstem_search^100
+        temporal_unstem_search^100
         spatial_unstem_search^100
-        contributor_unstem_search^100
-        dcterms_title
-        dcterms_description
-        dcterms_subject
-        dcterms_spatial
-        dcterms_publisher
-        dcterms_contributor
-        dcterms_creator
+        is_part_of_unstem_search^100
+        identifier_unstem_search^100
+        dcterms_is_shown_at_text^100
+        dcterms_title_text
+        dcterms_creator_text
+        dcterms_contributor_text
+        dcterms_subject_text
+        dcterms_description_text
+        dcterms_publisher_text
+        dcterms_temporal_text
+        dcterms_spatial_text
+        dcterms_is_part_of_text
+        dc_identifier_text
       </str>
 
 
@@ -455,6 +468,7 @@
         title_unstem_search^100
         dcterms_title_text
       </str>
+
       <str name="title_pf">
         title_unstem_search^100
         dcterms_title_text
@@ -464,15 +478,12 @@
         description_unstem_search^100
         dcterms_description
       </str>
-      <str name="description_pf">
-        description_unstem_search^100
-        dcterms_description_text
-      </str>
 
       <str name="subject_qf">
         subject_unstem_search^100
         dcterms_subject_text
       </str>
+
       <str name="subject_pf">
         subject_unstem_search^100
         dcterms_subject_text
@@ -482,6 +493,7 @@
         creator_unstem_search^100
         dcterms_creator_text
       </str>
+
       <str name="creator_pf">
         creator_unstem_search^100
         dcterms_creator_text
@@ -512,17 +524,25 @@
       <str name="facet.mincount">1</str>
       <str name="facet.limit">20</str>
 
-      <!-- do i need these defined here? -->
-      <str name="facet.field">location_facet</str>
-      <str name="facet.field">subject_facet</str>
-      <str name="facet.field">type_facet</str>
-      <str name="facet.field">format_facet</str>
-      <str name="facet.field">genre_facet</str>
+      <str name="facet.field">public_b</str>
+      <str name="facet.field">dpla_b</str>
+      <str name="facet.field">provenance_facet</str>
       <str name="facet.field">creator_facet</str>
-      <str name="facet.field">medium_facet</str>
+      <str name="facet.field">contributor_facet</str>
+      <str name="facet.field">subject_facet</str>
       <str name="facet.field">year_facet</str>
-      <str name="facet.field">collection_name_sms</str>
+      <str name="facet.field">temporal_facet</str>
+      <str name="facet.field">location_facet</str>
+      <str name="facet.field">format_facet</str>
+      <str name="facet.field">rights_facet</str>
+      <str name="facet.field">rights_holder_facet</str>
+      <str name="facet.field">relation_facet</str>
+      <str name="facet.field">type_facet</str>
+      <str name="facet.field">medium_facet</str>
+      <str name="facet.field">language_facet</str>
       <str name="facet.field">repository_name_sms</str>
+      <str name="facet.field">collection_name_sms</str>
+      <str name="facet.field">class_name</str>
 
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">default</str>
@@ -612,71 +632,6 @@
       <str name="ps">3</str>
       <float name="tie">0.01</float>
 
-      <!--&lt;!&ndash; for user query terms in author text box &ndash;&gt;-->
-      <!--<str name="qf_author">-->
-        <!--author_unstem_search^200-->
-        <!--author_addl_unstem_search^50-->
-        <!--author_t^20-->
-        <!--author_addl_t-->
-      <!--</str>-->
-      <!--<str name="pf_author">-->
-        <!--author_unstem_search^2000-->
-        <!--author_addl_unstem_search^500-->
-        <!--author_t^200-->
-        <!--author_addl_t^10-->
-      <!--</str>-->
-
-      <!--&lt;!&ndash; for user query terms in title text box &ndash;&gt;-->
-      <!--<str name="qf_title">-->
-        <!--title_unstem_search^50000-->
-        <!--subtitle_unstem_search^25000-->
-        <!--title_addl_unstem_search^10000-->
-        <!--title_t^5000-->
-        <!--subtitle_t^2500-->
-        <!--title_addl_t^100-->
-        <!--title_added_entry_unstem_search^50-->
-        <!--title_added_entry_t^10-->
-        <!--title_series_unstem_search^5-->
-        <!--title_series_t-->
-      <!--</str>-->
-      <!--<str name="pf_title">-->
-        <!--title_unstem_search^500000-->
-        <!--subtitle_unstem_search^250000-->
-        <!--title_addl_unstem_search^100000-->
-        <!--title_t^50000-->
-        <!--subtitle_t^25000-->
-        <!--title_addl_t^1000-->
-        <!--title_added_entry_unstem_search^500-->
-        <!--title_added_entry_t^100-->
-        <!--title_series_t^50-->
-        <!--title_series_unstem_search^10-->
-      <!--</str>-->
-
-      <!--&lt;!&ndash; for user query terms in subject text box &ndash;&gt;-->
-      <!--<str name="qf_subject">-->
-        <!--subject_topic_unstem_search^200-->
-        <!--subject_unstem_search^125-->
-        <!--subject_topic_facet^100-->
-        <!--subject_t^50-->
-        <!--subject_addl_unstem_search^10-->
-        <!--subject_addl_t-->
-      <!--</str>-->
-      <!--<str name="pf_subject">-->
-        <!--subject_topic_unstem_search^2000-->
-        <!--subject_unstem_search^1250-->
-        <!--subject_t^1000-->
-        <!--subject_topic_facet^500-->
-        <!--subject_addl_unstem_search^100-->
-        <!--subject_addl_t^10-->
-      <!--</str>-->
-
-      <!--&lt;!&ndash; for user query terms in number text box &ndash;&gt;-->
-      <!--<str name="qf_number">isbn_t</str>-->
-
-      <!--&lt;!&ndash; for user query terms in keyword text box &ndash;&gt;-->
-      <!--<str name="qf_keyword">text</str>-->
-      <!--<str name="pf_keyword">text^10</str>-->
-
       <str name="fl">
         *,
         score
@@ -685,6 +640,26 @@
       <str name="facet">true</str>
       <str name="facet.mincount">1</str>
       <str name="facet.limit">10</str>
+
+      <str name="facet.field">public_b</str>
+      <str name="facet.field">dpla_b</str>
+      <str name="facet.field">provenance_facet</str>
+      <str name="facet.field">creator_facet</str>
+      <str name="facet.field">contributor_facet</str>
+      <str name="facet.field">subject_facet</str>
+      <str name="facet.field">year_facet</str>
+      <str name="facet.field">temporal_facet</str>
+      <str name="facet.field">location_facet</str>
+      <str name="facet.field">format_facet</str>
+      <str name="facet.field">rights_facet</str>
+      <str name="facet.field">rights_holder_facet</str>
+      <str name="facet.field">relation_facet</str>
+      <str name="facet.field">type_facet</str>
+      <str name="facet.field">medium_facet</str>
+      <str name="facet.field">language_facet</str>
+      <str name="facet.field">repository_name_sms</str>
+      <str name="facet.field">collection_name_sms</str>
+      <str name="facet.field">class_name</str>
 
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">default</str>
