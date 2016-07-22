@@ -130,6 +130,7 @@ class ItemsController < ApplicationController
         :dcterms_type,
         :dcterms_is_shown_at,
         :dcterms_provenance,
+        :dcterms_bibliographic_citation,
         :dlg_local_right,
         :other_collections => [],
     )
