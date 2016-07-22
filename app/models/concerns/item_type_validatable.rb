@@ -9,11 +9,11 @@ module ItemTypeValidatable
     after_validation :set_validation_cache
 
     validates_presence_of :collection, message: ' must be selected'
-    validates_presence_of :dcterms_temporal, :dcterms_spatial
+    validates_presence_of :dc_date, :dcterms_spatial
     validate :dcterms_temporal_characters
     validate :dcterms_type_required_value
-    validate :url_in_dc_identifier
-    validate :url_in_dcterms_is_shown_at
+    # validate :url_in_dc_identifier
+    # validate :url_in_dcterms_is_shown_at
 
   end
 
