@@ -11,47 +11,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720163616) do
+ActiveRecord::Schema.define(version: 20160722124409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
 
   create_table "batch_items", force: :cascade do |t|
-    t.boolean  "dpla",                  default: false, null: false
-    t.boolean  "public",                default: false, null: false
-    t.text     "dc_format",             default: [],    null: false, array: true
-    t.text     "dc_identifier",         default: [],    null: false, array: true
-    t.text     "dc_right",              default: [],    null: false, array: true
-    t.text     "dc_date",               default: [],    null: false, array: true
-    t.text     "dc_relation",           default: [],    null: false, array: true
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.integer  "batch_id",                              null: false
-    t.integer  "collection_id",                         null: false
-    t.string   "slug",                                  null: false
-    t.text     "dcterms_is_part_of",    default: [],    null: false, array: true
-    t.text     "dcterms_contributor",   default: [],    null: false, array: true
-    t.text     "dcterms_creator",       default: [],    null: false, array: true
-    t.text     "dcterms_description",   default: [],    null: false, array: true
-    t.text     "dcterms_extent",        default: [],    null: false, array: true
-    t.text     "dcterms_medium",        default: [],    null: false, array: true
-    t.text     "dcterms_identifier",    default: [],    null: false, array: true
-    t.text     "dcterms_language",      default: [],    null: false, array: true
-    t.text     "dcterms_spatial",       default: [],    null: false, array: true
-    t.text     "dcterms_publisher",     default: [],    null: false, array: true
-    t.text     "dcterms_rights_holder", default: [],    null: false, array: true
-    t.text     "dcterms_subject",       default: [],    null: false, array: true
-    t.text     "dcterms_temporal",      default: [],    null: false, array: true
-    t.text     "dcterms_title",         default: [],    null: false, array: true
-    t.text     "dcterms_type",          default: [],    null: false, array: true
-    t.text     "dcterms_is_shown_at",   default: [],    null: false, array: true
-    t.text     "dcterms_provenance",    default: [],    null: false, array: true
+    t.boolean  "dpla",                          default: false, null: false
+    t.boolean  "public",                        default: false, null: false
+    t.text     "dc_format",                     default: [],    null: false, array: true
+    t.text     "dc_identifier",                 default: [],    null: false, array: true
+    t.text     "dc_right",                      default: [],    null: false, array: true
+    t.text     "dc_date",                       default: [],    null: false, array: true
+    t.text     "dc_relation",                   default: [],    null: false, array: true
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.integer  "batch_id",                                      null: false
+    t.integer  "collection_id",                                 null: false
+    t.string   "slug",                                          null: false
+    t.text     "dcterms_is_part_of",            default: [],    null: false, array: true
+    t.text     "dcterms_contributor",           default: [],    null: false, array: true
+    t.text     "dcterms_creator",               default: [],    null: false, array: true
+    t.text     "dcterms_description",           default: [],    null: false, array: true
+    t.text     "dcterms_extent",                default: [],    null: false, array: true
+    t.text     "dcterms_medium",                default: [],    null: false, array: true
+    t.text     "dcterms_identifier",            default: [],    null: false, array: true
+    t.text     "dcterms_language",              default: [],    null: false, array: true
+    t.text     "dcterms_spatial",               default: [],    null: false, array: true
+    t.text     "dcterms_publisher",             default: [],    null: false, array: true
+    t.text     "dcterms_rights_holder",         default: [],    null: false, array: true
+    t.text     "dcterms_subject",               default: [],    null: false, array: true
+    t.text     "dcterms_temporal",              default: [],    null: false, array: true
+    t.text     "dcterms_title",                 default: [],    null: false, array: true
+    t.text     "dcterms_type",                  default: [],    null: false, array: true
+    t.text     "dcterms_is_shown_at",           default: [],    null: false, array: true
+    t.text     "dcterms_provenance",            default: [],    null: false, array: true
     t.integer  "item_id"
-    t.integer  "other_collections",     default: [],                 array: true
-    t.text     "dlg_local_right",       default: [],    null: false, array: true
-    t.boolean  "valid_item",            default: false, null: false
-    t.boolean  "has_thumbnail",         default: false, null: false
+    t.integer  "other_collections",             default: [],                 array: true
+    t.text     "dlg_local_right",               default: [],    null: false, array: true
+    t.boolean  "valid_item",                    default: false, null: false
+    t.boolean  "has_thumbnail",                 default: false, null: false
+    t.text     "dcterms_bibliographicCitation", default: [],    null: false, array: true
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
@@ -183,37 +184,38 @@ ActiveRecord::Schema.define(version: 20160720163616) do
 
   create_table "items", force: :cascade do |t|
     t.integer  "collection_id"
-    t.boolean  "dpla",                  default: false, null: false
-    t.boolean  "public",                default: false, null: false
-    t.text     "dc_format",             default: [],    null: false, array: true
-    t.text     "dc_identifier",         default: [],    null: false, array: true
-    t.text     "dc_right",              default: [],    null: false, array: true
-    t.text     "dc_date",               default: [],    null: false, array: true
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.text     "dc_relation",           default: [],    null: false, array: true
-    t.string   "slug",                                  null: false
-    t.text     "dcterms_is_part_of",    default: [],    null: false, array: true
-    t.text     "dcterms_contributor",   default: [],    null: false, array: true
-    t.text     "dcterms_creator",       default: [],    null: false, array: true
-    t.text     "dcterms_description",   default: [],    null: false, array: true
-    t.text     "dcterms_extent",        default: [],    null: false, array: true
-    t.text     "dcterms_medium",        default: [],    null: false, array: true
-    t.text     "dcterms_identifier",    default: [],    null: false, array: true
-    t.text     "dcterms_language",      default: [],    null: false, array: true
-    t.text     "dcterms_spatial",       default: [],    null: false, array: true
-    t.text     "dcterms_publisher",     default: [],    null: false, array: true
-    t.text     "dcterms_rights_holder", default: [],    null: false, array: true
-    t.text     "dcterms_subject",       default: [],    null: false, array: true
-    t.text     "dcterms_temporal",      default: [],    null: false, array: true
-    t.text     "dcterms_title",         default: [],    null: false, array: true
-    t.text     "dcterms_type",          default: [],    null: false, array: true
-    t.text     "dcterms_is_shown_at",   default: [],    null: false, array: true
-    t.text     "dcterms_provenance",    default: [],    null: false, array: true
-    t.integer  "other_collections",     default: [],                 array: true
-    t.text     "dlg_local_right",       default: [],    null: false, array: true
-    t.boolean  "valid_item",            default: false, null: false
-    t.boolean  "has_thumbnail",         default: false, null: false
+    t.boolean  "dpla",                          default: false, null: false
+    t.boolean  "public",                        default: false, null: false
+    t.text     "dc_format",                     default: [],    null: false, array: true
+    t.text     "dc_identifier",                 default: [],    null: false, array: true
+    t.text     "dc_right",                      default: [],    null: false, array: true
+    t.text     "dc_date",                       default: [],    null: false, array: true
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.text     "dc_relation",                   default: [],    null: false, array: true
+    t.string   "slug",                                          null: false
+    t.text     "dcterms_is_part_of",            default: [],    null: false, array: true
+    t.text     "dcterms_contributor",           default: [],    null: false, array: true
+    t.text     "dcterms_creator",               default: [],    null: false, array: true
+    t.text     "dcterms_description",           default: [],    null: false, array: true
+    t.text     "dcterms_extent",                default: [],    null: false, array: true
+    t.text     "dcterms_medium",                default: [],    null: false, array: true
+    t.text     "dcterms_identifier",            default: [],    null: false, array: true
+    t.text     "dcterms_language",              default: [],    null: false, array: true
+    t.text     "dcterms_spatial",               default: [],    null: false, array: true
+    t.text     "dcterms_publisher",             default: [],    null: false, array: true
+    t.text     "dcterms_rights_holder",         default: [],    null: false, array: true
+    t.text     "dcterms_subject",               default: [],    null: false, array: true
+    t.text     "dcterms_temporal",              default: [],    null: false, array: true
+    t.text     "dcterms_title",                 default: [],    null: false, array: true
+    t.text     "dcterms_type",                  default: [],    null: false, array: true
+    t.text     "dcterms_is_shown_at",           default: [],    null: false, array: true
+    t.text     "dcterms_provenance",            default: [],    null: false, array: true
+    t.integer  "other_collections",             default: [],                 array: true
+    t.text     "dlg_local_right",               default: [],    null: false, array: true
+    t.boolean  "valid_item",                    default: false, null: false
+    t.boolean  "has_thumbnail",                 default: false, null: false
+    t.text     "dcterms_bibliographicCitation", default: [],    null: false, array: true
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
