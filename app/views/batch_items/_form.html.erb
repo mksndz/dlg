@@ -2,23 +2,21 @@
 
     <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Batch Item') %>
 
-    <%= f.text_field :slug, label: t('activerecord.attributes.batch_item.slug'), help: t('activerecord.help.batch_item.slug')  %>
+    <%= f.text_field :slug %>
 
-    <%= f.select :collection_id, @collections.collect { |c| [c.display_title, c.id] }, { include_blank: true, label: t('activerecord.attributes.batch_item.collection_id'), help: t('activerecord.help.batch_item.collection_id') }, {  } %>
+    <%= f.select :collection_id, @collections.collect { |c| [c.display_title, c.id] }, { include_blank: true } %>
 
-    <%= f.form_group :public, help: t('activerecord.help.batch_item.public') do %>
-        <%= f.check_box :public, label: t('activerecord.attributes.batch_item.public') %>
+    <%= f.form_group :public do %>
+        <%= f.check_box :public %>
     <% end %>
 
-    <%= f.form_group :dpla, help: t('activerecord.help.batch_item.dpla') do %>
-        <%= f.check_box :dpla, label: t('activerecord.attributes.batch_item.dpla') %>
+    <%= f.form_group :dpla do %>
+        <%= f.check_box :dpla %>
     <% end %>
 
-    <%= f.select :other_collections, @collections.collect { |c| [c.display_title, c.slug] }, { include_blank: true, label: t('activerecord.attributes.batch_item.other_collections'), help: t('activerecord.help.batch_item.other_collections') }, { multiple: true,  class: 'fancy-multiselect' } %>
+    <%= f.select :other_collections, @collections.collect { |c| [c.display_title, c.slug] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
 
     <%= render partial: 'shared/edit_dc_fields', locals: { f: f, entity: @batch_item } %>
-
-    <%= meta_textarea @batch_item, :dlg_local_right %>
 
     <%= f.primary t('meta.defaults.actions.save') %>
 

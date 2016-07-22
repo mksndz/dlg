@@ -24,10 +24,11 @@ module ApplicationHelper
 
   def meta_textarea(object, term)
     klass = object.class.name.demodulize.underscore
-    html = ''
+    html = '<div class="form-group">'
     html += label_tag "#{klass}[#{term}]", t("activerecord.attributes.#{klass}.#{term}")
-    html += text_area_tag "#{klass}[#{term}]", object.method(term).call.join("\n"), { rows: '10', class: 'form-control' }
-    html += content_tag :span, t("activerecord.help.#{klass}.#{term}"), { class: 'help-block'}
+    html += text_area_tag "#{klass}[#{term}]", object.method(term).call.join("\n"), { rows: '5', class: 'form-control' }
+    # html += content_tag :span, t("activerecord.help.#{klass}.#{term}", default: ''), { class: 'help-block'}
+    html += '</div>'
     html.html_safe
   end
 
