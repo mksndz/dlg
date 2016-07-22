@@ -88,9 +88,12 @@ class LegacyImporter
     @logger.info "Collection #{collection.title} Items Created: #{items_created}"
     @logger.info "Collection #{collection.title} Items In XML: #{items.length}"
 
-    # clean up file XML file from memory
     xml_file.close
-    xml_file.unlink
+
+    # clean up file XML file from memory, if saved
+    if xml_file.is_a? Tempfile
+      xml_file.unlink
+    end
 
     collection_finish_time = Time.now
 
