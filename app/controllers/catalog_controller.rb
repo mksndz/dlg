@@ -32,7 +32,7 @@ class CatalogController < ApplicationController
 
     # facets are defined in query handler so this is not needed
     # makes debugging solr calls easier
-    # config.add_facet_fields_to_solr_request!
+    config.add_facet_fields_to_solr_request!
     
     # solr path which will be added to solr base url before the other solr params.
     #config.solr_path = 'select' 
