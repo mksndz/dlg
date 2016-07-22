@@ -175,10 +175,10 @@ RSpec.describe Item, type: :model do
     expect(i.errors).to have_key :collection
   end
 
-  it 'should require a dcterms_temporal value' do
-    i = Fabricate.build(:item, dcterms_temporal: [])
+  it 'should require a dc_date value' do
+    i = Fabricate.build(:item, dc_date: [])
     i.valid?
-    expect(i.errors).to have_key :dcterms_temporal
+    expect(i.errors).to have_key :dc_date
   end
 
   it 'should require a dcterms_spatial value' do
@@ -205,28 +205,28 @@ RSpec.describe Item, type: :model do
   #   expect(i.errors).to have_key :entity
   # end
 
-  it 'should have a valid (resolvable) URL in dc_identifier' do
-    i = Fabricate.build(:item, dc_identifier: ['http://dlg.galileo.usg.edu/items/do:4321'])
-    i.valid?
-    expect(i.errors).to have_key :dc_identifier
-  end
+  # it 'should have a valid (resolvable) URL in dc_identifier' do
+  #   i = Fabricate.build(:item, dc_identifier: ['http://dlg.galileo.usg.edu/items/do:4321'])
+  #   i.valid?
+  #   expect(i.errors).to have_key :dc_identifier
+  # end
+  #
+  # it 'should validate if the item has a valid (resolvable) URL in dc_identifier' do
+  #   i = Fabricate.build(:item, dc_identifier: ['http://dlg.galileo.usg.edu'])
+  #   i.valid?
+  #   expect(i.errors).not_to have_key :dc_identifier
+  # end
 
-  it 'should validate if the item has a valid (resolvable) URL in dc_identifier' do
-    i = Fabricate.build(:item, dc_identifier: ['http://dlg.galileo.usg.edu'])
-    i.valid?
-    expect(i.errors).not_to have_key :dc_identifier
-  end
-
-  it 'should have a valid (resolvable) URL in dcterms_is_shown_at' do
-    i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu/items/do:4321'])
-    i.valid?
-    expect(i.errors).to have_key :dcterms_is_shown_at
-  end
-
-  it 'should validate if the item has a valid (resolvable) URL in dcterms_is_shown_at' do
-    i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu'])
-    i.valid?
-    expect(i.errors).not_to have_key :dcterms_is_shown_at
-  end
+  # it 'should have a valid (resolvable) URL in dcterms_is_shown_at' do
+  #   i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu/items/do:4321'])
+  #   i.valid?
+  #   expect(i.errors).to have_key :dcterms_is_shown_at
+  # end
+  #
+  # it 'should validate if the item has a valid (resolvable) URL in dcterms_is_shown_at' do
+  #   i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu'])
+  #   i.valid?
+  #   expect(i.errors).not_to have_key :dcterms_is_shown_at
+  # end
 
 end

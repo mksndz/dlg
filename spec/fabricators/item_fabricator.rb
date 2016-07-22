@@ -14,7 +14,7 @@ Fabricator(:item) do
       %w(Athens Atlanta Augusta Macon).sample,
       'Georgia'
   ]}
-  dcterms_temporal { [
+  dc_date { [
       '1999-2000'
   ]}
   dc_right { [

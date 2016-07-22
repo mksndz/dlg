@@ -20,7 +20,7 @@ RSpec.describe BatchItemsController, type: :controller do
         slug: 'test-item-slug',
         dcterms_type: 'Text',
         dcterms_title: "Test Item DC Title\nSubtitle",
-        dcterms_temporal: '1999-2000',
+        dc_date: '07-09-1975',
         dcterms_contributor: 'DLG',
         dcterms_spatial: 'Location',
         dc_right: 'CC-NA',

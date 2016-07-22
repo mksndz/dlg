@@ -14,7 +14,7 @@ RSpec.describe ItemsController, type: :controller do
     {
         slug: 'test-item-slug',
         dcterms_title: "Test Item DC Title\nTest Subtitle",
-        dcterms_temporal: '1999-2000',
+        dc_date: '07-09-1975',
         dcterms_contributor: 'DLG',
         dcterms_spatial: 'Location',
         dcterms_type: 'Text',

@@ -55,10 +55,10 @@ RSpec.describe BatchItem, type: :model do
     expect(i.errors).to have_key :collection
   end
 
-  it 'should require a dcterms_temporal value' do
-    i = Fabricate.build(:item, dcterms_temporal: [])
+  it 'should require a dc_date value' do
+    i = Fabricate.build(:item, dc_date: [])
     i.valid?
-    expect(i.errors).to have_key :dcterms_temporal
+    expect(i.errors).to have_key :dc_date
   end
 
   it 'should require a dcterms_spatial value' do
