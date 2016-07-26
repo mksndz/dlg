@@ -130,6 +130,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'dcterms_is_shown_at_display', label: I18n.t('meta.search.labels.dcterms_is_shown_at'), helper_method: 'linkify'
     config.add_index_field 'dcterms_creator_display',     label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
     config.add_index_field 'dc_format_display',           label: I18n.t('meta.search.labels.dc_format'), link_to_search: :format_facet
+    config.add_index_field 'dcterms_spatial_display',     label: I18n.t('meta.search.labels.dcterms_spatial'), link_to_search: :location_facet
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
