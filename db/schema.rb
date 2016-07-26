@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722124409) do
+ActiveRecord::Schema.define(version: 20160726223540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,43 +89,44 @@ ActiveRecord::Schema.define(version: 20160722124409) do
 
   create_table "collections", force: :cascade do |t|
     t.integer   "repository_id"
-    t.boolean   "in_georgia",            default: true,  null: false
-    t.boolean   "remote",                default: false, null: false
-    t.text      "display_title",                         null: false
+    t.boolean   "in_georgia",                     default: true,  null: false
+    t.boolean   "remote",                         default: false, null: false
+    t.text      "display_title",                                  null: false
     t.text      "short_description"
     t.text      "teaser"
     t.string    "color"
-    t.text      "dc_format",             default: [],    null: false, array: true
-    t.text      "dc_identifier",         default: [],    null: false, array: true
-    t.text      "dc_right",              default: [],    null: false, array: true
-    t.text      "dc_date",               default: [],    null: false, array: true
+    t.text      "dc_format",                      default: [],    null: false, array: true
+    t.text      "dc_identifier",                  default: [],    null: false, array: true
+    t.text      "dc_right",                       default: [],    null: false, array: true
+    t.text      "dc_date",                        default: [],    null: false, array: true
     t.daterange "date_range"
-    t.datetime  "created_at",                            null: false
-    t.datetime  "updated_at",                            null: false
-    t.text      "dc_relation",           default: [],    null: false, array: true
-    t.string    "other_repositories",    default: [],                 array: true
-    t.boolean   "public",                default: false, null: false
-    t.string    "slug",                                  null: false
-    t.text      "dcterms_is_part_of",    default: [],    null: false, array: true
-    t.text      "dcterms_contributor",   default: [],    null: false, array: true
-    t.text      "dcterms_creator",       default: [],    null: false, array: true
-    t.text      "dcterms_description",   default: [],    null: false, array: true
-    t.text      "dcterms_extent",        default: [],    null: false, array: true
-    t.text      "dcterms_medium",        default: [],    null: false, array: true
-    t.text      "dcterms_identifier",    default: [],    null: false, array: true
-    t.text      "dcterms_language",      default: [],    null: false, array: true
-    t.text      "dcterms_spatial",       default: [],    null: false, array: true
-    t.text      "dcterms_publisher",     default: [],    null: false, array: true
-    t.text      "dcterms_access_right",  default: [],    null: false, array: true
-    t.text      "dcterms_rights_holder", default: [],    null: false, array: true
-    t.text      "dcterms_subject",       default: [],    null: false, array: true
-    t.text      "dcterms_temporal",      default: [],    null: false, array: true
-    t.text      "dcterms_title",         default: [],    null: false, array: true
-    t.text      "dcterms_type",          default: [],    null: false, array: true
-    t.text      "dcterms_is_shown_at",   default: [],    null: false, array: true
-    t.text      "dcterms_provenance",    default: [],    null: false, array: true
-    t.text      "dcterms_license",       default: [],    null: false, array: true
-    t.integer   "items_count",           default: 0
+    t.datetime  "created_at",                                     null: false
+    t.datetime  "updated_at",                                     null: false
+    t.text      "dc_relation",                    default: [],    null: false, array: true
+    t.string    "other_repositories",             default: [],                 array: true
+    t.boolean   "public",                         default: false, null: false
+    t.string    "slug",                                           null: false
+    t.text      "dcterms_is_part_of",             default: [],    null: false, array: true
+    t.text      "dcterms_contributor",            default: [],    null: false, array: true
+    t.text      "dcterms_creator",                default: [],    null: false, array: true
+    t.text      "dcterms_description",            default: [],    null: false, array: true
+    t.text      "dcterms_extent",                 default: [],    null: false, array: true
+    t.text      "dcterms_medium",                 default: [],    null: false, array: true
+    t.text      "dcterms_identifier",             default: [],    null: false, array: true
+    t.text      "dcterms_language",               default: [],    null: false, array: true
+    t.text      "dcterms_spatial",                default: [],    null: false, array: true
+    t.text      "dcterms_publisher",              default: [],    null: false, array: true
+    t.text      "dcterms_access_right",           default: [],    null: false, array: true
+    t.text      "dcterms_rights_holder",          default: [],    null: false, array: true
+    t.text      "dcterms_subject",                default: [],    null: false, array: true
+    t.text      "dcterms_temporal",               default: [],    null: false, array: true
+    t.text      "dcterms_title",                  default: [],    null: false, array: true
+    t.text      "dcterms_type",                   default: [],    null: false, array: true
+    t.text      "dcterms_is_shown_at",            default: [],    null: false, array: true
+    t.text      "dcterms_provenance",             default: [],    null: false, array: true
+    t.text      "dcterms_license",                default: [],    null: false, array: true
+    t.integer   "items_count",                    default: 0
+    t.text      "dcterms_bibliographic_citation", default: [],    null: false, array: true
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
