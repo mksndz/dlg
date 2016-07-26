@@ -1,9 +1,8 @@
 require 'rake'
 require 'open-uri'
 require 'nokogiri'
-task :import_items, [:collection_slug] => [:environment] do |t, args|
 
-  importer = LegacyImporter.new
+task :import_items, [:collection_slug] => [:environment] do |t, args|
 
   @logger = Logger.new('./log/item_import.log')
 

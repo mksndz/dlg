@@ -41,8 +41,6 @@ class Collection < ActiveRecord::Base
       ''
     end
 
-    integer :repository_id, references: Repository
-
     boolean :public
 
     string :repository_name, stored: true do
