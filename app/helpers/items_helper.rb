@@ -4,11 +4,14 @@ module ItemsHelper
   def legacy_thumbnail_tag(item)
     thumbnail_url = "http://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
     begin
-      open(thumbnail_url)
-      image_tag(thumbnail_url, class: 'img-thumbnail')
+      open thumbnail_url
+      url = thumbnail_url
     rescue OpenURI::HTTPError
-      image_tag('no_thumb.png', class: 'img-thumbnail')
+      url = 'no_thumb.png'
+    rescue Net::ReadTimeout
+      url = 'no_thumb.png'
     end
+    image_tag url, class: 'img-thumbnail'
   end
 
   def item_validation_status(item)
@@ -17,9 +20,9 @@ module ItemsHelper
     else
       content_tag(:span, nil, class: 'glyphicon glyphicon-remove', aria: { hidden: true } )
       # todo very hard on page load times when most items are invalid...using staging vm server
-      # item.validate
-      # content_tag(:span, nil, class: 'glyphicon glyphicon-remove validation-errors', aria: { hidden: true }, data: { content: errors_html(item.errors), toggle: 'popover' } ) +
-      #   content_tag(:sup, item.errors.count)
+      item.validate
+      content_tag(:span, nil, class: 'glyphicon glyphicon-remove validation-errors', aria: { hidden: true }, data: { content: errors_html(item.errors), toggle: 'popover' } ) +
+        content_tag(:sup, item.errors.count)
     end
   end
 
