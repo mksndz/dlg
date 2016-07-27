@@ -104,11 +104,11 @@ class BatchesController < ApplicationController
   end
 
   def commit_form
-    e = check_if_batch_is_not_ready
-    if e
-      redirect_to @batch, alert: e
-    else
+    errors = check_if_batch_is_not_ready
+    if errors.empty?
       render :commit_form
+    else
+      redirect_to @batch, alert: errors.join(' and ') unless errors.empty?
     end
   end
 
@@ -118,7 +118,7 @@ class BatchesController < ApplicationController
       if @batch.batch_items.count == 0
         format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.empty_batch_commit') }
         format.json { head :no_content }
-      elsif !@batch.has_invalid_batch_items?
+      elsif @batch.has_invalid_batch_items?
         format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.has_invalid_batch_items') }
         format.json { head :no_content }
       else
@@ -169,8 +169,10 @@ class BatchesController < ApplicationController
   end
 
   def check_if_batch_is_not_ready
-    return I18n.t('meta.batch.labels.empty_batch_commit') if @batch.batch_items.count == 0
-    I18n.t('meta.batch.labels.has_invalid_batch_items') unless @batch.has_invalid_batch_items?
+    errors = []
+    errors << I18n.t('meta.batch.labels.empty_batch_commit') if @batch.batch_items.count == 0
+    errors << I18n.t('meta.batch.labels.has_invalid_batch_items') if @batch.has_invalid_batch_items?
+    errors
   end
 
 end

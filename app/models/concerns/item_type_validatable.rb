@@ -1,12 +1,12 @@
 module ItemTypeValidatable
-  include ApplicationHelper
+  # include ApplicationHelper
   extend ActiveSupport::Concern
 
   TYPE_REQUIRED_VALUES = %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text)
 
   included do
 
-    after_validation :set_validation_cache
+    after_save :update_validation_cache
 
     validates_presence_of :collection, message: I18n.t('activerecord.errors.messages.item_type.collection')
     validates_presence_of :dc_date, :dcterms_spatial
@@ -58,8 +58,9 @@ module ItemTypeValidatable
   #   end
   # end
 
-  def set_validation_cache
-    self.valid_item = errors.empty?
+  def update_validation_cache
+    item_valid = valid?
+    self.update_columns valid_item: valid?
   end
 
 end

@@ -109,7 +109,7 @@ feature 'Batches Management' do
       }
 
       i = batch.batch_items.first
-      i.valid_item = false
+      i.dc_date = []
       i.save(validate: false)
 
       visit batch_path batch
@@ -117,8 +117,6 @@ feature 'Batches Management' do
       expect(page).to have_link I18n.t('meta.batch.actions.commit')
 
       click_on I18n.t('meta.batch.actions.commit')
-
-      p = page.html
 
       expect(page).to have_current_path batch_path batch
       expect(page).to have_text I18n.t('meta.batch.labels.has_invalid_batch_items')

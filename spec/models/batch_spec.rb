@@ -45,17 +45,17 @@ RSpec.describe Batch, type: :model do
     expect(b.pending?).to be true
   end
 
-  it 'responds with true for has invalid batch items status when all batch_items are valid' do
+  it 'responds with false for has invalid batch items status when all batch_items are valid' do
     b = Fabricate(:batch) { batch_items(count: 2) }
-    expect(b.has_invalid_batch_items?).to be true
+    expect(b.has_invalid_batch_items?).to be false
   end
 
-  it 'responds with false for has invalid batch items status at least one batch_item is not valid' do
+  it 'responds with true for has_invalid_ batch_items status at least one batch_item is not valid' do
     b = Fabricate(:batch) { batch_items(count: 2) }
     i = b.batch_items.first
-    i.valid_item = false
+    i.dc_date = []
     i.save(validate: false)
-    expect(b.has_invalid_batch_items?).to be false
+    expect(b.has_invalid_batch_items?).to be true
   end
 
   it 'responds with boolean for pending status after batch is committed' do

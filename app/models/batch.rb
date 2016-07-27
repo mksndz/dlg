@@ -14,7 +14,7 @@ class Batch < ActiveRecord::Base
   end
 
   def has_invalid_batch_items?
-    !batch_items.where(valid_item: false).exists?
+    batch_items.where(valid_item: false).exists?
   end
 
   def committed?

@@ -157,9 +157,16 @@ RSpec.describe Item, type: :model do
     expect { i2.save! }.not_to raise_exception
   end
 
-  it 'caches validation status as a boolean' do
+  it 'has validation status as a boolean true if item is valid' do
     i1 = Fabricate :item
     expect(i1.valid_item).to be true
+  end
+
+  it 'has validation status as a boolean false if item is invalid' do
+    i1 = Fabricate :item
+    i1.dc_date = []
+    i1.save(validate: false)
+    expect(i1.valid_item).to be false
   end
 
   it 'has a boolean method has_thumbnail' do
