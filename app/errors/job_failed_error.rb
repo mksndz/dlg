@@ -1,0 +1,2 @@
+class JobFailedError < StandardError
+end
