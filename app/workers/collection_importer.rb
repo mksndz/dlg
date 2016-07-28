@@ -38,6 +38,10 @@ class CollectionImporter
       return true
     end
 
+    item_count = items.length
+
+    @logger.info "Starting import of #{c.display_title} with #{item_count} Items to add"
+
     items.each do |i|
 
       hash = Hash.from_xml(i.to_s)
@@ -73,7 +77,7 @@ class CollectionImporter
     Sunspot.commit_if_dirty
 
     @logger.info 'Finished importing ' + c.display_title
-    @logger.info "XML contained #{items.length} records and Collection now has #{c.items.count} items."
+    @logger.info "XML contained #{item_count} records and Collection now has #{c.items.count} items."
 
   end
 
