@@ -84,7 +84,7 @@ class BatchesController < ApplicationController
 
     respond_to do |format|
       if @batch.update(batch_params)
-        format.html { redirect_to @batch, notice: I18n.t('meta.defaults.messages.success.updated') }
+        format.html { redirect_to @batch, notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Batch') }
         format.json { render :show, status: :ok, location: @batch }
       else
         format.html { render :edit }
@@ -98,7 +98,7 @@ class BatchesController < ApplicationController
   def destroy
     @batch.destroy
     respond_to do |format|
-      format.html { redirect_to batches_url, notice: I18n.t('meta.defaults.messages.success.destroyed')}
+      format.html { redirect_to batches_url, notice: I18n.t('meta.defaults.messages.success.destroyed', entity: 'Batch')}
       format.json { head :no_content }
     end
   end
