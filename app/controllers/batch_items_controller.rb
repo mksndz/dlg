@@ -73,7 +73,7 @@ class BatchItemsController < ApplicationController
   def destroy
     @batch_item.destroy
     respond_to do |format|
-      format.html { redirect_to batch_batch_items_path(@batch), notice: I18n.t('meta.defaults.messages.success.destroyed') }
+      format.html { redirect_to batch_batch_items_path(@batch), notice: I18n.t('meta.defaults.messages.success.destroyed', entity: 'Batch Item') }
       format.json { head :no_content }
     end
   end
