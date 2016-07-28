@@ -26,17 +26,18 @@ $(document).ready ->
 
   $("a.add-to-batch-action").on("click", (e, data, status, xhr) ->
     e.preventDefault()
-    entities = get_checked_items()
-    url = $(this).data('url')
-    if entities
-      $.ajax url,
-        type: "POST",
-        data:
-          entities: entities,
-        error: (jqXHR, textStatus, errorThrown) ->
-          alert('arror')
-        success: (data, textStatus, jqXHR) ->
-          alert('success')
+    alert('feature not yet implemented')
+#    entities = get_checked_items()
+#    url = $(this).data('url')
+#    if entities
+#      $.ajax url,
+#        type: "POST",
+#        data:
+#          entities: entities,
+#        error: (jqXHR, textStatus, errorThrown) ->
+#          alert('error')
+#        success: (data, textStatus, jqXHR) ->
+#          alert('success')
   )
 
   $("a.select-all-action").on("click", (e, data, status, xhr) ->
