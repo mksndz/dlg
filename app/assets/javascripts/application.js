@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require 'blacklight_advanced_search'
 //= require blacklight-maps
@@ -22,7 +21,7 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function() {
+$(document).on('ready turbolinks:load', function() {
     $('select.fancy-multiselect').multiSelect({
         cssClass: 'fancy-multiselect-container'
     })
