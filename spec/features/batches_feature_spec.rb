@@ -223,7 +223,7 @@ feature 'Batches Management' do
 
       visit batches_path
 
-      expect(page).to have_text I18n.t('meta.batch.labels.commit_pending', time: batch.queued_for_commit_at)
+      expect(page).to have_text 'ago'
 
     end
 
