@@ -196,7 +196,7 @@ en:
         failed: 'Could not Commit'
         successful: 'Successfully Committed'
         not_yet_committed: 'Not Yet'
-        commit_pending: 'Queued at %{time}'
+        commit_pending: 'Queued %{time} ago'
         to_commit: 'You will be committing %{count} records in this action.'
         empty_batch_commit: 'You cannot commit an empty Batch'
         has_invalid_batch_items: 'You cannot commit a Batch with invalid items'
