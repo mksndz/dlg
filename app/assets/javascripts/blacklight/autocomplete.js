@@ -1,6 +1,6 @@
 /*global Bloodhound */
 
-$(document).ready(function() {
+$(document).on('ready turbolinks:load', function() {
 
     $('[data-autocomplete-enabled="true"]').each(function() {
         var $el = $(this);

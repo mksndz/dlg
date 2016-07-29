@@ -1,4 +1,4 @@
-$(document).ready ->
+$(document).on 'ready turbolinks:load', ->
 
   $import_form = $("#xml_form")
 

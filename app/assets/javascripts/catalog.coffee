@@ -1,4 +1,4 @@
-$(document).ready ->
+$(document).on 'ready turbolinks:load', ->
 
   $("a.delete-action").on("click", (e, data, status, xhr) ->
     e.preventDefault()
