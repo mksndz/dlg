@@ -11,17 +11,15 @@
 // about supported directives.
 //
 //= require jquery
-//= require 'blacklight_advanced_search'
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require turbolinks
-//
-// Required by Blacklight-Maps
+//= require 'blacklight_advanced_search'
 //= require blacklight-maps
 //= require blacklight/blacklight
 //= require bootstrap/tooltip
 //= require bootstrap/popover
 //= require multi-select
+//= require turbolinks
 //= require_tree .
 
 $(document).ready(function() {
