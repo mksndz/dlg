@@ -152,7 +152,7 @@ class Item < ActiveRecord::Base
   end
   
   def placename
-    return 'No Location Information Available' unless dcterms_spatial.first
+    return 'No Location Information Available' unless dcterms_spatial.first and dcterms_spatial.first.is_a? String
     placename = dcterms_spatial.first.gsub(coordinates_regex, '')
     return placename.chop.chop if element_has_coordinates dcterms_spatial.first
     placename
