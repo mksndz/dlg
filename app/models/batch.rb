@@ -33,6 +33,7 @@ class Batch < ActiveRecord::Base
       i = bi.commit
       begin
         i.save
+        Sunspot.commit
       rescue StandardError => e
         failures << { batch_item: bi.id, errors: e, slug: bi.slug }
       end
