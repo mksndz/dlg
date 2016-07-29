@@ -31,7 +31,11 @@ class Batch < ActiveRecord::Base
     failures = []
     batch_items.each do |bi|
       i = bi.commit
-      i.save
+      begin
+        i.save
+      rescue StandardError => e
+        failures << { batch_item: bi.id, errors: e, slug: bi.slug }
+      end
       if i.errors.empty?
         # item properly committed, save Item and BI ids
         successes << { batch_item: bi.id, item: i.id, slug: bi.slug }
