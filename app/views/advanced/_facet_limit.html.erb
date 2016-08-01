@@ -1,0 +1,13 @@
+<ul class="facet-values list-unstyled blacklight-advanced-facet-select">
+  <% display_facet.items.each do |item| %>
+      <li>
+        <div class="checkbox">
+          <label for="<%= "f_inclusive[#{solr_field}][]" %>">
+            <%= check_box_tag "f_inclusive[#{solr_field}][]", item.value.to_sym, facet_value_checked?(solr_field, item.value), id:  "f_inclusive_#{solr_field}_#{item.value.parameterize}" %>
+            <span class="advanced-facet-count label label-primary"><%= number_with_delimiter item.hits %></span>
+            <span class="advanced-facet-name"><%= facet_display_value solr_field, item %></span>
+          </label>
+        </div>
+      </li>
+  <% end %>
+</ul>
