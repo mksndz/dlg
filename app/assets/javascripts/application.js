@@ -26,7 +26,5 @@ $(document).on('ready turbolinks:load', function() {
     $('select.fancy-multiselect').multiSelect({
         cssClass: 'fancy-multiselect-container'
     });
-    $('select.advanced-search-facet-select').chosen({
-        allow_single_deselect: true
-    })
+    $('select.advanced-search-facet-select').chosen()
 });

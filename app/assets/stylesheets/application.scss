@@ -11,7 +11,8 @@ $logo_image: 'dlg_logo_red.png';
 @import 'blacklight_maps/default';
 @import 'blacklight_gallery/default';
 @import 'multi-select';
-@import 'chosen';
+//@import 'chosen';
+@import 'bootstrap-chosen/bootstrap-chosen.scss';
 
 // Blacklight CSS Overrides
 
