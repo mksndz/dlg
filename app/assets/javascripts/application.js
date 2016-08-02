@@ -18,11 +18,15 @@
 //= require bootstrap/tooltip
 //= require bootstrap/popover
 //= require multi-select
+//= require chosen-jquery
 //= require turbolinks
 //= require_tree .
 
 $(document).on('ready turbolinks:load', function() {
     $('select.fancy-multiselect').multiSelect({
         cssClass: 'fancy-multiselect-container'
+    });
+    $('select.advanced-search-facet-select').chosen({
+        allow_single_deselect: true
     })
 });
