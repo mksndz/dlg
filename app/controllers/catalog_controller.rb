@@ -77,25 +77,25 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'public_b',            label: I18n.t('meta.search.facets.public'), limit: 10, helper_method: :boolean_facet_labels
-    config.add_facet_field 'dpla_b',              label: I18n.t('meta.search.facets.dpla'), limit: 10, helper_method: :boolean_facet_labels
-    config.add_facet_field 'provenance_facet',    label: I18n.t('meta.search.facets.provenance'), limit: 10
-    config.add_facet_field 'creator_facet',       label: I18n.t('meta.search.facets.creator'), limit: 10
-    config.add_facet_field 'contributor_facet',   label: I18n.t('meta.search.facets.contributor'), limit: 10
-    config.add_facet_field 'subject_facet',       label: I18n.t('meta.search.facets.subject'), limit: 10
-    config.add_facet_field 'year_facet',          label: I18n.t('meta.search.facets.year'), limit: 10
-    config.add_facet_field 'temporal_facet',      label: I18n.t('meta.search.facets.temporal'), limit: 10
-    config.add_facet_field 'location_facet',      label: I18n.t('meta.search.facets.location'), limit: 10
-    config.add_facet_field 'format_facet',        label: I18n.t('meta.search.facets.format'), limit: 10
-    config.add_facet_field 'rights_facet',        label: I18n.t('meta.search.facets.rights'), limit: 10
-    config.add_facet_field 'rights_holder_facet', label: I18n.t('meta.search.facets.rights_holder'), limit: 10
-    config.add_facet_field 'relation_facet',      label: I18n.t('meta.search.facets.relation'), limit: 10
-    config.add_facet_field 'type_facet',          label: I18n.t('meta.search.facets.type'), limit: 10
-    config.add_facet_field 'medium_facet',        label: I18n.t('meta.search.facets.medium'), limit: 10
-    config.add_facet_field 'language_facet',      label: I18n.t('meta.search.facets.language'), limit: 10
-    config.add_facet_field 'repository_name_sms', label: I18n.t('meta.search.facets.repository'), limit: 10
-    config.add_facet_field 'collection_name_sms', label: I18n.t('meta.search.facets.collection'), limit: 10
-    config.add_facet_field 'class_name',          label: I18n.t('meta.search.facets.class'), limit: 10
+    config.add_facet_field 'public_b',            label: I18n.t('meta.search.facets.public'), helper_method: :boolean_facet_labels
+    config.add_facet_field 'dpla_b',              label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels
+    config.add_facet_field 'provenance_facet',    label: I18n.t('meta.search.facets.provenance')
+    config.add_facet_field 'creator_facet',       label: I18n.t('meta.search.facets.creator')
+    config.add_facet_field 'contributor_facet',   label: I18n.t('meta.search.facets.contributor')
+    config.add_facet_field 'subject_facet',       label: I18n.t('meta.search.facets.subject')
+    config.add_facet_field 'year_facet',          label: I18n.t('meta.search.facets.year')
+    config.add_facet_field 'temporal_facet',      label: I18n.t('meta.search.facets.temporal')
+    config.add_facet_field 'location_facet',      label: I18n.t('meta.search.facets.location')
+    config.add_facet_field 'format_facet',        label: I18n.t('meta.search.facets.format')
+    config.add_facet_field 'rights_facet',        label: I18n.t('meta.search.facets.rights')
+    config.add_facet_field 'rights_holder_facet', label: I18n.t('meta.search.facets.rights_holder')
+    config.add_facet_field 'relation_facet',      label: I18n.t('meta.search.facets.relation')
+    config.add_facet_field 'type_facet',          label: I18n.t('meta.search.facets.type')
+    config.add_facet_field 'medium_facet',        label: I18n.t('meta.search.facets.medium')
+    config.add_facet_field 'language_facet',      label: I18n.t('meta.search.facets.language')
+    config.add_facet_field 'repository_name_sms', label: I18n.t('meta.search.facets.repository')
+    config.add_facet_field 'collection_name_sms', label: I18n.t('meta.search.facets.collection')
+    config.add_facet_field 'class_name',          label: I18n.t('meta.search.facets.class')
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
@@ -311,7 +311,9 @@ class CatalogController < ApplicationController
     config.advanced_search = Blacklight::OpenStructWithHashAccess.new
     config.advanced_search[:url_key]              ||= 'advanced'
     config.advanced_search[:query_parser]         ||= 'dismax'
-    config.advanced_search[:form_solr_parameters] ||= {}
+    config.advanced_search[:form_solr_parameters] ||= {
+        'facet.limit' => 600
+    }
     config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
 
     # AUTOCOMPLETE CONFIG
