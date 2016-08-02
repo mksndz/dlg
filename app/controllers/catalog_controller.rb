@@ -8,13 +8,6 @@ class CatalogController < ApplicationController
 
   configure_blacklight do |config|
 
-    # default advanced config values
-    config.advanced_search ||= Blacklight::OpenStructWithHashAccess.new
-    # config.advanced_search[:qt] ||= 'advanced'
-    config.advanced_search[:url_key] ||= 'advanced'
-    config.advanced_search[:query_parser] ||= 'dismax'
-    config.advanced_search[:form_solr_parameters] ||= {}
-
     ## Class for sending and receiving requests from a search index
     # config.repository_class = Blacklight::Solr::Repository
     #
@@ -314,27 +307,34 @@ class CatalogController < ApplicationController
     config.show.document_actions.delete(:citation)
     config.show.document_actions.delete(:sms)
 
+    # ADVANCED SEARCH CONFIG
+    config.advanced_search = Blacklight::OpenStructWithHashAccess.new
+    config.advanced_search[:url_key]              ||= 'advanced'
+    config.advanced_search[:query_parser]         ||= 'dismax'
+    config.advanced_search[:form_solr_parameters] ||= {}
+    config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
+
     # AUTOCOMPLETE CONFIG
     config.autocomplete_enabled = false
     config.autocomplete_path = 'suggest'
 
     # MAPS CONFIG
     config.add_facet_field 'geojson', label: 'Coordinates', limit: -2, show: false
-    config.view.maps.geojson_field = 'geojson'
-    config.view.maps.placename_field = 'placename'
-    config.view.maps.coordinates_field = 'coordinates'
-    config.view.maps.search_mode = 'placename'
-    config.view.maps.facet_mode = 'geojson'
-    config.view.maps.initialview = '[[27.741885,-96.987305],[37.874853,-71.279297]]'
-    config.view.maps.maxzoom = 12
-    config.view.maps.show_initial_zoom = 9
-    config.show.partials << :show_maplet
+    config.view.maps.geojson_field      = 'geojson'
+    config.view.maps.placename_field    = 'placename'
+    config.view.maps.coordinates_field  = 'coordinates'
+    config.view.maps.search_mode        = 'placename'
+    config.view.maps.facet_mode         = 'geojson'
+    config.view.maps.initialview        = '[[27.741885,-96.987305],[37.874853,-71.279297]]'
+    config.view.maps.maxzoom            = 12
+    config.view.maps.show_initial_zoom  = 9
+    config.show.partials                << :show_maplet
 
     # GALLERY CONFIG
-    config.view.gallery.partials = [:index_header, :index]
-    config.view.masonry.partials = [:index]
-    config.view.slideshow.partials = [:index]
-    config.show.tile_source_field = :thumbnail_url
+    config.view.gallery.partials    = [:index_header, :index]
+    config.view.masonry.partials    = [:index]
+    config.view.slideshow.partials  = [:index]
+    config.show.tile_source_field   = :thumbnail_url
     # config.show.partials.insert(1, :openseadragon) # todo fix this
 
     # remove standard blacklight navbar links (they are in user tools menu now)
