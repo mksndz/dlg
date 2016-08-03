@@ -24,7 +24,6 @@ feature 'Item Management' do
       fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'),      with: '2000'
       fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'),       with: 'Georgia'
       fill_in I18n.t('activerecord.attributes.item.dcterms_type'),          with: 'Text'
-      fill_in I18n.t('activerecord.attributes.item.dc_right'),              with: 'None'
 
       click_button I18n.t('meta.defaults.actions.save')
 
@@ -45,7 +44,6 @@ feature 'Item Management' do
       fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'),      with: '2000'
       fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'),       with: 'Georgia'
       fill_in I18n.t('activerecord.attributes.item.dcterms_type'),          with: 'Text'
-      fill_in I18n.t('activerecord.attributes.item.dc_right'),              with: 'None'
 
       select c2.display_title, from: I18n.t('activerecord.attributes.item.other_collections')
 
@@ -72,7 +70,6 @@ feature 'Item Management' do
       fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'),      with: '2000'
       fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'),       with: 'Georgia'
       fill_in I18n.t('activerecord.attributes.item.dcterms_type'),          with: 'Text'
-      fill_in I18n.t('activerecord.attributes.item.dc_right'),              with: 'None'
 
       select '', from: I18n.t('activerecord.attributes.item.other_collections')
 
