@@ -59,7 +59,6 @@ module ItemTypeValidatable
   # end
 
   def update_validation_cache
-    item_valid = valid?
     self.update_columns valid_item: valid?
   end
 
