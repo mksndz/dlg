@@ -229,6 +229,10 @@ class Item < ActiveRecord::Base
     false
   end
 
+  def other_collection_titles
+    Collection.find(other_collections).map(&:title)
+  end
+
   private
 
   def latitude(el)
@@ -245,10 +249,6 @@ class Item < ActiveRecord::Base
 
   def coordinates_regex
     /(-?\d+\.\d+), (-?\d+\.\d+)/
-  end
-
-  def other_collection_titles
-    Collection.find(other_collections).map(&:title)
   end
 
   def other_repository_titles

@@ -30,11 +30,11 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong><%= t('meta.item.labels.view.other_collections') %></strong>
+    <strong><%= t('activerecord.attributes.item.other_collections') %></strong>
   </div>
   <div class="panel-body">
     <ul>
-      <% @item.other_collections.each do |c| %>
+      <% @item.other_collection_titles.each do |c| %>
           <li><%= c %></li>
       <% end %>
     </ul>

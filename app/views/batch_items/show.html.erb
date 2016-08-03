@@ -19,5 +19,18 @@
 
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @batch_item} %>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong><%= t('activerecord.attributes.batch_item.other_collections') %></strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @batch_item.other_collection_titles.each do |c| %>
+          <li><%= c %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.created_at'), value: @batch_item.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.updated_at'), value: @batch_item.updated_at %>

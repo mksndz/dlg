@@ -15,6 +15,10 @@ class BatchItem < ActiveRecord::Base
     has_thumbnail
   end
 
+  def other_collection_titles
+    Collection.find(other_collections).map(&:title)
+  end
+
   def commit
     scrub_attributes = %w(id created_at updated_at batch_id)
     attributes = self.attributes.except(*scrub_attributes)
