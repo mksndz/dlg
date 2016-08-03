@@ -12,7 +12,24 @@
 <%= meta_textarea entity, :dcterms_spatial %>
 <%= meta_textarea entity, :dc_format %>
 <%= meta_textarea entity, :dcterms_is_part_of %>
-<%= meta_textarea entity, :dc_right %>
+<%# meta_textarea entity, :dc_right %>
+
+<%= content_tag :div, class: 'form-group' do %>
+  <% e = entity.class.name.demodulize.underscore %>
+  <%=
+    label_tag "#{e}_dc_right", t("activerecord.attributes.#{e}.dc_right")
+  %>
+  <%=
+    select(
+        e,
+        :dc_right,
+        rights_statements_for_select,
+        { include_blank: true },
+        { class: 'form-control standardized-rights-select' }
+    )
+  %>
+<% end %>
+
 <%= meta_textarea entity, :dcterms_rights_holder %>
 <%= meta_textarea entity, :dcterms_bibliographic_citation %>
 <%= meta_textarea entity, :dlg_local_right %>
