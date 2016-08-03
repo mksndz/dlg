@@ -14,7 +14,7 @@
         <%= f.check_box :dpla %>
     <% end %>
 
-    <%= f.select :other_collections, @collections.collect { |c| [c.display_title, c.slug] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
+    <%= f.select :other_collections, @collections.collect { |c| [c.display_title, c.id] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
 
     <%= render partial: 'shared/edit_dc_fields', locals: { f: f, entity: @batch_item } %>
 
