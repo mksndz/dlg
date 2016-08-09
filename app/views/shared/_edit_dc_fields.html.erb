@@ -12,7 +12,6 @@
 <%= meta_textarea entity, :dcterms_spatial %>
 <%= meta_textarea entity, :dc_format %>
 <%= meta_textarea entity, :dcterms_is_part_of %>
-<%# meta_textarea entity, :dc_right %>
 
 <%= content_tag :div, class: 'form-group' do %>
   <% e = entity.class.name.demodulize.underscore %>
@@ -23,7 +22,7 @@
     select(
         e,
         :dc_right,
-        rights_statements_for_select,
+        all_rights_statements_for_select,
         { include_blank: true },
         { class: 'form-control standardized-rights-select' }
     )
