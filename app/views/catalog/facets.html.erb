@@ -1,12 +1,10 @@
 <% content_for :title do %>
-  Facets
+  Facet Browse
 <% end %>
 
-<ul>
+<div class="list-group col-md-3">
 <% @facets.each do |f| %>
     <% field = f[:field] %>
-      <%= content_tag :li do %>
-        <%= link_to f[:label], facet_catalog_path(field) %>
-      <% end %>
+    <%= link_to f[:label], facet_catalog_path(field), class: 'list-group-item' %>
 <% end %>
-</ul>
+</div>
