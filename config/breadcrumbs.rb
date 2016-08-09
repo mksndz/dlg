@@ -97,21 +97,6 @@ crumb :invitation do |user|
   parent :invitations
 end
 
-# ROLE
-
-crumb :roles do
-  link 'Roles', roles_path
-end
-
-crumb :role do |role|
-  if role.persisted?
-    link role.name
-  else
-    link 'New'
-  end
-  parent :roles
-end
-
 # BATCH
 
 crumb :batches do
