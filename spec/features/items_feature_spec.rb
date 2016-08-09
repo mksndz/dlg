@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'chosen-rails/rspec'
 include Warden::Test::Helpers
 Warden.test_mode!
 
@@ -99,6 +100,24 @@ feature 'Item Management' do
       end
 
       expect(titles).to eq %w(2 A F L Q Z)
+
+    end
+
+    scenario 'can select and save a rights statement from a drop down' do
+
+      item = Fabricate :item
+
+      display_value = 'In Copyright (http://rightsstatements.org/vocab/InC/1.0/)'
+      saved_value   = 'In Copyright'
+
+      visit edit_item_path item
+
+      chosen_select display_value, from: 'item_dc_right'
+
+      click_on I18n.t('meta.defaults.actions.save')
+
+      expect(page).to have_current_path item_path(item)
+      expect(page).to have_content saved_value
 
     end
 
