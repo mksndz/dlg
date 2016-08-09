@@ -13,7 +13,7 @@ feature 'Item Management' do
       login_as super_user, scope: :user
     end
 
-    scenario 'super user saves a new item with no other_collection value' do
+    scenario 'saves a new item with no other_collection value' do
 
       c1 = Fabricate(:collection) { items(count:1) }
 
@@ -21,10 +21,10 @@ feature 'Item Management' do
 
       click_on I18n.t('meta.defaults.actions.edit')
 
-      fill_in I18n.t('activerecord.attributes.item.slug'),                  with: 'test'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'),      with: '2000'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'),       with: 'Georgia'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_type'),          with: 'Text'
+      fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+      fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+      fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+      fill_in I18n.t('activerecord.attributes.item.dcterms_type'), with: 'Text'
 
       click_button I18n.t('meta.defaults.actions.save')
 
@@ -41,10 +41,10 @@ feature 'Item Management' do
 
       click_on I18n.t('meta.defaults.actions.edit')
 
-      fill_in I18n.t('activerecord.attributes.item.slug'),                  with: 'test'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'),      with: '2000'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'),       with: 'Georgia'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_type'),          with: 'Text'
+      fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+      fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+      fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+      fill_in I18n.t('activerecord.attributes.item.dcterms_type'), with: 'Text'
 
       select c2.display_title, from: I18n.t('activerecord.attributes.item.other_collections')
 
@@ -54,7 +54,7 @@ feature 'Item Management' do
 
     end
 
-    scenario 'super user saves a new item removing other_collection value' do
+    scenario 'saves a new item removing other_collection value' do
 
       c0 = Fabricate(:collection)
       c1 = Fabricate(:collection) {
@@ -67,10 +67,10 @@ feature 'Item Management' do
 
       click_on I18n.t('meta.defaults.actions.edit')
 
-      fill_in I18n.t('activerecord.attributes.item.slug'),                  with: 'test'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'),      with: '2000'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'),       with: 'Georgia'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_type'),          with: 'Text'
+      fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+      fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+      fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+      fill_in I18n.t('activerecord.attributes.item.dcterms_type'), with: 'Text'
 
       select '', from: I18n.t('activerecord.attributes.item.other_collections')
 
@@ -80,7 +80,7 @@ feature 'Item Management' do
 
     end
 
-    scenario 'user sorts items by title then sees items properly listed' do
+    scenario 'sorts items by title then sees items properly listed' do
 
       Fabricate(:item) { dcterms_title [ 'L' ] }
       Fabricate(:item) { dcterms_title [ 'F' ] }
