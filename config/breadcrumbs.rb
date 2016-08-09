@@ -2,8 +2,18 @@ crumb :root do
   link 'Home', root_path
 end
 
+# SEARCH
+
+crumb :basic_search do
+  link 'Basic Search'
+end
+
 crumb :advanced_search do
   link 'Advanced Search'
+end
+
+crumb :map_search do
+  link 'Map Search'
 end
 
 # PROFILE
