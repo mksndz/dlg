@@ -20,7 +20,7 @@ class CatalogController < ApplicationController
     ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = { 
       qt: 'search',
-      rows: 20
+      # 'facet.limit' => 20
     }
 
     # facets are defined in query handler so this is not needed
@@ -77,25 +77,25 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'public_b',            label: I18n.t('meta.search.facets.public'), helper_method: :boolean_facet_labels
-    config.add_facet_field 'dpla_b',              label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels
-    config.add_facet_field 'provenance_facet',    label: I18n.t('meta.search.facets.provenance')
-    config.add_facet_field 'creator_facet',       label: I18n.t('meta.search.facets.creator')
-    config.add_facet_field 'contributor_facet',   label: I18n.t('meta.search.facets.contributor')
-    config.add_facet_field 'subject_facet',       label: I18n.t('meta.search.facets.subject')
-    config.add_facet_field 'year_facet',          label: I18n.t('meta.search.facets.year')
-    config.add_facet_field 'temporal_facet',      label: I18n.t('meta.search.facets.temporal')
-    config.add_facet_field 'location_facet',      label: I18n.t('meta.search.facets.location')
-    config.add_facet_field 'format_facet',        label: I18n.t('meta.search.facets.format')
-    config.add_facet_field 'rights_facet',        label: I18n.t('meta.search.facets.rights')
-    config.add_facet_field 'rights_holder_facet', label: I18n.t('meta.search.facets.rights_holder')
-    config.add_facet_field 'relation_facet',      label: I18n.t('meta.search.facets.relation')
-    config.add_facet_field 'type_facet',          label: I18n.t('meta.search.facets.type')
-    config.add_facet_field 'medium_facet',        label: I18n.t('meta.search.facets.medium')
-    config.add_facet_field 'language_facet',      label: I18n.t('meta.search.facets.language')
-    config.add_facet_field 'repository_name_sms', label: I18n.t('meta.search.facets.repository')
-    config.add_facet_field 'collection_name_sms', label: I18n.t('meta.search.facets.collection')
-    config.add_facet_field 'class_name',          label: I18n.t('meta.search.facets.class')
+    config.add_facet_field 'public_b',            label: I18n.t('meta.search.facets.public'), helper_method: :boolean_facet_labels, limit: true
+    config.add_facet_field 'dpla_b',              label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels, limit: true
+    config.add_facet_field 'provenance_facet',    label: I18n.t('meta.search.facets.provenance'), limit: true
+    config.add_facet_field 'creator_facet',       label: I18n.t('meta.search.facets.creator'), limit: true
+    config.add_facet_field 'contributor_facet',   label: I18n.t('meta.search.facets.contributor'), limit: true
+    config.add_facet_field 'subject_facet',       label: I18n.t('meta.search.facets.subject'), limit: true
+    config.add_facet_field 'year_facet',          label: I18n.t('meta.search.facets.year'), limit: true
+    config.add_facet_field 'temporal_facet',      label: I18n.t('meta.search.facets.temporal'), limit: true
+    config.add_facet_field 'location_facet',      label: I18n.t('meta.search.facets.location'), limit: true
+    config.add_facet_field 'format_facet',        label: I18n.t('meta.search.facets.format'), limit: true
+    config.add_facet_field 'rights_facet',        label: I18n.t('meta.search.facets.rights'), limit: true
+    config.add_facet_field 'rights_holder_facet', label: I18n.t('meta.search.facets.rights_holder'), limit: true
+    config.add_facet_field 'relation_facet',      label: I18n.t('meta.search.facets.relation'), limit: true
+    config.add_facet_field 'type_facet',          label: I18n.t('meta.search.facets.type'), limit: true
+    config.add_facet_field 'medium_facet',        label: I18n.t('meta.search.facets.medium'), limit: true
+    config.add_facet_field 'language_facet',      label: I18n.t('meta.search.facets.language'), limit: true
+    config.add_facet_field 'repository_name_sms', label: I18n.t('meta.search.facets.repository'), limit: true
+    config.add_facet_field 'collection_name_sms', label: I18n.t('meta.search.facets.collection'), limit: true
+    config.add_facet_field 'class_name',          label: I18n.t('meta.search.facets.class'), limit: true
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
@@ -309,10 +309,28 @@ class CatalogController < ApplicationController
 
     # ADVANCED SEARCH CONFIG
     config.advanced_search = Blacklight::OpenStructWithHashAccess.new
+    config.advanced_search[:qt]                   ||= 'advanced'
     config.advanced_search[:url_key]              ||= 'advanced'
     config.advanced_search[:query_parser]         ||= 'dismax'
     config.advanced_search[:form_solr_parameters] ||= {
-        'facet.limit' => 600
+        'f.provenance_facet.facet.limit' => 600,
+        'f.creator_facet.facet.limit' => 600,
+        'f.contibutor_facet.facet.limit' => 600,
+        'f.subject_facet.facet.limit' => 600,
+        'f.year_facet.facet.limit' => 600,
+        'f.temporal_facet.facet.limit' => 600,
+        'f.location_facet.facet.limit' => 600,
+        'f.format_facet.facet.limit' => 600,
+        'f.rights_facet.facet.limit' => 600,
+        'f.rights_holder_facet.facet.limit' => 600,
+        'f.relation_facet.facet.limit' => 600,
+        'f.type_facet.facet.limit' => 600,
+        'f.medium_facet.facet.limit' => 600,
+        'f.language_facet.facet.limit' => 600,
+        'f.reposiotry_name_sms.facet.limit' => 600,
+        'f.collection_name_sms.facet.limit' => 600,
+        'f.class_name.facet.limit' => 600,
+        'f.geojson.facet.limit' => 0,
     }
     config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
 
@@ -354,5 +372,20 @@ class CatalogController < ApplicationController
 
   # add "Export as XML" button on search results
   add_results_collection_tool :action_widget
+
+  def facets
+    @facets = displayed_facets
+  end
+
+  private
+
+  def displayed_facets
+    facets = []
+    blacklight_config.facet_fields.each do |f|
+      facet = f[1]
+      facets << facet if facet[:show] == true
+    end
+    facets
+  end
 
 end
