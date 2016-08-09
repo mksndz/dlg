@@ -3,4 +3,5 @@
   <%= content_tag :li, link_to(t('meta.app.search_menu.basic'), search_catalog_path) %>
   <%= content_tag :li, link_to(t('meta.app.search_menu.advanced'), blacklight_advanced_search_engine.advanced_search_path) %>
   <%= content_tag :li, link_to(t('meta.app.search_menu.map'), map_path) %>
+  <%= content_tag :li, link_to('Browse Facets', facets_catalog_path) %>
 </ul>

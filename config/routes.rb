@@ -67,6 +67,9 @@ Rails.application.routes.draw do
 
   resource :catalog, only: [:index], controller: 'catalog', constraints: { id: /.*/, format: false } do
     concerns :searchable
+    collection do
+      get 'facets', to: 'catalog#facets'
+    end
   end
 
   resources :solr_documents, only: [:show], controller: 'catalog', constraints: { id: /.*/, format: false } do

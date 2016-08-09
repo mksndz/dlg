@@ -1,0 +1,12 @@
+<% content_for :title do %>
+  Facets
+<% end %>
+
+<ul>
+<% @facets.each do |f| %>
+    <% field = f[:field] %>
+      <%= content_tag :li do %>
+        <%= link_to f[:label], facet_catalog_path(field) %>
+      <% end %>
+<% end %>
+</ul>

@@ -1,10 +1,6 @@
 module BlacklightHelper
   include Blacklight::BlacklightHelperBehavior
 
-  def facet_more_link_threshold
-    10
-  end
-
   def render_page_title
     if content_for?(:page_title)
       head_page_titleify content_for(:page_title)
