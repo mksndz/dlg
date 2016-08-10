@@ -29,34 +29,8 @@ module MetadataHelper
     )
   end
 
-  def rights_statements_dot_org
-    {
-        'In Copyright'                                                    => 'http://rightsstatements.org/vocab/InC/1.0/',
-        'In Copyright - EU Orphan Work'                                   => 'http://rightsstatements.org/vocab/InC-OW-EU/1.0/',
-        'In Copyright - Educational Use Permitted'                        => 'http://rightsstatements.org/vocab/InC-EDU/1.0/',
-        'In Copyright - Non-Commercial Use Permitted'                     => 'http://rightsstatements.org/vocab/InC-NC/1.0/',
-        'In Copyright - Rights-holder(s) Unlocatable or Unidentifiable'   => 'http://rightsstatements.org/vocab/InC-RUU/1.0/',
-        'No Copyright - Contractual Restrictions'                         => 'http://rightsstatements.org/vocab/NoC-CR/1.0/',
-        'No Copyright - Non-Commercial Use Only'                          => 'http://rightsstatements.org/vocab/NoC-NC/1.0/',
-        'No Copyright - Other Known Legal Restrictions'                   => 'http://rightsstatements.org/vocab/NoC-OKLR/1.0/',
-        'No Copyright - United States'                                    => 'http://rightsstatements.org/vocab/NoC-US/1.0/',
-        'Copyright Not Evaluated'                                         => 'http://rightsstatements.org/vocab/CNE/1.0/',
-        'Copyright Undetermined'                                          => 'http://rightsstatements.org/vocab/UND/1.0/',
-        'No Known Copyright'                                              => 'http://rightsstatements.org/vocab/NKC/1.0/',
-    }
-  end
-
-  def creative_commons_licenses
-    {
-        'Creative Commons CC0 - Public Domain Dedication '                      => 'https://creativecommons.org/publicdomain/zero/1.0/',
-        'Creative Commons Public Domain Mark'                                   => 'https://creativecommons.org/publicdomain/mark/1.0/',
-        'Creative Commons CC0 - No Rights Reserved'                             => 'https://creativecommons.org/share-your-work/public-domain/cc0/',
-        'Creative Commons CC BY-NC-SA - Attribution-NonCommercial-ShareAlike'   => 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
-        'Creative Commons CC BY-NC - Attribution-NonCommercial'                 => 'https://creativecommons.org/licenses/by-nc/4.0/',
-        'Creative Commons CC BY-ND - Attribution-NoDerivatives'                 => 'https://creativecommons.org/licenses/by-nd/4.0/',
-        'Creative Commons CC BY-SA - Attribution-ShareAlike'                    => 'https://creativecommons.org/licenses/by-sa/4.0/',
-        'Creative Commons CC BY - Attribution'                                  => 'https://creativecommons.org/licenses/by/4.0/',
-    }
+  def rights_statements
+    %w(inc inc_ow_eu inc_edu inc_nc inc_ruu noc_cr noc_nc noc_oklr noc_us cne und nkc zero mark by-nc-sa by-nc by-nd by-sa by)
   end
 
   def split_multivalued_params(params)
@@ -66,9 +40,17 @@ module MetadataHelper
   end
 
   def all_rights_statements_for_select
-    rights_statements_dot_org.merge(creative_commons_licenses).map do |name, uri|
-      ["#{name} (#{uri})", name]
+    rights_statements.map do |r|
+      [I18n.t(:label, scope: [:meta, :rights, r.to_sym]), I18n.t(:uri, scope: [:meta, :rights, r.to_sym])]
     end
+  end
+
+  def rights_icon_url(uri)
+    # a simple lookup hash or pairs for doing this could be loaded into redis at app start
+    I18n.t([:rights], scope: :meta)[0].each do |r|
+      return r[1][:icon_url] if r[1][:uri] == uri
+    end
+    'Icon Not Found for ' + uri
   end
 
 end
