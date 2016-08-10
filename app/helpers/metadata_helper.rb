@@ -45,12 +45,12 @@ module MetadataHelper
     end
   end
 
-  def rights_icon_url(uri)
+  def rights_icon_tag(obj)
     # a simple lookup hash or pairs for doing this could be loaded into redis at app start
     I18n.t([:rights], scope: :meta)[0].each do |r|
-      return r[1][:icon_url] if r[1][:uri] == uri
+      return  image_tag r[1][:icon_url] if r[1][:uri] == obj[:value].first
     end
-    'Icon Not Found for ' + uri
+    link_to obj[:value].first, obj[:value].first
   end
 
 end

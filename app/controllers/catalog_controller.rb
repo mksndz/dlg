@@ -3,6 +3,7 @@ class CatalogController < ApplicationController
   include BlacklightAdvancedSearch::Controller
   include Blacklight::Catalog
   include BlacklightMaps::ControllerOverride
+  include MetadataHelper
 
   authorize_resource class: false
 
@@ -136,7 +137,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_description_display',    label: I18n.t('meta.search.labels.dcterms_description')
     config.add_show_field 'dc_format_display',              label: I18n.t('meta.search.labels.dc_format')
     config.add_show_field 'dc_identifier_display',          label: I18n.t('meta.search.labels.dc_identifier'), helper_method: 'linkify'
-    config.add_show_field 'dc_right_display',               label: I18n.t('meta.search.labels.dc_right')
+    config.add_show_field 'dc_right_display',               label: I18n.t('meta.search.labels.dc_right'), helper_method: 'rights_icon_tag'
     config.add_show_field 'dc_date_display',                label: I18n.t('meta.search.labels.dc_date')
     config.add_show_field 'dc_relation_display',            label: I18n.t('meta.search.labels.dc_relation')
     config.add_show_field 'dcterms_publisher_display',      label: I18n.t('meta.search.labels.dcterms_publisher')
