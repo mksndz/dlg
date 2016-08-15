@@ -288,13 +288,3 @@ en:
           invalid_url_provided: 'contains an unresolvable URL. '
         blank: "cannot be blank"
         taken: "must be unique"
-      models:
-        repository:
-          attributes:
-            slug:
-        collection:
-          attributes:
-            slug:
-        item:
-          attributes:
-            slug:
