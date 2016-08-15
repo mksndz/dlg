@@ -124,7 +124,7 @@ class BatchesController < ApplicationController
       else
         @batch.queued_for_commit_at = Time.now
         @batch.save
-        @batch.delay.commit
+        Resque.enqueue(BatchCommitter, @batch.id)
         format.html { redirect_to @batch, notice: I18n.t('meta.batch.messages.success.committed') }
         format.json { head :no_content }
       end

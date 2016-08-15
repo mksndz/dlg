@@ -229,6 +229,8 @@ feature 'Batches Management' do
 
     scenario 'committer user can commit a valid batch (run background jobs) and can view the results' do
 
+      ResqueSpec.reset!
+
       batch_items = 1
 
       batch = Fabricate :batch do
@@ -243,7 +245,7 @@ feature 'Batches Management' do
       click_on I18n.t('meta.batch.actions.commit')
       click_on I18n.t('meta.batch.actions.commit')
 
-      Delayed::Worker.new.work_off
+      ResqueSpec.perform_all(:batch_commit_queue)
 
       visit batches_path
 
