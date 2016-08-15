@@ -2,9 +2,11 @@
   Facet Browse
 <% end %>
 
+<% breadcrumb :facets_browse %>
+
 <div class="list-group col-md-3">
-<% @facets.each do |f| %>
-    <% field = f[:field] %>
-    <%= link_to f[:label], facet_catalog_path(field), class: 'list-group-item' %>
-<% end %>
+  <% @facets.each do |f| %>
+      <% field = f[:field] %>
+      <%= link_to f[:label], facet_catalog_path(field), class: 'list-group-item' %>
+  <% end %>
 </div>

@@ -2,6 +2,8 @@
     <% content_for :title do %>
         Facets
     <% end %>
+
+    <% breadcrumb :facet_browse, facet_field_label(@facet.key) %>
 <% end %>
 
 <div class="facet_pagination top">

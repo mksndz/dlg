@@ -16,6 +16,15 @@ crumb :map_search do
   link 'Map Search'
 end
 
+crumb :facets_browse do
+  link 'Facet Browse'
+end
+
+crumb :facet_browse do |facet|
+  link facet
+  parent :facets_browse
+end
+
 # PROFILE
 
 crumb :profile do
