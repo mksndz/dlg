@@ -5,6 +5,8 @@ class CatalogController < ApplicationController
   include BlacklightMaps::ControllerOverride
   include MetadataHelper
 
+  ADVANCED_FACET_LIMIT = 600
+
   authorize_resource class: false
 
   configure_blacklight do |config|
@@ -265,8 +267,8 @@ class CatalogController < ApplicationController
     config.add_search_field('is_part_of') do |field|
       field.label = 'Is Part Of'
       field.solr_local_parameters = {
-          qf: 'is_part_of_unstem_search^100 dcterms_is_part_of__text^50',
-          pf: 'is_part_of_unstem_search^100 dcterms_is_part_of__text^50'
+          qf: 'is_part_of_unstem_search^100 dcterms_is_part_of_text^50',
+          pf: 'is_part_of_unstem_search^100 dcterms_is_part_of_text^50'
       }
     end
 
@@ -313,27 +315,24 @@ class CatalogController < ApplicationController
     config.advanced_search[:qt]                   ||= 'advanced'
     config.advanced_search[:url_key]              ||= 'advanced'
     config.advanced_search[:query_parser]         ||= 'dismax'
-    config.advanced_search[:form_solr_parameters] ||= {
-        'f.provenance_facet.facet.limit'      => 600,
-        'f.creator_facet.facet.limit'         => 600,
-        'f.contributor_facet.facet.limit'     => 600,
-        'f.subject_facet.facet.limit'         => 600,
-        'f.year_facet.facet.limit'            => 600,
-        'f.temporal_facet.facet.limit'        => 600,
-        'f.location_facet.facet.limit'        => 600,
-        'f.format_facet.facet.limit'          => 600,
-        'f.rights_facet.facet.limit'          => 600,
-        'f.rights_holder_facet.facet.limit'   => 600,
-        'f.relation_facet.facet.limit'        => 600,
-        'f.type_facet.facet.limit'            => 600,
-        'f.medium_facet.facet.limit'          => 600,
-        'f.language_facet.facet.limit'        => 600,
-        'f.repository_name_sms.facet.limit'   => 600,
-        'f.collection_name_sms.facet.limit'   => 600,
-        'f.class_name.facet.limit'            => 600,
-        'f.geojson.facet.limit'               => 0,
-    }
     config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
+    config.advanced_search[:form_solr_parameters] ||= {
+        'f.provenance_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.creator_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.contributor_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.subject_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.year_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.temporal_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.location_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.rights_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.relation_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.type_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.medium_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.language_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.repository_name_sms.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.collection_name_sms.facet.limit' => ADVANCED_FACET_LIMIT,
+    }
 
     # AUTOCOMPLETE CONFIG
     config.autocomplete_enabled = false
