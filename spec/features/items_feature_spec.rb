@@ -107,8 +107,8 @@ feature 'Item Management' do
 
       item = Fabricate :item
 
-      display_value = 'In Copyright (http://rightsstatements.org/vocab/InC/1.0/)'
-      saved_value   = 'In Copyright'
+      display_value = 'Rightsstatements.org - In Copyright'
+      saved_value   = 'http://rightsstatements.org/vocab/InC/1.0/'
 
       visit edit_item_path item
 
