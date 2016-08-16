@@ -59,7 +59,7 @@ class CollectionImporter
           if other_collection
             item.other_collections << other_collection.id
           else
-            @logger.error "No Collection with slug #{oc} found to add to other_collection array for item #{i.record_id}."
+            @logger.error "No Collection with slug #{oc} found to add to other_collection array for item #{item.record_id}."
           end
         end
       end
@@ -67,7 +67,7 @@ class CollectionImporter
       begin
         item.save(validate: false)
       rescue => e
-        @logger.error "Item #{i.record_id} could not be saved: #{e.message}"
+        @logger.error "Item #{item.record_id} could not be saved: #{e.message}"
       end
 
       nil
