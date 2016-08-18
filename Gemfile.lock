@@ -305,7 +305,6 @@ GEM
     sunspot (2.2.5)
       pr_geohash (~> 1.0)
       rsolr (~> 1.1.1)
-    sunspot_matchers (2.2.5.0)
     sunspot_rails (2.2.5)
       nokogiri
       rails (>= 3)
@@ -365,10 +364,10 @@ DEPENDENCIES
   blacklight-marc
   blacklight_advanced_search
   bootstrap_form
-  byebug
   cancancan (~> 1.15)
   capybara
   capybara-screenshot
+  chosen-rails
   coffee-rails (~> 4.1.0)
   daemons
   delayed_job_active_record
@@ -383,6 +382,8 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jettywrapper (>= 2.0)
   jquery-rails
+  jquery-turbolinks
+  multi-select-rails
   paper_trail
   pg
   quiet_assets
@@ -395,7 +396,6 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring
-  sunspot_matchers
   sunspot_rails
   therubyracer
   turbolinks

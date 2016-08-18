@@ -35,7 +35,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :test do
   gem 'capybara-screenshot'
   gem 'resque_spec'
-  gem 'sunspot_matchers'
   gem 'rspec-rails', '~> 3.0'
   gem 'faker'
   gem 'fabrication'
@@ -44,10 +43,7 @@ end
 
 group :development do
   gem 'quiet_assets'
-  # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'xray-rails'
 end
@@ -75,5 +71,6 @@ gem 'multi-select-rails'
 gem 'blacklight-maps'
 gem 'blacklight-gallery'
 gem 'daemons'
+gem 'chosen-rails'
 gem 'redis'
 gem 'resque'
