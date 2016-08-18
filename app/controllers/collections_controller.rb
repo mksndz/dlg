@@ -88,7 +88,6 @@ class CollectionsController < ApplicationController
         :teaser,
         :color,
         :date_range,
-        :dc_identifier,
         :dc_right,
         :dc_relation,
         :dc_format,

@@ -65,7 +65,6 @@ en:
         in_georgia: "Located in Georgia"
         subject_ids: "Subjects"
         time_period_ids: "Time Periods"
-        dc_identifier: 'Identifier (DC)'
         dc_right: 'Rights (DC)'
         dc_relation: 'Relation (DC)'
         dc_format: 'Format (DC)'
@@ -103,7 +102,6 @@ en:
         dcterms_contributor: 'Contributor to Resource'
         dcterms_subject: 'Subject'
         dcterms_description: 'Description'
-        dc_identifier: 'Local Identification Number'
         dcterms_publisher: 'Publisher of Original Item'
         dcterms_is_shown_at: 'URL'
         dc_date: 'Date of Publication of Original (use ISO 8601b)'
@@ -136,7 +134,6 @@ en:
         dcterms_contributor: 'Contributor to Resource'
         dcterms_subject: 'Subject'
         dcterms_description: 'Description'
-        dc_identifier: 'Local Identification Number'
         dcterms_publisher: 'Publisher of Original Item'
         dcterms_is_shown_at: 'URL'
         dc_date: 'Date of Publication of Original (use ISO 8601b)'
@@ -198,7 +195,6 @@ en:
         in_georgia: "Check this to indicate the Collection is housed in Georgia"
         subject_ids: "This will classify the Collection into a Subject category"
         time_period_ids: "This will classify the Collection into a Time Period"
-        dc_identifier: 'An unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string conforming to a formal identification system.'
         dc_right: 'Information about rights held in and over the resource. 	Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights.'
         dc_relation: 'A related resource. 	Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system.'
         dc_format: 'The file format, physical medium, or dimensions of the resource. Examples of dimensions include size and duration. Recommended best practice is to use a controlled vocabulary such as the list of Internet Media Types.'

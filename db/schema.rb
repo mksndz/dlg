@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160818160110) do
+ActiveRecord::Schema.define(version: 20160818203348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20160818160110) do
     t.boolean  "dpla",                           default: false, null: false
     t.boolean  "public",                         default: false, null: false
     t.text     "dc_format",                      default: [],    null: false, array: true
-    t.text     "dc_identifier",                  default: [],    null: false, array: true
     t.text     "dc_right",                       default: [],    null: false, array: true
     t.text     "dc_date",                        default: [],    null: false, array: true
     t.text     "dc_relation",                    default: [],    null: false, array: true
@@ -96,7 +95,6 @@ ActiveRecord::Schema.define(version: 20160818160110) do
     t.text      "teaser"
     t.string    "color"
     t.text      "dc_format",                      default: [],    null: false, array: true
-    t.text      "dc_identifier",                  default: [],    null: false, array: true
     t.text      "dc_right",                       default: [],    null: false, array: true
     t.text      "dc_date",                        default: [],    null: false, array: true
     t.daterange "date_range"
@@ -189,7 +187,6 @@ ActiveRecord::Schema.define(version: 20160818160110) do
     t.boolean  "dpla",                           default: false, null: false
     t.boolean  "public",                         default: false, null: false
     t.text     "dc_format",                      default: [],    null: false, array: true
-    t.text     "dc_identifier",                  default: [],    null: false, array: true
     t.text     "dc_right",                       default: [],    null: false, array: true
     t.text     "dc_date",                        default: [],    null: false, array: true
     t.datetime "created_at",                                     null: false

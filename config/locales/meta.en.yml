@@ -107,7 +107,6 @@ en:
         dcterms_is_part_of: 'Original Collection'
         dcterms_description: 'Description'
         dc_format: 'Format'
-        dc_identifier: 'Local Identification Number'
         dc_right: 'Rights'
         dc_date: 'Date of Orig. Pub.'
         dc_relation: 'Intermediate Contrib.'

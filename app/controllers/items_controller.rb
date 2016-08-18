@@ -108,7 +108,6 @@ class ItemsController < ApplicationController
         :dpla,
         :public,
         :date_range,
-        :dc_identifier,
         :dc_right,
         :dc_relation,
         :dc_format,

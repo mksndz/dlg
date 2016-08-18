@@ -431,7 +431,7 @@
         dcterms_temporal_text
         dcterms_spatial_text
         dcterms_is_part_of_text
-        dc_identifier_text
+        dcterms_identifier_text
       </str>
 
       <!-- the pf parameter, which is an abbreviation of "phrase fields". The syntax
@@ -460,7 +460,7 @@
         dcterms_temporal_text
         dcterms_spatial_text
         dcterms_is_part_of_text
-        dc_identifier_text
+        dcterms_identifier_text
       </str>
 
 

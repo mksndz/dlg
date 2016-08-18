@@ -59,7 +59,6 @@ class Item < ActiveRecord::Base
     string :dcterms_contributor,            as: 'dcterms_contributor_display',            multiple: true
     string :dcterms_subject,                as: 'dcterms_subject_display',                multiple: true
     string :dcterms_description,            as: 'dcterms_description_display',            multiple: true
-    string :dc_identifier,                  as: 'dc_identifier_display',                  multiple: true
     string :dcterms_publisher,              as: 'dcterms_publisher_display',              multiple: true
     string :dcterms_is_shown_at,            as: 'dcterms_is_shown_at_display',            multiple: true
     string :dc_date,                        as: 'dc_date_display',                        multiple: true
@@ -79,7 +78,6 @@ class Item < ActiveRecord::Base
 
     # Primary Search Fields (multivalued, indexed, stemming/tokenized)
     text :dc_date
-    text :dc_identifier
     text :dcterms_title
     text :dcterms_creator
     text :dcterms_contributor

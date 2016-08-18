@@ -71,11 +71,7 @@ class Collection < ActiveRecord::Base
     text :dcterms_type
     text :dcterms_provenance
     text :dcterms_license
-
-    # identifiers (url)
-    string :dc_identifier, multiple: true, stored: true do
-      dc_identifier
-    end
+    
     string :dcterms_is_shown_at, multiple: true, stored: true do
       dcterms_is_shown_at
     end
