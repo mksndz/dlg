@@ -113,7 +113,7 @@ class LegacyImporter
     repository.description        = xml_node.css('description').inner_text
     repository.strengths          = xml_node.css('strengths').inner_text
     repository.address            = xml_node.css('address').inner_text
-    # repository.coordinates        = xml_node.css('coordiantes').inner_text
+    repository.coordinates        = xml_node.css('coordinates').inner_text
     repository.directions_url     = xml_node.css('directions_url').inner_text
     repository.homepage_url       = xml_node.css('homepage_url').inner_text
     repository.in_georgia         = xml_node.css('in_georgia').inner_text == 'yes'

@@ -38,4 +38,35 @@ RSpec.describe Repository, type: :model do
     expect(r.items.first).to be_kind_of Item
   end
 
+  it 'has a set of coordinates stored as a string' do
+    r = Fabricate :repository
+    expect(r.coordinates).to be_an String
+  end
+
+  # VALIDATIONS
+
+  it 'requires a title' do
+    r = Fabricate.build(:repository, title: '')
+    r.valid?
+    expect(r.errors).to have_key :title
+  end
+
+  it 'requires a properly formatted set of coordinates' do
+    r = Fabricate.build(:repository, coordinates: 'A, B')
+    r.valid?
+    expect(r.errors).to have_key :coordinates
+  end
+
+  it 'requires a coordinates to not be a single number' do
+    r = Fabricate.build(:repository, coordinates: '1.1')
+    r.valid?
+    expect(r.errors).to have_key :coordinates
+  end
+
+  it 'requires a coordinates with acceptable values' do
+    r = Fabricate.build(:repository, coordinates: '-99, 199')
+    r.valid?
+    expect(r.errors).to have_key :coordinates
+  end
+
 end

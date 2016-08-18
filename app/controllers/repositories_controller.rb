@@ -62,6 +62,7 @@ class RepositoriesController < ApplicationController
         :teaser,
         :short_description,
         :description,
+        :coordinates,
         :color,
         :public,
         :in_georgia,

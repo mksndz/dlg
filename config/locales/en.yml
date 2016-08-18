@@ -38,6 +38,7 @@ en:
         teaser: "Teaser"
         short_description: "Short Description"
         description: "Description"
+        coordinates: "Coordinates"
         color: "Highlight Color"
         public: "Display to Public"
         in_georgia: "Located in Georgia"
@@ -173,6 +174,7 @@ en:
         teaser: "Brief description of repository for inclusion in small panels"
         short_description: "Short description for Repository lists"
         description: "Full description for Repository main page"
+        coordinates: "Must be in 'latitude, longitude' form"
         color: "Color for highlighting repository in lists"
         public: "Check this to show the Repository to public users"
         in_georgia: "Check this to indicate that the repository is located in Georgia"
@@ -285,6 +287,8 @@ en:
           type_required_value: 'does not contain any required values.'
           collection: 'must be selected'
           no_rights_information: 'has no rights information set.'
-          invalid_url_provided: 'contains an unresolvable URL. '
+          invalid_url_provided: 'contains an unresolvable URL.'
+        repository:
+          coordinates: 'are not in the proper format. Use "latitude, longitude".'
         blank: "cannot be blank"
         taken: "must be unique"
