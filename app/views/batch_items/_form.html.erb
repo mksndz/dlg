@@ -18,6 +18,10 @@
 
     <%= render partial: 'shared/edit_dc_fields', locals: { f: f, entity: @batch_item } %>
 
-    <%= f.primary t('meta.defaults.actions.save') %>
+    <div class="action-buttons">
+      <%= f.primary t('meta.defaults.actions.save') %>
+      <%= f.submit(t('meta.defaults.actions.save_and_goto_next'), name: 'next') if @next %>
+      <%= f.submit(t('meta.defaults.actions.save_and_goto_previous'), name: 'previous') if @previous %>
+    </div>
 
 <% end %>

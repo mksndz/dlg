@@ -170,6 +170,8 @@ en:
         edit: 'Edit'
         destroy: 'Delete'
         save: 'Save'
+        save_and_goto_next: 'Save and Go To Next'
+        save_and_goto_previous: 'Save and Go To Previous'
         filter: 'Filter'
       labels:
         unfiltered_index_subtitle: 'All of Them'

@@ -47,6 +47,30 @@ RSpec.describe BatchItem, type: :model do
     expect(ni.slug).to eq bi.slug
   end
 
+  it 'responds to next with the next batch_item in a batch ordered by id' do
+    b = Fabricate(:batch) { batch_items(count: 3) }
+    n = b.batch_items.first.next
+    expect(n).to eq b.batch_items[1]
+  end
+
+  it 'responds to previous with the previous batch_item in a batch ordered by id' do
+    b = Fabricate(:batch) { batch_items(count: 3) }
+    p = b.batch_items.last.previous
+    expect(p).to eq b.batch_items[1]
+  end
+
+  it 'responds to previous with nil if there is no previous item' do
+    b = Fabricate(:batch) { batch_items(count: 2) }
+    p = b.batch_items.first.previous
+    expect(p).to eq nil
+  end
+
+  it 'responds to next with nil if there is no next item' do
+    b = Fabricate(:batch) { batch_items(count: 2) }
+    n = b.batch_items.last.next
+    expect(n).to eq nil
+  end
+
   # validations
 
   it 'should require a Collection' do

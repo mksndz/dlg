@@ -16,7 +16,7 @@ class BatchItem < ActiveRecord::Base
   end
 
   def other_collection_titles
-    Collection.find(other_collections).map(&:title)
+    Collection.find(other_collections.reject{ |c| c.nil? }).map(&:title)
   end
 
   def commit
@@ -30,6 +30,14 @@ class BatchItem < ActiveRecord::Base
     else
       Item.new attributes
     end
+  end
+
+  def next
+    self.batch.batch_items.where('id > ?', id).first
+  end
+
+  def previous
+    self.batch.batch_items.where('id < ?', id).last
   end
 
 end

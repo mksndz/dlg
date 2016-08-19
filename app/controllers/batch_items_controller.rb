@@ -33,6 +33,7 @@ class BatchItemsController < ApplicationController
 
   # GET /batch_items/1/edit
   def edit
+    set_next_and_previous
   end
 
   # POST /batch_items
@@ -58,10 +59,11 @@ class BatchItemsController < ApplicationController
   def update
     respond_to do |format|
       if @batch_item.update(split_multivalued_params(batch_item_params))
-        format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Batch Item') }
+        format.html { redirect_to after_save_destination, notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Batch Item') }
         format.json { render :show, status: :ok, location: @batch_item }
       else
         collections_for_select
+        set_next_and_previous
         format.html { render :edit }
         format.json { render json: @batch_item.errors, status: :unprocessable_entity }
       end
@@ -99,6 +101,11 @@ class BatchItemsController < ApplicationController
   private
   def set_batch
     @batch = Batch.where(id: params[:batch_id]).first
+  end
+
+  def set_next_and_previous
+    @previous = @batch_item.previous
+    @next = @batch_item.next
   end
 
   def collections_for_select
@@ -146,6 +153,12 @@ class BatchItemsController < ApplicationController
 
   def validate?
     params[:bypass] == 'true' ? false : true
+  end
+
+  def after_save_destination
+    return edit_batch_batch_item_path(@batch, @batch_item.next) if params.has_key? :next
+    return edit_batch_batch_item_path(@batch, @batch_item.previous) if params.has_key? :previous
+    batch_batch_item_path(@batch, @batch_item)
   end
 
 end
