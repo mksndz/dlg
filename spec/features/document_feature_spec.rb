@@ -2,7 +2,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature 'Searching' do
+feature 'Document' do
 
   let(:super_user) { Fabricate :super }
 
@@ -12,18 +12,15 @@ feature 'Searching' do
       login_as super_user, scope: :user
     end
 
-    scenario 'does a search and results are returned' do
+    scenario 'document view shows a rights icon that links to the uri' do
 
-      Fabricate(:collection) { items(count:10 )}
+      i = Fabricate :item
       Sunspot.commit
 
-      visit root_path
+      visit solr_document_path(i.record_id)
 
-      fill_in 'all_fields', with: ''
-
-      click_button 'Search'
-
-      expect(page).to have_css('.document')
+      expect(page).to have_css '.rights-statement-icon'
+      expect(page).to have_xpath '//a[@href = "' + i.dc_right.first + '"]'
 
     end
 
@@ -32,7 +29,6 @@ feature 'Searching' do
   context 'for basic user' do
 
     scenario '' do
-
 
 
     end

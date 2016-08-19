@@ -18,7 +18,7 @@ Fabricator(:item) do
       '1999-2000'
   ]}
   dc_right { [
-      'CC NA'
+      I18n.t('meta.rights.zero.uri')
   ]}
   dcterms_contributor { [
       'DLG'
