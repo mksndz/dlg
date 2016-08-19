@@ -64,10 +64,16 @@ class CollectionImporter
         end
       end
 
+      tries = 3
       begin
         item.save(validate: false)
       rescue => e
-        @logger.error "Item #{item.record_id} could not be saved: #{e.message}"
+        tries -= 1
+        if tries > 0
+          retry
+        else
+          @logger.error "Item #{item.record_id} could not be saved: #{e.message}"
+        end
       end
 
       nil
