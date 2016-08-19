@@ -1,3 +1,7 @@
 <% content_for :title do %>
   <%= render_document_heading(document, tag: :span) %>
 <% end %>
+
+<% content_for :page_title do %>
+  <%= presenter(document).heading %>
+<% end %>

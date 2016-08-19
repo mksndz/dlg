@@ -16,7 +16,7 @@ module BlacklightHelper
   private
 
   def head_page_titleify(pre)
-    pre + ' - ' + application_name
+    pre.strip + ' - ' + application_name
   end
 
 end

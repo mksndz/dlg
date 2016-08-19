@@ -197,7 +197,7 @@ class Item < ActiveRecord::Base
   end
 
   def title
-    dcterms_title.first || 'No Title'
+    dcterms_title.first.strip || 'No Title'
   end
 
   def to_xml(options = {})

@@ -24,6 +24,17 @@ feature 'Document' do
 
     end
 
+    scenario 'document view has a page title that begins with the item title' do
+
+      i = Fabricate :item
+      Sunspot.commit
+
+      visit solr_document_path(i.record_id)
+
+      expect(page).to have_title i.title
+
+    end
+
   end
 
   context 'for basic user' do
