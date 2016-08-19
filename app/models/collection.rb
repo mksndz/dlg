@@ -27,73 +27,73 @@ class Collection < ActiveRecord::Base
   # allow Items to delegate collection_title
   alias_method :collection_title, :title
 
-  searchable do
-
-    string :slug, stored: true
-
-    string :record_id, stored: true
-
-    # set empty proxy id field so sunspot knows about it
-    # value is set prior to save
-    # sunspot search will not work without this, but indexing will
-    # see monkeypatch @ config/initializers/sunspot_indexer_id.rb
-    string :sunspot_id, stored: true do
-      ''
-    end
-
-    boolean :public
-
-    string :repository_name, stored: true do
-      repository ? repository.title : ''
-    end
-
-    # DC Fields for Searching
-    # *_display fields created via copyFields
-    text :dc_right
-    text :dc_relation
-    text :dc_format
-    text :dc_date
-    text :dcterms_is_part_of
-    text :dcterms_contributor
-    text :dcterms_creator
-    text :dcterms_description
-    text :dcterms_extent
-    text :dcterms_medium
-    text :dcterms_identifier
-    text :dcterms_language
-    text :dcterms_spatial
-    text :dcterms_publisher
-    text :dcterms_access_right
-    text :dcterms_rights_holder
-    text :dcterms_subject
-    text :dcterms_temporal
-    text :dcterms_title
-    text :dcterms_type
-    text :dcterms_provenance
-    text :dcterms_license
-    
-    string :dcterms_is_shown_at, multiple: true, stored: true do
-      dcterms_is_shown_at
-    end
-
-    string :subjects, stored: true, multiple: true do
-      subjects.map(&:name)
-    end
-
-    string :time_periods, stored: true, multiple: true do
-      time_periods.map(&:name)
-    end
-
-    # Fields for Faceting, etc.
-    # string :format, stored: true do
-    #   dcterms_type.first ? dcterms_type.first : ''
-    # end
-
-    string :sort_title do
-      dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
-    end
-
-  end
+  # searchable do
+  #
+  #   string :slug, stored: true
+  #
+  #   string :record_id, stored: true
+  #
+  #   # set empty proxy id field so sunspot knows about it
+  #   # value is set prior to save
+  #   # sunspot search will not work without this, but indexing will
+  #   # see monkeypatch @ config/initializers/sunspot_indexer_id.rb
+  #   string :sunspot_id, stored: true do
+  #     ''
+  #   end
+  #
+  #   boolean :public
+  #
+  #   string :repository_name, stored: true do
+  #     repository ? repository.title : ''
+  #   end
+  #
+  #   # DC Fields for Searching
+  #   # *_display fields created via copyFields
+  #   text :dc_right
+  #   text :dc_relation
+  #   text :dc_format
+  #   text :dc_date
+  #   text :dcterms_is_part_of
+  #   text :dcterms_contributor
+  #   text :dcterms_creator
+  #   text :dcterms_description
+  #   text :dcterms_extent
+  #   text :dcterms_medium
+  #   text :dcterms_identifier
+  #   text :dcterms_language
+  #   text :dcterms_spatial
+  #   text :dcterms_publisher
+  #   text :dcterms_access_right
+  #   text :dcterms_rights_holder
+  #   text :dcterms_subject
+  #   text :dcterms_temporal
+  #   text :dcterms_title
+  #   text :dcterms_type
+  #   text :dcterms_provenance
+  #   text :dcterms_license
+  #
+  #   string :dcterms_is_shown_at, multiple: true, stored: true do
+  #     dcterms_is_shown_at
+  #   end
+  #
+  #   string :subjects, stored: true, multiple: true do
+  #     subjects.map(&:name)
+  #   end
+  #
+  #   string :time_periods, stored: true, multiple: true do
+  #     time_periods.map(&:name)
+  #   end
+  #
+  #   # Fields for Faceting, etc.
+  #   # string :format, stored: true do
+  #   #   dcterms_type.first ? dcterms_type.first : ''
+  #   # end
+  #
+  #   string :sort_title do
+  #     dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
+  #   end
+  #
+  # end
 
   def record_id
     "#{repository.slug}_#{self.slug}"
