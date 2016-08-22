@@ -150,6 +150,7 @@ en:
         users: 'Users'
         subjects: 'Subjects'
         time_periods: 'Time Periods'
+        resque: 'Background Jobs'
       user_menu:
         profile: 'User Info'
         change_password: 'Change Password'

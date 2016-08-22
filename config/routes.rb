@@ -1,3 +1,5 @@
+require 'resque/server'
+
 Rails.application.routes.draw do
 
   concern :searchable, Blacklight::Routes::Searchable.new
@@ -87,6 +89,15 @@ Rails.application.routes.draw do
   mount Blacklight::Engine => '/'
   mount BlacklightAdvancedSearch::Engine => '/'
 
+  # Resque Admin
+  resque_constraint = lambda do |request|
+    request.env['warden'].authenticate!( { scope: :user } )
+  end
+  constraints resque_constraint do
+    mount Resque::Server.new => '/resque'
+  end
+
+  # Base Paths
   authenticated do
     root to: 'advanced#index', as: :authenticated_root
   end
