@@ -47,11 +47,12 @@ class CollectionImporter
       hash = Hash.from_xml(i.to_s)
       item_hash = hash['item']
       item_hash.delete('collection')
-      item_hash.delete('dc_identifier_label')
 
       # todo: work with brad to make dc_identifier come as dcterms_identifier
-      item_hash.delete('dc_identifier')
-      @logger.info "DC Identifier info discarded for #{item_hash['slug']}"
+      if item_hash.delete('dc_identifier')
+        @logger.info "DC Identifier info discarded for #{item_hash['slug']}"
+      end
+      item_hash.delete('dc_identifier_label')
 
       other_collections = item_hash.delete('other_collection')
 

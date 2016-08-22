@@ -61,7 +61,8 @@ describe CollectionImporter, type: :model do
       }
 
       let(:good_xml) {
-        'http://dlg.galileo.usg.edu/xml/dcq/cviog_gainfo.xml'
+        # 'http://dlg.galileo.usg.edu/xml/dcq/cviog_gainfo.xml'
+        'http://dlg.galileo.usg.edu/xml/dcq/aarl_bss.xml'
       }
 
       it 'should return true' do
