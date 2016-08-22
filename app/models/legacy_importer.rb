@@ -74,7 +74,7 @@ class LegacyImporter
         @logger.error "Item #{i.record_id} could not be saved: #{e.message}"
       end
 
-      # run GC fdor every 10000 records? maybe this will help :/
+      # run GC for every 10000 records? maybe this will help :/
       if item_counter % 10000 == 0
         @logger.info 'Cleaning up...'
         GC.start
