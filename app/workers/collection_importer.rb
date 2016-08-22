@@ -49,9 +49,9 @@ class CollectionImporter
       item_hash.delete('collection')
       item_hash.delete('dc_identifier_label')
 
-      # todo: work with brad to make this unnecessary
-      dcterms_identifier = item_hash.delete('dc_identifier') || []
-      item_hash['dcterms_identifier'] = dcterms_identifier
+      # todo: work with brad to make dc_identifier come as dcterms_identifier
+      item_hash.delete('dc_identifier')
+      @logger.info "DC Identifier info discarded for #{item_hash['slug']}"
 
       other_collections = item_hash.delete('other_collection')
 
