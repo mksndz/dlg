@@ -86,7 +86,17 @@ class CollectionImporter
 
     end
 
-    Sunspot.commit_if_dirty
+    tries = 3
+    begin
+      Sunspot.commit_if_dirty
+    rescue => e
+      tries -= 1
+      if tries > 0
+        retry
+      else
+        @logger.error "Sunspot commit failed three times for Collection #{c.display_title} : #{e.message}"
+      end
+    end
 
     @logger.info 'Finished importing ' + c.display_title
     @logger.info "XML contained #{item_count} records and Collection now has #{c.items.count} items."
