@@ -63,4 +63,25 @@ module ApplicationHelper
     true
   end
 
+  def link_to_edit_previous_document(previous_document)
+    if previous_document
+      klass, id = previous_document['sunspot_id_ss'].split(' ')
+      link_opts = session_tracking_params(previous_document, search_session['counter'].to_i - 1).merge(class: 'previous', rel: 'prev')
+      link_to url_for(controller: klass.downcase.pluralize, action: 'edit', id: id), link_opts do
+        content_tag :span, 'Previous Result', class: 'previous'
+      end
+    end
+
+  end
+
+  def link_to_edit_next_document(next_document)
+    if next_document
+      klass, id = next_document['sunspot_id_ss'].split(' ')
+      link_opts = session_tracking_params(next_document, search_session['counter'].to_i + 1).merge(class: 'next', rel: 'next')
+      link_to url_for(controller: klass.downcase.pluralize, action: 'edit', id: id), link_opts do
+        content_tag :span, 'Next Result', class: 'next'
+      end
+    end
+  end
+
 end
