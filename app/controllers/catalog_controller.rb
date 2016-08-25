@@ -368,7 +368,7 @@ class CatalogController < ApplicationController
   add_nav_action :admin
 
   # add Edit button on search results
-  add_results_document_tool :meta
+  # add_results_document_tool :meta
 
   # add "Export as XML" button on search results
   add_results_collection_tool :action_widget

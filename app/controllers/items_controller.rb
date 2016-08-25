@@ -1,6 +1,9 @@
 class ItemsController < ApplicationController
 
   load_and_authorize_resource
+
+  include Blacklight::SearchContext
+  include Blacklight::SearchHelper
   include ErrorHandling
   include MetadataHelper
   include Sorting
@@ -10,6 +13,8 @@ class ItemsController < ApplicationController
   before_action :set_data, only: [ :new, :copy, :edit ]
 
   def index
+
+    session[:search] = {}
 
     set_filter_options [:repository, :collection, :public, :valid_item]
 
@@ -50,6 +55,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    setup_next_and_previous_documents
   end
 
   def update
@@ -137,6 +143,10 @@ class ItemsController < ApplicationController
 
   def multiple_action_params
     params.permit(:entities)
+  end
+
+  def start_new_search_session?
+    action_name == 'index'
   end
 
 end

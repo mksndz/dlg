@@ -8,4 +8,24 @@
 
 <% breadcrumb :item, @item %>
 
+<div class="search-result-navigation">
+
+  <% if current_search_session %>
+      <%= link_back_to_catalog class: 'btn btn-link' %>
+      <%= link_to t('blacklight.search.start_over'), start_over_path(current_search_session.try(:query_params) || {}), id: 'startOverLink', class: 'btn btn-link' %>
+  <% end %>
+
+  <% if @previous_document || @next_document %>
+      <div class="page_links pull-right">
+        <%= link_to_edit_previous_document @previous_document %> |
+
+        <%= item_page_entry_info %> |
+
+        <%= link_to_edit_next_document @next_document %>
+      </div>
+  <% end %>
+
+</div>
+
+
 <%= render 'form' %>
