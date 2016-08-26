@@ -1,20 +1,20 @@
 class LegacyImporter
 
-  @logger = Logger.new('./log/item_import.log')
-
   # Import a collection's items (not the collection's metadata)
   # todo rename...populate_collection?
   # @string slug
   # @string xml_url
   def self.collection(collection, xml_url)
 
+    logger = Logger.new('./log/item_import.log')
+
     unless collection.is_a? Collection
-      @logger.error 'collection is not a Collection'
+      logger.error 'collection is not a Collection'
       return false
     end
 
     if xml_url.empty?
-      @logger.error 'No xml url provided'
+      logger.error 'No xml url provided'
       return false
     end
 
@@ -22,22 +22,22 @@ class LegacyImporter
 
     collection_start_time = Time.now
 
-    @logger.info "Importing Items from XML: #{xml_url}"
+    logger.info "Importing Items from XML: #{xml_url}"
 
     xml_file = open(xml_url)
 
-    @data = Nokogiri::HTML(xml_file)
+    data = Nokogiri::HTML(xml_file)
 
-    unless @data.is_a? Nokogiri::HTML::Document
-      @logger.error "Could'nt get valid XML from #{data_source}"
+    unless data.is_a? Nokogiri::HTML::Document
+      logger.error "Could'nt get valid XML from #{data_source}"
       return false
     end
 
-    items = @data.css('item')
+    items = data.css('item')
 
     items_to_add = items.length
 
-    @logger.info "XML for #{collection.display_title} has #{items.length} to add"
+    logger.info "XML for #{collection.display_title} has #{items.length} to add"
 
     item_counter = 0
 
@@ -62,21 +62,21 @@ class LegacyImporter
           if other_collection
             i.other_collections << other_collection.id
           else
-            @logger.error "No Collection with slug #{oc} found to add to other_collection array for item #{i.record_id}."
+            logger.error "No Collection with slug #{oc} found to add to other_collection array for item #{i.record_id}."
           end
         end
       end
 
       begin
         i.save(validate: false)
-        @logger.info "#{collection.display_title}: #{item_counter} of #{items_to_add}" if item_counter % 50 == 0
+        logger.info "#{collection.display_title}: #{item_counter} of #{items_to_add}" if item_counter % 50 == 0
       rescue => e
-        @logger.error "Item #{i.record_id} could not be saved: #{e.message}"
+        logger.error "Item #{i.record_id} could not be saved: #{e.message}"
       end
 
       # run GC for every 10000 records? maybe this will help :/
       if item_counter % 10000 == 0
-        @logger.info 'Cleaning up...'
+        logger.info 'Cleaning up...'
         GC.start
       end
 
@@ -84,8 +84,8 @@ class LegacyImporter
 
     Sunspot.commit
 
-    @logger.info "Collection #{collection.title} Items Created: #{items_created}"
-    @logger.info "Collection #{collection.title} Items In XML: #{items.length}"
+    logger.info "Collection #{collection.title} Items Created: #{items_created}"
+    logger.info "Collection #{collection.title} Items In XML: #{items.length}"
 
     xml_file.close
 
@@ -96,7 +96,7 @@ class LegacyImporter
 
     collection_finish_time = Time.now
 
-    @logger.info "Importing #{xml_url} took #{collection_finish_time - collection_start_time} seconds!"
+    logger.info "Importing #{xml_url} took #{collection_finish_time - collection_start_time} seconds!"
 
   end
 
@@ -140,6 +140,82 @@ class LegacyImporter
     end
 
     return repository.collections.count
+
+  end
+
+  def self.create_or_update_collection(xml_node)
+
+    logger = Logger.new('./log/repo_and_coll_import.log')
+
+    collection_attributes = Hash.from_xml xml_node.to_s
+
+    collection_attributes = collection_attributes['coll']
+
+    collection = Collection.find_by_slug collection_attributes['slug']
+    collection ||= Collection.new
+
+    # extract attributes for special treatment
+    repository = collection_attributes.delete('repository')
+    time_periods = collection_attributes.delete('time_period')
+    topics = collection_attributes.delete('topic')
+    other_repositories = collection_attributes.delete('other_repository')
+    color = collection_attributes.delete('color')
+
+    collection.assign_attributes(collection_attributes)
+
+    if time_periods
+      time_periods.each do |tp|
+        prepared_tp = tp.gsub(/[0-9\-,]/i,'').strip
+        tp_obj = TimePeriod.find_by_name prepared_tp
+        if tp_obj
+          collection.time_periods << tp_obj
+        else
+          logger.error "Time Period could not be added: #{prepared_tp}"
+        end
+      end
+    end
+
+    if topics
+      topics.each do |s|
+        subj = Subject.find_by_name s
+        if subj
+          collection.subjects << subj
+        else
+          logger.error "Subject could not be added: #{s}"
+        end
+      end
+    end
+
+
+    if other_repositories
+      other_repositories.each do |r|
+        other_repository = Repository.find_by_slug(r)
+        if other_repository
+          collection.other_repositories << other_repository
+        else
+          logger.error "No Repository with slug #{r} found to add to other_repositories array for Collection #{collection.slug}."
+        end
+      end
+    end
+
+    collection.color = "##{color}"
+
+    unless collection.repository
+      repo = Repository.find_by_slug repository['slug']
+      if repo
+        collection.repository = repo
+      else
+        logger.error "Needed repo but collection metadata for #{collection.slug} contains unknown repo slug #{repository['slug']}."
+      end
+    end
+
+    collection.save(validate: false)
+
+    if collection.errors.present?
+      logger.error 'Problem saving Collection. Check errors.'
+    end
+
+    collection
 
   end
 

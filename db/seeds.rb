@@ -33,7 +33,7 @@ Subject.create!([
                  { name: 'Business & Industry' },
                  { name: 'Education' },
                  { name: 'Folklife' },
-                 { name: 'Government & Politic' },
+                 { name: 'Government & Politics' },
                  { name: 'Land & Resources' },
                  { name: 'Literature' },
                  { name: 'Media' },

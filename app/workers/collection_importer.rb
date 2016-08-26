@@ -1,6 +1,6 @@
 class CollectionImporter
 
-  @queue = :collection_queue
+  @queue = :items
   @logger = Logger.new('./log/item_import.log')
 
   def self.perform(collection_id, items_xml_url)
