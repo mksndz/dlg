@@ -164,14 +164,16 @@ class LegacyImporter
     collection.assign_attributes(collection_attributes)
 
     if time_periods
-      time_periods.each do |tp|
-        prepared_tp = tp.gsub(/[0-9\-,]/i,'').strip
-        tp_obj = TimePeriod.find_by_name prepared_tp
-        if tp_obj
-          collection.time_periods << tp_obj
-        else
-          logger.error "Time Period could not be added: #{prepared_tp}"
+      time_periods.each do |xml_tp|
+        tp_added = false
+        xml_tp.gsub!('Millenium','Millennium')
+        TimePeriod.all.each do |tp|
+          if xml_tp.index(tp.name)
+            collection.time_periods << tp
+            tp_added = true
+          end
         end
+        logger.error "TimePeriod from XML not added: #{xml_tp}" unless tp_added
       end
     end
 
