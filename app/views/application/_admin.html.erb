@@ -7,5 +7,5 @@
   <%= content_tag :li, link_to(t('meta.app.admin_menu.users'), users_path) if can? :index, User %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.subjects'), subjects_path) if can? :index, Subject %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.time_periods'), time_periods_path) if can? :index, TimePeriod %>
-  <%= content_tag :li, link_to(t('meta.app.admin_menu.resque'), '/resque', target: '_blank') if current_user.super? %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.resque'), '/resque', { target: '_blank', rel: 'noopener noreferrer' } ) if current_user.super? %>
 </ul>
