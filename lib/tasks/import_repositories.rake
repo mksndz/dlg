@@ -119,12 +119,19 @@ task import_repositories: :environment do
   # COLLECTION METADATA PROCESSING
 
   colls_in_mfile.each do |coll_node|
-
     collection = LegacyImporter.create_or_update_collection coll_node
     if collection
       @logger.info "Collection processed: #{collection.display_title}"
     end
+  end
 
+  # REPORT AND REMOVE ANY COLLECTIONS WITHOUT REPOSITORIES
+
+  Collection.find_each(batch_size: 100) do |c|
+    unless c.repository
+      @logger.error "Collection without Repository found: #{c.display_title}. Will destroy."
+      c.destroy
+    end
   end
 
   Sunspot.commit_if_dirty
