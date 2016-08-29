@@ -70,7 +70,7 @@ RSpec.describe LegacyImporter, type: :model do
     'Annual Reports of the Mayor of Savannah, Georgia, 1855-1923'
   }
 
-  before(:all) {
+  before(:each) {
 
     Subject.create!([
       { name: 'The Arts' },
@@ -99,6 +99,11 @@ RSpec.describe LegacyImporter, type: :model do
        { name: 'Civil Rights & Sunbelt Georgia', start: 1945, finish: 1980 },
        { name: 'Georgia at the Turn of the Millennium', start: 1990 },
      ])
+  }
+
+  after(:each) {
+    Subject.delete_all
+    TimePeriod.delete_all
   }
 
   it 'updates an existing collection with metadata from the xml' do
