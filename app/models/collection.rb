@@ -1,6 +1,7 @@
 class Collection < ActiveRecord::Base
   include Slugged
   include IndexFilterable
+  include GeospatialIndexable
 
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
@@ -45,10 +46,6 @@ class Collection < ActiveRecord::Base
     end
 
     boolean :public
-
-    # string :collection_name, stored: true, multiple: true do
-    #   collection_titles
-    # end
 
     string :repository_name, stored: true, multiple: true do
       repository_titles
@@ -128,15 +125,15 @@ class Collection < ActiveRecord::Base
     time :updated_at, stored: true, trie: true
 
     # spatial coordinates
-    # string :coordinates, as: 'coordinates' do
-    #   coordinates
-    # end
-    #
-    # # geojson
-    # string :geojson, as: 'geojson'
-    #
-    # # spatial placename
-    # string :placename, as: 'placename'
+    string :coordinates, as: 'coordinates' do
+      coordinates
+    end
+
+    # geojson
+    string :geojson, as: 'geojson'
+
+    # spatial placename
+    string :placename, as: 'placename'
 
     # time periods
     string :time_periods, multiple: true do
