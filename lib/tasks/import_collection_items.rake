@@ -19,7 +19,7 @@ task import_collection_items: :environment do
   puts 'Enter number of Collections to populate, or leave blank for all: '
   number = STDIN.gets.chomp
 
-  if number == ''
+  if number != ''
     Collection.first(number).each do |c|
       Resque.enqueue(
           CollectionImporter, c.id, "#{meta_xml_root_url}#{c.record_id}.xml"
