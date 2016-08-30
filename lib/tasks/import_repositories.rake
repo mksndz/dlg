@@ -103,12 +103,17 @@ task import_repositories: :environment do
   repos_in_mfile.each do |repo_node|
     # create or update repository
     repository = LegacyImporter.create_or_update_repository repo_node
+
     # set collection relations
     if repository
       @logger.info "Repository processed: #{repository.title}"
-      collections_count = LegacyImporter.create_repository_collections repository, structure_hash[repository.slug]
-      collections_created += collections_count
-      @logger.info "Collections created within repository: #{collections_count}"
+
+      # dont't create collections now, use metadata for collections
+      # collections_count = LegacyImporter.create_repository_collections repository, structure_hash[repository.slug]
+      # collections_created += collections_count
+      # @logger.info "Collections created within repository: #{collections_count}"
+
+
       repositories_created += 1
     else
       @logger.error "Could not create repository: #{slug}"

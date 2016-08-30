@@ -16,7 +16,7 @@ class DateIndexer
   def get_valid_years_for(dc_date, item = nil)
     item_dates = []
 
-    @item = item
+    @record = item
 
     dc_date.each do |date|
 
@@ -108,7 +108,7 @@ class DateIndexer
         end
       rescue NoMethodError => e
         @logger.error 'No Method error!' + e.message
-        @logger.error "Item: #{@item.dc_date}" if @item
+        @logger.error "Item: #{@record.dc_date}" if @record
         @logger.error "item_dates: #{item_dates}"
         next
       end
@@ -237,8 +237,13 @@ class DateIndexer
   end
 
   def get_url_for_xml
-    return '' unless @item
-    "http://dlg.galileo.usg.edu/xml/dcq/#{@item.repository.slug}_#{@item.collection.slug}.xml##{@item.slug}"
+    if @record.is_a? Item
+      "http://dlg.galileo.usg.edu/xml/dcq/#{@record.repository.slug}_#{@record.collection.slug}.xml##{@record.slug}"
+    elsif @record.is_a? Collection
+      'http://dlg.galileo.usg.edu/xml/dcq/colls.xml'
+    else
+      ''
+    end
   end
 
 end

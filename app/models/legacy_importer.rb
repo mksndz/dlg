@@ -202,16 +202,17 @@ class LegacyImporter
 
     collection.color = "##{color}"
 
+    # set repository
     unless collection.repository
       repo = Repository.find_by_slug repository['slug']
       if repo
         collection.repository = repo
+        collection.save(validate: false)
       else
         logger.error "Needed repo but collection metadata for #{collection.slug} contains unknown repo slug #{repository['slug']}."
+        logger.error 'Collection not saved.'
       end
     end
-
-    collection.save(validate: false)
 
     if collection.errors.present?
       logger.error 'Problem saving Collection. Check errors.'
