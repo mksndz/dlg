@@ -17,6 +17,11 @@
     <% end %>
 
     <% klass, id = document['sunspot_id_ss'].split(' ') %>
+
+    <% if klass == 'Collection' %>
+      <span class="label label-info">Collection</span>
+    <% end %>
+
     <% if current_user.super? && klass == 'Item' %>
         <%= check_box_tag(:action_item, id, false, { class: 'action-item'}) %>
     <% end %>
