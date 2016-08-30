@@ -11,21 +11,21 @@ class CollectionImporter
       xml_file = open items_xml_url
     rescue StandardError => e
       @logger.error "Could not get XML from provided URL(#{items_xml_url}): #{e.message}"
-      raise JobFailedError "Could not get XML from provided URL(#{items_xml_url}): #{e.message}"
+      raise JobFailedError
     end
 
     c = Collection.find collection_id
 
     unless c
       @logger.error "Collection with ID #{collection_id} could not be found."
-      raise JobFailedError "Collection with ID #{collection_id} could not be found."
+      raise JobFailedError
     end
 
     item_data = Nokogiri::XML xml_file
 
     unless item_data.is_a? Nokogiri::XML::Document and item_data.errors.empty?
       @logger.error 'XML file downloaded but could not be parsed by Nokogiri'
-      raise JobFailedError 'XML file downloaded but could not be parsed by Nokogiri'
+      raise JobFailedError
     end
 
     xml_file.close
