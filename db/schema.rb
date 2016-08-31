@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160818203348) do
+ActiveRecord::Schema.define(version: 20160831153122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 20160818203348) do
     t.boolean   "remote",                         default: false, null: false
     t.text      "display_title",                                  null: false
     t.text      "short_description"
-    t.text      "teaser"
     t.string    "color"
     t.text      "dc_format",                      default: [],    null: false, array: true
     t.text      "dc_right",                       default: [],    null: false, array: true
@@ -232,7 +231,6 @@ ActiveRecord::Schema.define(version: 20160818203348) do
     t.string   "color"
     t.string   "homepage_url"
     t.string   "directions_url"
-    t.text     "teaser"
     t.text     "short_description"
     t.text     "description"
     t.text     "address"
@@ -243,6 +241,7 @@ ActiveRecord::Schema.define(version: 20160818203348) do
     t.boolean  "dpla",              default: false, null: false
     t.integer  "collections_count", default: 0
     t.string   "coordinates"
+    t.boolean  "teaser"
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree
