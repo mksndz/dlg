@@ -7,7 +7,6 @@
     <%= f.select :repository_id, @data[:repositories].collect { |r| [r.title, r.id] }, {} %>
 
     <%= f.text_field :display_title %>
-    <%= f.text_area :teaser %>
     <%= f.text_area :short_description %>
 
     <%= f.color_field :color %>

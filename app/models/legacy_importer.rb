@@ -160,6 +160,7 @@ class LegacyImporter
     topics = collection_attributes.delete('topic')
     other_repositories = collection_attributes.delete('other_repository')
     color = collection_attributes.delete('color')
+    collection_attributes.delete('teaser') # todo remove teaser when brad removes it from xml
 
     collection.assign_attributes(collection_attributes)
 

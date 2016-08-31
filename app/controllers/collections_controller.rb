@@ -90,7 +90,6 @@ class CollectionsController < ApplicationController
         :public,
         :display_title,
         :short_description,
-        :teaser,
         :color,
         :date_range,
         :dc_right,
