@@ -26,11 +26,11 @@ describe CollectionImporter, type: :model do
         'zzz://web.page'
       }
       
-      it 'should raise a JobFailedError' do
+      it 'should not raise a JobFailedError' do
         
         expect{
           CollectionImporter.perform(collection.id, bad_url)
-        }.to raise_error JobFailedError
+        }.not_to raise_error JobFailedError
         
       end
       

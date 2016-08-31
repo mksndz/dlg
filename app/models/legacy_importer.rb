@@ -202,8 +202,10 @@ class LegacyImporter
 
     collection.color = "##{color}"
 
-    # set repository
-    unless collection.repository
+    # set repository unless already set
+    if collection.repository
+      collection.save(validate: false)
+    else
       repo = Repository.find_by_slug repository['slug']
       if repo
         collection.repository = repo

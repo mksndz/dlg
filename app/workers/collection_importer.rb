@@ -8,17 +8,17 @@ class CollectionImporter
     item_node_name = 'item'.freeze
 
     begin
+      c = Collection.find collection_id
+    rescue ActiveRecord::RecordNotFound
+      @logger.error "Collection with ID #{collection_id} could not be found."
+      raise JobFailedError
+    end
+
+    begin
       xml_file = open items_xml_url
     rescue StandardError => e
       @logger.info "Could not get XML from provided URL(#{items_xml_url}): #{e.message}. The Collection likely has no Items."
       return
-    end
-
-    c = Collection.find collection_id
-
-    unless c
-      @logger.error "Collection with ID #{collection_id} could not be found."
-      raise JobFailedError
     end
 
     item_data = Nokogiri::XML xml_file
