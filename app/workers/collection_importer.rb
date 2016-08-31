@@ -10,8 +10,8 @@ class CollectionImporter
     begin
       xml_file = open items_xml_url
     rescue StandardError => e
-      @logger.error "Could not get XML from provided URL(#{items_xml_url}): #{e.message}"
-      raise JobFailedError
+      @logger.info "Could not get XML from provided URL(#{items_xml_url}): #{e.message}. The Collection likely has no Items."
+      return
     end
 
     c = Collection.find collection_id
