@@ -33,7 +33,7 @@
         <%= link_to(
                 raw('<span class="glyphicon glyphicon-edit"></span>'),
                 url_for(controller: klass.downcase.pluralize, action: 'edit', id: id),
-                session_tracking_params(document, counter)
+                session_tracking_params(document, counter).merge({class: 'edit-record'})
             ) %>
 
     <% end %>

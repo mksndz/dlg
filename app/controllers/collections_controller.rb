@@ -1,6 +1,9 @@
 class CollectionsController < ApplicationController
 
   load_and_authorize_resource
+
+  include Blacklight::SearchContext
+  include Blacklight::SearchHelper
   include ErrorHandling
   include MetadataHelper
   include Sorting
@@ -9,6 +12,8 @@ class CollectionsController < ApplicationController
   before_action :set_data, only: [:new, :edit]
 
   def index
+
+    session[:search] = {}
 
     set_filter_options [:repository, :public]
 
@@ -115,6 +120,10 @@ class CollectionsController < ApplicationController
         :time_period_ids => [],
         :other_repositories => []
     )
+  end
+
+  def start_new_search_session?
+    action_name == 'index'
   end
 
 end
