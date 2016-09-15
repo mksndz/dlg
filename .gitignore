@@ -22,3 +22,6 @@ jetty/*
 
 # hide secrets
 /config/secrets.yml
+
+# redis file
+dump.rdb
