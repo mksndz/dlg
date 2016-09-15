@@ -194,7 +194,7 @@ class LegacyImporter
       other_repositories.each do |r|
         other_repository = Repository.find_by_slug(r)
         if other_repository
-          collection.other_repositories << other_repository
+          collection.other_repositories << other_repository.id
         else
           logger.error "No Repository with slug #{r} found to add to other_repositories array for Collection #{collection.slug}."
         end
