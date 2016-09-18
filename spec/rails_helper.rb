@@ -61,7 +61,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
 
   # clean up DB & Solr index after test suite
-  config.after(:suite){
+  config.before(:suite){
     BatchItem.destroy_all
     Batch.destroy_all
     Item.destroy_all
@@ -70,7 +70,7 @@ RSpec.configure do |config|
     User.destroy_all
   }
 
-  config.after(:all){
+  config.before(:all){
     Sunspot.remove_all! Item
     Sunspot.remove_all! Collection
   }
