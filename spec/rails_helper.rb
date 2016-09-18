@@ -60,7 +60,7 @@ RSpec.configure do |config|
 
   config.include Devise::Test::ControllerHelpers, type: :controller
 
-  # clean up Solr index after test suite
+  # clean up DB & Solr index after test suite
   config.after(:suite){
     BatchItem.destroy_all
     Batch.destroy_all

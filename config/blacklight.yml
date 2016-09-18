@@ -1,10 +1,10 @@
 development:
   adapter: solr
-  url: <%= ENV['SOLR_URL'] || "http://127.0.0.1:8983/solr/blacklight-core" %>
+  url: <%= "http://127.0.0.1:8983/solr/blacklight-core" %>
 #  url: <%= "http://metasolr.galib.uga.edu:8983/solr/blacklight-core" %>
 test: &test
   adapter: solr
-  url: <%= ENV['SOLR_URL'] || "http://127.0.0.1:8983/solr/blacklight-core" %>
+  url: <%= "http://127.0.0.1:8983/solr/test-blacklight-core" %>
 production:
   adapter: solr
   url: <%= "http://metasolr.galib.uga.edu:8983/solr/blacklight-core" %>

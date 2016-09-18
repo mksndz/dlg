@@ -22,5 +22,5 @@ test:
     hostname: localhost
     port: 8983
     log_level: WARNING
-    path: /solr/blacklight-core
+    path: /solr/test-blacklight-core
     
