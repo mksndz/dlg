@@ -2,7 +2,11 @@ require 'rails_helper'
 
 describe CollectionImporter, type: :model do
 
+
   describe '#perform' do
+
+    # todo does setting this here limit the config change to only these tests?
+    RSpec::Expectations.configuration.on_potential_false_positives = :nothing
 
     let(:collection) {
       Fabricate :collection
@@ -14,7 +18,7 @@ describe CollectionImporter, type: :model do
         
         expect{
           CollectionImporter.perform('Z','foo')
-        }.to raise_error JobFailedError
+        }.to raise_exception JobFailedError
         
       end
       
@@ -30,7 +34,7 @@ describe CollectionImporter, type: :model do
         
         expect{
           CollectionImporter.perform(collection.id, bad_url)
-        }.not_to raise_error JobFailedError
+        }.not_to raise_exception
         
       end
       
@@ -46,7 +50,7 @@ describe CollectionImporter, type: :model do
 
         expect{
           CollectionImporter.perform(collection.id, bad_xml)
-        }.to raise_error JobFailedError
+        }.to raise_exception
 
       end
 
