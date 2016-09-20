@@ -39,6 +39,7 @@ group :test do
   gem 'faker'
   gem 'fabrication'
   gem 'capybara'
+  gem 'poltergeist'
 end
 
 group :development do

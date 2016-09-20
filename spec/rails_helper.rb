@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'paper_trail/frameworks/rspec'
 require 'capybara-screenshot/rspec'
+require 'capybara/poltergeist'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -65,6 +66,7 @@ RSpec.configure do |config|
     BatchItem.destroy_all
     Batch.destroy_all
     Item.destroy_all
+    ItemVersion.destroy_all
     Collection.destroy_all
     Repository.destroy_all
     User.destroy_all
@@ -74,4 +76,6 @@ RSpec.configure do |config|
     Sunspot.remove_all! Item
     Sunspot.remove_all! Collection
   }
+
+  Capybara.javascript_driver = :poltergeist
 end

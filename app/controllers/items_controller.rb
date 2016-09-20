@@ -7,7 +7,7 @@ class ItemsController < ApplicationController
   include ErrorHandling
   include MetadataHelper
   include Sorting
-  include Searchable
+  # include Searchable
   include Filterable
 
   before_action :set_data, only: [ :new, :copy, :edit ]

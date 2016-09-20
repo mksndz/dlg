@@ -56,6 +56,7 @@ class CollectionsController < ApplicationController
   end
 
   def edit
+    setup_next_and_previous_documents
   end
 
   def update
