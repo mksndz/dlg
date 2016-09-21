@@ -8,7 +8,6 @@ feature 'Searching' do
 
   context 'for super user', js: true do
 
-
     before :each do
       login_as super_user, scope: :user
     end
@@ -48,8 +47,6 @@ feature 'Searching' do
       expect(all('.edit-record').count).to eq 2
 
       first('.edit-record').click
-
-      # expect(page).to have_current_path edit_collection_path c
 
       expect(page).to have_link 'Next Result'
       expect(page).not_to have_link 'Previous Result'

@@ -51,7 +51,7 @@ create_record = (url, number, record_node, bypass) ->
 
 render_successful_output = (response, num) ->
   if response.valid
-    return list_item_html num, "Batch Item Successfuly Created",
+    return list_item_html num, "Batch Item Successfully Created",
       "<a href='#{response.edit_url}' target='_blank'>Click here to edit record with slug #{ response.slug }</a>",
       "list-group-item-success"
   else
