@@ -126,9 +126,10 @@ class Item < ActiveRecord::Base
     time :updated_at, stored: true, trie: true
 
     # spatial coordinates
-    string :coordinates, as: 'coordinates' do
+    string :coordinates, multiple: true, stored: true do
       coordinates
     end
+    string :multiple_coordinates, multiple: true, stored: true
 
     # geojson
     string :geojson, as: 'geojson'
