@@ -128,9 +128,11 @@ class Collection < ActiveRecord::Base
     string :coordinates, as: 'coordinates' do
       coordinates
     end
+    string :multiple_coordinates, multiple: true, stored: true
 
     # geojson
     string :geojson, as: 'geojson'
+    string :multiple_geojson, multiple: true, stored: true
 
     # spatial placename
     string :placename, as: 'placename'

@@ -9,4 +9,7 @@ Fabricator(:collection) do
       Faker::Hipster.sentence(5),
       Faker::Hipster.sentence(4)
   ] }
+  dcterms_spatial { [
+      'United States, Georgia, Bibb County, 32.8064982, -83.69742'
+  ] }
 end

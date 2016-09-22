@@ -133,9 +133,11 @@ class Item < ActiveRecord::Base
 
     # geojson
     string :geojson, as: 'geojson'
+    string :multiple_geojson, multiple: true, stored: true
 
     # spatial placename
     string :placename, as: 'placename'
+    string :multiple_placename, multiple: true, stored: true
 
   end
 

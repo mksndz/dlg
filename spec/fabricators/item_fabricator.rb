@@ -24,8 +24,17 @@ Fabricator(:item) do
       'DLG'
   ]}
   dcterms_spatial { [
-      %w(Athens Atlanta Augusta Macon).sample,
+      'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358'
   ]}
   collection
+
+end
+
+Fabricator(:item_with_two_spatial_values, from: :item) do
+
+  dcterms_spatial { [
+      'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358',
+      'United States, Georgia, Fulton County, 33.7902836, -84.466986'
+  ] }
 
 end

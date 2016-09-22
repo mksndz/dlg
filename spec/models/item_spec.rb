@@ -65,7 +65,6 @@ RSpec.describe Item, type: :model do
                          'United States, Georgia, Fulton County, 33.7902836, -84.466986'
       ] }
     }
-    Sunspot.commit
     expect(i.multiple_coordinates).to be_a Array
     expect(i.multiple_coordinates).to eq ['33.7748275, -84.2963123','33.7902836, -84.466986']
 
