@@ -5,6 +5,7 @@ $(document).on 'ready turbolinks:load', ->
   $import_form.find("input[type='submit']").removeClass('hide')
 
   $import_form.on("submit" ,(e, data, status, xhr) ->
+    $('.flash_messages').html('')
     e.preventDefault()
     $this = $(this)
     url = this.action
@@ -20,7 +21,12 @@ $(document).on 'ready turbolinks:load', ->
   )
 
 handle_error = (e) ->
-  alert(e)
+  alert = "<div class='alert alert-danger'>" +
+            e +
+            "<a class='close' data-dismiss='alert' href='#'>&times;</a>" +
+          "</div>"
+  $('.flash_messages').show().html(alert)
+
 
 update_progress_bar = (num, total) ->
   val = (num/total) * 100
