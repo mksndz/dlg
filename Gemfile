@@ -33,13 +33,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 group :test do
-  gem 'capybara-screenshot'
   gem 'resque_spec'
   gem 'rspec-rails', '~> 3.0'
   gem 'faker'
   gem 'fabrication'
   gem 'capybara'
-  gem 'poltergeist'
+  gem 'capybara-screenshot'
+  gem 'capybara-webkit'
+  # gem 'poltergeist'
 end
 
 group :development do
