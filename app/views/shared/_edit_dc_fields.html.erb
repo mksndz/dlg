@@ -1,17 +1,33 @@
+<a name="dcterms_provenance"></a>
 <%= meta_textarea entity, :dcterms_provenance %>
+<a name="dcterms_title"></a>
 <%= meta_textarea entity, :dcterms_title %>
+<a name="dcterms_creator"></a>
 <%= meta_textarea entity, :dcterms_creator %>
+<a name="dcterms_contributor"></a>
 <%= meta_textarea entity, :dcterms_contributor %>
+<a name="dcterms_subject"></a>
 <%= meta_textarea entity, :dcterms_subject %>
+<a name="dcterms_description"></a>
 <%= meta_textarea entity, :dcterms_description %>
+<a name="dcterms_identifier"></a>
+<%= meta_textarea entity, :dcterms_identifier %>
+<a name="dcterms_publisher"></a>
 <%= meta_textarea entity, :dcterms_publisher %>
+<a name="dcterms_is_shown_at"></a>
 <%= meta_textarea entity, :dcterms_is_shown_at %>
+<a name="dc_date"></a>
 <%= meta_textarea entity, :dc_date %>
+<a name="dcterms_temporal"></a>
 <%= meta_textarea entity, :dcterms_temporal %>
+<a name="dcterms_spatial"></a>
 <%= meta_textarea entity, :dcterms_spatial %>
+<a name="dc_format"></a>
 <%= meta_textarea entity, :dc_format %>
+<a name="dcterms_is_part_of"></a>
 <%= meta_textarea entity, :dcterms_is_part_of %>
 
+<a name="dc_right"></a>
 <%= content_tag :div, class: 'form-group' do %>
   <% e = entity.class.name.demodulize.underscore %>
   <%=
@@ -28,11 +44,19 @@
   %>
 <% end %>
 
+<a name="dcterms_rights_holder"></a>
 <%= meta_textarea entity, :dcterms_rights_holder %>
+<a name="dcterms_bibliographic_citation"></a>
 <%= meta_textarea entity, :dcterms_bibliographic_citation %>
+<a name="dlg_local_right"></a>
 <%= meta_textarea entity, :dlg_local_right %>
+<a name="dc_relation"></a>
 <%= meta_textarea entity, :dc_relation %>
+<a name="dcterms_type"></a>
 <%= meta_textarea entity, :dcterms_type %>
+<a name="dcterms_medium"></a>
 <%= meta_textarea entity, :dcterms_medium %>
+<a name="dcterms_extent"></a>
 <%= meta_textarea entity, :dcterms_extent %>
+<a name="dcterms_language"></a>
 <%= meta_textarea entity, :dcterms_language %>

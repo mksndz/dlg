@@ -27,5 +27,12 @@
 
 </div>
 
+<h4>Jump To:</h4>
+
+<div id="form_navigation" class="list-group">
+  <% multivalued_fields.each do |f| %>
+      <%= link_to t("activerecord.attributes.item.#{f}"), "##{f}", { class: 'list-group-item', 'data-turbolinks': false } %>
+  <% end %>
+</div>
 
 <%= render 'form' %>
