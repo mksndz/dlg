@@ -1,8 +1,12 @@
-#$(document).on 'ready turbolinks:load', ->
+$(document).on 'ready turbolinks:load', ->
 
   $import_form = $("#xml_form")
 
   $import_form.find("input[type='submit']").removeClass('hide')
+
+  # ugly hack to avoid double binding of the submit handler
+  # todo prevent double binding
+  $import_form.off("submit")
 
   $import_form.on("submit" ,(e, data, status, xhr) ->
     $('.flash_messages').html('')
