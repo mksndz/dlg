@@ -127,6 +127,8 @@ class CatalogController < ApplicationController
     config.add_index_field 'dcterms_creator_display',     label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
     config.add_index_field 'dc_format_display',           label: I18n.t('meta.search.labels.dc_format'), link_to_search: :format_facet
     config.add_index_field 'dcterms_spatial_display',     label: I18n.t('meta.search.labels.dcterms_spatial'), link_to_search: :location_facet
+    config.add_index_field 'dpla_ss',                     label: I18n.t('meta.search.labels.dpla')
+    config.add_index_field 'public_ss',                   label: I18n.t('meta.search.labels.public')
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -138,7 +140,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_is_part_of_display',     label: I18n.t('meta.search.labels.dcterms_is_part_of')
     config.add_show_field 'dcterms_description_display',    label: I18n.t('meta.search.labels.dcterms_description')
     config.add_show_field 'dc_format_display',              label: I18n.t('meta.search.labels.dc_format')
-    config.add_show_field 'dc_identifier_display',          label: I18n.t('meta.search.labels.dc_identifier'), helper_method: 'linkify'
+    config.add_show_field 'dcterms_identifier_display',     label: I18n.t('meta.search.labels.dcterms_identifier'), helper_method: 'linkify'
     config.add_show_field 'dc_right_display',               label: I18n.t('meta.search.labels.dc_right'), helper_method: 'rights_icon_tag'
     config.add_show_field 'dc_date_display',                label: I18n.t('meta.search.labels.dc_date')
     config.add_show_field 'dc_relation_display',            label: I18n.t('meta.search.labels.dc_relation')

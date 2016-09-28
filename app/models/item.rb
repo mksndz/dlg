@@ -40,6 +40,14 @@ class Item < ActiveRecord::Base
 
     boolean :dpla
     boolean :public
+    # for display in search results
+
+    string :dpla, stored: true do
+      dpla == 'true' ? 'Yes' : 'No'
+    end
+    string :public, stored: true do
+      public == 'true' ? 'Yes' : 'No'
+    end
 
     string :collection_name, stored: true, multiple: true do
       collection_titles
