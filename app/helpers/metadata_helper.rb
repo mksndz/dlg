@@ -2,7 +2,6 @@ module MetadataHelper
 
   def multivalued_fields
     %w(
-      dc_identifier
       dc_right
       dc_relation
       dc_format

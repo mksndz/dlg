@@ -117,7 +117,7 @@ en:
         dcterms_medium: 'Medium (use AAT)'
         dcterms_extent: 'Extent'
         dcterms_language: 'Language (use ISO 639-2)'
-#        dcterms_identifier: 'Identifier (QDC)'
+        dcterms_identifier: 'Identifier'
         created_at: "Created"
         updated_at: "Last Updated"
       batch_item:
@@ -149,7 +149,7 @@ en:
         dcterms_medium: 'Medium (use AAT)'
         dcterms_extent: 'Extent'
         dcterms_language: 'Language (use ISO 639-2)'
-#        dcterms_identifier: 'Identifier (QDC)'
+        dcterms_identifier: 'Identifier (QDC)'
         created_at: "Created"
         updated_at: "Last Updated"
     help:

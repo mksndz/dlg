@@ -101,6 +101,8 @@ en:
       labels:
         item_id: 'Item ID'
         record_id: 'Record ID'
+        dpla: 'Push to DPLA?'
+        public: 'Show to Public?'
         dcterms_title: 'Title'
         collection: 'Collection'
         repository: 'Repository'
