@@ -77,5 +77,18 @@ RSpec.configure do |config|
     Sunspot.remove_all! Collection
   }
 
+  # JS driver madness
+
+  # Capybara.register_driver :poltergeist do |app|
+  #   Capybara::Poltergeist::Driver.new(app, inspector: true)
+  # end
   Capybara.javascript_driver = :poltergeist
+
+  # Capybara::Webkit.configure do |wk_config|
+  #   # Enable debug mode. Prints a log of everything the driver is doing.
+  #   wk_config.debug = true
+  # end
+
+  # Capybara.javascript_driver = :webkit
+
 end
