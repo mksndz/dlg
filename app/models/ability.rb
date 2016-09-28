@@ -43,6 +43,7 @@ class Ability
 
         # User with Uploader Role can upload XML
         can [:import], Batch, user_id: user.id
+        can [:import], BatchItem
 
       end
 

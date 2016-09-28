@@ -39,8 +39,8 @@ group :test do
   gem 'fabrication'
   gem 'capybara'
   gem 'capybara-screenshot'
-  gem 'capybara-webkit'
-  # gem 'poltergeist'
+  # gem 'capybara-webkit'
+  gem 'poltergeist'
 end
 
 group :development do
