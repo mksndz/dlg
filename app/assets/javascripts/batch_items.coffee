@@ -1,4 +1,4 @@
-$(document).on 'ready turbolinks:load', ->
+#$(document).on 'ready turbolinks:load', ->
 
   $import_form = $("#xml_form")
 
@@ -22,9 +22,9 @@ $(document).on 'ready turbolinks:load', ->
 
 handle_error = (e) ->
   alert = "<div class='alert alert-danger'>" +
-            e +
-            "<a class='close' data-dismiss='alert' href='#'>&times;</a>" +
-          "</div>"
+    e +
+    "<a class='close' data-dismiss='alert' href='#'>&times;</a>" +
+    "</div>"
   $('.flash_messages').show().html(alert)
 
 
