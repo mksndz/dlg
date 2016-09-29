@@ -119,7 +119,7 @@ class LegacyImporter
     repository.in_georgia         = xml_node.css('in_georgia').inner_text == 'yes'
     repository.public             = xml_node.css('public').inner_text == 'yes'
     repository.color              = "##{xml_node.css('color').inner_text}"
-    repository.teaser             = xml_node.css('teaser').inner_text
+    repository.teaser             = xml_node.css('teaser').inner_text == 'yes'
 
     repository.save(validate: false)
     repository
