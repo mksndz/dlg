@@ -96,3 +96,12 @@ a.current.desc:after {
 .rights-statement-icon {
   width: 200px
 }
+
+#floating-form-navigation {
+  position: fixed;
+  right: 0;
+  top: 15%;
+  width: 12em;
+  // margin-top: -2.5em;
+  z-index: 1000;
+}

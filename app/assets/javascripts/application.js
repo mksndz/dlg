@@ -30,4 +30,16 @@ $(document).on('ready turbolinks:load', function() {
     $('select.collection-select').chosen();
     $('select.fancy-multiselect').chosen();
 
+    $('a.floating-submit-button').on('click', function() {
+
+        // todo find nearest form and submit it?
+
+    });
+
+    $('a.form-jump-link').on('click', function() {
+
+        // todo focus on specified field
+
+    });
+
 });
