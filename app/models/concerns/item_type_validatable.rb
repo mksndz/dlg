@@ -1,8 +1,6 @@
 module ItemTypeValidatable
-  # include ApplicationHelper
+  include MetadataHelper
   extend ActiveSupport::Concern
-
-  TYPE_REQUIRED_VALUES = %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text)
 
   included do
 
@@ -35,7 +33,7 @@ module ItemTypeValidatable
       errors.add(:dcterms_type, I18n.t('activerecord.errors.messages.blank'))
       return
     end
-    if (dcterms_type & TYPE_REQUIRED_VALUES).empty?
+    if (dcterms_type & dcmi_valid_types).empty?
       errors.add(:dcterms_type, I18n.t('activerecord.errors.messages.item_type.type_required_value'))
     end
   end

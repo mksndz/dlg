@@ -16,6 +16,8 @@
 <%= meta_textarea entity, :dcterms_publisher %>
 <a name="dcterms_is_shown_at"></a>
 <%= meta_textarea entity, :dcterms_is_shown_at %>
+<% e = entity.class.name.demodulize.underscore %>
+
 <a name="dc_date"></a>
 <%= meta_textarea entity, :dc_date %>
 <a name="dcterms_temporal"></a>
@@ -29,7 +31,6 @@
 
 <a name="dc_right"></a>
 <%= content_tag :div, class: 'form-group' do %>
-  <% e = entity.class.name.demodulize.underscore %>
   <%=
     label_tag "#{e}_dc_right", t("activerecord.attributes.#{e}.dc_right")
   %>
@@ -52,8 +53,20 @@
 <%= meta_textarea entity, :dlg_local_right %>
 <a name="dc_relation"></a>
 <%= meta_textarea entity, :dc_relation %>
+
 <a name="dcterms_type"></a>
-<%= meta_textarea entity, :dcterms_type %>
+<%= content_tag :div, class: 'form-group' do %>
+    <%= label_tag "#{e}_dcterms_type", t("activerecord.attributes.#{e}.dcterms_type") %>
+    <%= select(
+                e,
+                :dcterms_type,
+                dcmi_valid_types,
+                # { include_blank: true, multiple: true },
+                { include_blank: true },
+                { class: 'form-control dcmi-type-select' }
+        ) %>
+<% end %>
+
 <a name="dcterms_medium"></a>
 <%= meta_textarea entity, :dcterms_medium %>
 <a name="dcterms_extent"></a>

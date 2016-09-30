@@ -27,6 +27,9 @@ $(document).on('ready turbolinks:load', function() {
     $('select.standardized-rights-select').chosen({
         allow_single_deselect: true
     });
+    $('select.dcmi-type-select').chosen({
+        allow_single_deselect: true
+    });
     $('select.collection-select').chosen();
     $('select.fancy-multiselect').chosen();
 

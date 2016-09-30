@@ -1,5 +1,9 @@
 module MetadataHelper
 
+  def dcmi_valid_types
+    %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text)
+  end
+
   def multivalued_fields
     %w(
       dc_right
