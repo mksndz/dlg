@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010195625) do
+ActiveRecord::Schema.define(version: 20161010203327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20161010195625) do
 
   create_table "batch_imports", force: :cascade do |t|
     t.string   "xml",        null: false
-    t.string   "type",       null: false
+    t.string   "format",     null: false
     t.integer  "added"
-    t.integer  "errors"
+    t.integer  "failed"
     t.integer  "user_id",    null: false
     t.integer  "batch_id",   null: false
     t.datetime "created_at", null: false
