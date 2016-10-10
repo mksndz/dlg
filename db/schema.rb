@@ -11,11 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160831153122) do
+ActiveRecord::Schema.define(version: 20161010195625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "batch_imports", force: :cascade do |t|
+    t.string   "xml",        null: false
+    t.string   "type",       null: false
+    t.integer  "added"
+    t.integer  "errors"
+    t.integer  "user_id",    null: false
+    t.integer  "batch_id",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "batch_items", force: :cascade do |t|
     t.boolean  "dpla",                           default: false, null: false
