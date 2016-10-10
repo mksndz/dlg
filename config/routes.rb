@@ -65,6 +65,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :batch_imports, only: [:index, :new, :create, :show]
+
   end
 
   resource :catalog, only: [:index], controller: 'catalog', constraints: { id: /.*/, format: false } do

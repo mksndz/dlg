@@ -1,0 +1,11 @@
+<%= bootstrap_form_for([@batch, @batch_import]) do |f|  %>
+
+  <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Batch Import') %>
+
+  <%= f.text_area %>
+
+  <div class="action-buttons">
+    <%= f.primary t('meta.defaults.actions.save') %>
+  </div>
+
+<% end %>
