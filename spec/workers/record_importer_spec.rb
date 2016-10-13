@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe CollectionImporter, type: :model do
+describe RecordImporter, type: :model do
 
   describe '#perform' do
 
@@ -15,14 +15,21 @@ describe CollectionImporter, type: :model do
 
       context 'with valid XML' do
 
-        Fabricate(:collection) {
+        before(:each) {
+          Fabricate(:collection) {
             slug { '0091' } # to make the test xml fully valid
+          }
         }
 
-        it 'should create a BatchItem' do
+        it 'should create a BatchItem and update BatchImport appropriately' do
+
           expect{
             RecordImporter.perform(batch_import)
           }.to change(BatchItem, :count).by(1)
+
+          expect(batch_import.results['added'].length).to eq 1
+          expect(batch_import.results['updated'].length).to eq 0
+          expect(batch_import.results['failed'].length).to eq 0
         end
 
       end
