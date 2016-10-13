@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013145009) do
+ActiveRecord::Schema.define(version: 20161013154709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20161013145009) do
     t.datetime "updated_at",               null: false
     t.json     "results",     default: {}
     t.boolean  "validations"
+    t.integer  "updated"
   end
 
   create_table "batch_items", force: :cascade do |t|

@@ -67,6 +67,62 @@ end
 Fabricator(:completed_batch_import, from: :batch_import) do
 
   added { 1 }
+  updated { 0 }
   failed { 0 }
+  results {
+    {
+      added: [
+          {
+            batch_item_id: 1,
+            slug: 'ahc0091-002-004'
+          }
+      ],
+      updated: [],
+      failed: []
+    }
+  }
+  validations { true }
+
+end
+
+Fabricator(:completed_batch_import_with_failure, from: :batch_import) do
+
+  added { 0 }
+  updated { 0 }
+  failed { 1 }
+  results {
+    {
+      added: [],
+      updated: [],
+      failed: [
+          {
+              number: 1,
+              message: 'Validation Failed'
+          }
+      ]
+    }
+  }
+  validations { true }
+
+end
+
+Fabricator(:completed_batch_import_with_update, from: :batch_import) do
+
+  added { 0 }
+  updated { 1 }
+  failed { 0 }
+  results {
+    {
+      added: [],
+      updated: [
+          batch_item_id: 1,
+          item_id: 1,
+          slug: 'ahc0091-002-004'
+      ],
+      failed: [
+      ]
+    }
+  }
+  validations { true }
 
 end

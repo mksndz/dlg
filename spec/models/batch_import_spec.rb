@@ -41,12 +41,24 @@ RSpec.describe BatchImport, type: :model do
       expect(b.failed).to be_kind_of Integer
     end
 
+    it 'has integer updated' do
+      expect(b.updated).to be_kind_of Integer
+    end
+
     it 'has integer added' do
       expect(b.added).to be_kind_of Integer
     end
 
     it 'returns true for completed' do
       expect(b.completed?).to be true
+    end
+
+    it 'has boolean validations' do
+      expect(b.validations?).to be_in([true, false])
+    end
+
+    it 'has hash results' do
+      expect(b.results).to be_kind_of Hash
     end
 
   end
