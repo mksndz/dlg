@@ -37,18 +37,6 @@ RSpec.describe BatchImport, type: :model do
 
     let(:b) { Fabricate :completed_batch_import }
 
-    it 'has integer failed' do
-      expect(b.failed).to be_kind_of Integer
-    end
-
-    it 'has integer updated' do
-      expect(b.updated).to be_kind_of Integer
-    end
-
-    it 'has integer added' do
-      expect(b.added).to be_kind_of Integer
-    end
-
     it 'returns true for completed' do
       expect(b.completed?).to be true
     end

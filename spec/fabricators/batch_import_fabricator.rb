@@ -66,9 +66,6 @@ end
 
 Fabricator(:completed_batch_import, from: :batch_import) do
 
-  added { 1 }
-  updated { 0 }
-  failed { 0 }
   results {
     {
       added: [
@@ -87,9 +84,6 @@ end
 
 Fabricator(:completed_batch_import_with_failure, from: :batch_import) do
 
-  added { 0 }
-  updated { 0 }
-  failed { 1 }
   results {
     {
       added: [],
@@ -108,9 +102,6 @@ end
 
 Fabricator(:completed_batch_import_with_update, from: :batch_import) do
 
-  added { 0 }
-  updated { 1 }
-  failed { 0 }
   results {
     {
       added: [],
