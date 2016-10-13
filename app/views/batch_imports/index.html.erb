@@ -1,0 +1,63 @@
+<%= content_for :title do %>
+    Imports for Batch
+<% end %>
+
+<%=
+  content_for :subtitle do
+    @batch.name
+  end
+%>
+
+<% breadcrumb :batch_imports, @batch %>
+
+<%= render 'shared/per_pager' %>
+
+<% if @batch_imports.empty? %>
+
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Batch Imports') %></p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
+        </th>
+        <th>
+          <%= sortable 'format', t('meta.defaults.labels.columns.slug') %>
+        </th>
+        <th>
+          <%= 'User' %>
+        </th>
+        <th>
+          <%= 'Finished?' %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @batch_imports.each do |import| %>
+          <tr>
+            <td>
+              <%= link_to import.id, batch_batch_import_path(@batch, import) %>
+            </td>
+            <td>
+              <%= import.format %>
+            </td>
+            <td>
+              <%= import.user.email %>
+            </td>
+            <td>
+              <%= import.results.empty? ? 'Not Yet' : 'Yes' %>
+            </td>
+            <td></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @batch_imports %>
+
+<% end %>

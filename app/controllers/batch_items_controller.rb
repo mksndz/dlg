@@ -80,23 +80,23 @@ class BatchItemsController < ApplicationController
     end
   end
 
-  def import
-    begin
-      @batch_item = BatchItemImport.new(params[:xml_text], @batch, true).process
-    rescue StandardError => e
-      @errors = { batch_item: e.message }
-    end
-    respond_to do |format|
-      if @batch_item.save(validate: validate?)
-        @batch_item.valid_item = @batch_item.valid? unless validate?
-        format.json { render :success_result, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
-      else
-        @errors ||= @batch_item.errors
-        @slug = @batch_item.slug
-        format.json { render :error_result, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def import
+  #   begin
+  #     @batch_item = BatchItemImport.new(params[:xml_text], @batch, true).process
+  #   rescue StandardError => e
+  #     @errors = { batch_item: e.message }
+  #   end
+  #   respond_to do |format|
+  #     if @batch_item.save(validate: validate?)
+  #       @batch_item.valid_item = @batch_item.valid? unless validate?
+  #       format.json { render :success_result, status: :ok, location: batch_batch_item_path(@batch, @batch_item) }
+  #     else
+  #       @errors ||= @batch_item.errors
+  #       @slug = @batch_item.slug
+  #       format.json { render :error_result, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   private
   def set_batch

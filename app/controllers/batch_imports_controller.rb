@@ -1,7 +1,8 @@
 class BatchImportsController < ApplicationController
   include ErrorHandling
+  include Sorting
 
-  before_action :set_batch
+  before_action :set_batch, except: [:help]
 
   rescue_from ImportFailedError do |e|
     redirect_to :new, alert: e.message
@@ -10,6 +11,9 @@ class BatchImportsController < ApplicationController
   # show imports for batch
   def index
     @batch_imports = BatchImport
+                         .order(sort_column + ' ' + sort_direction)
+                         .page(params[:page])
+                         .per(params[:per_page])
                          .where(batch_id: @batch.id)
   end
 
@@ -25,42 +29,46 @@ class BatchImportsController < ApplicationController
     # return error if both fields have data
     throw ImportFailedError('You provided both a file and XML text. Choose one only!') if (batch_import_params[:xml] and batch_import_params[:xml_file])
 
+    @batch_import = BatchImport.new
+
     # copy file contents to string if needed
     if batch_import_params[:xml_file]
       file = batch_import_params[:xml_file]
       if xml.respond_to? :read
-        xml = file.read
+        @batch_import.xml = file.read # todo sanitize????
+        @batch_import.format = 'file'
       else
         throw ImportFailedError('Could not read from uploaded file.')
       end
     else
-      xml = batch_import_params[:xml]
+      @batch_import.xml = batch_import_params[:xml]
+      @batch_import.format = 'text'
     end
 
-    @batch_import = BatchImport.new
-    @batch_import.xml = xml
+    @batch_import.user = current_user
     @batch_import.batch = @batch
+    @batch_import.validations = run_validations?
 
-    # save entity
     @batch_import.save
 
-    # queue processing job
-    Resque.enqueue(
-        RecordImporter(@batch_import)
-    )
+    Resque.enqueue(RecordImporter, @batch_import.id)
 
-    # return
     respond_to do |format|
-      format.html { redirect_to batch_batch_import_path(@batch) }
+      format.html { redirect_to batch_batch_import_path(@batch, @batch_import) }
     end
 
   end
 
   # show info about completed import
   def show
+    @batch_import = BatchImport.find(params[:id])
   end
 
   def help
+  end
+
+  def xml
+    @batch_import = BatchImport.find(params[:id])
   end
 
   private
@@ -70,7 +78,11 @@ class BatchImportsController < ApplicationController
   end
 
   def batch_import_params
-    params.require(:batch_import).permit(:xml, :bypass_validations)
+    params.require(:batch_import).permit(:xml, :validations)
+  end
+
+  def run_validations?
+    batch_import_params[:validations] == '1'
   end
 
 end

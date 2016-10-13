@@ -138,6 +138,35 @@ crumb :batch_results do |batch|
     parent :batches, batch
 end
 
+# BATCH IMPORT
+
+crumb :batch_imports do |batch|
+  link batch.name, batch
+  link 'Batch Imports', batch_batch_imports_path(batch)
+  parent :batches
+end
+
+crumb :batch_import_results do |batch_import|
+  link batch_import.batch.name, batch_import.batch
+  link 'Batch Imports', batch_batch_imports_path(batch_import.batch)
+  link batch_import.id, batch_batch_import_path(batch_import.batch, batch_import)
+  link 'Results'
+  parent :batches
+end
+
+crumb :batch_import_xml do |batch_import|
+  link batch_import.batch.name, batch_import.batch
+  link 'Batch Imports', batch_batch_imports_path(batch_import.batch)
+  link batch_import.id, batch_batch_import_path(batch_import.batch, batch_import)
+  link 'XML'
+  parent :batches
+end
+
+crumb :batch_import do |batch_import|
+  link 'Batch Import', batch_batch_imports_path(batch_import.batch, batch_import)
+  parent :batches
+end
+
 # BATCH ITEM
 
 crumb :batch_items do |batch|

@@ -3,13 +3,14 @@ class RecordImporter
   @queue = :xml
   @logger = Logger.new('./log/xml_import.log')
 
-  def self.perform(batch_import, validate = true)
+  def self.perform(batch_import_id)
 
-    @batch_import = batch_import
+    @batch_import = BatchImport.find(batch_import_id)
+
     @added = 0
     @failed = 0
     @batch = @batch_import.batch
-    @validate = validate
+    @validate = @batch_import.validations?
     @added = []
     @updated = []
     @failed = []
@@ -43,9 +44,6 @@ class RecordImporter
         updated: @updated,
         failed: @failed
     }
-    @batch_import.added   = @added.length
-    @batch_import.updated = @updated.length
-    @batch_import.failed  = @failed.length
 
     @batch_import.save
 

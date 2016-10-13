@@ -1,12 +1,13 @@
 <%= content_for :title do %>
     Batch Import
 <% end %>
+
 <%=
   content_for :subtitle do
     "For Batch: #{@batch.name}"
   end
 %>
 
-<%# breadcrumb :batch_item, @batch_item %>
+<% breadcrumb :batch_import, @batch_import %>
 
 <%= render 'form' %>

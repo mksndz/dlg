@@ -65,7 +65,14 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :batch_imports, only: [:index, :new, :create, :show]
+    resources :batch_imports, only: [:index, :new, :create, :show] do
+      collection do
+        get 'help'
+      end
+      member do
+        get 'xml'
+      end
+    end
 
   end
 

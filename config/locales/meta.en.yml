@@ -285,7 +285,7 @@ en:
         import:
           xml_file: 'XML File'
           xml_text: 'XML Text'
-          bypass_validations: 'Bypass Validations'
+          validations: 'Run Validations'
         columns:
           creator: 'Creator'
           committed: 'Committed'

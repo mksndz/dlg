@@ -6,7 +6,7 @@
 
   <%= f.file_field :xml_file, label: t('meta.batch.labels.import.xml_file')%>
 
-  <%= f.check_box :bypass_validations, label: t('meta.batch.labels.import.bypass_validations') %>
+  <%= f.check_box :validations, { label: t('meta.batch.labels.import.validations'), checked: true } %>
 
   <div class="action-buttons">
     <%= f.primary t('meta.defaults.actions.save') %>
