@@ -6,35 +6,76 @@ describe CollectionImporter, type: :model do
 
     RSpec::Expectations.configuration.on_potential_false_positives = :nothing
 
-    let(:batch_import) {
-      Fabricate :batch_import
-    }
 
     context 'with valid XML' do
 
-      before(:all) {
+      let(:batch_import) {
+        Fabricate :batch_import
+      }
+
+      context 'with valid XML' do
+
         Fabricate(:collection) {
-          slug { '0091' } # to make the test xml valid
+            slug { '0091' } # to make the test xml fully valid
+        }
+
+        it 'should create a BatchItem' do
+          expect{
+            RecordImporter.perform(batch_import)
+          }.to change(BatchItem, :count).by(1)
+        end
+
+      end
+
+      context 'with valid XML but no existing collection' do
+
+        it 'should not create a BatchItem' do
+
+          expect{
+            RecordImporter.perform(batch_import)
+          }.to change(BatchItem, :count).by(0)
+
+        end
+
+      end
+
+    end
+
+    context 'with unparseable xml' do
+
+      let(:batch_import) {
+        Fabricate(:batch_import) {
+          xml { '
+            <items><item>M</zzz>
+          ' }
         }
       }
 
-      it 'should create a BatchItem' do
+      it 'should raise a JobFailedError' do
 
         expect{
           RecordImporter.perform(batch_import)
-        }.to change(BatchItem, :count).by(1)
+        }.to raise_error JobFailedError
 
       end
-      
+
     end
 
-    context 'with valid XML but no existing collection' do
+    context 'with xml with no item nodes' do
 
-      it 'should raise an exception' do
+      let(:batch_import) {
+        Fabricate(:batch_import) {
+          xml { '
+            <items><collection><slug>blah</slug></collection></items>
+          ' }
+        }
+      }
+
+      it 'should raise a JobFailedError' do
 
         expect{
           RecordImporter.perform(batch_import)
-        }.to change(BatchItem, :count).by(0)
+        }.to raise_error JobFailedError
 
       end
 
