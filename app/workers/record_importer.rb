@@ -1,7 +1,6 @@
 class RecordImporter
 
   @queue = :xml
-  @logger = Logger.new('./log/xml_import.log')
 
   def self.perform(batch_import_id)
 
@@ -18,26 +17,22 @@ class RecordImporter
     xml_data = Nokogiri::XML @batch_import.xml
 
     unless xml_data.is_a? Nokogiri::XML::Document and xml_data.errors.empty?
-      @logger.error 'XML could not be parsed by Nokogiri'
-      raise JobFailedError
+      total_failure 'XML could not be parsed by Nokogiri'
+      return
     end
 
     records = xml_data.css('item')
     n = records.length
 
     unless n > 0
-      @logger.error 'No records could be extracted from the XML'
-      raise JobFailedError
+      total_failure 'No records could be extracted from the XML'
+      return
     end
-
-    @logger.info "Processing XML file with #{n} records"
 
     records.each_with_index do |r, i|
       record = Hash.from_xml(r.to_s)
       create_or_update_record i + 1, record['item']
     end
-
-    @logger.info 'XML processing complete.'
 
     @batch_import.results = {
         added: @added,
@@ -45,7 +40,7 @@ class RecordImporter
         failed: @failed
     }
 
-    @batch_import.save
+    save_batch_import
 
   end
 
@@ -149,6 +144,19 @@ class RecordImporter
         item_id: item_id,
         slug: slug
     }
+  end
+
+  def self.total_failure(msg)
+    @batch_import.results = {
+        added: @added,
+        updated: @updated,
+        failed: [{number: 0, message: msg}]
+    }
+    save_batch_import
+  end
+
+  def self.save_batch_import
+    raise JobFailedError("BatchImport could not be updated: #{@batch_import.errors.inspect}") unless @batch_import.save
   end
 
 end

@@ -4,9 +4,6 @@ describe RecordImporter, type: :model do
 
   describe '#perform' do
 
-    RSpec::Expectations.configuration.on_potential_false_positives = :nothing
-
-
     context 'with valid XML' do
 
       let(:batch_import) {
@@ -21,15 +18,22 @@ describe RecordImporter, type: :model do
           }
         }
 
-        it 'should create a BatchItem and update BatchImport appropriately' do
+        it 'should create a BatchItem' do
 
           expect{
-            RecordImporter.perform(batch_import)
+            RecordImporter.perform(batch_import.id)
           }.to change(BatchItem, :count).by(1)
 
-          expect(batch_import.results['added'].length).to eq 1
-          expect(batch_import.results['updated'].length).to eq 0
-          expect(batch_import.results['failed'].length).to eq 0
+        end
+
+        it 'should update BatchImport results appropriately' do
+
+          RecordImporter.perform(batch_import.id)
+
+          expect(
+              batch_import.reload.results['added'].length
+          ).to eq 1
+
         end
 
       end
@@ -39,7 +43,7 @@ describe RecordImporter, type: :model do
         it 'should not create a BatchItem' do
 
           expect{
-            RecordImporter.perform(batch_import)
+            RecordImporter.perform(batch_import.id)
           }.to change(BatchItem, :count).by(0)
 
         end
@@ -58,11 +62,13 @@ describe RecordImporter, type: :model do
         }
       }
 
-      it 'should raise a JobFailedError' do
+      it 'should store a verbose error in results saying the XML could not be parsed' do
 
-        expect{
-          RecordImporter.perform(batch_import)
-        }.to raise_error JobFailedError
+        RecordImporter.perform(batch_import.id)
+
+        expect(
+            batch_import.reload.results['failed'][0]['message']
+        ).to eq 'XML could not be parsed by Nokogiri'
 
       end
 
@@ -78,11 +84,13 @@ describe RecordImporter, type: :model do
         }
       }
 
-      it 'should raise a JobFailedError' do
+      it 'should store a verbose error in results saying no records found' do
 
-        expect{
-          RecordImporter.perform(batch_import)
-        }.to raise_error JobFailedError
+        RecordImporter.perform(batch_import.id)
+
+        expect(
+            batch_import.reload.results['failed'][0]['message']
+        ).to eq 'No records could be extracted from the XML'
 
       end
 
