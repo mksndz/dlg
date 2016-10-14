@@ -13,6 +13,110 @@
 <%= render 'shared/show_field', field_name: 'User', value: @batch_import.user.email %>
 <%= render 'shared/show_field', field_name: 'Batch', value: @batch_import.batch.name %>
 <%= render 'shared/show_field', field_name: 'Loaded', value: @batch_import.created_at %>
+<%= render 'shared/show_field', field_name: 'Validations Run?', value: @batch_import.validations %>
+
+<% if @batch_import.results.empty? %>
+
+    <%= render 'shared/show_field', field_name: 'Results', value: @batch_import.created_at %>
+
+<% else %>
+
+    <% unless @batch_import.results['added'].empty? %>
+      <div class="panel panel-success">
+        <div class="panel-heading">New Batch Items</div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ID</th>
+              <th>Batch Item</th>
+            </tr>
+          </thead>
+        <% n = 1 %>
+        <% @batch_import.results['added'].each do |a| %>
+          <tr>
+            <td><%= n %></td>
+            <td><%= a['slug'] %></td>
+            <td><%= link_to 'View', batch_batch_item_path(@batch, a['batch_item_id']) %></td>
+          </tr>
+          <% n += 1 %>
+        <% end %>
+        </table>
+      </div>
+    <% end %>
+
+    <% unless @batch_import.results['updated'].empty? %>
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        Batch Items for Updating
+        <span class="pull-right badge">
+          <%= @batch_import.results['updated'].length %>
+        </span>
+      </div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>ID</th>
+          <th>Batch Item</th>
+          <th>Item to Update</th>
+        </tr>
+        </thead>
+        <% n = 1 %>
+        <% @batch_import.results['updated'].each do |u| %>
+            <tr>
+              <td><%= n %></td>
+              <td><%= u['slug'] %></td>
+              <td><%= link_to 'View', batch_batch_item_path(@batch, u['batch_item_id']) %></td>
+              <td><%= link_to 'View', item_path(u['item_id']) %></td>
+            </tr>
+            <% n += 1 %>
+        <% end %>
+      </table>
+    </div>
+    <% end %>
+
+    <% unless @batch_import.results['failed'].empty? %>
+        <div class="panel panel-danger">
+
+        <% if @batch_import.results['failed'][0]['number'] == 0 %>
+
+          <div class="panel-heading">Failed to Import</div>
+          <div class="panel-body">
+            <%= @batch_import.results['failed'][0]['message'] %>
+          </div>
+
+        <% else %>
+
+          <div class="panel-heading">
+            Failed to Import
+            <span class="pull-right badge">
+              <%= @batch_import.results['updated'].length %>
+            </span>
+          </div>
+
+          <table class="table">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Message</th>
+            </tr>
+            </thead>
+            <% n = 1 %>
+            <% @batch_import.results['failed'].each do |f| %>
+                <tr>
+                  <td><%= n %></td>
+                  <td><%= f['message'] %></td>
+                </tr>
+                <% n += 1 %>
+            <% end %>
+          </table>
+
+        <% end %>
+
+      </div>
+
+    <% end %>
 
 
-<%= render 'shared/show_field', field_name: 'Results', value: @batch_import.results.inspect %>
+<% end %>
