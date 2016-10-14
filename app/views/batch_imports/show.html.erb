@@ -1,8 +1,8 @@
 <%= content_for :title do %>
-    Batch Import Results
+    Batch Import Info
 <% end %>
 
-<% breadcrumb :batch_import_results, @batch_import %>
+<% breadcrumb :batch_import_info, @batch_import %>
 
 <%= link_to 'New XML Upload', new_batch_batch_import_path(@batch), class: 'btn btn-default' %>
 <%= link_to 'View Uploaded XML', xml_batch_batch_import_path(@batch, @batch_import), class: 'btn btn-default' %>
@@ -13,4 +13,6 @@
 <%= render 'shared/show_field', field_name: 'User', value: @batch_import.user.email %>
 <%= render 'shared/show_field', field_name: 'Batch', value: @batch_import.batch.name %>
 <%= render 'shared/show_field', field_name: 'Loaded', value: @batch_import.created_at %>
+
+
 <%= render 'shared/show_field', field_name: 'Results', value: @batch_import.results.inspect %>

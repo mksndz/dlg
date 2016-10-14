@@ -10,7 +10,11 @@
 
 <% breadcrumb :batch_imports, @batch %>
 
+<%= link_to 'New XML Upload', new_batch_batch_import_path(@batch), class: 'btn btn-default' %>
+
 <%= render 'shared/per_pager' %>
+
+<br><br>
 
 <% if @batch_imports.empty? %>
 
@@ -52,7 +56,12 @@
             <td>
               <%= import.results.empty? ? 'Not Yet' : 'Yes' %>
             </td>
-            <td></td>
+            <td>
+              <div class="btn-group btn-group-xs">
+                <%= link_to 'Info', batch_batch_import_path(@batch, import) , class: 'btn btn-default' %>
+                <%= link_to 'XML', xml_batch_batch_import_path(@batch, import) , class: 'btn btn-default' %>
+              </div>
+            </td>
           </tr>
       <% end %>
       </tbody>

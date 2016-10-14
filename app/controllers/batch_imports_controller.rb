@@ -54,7 +54,7 @@ class BatchImportsController < ApplicationController
     Resque.enqueue(RecordImporter, @batch_import.id)
 
     respond_to do |format|
-      format.html { redirect_to batch_batch_import_path(@batch, @batch_import) }
+      format.html { redirect_to batch_batch_import_path(@batch, @batch_import), notice: 'XML Import Job Queued. This page will show results when the job is finished.' }
     end
 
   end
