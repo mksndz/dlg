@@ -5,7 +5,7 @@ class BatchImportsController < ApplicationController
   before_action :set_batch, except: [:help]
 
   rescue_from ImportFailedError do |e|
-    redirect_to :new, alert: e.message
+    redirect_to new_batch_batch_import_path(@batch), alert: e.message
   end
 
   # show imports for batch
@@ -27,8 +27,8 @@ class BatchImportsController < ApplicationController
   def create
 
     # return error if both fields have data
-    throw ImportFailedError('You provided both a file and XML text. Choose one only!') if (batch_import_params[:xml] and batch_import_params[:xml_file])
-    throw ImportFailedError('No file or XML text provided!') unless (batch_import_params[:xml] or batch_import_params[:xml_file])
+    raise ImportFailedError.new('You provided both a file and XML text. Choose one only!') if (batch_import_params[:xml].empty? and batch_import_params[:xml_file])
+    raise ImportFailedError.new('No file or XML text provided!') unless (batch_import_params[:xml].present? or batch_import_params[:xml_file])
 
     @batch_import = BatchImport.new
 
@@ -39,7 +39,7 @@ class BatchImportsController < ApplicationController
         @batch_import.xml = file.read # todo sanitize????
         @batch_import.format = 'file'
       else
-        throw ImportFailedError('Could not read from uploaded file.')
+        raise ImportFailedError.new('Could not read from uploaded file.')
       end
     else
       @batch_import.xml = batch_import_params[:xml]
@@ -66,8 +66,9 @@ class BatchImportsController < ApplicationController
   end
 
   def destroy
+    @batch_import = BatchImport.find(params[:id])
     @batch_import.destroy
-    format.html { redirect_to batch_batch_import_path(@batch), notice: 'BatchImport and all associated Batch Items deleted'}
+    redirect_to batch_batch_imports_path(@batch), notice: 'BatchImport and all associated Batch Items deleted'
   end
 
   def help
