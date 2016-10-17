@@ -23,7 +23,9 @@
 
     <% unless @batch_import.results['added'].empty? %>
       <div class="panel panel-success">
-        <div class="panel-heading">New Batch Items</div>
+        <div class="panel-heading">
+          <strong>New Batch Items</strong>
+        </div>
         <table class="table">
           <thead>
             <tr>
@@ -46,9 +48,9 @@
     <% end %>
 
     <% unless @batch_import.results['updated'].empty? %>
-    <div class="panel panel-warning">
+    <div class="panel panel-primary">
       <div class="panel-heading">
-        Batch Items for Updating
+        <strong>Batch Items for Updating</strong>
         <span class="pull-right badge">
           <%= @batch_import.results['updated'].length %>
         </span>
@@ -81,7 +83,9 @@
 
         <% if @batch_import.results['failed'][0]['number'] == 0 %>
 
-          <div class="panel-heading">Failed to Import</div>
+          <div class="panel-heading">
+            <strong>Failed to Import</strong>
+          </div>
           <div class="panel-body">
             <%= @batch_import.results['failed'][0]['message'] %>
           </div>
@@ -89,7 +93,7 @@
         <% else %>
 
           <div class="panel-heading">
-            Failed to Import
+            <strong>Failed to Import</strong>
             <span class="pull-right badge">
               <%= @batch_import.results['updated'].length %>
             </span>
