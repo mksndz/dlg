@@ -2,32 +2,33 @@ require 'rails_helper'
 
 RSpec.describe BatchItem, type: :model do
 
+  let(:bi) {
+    Fabricate(:batch_item)
+  }
+
   it 'has none to begin with' do
     expect(BatchItem.count).to eq 0
   end
 
   it 'has some after creating a batch' do
-    Fabricate(:batch) { batch_items(count: 1) }
+    Fabricate(:batch_item)
     expect(BatchItem.count).to be 1
   end
+
   it 'has a Batch' do
-    b = Fabricate(:batch) { batch_items(count: 1) }
-    expect(b.batch_items.first.batch).to be_kind_of Batch
+    expect(bi.batch).to be_kind_of Batch
   end
 
   it 'has a String title' do
-    b = Fabricate(:batch) { batch_items(count: 1) }
-    expect(b.batch_items.first.title).to be_kind_of String
+    expect(bi.title).to be_kind_of String
   end
 
   it 'has a slug' do
-    b = Fabricate(:batch) { batch_items(count: 1) }
-    expect(b.batch_items.first.slug).not_to be_empty
+    expect(bi.slug).not_to be_empty
   end
 
   it 'is not an Item' do
-    b = Fabricate(:batch) { batch_items(count: 1) }
-    expect(b.batch_items.first).not_to be_kind_of Item
+    expect(bi).not_to be_kind_of Item
   end
 
   it 'creates an Item copy of itself using commit' do
@@ -38,8 +39,7 @@ RSpec.describe BatchItem, type: :model do
 
   it 'replaces an existing Item with its attributes using commit' do
     i = Fabricate(:item)
-    b = Fabricate(:batch) { batch_items(count: 1) }
-    bi = b.batch_items.first
+    bi = Fabricate(:batch_item)
     bi.item = i
     bi.save
     ni = bi.commit
@@ -74,31 +74,31 @@ RSpec.describe BatchItem, type: :model do
   # validations
 
   it 'should require a Collection' do
-    i = Fabricate.build(:item, collection: nil)
+    i = Fabricate.build(:batch_item, collection: nil)
     i.valid?
     expect(i.errors).to have_key :collection
   end
 
   it 'should require a dc_date value' do
-    i = Fabricate.build(:item, dc_date: [])
+    i = Fabricate.build(:batch_item, dc_date: [])
     i.valid?
     expect(i.errors).to have_key :dc_date
   end
 
   it 'should require a dcterms_spatial value' do
-    i = Fabricate.build(:item, dcterms_spatial: [])
+    i = Fabricate.build(:batch_item, dcterms_spatial: [])
     i.valid?
     expect(i.errors).to have_key :dcterms_spatial
   end
 
   it 'should require one of the dcterms_type values to be in a standardized set' do
-    i = Fabricate.build(:item, dcterms_type: ['Some Random Silly Type'])
+    i = Fabricate.build(:batch_item, dcterms_type: ['Some Random Silly Type'])
     i.valid?
     expect(i.errors).to have_key :dcterms_type
   end
 
   it 'should require each of the dcterms_temporal values use a limited character set' do
-    i = Fabricate.build(:item, dcterms_temporal: ['Text'])
+    i = Fabricate.build(:batch_item, dcterms_temporal: ['Text'])
     i.valid?
     expect(i.errors).to have_key :dcterms_temporal
   end
