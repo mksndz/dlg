@@ -41,6 +41,10 @@ RSpec.describe BatchImport, type: :model do
       expect(b.completed?).to be true
     end
 
+    it 'has BatchItems' do
+      expect(b.batch_items.first).to be_kind_of BatchItem
+    end
+
     it 'has boolean validations' do
       expect(b.validations?).to be_in([true, false])
     end

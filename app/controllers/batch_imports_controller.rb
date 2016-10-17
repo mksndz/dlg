@@ -28,6 +28,7 @@ class BatchImportsController < ApplicationController
 
     # return error if both fields have data
     throw ImportFailedError('You provided both a file and XML text. Choose one only!') if (batch_import_params[:xml] and batch_import_params[:xml_file])
+    throw ImportFailedError('No file or XML text provided!') unless (batch_import_params[:xml] or batch_import_params[:xml_file])
 
     @batch_import = BatchImport.new
 
@@ -62,6 +63,11 @@ class BatchImportsController < ApplicationController
   # show info about completed import
   def show
     @batch_import = BatchImport.find(params[:id])
+  end
+
+  def destroy
+    @batch_import.destroy
+    format.html { redirect_to batch_batch_import_path(@batch), notice: 'BatchImport and all associated Batch Items deleted'}
   end
 
   def help

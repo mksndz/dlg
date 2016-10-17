@@ -3,6 +3,7 @@ class BatchItem < ActiveRecord::Base
   include ItemTypeValidatable
 
   belongs_to :batch, counter_cache: true
+  belongs_to :batch_import, counter_cache: true
   belongs_to :collection
   belongs_to :item
   has_one :repository, through: :collection
@@ -20,7 +21,7 @@ class BatchItem < ActiveRecord::Base
   end
 
   def commit
-    scrub_attributes = %w(id created_at updated_at batch_id)
+    scrub_attributes = %w(id created_at updated_at batch_id batch_import_id)
     attributes = self.attributes.except(*scrub_attributes)
     item_id = attributes.delete('item_id')
     if item_id

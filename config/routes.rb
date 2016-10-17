@@ -65,7 +65,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :batch_imports, only: [:index, :new, :create, :show] do
+    resources :batch_imports, except: [:edit, :update] do
       collection do
         get 'help'
       end

@@ -11,21 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013172538) do
+ActiveRecord::Schema.define(version: 20161017152246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
 
   create_table "batch_imports", force: :cascade do |t|
-    t.string   "xml",                      null: false
-    t.string   "format",                   null: false
-    t.integer  "user_id",                  null: false
-    t.integer  "batch_id",                 null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.json     "results",     default: {}
+    t.string   "xml",                            null: false
+    t.string   "format",                         null: false
+    t.integer  "user_id",                        null: false
+    t.integer  "batch_id",                       null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.json     "results",           default: {}
     t.boolean  "validations"
+    t.integer  "batch_items_count"
+    t.datetime "completed_at"
   end
 
   create_table "batch_items", force: :cascade do |t|
@@ -63,9 +65,11 @@ ActiveRecord::Schema.define(version: 20161013172538) do
     t.boolean  "valid_item",                     default: false, null: false
     t.boolean  "has_thumbnail",                  default: false, null: false
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
+    t.integer  "batch_import_id"
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
+  add_index "batch_items", ["batch_import_id"], name: "index_batch_items_on_batch_import_id", using: :btree
   add_index "batch_items", ["item_id"], name: "index_batch_items_on_item_id", using: :btree
   add_index "batch_items", ["other_collections"], name: "index_batch_items_on_other_collections", using: :btree
   add_index "batch_items", ["slug"], name: "index_batch_items_on_slug", using: :btree

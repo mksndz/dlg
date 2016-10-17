@@ -2,9 +2,10 @@ class BatchImport < ActiveRecord::Base
 
   belongs_to :batch
   belongs_to :user
+  has_many :batch_items, dependent: :destroy
 
   def completed?
-    !!(failed || added)
+    !!completed_at
   end
 
 end
