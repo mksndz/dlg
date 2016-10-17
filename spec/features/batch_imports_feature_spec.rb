@@ -20,27 +20,7 @@ feature 'Batch Importing Stuff' do
       login_as super_user, scope: :user
     end
 
-    scenario 'can load the form to import some xml' do
-
-      visit new_batch_batch_import_path(batch)
-
-      expect(page).to have_field I18n.t('meta.batch.labels.import.xml_text')
-      expect(page).to have_field I18n.t('meta.batch.labels.import.xml_file')
-
-
-    end
-
-    scenario 'can submit the form with some valid xml with one record' do
-
-      visit new_batch_batch_import_path(batch)
-
-      fill_in I18n.t('meta.batch.labels.import.xml_text'), with: batch_import.xml
-
-      click_on I18n.t('meta.defaults.actions.save')
-
-      # todo
-
-    end
+    # todo
 
   end
 

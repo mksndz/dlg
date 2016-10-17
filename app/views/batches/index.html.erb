@@ -64,10 +64,10 @@
               <%= link_to batch.name, batch %>
             </td>
             <td>
-              <%= link_to batch.batch_items.size, batch_batch_items_path(batch_id: batch.id), class: 'count-link' %>
+              <%= link_to batch.batch_items.size, batch_batch_items_path(batch_id: batch.id), class: 'batch-items-count-link' %>
             </td>
             <td>
-              <%= link_to batch.batch_imports.size, batch_batch_imports_path(batch_id: batch.id), class: 'count-link' %>
+              <%= link_to batch.batch_imports.size, batch_batch_imports_path(batch_id: batch.id), class: 'batch-imports-count' %>
             </td>
             <td>
               <%= batch.user.email %>

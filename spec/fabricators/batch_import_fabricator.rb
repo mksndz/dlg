@@ -80,6 +80,7 @@ Fabricator(:completed_batch_import, from: :batch_import) do
   }
   validations { true }
   batch_items(count: 1)
+  completed_at { Time.now.to_s }
 
 end
 
@@ -99,6 +100,7 @@ Fabricator(:completed_batch_import_with_update, from: :batch_import) do
   }
   validations { true }
   batch_items(count: 1)
+  completed_at { Time.now.to_s }
 
 end
 
@@ -117,5 +119,6 @@ Fabricator(:completed_batch_import_with_failure, from: :batch_import) do
     }
   }
   validations { true }
+  completed_at { Time.now.to_s }
 
 end

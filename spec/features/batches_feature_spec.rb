@@ -133,25 +133,9 @@ feature 'Batches Management' do
 
       visit batches_path
 
-      within('.count-link') do
+      within('.batch-items-count-link') do
         expect(page).to have_text count
       end
-
-    end
-
-    scenario 'super user sees a button to import XML and can load the form' do
-
-      Fabricate :batch
-
-      visit edit_batch_path(Batch.last)
-
-      expect(page).to have_link I18n.t('meta.batch.actions.populate_with_xml')
-
-      click_on I18n.t('meta.batch.actions.populate_with_xml')
-
-      expect(page).to have_text I18n.t('meta.batch.labels.import.xml_file') # todo
-      expect(page).to have_field I18n.t('meta.batch.labels.import.xml_text')
-      expect(page).to have_field I18n.t('meta.batch.labels.import.bypass_validations')
 
     end
 
