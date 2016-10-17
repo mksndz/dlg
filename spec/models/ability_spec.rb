@@ -353,19 +353,22 @@ RSpec.describe Ability, type: :model do
 
     subject { Ability.new uploader_user }
 
-    let(:batch) { Fabricate :batch }
+    it 'cannot manage Batch Imports for Batches not owned by self' do
 
-    it 'can upload to a batch owned by self' do
+      batch_import = Fabricate :batch_import
 
-      batch.user = uploader_user
-
-      is_expected.to be_able_to :import, batch
+      is_expected.not_to be_able_to :manage, batch_import
 
     end
 
-    it 'cannot upload to a batch not owned by self' do
+    it 'can manage Batch Imports for Batches owned by self' do
 
-      is_expected.not_to be_able_to :import, batch
+      batch = Fabricate :batch
+      batch.user = uploader_user
+
+      batch_import = BatchImport.new({user: uploader_user})
+
+      is_expected.to be_able_to :manage, batch_import
 
     end
 

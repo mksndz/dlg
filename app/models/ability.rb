@@ -41,9 +41,8 @@ class Ability
 
       if roles.include? 'uploader'
 
-        # User with Uploader Role can upload XML
-        can [:import], Batch, user_id: user.id
-        can [:import], BatchItem
+        # User with Uploader Role can manage BatchImports
+        can [:manage], BatchImport, user_id: user.id
 
       end
 

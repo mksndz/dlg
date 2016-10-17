@@ -1,4 +1,7 @@
 class BatchImportsController < ApplicationController
+
+  load_and_authorize_resource
+
   include ErrorHandling
   include Sorting
 
@@ -61,11 +64,9 @@ class BatchImportsController < ApplicationController
 
   # show info about completed import
   def show
-    @batch_import = BatchImport.find(params[:id])
   end
 
   def destroy
-    @batch_import = BatchImport.find(params[:id])
     @batch_import.destroy
     redirect_to batch_batch_imports_path(@batch), notice: 'BatchImport and all associated Batch Items deleted'
   end
@@ -74,7 +75,6 @@ class BatchImportsController < ApplicationController
   end
 
   def xml
-    @batch_import = BatchImport.find(params[:id])
   end
 
   private
