@@ -17,7 +17,7 @@ class RecordImporter
     xml_data = Nokogiri::XML @batch_import.xml
 
     unless xml_data.is_a? Nokogiri::XML::Document and xml_data.errors.empty?
-      total_failure 'XML could not be parsed by Nokogiri'
+      total_failure 'XML could not be parsed, probably due to invalid XML format.'
       return
     end
 
@@ -39,6 +39,8 @@ class RecordImporter
         updated: @updated,
         failed: @failed
     }
+
+    @batch_import.completed_at = Time.now
 
     save_batch_import
 
@@ -112,6 +114,7 @@ class RecordImporter
 
   def self.create_new_record(record_data)
     @record = BatchItem.new prepared_params(record_data)
+    @record.batch_import = @batch_import
   end
 
   # reject any values the db is not prepared for...
