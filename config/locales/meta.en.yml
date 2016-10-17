@@ -264,11 +264,9 @@ en:
       actions:
         add: 'New Batch'
         add_batch_item: 'Add Batch Item'
-        manage_xml_imports: 'Manage XML Imports'
         import: 'Import'
         view_batch: 'View Batch'
         view_item: 'View Item'
-        process_more: 'Process More XML'
         results: 'Results'
         commit: 'Commit'
         recreate: 'Recreate'
@@ -281,11 +279,6 @@ en:
         to_commit: 'You will be committing %{count} records in this action.'
         empty_batch_commit: 'You cannot commit an empty Batch'
         has_invalid_batch_items: 'You cannot commit a Batch with invalid items'
-        progress_remaining: '% Complete'
-        import:
-          xml_file: 'XML File'
-          xml_text: 'XML Text'
-          validations: 'Run Validations'
         columns:
           creator: 'Creator'
           committed: 'Committed'
