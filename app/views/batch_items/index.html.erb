@@ -10,11 +10,12 @@
 
 <% breadcrumb :batch_items, @batch %>
 
+<div class="btn-group" role="group" aria-label="Batch Items Actions">
 <% unless @batch.committed? %>
   <%= link_to t('meta.batch_item.action.add'), new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
-  <%# link_to t('meta.batch.actions.populate_with_xml'), import_batch_path(@batch), class: 'btn btn-default' %>
-  <%= link_to t('meta.batch.actions.populate_with_xml'), new_batch_batch_import_path(@batch), class: 'btn btn-default' %>
 <% end %>
+  <%= link_to t('meta.batch.actions.manage_xml_imports'), batch_batch_imports_path(@batch), class: 'btn btn-default' %>
+</div>
 
 <%= render 'shared/per_pager' %>
 

@@ -4,34 +4,34 @@
 
 <% breadcrumb :batch_import_info, @batch_import %>
 
-<%= link_to 'New XML Upload', new_batch_batch_import_path(@batch), class: 'btn btn-default' %>
-<%= link_to 'View Uploaded XML', xml_batch_batch_import_path(@batch, @batch_import), class: 'btn btn-default' %>
+<div class="btn-group" role="group" aria-label="Batch Import Actions">
+  <%= link_to t('meta.batch_import.action.new'), new_batch_batch_import_path(@batch), class: 'btn btn-default' %>
+  <%= link_to t('meta.batch_import.action.xml'), xml_batch_batch_import_path(@batch, @batch_import), class: 'btn btn-default' %>
+</div>
 
 <br><br>
 
-<%= render 'shared/show_field', field_name: 'Format', value: @batch_import.format %>
-<%= render 'shared/show_field', field_name: 'User', value: @batch_import.user.email %>
-<%= render 'shared/show_field', field_name: 'Batch', value: @batch_import.batch.name %>
-<%= render 'shared/show_field', field_name: 'Loaded', value: @batch_import.created_at %>
-<%= render 'shared/show_field', field_name: 'Validations Run?', value: @batch_import.validations %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.format'), value: @batch_import.format %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.user_id'), value: @batch_import.user.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.batch_id'), value: @batch_import.batch.name %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.created_at'), value: @batch_import.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.validations'), value: @batch_import.validations %>
 
-<% if @batch_import.results.empty? %>
+<% unless @batch_import.results.empty? %>
 
-    <%= render 'shared/show_field', field_name: 'Results', value: @batch_import.created_at %>
-
-<% else %>
+    <%= render 'shared/show_field', field_name: 'Completed', value: @batch_import.completed_at %>
 
     <% unless @batch_import.results['added'].empty? %>
       <div class="panel panel-success">
         <div class="panel-heading">
-          <strong>New Batch Items</strong>
+          <strong><%= t('meta.batch_import.labels.panels.results_added') %></strong>
         </div>
         <table class="table">
           <thead>
             <tr>
-              <th>#</th>
-              <th>ID</th>
-              <th>Batch Item</th>
+              <th><%= t('meta.batch_import.labels.columns.number') %></th>
+              <th><%= t('meta.defaults.labels.columns.slug') %></th>
+              <th><%= t('meta.batch_import.labels.columns.batch_item') %></th>
             </tr>
           </thead>
         <% n = 1 %>
@@ -50,7 +50,7 @@
     <% unless @batch_import.results['updated'].empty? %>
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <strong>Batch Items for Updating</strong>
+        <strong><%= t('meta.batch_import.labels.panels.results_updated') %></strong>
         <span class="pull-right badge">
           <%= @batch_import.results['updated'].length %>
         </span>
@@ -58,10 +58,10 @@
       <table class="table">
         <thead>
         <tr>
-          <th>#</th>
-          <th>ID</th>
-          <th>Batch Item</th>
-          <th>Item to Update</th>
+          <th><%= t('meta.batch_import.labels.columns.number') %></th>
+          <th><%= t('meta.defaults.labels.columns.slug') %></th>
+          <th><%= t('meta.batch_import.labels.columns.batch_item') %></th>
+          <th><%= t('meta.batch_import.labels.columns.item') %></th>
         </tr>
         </thead>
         <% n = 1 %>
@@ -84,7 +84,7 @@
         <% if @batch_import.results['failed'][0]['number'] == 0 %>
 
           <div class="panel-heading">
-            <strong>Failed to Import</strong>
+            <strong><%= t('meta.batch_import.labels.panels.results_failed') %></strong>
           </div>
           <div class="panel-body">
             <%= @batch_import.results['failed'][0]['message'] %>
@@ -93,7 +93,7 @@
         <% else %>
 
           <div class="panel-heading">
-            <strong>Failed to Import</strong>
+            <strong><%= t('meta.batch_import.labels.panels.results_failed') %></strong>
             <span class="pull-right badge">
               <%= @batch_import.results['updated'].length %>
             </span>
@@ -102,8 +102,8 @@
           <table class="table">
             <thead>
             <tr>
-              <th>#</th>
-              <th>Message</th>
+              <th><%= t('meta.batch_import.labels.columns.number') %></th>
+              <th><%= t('meta.batch_import.labels.columns.message') %></th>
             </tr>
             </thead>
             <% n = 1 %>

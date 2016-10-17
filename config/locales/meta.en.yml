@@ -264,7 +264,7 @@ en:
       actions:
         add: 'New Batch'
         add_batch_item: 'Add Batch Item'
-        populate_with_xml: 'Populate Batch Items via XML'
+        manage_xml_imports: 'Manage XML Imports'
         import: 'Import'
         view_batch: 'View Batch'
         view_item: 'View Item'
@@ -320,6 +320,27 @@ en:
       labels:
         columns:
           collection: 'Collection'
+    batch_import:
+      action:
+        new: 'New XML Upload'
+        add: 'Create Batch Item'
+        xml: 'XML'
+        info: 'Info'
+        undo: 'Undo'
+      labels:
+        columns:
+          batch_items: 'Batch Items Created'
+          finished: 'Finished'
+          format: 'Format'
+          number: '#'
+          batch_item: 'Batch Item'
+          user: 'User'
+          item: 'Item to Update'
+          message: 'Message'
+        panels:
+          results_added: 'New Batch Items'
+          results_updated: 'Batch Items for Updating'
+          results_failed: 'Failed to import'
     versions:
       action:
         diff: 'Diff'

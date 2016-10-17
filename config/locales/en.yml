@@ -152,6 +152,19 @@ en:
         dcterms_identifier: 'Identifier (QDC)'
         created_at: "Created"
         updated_at: "Last Updated"
+      batch_import:
+        xml: 'XML'
+        xml_text: 'XML Text'
+        xml_file: 'XML File'
+        format: 'Format'
+        user_id: 'User'
+        batch_id: 'Batch'
+        results: 'Results'
+        validations: 'Run Validations?'
+        batch_items_count: 'Batch Item Count'
+        created_at: "Created"
+        updated_at: "Last Updated"
+        completed_at: 'Completed At'
     help:
       subject:
         name: "Display name for the Subject"
@@ -276,6 +289,8 @@ en:
 #        dlg_local_right: 'Any rights-related information not appropriate for inclusion in the DC Right field or DCQ Rights Holder field.'
     errors:
       messages:
+        batch_import:
+          failed: 'The XML could not be processed due to the following errors:'
         item_type:
           temporal_invalid_character: "contains an invalid character. Only 0-9, '/' and '-' allowed."
           type_required_value: 'does not contain any required values.'

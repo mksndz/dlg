@@ -26,7 +26,6 @@ class BatchImportsController < ApplicationController
   # create batch import and queue import job
   def create
 
-    # return error if both fields have data
     raise ImportFailedError.new('You provided both a file and XML text. Choose one only!') if (batch_import_params[:xml].empty? and batch_import_params[:xml_file])
     raise ImportFailedError.new('No file or XML text provided!') unless (batch_import_params[:xml].present? or batch_import_params[:xml_file])
 

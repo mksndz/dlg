@@ -1,12 +1,12 @@
 <%= bootstrap_form_for([@batch, @batch_import], multipart: true) do |f|  %>
 
-  <%= f.alert_message "The XML could not be processed due to the following errors:" %>
+  <%= f.alert_message t('activerecord.errors.messages.batch_import.failed') %>
 
-  <%= f.text_area :xml, label: t('meta.batch.labels.import.xml_text') %>
+  <%= f.text_area :xml, label: t('activerecord.attributes.batch_import.xml_text') %>
 
-  <%= f.file_field :xml_file, label: t('meta.batch.labels.import.xml_file')%>
+  <%= f.file_field :xml_file, label: t('activerecord.attributes.batch_import.xml_file') %>
 
-  <%= f.check_box :validations, { label: t('meta.batch.labels.import.validations'), checked: true } %>
+  <%= f.check_box :validations, { label: t('activerecord.attributes.batch_import.validations'), checked: true } %>
 
   <div class="action-buttons">
     <%= f.primary t('meta.defaults.actions.save') %>
