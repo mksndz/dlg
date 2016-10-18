@@ -41,10 +41,8 @@ class Ability
 
       if roles.include? 'uploader'
 
-        # User with Uploader Role can manage BatchImports
-        can [:manage], BatchImport do |batch_import|
-          batch_import.batch.user_id == user.id
-        end
+        can [:new, :create, :help], BatchImport
+        can [:show, :xml, :destroy], BatchImport, batch: { user_id: user.id }
 
       end
 

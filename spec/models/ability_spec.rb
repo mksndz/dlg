@@ -353,15 +353,26 @@ RSpec.describe Ability, type: :model do
 
     subject { Ability.new uploader_user }
 
-    it 'cannot manage Batch Imports for Batches not owned by self' do
+    it 'can create a new BatchImport' do
 
       batch_import = Fabricate :batch_import
 
-      is_expected.not_to be_able_to :manage, batch_import
+      is_expected.to be_able_to :new, batch_import
+      is_expected.to be_able_to :create, batch_import
+      is_expected.to be_able_to :help, batch_import
 
     end
 
-    it 'can manage Batch Imports for Batches owned by self' do
+    it 'cannot show or destroy Batch Imports for Batches not owned by self' do
+
+      batch_import = Fabricate :batch_import
+
+      is_expected.not_to be_able_to :show, batch_import
+      is_expected.not_to be_able_to :destroy, batch_import
+
+    end
+
+    it 'can show and destroy Batch Imports for Batches owned by self' do
 
       batch = Fabricate :batch
       batch.user = uploader_user
@@ -371,7 +382,8 @@ RSpec.describe Ability, type: :model do
                          batch: batch
                      })
 
-      is_expected.to be_able_to :manage, batch_import
+      is_expected.to be_able_to :show, batch_import
+      is_expected.to be_able_to :destroy, batch_import
 
     end
 
