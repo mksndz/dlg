@@ -366,7 +366,10 @@ RSpec.describe Ability, type: :model do
       batch = Fabricate :batch
       batch.user = uploader_user
 
-      batch_import = BatchImport.new({user: uploader_user})
+      batch_import = BatchImport.new({
+                         user: uploader_user,
+                         batch: batch
+                     })
 
       is_expected.to be_able_to :manage, batch_import
 
