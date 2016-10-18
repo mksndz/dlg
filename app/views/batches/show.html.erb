@@ -13,7 +13,7 @@
   <%= link_to t('meta.batch.actions.commit'), commit_form_batch_path(@batch), class: 'btn btn-default' if !@batch.committed? and can? :commit, @batch  %>
   <%= link_to t('meta.batch.actions.recreate'), recreate_batch_path(@batch), method: :post, class: 'btn btn-default' if @batch.committed? and can? :recreate, @batch %>
   <%= link_to t('meta.batch.actions.batch_items'), batch_batch_items_path(@batch), class: 'btn btn-default' %>
-  <%= link_to t('meta.batch.actions.manage_xml_imports'), batch_batch_imports_path(@batch), class: 'btn btn-default' %>
+  <%= link_to t('meta.batch.actions.batch_imports'), batch_batch_imports_path(@batch), class: 'btn btn-default' %>
 </div>
 
 <br><br>

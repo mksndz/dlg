@@ -271,6 +271,7 @@ en:
         commit: 'Commit'
         recreate: 'Recreate'
         batch_items: 'Manage Batch Items'
+        batch_imports: 'Manage XML Imports'
       labels:
         failed: 'Could not Commit'
         successful: 'Successfully Committed'
