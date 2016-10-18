@@ -114,7 +114,8 @@ feature 'Item Management' do
 
       chosen_select display_value, from: 'item_dc_right'
 
-      click_on I18n.t('meta.defaults.actions.save')
+
+      find('.fixed-save-button').click
 
       expect(page).to have_current_path item_path(item)
       expect(page).to have_content saved_value
