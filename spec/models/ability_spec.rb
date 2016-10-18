@@ -372,7 +372,7 @@ RSpec.describe Ability, type: :model do
 
     end
 
-    it 'can show and destroy Batch Imports for Batches owned by self' do
+    it 'can index, show and destroy Batch Imports for Batches owned by self' do
 
       batch = Fabricate :batch
       batch.user = uploader_user
@@ -382,6 +382,7 @@ RSpec.describe Ability, type: :model do
                          batch: batch
                      })
 
+      is_expected.to be_able_to :index, batch_import
       is_expected.to be_able_to :show, batch_import
       is_expected.to be_able_to :destroy, batch_import
 

@@ -42,7 +42,7 @@ class Ability
       if roles.include? 'uploader'
 
         can [:new, :create, :help], BatchImport
-        can [:show, :xml, :destroy], BatchImport, batch: { user_id: user.id }
+        can [:index, :show, :xml, :destroy], BatchImport, batch: { user_id: user.id }
 
       end
 
