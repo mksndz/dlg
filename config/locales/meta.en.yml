@@ -335,6 +335,14 @@ en:
           results_added: 'New Batch Items'
           results_updated: 'Batch Items for Updating'
           results_failed: 'Failed to import'
+      messages:
+        success:
+          created: 'XML Import Job Queued. This page will show results when the job is finished.'
+          deleted: 'BatchImport and all associated Batch Items deleted'
+        errors:
+          both_types: 'You provided both a file and XML text. Choose one only!'
+          neither_type: 'No file or XML text provided!'
+          file_error: 'Could not read from uploaded file.'
     versions:
       action:
         diff: 'Diff'

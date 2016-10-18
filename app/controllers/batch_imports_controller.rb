@@ -29,8 +29,8 @@ class BatchImportsController < ApplicationController
   # create batch import and queue import job
   def create
 
-    raise ImportFailedError.new('You provided both a file and XML text. Choose one only!') if (batch_import_params[:xml].empty? and batch_import_params[:xml_file])
-    raise ImportFailedError.new('No file or XML text provided!') unless (batch_import_params[:xml].present? or batch_import_params[:xml_file])
+    raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.both_types')) if (batch_import_params[:xml].present? and batch_import_params[:xml_file])
+    raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.neither_type')) unless (batch_import_params[:xml].present? or batch_import_params[:xml_file])
 
     @batch_import = BatchImport.new
 
@@ -41,7 +41,7 @@ class BatchImportsController < ApplicationController
         @batch_import.xml = file.read # todo sanitize????
         @batch_import.format = 'file'
       else
-        raise ImportFailedError.new('Could not read from uploaded file.')
+        raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.file_error'))
       end
     else
       @batch_import.xml = batch_import_params[:xml]
@@ -57,7 +57,7 @@ class BatchImportsController < ApplicationController
     Resque.enqueue(RecordImporter, @batch_import.id)
 
     respond_to do |format|
-      format.html { redirect_to batch_batch_import_path(@batch, @batch_import), notice: 'XML Import Job Queued. This page will show results when the job is finished.' }
+      format.html { redirect_to batch_batch_import_path(@batch, @batch_import), notice: I18n.t('meta.batch_import.messages.success.created') }
     end
 
   end
@@ -68,7 +68,7 @@ class BatchImportsController < ApplicationController
 
   def destroy
     @batch_import.destroy
-    redirect_to batch_batch_imports_path(@batch), notice: 'BatchImport and all associated Batch Items deleted'
+    redirect_to batch_batch_imports_path(@batch), notice: I18n.t('meta.batch_import.messages.success.deleted')
   end
 
   def help
