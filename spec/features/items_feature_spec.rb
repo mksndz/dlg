@@ -114,7 +114,6 @@ feature 'Item Management' do
 
       chosen_select display_value, from: 'dc-right-select'
 
-
       find('.fixed-save-button').click
 
       expect(page).to have_current_path item_path(item)

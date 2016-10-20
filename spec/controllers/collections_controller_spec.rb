@@ -19,6 +19,7 @@ RSpec.describe CollectionsController, type: :controller do
         slug: 'test-collection-slug',
         dcterms_title: "Test Collection DC Title\nTest Subtitle",
         display_title: 'Test Collections Display Title',
+        dcterms_type: ['Text'],
         repository_id: repository.id
     }
   }
@@ -92,7 +93,7 @@ RSpec.describe CollectionsController, type: :controller do
         sign_out super_user
         basic_user = Fabricate(:basic)
         sign_in basic_user
-        post :create, {:collection => valid_attributes}, valid_session
+        post :create, { collection: valid_attributes }, valid_session
         expect(response).to redirect_to root_url
       end
     end
@@ -106,7 +107,8 @@ RSpec.describe CollectionsController, type: :controller do
         basic_user.repositories << repository
         collection = Fabricate.build(:collection) { repository repository }
         collection.repository = repository
-        post :create, {:collection => collection.as_json}, valid_session
+        valid_attributes[:repository_id] = repository.id
+        post :create, { collection: valid_attributes }, valid_session
         expect(response).to redirect_to collection_path(assigns(:collection))
       end
     end

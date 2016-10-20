@@ -17,7 +17,7 @@ RSpec.describe ItemsController, type: :controller do
         dc_date: '07-09-1975',
         dcterms_contributor: 'DLG',
         dcterms_spatial: 'Location',
-        dcterms_type: 'Text',
+        dcterms_type: ['Text'],
         dc_right: 'CC-NA',
         collection_id: collection.id
     }

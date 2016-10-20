@@ -18,7 +18,7 @@ RSpec.describe BatchItemsController, type: :controller do
   let(:valid_attributes) {
     {
         slug: 'test-item-slug',
-        dcterms_type: 'Text',
+        dcterms_type: ['Text'],
         dcterms_title: "Test Item DC Title\nSubtitle",
         dc_date: '07-09-1975',
         dcterms_contributor: 'DLG',

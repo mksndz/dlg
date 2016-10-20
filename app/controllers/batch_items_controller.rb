@@ -1,4 +1,4 @@
-class BatchItemsController < ApplicationController
+class BatchItemsController < RecordController
 
   load_and_authorize_resource
   include ErrorHandling
@@ -39,7 +39,7 @@ class BatchItemsController < ApplicationController
   # POST /batch_items
   # POST /batch_items.json
   def create
-    @batch_item = BatchItem.new(split_multivalued_params(batch_item_params))
+    @batch_item = BatchItem.new batch_item_params
     @batch_item.batch = @batch
 
     respond_to do |format|
@@ -58,7 +58,7 @@ class BatchItemsController < ApplicationController
   # PATCH/PUT /batch_items/1.json
   def update
     respond_to do |format|
-      if @batch_item.update(split_multivalued_params(batch_item_params))
+      if @batch_item.update batch_item_params
         format.html { redirect_to after_save_destination, notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Batch Item') }
         format.json { render :show, status: :ok, location: @batch_item }
       else
@@ -95,38 +95,39 @@ class BatchItemsController < ApplicationController
     @collections = Collection.all
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def batch_item_params
-    params.require(:batch_item).permit(
-        :collection_id,
-        :slug,
-        :dpla,
-        :public,
-        :date_range,
-        :dc_right,
-        :dc_relation,
-        :dc_format,
-        :dc_date,
-        :dcterms_is_part_of,
-        :dcterms_contributor,
-        :dcterms_creator,
-        :dcterms_description,
-        :dcterms_extent,
-        :dcterms_medium,
-        :dcterms_identifier,
-        :dcterms_language,
-        :dcterms_spatial,
-        :dcterms_publisher,
-        :dcterms_access_right,
-        :dcterms_subject,
-        :dcterms_temporal,
-        :dcterms_title,
-        :dcterms_type,
-        :dcterms_is_shown_at,
-        :dcterms_provenance,
-        :dcterms_bibliographic_citation,
-        :dlg_local_right,
-        :other_collections  => [],
+    prepare_params(
+        params.require(:batch_item).permit(
+            :collection_id,
+            :slug,
+            :dpla,
+            :public,
+            :date_range,
+            :dc_right,
+            :dc_relation,
+            :dc_format,
+            :dc_date,
+            :dcterms_is_part_of,
+            :dcterms_contributor,
+            :dcterms_creator,
+            :dcterms_description,
+            :dcterms_extent,
+            :dcterms_medium,
+            :dcterms_identifier,
+            :dcterms_language,
+            :dcterms_spatial,
+            :dcterms_publisher,
+            :dcterms_access_right,
+            :dcterms_subject,
+            :dcterms_temporal,
+            :dcterms_title,
+            :dcterms_is_shown_at,
+            :dcterms_provenance,
+            :dcterms_bibliographic_citation,
+            :dlg_local_right,
+            :dcterms_type => [],
+            :other_collections  => [],
+        )
     )
   end
 

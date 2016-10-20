@@ -1,4 +1,4 @@
-class ItemsController < ApplicationController
+class ItemsController < RecordController
 
   load_and_authorize_resource
 
@@ -40,7 +40,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(split_multivalued_params(item_params))
+    @item = Item.new item_params
     if @item.save
       redirect_to item_path(@item), notice: I18n.t('meta.defaults.messages.success.created', entity: 'Item')
     else
@@ -59,7 +59,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update(split_multivalued_params(item_params))
+    if @item.update item_params
       redirect_to item_path(@item), notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Item')
     else
       set_data
@@ -107,37 +107,38 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params[:item]['other_collections'].reject!{ |e| e.empty? } if params[:item]['other_collections']
-    params.require(:item).permit(
-        :collection_id,
-        :slug,
-        :dpla,
-        :public,
-        :date_range,
-        :dc_right,
-        :dc_relation,
-        :dc_format,
-        :dc_date,
-        :dcterms_is_part_of,
-        :dcterms_contributor,
-        :dcterms_creator,
-        :dcterms_description,
-        :dcterms_extent,
-        :dcterms_medium,
-        :dcterms_identifier,
-        :dcterms_language,
-        :dcterms_spatial,
-        :dcterms_publisher,
-        :dcterms_rights_holder,
-        :dcterms_subject,
-        :dcterms_temporal,
-        :dcterms_title,
-        :dcterms_type,
-        :dcterms_is_shown_at,
-        :dcterms_provenance,
-        :dcterms_bibliographic_citation,
-        :dlg_local_right,
-        :other_collections => [],
+    prepare_params(
+      params.require(:item).permit(
+          :collection_id,
+          :slug,
+          :dpla,
+          :public,
+          :date_range,
+          :dc_right,
+          :dc_relation,
+          :dc_format,
+          :dc_date,
+          :dcterms_is_part_of,
+          :dcterms_contributor,
+          :dcterms_creator,
+          :dcterms_description,
+          :dcterms_extent,
+          :dcterms_medium,
+          :dcterms_identifier,
+          :dcterms_language,
+          :dcterms_spatial,
+          :dcterms_publisher,
+          :dcterms_rights_holder,
+          :dcterms_subject,
+          :dcterms_temporal,
+          :dcterms_title,
+          :dcterms_is_shown_at,
+          :dcterms_provenance,
+          :dcterms_bibliographic_citation,
+          :dlg_local_right,
+          :dcterms_type => [],
+          :other_collections => [],
+      )
     )
   end
 

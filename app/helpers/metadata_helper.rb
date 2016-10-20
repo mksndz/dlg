@@ -57,4 +57,3 @@ module MetadataHelper
   end
 
 end
-

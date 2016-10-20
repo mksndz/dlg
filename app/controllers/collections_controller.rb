@@ -1,4 +1,4 @@
-class CollectionsController < ApplicationController
+class CollectionsController < RecordController
 
   load_and_authorize_resource
 
@@ -43,7 +43,7 @@ class CollectionsController < ApplicationController
 
   def create
 
-    @collection = Collection.new(split_multivalued_params(collection_params))
+    @collection = Collection.new collection_params
 
     respond_to do |format|
       if @collection.save
@@ -60,7 +60,7 @@ class CollectionsController < ApplicationController
   end
 
   def update
-    if @collection.update split_multivalued_params(collection_params)
+    if @collection.update collection_params
       redirect_to collection_path(@collection), notice: I18n.t('meta.defaults.messages.success.updated', entity: ('Collection'))
     else
       set_data
@@ -83,43 +83,46 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params
-    params.require(:collection).permit(
-        :repository_id,
-        :slug,
-        :in_georgia,
-        :remote,
-        :public,
-        :display_title,
-        :short_description,
-        :color,
-        :date_range,
-        :dc_right,
-        :dc_relation,
-        :dc_format,
-        :dc_date,
-        :dcterms_is_part_of,
-        :dcterms_contributor,
-        :dcterms_creator,
-        :dcterms_description,
-        :dcterms_extent,
-        :dcterms_medium,
-        :dcterms_identifier,
-        :dcterms_language,
-        :dcterms_spatial,
-        :dcterms_publisher,
-        :dcterms_access_right,
-        :dcterms_rights_holder,
-        :dcterms_subject,
-        :dcterms_temporal,
-        :dcterms_title,
-        :dcterms_type,
-        :dcterms_is_shown_at,
-        :dcterms_provenance,
-        :dcterms_license,
-        :subject_ids => [],
-        :time_period_ids => [],
-        :other_repositories => []
+    prepare_params(
+        params.require(:collection).permit(
+            :repository_id,
+            :slug,
+            :in_georgia,
+            :remote,
+            :public,
+            :display_title,
+            :short_description,
+            :color,
+            :date_range,
+            :dc_right,
+            :dc_relation,
+            :dc_format,
+            :dc_date,
+            :dcterms_is_part_of,
+            :dcterms_contributor,
+            :dcterms_creator,
+            :dcterms_description,
+            :dcterms_extent,
+            :dcterms_medium,
+            :dcterms_identifier,
+            :dcterms_language,
+            :dcterms_spatial,
+            :dcterms_publisher,
+            :dcterms_access_right,
+            :dcterms_rights_holder,
+            :dcterms_subject,
+            :dcterms_temporal,
+            :dcterms_title,
+            :dcterms_is_shown_at,
+            :dcterms_provenance,
+            :dcterms_license,
+            :dcterms_type => [],
+            :subject_ids => [],
+            :time_period_ids => [],
+            :other_repositories => []
+        )
     )
+
   end
 
   def start_new_search_session?
