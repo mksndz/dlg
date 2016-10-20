@@ -341,12 +341,18 @@ class CatalogController < ApplicationController
     config.autocomplete_path = 'suggest'
 
     # MAPS CONFIG
-    config.add_facet_field 'multiple_geojson_sms', label: 'Coordinates', limit: -2, show: false
-    config.view.maps.geojson_field      = 'multiple_geojson_sms'
-    config.view.maps.placename_field    = 'multiple_placename_sms'
-    config.view.maps.coordinates_field  = 'multiple_coordinates_sms'
-    config.view.maps.search_mode        = 'multiple_placename_sms'
-    config.view.maps.facet_mode         = 'multiple_geojson_sms'
+    config.add_facet_field 'geojson', label: 'Coordinates', limit: -2, show: false
+    config.view.maps.geojson_field      = 'geojson'
+    config.view.maps.placename_field    = 'placename'
+    config.view.maps.coordinates_field  = 'coordinates'
+    config.view.maps.search_mode        = 'placename'
+    config.view.maps.facet_mode         = 'geojson'
+    # config.add_facet_field 'multiple_geojson_sms', label: 'Coordinates', limit: -2, show: false
+    # config.view.maps.geojson_field      = 'multiple_geojson_sms'
+    # config.view.maps.placename_field    = 'multiple_placename_sms'
+    # config.view.maps.coordinates_field  = 'multiple_coordinates_sms'
+    # config.view.maps.search_mode        = 'multiple_coordinates_sms'
+    # config.view.maps.facet_mode         = 'multiple_geojson_sms'
     config.view.maps.initialview        = '[[27.741885,-96.987305],[37.874853,-71.279297]]'
     config.view.maps.maxzoom            = 12
     config.view.maps.show_initial_zoom  = 9

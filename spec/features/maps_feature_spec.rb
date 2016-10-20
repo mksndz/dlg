@@ -24,7 +24,6 @@ feature 'Maps', js: true do
       expect(page).to have_selector('div.marker-cluster', count: 1)
       expect(page).to have_selector('.mapped-count .badge', text: '1')
 
-
     end
 
   end
