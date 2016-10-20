@@ -24,7 +24,7 @@ feature 'Item Management' do
       fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
       fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
       fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_type'), with: 'Text'
+      chosen_select 'Text', from: 'dcterms-type-select'
 
       click_button I18n.t('meta.defaults.actions.save')
 
@@ -44,7 +44,7 @@ feature 'Item Management' do
       fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
       fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
       fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_type'), with: 'Text'
+      chosen_select 'Text', from: 'dcterms-type-select'
 
       select c2.display_title, from: I18n.t('activerecord.attributes.item.other_collections')
 
@@ -70,7 +70,7 @@ feature 'Item Management' do
       fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
       fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
       fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_type'), with: 'Text'
+      chosen_select 'Text', from: 'dcterms-type-select'
 
       select '', from: I18n.t('activerecord.attributes.item.other_collections')
 
@@ -112,13 +112,30 @@ feature 'Item Management' do
 
       visit edit_item_path item
 
-      chosen_select display_value, from: 'item_dc_right'
+      chosen_select display_value, from: 'dc-right-select'
 
 
       find('.fixed-save-button').click
 
       expect(page).to have_current_path item_path(item)
       expect(page).to have_content saved_value
+
+    end
+
+    scenario 'can select and save multiple DCMI Type values from a drop down' do
+
+      item = Fabricate :item
+
+      visit edit_item_path item
+
+      new_type = 'MovingImage'
+
+      chosen_select new_type, from: 'dcterms-type-select'
+
+      find('.fixed-save-button').click
+
+      expect(page).to have_current_path item_path(item)
+      expect(page).to have_content new_type
 
     end
 

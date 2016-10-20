@@ -24,10 +24,10 @@
 $(document).on('ready turbolinks:load', function() {
 
     $('select.advanced-search-facet-select').chosen();
-    $('select.standardized-rights-select').chosen({
+    $('select#dc-right-select').chosen({
         allow_single_deselect: true
     });
-    $('select.dcmi-type-select').chosen({
+    $('select#dcterms-type-select').chosen({
         allow_single_deselect: true
     });
     $('select.collection-select').chosen();
