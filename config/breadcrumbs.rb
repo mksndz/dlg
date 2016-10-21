@@ -17,7 +17,7 @@ crumb :map_search do
 end
 
 crumb :facets_browse do
-  link 'Facet Browse'
+  link 'Facet Browse', facets_catalog_path
 end
 
 crumb :facet_browse do |facet|
