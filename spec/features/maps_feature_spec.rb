@@ -2,6 +2,8 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
+# todo consider the validity of these tests
+
 feature 'Maps', js: true do
 
   before :each do

@@ -124,18 +124,10 @@ class Collection < ActiveRecord::Base
     time :created_at, stored: true, trie: true
     time :updated_at, stored: true, trie: true
 
-    # spatial coordinates
-    string :coordinates, as: 'coordinates' do
-      coordinates
-    end
-    string :multiple_coordinates, multiple: true, stored: true
-
-    # geojson
-    string :geojson, as: 'geojson'
-    string :multiple_geojson, multiple: true, stored: true
-
-    # spatial placename
-    string :placename, as: 'placename'
+    # spatial stuff
+    string :coordinates, as: 'coordinates', multiple: true
+    string :geojson, as: 'geojson', multiple: true
+    string :placename, as: 'placename', multiple: true
 
     # time periods
     string :time_periods, multiple: true do
