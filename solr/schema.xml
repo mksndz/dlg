@@ -154,7 +154,7 @@
   <copyField source="dc_right_display"               dest="rights_facet" />
   <copyField source="dcterms_rights_holder_display"  dest="rights_holder_facet" />
   <copyField source="dcterms_relation_display"       dest="relation_facet" />
-  <copyField source="dc_type_display"                dest="type_facet" />
+  <copyField source="dcterms_type_display"           dest="type_facet" />
   <copyField source="dcterms_medium_display"         dest="medium_facet" />
   <copyField source="dc_language_display"            dest="language_facet" />
   <copyField source="coordinates"                    dest="coordinates_facet" />
