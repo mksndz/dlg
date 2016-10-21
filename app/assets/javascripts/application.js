@@ -33,10 +33,10 @@ $(document).on('ready turbolinks:load', function() {
     $('select.collection-select').chosen();
     $('select.fancy-multiselect').chosen();
 
-    $('a.floating-submit-button').on('click', function() {
-
-        // todo find nearest form and submit it?
-
+    $('a.floating-save-button').on('click', function(e) {
+        e.preventDefault();
+        $(document).find('form').submit();
+        return false;
     });
 
     $('a.form-jump-link').on('click', function() {
