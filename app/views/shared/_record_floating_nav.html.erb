@@ -1,0 +1,12 @@
+<div id="floating-form-navigation" class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Jump To</strong>
+    <%= link_to t('meta.defaults.actions.save'), '#', class: 'floating-save-button btn btn-xs btn-default pull-right' %>
+  </div>
+  <div class="list-group">
+    <% multivalued_fields.each do |f| %>
+        <% label = t("meta.search.labels.#{f}") %>
+        <%= link_to "<small>#{label}</small>".html_safe, "##{f}", { class: 'list-group-item form-jump-link', 'data-turbolinks': false } %>
+    <% end %>
+  </div>
+</div>

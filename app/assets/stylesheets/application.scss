@@ -102,6 +102,18 @@ a.current.desc:after {
   right: 0;
   top: 15%;
   width: 12em;
-  // margin-top: -2.5em;
+  margin-top: -2.5em;
   z-index: 1000;
+  overflow-y: auto;
+}
+
+.form-jump-link {
+  height: 30px;
+  padding: 5px;
+}
+
+@media screen and (max-width: 1400px) {
+  #floating-form-navigation {
+    display: none !important;
+  }
 }

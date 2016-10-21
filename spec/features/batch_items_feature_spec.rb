@@ -56,7 +56,9 @@ feature 'Batches Management' do
 
       visit edit_batch_batch_item_path(batch, batch.batch_items.first)
 
-      click_on I18n.t('meta.defaults.actions.save')
+      within '.action-buttons' do
+        click_on I18n.t('meta.defaults.actions.save')
+      end
 
       expect(page).to have_current_path batch_batch_item_path(batch, batch.batch_items.first)
 
