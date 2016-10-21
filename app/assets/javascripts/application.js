@@ -40,9 +40,7 @@ $(document).on('ready turbolinks:load', function() {
     });
 
     $('a.form-jump-link').on('click', function() {
-
-        // todo focus on specified field
-
+        $($(this).href()).focus();
     });
 
 });
