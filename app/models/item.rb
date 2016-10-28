@@ -70,6 +70,7 @@ class Item < ActiveRecord::Base
     string :dcterms_description,            as: 'dcterms_description_display',            multiple: true
     string :dcterms_publisher,              as: 'dcterms_publisher_display',              multiple: true
     string :dcterms_is_shown_at,            as: 'dcterms_is_shown_at_display',            multiple: true
+    string :dcterms_identifier,             as: 'dcterms_identifier_display',             multiple: true
     string :dc_date,                        as: 'dc_date_display',                        multiple: true
     string :dcterms_temporal,               as: 'dcterms_temporal_display',               multiple: true
     string :dcterms_spatial,                as: 'dcterms_spatial_display',                multiple: true
@@ -97,6 +98,7 @@ class Item < ActiveRecord::Base
     text :dcterms_spatial
     text :dcterms_is_part_of
     text :dcterms_is_shown_at
+    text :dcterms_identifier
 
     string :title, as: 'title' do
       dcterms_title.first ? dcterms_title.first : slug

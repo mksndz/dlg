@@ -117,6 +117,7 @@ en:
         dcterms_temporal: 'Coverage Temporal'
         dcterms_spatial: 'Coverage Spatial'
         dcterms_provenance: 'Holding Institution'
+        dcterms_identifier: 'Identifier'
         dcterms_subject: 'Subject'
         dcterms_type: 'DCMI Type'
         dcterms_creator: 'Creator'

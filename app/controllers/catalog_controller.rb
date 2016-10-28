@@ -140,7 +140,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_is_part_of_display',     label: I18n.t('meta.search.labels.dcterms_is_part_of')
     config.add_show_field 'dcterms_description_display',    label: I18n.t('meta.search.labels.dcterms_description')
     config.add_show_field 'dc_format_display',              label: I18n.t('meta.search.labels.dc_format')
-    config.add_show_field 'dcterms_identifier_display',     label: I18n.t('meta.search.labels.dcterms_identifier'), helper_method: 'linkify'
+    config.add_show_field 'dcterms_identifier_display',     label: I18n.t('meta.search.labels.dcterms_identifier')
     config.add_show_field 'dc_right_display',               label: I18n.t('meta.search.labels.dc_right'), helper_method: 'rights_icon_tag'
     config.add_show_field 'dc_date_display',                label: I18n.t('meta.search.labels.dc_date')
     config.add_show_field 'dc_relation_display',            label: I18n.t('meta.search.labels.dc_relation')
