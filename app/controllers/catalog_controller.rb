@@ -356,8 +356,8 @@ class CatalogController < ApplicationController
     config.view.gallery.partials    = [:index_header, :index]
     config.view.masonry.partials    = [:index]
     config.view.slideshow.partials  = [:index]
-    config.show.tile_source_field   = :thumbnail_url
-    # config.show.partials.insert(1, :openseadragon) # todo fix this
+    # config.show.tile_source_field   = :thumbnail_url
+    # config.show.partials.insert(1, :openseadragon) # wont work with thumbs on different server...i think
 
     # remove standard blacklight navbar links (they are in user tools menu now)
     config.navbar.partials.delete(:bookmark)
@@ -368,9 +368,6 @@ class CatalogController < ApplicationController
   # add Admin and Search menu to navbar
   add_nav_action :search
   add_nav_action :admin
-
-  # add Edit button on search results
-  # add_results_document_tool :meta
 
   # add "Export as XML" button on search results
   add_results_collection_tool :action_widget
