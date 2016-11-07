@@ -118,6 +118,7 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
+    config.add_index_field 'record_id_ss',                label: I18n.t('meta.search.labels.record_id')
     config.add_index_field 'dcterms_title_display',       label: I18n.t('meta.search.labels.dcterms_title')
     config.add_index_field 'dcterms_description_display', label: I18n.t('meta.search.labels.dcterms_description')
     config.add_index_field 'collection_name_sms',         label: I18n.t('meta.search.labels.collection'), link_to_search: true
@@ -133,7 +134,7 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'slug_ss',                        label: I18n.t('meta.search.labels.item_id')
-    config.add_show_field 'id',                             label: I18n.t('meta.search.labels.record_id')
+    config.add_show_field 'record_id_ss',                   label: I18n.t('meta.search.labels.record_id')
     config.add_show_field 'dcterms_title_display',          label: I18n.t('meta.search.labels.dcterms_title')
     config.add_show_field 'collection_name_sms',            label: I18n.t('meta.search.labels.collection'), link_to_search: true
     config.add_show_field 'repository_name_sms',            label: I18n.t('meta.search.labels.repository'), link_to_search: true
@@ -164,7 +165,7 @@ class CatalogController < ApplicationController
     # FIELDED SEARCH CONFIGURATION
 
     config.add_search_field('all_fields') do |field|
-      field.include_in_advanced_search = false # this wouldn't work in advanced search
+      field.include_in_advanced_search = false # no results returned in advanced search
     end
 
     # ADVANCED SEARCH FIELDS
