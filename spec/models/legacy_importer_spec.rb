@@ -113,7 +113,7 @@ RSpec.describe LegacyImporter, type: :model do
       collections { [Fabricate(:collection) { slug 'zmos' }] }
     }
 
-    LegacyImporter.create_or_update_collection valid_xml_collection_node
+    LegacyImporter.create_collection valid_xml_collection_node
 
     expect(Collection.last.display_title).to eq display_title
     expect(Collection.last.time_periods.count).to eq 4
@@ -127,7 +127,7 @@ RSpec.describe LegacyImporter, type: :model do
 
     Fabricate(:repository) { slug 'dlg' }
 
-    LegacyImporter.create_or_update_collection valid_xml_collection_node
+    LegacyImporter.create_collection valid_xml_collection_node
 
     expect(Collection.last.display_title).to eq display_title
     expect(Collection.last.time_periods.count).to eq 4
