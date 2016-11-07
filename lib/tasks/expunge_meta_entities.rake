@@ -22,7 +22,7 @@ task expunge_meta_entities: :environment do
     truncate_table t.table_name
   end
 
-  %w(collections_users repositories_users collections_subjects bookmarks).each do |t|
+  %w(collections_users repositories_users collections_subjects collection_time_periods bookmarks).each do |t|
     truncate_table t
   end
 
