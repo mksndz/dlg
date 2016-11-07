@@ -4,4 +4,10 @@ class TimePeriod < ActiveRecord::Base
 
   validates_presence_of :name
 
+  searchable do
+
+    string :name, stored: true
+
+  end
+
 end
