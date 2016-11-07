@@ -100,6 +100,62 @@ feature 'Collections Management' do
 
     end
 
+    context 'working with subjects' do
+
+      before :each do
+
+        Fabricate(:collection) {
+          subjects(count:2)
+        }
+
+        visit edit_collection_path(Collection.last)
+
+      end
+
+      scenario 'collection has checkboxes designating assigned subject categories' do
+
+        expect(page).to have_checked_field(Collection.last.subjects.first.name)
+
+      end
+
+      scenario 'collection is re-saved without duplicating saved subject values' do
+
+        find('.fixed-save-button').click
+
+        expect(Collection.last.subjects.length).to eq(2)
+
+      end
+
+    end
+
+    context 'working with time_periods' do
+
+      before :each do
+
+        Fabricate(:collection) {
+          time_periods(count:2)
+        }
+
+        visit edit_collection_path(Collection.last)
+
+      end
+
+      scenario 'collection has checkboxes designating assigned time periods' do
+
+        expect(page).to have_checked_field(Collection.last.time_periods.first.name)
+
+      end
+
+      scenario 'collection is re-saved without duplicating saved time periods' do
+
+        find('.fixed-save-button').click
+
+        expect(Collection.last.time_periods.length).to eq(2)
+
+      end
+
+    end
+
   end
 
   context 'for basic user' do
