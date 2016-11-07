@@ -161,33 +161,27 @@ class CatalogController < ApplicationController
     config.add_show_field 'created_at_dts',                 label: I18n.t('meta.search.labels.created_at')
     config.add_show_field 'updated_at_dts',                 label: I18n.t('meta.search.labels.updated_at')
 
-    # "fielded" search configuration. Used by pulldown among other places.
-    # For supported keys in hash, see rdoc for Blacklight::SearchFields
-    #
-    # Search fields will inherit the :qt solr request handler from
-    # config[:default_solr_parameters], OR can specify a different one
-    # with a :qt key/value. Below examples inherit, except for subject
-    # that specifies the same:qt as default for our own internal
-    # testing purposes.
-    #
-    # The :key is what will be used to identify this BL search field internally,
-    # as well as in URLs -- so changing it after deployment may break bookmarked
-    # urls.  A display label will be automatically calculated from the :key,
-    # or can be specified manually to be different. 
+    # FIELDED SEARCH CONFIGURATION
 
-    # This one uses all the defaults set by the solr request handler. Which
-    # solr request handler? The one set in config[:default_solr_parameters][:qt],
-    # since we aren't specifying it otherwise.
-    config.add_search_field 'all_fields', label: 'All Fields'
+    config.add_search_field('all_fields') do |field|
+      field.include_in_advanced_search = false # this wouldn't work in advanced search
+    end
 
-    #
-    # PRIMARY SEARCH FIELDS
-    #
+    # ADVANCED SEARCH FIELDS
+
+    # # slug
+    # config.add_search_field('slug') do |field|
+    #   field.label = 'ID'
+    #   field.solr_parameters = {
+    #       qf: 'slug_text^100',
+    #       pf: 'slug_text^100'
+    #   }
+    # end
 
     # title
     config.add_search_field('title') do |field|
       field.label = 'Title'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'title_unstem_search^100 dcterms_title_text^50',
           pf: 'title_unstem_search^100 dcterms_title_text^50'
       }
@@ -196,7 +190,7 @@ class CatalogController < ApplicationController
     # creator
     config.add_search_field('creator') do |field|
       field.label = 'Creator'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'creator_unstem_search^100 dcterms_creator_text^50',
           pf: 'creator_unstem_search^100 dcterms_creator_text^50'
       }
@@ -205,7 +199,7 @@ class CatalogController < ApplicationController
     # contributor
     config.add_search_field('contributor') do |field|
       field.label = 'Contributor'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'contributor_unstem_search^100 dcterms_contributor_text^50',
           pf: 'contributor_unstem_search^100 dcterms_contributor_text^50'
       }
@@ -214,7 +208,7 @@ class CatalogController < ApplicationController
     # subject
     config.add_search_field('subject') do |field|
       field.label = 'Subject'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'subject_unstem_search^100 dcterms_subject_text^50',
           pf: 'subject_unstem_search^100 dcterms_subject_text^50'
       }
@@ -223,7 +217,7 @@ class CatalogController < ApplicationController
     # description
     config.add_search_field('description') do |field|
       field.label = 'Description'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'description_unstem_search^100 dcterms_description_text^50',
           pf: 'description_unstem_search^100 dcterms_description_text^50'
       }
@@ -232,7 +226,7 @@ class CatalogController < ApplicationController
     # publisher
     config.add_search_field('publisher') do |field|
       field.label = 'Publisher'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'publisher_unstem_search^100 dcterms_publisher_text^50',
           pf: 'publisher_unstem_search^100 dcterms_publisher_text^50'
       }
@@ -241,7 +235,7 @@ class CatalogController < ApplicationController
     # date
     config.add_search_field('date') do |field|
       field.label = 'Date'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'date_unstem_search^100 dc_date_text^50',
           pf: 'date_unstem_search^100 dc_date_text^50'
       }
@@ -250,7 +244,7 @@ class CatalogController < ApplicationController
     # temporal / dcterms_temporal
     config.add_search_field('temporal') do |field|
       field.label = 'Temporal'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'temporal_unstem_search^100 dcterms_temporal_text^50',
           pf: 'temporal_unstem_search^100 dcterms_temporal_text^50'
       }
@@ -259,7 +253,7 @@ class CatalogController < ApplicationController
     # place / dcterms_spatial
     config.add_search_field('spatial') do |field|
       field.label = 'Spatial'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'spatial_unstem_search^100 dcterms_spatial_text^50',
           pf: 'spatial_unstem_search^100 dcterms_spatial_text^50'
       }
@@ -268,7 +262,7 @@ class CatalogController < ApplicationController
     # is part of
     config.add_search_field('is_part_of') do |field|
       field.label = 'Is Part Of'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'is_part_of_unstem_search^100 dcterms_is_part_of_text^50',
           pf: 'is_part_of_unstem_search^100 dcterms_is_part_of_text^50'
       }
@@ -277,7 +271,7 @@ class CatalogController < ApplicationController
     # is shown at
     config.add_search_field('is_shown_at') do |field|
       field.label = 'Is Shown At (URL)'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'dcterms_is_shown_at_text^100',
           pf: 'dcterms_is_shown_at_text^100'
       }
@@ -286,7 +280,7 @@ class CatalogController < ApplicationController
     # identifier
     config.add_search_field('identifier') do |field|
       field.label = 'Identifier'
-      field.solr_local_parameters = {
+      field.solr_parameters = {
           qf: 'identifier_unstem_search^100 dc_identifier_text^50',
           pf: 'identifier_unstem_search^100 dc_identifier_text^50'
       }

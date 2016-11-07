@@ -19,7 +19,7 @@ feature 'Searching' do
 
     scenario 'does a search and results are returned' do
 
-      Fabricate(:collection) { items(count:1 )}
+      Fabricate(:collection) { items(count:1 ) }
       Sunspot.commit
 
       visit root_path
