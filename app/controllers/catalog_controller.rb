@@ -170,14 +170,14 @@ class CatalogController < ApplicationController
 
     # ADVANCED SEARCH FIELDS
 
-    # # slug
-    # config.add_search_field('slug') do |field|
-    #   field.label = 'ID'
-    #   field.solr_parameters = {
-    #       qf: 'slug_text^100',
-    #       pf: 'slug_text^100'
-    #   }
-    # end
+    # slug
+    config.add_search_field('slug') do |field|
+      field.label = 'ID (slug)'
+      field.solr_parameters = {
+          qf: 'slug_text^100',
+          pf: 'slug_text^100'
+      }
+    end
 
     # title
     config.add_search_field('title') do |field|
