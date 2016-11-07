@@ -133,12 +133,12 @@ class Collection < ActiveRecord::Base
     string :placename, as: 'placename', multiple: true
 
     # time periods
-    string :time_periods, multiple: true do
+    string :time_periods, multiple: true, stored: true do
       time_periods.map(&:name)
     end
 
     # subjects
-    string :subjects, multiple: true do
+    string :subjects, multiple: true, stored: true do
       subjects.map(&:name)
     end
 
