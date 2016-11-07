@@ -18,11 +18,20 @@ task expunge_meta_entities: :environment do
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{table_name} RESTART IDENTITY CASCADE;")
   end
 
-  [ItemVersion, BatchItem, Item, Batch, Collection, Repository].each do |t|
-    truncate_table t.table_name
-  end
-
-  %w(collections_users repositories_users collections_subjects collection_time_periods bookmarks).each do |t|
+  %w(
+    items
+    collections
+    repositories
+    batches
+    batch_items
+    batch_imports
+    item_versions
+    collections_users
+    repositories_users
+    collections_subjects
+    collections_time_periods
+    bookmarks
+  ).each do |t|
     truncate_table t
   end
 
