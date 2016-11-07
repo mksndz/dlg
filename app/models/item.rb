@@ -99,6 +99,7 @@ class Item < ActiveRecord::Base
     text :dcterms_is_part_of
     text :dcterms_is_shown_at
     text :dcterms_identifier
+    text :slug
 
     string :title, as: 'title' do
       dcterms_title.first ? dcterms_title.first : slug
