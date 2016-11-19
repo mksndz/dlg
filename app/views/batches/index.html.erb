@@ -81,6 +81,7 @@
                 <% if batch.committed? %>
                     <%= link_to t('meta.batch.actions.results'), results_batch_path(batch), class: 'btn btn-default' %>
                 <% else %>
+                    <%= link_to t('meta.batch.actions.commit'), commit_form_batch_path(batch), class: 'btn btn-default' %>
                     <%= link_to t('meta.defaults.actions.edit'), edit_batch_path(batch), class: 'btn btn-default' %>
                     <%= link_to t('meta.defaults.actions.destroy'), batch, method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
                 <% end %>
