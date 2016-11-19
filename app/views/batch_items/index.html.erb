@@ -41,6 +41,9 @@
           <%= t('meta.defaults.labels.columns.valid') %>
         </th>
         <th>
+          <%= t('meta.defaults.labels.columns.public') %>
+        </th>
+        <th>
           <%= t('meta.batch_item.labels.columns.collection') %>
         </th>
         <th width="185px"></th>
@@ -61,6 +64,9 @@
             </td>
             <td>
               <%= item_validation_status item %>
+            </td>
+            <td>
+              <%= boolean_check_icon item.public %>
             </td>
             <td>
               <%= link_to(item.collection.display_title, collection_path(item.collection)) if item.collection %>
