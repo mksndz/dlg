@@ -24,7 +24,7 @@ feature 'Searching' do
 
       visit root_path
 
-      fill_in 'all_fields', with: ''
+      fill_in 'title', with: ''
 
       click_button 'Search'
 
@@ -40,7 +40,7 @@ feature 'Searching' do
 
       visit root_path
 
-      fill_in 'all_fields', with: ''
+      fill_in 'title', with: ''
 
       click_button 'Search'
 
