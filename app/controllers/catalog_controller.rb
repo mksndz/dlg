@@ -3,7 +3,6 @@ class CatalogController < ApplicationController
   include BlacklightAdvancedSearch::Controller
   include Blacklight::Catalog
   include BlacklightMaps::ControllerOverride
-  include MetadataHelper
 
   ADVANCED_FACET_LIMIT = 600
 
