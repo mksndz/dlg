@@ -4,51 +4,51 @@ en:
         inc:
           label: 'Rightsstatements.org - In Copyright'
           uri: 'http://rightsstatements.org/vocab/InC/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/InC.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/InC.dark-white-interior-blue-type.svg'
         inc_ow_eu:
           label: 'Rightsstatements.org - In Copyright - EU Orphan Work'
           uri: 'http://rightsstatements.org/vocab/InC-OW-EU/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/InC-OW-EU.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/InC-OW-EU.dark-white-interior-blue-type.svg'
         inc_edu:
           label: 'Rightsstatements.org - In Copyright - Educational Use Permitted'
           uri: 'http://rightsstatements.org/vocab/InC-EDU/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/InC-EDU.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/InC-EDU.dark-white-interior-blue-type.svg'
         inc_nc:
           label: 'Rightsstatements.org - In Copyright - Non-Commercial Use Permitted'
           uri: 'http://rightsstatements.org/vocab/InC-NC/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/InC-NC.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/InC-NC.dark-white-interior-blue-type.svg'
         inc_ruu:
           label: 'Rightsstatements.org - In Copyright - Rights-Holder(s) Unlocatable or Unidentifiable'
           uri: 'http://rightsstatements.org/vocab/InC-RUU/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/InC-RUU.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/InC-RUU.dark-white-interior-blue-type.svg'
         noc_cr:
           label: 'Rightsstatements.org - No Copyright - Contractual Restrictions'
           uri: 'http://rightsstatements.org/vocab/NoC-CR/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/NoC-CR.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/NoC-CR.dark-white-interior-blue-type.svg'
         noc_nc:
           label: 'Rightsstatements.org - No Copyright - Non-Commercial Use Only'
           uri: 'http://rightsstatements.org/vocab/NoC-NC/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/NoC-NC.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/NoC-NC.dark-white-interior-blue-type.svg'
         noc_oklr:
           label: 'Rightsstatements.org - No Copyright - Other Known Legal Restrictions'
           uri: 'http://rightsstatements.org/vocab/NoC-OKLR/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/NoC-OKLR.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/NoC-OKLR.dark-white-interior-blue-type.svg'
         noc_us:
           label: 'Rightsstatements.org - No Copyright - united States'
           uri: 'http://rightsstatements.org/vocab/NoC-US/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/NoC-US.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/NoC-US.dark-white-interior-blue-type.svg'
         cne:
           label: 'Rightsstatements.org - Copyright Not Evaluated'
           uri: 'http://rightsstatements.org/vocab/CNE/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/CNE.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/CNE.dark-white-interior-blue-type.svg'
         und:
           label: 'Rightsstatements.org - Copyright Undetermined'
           uri: 'http://rightsstatements.org/vocab/UND/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/UND.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/UND.dark-white-interior-blue-type.svg'
         nkc:
           label: 'Rightsstatements.org - No Known Copyright'
           uri: 'http://rightsstatements.org/vocab/NKC/1.0/'
-          icon_url: 'http://rightsstatements.org/files/icons/NKC.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/NKC.dark-white-interior-blue-type.svg'
         zero:
           label: 'Creative Commons - Public Domain Dedication'
           uri: 'https://creativecommons.org/publicdomain/zero/1.0/'

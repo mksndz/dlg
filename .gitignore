@@ -26,5 +26,6 @@ jetty/*
 # redis file
 dump.rdb
 
-# collection thumbs
-/public/assets/collection_thumbnails/*
+# large collections of images
+/app/assets/images/collection_thumbnails/*
+/app/assets/images/rs_org_icons/*
