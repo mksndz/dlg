@@ -1,7 +1,14 @@
-<%= content_for :title do %>
-    New Item
-<% end %>
+<div class="row">
+  <div class="col-sm-12 col-md-11">
+    <%= content_for :title do %>
+        New Item
+    <% end %>
 
-<% breadcrumb :item, @item %>
+    <% breadcrumb :item, @item %>
 
-<%= render 'form' %>
+    <%= render 'form' %>
+  </div>
+  <div class="col-md-1">
+    <%= render 'shared/record_floating_nav' %>
+  </div>
+</div>
