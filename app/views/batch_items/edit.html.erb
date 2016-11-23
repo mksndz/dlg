@@ -1,13 +1,20 @@
-<%= content_for :title do %>
-    Edit Batch Item
-<% end %>
+<div class="row">
+  <div class="col-sm-12 col-md-11">
+    <%= content_for :title do %>
+        Edit Batch Item
+    <% end %>
 
-<%= content_for :subtitle do %>
-    <%= @batch_item.title %>
-<% end %>
+    <%= content_for :subtitle do %>
+        <%= @batch_item.title %>
+    <% end %>
 
-<% breadcrumb :batch_item, @batch_item %>
+    <% breadcrumb :batch_item, @batch_item %>
 
-<%= render 'shared/record_floating_nav' %>
+    <%= render 'shared/record_floating_nav' %>
 
-<%= render 'form' %>
+    <%= render 'form' %>
+  </div>
+  <div class="col-md-1">
+    <%= render 'shared/record_floating_nav' %>
+  </div>
+</div>
