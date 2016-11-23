@@ -25,3 +25,6 @@ jetty/*
 
 # redis file
 dump.rdb
+
+# collection thumbs
+/public/assets/collection_thumbnails/*
