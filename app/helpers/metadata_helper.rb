@@ -49,11 +49,17 @@ module MetadataHelper
   end
 
   def rights_icon_tag(obj)
-    # a simple lookup hash or pairs for doing this could be loaded into redis at app start
+    # todo a simple lookup hash or pairs for doing this could be loaded into redis at app start
     I18n.t([:rights], scope: :meta)[0].each do |r|
       return link_to(image_tag(r[1][:icon_url], class: 'rights-statement-icon'), r[1][:uri]) if r[1][:uri] == obj[:value].first
     end
     link_to obj[:value].first, obj[:value].first
+  end
+
+  def rights_icon_label(uri)
+    I18n.t([:rights], scope: :meta)[0].each do |r|
+      return r[1][:label] if r[1][:uri] == uri
+    end
   end
 
 end
