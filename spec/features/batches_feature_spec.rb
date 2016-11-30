@@ -361,7 +361,7 @@ feature 'Batches Management' do
 
       # todo expect page to have all item_type fields
 
-      click_on I18n.t('meta.defaults.actions.save')
+      find('.fixed-save-button').click
 
       expect(page).to have_text I18n.t('meta.defaults.messages.errors.invalid_on_save', entity: 'Batch Item')
 
