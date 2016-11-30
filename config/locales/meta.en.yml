@@ -34,7 +34,7 @@ en:
           uri: 'http://rightsstatements.org/vocab/NoC-OKLR/1.0/'
           icon_url: 'rs_org_icons/NoC-OKLR.dark-white-interior-blue-type.svg'
         noc_us:
-          label: 'Rightsstatements.org - No Copyright - united States'
+          label: 'Rightsstatements.org - No Copyright - United States'
           uri: 'http://rightsstatements.org/vocab/NoC-US/1.0/'
           icon_url: 'rs_org_icons/NoC-US.dark-white-interior-blue-type.svg'
         cne:
@@ -77,6 +77,10 @@ en:
           label: 'Creative Commons - Attribution 4.0 International'
           uri: 'https://creativecommons.org/licenses/by/4.0/'
           icon_url: 'http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by.svg'
+        by-nc-nd:
+          label: 'Creative Commons - Attribution-NonCommercial-NoDerivatives 4.0 International'
+          uri: 'https://creativecommons.org/licenses/by-nc-nd/4.0/'
+          icon_url: 'http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-nd.svg'
     search:
       facets:
         public: 'Public'

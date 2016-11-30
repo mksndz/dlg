@@ -33,7 +33,7 @@ module MetadataHelper
   end
 
   def rights_statements
-    %w(inc inc_ow_eu inc_edu inc_nc inc_ruu noc_cr noc_nc noc_oklr noc_us cne und nkc zero mark by-nc-sa by-nc by-nd by-sa by)
+    %w(inc inc_ow_eu inc_edu inc_nc inc_ruu noc_cr noc_nc noc_oklr noc_us cne und nkc zero mark by-nc-sa by-nc by-nd by-sa by by-nc-nd)
   end
 
   def split_multivalued_params(params)
