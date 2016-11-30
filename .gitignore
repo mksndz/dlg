@@ -28,4 +28,4 @@ dump.rdb
 
 # large collections of images
 /app/assets/images/collection_thumbnails/*
-/app/assets/images/rs_org_icons/*
+#/app/assets/images/rs_org_icons/*
