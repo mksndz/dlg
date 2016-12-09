@@ -157,6 +157,7 @@ class Collection < ActiveRecord::Base
         dasherize: false,
         # fields to not include
         except: [
+            :id,
             :repository_id,
             :created_at,
             :updated_at,
