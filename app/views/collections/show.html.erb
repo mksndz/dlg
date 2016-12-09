@@ -9,8 +9,8 @@
 <% breadcrumb :collection, @collection %>
 
 <%= link_to t('meta.defaults.actions.edit'), edit_collection_path(@collection), class: 'btn btn-default' %>
-<%= link_to t('meta.collection.actions.collection_xml'), '#xml' , class: 'btn btn-default' %>
-<%= link_to t('meta.collection.actions.item_xml'), '#item_xml' , class: 'btn btn-default' %>
+<%= link_to t('meta.collection.actions.collection_xml'), '#xml' , class: 'btn btn-default', data: { turbolinks: false } %>
+<%= link_to t('meta.collection.actions.item_xml'), '#item_xml' , class: 'btn btn-default', data: { turbolinks: false } %>
 
 <br><br>
 
