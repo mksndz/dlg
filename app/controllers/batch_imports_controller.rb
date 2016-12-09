@@ -29,15 +29,16 @@ class BatchImportsController < ApplicationController
   # create batch import and queue import job
   def create
 
-    raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.both_types')) if (batch_import_params[:xml].present? and batch_import_params[:xml_file])
-    raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.neither_type')) unless (batch_import_params[:xml].present? or batch_import_params[:xml_file])
+    file = params[:batch_import][:xml_file]
+
+    raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.both_types')) if (batch_import_params[:xml].present? and file)
+    raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.neither_type')) unless (batch_import_params[:xml].present? or file)
 
     @batch_import = BatchImport.new
 
     # copy file contents to string if needed
-    if batch_import_params[:xml_file]
-      file = batch_import_params[:xml_file]
-      if xml.respond_to? :read
+    if file
+      if file.respond_to? :read
         @batch_import.xml = file.read # todo sanitize????
         @batch_import.format = 'file'
       else
