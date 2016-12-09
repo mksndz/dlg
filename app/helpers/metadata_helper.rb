@@ -6,29 +6,29 @@ module MetadataHelper
 
   def multivalued_fields
     %w(
-      dc_right
-      dc_relation
-      dc_format
-      dc_date
-      dcterms_is_part_of
-      dcterms_contributor
-      dcterms_creator
-      dcterms_description
-      dcterms_extent
-      dcterms_medium
-      dcterms_identifier
-      dcterms_language
-      dcterms_spatial
-      dcterms_publisher
-      dcterms_rights_holder
-      dcterms_subject
-      dcterms_temporal
-      dcterms_title
-      dcterms_type
-      dcterms_is_shown_at
       dcterms_provenance
-      dcterms_bibliographic_citation
+      dcterms_title
+      dcterms_creator
+      dcterms_contributor
+      dcterms_subject
+      dcterms_description
+      dcterms_identifier
+      dcterms_publisher
+      dcterms_is_shown_at
+      dc_date
+      dcterms_temporal
+      dcterms_spatial
+      dc_format
+      dcterms_is_part_of
+      dc_right
+      dcterms_rights_holder
       dlg_local_right
+      dc_relation
+      dcterms_type
+      dcterms_medium
+      dcterms_extent
+      dcterms_language
+      dcterms_bibliographic_citation
     )
   end
 
