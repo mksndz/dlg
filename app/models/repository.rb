@@ -8,6 +8,39 @@ class Repository < ActiveRecord::Base
   validates_presence_of :title
   validate :coordinates_format
 
+  searchable do
+
+    string :slug, stored: true
+    string :record_id, stored: true
+
+    # set empty proxy id field so sunspot knows about it
+    # value is set prior to save
+    # sunspot search will not work without this, but indexing will
+    # see monkeypatch @ config/initializers/sunspot_indexer_id.rb
+    string :sunspot_id, stored: true do
+      ''
+    end
+
+    string :title, stored: true
+    string :short_description, stored: true
+    string :description, stored: true
+
+    text :title
+    text :short_description
+    text :description
+
+    string :coordinates, stored: true
+
+    boolean :teaser
+    boolean :public
+    boolean :dpla
+
+  end
+
+  def record_id
+    slug
+  end
+
   private
 
   def coordinates_format
