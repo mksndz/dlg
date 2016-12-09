@@ -31,9 +31,7 @@
 
 <a name="dc_right"></a>
 <%= content_tag :div, class: 'form-group' do %>
-  <%=
-    label_tag "#{e}_dc_right", t("activerecord.attributes.#{e}.dc_right")
-  %>
+  <%= meta_textarea_label e, 'dc_right' %>
   <%=
     select(
         e,
@@ -56,7 +54,7 @@
 
 <a name="dcterms_type"></a>
 <%= content_tag :div, class: 'form-group' do %>
-    <%= label_tag "#{e}_dcterms_type", t("activerecord.attributes.#{e}.dcterms_type") %>
+    <%= meta_textarea_label e, 'dcterms_type' %>
     <%= select(
                 e,
                 :dcterms_type,

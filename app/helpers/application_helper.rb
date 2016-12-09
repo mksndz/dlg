@@ -22,10 +22,18 @@ module ApplicationHelper
     request.original_url.include?('/' + key) ? 'active' : ''
   end
 
+  def meta_textarea_label(klass, term)
+    label = ''
+    label += label_tag "#{term}", t("activerecord.attributes.#{klass}.#{term}")
+    label += "&nbsp;<em class='text-muted'>#{term}</em>"
+    label.html_safe
+  end
+
   def meta_textarea(object, term)
     klass = object.class.name.demodulize.underscore
     html = '<div class="form-group">'
-    html += label_tag "#{term}", t("activerecord.attributes.#{klass}.#{term}")
+    # html += label_tag "#{term}", t("activerecord.attributes.#{klass}.#{term}")
+    html += meta_textarea_label(klass, term)
     html += text_area_tag "#{klass}[#{term}]", object.method(term).call.join("\n"), { rows: '5', class: 'form-control', id: term }
     # html += content_tag :span, t("activerecord.help.#{klass}.#{term}", default: ''), { class: 'help-block'}
     html += '</div>'
