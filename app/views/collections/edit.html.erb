@@ -1,14 +1,21 @@
-<%= content_for :title do %>
-    Edit Collection
-<% end %>
+<div class="row">
+  <div class="col-sm-12 col-md-11">
+    <%= content_for :title do %>
+        Edit Collection
+    <% end %>
 
-<%= content_for :subtitle do %>
-    <%= @collection.display_title %>
-<% end %>
+    <%= content_for :subtitle do %>
+        <%= @collection.display_title %>
+    <% end %>
 
-<% breadcrumb :collection, @collection %>
+    <% breadcrumb :collection, @collection %>
 
-<%= render 'shared/search_results_nav' %>
-<%= render 'shared/record_floating_nav' %>
+    <%= render 'shared/search_results_nav' %>
+    <%= render 'shared/record_floating_nav' %>
 
-<%= render 'form' %>
+    <%= render 'form' %>
+  </div>
+  <div class="col-md-1">
+    <%= render 'shared/record_floating_nav' %>
+  </div>
+</div>
