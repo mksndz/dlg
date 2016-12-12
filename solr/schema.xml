@@ -156,7 +156,7 @@
   <copyField source="dcterms_relation_display"       dest="relation_facet" />
   <copyField source="dcterms_type_display"           dest="type_facet" />
   <copyField source="dcterms_medium_display"         dest="medium_facet" />
-  <copyField source="dc_language_display"            dest="language_facet" />
+  <copyField source="dcterms_language_display"       dest="language_facet" />
   <copyField source="coordinates"                    dest="coordinates_facet" />
 
   <!-- Similarity is the scoring routine for each document vs. a query.
