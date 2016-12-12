@@ -182,6 +182,7 @@ en:
         save_and_goto_previous: 'Save and Go To Previous'
         filter: 'Filter'
       labels:
+        na: 'N/A'
         unfiltered_index_subtitle: 'All of Them'
         filtered_by_subtitle: 'For %{title}'
         filtered_empty_subtitle: 'None'
@@ -320,6 +321,7 @@ en:
       labels:
         columns:
           collection: 'Collection'
+          item_to_update: 'Item to Update'
     batch_import:
       action:
         new: 'New XML Upload'

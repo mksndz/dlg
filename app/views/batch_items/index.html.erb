@@ -14,7 +14,7 @@
 <% unless @batch.committed? %>
   <%= link_to t('meta.batch_item.action.add'), new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
 <% end %>
-  <%= link_to t('meta.batch.actions.manage_xml_imports'), batch_batch_imports_path(@batch), class: 'btn btn-default' %>
+  <%= link_to t('meta.batch.actions.batch_imports'), batch_batch_imports_path(@batch), class: 'btn btn-default' %>
 </div>
 
 <%= render 'shared/per_pager' %>
@@ -44,6 +44,9 @@
           <%= t('meta.defaults.labels.columns.public') %>
         </th>
         <th>
+          <%= t('meta.batch_item.labels.columns.item_to_update') %>
+        </th>
+        <th>
           <%= t('meta.batch_item.labels.columns.collection') %>
         </th>
         <th width="185px"></th>
@@ -67,6 +70,13 @@
             </td>
             <td>
               <%= boolean_check_icon item.public %>
+            </td>
+            <td>
+              <% if item.item %>
+                <%= link_to item.item.id, item_path(item.item) %>
+              <% else %>
+                <%= t('meta.defaults.labels.na') %>
+              <% end %>
             </td>
             <td>
               <%= link_to(item.collection.display_title, collection_path(item.collection)) if item.collection %>
