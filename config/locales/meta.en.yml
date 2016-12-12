@@ -291,6 +291,7 @@ en:
           errors: 'Errors'
           batch_item: 'Batch Item'
           number: '#'
+          updated_record: 'Existing Record Updated?'
       messages:
         success:
           recreated: 'Batch was successfully recreated.'

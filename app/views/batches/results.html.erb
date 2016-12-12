@@ -68,6 +68,9 @@
       <th>
         <%= t('meta.defaults.labels.columns.slug') %>
       </th>
+      <th>
+        <%= t('meta.batch.labels.columns.updated_record') %>
+      </th>
       <th></th>
     </tr>
     </thead>
@@ -81,6 +84,9 @@
           </td>
           <td>
             <%= r['slug'] %>
+          </td>
+          <td>
+            <%= boolean_check_icon r['item_updated'] %>
           </td>
           <td>
             <%= link_to 'View Item', item_path(r['item']), class: 'btn btn-default btn-xs' %>

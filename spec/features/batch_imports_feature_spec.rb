@@ -106,7 +106,7 @@ feature 'Batch Importing Batch Items' do
 
         end
 
-        scenario 'can view a batch imports with details and actions' do
+        scenario 'can view a batch import with details and actions' do
 
           visit batch_batch_import_path(@batch, @batch_import)
 

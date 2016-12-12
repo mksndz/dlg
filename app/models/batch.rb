@@ -32,6 +32,7 @@ class Batch < ActiveRecord::Base
     failures = []
     batch_items.each do |bi|
       i = bi.commit
+      item_updated = i.persisted?
       begin
         i.save
         Sunspot.commit
@@ -40,7 +41,7 @@ class Batch < ActiveRecord::Base
       end
       if i.errors.empty?
         # item properly committed, save Item and BI ids
-        successes << { batch_item: bi.id, item: i.id, slug: bi.slug }
+        successes << { batch_item: bi.id, item: i.id, slug: bi.slug, item_updated: item_updated }
       else
         # item did not properly get built, add errors to array with BI id
         failures << { batch_item: bi.id, errors: i.errors, slug: bi.slug }
