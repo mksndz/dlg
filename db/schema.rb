@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161212185043) do
+ActiveRecord::Schema.define(version: 20161213160912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 20161212185043) do
     t.boolean  "has_thumbnail",                  default: false, null: false
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
     t.integer  "batch_import_id"
-    t.string   "portal"
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
@@ -141,7 +140,6 @@ ActiveRecord::Schema.define(version: 20161212185043) do
     t.integer   "items_count",                    default: 0
     t.text      "dcterms_bibliographic_citation", default: [],    null: false, array: true
     t.text      "dlg_local_right",                default: [],    null: false, array: true
-    t.string    "portal"
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
@@ -231,7 +229,6 @@ ActiveRecord::Schema.define(version: 20161212185043) do
     t.boolean  "valid_item",                     default: false, null: false
     t.boolean  "has_thumbnail",                  default: false, null: false
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
-    t.string   "portal"
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
@@ -240,6 +237,11 @@ ActiveRecord::Schema.define(version: 20161212185043) do
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
   add_index "items", ["valid_item"], name: "index_items_on_valid_item", using: :btree
+
+  create_table "portals", force: :cascade do |t|
+    t.string "code"
+    t.text   "name"
+  end
 
   create_table "repositories", force: :cascade do |t|
     t.string   "slug",                              null: false
@@ -260,7 +262,6 @@ ActiveRecord::Schema.define(version: 20161212185043) do
     t.integer  "collections_count", default: 0
     t.string   "coordinates"
     t.boolean  "teaser"
-    t.string   "portal"
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree
