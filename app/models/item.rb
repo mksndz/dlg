@@ -10,6 +10,9 @@ class Item < ActiveRecord::Base
   has_one :repository, through: :collection
   has_many :batch_items
 
+  has_many :portal_records, as: :portable
+  has_many :portals, through: :portal_records
+
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection
 

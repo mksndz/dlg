@@ -5,6 +5,9 @@ class Repository < ActiveRecord::Base
   has_many :items, through: :collections
   has_and_belongs_to_many :users
 
+  has_many :portal_records, as: :portable
+  has_many :portals, through: :portal_records
+
   validates_presence_of :title
   validate :coordinates_format
 

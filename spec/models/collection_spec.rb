@@ -60,6 +60,17 @@ RSpec.describe Collection, type: :model do
     expect(c.time_periods.first).to be_a TimePeriod
   end
 
+  it 'has an array of Portals' do
+
+    c = Fabricate :collection
+    p = Fabricate :portal
+
+    c.portals << p
+
+    expect(c.portals.first).to be_a Portal
+
+  end
+
   it 'prevents items with other_collection arrays containing a collection id from persisting after a collection is destroyed' do
     c = Fabricate(:collection)
     i = Fabricate(:item)

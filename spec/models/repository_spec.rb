@@ -43,6 +43,17 @@ RSpec.describe Repository, type: :model do
     expect(r.coordinates).to be_an String
   end
 
+  it 'has an array of Portals' do
+
+    r = Fabricate :repository
+    p = Fabricate :portal
+
+    r.portals << p
+
+    expect(r.portals.first).to be_a Portal
+
+  end
+
   # VALIDATIONS
 
   it 'requires a title' do

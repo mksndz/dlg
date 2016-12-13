@@ -152,6 +152,32 @@ RSpec.describe Item, type: :model do
     expect(i.has_thumbnail?).to be false
   end
 
+  it 'has an array of Portals' do
+
+    i = Fabricate :item
+    p = Fabricate :portal
+
+    i.portals << p
+
+    expect(i.portals.first).to be_a Portal
+
+  end
+
+  it 'can be associated with multiple different Portals' do
+
+    i = Fabricate :item
+    p1 = Fabricate :portal
+    p2 = Fabricate :portal
+
+    i.portals << [ p1, p2 ]
+
+    expect(i.portals.first).to be_a Portal
+    expect(i.portals.last).to be_a Portal
+
+    expect(i.portals.last).not_to be p1
+
+  end
+
   # validations
 
   it 'should require a Collection' do

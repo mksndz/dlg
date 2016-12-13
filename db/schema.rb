@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213160912) do
+ActiveRecord::Schema.define(version: 20161213161456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,6 +237,15 @@ ActiveRecord::Schema.define(version: 20161213160912) do
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
   add_index "items", ["valid_item"], name: "index_items_on_valid_item", using: :btree
+
+  create_table "portal_records", force: :cascade do |t|
+    t.integer "portal_id"
+    t.integer "portable_id"
+    t.string  "portable_type"
+  end
+
+  add_index "portal_records", ["portable_type", "portable_id"], name: "index_portal_records_on_portable_type_and_portable_id", using: :btree
+  add_index "portal_records", ["portal_id"], name: "index_portal_records_on_portal_id", using: :btree
 
   create_table "portals", force: :cascade do |t|
     t.string "code"

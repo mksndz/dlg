@@ -11,6 +11,9 @@ class Collection < ActiveRecord::Base
   has_and_belongs_to_many :time_periods
   has_and_belongs_to_many :users
 
+  has_many :portal_records, as: :portable
+  has_many :portals, through: :portal_records
+
   validates_presence_of :repository
   validates_presence_of :display_title
   validates_uniqueness_of :slug, scope: :repository_id
