@@ -3,6 +3,8 @@
     ItemVersion,
     TimePeriod,
     Subject,
+    Portal,
+    PortalRecord,
     BatchItem,
     Item,
     User,
@@ -24,6 +26,16 @@ end
 ).each do |j|
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{j} RESTART IDENTITY CASCADE;")
 end
+
+#
+# DLG Portals
+#
+Portal.create!([
+                { name: 'The Digital Library of Georgia', code: 'dlg' },
+                { name: 'The Civil War in the American South', code: 'amso' },
+                { name: 'The Civil Rights Digital Library', code: 'crdl' },
+                { name: 'Other', code: 'other' },
+               ])
 
 #
 # Default Subjects
