@@ -80,6 +80,7 @@ class CollectionsController < RecordController
     @data[:subjects] = Subject.all.order(:name)
     @data[:time_periods] = TimePeriod.all.order(:name)
     @data[:repositories] = Repository.all.order(:title)
+    @data[:portals] = Portal.all.order(:name)
   end
 
   def collection_params
@@ -116,10 +117,13 @@ class CollectionsController < RecordController
             :dcterms_is_shown_at,
             :dcterms_provenance,
             :dcterms_license,
+            :dlg_local_right,
+            :dcterms_bibliographic_citation,
             :dcterms_type => [],
             :subject_ids => [],
             :time_period_ids => [],
-            :other_repositories => []
+            :other_repositories => [],
+            :portal_ids => []
         )
     )
 

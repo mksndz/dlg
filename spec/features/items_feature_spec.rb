@@ -13,70 +13,174 @@ feature 'Item Management' do
       login_as super_user, scope: :user
     end
 
-    scenario 'saves a new item with no other_collection value' do
+    context 'other_collection behavior' do
 
-      c1 = Fabricate(:collection) { items(count:1) }
+      scenario 'saves a new item with no other_collection value' do
 
-      visit items_path
+        c1 = Fabricate(:collection) { items(count:1) }
 
-      click_on I18n.t('meta.defaults.actions.edit')
+        visit items_path
 
-      fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-      chosen_select 'Text', from: 'dcterms-type-select'
+        click_on I18n.t('meta.defaults.actions.edit')
 
-      click_button I18n.t('meta.defaults.actions.save')
+        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
 
-      expect(page).to have_current_path item_path(c1.items.first)
+        click_button I18n.t('meta.defaults.actions.save')
 
-    end
+        expect(page).to have_current_path item_path(c1.items.first)
 
-    scenario 'super user saves a new item with other_collection value' do
+      end
 
-      c1 = Fabricate(:collection) { items(count:1) }
-      c2 = Fabricate(:collection)
+      scenario 'super user saves a new item with other_collection value' do
 
-      visit items_path
+        c1 = Fabricate(:collection) { items(count:1) }
+        c2 = Fabricate(:collection)
 
-      click_on I18n.t('meta.defaults.actions.edit')
+        visit items_path
 
-      fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-      chosen_select 'Text', from: 'dcterms-type-select'
+        click_on I18n.t('meta.defaults.actions.edit')
 
-      select c2.display_title, from: I18n.t('activerecord.attributes.item.other_collections')
+        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
 
-      click_button I18n.t('meta.defaults.actions.save')
+        select c2.display_title, from: I18n.t('activerecord.attributes.item.other_collections')
 
-      expect(page).to have_current_path item_path(c1.items.first)
+        click_button I18n.t('meta.defaults.actions.save')
 
-    end
+        expect(page).to have_current_path item_path(c1.items.first)
 
-    scenario 'saves a new item removing other_collection value' do
+      end
 
-      c0 = Fabricate(:collection)
-      c1 = Fabricate(:collection) {
-        items(count:1)
-      }
+      scenario 'saves a new item removing other_collection value' do
 
-      c1.items.first.other_collections = [c0.id]
+        c0 = Fabricate(:collection)
+        c1 = Fabricate(:collection) {
+          items(count:1)
+        }
 
-      visit items_path
+        c1.items.first.other_collections = [c0.id]
 
-      click_on I18n.t('meta.defaults.actions.edit')
+        visit items_path
 
-      fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-      fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-      chosen_select 'Text', from: 'dcterms-type-select'
+        click_on I18n.t('meta.defaults.actions.edit')
 
-      select '', from: I18n.t('activerecord.attributes.item.other_collections')
+        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
 
-      click_button I18n.t('meta.defaults.actions.save')
+        select '', from: I18n.t('activerecord.attributes.item.other_collections')
 
-      expect(page).to have_current_path item_path(c1.items.first)
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path item_path(c1.items.first)
+
+      end
+
+      context 'portal behavior' do
+
+        scenario 'saves a new item with no portal value' do
+
+          c1 = Fabricate(:collection) { items(count:1) }
+
+          visit items_path
+
+          click_on I18n.t('meta.defaults.actions.edit')
+
+          fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+          fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+          fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+          chosen_select 'Text', from: 'dcterms-type-select'
+
+          click_button I18n.t('meta.defaults.actions.save')
+
+          expect(page).to have_current_path item_path(c1.items.first)
+
+        end
+
+        scenario 'super user saves a new item with a single portal value' do
+
+          c1 = Fabricate(:collection) { items(count:1) }
+
+          p = Fabricate(:portal)
+
+          visit items_path
+
+          click_on I18n.t('meta.defaults.actions.edit')
+
+          fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+          fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+          fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+          chosen_select 'Text', from: 'dcterms-type-select'
+
+          select p.name, from: I18n.t('activerecord.attributes.item.portal_ids')
+
+          click_button I18n.t('meta.defaults.actions.save')
+
+          expect(page).to have_current_path item_path(c1.items.first)
+
+        end
+
+        scenario 'super user saves a new item with a multiple portal values' do
+
+          c1 = Fabricate(:collection) { items(count:1) }
+
+          p1 = Fabricate(:portal)
+          p2 = Fabricate(:portal)
+
+          visit items_path
+
+          click_on I18n.t('meta.defaults.actions.edit')
+
+          fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+          fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+          fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+          chosen_select 'Text', from: 'dcterms-type-select'
+
+          select p1.name, from: I18n.t('activerecord.attributes.item.portal_ids')
+          select p2.name, from: I18n.t('activerecord.attributes.item.portal_ids')
+
+          click_button I18n.t('meta.defaults.actions.save')
+
+          expect(page).to have_current_path item_path(c1.items.first)
+          expect(page).to have_text p1.name
+          expect(page).to have_text p2.name
+
+        end
+
+        scenario 'saves a new item removing other_collection value' do
+
+          c = Fabricate(:collection) {
+            items(count:1)
+          }
+
+          p = Fabricate :portal
+
+          c.items.first.portals = [p]
+
+          visit items_path
+
+          click_on I18n.t('meta.defaults.actions.edit')
+
+          fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+          fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+          fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+          chosen_select 'Text', from: 'dcterms-type-select'
+
+          select '', from: I18n.t('activerecord.attributes.item.portal_ids')
+
+          click_button I18n.t('meta.defaults.actions.save')
+
+          expect(page).to have_current_path item_path(c.items.first)
+
+        end
+
+      end
 
     end
 

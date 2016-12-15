@@ -174,6 +174,7 @@ RSpec.describe Item, type: :model do
     expect(i.portals.first).to be_a Portal
     expect(i.portals.last).to be_a Portal
 
+    expect(i.portals.first).not_to be p2
     expect(i.portals.last).not_to be p1
 
   end

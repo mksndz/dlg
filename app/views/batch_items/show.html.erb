@@ -13,6 +13,8 @@
 <br><br>
 
 <%= render('shared/show_field', field_name: t('activerecord.attributes.batch_item.collection_id'), value: @batch_item.collection.display_title) if @batch_item.collection %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.portal_ids'), value: portals_list(@batch_item) %>
+
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.slug'), value: @batch_item.slug %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.dpla'), value: @batch_item.dpla %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.public'), value: @batch_item.public%>

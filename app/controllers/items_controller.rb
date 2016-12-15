@@ -104,6 +104,7 @@ class ItemsController < RecordController
   def set_data
     @data = {}
     @data[:collections] = Collection.all.order(:display_title)
+    @data[:portals] = Portal.all.order(:name)
   end
 
   def item_params
@@ -138,6 +139,7 @@ class ItemsController < RecordController
           :dlg_local_right,
           :dcterms_type => [],
           :other_collections => [],
+          :portal_ids => []
       )
     )
   end

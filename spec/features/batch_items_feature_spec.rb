@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'chosen-rails/rspec'
 include Warden::Test::Helpers
 Warden.test_mode!
 
@@ -82,6 +83,107 @@ feature 'Batches Management' do
       click_on I18n.t('meta.defaults.actions.save_and_goto_previous')
 
       expect(page).to have_current_path edit_batch_batch_item_path(batch, batch.batch_items.last.previous)
+
+    end
+
+
+    context 'portal behavior' do
+
+      scenario 'saves a new batch_item with no portal value' do
+
+        b = Fabricate(:batch) { batch_items(count:1) }
+
+        visit batch_batch_items_path(b)
+
+        click_on I18n.t('meta.defaults.actions.edit')
+
+        fill_in I18n.t('activerecord.attributes.batch_item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.batch_item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.batch_item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
+
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path batch_batch_item_path(b, b.batch_items.first)
+
+      end
+
+      scenario 'super user saves a new batch_item with a single portal value' do
+
+        b = Fabricate(:batch) { batch_items(count:1) }
+
+        p = Fabricate(:portal)
+
+        visit batch_batch_items_path(b)
+
+        click_on I18n.t('meta.defaults.actions.edit')
+
+        fill_in I18n.t('activerecord.attributes.batch_item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.batch_item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.batch_item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
+
+        select p.name, from: I18n.t('activerecord.attributes.batch_item.portal_ids')
+
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path batch_batch_item_path(b, b.batch_items.first)
+
+      end
+
+      scenario 'super user saves a new batch_item with a multiple portal values' do
+
+        b = Fabricate(:batch) { batch_items(count:1) }
+
+        p1 = Fabricate(:portal)
+        p2 = Fabricate(:portal)
+
+        visit batch_batch_items_path(b)
+
+        click_on I18n.t('meta.defaults.actions.edit')
+
+        fill_in I18n.t('activerecord.attributes.batch_item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.batch_item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.batch_item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
+
+        select p1.name, from: I18n.t('activerecord.attributes.batch_item.portal_ids')
+        select p2.name, from: I18n.t('activerecord.attributes.batch_item.portal_ids')
+
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path batch_batch_item_path(b, b.batch_items.first)
+        expect(page).to have_text p1.name
+        expect(page).to have_text p2.name
+
+      end
+
+      scenario 'saves a new batch_item removing other_collection value' do
+
+        b = Fabricate(:batch) {
+          batch_items(count:1)
+        }
+
+        p = Fabricate :portal
+
+        b.batch_items.first.portals = [p]
+
+        visit batch_batch_items_path(b)
+
+        click_on I18n.t('meta.defaults.actions.edit')
+
+        fill_in I18n.t('activerecord.attributes.batch_item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.batch_item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.batch_item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
+
+        select '', from: I18n.t('activerecord.attributes.batch_item.portal_ids')
+
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path batch_batch_item_path(b, b.batch_items.first)
+
+      end
 
     end
 

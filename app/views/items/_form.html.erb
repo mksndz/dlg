@@ -16,6 +16,8 @@
 
     <%= f.select :other_collections, @data[:collections].collect { |c| [c.display_title, c.id] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
 
+    <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
+
     <%= render partial: 'shared/edit_dc_fields', locals: {f: f, entity: @item } %>
 
     <%= f.primary I18n.t('meta.defaults.actions.save'), class: 'btn btn-primary fixed-save-button' %>

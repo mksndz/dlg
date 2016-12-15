@@ -63,4 +63,9 @@ module MetadataHelper
     uri # return uri if no match found
   end
 
+  def portals_list(rec)
+    names = rec.portals.collect { |p| sanitize(p.name) }
+    names.join('<br />').html_safe
+  end
+
 end

@@ -43,6 +43,7 @@ en:
         public: "Display to Public"
         in_georgia: "Located in Georgia"
         homepage_url: "Repository Homepage URL"
+        portal_ids: 'Portals'
         directions_url: "Driving Directions URL"
         address: "Address"
         strengths: "Strengths"
@@ -87,6 +88,7 @@ en:
         dcterms_extent: 'Extent'
         dcterms_language: 'Language (use ISO 639-2)'
         dcterms_identifier: 'Identifier'
+        portal_ids: 'Portals'
         created_at: "Created"
         updated_at: "Last Updated"
       item:
@@ -120,6 +122,7 @@ en:
         dcterms_extent: 'Extent'
         dcterms_language: 'Language (use ISO 639-2)'
         dcterms_identifier: 'Identifier'
+        portal_ids: 'Portals'
         created_at: "Created"
         updated_at: "Last Updated"
       batch_item:
@@ -151,7 +154,8 @@ en:
         dcterms_medium: 'Medium (use AAT)'
         dcterms_extent: 'Extent'
         dcterms_language: 'Language (use ISO 639-2)'
-        dcterms_identifier: 'Identifier (QDC)'
+        dcterms_identifier: 'Identifier'
+        portal_ids: 'Portals'
         created_at: "Created"
         updated_at: "Last Updated"
       batch_import:

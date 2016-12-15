@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'chosen-rails/rspec'
 include Warden::Test::Helpers
 Warden.test_mode!
 
@@ -11,6 +12,103 @@ feature 'Collections Management' do
 
     before :each do
       login_as super_user, scope: :user
+    end
+
+    context 'portal behavior' do
+
+      scenario 'saves a new collection with no portal value' do
+
+        c = Fabricate(:collection)
+
+        visit collections_path
+
+        click_on I18n.t('meta.defaults.actions.edit')
+
+        fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
+
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path collection_path(c)
+
+      end
+
+      scenario 'super user saves a new collection with a single portal value' do
+
+        c = Fabricate(:collection)
+
+        p = Fabricate(:portal)
+
+        visit collections_path
+
+        click_on I18n.t('meta.defaults.actions.edit')
+
+        fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
+
+        select p.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
+
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path collection_path(c)
+
+      end
+
+      scenario 'super user saves a new collection with a multiple portal values' do
+
+        c = Fabricate(:collection)
+
+        p1 = Fabricate(:portal)
+        p2 = Fabricate(:portal)
+
+        visit collections_path
+
+        click_on I18n.t('meta.defaults.actions.edit')
+
+        fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
+
+        select p1.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
+        select p2.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
+
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path collection_path(c)
+        expect(page).to have_text p1.name
+        expect(page).to have_text p2.name
+
+      end
+
+      scenario 'saves a new collection removing other_collection value' do
+
+        c = Fabricate(:collection)
+        p = Fabricate :portal
+
+        c.portals = [p]
+
+        visit collections_path
+
+        click_on I18n.t('meta.defaults.actions.edit')
+
+        fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
+
+        select '', from: I18n.t('activerecord.attributes.collection.portal_ids')
+
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path collection_path(c)
+
+      end
+
     end
 
     scenario 'index shows all collections with actions' do

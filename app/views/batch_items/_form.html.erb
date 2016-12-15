@@ -4,7 +4,7 @@
 
     <%= f.text_field :slug %>
 
-    <%= f.select :collection_id, @collections.collect { |c| [c.display_title, c.id] }, { include_blank: true } %>
+    <%= f.select :collection_id, @data[:collections].collect { |c| [c.display_title, c.id] }, { include_blank: true } %>
 
     <%= f.form_group :public do %>
         <%= f.check_box :public %>
@@ -14,7 +14,9 @@
         <%= f.check_box :dpla %>
     <% end %>
 
-    <%= f.select :other_collections, @collections.collect { |c| [c.display_title, c.id] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
+    <%= f.select :other_collections, @data[:collections].collect { |c| [c.display_title, c.id] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
+
+    <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
 
     <%= render partial: 'shared/edit_dc_fields', locals: { f: f, entity: @batch_item } %>
 

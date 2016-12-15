@@ -5,5 +5,6 @@ class Portal < ActiveRecord::Base
   has_many :items,          through: :portal_records,   source: :portable, source_type: 'Item'
   has_many :collections,    through: :portal_records,   source: :portable, source_type: 'Collection'
   has_many :repositories,   through: :portal_records,   source: :portable, source_type: 'Repository'
+  has_many :batch_items,    through: :portal_records,   source: :portable, source_type: 'BatchItems'
 
 end

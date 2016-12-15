@@ -8,6 +8,9 @@ class BatchItem < ActiveRecord::Base
   belongs_to :item
   has_one :repository, through: :collection
 
+  has_many :portal_records, as: :portable
+  has_many :portals, through: :portal_records
+
   def title
     dcterms_title.first
   end

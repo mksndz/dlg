@@ -31,7 +31,7 @@ end
 # DLG Portals
 #
 Portal.create!([
-                { name: 'The Digital Library of Georgia', code: 'dlg' },
+                { name: 'The Digital Library of Georgia', code: 'georgia' },
                 { name: 'The Civil War in the American South', code: 'amso' },
                 { name: 'The Civil Rights Digital Library', code: 'crdl' },
                 { name: 'Other', code: 'other' },

@@ -4,6 +4,8 @@
 
     <%= f.text_field :slug %>
     <%= f.text_field :title %>
+    <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
+
     <%= f.text_area :teaser %>
     <%= f.text_area :short_description %>
     <%= f.text_area :description %>

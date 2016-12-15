@@ -25,6 +25,8 @@
 
     <%= f.select :other_repositories, @data[:repositories].collect { |r| [r.title, r.slug] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
 
+    <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
+
     <%= render partial: 'shared/edit_dc_fields', locals: { entity: @collection, form: f } %>
 
     <%= f.collection_check_boxes :subject_ids, @data[:subjects], :id, :name %>

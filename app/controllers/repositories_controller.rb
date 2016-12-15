@@ -4,6 +4,8 @@ class RepositoriesController < ApplicationController
   include ErrorHandling
   include Sorting
 
+  before_action :set_data, only: [:new, :edit]
+
   def index
 
     if current_user.super?
@@ -55,6 +57,11 @@ class RepositoriesController < ApplicationController
 
   private
 
+  def set_data
+    @data = {}
+    @data[:portals] = Portal.all.order(:name)
+  end
+
   def repository_params
     params.require(:repository).permit(
         :slug,
@@ -70,7 +77,8 @@ class RepositoriesController < ApplicationController
         :directions_url,
         :address,
         :strengths,
-        :contact
+        :contact,
+        :portal_ids => []
     )
   end
 

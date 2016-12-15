@@ -5,7 +5,7 @@ class BatchItemsController < RecordController
   include Sorting
   include MetadataHelper
   before_action :set_batch
-  before_action :collections_for_select, only: [:new, :edit]
+  before_action :set_data, only: [:new, :edit]
   before_action :check_if_committed, except: [:index, :show]
 
   rescue_from BatchCommittedError do
@@ -47,7 +47,7 @@ class BatchItemsController < RecordController
         format.html { redirect_to batch_batch_item_path(@batch, @batch_item), notice: I18n.t('meta.defaults.messages.success.created', entity: 'Batch Item') }
         format.json { render :show, status: :created, location: @batch_item }
       else
-        collections_for_select
+        set_data
         format.html { render :new }
         format.json { render json: @batch_item.errors, status: :unprocessable_entity }
       end
@@ -62,7 +62,7 @@ class BatchItemsController < RecordController
         format.html { redirect_to after_save_destination, notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Batch Item') }
         format.json { render :show, status: :ok, location: @batch_item }
       else
-        collections_for_select
+        set_data
         set_next_and_previous
         format.html { render :edit }
         format.json { render json: @batch_item.errors, status: :unprocessable_entity }
@@ -91,8 +91,10 @@ class BatchItemsController < RecordController
     @next = @batch_item.next
   end
 
-  def collections_for_select
-    @collections = Collection.all
+  def set_data
+    @data = {}
+    @data[:collections] = Collection.all.order(:display_title)
+    @data[:portals] = Portal.all.order(:name)
   end
 
   def batch_item_params
@@ -127,6 +129,7 @@ class BatchItemsController < RecordController
             :dlg_local_right,
             :dcterms_type => [],
             :other_collections  => [],
+            :portal_ids => []
         )
     )
   end

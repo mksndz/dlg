@@ -17,6 +17,7 @@
 
 <%= render 'shared/show_field', field_name: t('meta.item.labels.view.thumbnail'), value: legacy_thumbnail_tag(@item) %>
 
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.portal_ids'), value: portals_list(@item) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.collection_id'), value: @item.collection.display_title %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.record_id'), value: @item.record_id %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.slug'), value: @item.slug %>
