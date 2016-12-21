@@ -45,7 +45,7 @@ class InvitationsController < Devise::InvitationsController
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:invite, keys: [
-       { role_ids: [] },
+       :is_super, :is_coordinator, :is_uploader, :is_committer,
        { repository_ids: [] },
        { collection_ids: [] }
     ])

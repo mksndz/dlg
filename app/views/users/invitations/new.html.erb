@@ -11,7 +11,16 @@
   <% end -%>
 
   <% if current_user.super? %>
-      <%= f.collection_check_boxes :role_ids, @data[:roles], :id, :name %>
+
+      <%= f.form_group :roles, label: { text: t('meta.user.labels.form.roles') }, help: t('meta.user.labels.form.roles_help') do %>
+
+          <%= f.check_box :is_super %>
+          <%= f.check_box :is_coordinator %>
+          <%= f.check_box :is_committer %>
+          <%= f.check_box :is_uploader %>
+
+      <% end %>
+
   <% end %>
 
   <% if current_user.super? or current_user.coordinator? %>
