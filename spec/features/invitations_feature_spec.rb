@@ -83,6 +83,19 @@ feature 'Invitation Management' do
 
   end
 
+  scenario 'super user can see a form to create an invitation and set roles' do
+
+    login_as super_user, scope: :user
+
+    visit new_user_invitation_path
+
+    expect(page).to have_field I18n.t('activerecord.attributes.user.is_committer')
+    expect(page).to have_field I18n.t('activerecord.attributes.user.is_coordinator')
+    expect(page).to have_field I18n.t('activerecord.attributes.user.is_super')
+    expect(page).to have_field I18n.t('activerecord.attributes.user.is_uploader')
+
+  end
+
   scenario 'invited user can complete invitation process' do
 
     invited_user = User.invite!({email: Faker::Internet.email}, coordinator_user)
