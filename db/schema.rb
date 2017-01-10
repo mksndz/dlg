@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213161456) do
+ActiveRecord::Schema.define(version: 20170110195954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 20161213161456) do
     t.boolean  "has_thumbnail",                  default: false, null: false
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
     t.integer  "batch_import_id"
+    t.boolean  "remote",                         default: true,  null: false
+    t.text     "dlg_subject_personal",           default: [],    null: false, array: true
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
@@ -229,6 +231,8 @@ ActiveRecord::Schema.define(version: 20161213161456) do
     t.boolean  "valid_item",                     default: false, null: false
     t.boolean  "has_thumbnail",                  default: false, null: false
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
+    t.boolean  "remote",                         default: true,  null: false
+    t.text     "dlg_subject_personal",           default: [],    null: false, array: true
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
