@@ -55,6 +55,9 @@
             <%= t('meta.collection.labels.columns.repository') %>
           </th>
           <th>
+            <%= t('meta.defaults.labels.columns.portals') %>
+          </th>
+          <th>
             <%= sortable 'items_count', t('meta.defaults.labels.columns.items_count') %>
           </th>
           <th>
@@ -84,6 +87,9 @@
               </td>
               <td>
                 <%= link_to(collection.repository.title, repository_path(collection.repository)) if collection.repository %>
+              </td>
+              <td>
+                <%= portal_badges collection %>
               </td>
               <td>
                 <%= link_to(collection.items.size, items_path(collection_id: collection.id)) %>

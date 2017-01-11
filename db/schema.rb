@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110195954) do
+ActiveRecord::Schema.define(version: 20170111175408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20170110195954) do
     t.integer   "items_count",                    default: 0
     t.text      "dcterms_bibliographic_citation", default: [],    null: false, array: true
     t.text      "dlg_local_right",                default: [],    null: false, array: true
+    t.text      "dlg_subject_personal",           default: [],    null: false, array: true
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree

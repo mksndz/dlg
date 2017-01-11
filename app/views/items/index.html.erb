@@ -63,6 +63,9 @@
             <%= t('meta.item.labels.columns.collection') %>
           </th>
           <th>
+            <%= t('meta.defaults.labels.columns.portals') %>
+          </th>
+          <th>
             <%= sortable 'created_at', t('activerecord.attributes.item.created_at')  %>
           </th>
           <th>
@@ -92,6 +95,9 @@
             </td>
             <td>
               <%= link_to item.collection.display_title, collection_path(item.collection) %>
+            </td>
+            <td>
+              <%= portal_badges item %>
             </td>
             <td>
               <%= time_tag item.created_at %>

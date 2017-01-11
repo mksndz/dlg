@@ -203,6 +203,7 @@ en:
           slug: 'Slug'
           title: 'Title'
           public: 'Public?'
+          portals: 'Portals'
           valid: 'Valid?'
           collections_count: 'Collections'
           items_count: 'Items'

@@ -26,6 +26,14 @@ module ItemsHelper
     end
   end
 
+  def portal_badges(rec)
+    labels = []
+    rec.portals.each do |p|
+      labels << content_tag(:span, p.code, class: 'label label-primary')
+    end
+    labels.join('<br />').html_safe
+  end
+
   def version_author_name(version)
     user = User.get_version_author(version)
     user ? user.email : ''
