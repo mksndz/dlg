@@ -5,13 +5,11 @@ class Item < ActiveRecord::Base
   include IndexFilterable
   include ItemTypeValidatable
   include GeospatialIndexable
+  include Portable
 
   belongs_to :collection, counter_cache: true
   has_one :repository, through: :collection
   has_many :batch_items
-
-  has_many :portal_records, as: :portable
-  has_many :portals, through: :portal_records
 
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection

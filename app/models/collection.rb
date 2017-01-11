@@ -2,6 +2,7 @@ class Collection < ActiveRecord::Base
   include Slugged
   include IndexFilterable
   include GeospatialIndexable
+  include Portable
 
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
@@ -10,9 +11,6 @@ class Collection < ActiveRecord::Base
   has_and_belongs_to_many :subjects
   has_and_belongs_to_many :time_periods
   has_and_belongs_to_many :users
-
-  has_many :portal_records, as: :portable
-  has_many :portals, through: :portal_records
 
   validates_presence_of :repository
   validates_presence_of :display_title

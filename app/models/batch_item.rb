@@ -1,15 +1,13 @@
 class BatchItem < ActiveRecord::Base
   include Slugged
   include ItemTypeValidatable
+  include Portable
 
   belongs_to :batch, counter_cache: true
   belongs_to :batch_import, counter_cache: true
   belongs_to :collection
   belongs_to :item
   has_one :repository, through: :collection
-
-  has_many :portal_records, as: :portable
-  has_many :portals, through: :portal_records
 
   def title
     dcterms_title.first

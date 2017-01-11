@@ -168,6 +168,21 @@ RSpec.describe Item, type: :model do
 
   end
 
+  it 'has an array of unique Portals' do
+
+    i = Fabricate :item
+    p = Fabricate :portal
+    p2 = Fabricate :portal
+
+    i.portals << p
+    i.portals << p2
+    i.portals << p
+
+    expect(i.portals.first).to eq p
+    expect(i.portals.last).to eq p2
+
+  end
+
   it 'can be associated with multiple different Portals' do
 
     i = Fabricate :item
