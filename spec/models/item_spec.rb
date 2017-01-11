@@ -36,6 +36,11 @@ RSpec.describe Item, type: :model do
     expect(i.dcterms_title).to be_kind_of Array
   end
 
+  it 'has an Array dlg_subject_personal' do
+    i = Fabricate(:item)
+    expect(i.dcterms_title).to be_kind_of Array
+  end
+
   it 'has a slug' do
     i = Fabricate(:item)
     expect(i.slug).not_to be_empty

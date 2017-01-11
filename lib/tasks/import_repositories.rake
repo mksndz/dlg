@@ -29,6 +29,7 @@ task import_repositories: :environment do
   collection_node_name          = 'coll'.freeze
   slug_node_name                = 'code'.freeze
   name_node_name                = 'name'.freeze
+  portal_node_name              = 'portal'.freeze
 
   # define sources
   repository_hierarchy_source   = 'http://dlg.galileo.usg.edu/xml/dcq/Collections.xml'.freeze
@@ -122,6 +123,10 @@ task import_repositories: :environment do
       @logger.error "Could not create repository: #{slug}."
     end
 
+    # set portal membership
+    portals_node = repo_node.css(portal_node_name)
+    LegacyImporter.set_portals repository, portals_node
+
   end
 
   # COLLECTION METADATA PROCESSING
@@ -131,6 +136,10 @@ task import_repositories: :environment do
     if collection
       @logger.info "Collection added: #{collection.display_title}."
       collections_created += 1
+
+      # set portals
+      LegacyImporter.set_portals collection, coll_node.css(portal_node_name)
+
     end
   end
 

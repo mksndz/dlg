@@ -1,24 +1,31 @@
 class LegacyImporter
 
+  def self.get_value(xml, field)
+    xml.css(field).inner_text.encode('UTF-8', invalid: :replace, undef: :replace)
+        # .gsub('&quot;',"'")
+        # .gsub('&apos;',"'")
+        # .gsub("\n",'')
+  end
+
   def self.create_repository(xml_node)
 
-    slug = xml_node.css('slug').inner_text
+    slug = get_value xml_node, 'slug'
 
     repository = Repository.new
 
     repository.slug               = slug
-    repository.title              = xml_node.css('title').inner_text
-    repository.short_description  = xml_node.css('short_description').inner_text
-    repository.description        = xml_node.css('description').inner_text
-    repository.strengths          = xml_node.css('strengths').inner_text
-    repository.address            = xml_node.css('address').inner_text
-    repository.coordinates        = xml_node.css('coordinates').inner_text
-    repository.directions_url     = xml_node.css('directions_url').inner_text
-    repository.homepage_url       = xml_node.css('homepage_url').inner_text
-    repository.in_georgia         = xml_node.css('in_georgia').inner_text == 'yes'
-    repository.public             = xml_node.css('public').inner_text == 'yes'
-    repository.color              = "##{xml_node.css('color').inner_text}"
-    repository.teaser             = xml_node.css('teaser').inner_text == 'yes'
+    repository.title              = get_value xml_node, 'title'
+    repository.short_description  = get_value xml_node, 'short_description'
+    repository.description        = get_value xml_node, 'description'
+    repository.strengths          = get_value xml_node, 'strengths'
+    repository.address            = get_value xml_node, 'address'
+    repository.coordinates        = get_value xml_node, 'coordinates'
+    repository.directions_url     = get_value xml_node, 'directions_url'
+    repository.homepage_url       = get_value xml_node, 'homepage_url'
+    repository.in_georgia         = get_value(xml_node, 'in_georgia') == 'true'
+    repository.public             = get_value(xml_node, 'public') == 'true'
+    repository.color              = "##{get_value xml_node, 'color'}"
+    repository.teaser             = get_value(xml_node, 'teaser') == 'true'
 
     repository.save(validate: false)
     repository
@@ -43,8 +50,21 @@ class LegacyImporter
     other_repositories = collection_attributes.delete('other_repository')
     color = collection_attributes.delete('color')
     collection_attributes.delete('teaser') # todo remove teaser when brad removes it from xml
+    local = collection_attributes.delete('local')
+    portals = collection_attributes.delete('portal')
+
+    # ensure a display title is set
+    unless collection_attributes['display_title']
+      collection_attributes['display_title'] = collection_attributes['dcterms_title'].first
+    end
 
     collection.assign_attributes(collection_attributes)
+
+    collection.remote = !local
+
+    # if portals
+    #   LegacyImporter.set_portals collection, xml_node.css('portal')
+    # end
 
     if time_periods
       time_periods.each do |xml_tp|
@@ -89,14 +109,23 @@ class LegacyImporter
     if collection.repository
       collection.save(validate: false)
     else
-      repo = Repository.find_by_slug repository['slug']
-      if repo
-        collection.repository = repo
-        collection.save(validate: false)
+
+      if repository and repository.has_key? 'slug'
+        repo = Repository.find_by_slug repository['slug']
+
+        if repo
+          collection.repository = repo
+          collection.save(validate: false)
+        else
+          logger.error "Needed repo but collection metadata for #{collection.slug} contains no or an unknown repo slug (#{repository['slug']})."
+          logger.error 'Collection not saved.'
+        end
+
       else
-        logger.error "Needed repo but collection metadata for #{collection.slug} contains unknown repo slug #{repository['slug']}."
-        logger.error 'Collection not saved.'
+        logger.error "No Repository provided for #{collection.slug}"
       end
+
+
     end
 
     if collection.errors.present?
@@ -104,6 +133,30 @@ class LegacyImporter
     end
 
     collection
+
+  end
+
+  def self.set_portals(entity, portals_node)
+
+    portals_hash = Hash.from_xml(portals_node.to_s)
+    portals = portals_hash['portal']['code']
+
+    if portals.respond_to? :each
+
+      portals.each do |c|
+
+        portal = Portal.find_by_code c
+
+        entity.portals << portal if portal
+
+      end
+
+    else
+
+      portal = Portal.find_by_code portals
+      entity.portals = [portal] if portal
+
+    end
 
   end
 

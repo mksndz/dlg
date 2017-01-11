@@ -11,6 +11,11 @@ Fabricator(:batch_import) do
         <item>
           <dpla type="boolean">true</dpla>
           <public type="boolean">true</public>
+          <local type="boolean">true</local>
+          <portal>
+             <code>georgia</code>
+             <code>other</code>
+          </portal>
           <dc_format type="array">
             <dc_format>application/pdf</dc_format>
           </dc_format>

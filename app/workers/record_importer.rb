@@ -121,7 +121,8 @@ class RecordImporter
   def self.prepared_params(record_data)
     record_data.reject do |k,v|
       if BatchItem.column_names.exclude?(k)
-        @logger.warn "Param from XML discarded: #{k}"
+        # @logger.warn "Param from XML discarded: #{k}" todo fix this (set logger)
+        k
         true
       end
     end

@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe CollectionImporter, type: :model do
 
-
   describe '#perform' do
 
     # todo does setting this here limit the config change to only these tests?

@@ -26,6 +26,22 @@ describe RecordImporter, type: :model do
 
         end
 
+        it 'should create a BatchItem with a boolean remote value' do
+
+          RecordImporter.perform(batch_import.id)
+
+          expect(BatchItem.last.remote).to be true
+
+        end
+
+        it 'should create a BatchItem with dlg_subject_personal value' do
+
+          RecordImporter.perform(batch_import.id)
+
+          expect(BatchItem.last.dlg_subject_personal).to be_an Array
+
+        end
+
         it 'should update BatchImport results appropriately' do
 
           RecordImporter.perform(batch_import.id)
