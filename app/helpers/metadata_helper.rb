@@ -29,6 +29,7 @@ module MetadataHelper
       dcterms_extent
       dcterms_language
       dcterms_bibliographic_citation
+      dlg_subject_personal
     )
   end
 
