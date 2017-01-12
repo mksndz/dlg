@@ -82,130 +82,203 @@ feature 'Item Management' do
 
       end
 
-      context 'portal behavior' do
+    end
 
-        scenario 'saves a new item with no portal value' do
+    context 'portal behavior' do
 
-          c1 = Fabricate(:collection) { items(count:1) }
+      scenario 'portals are displayed as badges on index' do
 
-          visit items_path
+        Fabricate(:item) {
+          portals(count: 1)
+        }
 
-          click_on I18n.t('meta.defaults.actions.edit')
+        visit items_path
 
-          fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-          fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-          fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-          chosen_select 'Text', from: 'dcterms-type-select'
-
-          click_button I18n.t('meta.defaults.actions.save')
-
-          expect(page).to have_current_path item_path(c1.items.first)
-
+        within 'tbody' do
+          expect(page).to have_css '.label-primary'
         end
 
-        scenario 'super user saves a new item with a single portal value' do
+      end
 
-          c1 = Fabricate(:collection) { items(count:1) }
+      scenario 'saves a new item with no portal value' do
 
-          p = Fabricate(:portal)
+        c1 = Fabricate(:collection) { items(count:1) }
 
-          visit items_path
+        visit items_path
 
-          click_on I18n.t('meta.defaults.actions.edit')
+        click_on I18n.t('meta.defaults.actions.edit')
 
-          fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-          fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-          fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-          chosen_select 'Text', from: 'dcterms-type-select'
+        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
 
-          select p.name, from: I18n.t('activerecord.attributes.item.portal_ids')
+        click_button I18n.t('meta.defaults.actions.save')
 
-          click_button I18n.t('meta.defaults.actions.save')
+        expect(page).to have_current_path item_path(c1.items.first)
 
-          expect(page).to have_current_path item_path(c1.items.first)
+      end
 
-        end
+      scenario 'super user saves a new item with a single portal value' do
 
-        scenario 'super user saves a new item with a multiple portal values' do
+        c1 = Fabricate(:collection) { items(count:1) }
 
-          c1 = Fabricate(:collection) { items(count:1) }
+        p = Fabricate(:portal)
 
-          p1 = Fabricate(:portal)
-          p2 = Fabricate(:portal)
+        visit items_path
 
-          visit items_path
+        click_on I18n.t('meta.defaults.actions.edit')
 
-          click_on I18n.t('meta.defaults.actions.edit')
+        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
 
-          fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-          fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-          fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-          chosen_select 'Text', from: 'dcterms-type-select'
+        select p.name, from: I18n.t('activerecord.attributes.item.portal_ids')
 
-          select p1.name, from: I18n.t('activerecord.attributes.item.portal_ids')
-          select p2.name, from: I18n.t('activerecord.attributes.item.portal_ids')
+        click_button I18n.t('meta.defaults.actions.save')
 
-          click_button I18n.t('meta.defaults.actions.save')
+        expect(page).to have_current_path item_path(c1.items.first)
 
-          expect(page).to have_current_path item_path(c1.items.first)
-          expect(page).to have_text p1.name
-          expect(page).to have_text p2.name
+      end
 
-        end
+      scenario 'super user saves a new item with a multiple portal values' do
 
-        scenario 'saves a new item removing other_collection value' do
+        c1 = Fabricate(:collection) { items(count:1) }
 
-          c = Fabricate(:collection) {
-            items(count:1)
-          }
+        p1 = Fabricate(:portal)
+        p2 = Fabricate(:portal)
 
-          p = Fabricate :portal
+        visit items_path
 
-          c.items.first.portals = [p]
+        click_on I18n.t('meta.defaults.actions.edit')
 
-          visit items_path
+        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
 
-          click_on I18n.t('meta.defaults.actions.edit')
+        select p1.name, from: I18n.t('activerecord.attributes.item.portal_ids')
+        select p2.name, from: I18n.t('activerecord.attributes.item.portal_ids')
 
-          fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-          fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-          fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-          chosen_select 'Text', from: 'dcterms-type-select'
+        click_button I18n.t('meta.defaults.actions.save')
 
-          select '', from: I18n.t('activerecord.attributes.item.portal_ids')
+        expect(page).to have_current_path item_path(c1.items.first)
+        expect(page).to have_text p1.name
+        expect(page).to have_text p2.name
 
-          click_button I18n.t('meta.defaults.actions.save')
+      end
 
-          expect(page).to have_current_path item_path(c.items.first)
+      scenario 'saves a new item removing other_collection value' do
 
-        end
+        c = Fabricate(:collection) {
+          items(count:1)
+        }
+
+        p = Fabricate :portal
+
+        c.items.first.portals = [p]
+
+        visit items_path
+
+        click_on I18n.t('meta.defaults.actions.edit')
+
+        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
+        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
+        chosen_select 'Text', from: 'dcterms-type-select'
+
+        select '', from: I18n.t('activerecord.attributes.item.portal_ids')
+
+        click_button I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_current_path item_path(c.items.first)
 
       end
 
     end
 
-    scenario 'sorts items by title then sees items properly listed' do
+    context 'sorting and limiting behavior' do
 
-      Fabricate(:item) { dcterms_title [ 'L' ] }
-      Fabricate(:item) { dcterms_title [ 'F' ] }
-      Fabricate(:item) { dcterms_title [ 'A' ] }
-      Fabricate(:item) { dcterms_title [ 'Z' ] }
-      Fabricate(:item) { dcterms_title [ 'Q' ] }
-      Fabricate(:item) { dcterms_title [ '2' ] }
+      scenario 'sorts items by title then sees items properly listed' do
 
-      visit items_path
+        Fabricate(:item) { dcterms_title [ 'L' ] }
+        Fabricate(:item) { dcterms_title [ 'F' ] }
+        Fabricate(:item) { dcterms_title [ 'A' ] }
+        Fabricate(:item) { dcterms_title [ 'Z' ] }
+        Fabricate(:item) { dcterms_title [ 'Q' ] }
+        Fabricate(:item) { dcterms_title [ '2' ] }
 
-      click_on I18n.t('meta.defaults.labels.columns.title')
+        visit items_path
 
-      titles = []
+        click_on I18n.t('meta.defaults.labels.columns.title')
 
-      page.all('table tbody tr').each do |row|
-        titles << row.all('td')[2].text
+        titles = []
+
+        page.all('table tbody tr').each do |row|
+          titles << row.all('td')[2].text
+        end
+
+        expect(titles).to eq %w(2 A F L Q Z)
+
       end
 
-      expect(titles).to eq %w(2 A F L Q Z)
+      scenario 'can limit to just items from a particular portal' do
+
+        i = Fabricate(:item) {
+          portals(count: 1)
+        }
+
+        i2 = Fabricate(:item)
+
+        p = Portal.last
+
+        visit items_path
+
+        chosen_select p.name, from: '_portal_id'
+
+        within '.index-filter-area' do
+          find('.btn-primary').click
+        end
+
+        expect(page).to have_text i.dcterms_title.first
+        expect(page).not_to have_text i2.dcterms_title.first
+
+      end
+
+      scenario 'can limit to just items from multiple portals' do
+
+        i = Fabricate(:item) {
+          portals(count: 1)
+        }
+
+        i2 = Fabricate(:item) {
+          portals(count: 1)
+        }
+
+        i3 = Fabricate(:item)
+
+        p1 = Portal.first
+        p2 = Portal.last
+
+        visit items_path
+
+        chosen_select p1.name, from: '_portal_id'
+        chosen_select p2.name, from: '_portal_id'
+
+        within '.index-filter-area' do
+          find('.btn-primary').click
+        end
+
+        expect(page).to have_text i.dcterms_title.first
+        expect(page).to have_text i2.dcterms_title.first
+        expect(page).not_to have_text i3.dcterms_title.first
+
+      end
 
     end
+
+
 
     scenario 'can select and save a rights statement from a drop down' do
 

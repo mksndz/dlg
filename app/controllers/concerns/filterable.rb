@@ -5,6 +5,7 @@ module Filterable
 
   def set_filter_options(parameters = [])
     @search_options = {}
+    @search_options[:portals] = Portal.select(:id, :name)
     @search_options[:public] = [['Public or Not Public', ''],['Public', '1'],['Not Public', '0']] if parameters.include? :public
     @search_options[:status] = [%w(Committed committed), %w(Pending pending)] if parameters.include? :status
     @search_options[:valid_item] = [['Any', ''], %w(Valid true), %w(Invalid false)] if parameters.include? :valid_item

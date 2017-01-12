@@ -19,10 +19,14 @@ class ItemsController < RecordController
     set_filter_options [:repository, :collection, :public, :valid_item]
 
     item_query = Item.index_query(params)
-                     .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
                      .per(params[:per_page])
                      .includes(:collection)
+
+    if params[:portal_id]
+      portals_filter = params[:portal_id].reject(&:empty?)
+      item_query = item_query.includes(:portals).joins(:portals).where(portals: { id: portals_filter } ) if portals_filter
+    end
 
     if current_user.super?
         @items = item_query

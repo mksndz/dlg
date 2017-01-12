@@ -190,6 +190,7 @@ en:
         per_page: 'Per Page'
         confirm: 'Are you sure?'
         filter:
+          portals: 'Portals'
           repository: 'Repository'
           collection: 'Collection'
           public: 'Public'
@@ -223,6 +224,7 @@ en:
         copy: 'Copy Item'
         xml: 'XML for Item'
         versions: 'Previous Versions'
+        deleted: 'Deleted Items'
         restore: 'Restore'
       labels:
         columns:
