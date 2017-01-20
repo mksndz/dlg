@@ -26,11 +26,11 @@ describe RecordImporter, type: :model do
 
         end
 
-        it 'should create a BatchItem with a boolean remote value' do
+        it 'should create a BatchItem with a boolean local value' do
 
           RecordImporter.perform(batch_import.id)
 
-          expect(BatchItem.last.remote).to be true
+          expect(BatchItem.last.local).to be true
 
         end
 

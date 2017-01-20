@@ -60,8 +60,6 @@ class LegacyImporter
 
     collection.assign_attributes(collection_attributes)
 
-    collection.remote = !local
-
     # if portals
     #   LegacyImporter.set_portals collection, xml_node.css('portal')
     # end

@@ -17,7 +17,8 @@
 
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.slug'), value: @batch_item.slug %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.dpla'), value: @batch_item.dpla %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.public'), value: @batch_item.public%>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.public'), value: @batch_item.public %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.local'), value: @batch_item.local %>
 
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @batch_item} %>
 

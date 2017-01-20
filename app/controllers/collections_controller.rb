@@ -89,7 +89,6 @@ class CollectionsController < RecordController
             :repository_id,
             :slug,
             :in_georgia,
-            :remote,
             :public,
             :display_title,
             :short_description,

@@ -104,6 +104,7 @@ class BatchItemsController < RecordController
             :slug,
             :dpla,
             :public,
+            :local,
             :date_range,
             :dc_right,
             :dc_relation,

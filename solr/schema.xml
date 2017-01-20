@@ -134,6 +134,7 @@
   <copyField source="dcterms_creator_text"      dest="creator_unstem_search" />
   <copyField source="dcterms_contributor_text"  dest="contributor_unstem_search" />
   <copyField source="dcterms_subject_text"      dest="subject_unstem_search" />
+  <copyField source="dlg_subject_personal_text" dest="subject_personal_unstem_search" />
   <copyField source="dcterms_description_text"  dest="description_unstem_search" />
   <copyField source="dcterms_publisher_text"    dest="publisher_unstem_search" />
   <copyField source="dc_date_text"              dest="date_unstem_search" />
@@ -147,6 +148,7 @@
   <copyField source="dcterms_creator_display"        dest="creator_facet" />
   <copyField source="dcterms_contributor_display"    dest="contributor_facet" />
   <copyField source="dcterms_subject_text"           dest="subject_facet" />
+  <copyField source="dlg_subject_personal_text"      dest="subject_personal_facet" />
   <copyField source="year"                           dest="year_facet" />
   <copyField source="dcterms_temporal_text"          dest="temporal_facet" />
   <copyField source="dcterms_spatial_text"           dest="location_facet" />

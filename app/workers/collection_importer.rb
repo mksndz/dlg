@@ -49,15 +49,11 @@ class CollectionImporter
       item_hash.delete('collection')
       item_hash.delete('dc_identifier_label')
       portal = item_hash.delete('portal')
-      local = item_hash.delete('local')
 
       other_collections = item_hash.delete('other_collection')
 
       item = Item.new(item_hash)
       item.collection = c
-
-      # set remote value
-      item.remote = !local
 
       # set portals value
       LegacyImporter.set_portals(item, i.css('portal')) if portal

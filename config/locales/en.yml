@@ -59,7 +59,6 @@ en:
         description: "Description"
         date_range: "Date Range"
         color: "Highlight Color"
-        remote: "Remote Collection"
         public: "Display to Public"
         dpla: "Push to DPLA"
         in_georgia: "Located in Georgia"
@@ -99,6 +98,7 @@ en:
         public: "Display to Public"
         dpla: "Push to DPLA"
         in_georgia: "Located in Georgia"
+        local: "Locally Hosted Item"
         other_collections: "Other Collections"
         dcterms_provenance: 'Holding Institution (Use LCNAF or DLG Names for repository name)'
         dcterms_title: 'Title'
@@ -133,6 +133,7 @@ en:
         public: "Display to Public"
         dpla: "Push to DPLA"
         in_georgia: "Located in Georgia"
+        local: "Locally Hosted Item"
         other_collections: "Other Collections"
         dcterms_provenance: 'Holding Institution (Use LCNAF or DLG Names for repository name)'
         dcterms_title: 'Title'
@@ -211,7 +212,6 @@ en:
         date_range: "Date range for temporal span of Collection items"
         color: "Color highlighting for Collection in lists"
         public: "Check this to display the Collection to the public"
-        remote: "Check this to indicate that the Collection is located remotely"
         in_georgia: "Check this to indicate the Collection is housed in Georgia"
         subject_ids: "This will classify the Collection into a Subject category"
         time_period_ids: "This will classify the Collection into a Time Period"

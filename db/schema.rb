@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111175408) do
+ActiveRecord::Schema.define(version: 20170120115325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20170111175408) do
     t.boolean  "has_thumbnail",                  default: false, null: false
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
     t.integer  "batch_import_id"
-    t.boolean  "remote",                         default: true,  null: false
+    t.boolean  "local",                          default: true,  null: false
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
   end
 
@@ -106,7 +106,6 @@ ActiveRecord::Schema.define(version: 20170111175408) do
   create_table "collections", force: :cascade do |t|
     t.integer   "repository_id"
     t.boolean   "in_georgia",                     default: true,  null: false
-    t.boolean   "remote",                         default: false, null: false
     t.text      "display_title",                                  null: false
     t.text      "short_description"
     t.string    "color"
@@ -232,7 +231,7 @@ ActiveRecord::Schema.define(version: 20170111175408) do
     t.boolean  "valid_item",                     default: false, null: false
     t.boolean  "has_thumbnail",                  default: false, null: false
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
-    t.boolean  "remote",                         default: true,  null: false
+    t.boolean  "local",                          default: true,  null: false
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
   end
 

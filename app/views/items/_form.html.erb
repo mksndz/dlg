@@ -14,6 +14,10 @@
         <%= f.check_box :dpla %>
     <% end %>
 
+    <%= f.form_group do %>
+        <%= f.check_box :local %>
+    <% end %>
+
     <%= f.select :other_collections, @data[:collections].collect { |c| [c.display_title, c.id] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
 
     <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
