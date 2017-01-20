@@ -8,9 +8,9 @@ module Sorting
   # this is injection safe because if ensures the params value is in the column_names array from the entity
   def sort_column
     begin
-      check_columns_for_field(controller_name, params[:sort]) ? params[:sort] : 'id'
+      check_columns_for_field(controller_name, params[:sort]) ? params[:sort] : "#{controller_name.downcase}.id"
     rescue NameError
-      check_columns_for_field(controller_path, params[:sort]) ? params[:sort] : 'id'
+      check_columns_for_field(controller_path, params[:sort]) ? params[:sort] : "#{controller_path.downcase}.id"
     end
   end
 
@@ -20,8 +20,12 @@ module Sorting
 
   private
 
+  def current_class(entity)
+    entity.classify.constantize
+  end
+
   def check_columns_for_field(entity, field)
-    entity.classify.constantize.column_names.include?(field)
+    current_class(entity).column_names.include?(field)
   end
 
 end
