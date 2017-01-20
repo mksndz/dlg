@@ -33,6 +33,9 @@
           <%= sortable 'title', t('meta.defaults.labels.columns.title') %>
         </th>
         <th>
+          <%= t('meta.defaults.labels.columns.portals') %>
+        </th>
+        <th>
           <%= sortable 'collections_count', t('meta.defaults.labels.columns.collections_count') %>
         </th>
         <th>
@@ -56,6 +59,9 @@
             </td>
             <td>
               <%= repository.title %>
+            </td>
+            <td>
+              <%= portal_badges repository %>
             </td>
             <td>
               <%= link_to(repository.collections.size, collections_path(repository_id: repository.id)) %>
