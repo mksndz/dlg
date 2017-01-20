@@ -123,10 +123,6 @@ task import_repositories: :environment do
       @logger.error "Could not create repository: #{slug}."
     end
 
-    # set portal membership
-    portals_node = repo_node.css(portal_node_name)
-    LegacyImporter.set_portals repository, portals_node
-
   end
 
   # COLLECTION METADATA PROCESSING
@@ -136,10 +132,6 @@ task import_repositories: :environment do
     if collection
       @logger.info "Collection added: #{collection.display_title}."
       collections_created += 1
-
-      # set portals
-      LegacyImporter.set_portals collection, coll_node.css(portal_node_name)
-
     end
   end
 

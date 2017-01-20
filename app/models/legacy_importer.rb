@@ -1,5 +1,7 @@
 class LegacyImporter
 
+  THUMBNAIL_ROOT = 'http://dlg.galileo.usg.edu/do-th:'
+
   def self.get_value(xml, field)
     xml.css(field).inner_text.encode('UTF-8', invalid: :replace, undef: :replace)
         # .gsub('&quot;',"'")
@@ -27,6 +29,14 @@ class LegacyImporter
     repository.color              = "##{get_value xml_node, 'color'}"
     repository.teaser             = get_value(xml_node, 'teaser') == 'true'
 
+    repository.thumbnail_url      = "#{THUMBNAIL_ROOT}#{slug}"
+
+    portals = xml_node.css('portal')
+
+    if portals
+      set_portals repository, portals
+    end
+
     repository.save(validate: false)
     repository
 
@@ -49,7 +59,6 @@ class LegacyImporter
     topics = collection_attributes.delete('topic')
     other_repositories = collection_attributes.delete('other_repository')
     color = collection_attributes.delete('color')
-    collection_attributes.delete('teaser') # todo remove teaser when brad removes it from xml
     local = collection_attributes.delete('local')
     portals = collection_attributes.delete('portal')
 
@@ -60,9 +69,9 @@ class LegacyImporter
 
     collection.assign_attributes(collection_attributes)
 
-    # if portals
-    #   LegacyImporter.set_portals collection, xml_node.css('portal')
-    # end
+    if portals
+      set_portals collection, xml_node.css('portal')
+    end
 
     if time_periods
       time_periods.each do |xml_tp|
@@ -101,10 +110,11 @@ class LegacyImporter
       end
     end
 
-    collection.color = "##{color}"
+    collection.color = "##{color}" if color && !color.empty?
 
     # set repository unless already set
     if collection.repository
+      collection.thumbnail_url = "#{THUMBNAIL_ROOT}#{repository.slug}_#{collection.slug}"
       collection.save(validate: false)
     else
 
@@ -113,6 +123,7 @@ class LegacyImporter
 
         if repo
           collection.repository = repo
+          collection.thumbnail_url = "#{THUMBNAIL_ROOT}#{repo.slug}_#{collection.slug}"
           collection.save(validate: false)
         else
           logger.error "Needed repo but collection metadata for #{collection.slug} contains no or an unknown repo slug (#{repository['slug']})."
@@ -122,7 +133,6 @@ class LegacyImporter
       else
         logger.error "No Repository provided for #{collection.slug}"
       end
-
 
     end
 

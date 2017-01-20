@@ -177,9 +177,10 @@ RSpec.describe Item, type: :model do
     i.portals << p
     i.portals << p2
     i.portals << p
+    i.portals << p2
+    i.portals << p
 
-    expect(i.portals.first).to eq p
-    expect(i.portals.last).to eq p2
+    expect(i.portals.length).to eq 2
 
   end
 

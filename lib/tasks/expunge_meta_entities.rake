@@ -31,6 +31,7 @@ task expunge_meta_entities: :environment do
     collections_subjects
     collections_time_periods
     bookmarks
+    portal_records
   ).each do |t|
     truncate_table t
   end
