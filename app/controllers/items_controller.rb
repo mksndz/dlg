@@ -19,6 +19,7 @@ class ItemsController < RecordController
     set_filter_options [:repository, :collection, :public, :valid_item]
 
     item_query = Item.index_query(params)
+                     .order(sort_column + ' ' + sort_direction)
                      .page(params[:page])
                      .per(params[:per_page])
                      .includes(:collection)
