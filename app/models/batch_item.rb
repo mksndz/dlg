@@ -25,12 +25,16 @@ class BatchItem < ActiveRecord::Base
     scrub_attributes = %w(id created_at updated_at batch_id batch_import_id)
     attributes = self.attributes.except(*scrub_attributes)
     item_id = attributes.delete('item_id')
+    portals = self.portals
     if item_id
       # replace existing
       self.item.update attributes
+      self.item.portals = portals
       self.item
     else
-      Item.new attributes
+      item = Item.new attributes
+      item.portals = portals
+      item
     end
   end
 

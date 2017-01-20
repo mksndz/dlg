@@ -139,6 +139,49 @@ feature 'Batches Management' do
 
     end
 
+    scenario 'super user can commit a valid batch (run background jobs) and the created item has correct portal values' do
+
+      ResqueSpec.reset!
+
+      batch_items = 1
+
+      batch = Fabricate :batch do
+        batch_items(count: batch_items)
+      end
+
+      batch.user = committer_user
+      batch.save
+
+      batch_item = BatchItem.last
+      portal = Fabricate :portal
+      batch_item.portals << portal
+
+      visit batch_path batch
+
+      click_on I18n.t('meta.batch.actions.commit')
+      click_on I18n.t('meta.batch.actions.commit')
+
+      ResqueSpec.perform_all(:batch_commit_queue)
+
+      visit batches_path
+
+      click_on I18n.t('meta.batch.actions.results')
+
+      expect(page).to have_current_path(results_batch_path(batch))
+
+      expect(page).to have_text batch.batch_items.first.slug
+      expect(page).not_to have_text I18n.t('meta.batch.labels.failed')
+      within 'table.successfully-committed-results-table tbody' do
+        expect(all('tr').length).to eq 1
+      end
+      expect(page).to have_link I18n.t('meta.batch.actions.view_item')
+
+      click_on I18n.t('meta.batch.actions.view_item')
+
+      expect(page).to have_text portal.name
+
+    end
+
   end
 
   context :coordinator_user do

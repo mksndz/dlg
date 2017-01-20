@@ -44,6 +44,9 @@
           <%= t('meta.defaults.labels.columns.public') %>
         </th>
         <th>
+          <%= t('meta.defaults.labels.columns.portals') %>
+        </th>
+        <th>
           <%= t('meta.batch_item.labels.columns.item_to_update') %>
         </th>
         <th>
@@ -70,6 +73,9 @@
             </td>
             <td>
               <%= boolean_check_icon item.public %>
+            </td>
+            <td>
+              <%= portal_badges item %>
             </td>
             <td>
               <% if item.item %>
