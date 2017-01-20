@@ -52,9 +52,7 @@ class Collection < ActiveRecord::Base
       repository_titles
     end
 
-    # string :thumbnail_url, as: 'thumbnail_url' do
-    #   thumbnail_url
-    # end
+    string :thumbnail_url, stored: true
 
     # *_display (not indexed, stored, multivalued)
     string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true

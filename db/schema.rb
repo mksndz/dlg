@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120115325) do
+ActiveRecord::Schema.define(version: 20170120133944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20170120115325) do
     t.integer  "batch_import_id"
     t.boolean  "local",                          default: true,  null: false
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
+    t.string   "thumbnail_url"
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
@@ -142,6 +143,7 @@ ActiveRecord::Schema.define(version: 20170120115325) do
     t.text      "dcterms_bibliographic_citation", default: [],    null: false, array: true
     t.text      "dlg_local_right",                default: [],    null: false, array: true
     t.text      "dlg_subject_personal",           default: [],    null: false, array: true
+    t.string    "thumbnail_url"
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
@@ -233,6 +235,7 @@ ActiveRecord::Schema.define(version: 20170120115325) do
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
     t.boolean  "local",                          default: true,  null: false
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
+    t.string   "thumbnail_url"
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
@@ -275,6 +278,7 @@ ActiveRecord::Schema.define(version: 20170120115325) do
     t.integer  "collections_count", default: 0
     t.string   "coordinates"
     t.boolean  "teaser"
+    t.string   "thumbnail_url"
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree

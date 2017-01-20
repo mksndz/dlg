@@ -42,6 +42,7 @@ en:
         color: "Highlight Color"
         public: "Display to Public"
         in_georgia: "Located in Georgia"
+        thumbnail_url: "Thumbnail URL"
         homepage_url: "Repository Homepage URL"
         portal_ids: 'Portals'
         directions_url: "Driving Directions URL"
@@ -62,6 +63,7 @@ en:
         public: "Display to Public"
         dpla: "Push to DPLA"
         in_georgia: "Located in Georgia"
+        thumbnail_url: "Thumbnail URL"
         subject_ids: "Subjects"
         time_period_ids: "Time Periods"
         dcterms_provenance: 'Holding Institution (Use LCNAF or DLG Names for repository name)'

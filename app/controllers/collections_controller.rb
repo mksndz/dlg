@@ -118,6 +118,7 @@ class CollectionsController < RecordController
             :dcterms_license,
             :dlg_local_right,
             :dcterms_bibliographic_citation,
+            :thumbnail_url,
             :dcterms_type => [],
             :subject_ids => [],
             :time_period_ids => [],
