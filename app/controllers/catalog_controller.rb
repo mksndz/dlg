@@ -163,27 +163,49 @@ class CatalogController < ApplicationController
     config.add_show_field 'created_at_dts',                 label: I18n.t('meta.search.labels.created_at')
     config.add_show_field 'updated_at_dts',                 label: I18n.t('meta.search.labels.updated_at')
 
-    # FIELDED SEARCH CONFIGURATION
+
+    # ADVANCED SEARCH CONFIG
+
+    config.advanced_search = Blacklight::OpenStructWithHashAccess.new
+    config.advanced_search[:qt]                   ||= 'advanced'
+    config.advanced_search[:url_key]              ||= 'advanced'
+    config.advanced_search[:query_parser]         ||= 'dismax'
+    config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
+    config.advanced_search[:form_solr_local_parameters] ||= {
+        'f.provenance_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.creator_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.contributor_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.subject_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.year_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.temporal_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.location_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.rights_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.relation_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.type_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.medium_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.language_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.repository_name_sms.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.collection_name_sms.facet.limit' => ADVANCED_FACET_LIMIT,
+    }
 
     config.add_search_field('all_fields') do |field|
       field.include_in_advanced_search = false # no results returned in advanced search
     end
 
-    # ADVANCED SEARCH FIELDS
-
     # slug
     config.add_search_field('slug') do |field|
       field.label = 'ID (slug)'
-      field.solr_parameters = {
-          qf: 'slug_text^100',
-          pf: 'slug_text^100'
+      field.solr_local_parameters = {
+          qf: 'slug_ng',
+          pf: 'slug_ng'
       }
     end
 
     # title
     config.add_search_field('title') do |field|
       field.label = 'Title'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'title_unstem_search^100 dcterms_title_text^50',
           pf: 'title_unstem_search^100 dcterms_title_text^50'
       }
@@ -192,7 +214,7 @@ class CatalogController < ApplicationController
     # creator
     config.add_search_field('creator') do |field|
       field.label = 'Creator'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'creator_unstem_search^100 dcterms_creator_text^50',
           pf: 'creator_unstem_search^100 dcterms_creator_text^50'
       }
@@ -201,7 +223,7 @@ class CatalogController < ApplicationController
     # contributor
     config.add_search_field('contributor') do |field|
       field.label = 'Contributor'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'contributor_unstem_search^100 dcterms_contributor_text^50',
           pf: 'contributor_unstem_search^100 dcterms_contributor_text^50'
       }
@@ -210,7 +232,7 @@ class CatalogController < ApplicationController
     # subject
     config.add_search_field('subject') do |field|
       field.label = 'Subject'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'subject_unstem_search^100 dcterms_subject_text^50',
           pf: 'subject_unstem_search^100 dcterms_subject_text^50'
       }
@@ -219,7 +241,7 @@ class CatalogController < ApplicationController
     # description
     config.add_search_field('description') do |field|
       field.label = 'Description'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'description_unstem_search^100 dcterms_description_text^50',
           pf: 'description_unstem_search^100 dcterms_description_text^50'
       }
@@ -228,7 +250,7 @@ class CatalogController < ApplicationController
     # publisher
     config.add_search_field('publisher') do |field|
       field.label = 'Publisher'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'publisher_unstem_search^100 dcterms_publisher_text^50',
           pf: 'publisher_unstem_search^100 dcterms_publisher_text^50'
       }
@@ -237,7 +259,7 @@ class CatalogController < ApplicationController
     # date
     config.add_search_field('date') do |field|
       field.label = 'Date'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'date_unstem_search^100 dc_date_text^50',
           pf: 'date_unstem_search^100 dc_date_text^50'
       }
@@ -246,7 +268,7 @@ class CatalogController < ApplicationController
     # temporal / dcterms_temporal
     config.add_search_field('temporal') do |field|
       field.label = 'Temporal'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'temporal_unstem_search^100 dcterms_temporal_text^50',
           pf: 'temporal_unstem_search^100 dcterms_temporal_text^50'
       }
@@ -255,7 +277,7 @@ class CatalogController < ApplicationController
     # place / dcterms_spatial
     config.add_search_field('spatial') do |field|
       field.label = 'Spatial'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'spatial_unstem_search^100 dcterms_spatial_text^50',
           pf: 'spatial_unstem_search^100 dcterms_spatial_text^50'
       }
@@ -264,7 +286,7 @@ class CatalogController < ApplicationController
     # is part of
     config.add_search_field('is_part_of') do |field|
       field.label = 'Is Part Of'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'is_part_of_unstem_search^100 dcterms_is_part_of_text^50',
           pf: 'is_part_of_unstem_search^100 dcterms_is_part_of_text^50'
       }
@@ -273,7 +295,7 @@ class CatalogController < ApplicationController
     # is shown at
     config.add_search_field('is_shown_at') do |field|
       field.label = 'Is Shown At (URL)'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'dcterms_is_shown_at_text^100',
           pf: 'dcterms_is_shown_at_text^100'
       }
@@ -282,7 +304,7 @@ class CatalogController < ApplicationController
     # identifier
     config.add_search_field('identifier') do |field|
       field.label = 'Identifier'
-      field.solr_parameters = {
+      field.solr_local_parameters = {
           qf: 'identifier_unstem_search^100 dc_identifier_text^50',
           pf: 'identifier_unstem_search^100 dc_identifier_text^50'
       }
@@ -307,30 +329,6 @@ class CatalogController < ApplicationController
     # remove citation and SMS tools
     config.show.document_actions.delete(:citation)
     config.show.document_actions.delete(:sms)
-
-    # ADVANCED SEARCH CONFIG
-    config.advanced_search = Blacklight::OpenStructWithHashAccess.new
-    config.advanced_search[:qt]                   ||= 'advanced'
-    config.advanced_search[:url_key]              ||= 'advanced'
-    config.advanced_search[:query_parser]         ||= 'dismax'
-    config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
-    config.advanced_search[:form_solr_parameters] ||= {
-        'f.provenance_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.creator_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.contributor_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.subject_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.year_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.temporal_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.location_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.rights_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.relation_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.type_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.medium_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.language_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.repository_name_sms.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.collection_name_sms.facet.limit' => ADVANCED_FACET_LIMIT,
-    }
 
     # AUTOCOMPLETE CONFIG
     config.autocomplete_enabled = false

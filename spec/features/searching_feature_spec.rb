@@ -35,7 +35,6 @@ feature 'Searching' do
     scenario 'does a search and can navigate the edit forms for the results across items and collections' do
 
       c = Fabricate(:collection) { items(count: 1) }
-      c.items.first
       Sunspot.commit
 
       visit root_path
@@ -55,6 +54,27 @@ feature 'Searching' do
 
       expect(page).not_to have_link 'Next Result'
       expect(page).to have_link 'Previous Result'
+
+    end
+
+    context 'advanced searching functionality' do
+
+      scenario 'slug search returns results based on substrings' do
+
+        Fabricate(:item) {
+          slug 'polyester'
+        }
+        Sunspot.commit
+
+        visit blacklight_advanced_search_engine.advanced_search_path
+
+        fill_in 'slug', with: 'yes'
+
+        click_button 'Search'
+
+        expect(all('.edit-record').count).to eq 1
+
+      end
 
     end
 

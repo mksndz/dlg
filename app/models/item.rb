@@ -21,6 +21,7 @@ class Item < ActiveRecord::Base
   searchable do
 
     string :slug, stored: true
+    string :slug, as: 'slug_ng'
     string :record_id, stored: true
 
     # set empty proxy id field so sunspot knows about it
@@ -102,7 +103,7 @@ class Item < ActiveRecord::Base
     text :dcterms_is_part_of
     text :dcterms_is_shown_at
     text :dcterms_identifier
-    text :slug
+    # text :slug
 
     string :title, as: 'title' do
       dcterms_title.first ? dcterms_title.first : slug
