@@ -7,7 +7,6 @@ RSpec.describe LegacyImporter, type: :model do
     <slug>zmos</slug>
     <display_title>Annual Reports of the Mayor of Savannah, Georgia, 1855-1923</display_title>
     <short_description>Annual reports dated from 1855 to 1923 covering Savannah&apos;s activities and finances, statistics, trade, and ordinances from  from the collections of the &lt;a href=&quot;http://purl.galileo.usg.edu/dlgbeta/Institutions/sava.html&quot;&gt;City of Savannah Municipal Archives&lt;/a&gt; and the &lt;a href=&quot;http://purl.galileo.usg.edu/dlgbeta/Institutions/gua.html&quot;&gt;University of Georgia Libraries&lt;/a&gt;</short_description>
-    <teaser>Annual_Reports_of_the_Mayor_of_Savannah.gif</teaser>
     <color>F0EEE0</color>
     <time_period type="array">
         <time_period>Antebellum Era 1800-1860</time_period>

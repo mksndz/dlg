@@ -305,8 +305,8 @@ class CatalogController < ApplicationController
     config.add_search_field('identifier') do |field|
       field.label = 'Identifier'
       field.solr_local_parameters = {
-          qf: 'identifier_unstem_search^100 dc_identifier_text^50',
-          pf: 'identifier_unstem_search^100 dc_identifier_text^50'
+          qf: 'identifier_unstem_search^100 dcterms_identifier_text^50',
+          pf: 'identifier_unstem_search^100 dcterms_identifier_text^50'
       }
     end
 

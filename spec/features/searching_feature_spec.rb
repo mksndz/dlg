@@ -59,7 +59,7 @@ feature 'Searching' do
 
     context 'advanced searching functionality' do
 
-      scenario 'slug search returns results based on substrings' do
+      scenario 'slug search returns relevant results based on substrings' do
 
         Fabricate(:item) {
           slug 'polyester'
@@ -68,11 +68,235 @@ feature 'Searching' do
 
         visit blacklight_advanced_search_engine.advanced_search_path
 
-        fill_in 'slug', with: 'yes'
+        fill_in 'slug', with: 'ester'
 
         click_button 'Search'
 
         expect(all('.edit-record').count).to eq 1
+
+      end
+
+      context 'dublin core terms' do
+
+        before :each do
+          Fabricate(:collection){ items(count:10) }
+        end
+
+        scenario 'title search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_title ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'title', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'creator search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_creator ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'creator', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'contributor search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_contributor ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'contributor', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'subject search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_subject ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'subject', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'description search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_description ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'description', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'publisher search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_publisher ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'publisher', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'date search returns only relevant results' do
+
+          Fabricate(:item) {
+            dc_date ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'date', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'temporal search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_temporal ['9999']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'temporal', with: '9999'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'spatial search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_spatial ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'spatial', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'is part of search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_is_part_of ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'is_part_of', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'is shown at search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_is_shown_at ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'is_shown_at', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'identifier search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_identifier ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'identifier', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
 
       end
 
