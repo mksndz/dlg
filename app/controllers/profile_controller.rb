@@ -11,7 +11,7 @@ class ProfileController < ApplicationController
   end
 
   def update
-    if @user.update user_params
+    if @user.update user_params.except(:utf8, :_method, :commit)
       bypass_sign_in @user
       redirect_to root_path, notice: I18n.t('meta.profile.messages.success.password_changed')
     else
@@ -27,6 +27,9 @@ class ProfileController < ApplicationController
 
   def user_params
     params.permit(
+       :utf8,
+       :_method,
+       :commit,
        :password,
        :password_confirmation
     )

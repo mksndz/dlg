@@ -101,6 +101,7 @@ class BatchItemsController < RecordController
     prepare_params(
         params.require(:batch_item).permit(
             :collection_id,
+            :batch_id,
             :slug,
             :dpla,
             :public,
@@ -121,6 +122,7 @@ class BatchItemsController < RecordController
             :dcterms_spatial,
             :dcterms_publisher,
             :dcterms_access_right,
+            :dcterms_rights_holder,
             :dcterms_subject,
             :dcterms_temporal,
             :dcterms_title,
@@ -128,6 +130,7 @@ class BatchItemsController < RecordController
             :dcterms_provenance,
             :dcterms_bibliographic_citation,
             :dlg_local_right,
+            :dlg_subject_personal,
             :dcterms_type => [],
             :other_collections  => [],
             :portal_ids => []
