@@ -143,6 +143,7 @@ class ItemsController < RecordController
           :dcterms_provenance,
           :dcterms_bibliographic_citation,
           :dlg_local_right,
+          :dlg_subject_personal,
           :dcterms_type => [],
           :other_collections => [],
           :portal_ids => []
