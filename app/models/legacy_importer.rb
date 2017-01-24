@@ -114,7 +114,7 @@ class LegacyImporter
 
     # set repository unless already set
     if collection.repository
-      collection.thumbnail_url = "#{THUMBNAIL_ROOT}#{repository.slug}_#{collection.slug}"
+      collection.thumbnail_url = "#{THUMBNAIL_ROOT}#{collection.repository.slug}_#{collection.slug}"
       collection.save(validate: false)
     else
 
