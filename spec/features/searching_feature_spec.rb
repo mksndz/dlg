@@ -59,6 +59,21 @@ feature 'Searching' do
 
     context 'advanced searching functionality' do
 
+      scenario 'all fields search returns results' do
+
+        i = Fabricate(:item)
+        Sunspot.commit
+
+        visit blacklight_advanced_search_engine.advanced_search_path
+
+        fill_in 'all_fields', with: i.dcterms_title.last
+
+        click_button 'Search'
+
+        expect(all('.edit-record').count).to eq 1
+
+      end
+
       scenario 'slug search returns relevant results based on substrings' do
 
         Fabricate(:item) {

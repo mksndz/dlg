@@ -190,7 +190,7 @@ class CatalogController < ApplicationController
     }
 
     config.add_search_field('all_fields') do |field|
-      field.include_in_advanced_search = false # no results returned in advanced search
+      # field.include_in_advanced_search = false # no results returned in advanced search
     end
 
     # slug

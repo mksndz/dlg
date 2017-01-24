@@ -630,6 +630,57 @@
       <str name="ps">3</str>
       <float name="tie">0.01</float>
 
+      <!-- query fields for all terms search -->
+      <str name="qf">
+        title_unstem_search^100
+        creator_unstem_search^100
+        contributor_unstem_search^100
+        subject_unstem_search^100
+        description_unstem_search^100
+        publisher_unstem_search^100
+        date_unstem_search^100
+        temporal_unstem_search^100
+        spatial_unstem_search^100
+        is_part_of_unstem_search^100
+        identifier_unstem_search^100
+        dcterms_is_shown_at_text^100
+        dcterms_title_text
+        dcterms_creator_text
+        dcterms_contributor_text
+        dcterms_subject_text
+        dcterms_description_text
+        dcterms_publisher_text
+        dcterms_temporal_text
+        dcterms_spatial_text
+        dcterms_is_part_of_text
+        dcterms_identifier_text
+      </str>
+
+      <str name="pf">
+        title_unstem_search^100
+        creator_unstem_search^100
+        contributor_unstem_search^100
+        subject_unstem_search^100
+        description_unstem_search^100
+        publisher_unstem_search^100
+        date_unstem_search^100
+        temporal_unstem_search^100
+        spatial_unstem_search^100
+        is_part_of_unstem_search^100
+        identifier_unstem_search^100
+        dcterms_is_shown_at_text^100
+        dcterms_title_text
+        dcterms_creator_text
+        dcterms_contributor_text
+        dcterms_subject_text
+        dcterms_description_text
+        dcterms_publisher_text
+        dcterms_temporal_text
+        dcterms_spatial_text
+        dcterms_is_part_of_text
+        dcterms_identifier_text
+      </str>
+
       <str name="fl">
         *,
         score
