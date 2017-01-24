@@ -280,6 +280,24 @@ feature 'Searching' do
 
         end
 
+        scenario 'is shown at search returns results using a part of the url hierarchy' do
+
+          Fabricate(:item) {
+            dcterms_is_shown_at ['http://dlg.galileo.usg.edu/Topics/GovernmentPolitics.html']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'is_shown_at', with: 'http://dlg.galileo.usg.edu'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
         scenario 'identifier search returns only relevant results' do
 
           Fabricate(:item) {
@@ -291,6 +309,24 @@ feature 'Searching' do
           visit blacklight_advanced_search_engine.advanced_search_path
 
           fill_in 'identifier', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
+        scenario 'identifier search returns results using a part of the url hierarchy' do
+
+          Fabricate(:item) {
+            dcterms_identifier ['http://dlg.galileo.usg.edu/Topics/GovernmentPolitics.html']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'identifier', with: 'http://dlg.galileo.usg.edu'
 
           click_button 'Search'
 

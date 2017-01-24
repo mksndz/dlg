@@ -296,8 +296,8 @@ class CatalogController < ApplicationController
     config.add_search_field('is_shown_at') do |field|
       field.label = 'Is Shown At (URL)'
       field.solr_local_parameters = {
-          qf: 'dcterms_is_shown_at_text^100',
-          pf: 'dcterms_is_shown_at_text^100'
+          qf: 'dcterms_is_shown_at_url^1000 dcterms_is_shown_at_text^100',
+          pf: 'dcterms_is_shown_at_url^1000 dcterms_is_shown_at_text^100'
       }
     end
 
@@ -305,8 +305,8 @@ class CatalogController < ApplicationController
     config.add_search_field('identifier') do |field|
       field.label = 'Identifier'
       field.solr_local_parameters = {
-          qf: 'identifier_unstem_search^100 dcterms_identifier_text^50',
-          pf: 'identifier_unstem_search^100 dcterms_identifier_text^50'
+          qf: 'dcterms_identifier_url^1000 identifier_unstem_search^100 dcterms_identifier_text^50',
+          pf: 'dcterms_identifier_url^1000 identifier_unstem_search^100 dcterms_identifier_text^50'
       }
     end
 

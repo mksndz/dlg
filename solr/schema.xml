@@ -33,6 +33,7 @@
     <dynamicField name="*suggest" type="textSuggest" indexed="true" stored="false" multiValued="true" />
 
     <dynamicField name="*_ng"      stored="false"  type="text_ng"  multiValued="false"   indexed="true"  />
+    <dynamicField name="*_url"     stored="false"  type="text_url" multiValued="true"    indexed="true"  />
 
     <!-- sunspot dynamic fields -->
     <dynamicField name="_local*"   stored="false"  type="tdouble"  multiValued="false"   indexed="true" />
@@ -212,7 +213,13 @@
     <fieldType name="text_ng" class="solr.TextField">
       <analyzer>
         <tokenizer class="solr.NGramTokenizerFactory" minGramSize="2" maxGramSize="6" />
-        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory" />
+      </analyzer>
+    </fieldType>
+    <fieldType name="text_url" class="solr.TextField">
+      <analyzer>
+        <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" replace="/" />
+        <filter class="solr.LowerCaseFilterFactory" />
       </analyzer>
     </fieldType>
     <fieldType name="text_ws" class="solr.TextField" positionIncrementGap="100">

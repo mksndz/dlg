@@ -105,6 +105,10 @@ class Item < ActiveRecord::Base
     text :dcterms_identifier
     # text :slug
 
+    # special indexing for url fields
+    string :dcterms_identifier, as: 'dcterms_identifier_url', multiple: true
+    string :dcterms_is_shown_at, as: 'dcterms_is_shown_at_url', multiple: true
+
     string :title, as: 'title' do
       dcterms_title.first ? dcterms_title.first : slug
     end
