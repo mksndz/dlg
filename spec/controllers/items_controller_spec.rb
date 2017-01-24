@@ -275,7 +275,7 @@ RSpec.describe ItemsController, type: :controller do
     it 'return xml for the requested items' do
       item = Fabricate(:item)
       item2 = Fabricate(:item)
-      get :xml, { entities: "#{item.id},#{item2.id}" }
+      get :xml, { entities: "#{item.id},#{item2.id}", format: :xml }
       expect(response.content_type).to eq 'application/xml'
       expect(response.body).to include item.slug
     end
@@ -286,7 +286,7 @@ RSpec.describe ItemsController, type: :controller do
       item = Fabricate(:item)
       item2 = Fabricate(:item)
       expect {
-        delete :multiple_destroy, { entities: "#{item.id},#{item2.id}" }
+        delete :multiple_destroy, { entities: "#{item.id},#{item2.id}", format: :json }
       }.to change(Item, :count).by(-2)
     end
   end
