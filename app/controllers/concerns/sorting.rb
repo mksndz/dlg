@@ -6,11 +6,13 @@ module Sorting
   end
 
   # this is injection safe because if ensures the params value is in the column_names array from the entity
-  def sort_column
+  def sort_column(table = nil)
     begin
-      check_columns_for_field(controller_name, params[:sort]) ? params[:sort] : "#{controller_name.downcase}.id"
+      table = table ? table : controller_name.downcase
+      check_columns_for_field(controller_name, params[:sort]) ? params[:sort] : "#{table}.id"
     rescue NameError
-      check_columns_for_field(controller_path, params[:sort]) ? params[:sort] : "#{controller_path.downcase}.id"
+      table = table ? table : controller_path.downcase
+      check_columns_for_field(controller_path, params[:sort]) ? params[:sort] : "#{table}.id"
     end
   end
 

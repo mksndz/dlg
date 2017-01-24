@@ -99,7 +99,7 @@ class ItemsController < RecordController
     @item_versions = ItemVersion
                          .index_query(params)
                          .where(item_type: 'Item', event: 'destroy')
-                         .order(sort_column + ' ' + sort_direction)
+                         .order(sort_column('item_versions') + ' ' + sort_direction)
                          .page(params[:page])
                          .per(params[:per_page])
   end
