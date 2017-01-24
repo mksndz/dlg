@@ -152,7 +152,7 @@ class ItemsController < RecordController
   end
 
   def multiple_action_params
-    params.permit(:entities)
+    params.permit(:entities, :format)
   end
 
   def start_new_search_session?
