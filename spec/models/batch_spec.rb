@@ -86,7 +86,7 @@ RSpec.describe Batch, type: :model do
   end
 
   it 'recreates itself as a fresh batch referencing the current state of Items' do
-    b = Fabricate(:batch){ batch_items(count: 2)}
+    b = Fabricate(:batch){ batch_items(count: 1)}
     b.commit
     recreated = b.recreate
     expect(recreated.batch_items.length).to eq b.batch_items.length
