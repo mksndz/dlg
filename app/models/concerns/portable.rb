@@ -14,4 +14,12 @@ module Portable
 
   end
 
+  def portal_names
+    portals.map(&:name)
+  end
+
+  def portal_codes
+    portals.map(&:code)
+  end
+
 end

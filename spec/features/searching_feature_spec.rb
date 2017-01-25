@@ -91,6 +91,24 @@ feature 'Searching' do
 
       end
 
+      context 'facet behavior' do
+
+        scenario 'there exists a portals facet' do
+
+          Fabricate(:item) {
+            portals(count: 1)
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          expect(page).to have_text I18n.t('meta.search.facets.portals')
+
+        end
+
+      end
+
       context 'dublin core terms' do
 
         before :each do

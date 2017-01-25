@@ -22,6 +22,14 @@ class Repository < ActiveRecord::Base
       ''
     end
 
+    string :portals, multiple: true do
+      portal_codes
+    end
+
+    string :portal_names, stored: true, multiple: true do
+      portal_names
+    end
+
     string :title, stored: true
     string :short_description, stored: true
     string :description, stored: true

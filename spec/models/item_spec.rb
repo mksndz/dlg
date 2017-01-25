@@ -200,6 +200,34 @@ RSpec.describe Item, type: :model do
 
   end
 
+  it 'has a portal_codes value that return an array of portal codes' do
+
+    i = Fabricate :item
+    p1 = Fabricate :portal
+    p2 = Fabricate :portal
+
+    i.portals << [ p1, p2 ]
+
+    expect(i.portal_codes).to be_an Array
+    expect(i.portal_codes).to include p2.code
+    expect(i.portal_codes).to include p1.code
+
+  end
+
+  it 'has a portal_names value that return an array of portal names' do
+
+    i = Fabricate :item
+    p1 = Fabricate :portal
+    p2 = Fabricate :portal
+
+    i.portals << [ p1, p2 ]
+
+    expect(i.portal_names).to be_an Array
+    expect(i.portal_names).to include p2.name
+    expect(i.portal_names).to include p1.name
+
+  end
+
   # validations
 
   it 'should require a Collection' do

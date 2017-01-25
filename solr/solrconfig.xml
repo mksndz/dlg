@@ -541,6 +541,7 @@
       <str name="facet.field">repository_name_sms</str>
       <str name="facet.field">collection_name_sms</str>
       <str name="facet.field">class_name</str>
+      <str name="facet.field">portal_names_sms</str>
 
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">default</str>
@@ -708,6 +709,7 @@
       <str name="facet.field">repository_name_sms</str>
       <str name="facet.field">collection_name_sms</str>
       <str name="facet.field">class_name</str>
+      <str name="facet.field">portals_sms</str>
 
       <str name="spellcheck">true</str>
       <str name="spellcheck.dictionary">default</str>

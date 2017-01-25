@@ -52,6 +52,18 @@ class Collection < ActiveRecord::Base
       repository_titles
     end
 
+    string :portal_names, stored: true, multiple: true do
+      portal_names
+    end
+
+    string :portals, multiple: true do
+      portal_codes
+    end
+
+    string :portal_names, stored: true, multiple: true do
+      portal_names
+    end
+
     string :thumbnail_url, stored: true
 
     # *_display (not indexed, stored, multivalued)
