@@ -25,6 +25,7 @@
       <%= f.hidden_field :direction, { value: h(params[:direction]), name: 'direction' } if params[:direction] %>
       <%= f.hidden_field :sort, { value: h(params[:sort]), name: 'sort' } if params[:sort] %>
       <%= f.hidden_field :per_page, { value: h(params[:per_page]), name: 'per_page' } if params[:per_page] %>
+      <%= f.select :portal_id, options_for_select(@search_options[:portals].collect { |p| [p.name, p.id] }, selected: params[:portal_id]), { label: t('meta.defaults.labels.filter.portals'), include_blank: true }, { name: 'portal_id[]', class: 'fancy-multiselect portals-filter', multiple: true } %>
       <%= f.select :repository_id, options_for_select(@search_options[:repositories].collect { |c| [c.title, c.id] }, selected: params[:repository_id] ), { label: t('meta.defaults.labels.filter.repository'), include_blank: true }, { name: 'repository_id' } %>
       <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: t('meta.defaults.labels.filter.public')}, { name: 'public' } %>
       <%= f.primary 'Filter' %>

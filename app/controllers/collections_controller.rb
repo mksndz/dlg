@@ -17,19 +17,24 @@ class CollectionsController < RecordController
 
     set_filter_options [:repository, :public]
 
+    collection_query = Collection.index_query(params)
+                           .order(sort_column + ' ' + sort_direction)
+                           .page(params[:page])
+                           .per(params[:per_page])
+                           .includes(:repository)
+
+    if params[:portal_id]
+      portals_filter = params[:portal_id].reject(&:empty?)
+      collection_query = collection_query
+                             .includes(:portals)
+                             .joins(:portals)
+                             .where(portals: { id: portals_filter } ) if portals_filter
+    end
+
     if current_user.super?
-      @collections = Collection.index_query(params)
-                               .order(sort_column + ' ' + sort_direction)
-                               .page(params[:page])
-                               .per(params[:per_page])
-                               .includes(:repository)
+      @collections = collection_query
     else
-      @collections = Collection.index_query(params)
-                               .where(id: user_collection_ids)
-                               .order(sort_column + ' ' + sort_direction)
-                               .page(params[:page])
-                               .per(params[:per_page])
-                               .includes(:repository)
+      @collections = collection_query.where(id: user_collection_ids)
     end
 
   end
