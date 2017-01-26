@@ -132,6 +132,8 @@ en:
         dcterms_bibliographic_citation: 'Cite As'
         dcterms_extent: 'Extent'
         dcterms_medium: 'Medium'
+        dlg_local_right: 'Local Rights Stmt.'
+        dlg_subject_personal: 'Subject Personal'
         created_at: 'Created'
         updated_at: 'Updated'
     app:
