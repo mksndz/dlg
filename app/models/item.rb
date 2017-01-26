@@ -202,6 +202,9 @@ class Item < ActiveRecord::Base
         except: [
             :id,
             :collection_id,
+            :valid_item,
+            :thumbnail_url,
+            :has_thumbnail,
             :created_at,
             :updated_at
         ],

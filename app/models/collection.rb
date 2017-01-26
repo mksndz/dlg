@@ -174,7 +174,9 @@ class Collection < ActiveRecord::Base
             :repository_id,
             :created_at,
             :updated_at,
-            :other_collections
+            :other_repositories,
+            :items_count,
+            :date_range
         ]
     }
 
