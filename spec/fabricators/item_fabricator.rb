@@ -38,3 +38,19 @@ Fabricator(:item_with_two_spatial_values, from: :item) do
   ] }
 
 end
+
+Fabricator(:robust_item, from: :item) do
+
+  dcterms_is_shown_at { [
+      Faker::Internet.url
+  ] }
+
+  dcterms_identifier { [
+      Faker::Internet.url
+  ] }
+
+  dlg_subject_personal { [
+      Faker::Name.name_with_middle
+  ] }
+
+end

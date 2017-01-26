@@ -123,6 +123,10 @@
         or to add multiple fields to the same field for easier/faster
         searching.  -->
 
+  <!-- for url field searching -->
+  <copyField source="dcterms_identifier_display" dest="dcterms_identifier_url" />
+  <copyField source="dcterms_is_shown_at_display" dest="dcterms_is_shown_at_url" />
+
   <!-- for spellcheck, use chosen fields only -->
   <copyField source="dcterms_title_text"    dest="textSpell" />
   <copyField source="dcterms_creator_text"  dest="textSpell" />
