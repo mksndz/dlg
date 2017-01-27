@@ -1,0 +1,145 @@
+require 'rails_helper'
+
+RSpec.describe OaiSupportController, type: :controller do
+
+  describe 'GET #dump' do
+
+    context 'with many records' do
+
+      it 'it works as expected' do
+
+        PaperTrail.enabled = true
+
+        Fabricate(:collection) {
+          items(count:40)
+        }
+
+        Item.first.destroy
+        Item.last.destroy
+
+        get :dump
+
+        response_object = JSON.parse(response.body)
+
+        expect(response_object['count']).to eq 40
+
+      end
+
+    end
+
+    context 'with no parameters' do
+
+      before :each do
+
+        PaperTrail.enabled = true
+
+        @item = Fabricate :item
+        fleeting_item = Fabricate :item
+        fleeting_item.destroy
+
+        get :dump
+
+        @response_object = JSON.parse(response.body)
+
+      end
+
+      it 'returns JSON type' do
+
+        expect(response.content_type).to eq 'application/json'
+
+      end
+
+      it 'returns a JSON object with a count' do
+
+        expect(@response_object).to have_key 'count'
+
+      end
+
+      it 'returns a JSON object with items' do
+
+        expect(@response_object).to have_key 'items'
+
+      end
+
+      it 'returns a JSON object with items array' do
+
+        expect(@response_object['items']).to be_an Array
+
+      end
+
+      it 'returns a JSON object with items array containing expected fields' do
+
+        item = @response_object['items'][0]
+
+        expect(item).to have_key 'id'
+        expect(item).to have_key 'record_id'
+        expect(item).to have_key 'updated_at'
+
+      end
+
+      it 'returns a JSON object with items array containing information about a deleted item' do
+
+        item = @response_object['items'][1]
+
+        expect(item['id']).to eq 'deleted'
+
+      end
+
+    end
+
+    context 'with a date parameter' do
+
+      before :each do
+
+        @i1 = Fabricate(:item) {
+          updated_at '2015-01-01'
+        }
+
+        @i2 = Fabricate(:item) {
+          updated_at '2017-01-01'
+        }
+
+        get :dump, { date: '2016-01-01' }
+
+        @response_object = JSON.parse(response.body)
+
+      end
+
+      it 'gets a JSON dump of all records updated since a provided date' do
+
+        expect(@response_object['count']).to eq 1
+
+      end
+
+    end
+
+
+  end
+
+  describe 'GET #metadata' do
+
+    before :each do
+
+      @items = Fabricate.times(3, :item)
+
+      item_ids = @items.collect { |i| i.id }.join(',')
+
+      get :metadata, { ids: item_ids, format: :json }
+
+    end
+
+    it 'returns JSON type' do
+
+      expect(response.content_type).to eq 'application/json'
+
+    end
+
+    it 'sets @items to the Items with the specified IDs' do
+
+      expect(assigns(:items)).to eq @items
+
+    end
+
+  end
+
+end

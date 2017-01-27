@@ -12,6 +12,21 @@ RSpec.describe Item, type: :model do
     expect(Item.count).to eq 1
   end
 
+  it 'has a scope that returns items updated after a provided date' do
+
+    i1 = Fabricate(:item) {
+      updated_at '2015-01-01'
+    }
+
+    i2 = Fabricate(:item) {
+      updated_at '2017-01-01'
+    }
+
+    expect(Item.updated_since('2016-01-01')).to include i2
+    expect(Item.updated_since('2016-01-01')).not_to include i1
+
+  end
+
   it 'belongs to a Repository' do
     i = Fabricate(:item) {
       repository

@@ -2,7 +2,11 @@ require 'resque/server'
 
 Rails.application.routes.draw do
 
-  get 'oai_support/dump', to: 'oai_support#dump'
+  constraints(format: :json) do
+    get 'oai_support/dump', to: 'oai_support#dump', as: 'oai_support_dump'
+    get 'oai_support/:date/dump', to: 'oai_support#dump', as: 'oai_support_dump_since'
+    get 'oai_support/metadata', to: 'oai_support#metadata', as: 'oai_support_metadata'
+  end
 
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :exportable, Blacklight::Routes::Exportable.new

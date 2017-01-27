@@ -14,6 +14,8 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection
 
+  scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
+
   has_paper_trail class_name: 'ItemVersion'
 
   # after_save :check_for_thumbnail

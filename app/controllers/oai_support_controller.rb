@@ -4,12 +4,18 @@ class OaiSupportController < ApplicationController
 
   def dump
 
-    # todo a limit? or pagination?
-    items = Item.all
-                 .includes(:collection)
-                 .includes(:repository)
+    deleted_items = ItemVersion.unscoped.where(event: 'destroy')
 
-    z = items.map do |i|
+    if params[:date]
+      items = Item.updated_since params[:date]
+      deleted_items = deleted_items.where('created_at > ?', params[:date])
+    else
+      items = Item
+    end
+
+    items = items.includes(:collection).includes(:repository)
+
+    dump = items.map do |i|
       {
           id: i.id,
           record_id: "#{i.repository.slug}_#{i.collection.slug}_#{i.slug}",
@@ -17,32 +23,34 @@ class OaiSupportController < ApplicationController
       }
     end
 
-    respond_with z.to_json
+    deleted_items.each do |di|
 
-    # simple, but takes way too long
-    # respond_with Item.all.to_json methods: :record_id
+      i = di.reify
+
+      dump << {
+          id: 'deleted',
+          record_id: "#{i.repository.slug}_#{i.collection.slug}_#{i.slug}",
+          updated_at: di.created_at
+      }
+
+    end
+
+    response = {
+        count: dump.length,
+        items: dump
+    }
+
+    render json: response
 
   end
 
   def metadata
 
-    ids = params[:ids]
+    @items = Item.where(id: params[:ids].split(','))
 
-    respond_with Item.where(id: ids).to_json
-
-  end
-
-  def diff
-
-    since = params[:since]
-
-    # todo validate and confirm datetime
-
-    respond_with Item.where(:updated_at >= since).to_json
+    render json: @items
 
   end
-
-  private
 
 
 
