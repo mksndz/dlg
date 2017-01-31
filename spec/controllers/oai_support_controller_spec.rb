@@ -72,6 +72,7 @@ RSpec.describe OaiSupportController, type: :controller do
         item = @response_object['items'][0]
 
         expect(item).to have_key 'id'
+        expect(item).to have_key 'public'
         expect(item).to have_key 'record_id'
         expect(item).to have_key 'updated_at'
 

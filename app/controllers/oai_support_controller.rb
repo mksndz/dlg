@@ -18,6 +18,7 @@ class OaiSupportController < ApplicationController
     dump = items.map do |i|
       {
           id: i.id,
+          public: i.public,
           record_id: "#{i.repository.slug}_#{i.collection.slug}_#{i.slug}",
           updated_at: i.updated_at
       }
@@ -29,6 +30,7 @@ class OaiSupportController < ApplicationController
 
       dump << {
           id: 'deleted',
+          public: i.public,
           record_id: "#{i.repository.slug}_#{i.collection.slug}_#{i.slug}",
           updated_at: di.created_at
       }
