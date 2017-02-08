@@ -141,6 +141,18 @@ RSpec.describe OaiSupportController, type: :controller do
 
     end
 
+    it 'returns nothing for a record where there is no ID match' do
+
+      ids = @items.collect { |i| i.id }.join(',')
+
+      ids += ',999999999'
+
+      get :metadata, { ids: ids, format: :json }
+
+      expect(assigns(:items).length).to eq 3
+
+    end
+
   end
 
 end
