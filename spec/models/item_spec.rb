@@ -305,4 +305,58 @@ RSpec.describe Item, type: :model do
   #   expect(i.errors).not_to have_key :dcterms_is_shown_at
   # end
 
+  context 'portal removal behavior' do
+
+    before :each do
+
+      @item = Fabricate :item
+      @portal = Fabricate :portal
+      @portal2 = Fabricate :portal
+
+    end
+
+    it 'should be unassigned from a portal if its collection is unassigned from that portal' do
+
+      c = @item.collection
+
+      c.portals << @portal
+      @item.portals << @portal
+      @item.portals << @portal2
+
+      @item.reload
+
+      expect(c.portals).to include @portal
+      expect(@item.portals).to include @portal
+
+      c.portals = []
+
+      expect(c.portals).not_to include @portal
+      expect(@item.portals).not_to include @portal
+      expect(@item.portals).to include @portal2
+
+    end
+
+    it 'should be unassigned from a portal if its repository is unassigned from that portal' do
+
+      r = @item.collection
+
+      r.portals << @portal
+      @item.portals << @portal
+      @item.portals << @portal2
+
+      @item.reload
+
+      expect(r.portals).to include @portal
+      expect(@item.portals).to include @portal
+
+      r.portals = []
+
+      expect(r.portals).not_to include @portal
+      expect(@item.portals).not_to include @portal
+      expect(@item.portals).to include @portal2
+
+    end
+
+  end
+
 end

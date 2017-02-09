@@ -81,4 +81,38 @@ RSpec.describe Collection, type: :model do
     expect(i.other_collections).to be_empty
   end
 
+  context 'portal removal behavior' do
+
+    before :each do
+
+      @collection = Fabricate :collection
+      @portal = Fabricate :portal
+      @portal2 = Fabricate :portal
+
+    end
+
+    it 'should be unassigned from a portal if its repository is unassigned from that portal' do
+
+      r = @collection.repository
+
+      @collection.portals << @portal
+      @collection.portals << @portal2
+      r.portals << @portal
+
+      @collection.reload
+
+      expect(r.portals).to include @portal
+      expect(@collection.portals).to include @portal
+      expect(@collection.portals).to include @portal2
+
+      r.portals = []
+
+      expect(r.portals).not_to include @portal
+      expect(@collection.portals).not_to include @portal
+      expect(@collection.portals).to include @portal2
+
+    end
+
+  end
+
 end
