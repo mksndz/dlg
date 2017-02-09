@@ -23,6 +23,7 @@ class RecordController < ApplicationController
       dcterms_provenance
       dcterms_bibliographic_citation
       dlg_local_right
+      dlg_subject_personal
     )
   VALID_TYPES = %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text)
   RIGHTS_STATEMENTS = %w(inc inc_ow_eu inc_edu inc_nc inc_ruu noc_cr noc_nc noc_oklr noc_us cne und nkc zero mark by-nc-sa by-nc by-nd by-sa by)
