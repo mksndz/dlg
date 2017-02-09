@@ -107,6 +107,21 @@ feature 'Searching' do
 
         end
 
+        scenario 'advanced search facets are not limited to 11' do
+
+          Fabricate.times(20, :item)
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          find('#repository_name_sms_chosen').click
+
+          expect(page).to have_text(Repository.first.title)
+          expect(page).to have_text(Repository.last.title)
+
+        end
+
       end
 
       context 'dublin core terms' do
