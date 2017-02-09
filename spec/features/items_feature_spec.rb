@@ -278,8 +278,6 @@ feature 'Item Management' do
 
     end
 
-
-
     scenario 'can select and save a rights statement from a drop down' do
 
       item = Fabricate :item

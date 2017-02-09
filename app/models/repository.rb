@@ -1,6 +1,7 @@
 class Repository < ActiveRecord::Base
   include Slugged
   include Portable
+  include IndexFilterable
 
   has_many :collections, dependent: :destroy
   has_many :items, through: :collections
@@ -45,6 +46,10 @@ class Repository < ActiveRecord::Base
     boolean :public
     boolean :dpla
 
+  end
+
+  def self.index_query_fields
+    %w().freeze
   end
 
   def record_id

@@ -15,6 +15,7 @@ feature 'Searching' do
     after :each do
       Sunspot.remove_all! Item
       Sunspot.remove_all! Collection
+      Sunspot.remove_all! Repository
     end
 
     scenario 'does a search and results are returned' do

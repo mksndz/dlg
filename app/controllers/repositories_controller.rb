@@ -1,25 +1,35 @@
 class RepositoriesController < ApplicationController
 
   load_and_authorize_resource
+
   include ErrorHandling
   include Sorting
+  include Filterable
 
-  before_action :set_data, only: [:new, :edit]
+  before_action :set_data, only: [:index, :new, :edit]
 
   def index
 
-    if current_user.super?
-      @repositories = Repository
-                          .order(sort_column + ' ' + sort_direction)
-                          .page(params[:page])
-                          .per(params[:per_page])
-    else
-      @repositories = Repository
-                          .where(id: current_user.repository_ids)
-                          .order(sort_column + ' ' + sort_direction)
-                          .page(params[:page])
-                          .per(params[:per_page])
+    repository_query = Repository.index_query(params)
+                           .order(sort_column + ' ' + sort_direction)
+                           .page(params[:page])
+                           .per(params[:per_page])
+
+    if params[:portal_id]
+      portals_filter = params[:portal_id].reject(&:empty?)
+
+      unless portals_filter.empty?
+        repository_query = repository_query
+                               .includes(:portals)
+                               .joins(:portals)
+                               .where(portals: { id: portals_filter } )
+      end
+
     end
+
+    repository_query = repository_query.where(id: current_user.repository_ids) unless current_user.super?
+
+    @repositories = repository_query
 
   end
 

@@ -32,6 +32,9 @@ $(document).on('ready turbolinks:load', function() {
     });
     $('select.collection-select').chosen();
     $('select.fancy-multiselect').chosen();
+    $('select.fancy-select').chosen({
+        allow_single_deselect: true
+    });
 
     $('a.floating-save-button').on('click', function(e) {
         e.preventDefault();

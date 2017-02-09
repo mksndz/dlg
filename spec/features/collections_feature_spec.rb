@@ -14,6 +14,69 @@ feature 'Collections Management' do
       login_as super_user, scope: :user
     end
 
+    after :each do
+      Sunspot.remove_all! Item
+      Sunspot.remove_all! Collection
+      Sunspot.remove_all! Repository
+    end
+
+    context 'index page filtering' do
+
+      scenario 'can limit to just collections from a particular portal' do
+
+        c = Fabricate(:collection) {
+          portals(count: 1)
+        }
+
+        c2 = Fabricate(:collection)
+
+        p = Portal.last
+
+        visit collections_path
+
+        chosen_select p.name, from: '_portal_id'
+
+        within '.index-filter-area' do
+          find('.btn-primary').click
+        end
+
+        expect(page).to have_text c.display_title
+        expect(page).not_to have_text c2.display_title
+
+      end
+
+      scenario 'can limit to just collections from multiple portals' do
+
+        c = Fabricate(:collection) {
+          portals(count: 1)
+        }
+
+        c2 = Fabricate(:collection) {
+          portals(count: 1)
+        }
+
+        c3 = Fabricate(:collection)
+
+        p1 = Portal.first
+        p2 = Portal.last
+
+        visit collections_path
+
+        chosen_select p1.name, from: '_portal_id'
+        chosen_select p2.name, from: '_portal_id'
+
+        within '.index-filter-area' do
+          find('.btn-primary').click
+        end
+
+        expect(page).to have_text c.display_title
+        expect(page).to have_text c2.display_title
+        expect(page).not_to have_text c3.display_title
+
+      end
+
+    end
+
     context 'portal behavior' do
 
       scenario 'saves a new collection with no portal value' do

@@ -7,7 +7,6 @@ class ItemsController < RecordController
   include ErrorHandling
   include MetadataHelper
   include Sorting
-  # include Searchable
   include Filterable
 
   before_action :set_data, only: [ :new, :copy, :edit ]
@@ -26,7 +25,13 @@ class ItemsController < RecordController
 
     if params[:portal_id]
       portals_filter = params[:portal_id].reject(&:empty?)
-      item_query = item_query.includes(:portals).joins(:portals).where(portals: { id: portals_filter } ) if portals_filter
+
+      unless portals_filter.empty?
+        item_query = item_query
+                         .includes(:portals)
+                         .joins(:portals)
+                         .where(portals: { id: portals_filter } )
+      end
     end
 
     if current_user.super?

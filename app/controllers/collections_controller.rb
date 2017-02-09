@@ -25,10 +25,14 @@ class CollectionsController < RecordController
 
     if params[:portal_id]
       portals_filter = params[:portal_id].reject(&:empty?)
-      collection_query = collection_query
-                             .includes(:portals)
-                             .joins(:portals)
-                             .where(portals: { id: portals_filter } ) if portals_filter
+
+      unless portals_filter.empty?
+        collection_query = collection_query
+                               .includes(:portals)
+                               .joins(:portals)
+                               .where(portals: { id: portals_filter } )
+      end
+
     end
 
     if current_user.super?
