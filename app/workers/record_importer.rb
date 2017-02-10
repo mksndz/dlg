@@ -63,13 +63,20 @@ class RecordImporter
       return
     end
 
-    existing_item = Item.find_by_slug record_data['slug']
+    # existing_item = Item.find_by_slug record_data['slug']
+
+    # look for existing item based on unique attributes
+    item_lookup = Item.where(slug: record_data['slug'], collection: collection)
+
+    if item_lookup.length > 1
+      add_failed num, "More than one existing Item match for #{record_data['slug']} in Collection #{collection_slug}. This should never happen!"
+    end
 
     begin
 
-      if existing_item
+      if item_lookup.any?
         action = :update
-        create_update_record(existing_item, record_data)
+        create_update_record(item_lookup.first, record_data)
       else
         action = :add
         create_new_record(record_data)

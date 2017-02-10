@@ -52,6 +52,24 @@ describe RecordImporter, type: :model do
 
         end
 
+        it 'should create a BatchItem linked to an existing Item' do
+
+          i = Fabricate :item
+
+          c = Collection.last
+          c.slug = '0091' # todo retrieve collection slug from test xml
+          c.save
+
+          slug = batch_import.xml[/<slug>(.*?)<\/slug>/, 1]
+          i.slug = slug
+          i.save
+
+          RecordImporter.perform(batch_import.id)
+
+          expect(BatchItem.last.item).to eq i
+
+        end
+
       end
 
       context 'with valid XML but no existing collection' do
