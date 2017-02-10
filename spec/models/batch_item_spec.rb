@@ -103,4 +103,40 @@ RSpec.describe BatchItem, type: :model do
     expect(i.errors).to have_key :dcterms_temporal
   end
 
+  context 'coordinate lookup on commit' do
+
+    it 'finds matching coordinates in existing Items' do
+
+      Fabricate :item
+      bi = Fabricate.build(:batch_item, dcterms_spatial: ['United States, Georgia, Clarke County, Athens'])
+      bi.save
+      expect(bi.dcterms_spatial).to eq ['United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358']
+
+    end
+
+    it 'saves original value if no match found in existing Items' do
+
+      bi = Fabricate.build(:batch_item, dcterms_spatial: ['United States, Georgia, Clarke County, Athens'])
+      bi.save
+      expect(bi.dcterms_spatial).to eq ['United States, Georgia, Clarke County, Athens']
+
+    end
+
+    it 'finds matching coordinates in existing Items and picks the right one' do
+
+      Fabricate :item
+      Fabricate(:item) do
+        dcterms_spatial [['United States, Georgia, Clarke County, Athens, Winterville, 33.960999, -83.3779399']]
+      end
+      bi = Fabricate.build(:batch_item, dcterms_spatial: ['United States, Georgia, Clarke County, Athens'])
+      bi.save
+      bi2 = Fabricate.build(:batch_item, dcterms_spatial: ['United States, Georgia, Clarke County, Athens, Winterville, 33.960999, -83.3779399'])
+      bi2.save
+      expect(bi.dcterms_spatial).to eq ['United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358']
+      expect(bi2.dcterms_spatial).to eq ['United States, Georgia, Clarke County, Athens, Winterville, 33.960999, -83.3779399']
+
+    end
+
+  end
+
 end
