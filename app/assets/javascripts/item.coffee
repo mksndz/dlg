@@ -1,4 +1,4 @@
-$(document).on 'ready turbolinks:load', ->
+Blacklight.onLoad ->
   $(".validation-errors").popover {
     html: true,
     title: 'Validation Errors'

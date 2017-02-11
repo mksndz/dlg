@@ -21,7 +21,7 @@
 //= require chosen-jquery
 //= require_tree .
 
-$(document).on('ready turbolinks:load', function() {
+Blacklight.onLoad(function() {
 
     $('select.advanced-search-facet-select').chosen();
     $('select#dc-right-select').chosen({

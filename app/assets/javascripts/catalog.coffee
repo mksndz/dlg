@@ -1,4 +1,4 @@
-$(document).on 'ready turbolinks:load', ->
+Blacklight.onLoad ->
 
   $("a.delete-action").on("click", (e, data, status, xhr) ->
     e.preventDefault()
