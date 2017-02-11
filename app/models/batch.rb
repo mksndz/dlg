@@ -32,6 +32,7 @@ class Batch < ActiveRecord::Base
     failures = []
     batch_items.each do |bi|
       i = bi.commit
+      i.batch_items << bi
       item_updated = i.persisted?
       begin
         i.save

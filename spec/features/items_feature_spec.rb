@@ -13,6 +13,24 @@ feature 'Item Management' do
       login_as super_user, scope: :user
     end
 
+    context 'batch_items listing for item' do
+
+      scenario 'item created from batch_item should link to batch and batch_item from whence it came' do
+
+        b = Fabricate(:batch) {
+          batch_items(count: 1)
+        }
+
+        b.commit
+
+        visit item_path(Item.last.id)
+
+        expect(page).to have_text b.name
+
+      end
+
+    end
+
     context 'other_collection behavior' do
 
       scenario 'saves a new item with no other_collection value' do
