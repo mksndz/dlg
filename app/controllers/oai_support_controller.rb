@@ -6,6 +6,8 @@ class OaiSupportController < ApplicationController
 
     if params[:rows].nil? || params[:rows].to_i <= 0
       rows = 50
+    elsif params[:rows].to_i > 50000
+      rows = 50000
     else
       rows = params[:rows]
     end
