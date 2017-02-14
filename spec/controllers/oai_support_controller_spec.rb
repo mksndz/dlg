@@ -6,22 +6,37 @@ RSpec.describe OaiSupportController, type: :controller do
 
     context 'with many records' do
 
-      it 'it works as expected' do
-
-        PaperTrail.enabled = true
+      before :each do
 
         Fabricate(:collection) {
           items(count:40)
         }
 
+      end
+
+      it 'it works as expected' do
+
+        PaperTrail.enabled = true
+
         Item.first.destroy
         Item.last.destroy
 
-        get :dump
+        get :dump, { rows: 50 }
 
         response_object = JSON.parse(response.body)
 
         expect(response_object['count']).to eq 40
+
+      end
+
+      it 'can paginate through all the records' do
+
+        get :dump, { rows: 20, page: 2 }
+
+        response_object = JSON.parse(response.body)
+
+        expect(response_object['count']).to eq 20
+        expect(response_object['items'].last['id']).to eq(Item.last.id)
 
       end
 

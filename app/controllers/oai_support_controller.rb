@@ -13,7 +13,11 @@ class OaiSupportController < ApplicationController
       items = Item
     end
 
-    items = items.includes(:collection).includes(:repository)
+    items = items
+                .page(params[:page])
+                .per(params[:rows])
+                .includes(:collection)
+                .includes(:repository)
 
     dump = items.map do |i|
       {
