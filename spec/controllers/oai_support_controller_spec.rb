@@ -37,6 +37,16 @@ RSpec.describe OaiSupportController, type: :controller do
 
       end
 
+      it 'can handle garbage params' do
+
+        get :dump, { rows: 'HAXXOR', page: 'PWNED' }
+
+        response_object = JSON.parse(response.body)
+
+        expect(response_object['count']).to eq 0
+
+      end
+
     end
 
     context 'with no parameters' do

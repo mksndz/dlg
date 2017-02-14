@@ -31,7 +31,7 @@ class OaiSupportController < ApplicationController
       {
           id: i.id,
           public: i.public,
-          record_id: "#{i.repository.slug}_#{i.collection.slug}_#{i.slug}",
+          record_id: record_id(i),
           updated_at: i.updated_at
       }
     end
@@ -43,7 +43,7 @@ class OaiSupportController < ApplicationController
       dump << {
           id: 'deleted',
           public: i.public,
-          record_id: "#{i.repository.slug}_#{i.collection.slug}_#{i.slug}",
+          record_id: record_id(i),
           updated_at: di.created_at
       }
 
@@ -68,6 +68,10 @@ class OaiSupportController < ApplicationController
 
   end
 
+  private
 
+  def record_id(r)
+    "#{r.repository.slug}_#{r.collection.slug}_#{r.slug}"
+  end
 
 end
