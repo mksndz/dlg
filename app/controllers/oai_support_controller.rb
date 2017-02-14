@@ -4,6 +4,12 @@ class OaiSupportController < ApplicationController
 
   def dump
 
+    if params[:rows].nil? || params[:rows].to_i <= 0
+      rows = 50
+    else
+      rows = params[:rows]
+    end
+
     deleted_items = ItemVersion.unscoped.where(event: 'destroy')
 
     if params[:date]
@@ -15,7 +21,7 @@ class OaiSupportController < ApplicationController
 
     items = items
                 .page(params[:page])
-                .per(params[:rows])
+                .per(rows)
                 .includes(:collection)
                 .includes(:repository)
 
@@ -43,6 +49,8 @@ class OaiSupportController < ApplicationController
 
     response = {
         count: dump.length,
+        page: params[:page],
+        rows: rows,
         items: dump
     }
 
