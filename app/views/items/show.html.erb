@@ -61,7 +61,14 @@
 <% end %>
 
 <a name="xml"></a>
-<pre><%= @item.to_xml %></pre>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong><%= t('meta.item.actions.xml')%></strong><%= link_to 'Select All', '#xml', { data: { container_id: 'record_xml', turbolinks: false }, class: 'select-element-text btn btn-xs btn-primary pull-right' } %>
+  </div>
+  <div class="panel-body">
+    <pre id="record_xml"><%= @item.to_xml %></pre>
+  </div>
+</div>
 
 <a name="versions"></a>
 <%= render 'shared/versions', entity: @item %>

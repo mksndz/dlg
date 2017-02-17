@@ -46,4 +46,25 @@ Blacklight.onLoad(function() {
         $($(this).href()).focus();
     });
 
+    $('a.select-element-text').on('click', function() {
+        selectElementText(document.getElementById($(this).data('container-id')))
+    });
+
 });
+
+// thx http://stackoverflow.com/a/2838358
+function selectElementText(el, win) {
+    win = win || window;
+    var doc = win.document, sel, range;
+    if (win.getSelection && doc.createRange) {
+        sel = win.getSelection();
+        range = doc.createRange();
+        range.selectNodeContents(el);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } else if (doc.body.createTextRange) {
+        range = doc.body.createTextRange();
+        range.moveToElementText(el);
+        range.select();
+    }
+}
