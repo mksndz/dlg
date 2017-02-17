@@ -58,6 +58,48 @@ feature 'Searching' do
 
     end
 
+    context 'result URL display behavior' do
+
+      scenario 'item record dcterms_is_shown_at value displayed as URL link' do
+
+        url = 'http://dlg.galileo.usg.edu'
+
+        Fabricate(:item) {
+          dcterms_is_shown_at [url]
+        }
+
+        Sunspot.commit
+
+        visit blacklight_advanced_search_engine.advanced_search_path
+        click_button 'Search'
+
+        expect(page).to have_css('dt.blacklight-dcterms_is_shown_at_display', text: "#{I18n.t('meta.search.labels.dcterms_is_shown_at')}:")
+        expect(page).to have_css('dd.blacklight-dcterms_is_shown_at_display', text: url)
+        expect(page).to have_link url
+
+      end
+
+      scenario 'item record dcterms_identifier value is displayed as Identifier link' do
+
+        url = 'http://dlg.galileo.usg.edu'
+
+        Fabricate(:item) {
+          dcterms_identifier [url]
+        }
+        Sunspot.commit
+
+        visit blacklight_advanced_search_engine.advanced_search_path
+        click_button 'Search'
+
+        expect(page).to have_selector('dt.blacklight-dcterms_identifier_display', text: "#{I18n.t('meta.search.labels.dcterms_identifier')}:")
+        expect(page).to have_css('dd.blacklight-dcterms_identifier_display', text: url)
+
+        expect(page).to have_link url
+
+      end
+
+    end
+
     context 'advanced searching functionality' do
 
       scenario 'all fields search returns results' do
