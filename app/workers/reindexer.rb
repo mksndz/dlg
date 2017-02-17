@@ -12,6 +12,7 @@ class Reindexer
     rescue StandardError => e
       @logger.fatal "Reindexing #{model} failed: #{e}"
     end
+    Sunspot.commit
     model_finish_time = Time.now
     @logger.info "#{model} re-indexed in #{model_finish_time - model_start_time} seconds"
 
