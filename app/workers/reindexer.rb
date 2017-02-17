@@ -1,6 +1,6 @@
 class Reindexer
 
-  @queue = :items
+  @queue = :reindex
   @logger = Logger.new('./log/reindex.log')
 
   def self.perform(model)
