@@ -83,7 +83,7 @@ class RepositoriesController < ApplicationController
         :color,
         :public,
         :in_georgia,
-        :thumbnail_url,
+        :thumbnail_path,
         :homepage_url,
         :directions_url,
         :address,

@@ -128,7 +128,6 @@ class CollectionsController < RecordController
             :dlg_local_right,
             :dcterms_bibliographic_citation,
             :dlg_subject_personal,
-            :thumbnail_url,
             :dcterms_type => [],
             :subject_ids => [],
             :time_period_ids => [],

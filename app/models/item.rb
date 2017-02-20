@@ -41,15 +41,12 @@ class Item < ActiveRecord::Base
       repository.id
     end
 
-    boolean :dpla
-    boolean :public
-    # for display in search results
-
-    string :dpla, stored: true do
-      dpla == 'true' ? 'Yes' : 'No'
+    string :collection_slug, stored: true do
+      collection.slug
     end
-    string :public, stored: true do
-      public == 'true' ? 'Yes' : 'No'
+
+    string :repository_slug, stored: true do
+      repository.slug
     end
 
     string :collection_name, stored: true, multiple: true do
@@ -68,8 +65,15 @@ class Item < ActiveRecord::Base
       portal_names
     end
 
-    string :thumbnail_url, as: 'thumbnail_url' do
-      thumbnail_url
+    boolean :dpla
+    boolean :public
+    # for display in search results
+
+    string :dpla, stored: true do
+      dpla == 'true' ? 'Yes' : 'No'
+    end
+    string :public, stored: true do
+      public == 'true' ? 'Yes' : 'No'
     end
 
     # *_display (not indexed, stored, multivalued)
@@ -188,10 +192,6 @@ class Item < ActiveRecord::Base
     "#{self.repository.slug}_#{self.collection.slug}_#{self.slug}"
   end
 
-  def thumbnail_url
-    "http://dlg.galileo.usg.edu/#{repository.slug}/#{collection.slug}/do-th:#{slug}"
-  end
-
   def title
     dcterms_title.first ? dcterms_title.first.strip : 'No Title'
   end
@@ -204,8 +204,6 @@ class Item < ActiveRecord::Base
             :id,
             :collection_id,
             :valid_item,
-            :thumbnail_url,
-            :has_thumbnail,
             :created_at,
             :updated_at
         ],
@@ -228,11 +226,6 @@ class Item < ActiveRecord::Base
 
   def other_repository_titles
     Collection.find(other_collections).map(&:repository_title)
-  end
-
-  def check_for_thumbnail
-    update_column(:has_thumbnail, valid_url?(thumbnail_url) )
-    true
   end
 
   # def date_facet

@@ -12,13 +12,13 @@
 
 <br><br>
 
+<%= render 'shared/show_field', field_name: t(:thumbnail_path,    scope: [:activerecord, :attributes, :repository]), value: link_to(image_tag(@repository.thumbnail_path), @repository.thumbnail_path) %>
 <%= render 'shared/show_field', field_name: t(:slug,              scope: [:activerecord, :attributes, :repository]), value: @repository.slug %>
 <%= render 'shared/show_field', field_name: t(:portal_ids,        scope: [:activerecord, :attributes, :repository]), value: portals_list(@repository) %>
 <%= render 'shared/show_field', field_name: t(:public,            scope: [:activerecord, :attributes, :repository]), value: @repository.public %>
 <%= render 'shared/show_field', field_name: t(:in_georgia,        scope: [:activerecord, :attributes, :repository]), value: @repository.in_georgia %>
 <%= render 'shared/show_field', field_name: t(:title,             scope: [:activerecord, :attributes, :repository]), value: @repository.title %>
 <%= render 'shared/show_field', field_name: t(:color,             scope: [:activerecord, :attributes, :repository]), value: @repository.color %>
-<%= render 'shared/show_field', field_name: t(:thumbnail_url,     scope: [:activerecord, :attributes, :repository]), value: link_to(@repository.thumbnail_url, @repository.thumbnail_url) %>
 <%= render 'shared/show_field', field_name: t(:homepage_url,      scope: [:activerecord, :attributes, :repository]), value: link_to(@repository.homepage_url, @repository.homepage_url) %>
 <%= render 'shared/show_field', field_name: t(:directions_url,    scope: [:activerecord, :attributes, :repository]), value: link_to(@repository.directions_url, @repository.directions_url) %>
 <%= render 'shared/show_field', field_name: t(:teaser,            scope: [:activerecord, :attributes, :repository]), value: @repository.teaser %>

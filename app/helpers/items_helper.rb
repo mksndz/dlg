@@ -1,16 +1,6 @@
-require 'open-uri'
-
 module ItemsHelper
-  def legacy_thumbnail_tag(item)
-    thumbnail_url = "http://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
-    begin
-      open thumbnail_url
-      url = thumbnail_url
-    rescue OpenURI::HTTPError
-      url = 'no_thumb.png'
-    rescue Net::ReadTimeout
-      url = 'no_thumb.png'
-    end
+  def legacy_thumbnail_tag(item) # todo this duplicates functionality in BlacklightHelper
+    url = "http://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
     image_tag url, class: 'img-thumbnail'
   end
 

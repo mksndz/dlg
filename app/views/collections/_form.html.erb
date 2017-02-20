@@ -19,8 +19,6 @@
       <%= f.check_box :in_georgia %>
     <% end %>
 
-    <%= f.url_field :thumbnail_url %>
-
     <%= f.select :other_repositories, @data[:repositories].collect { |r| [r.title, r.slug] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
 
     <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>

@@ -114,7 +114,6 @@ class LegacyImporter
 
     # set repository unless already set
     if collection.repository
-      collection.thumbnail_url = "#{THUMBNAIL_ROOT}#{collection.repository.slug}_#{collection.slug}"
       collection.save(validate: false)
     else
 
@@ -123,7 +122,6 @@ class LegacyImporter
 
         if repo
           collection.repository = repo
-          collection.thumbnail_url = "#{THUMBNAIL_ROOT}#{repo.slug}_#{collection.slug}"
           collection.save(validate: false)
         else
           logger.error "Needed repo but collection metadata for #{collection.slug} contains no or an unknown repo slug (#{repository['slug']})."

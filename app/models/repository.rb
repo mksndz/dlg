@@ -34,7 +34,7 @@ class Repository < ActiveRecord::Base
     string :title, stored: true
     string :short_description, stored: true
     string :description, stored: true
-    string :thumbnail_url, stored: true
+    string :thumbnail_path, stored: true
 
     text :title
     text :short_description

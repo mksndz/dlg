@@ -46,6 +46,14 @@ class Collection < ActiveRecord::Base
       repository.id
     end
 
+    string :repository_slug do
+      repository.slug
+    end
+
+    string :thumbnail, stored: true do
+      repository.thumbnail_path
+    end
+
     boolean :public
 
     string :repository_name, stored: true, multiple: true do
@@ -63,8 +71,6 @@ class Collection < ActiveRecord::Base
     string :portal_names, stored: true, multiple: true do
       portal_names
     end
-
-    string :thumbnail_url, stored: true
 
     # *_display (not indexed, stored, multivalued)
     string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true

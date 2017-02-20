@@ -1,22 +1,5 @@
 module ApplicationHelper
 
-  # def portals
-  #   %w(
-  #     dlg
-  #     crdl
-  #     amso
-  #     other
-  #   )
-  # end
-
-  def portal_select(form)
-
-    # return html for JS-ified portal select box
-    # html = ''
-    # html =+
-
-  end
-
   def boolean_facet_labels(value)
     value == 'true' ? 'Yes' : 'No'
   end

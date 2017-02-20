@@ -17,7 +17,7 @@
 
     <!-- blacklight required fields -->
     <field name="format"         type="string" indexed="false" stored="true"  multiValued="false" />
-    <field name="thumbnail_url"  type="string" indexed="false" stored="true"  multiValued="false" />
+    <field name="thumbnail"      type="string" indexed="false" stored="true"  multiValued="false" />
     <field name="year"           type="tint"   indexed="true"  stored="true"  multiValued="false" />
 
     <!-- maps related fields -->

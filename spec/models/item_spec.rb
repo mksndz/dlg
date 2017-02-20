@@ -66,11 +66,6 @@ RSpec.describe Item, type: :model do
     expect(i.record_id).not_to be_empty
   end
 
-  it 'has a thumbnail_url that is a url' do
-    i = Fabricate(:item)
-    expect { URI.parse(i.thumbnail_url) }.not_to raise_exception
-  end
-
   it 'has a facet_years value that is an Array of years taken from dc_date' do
     i = Fabricate(:item) {
       dc_date { %w(text 991 1802 2001 1776-1791 1900/1901) }

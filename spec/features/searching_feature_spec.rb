@@ -5,6 +5,7 @@ Warden.test_mode!
 feature 'Searching' do
 
   let(:super_user) { Fabricate :super }
+  let(:basic_user) { Fabricate :basic }
 
   context 'for super user', js: true do
 
@@ -469,9 +470,45 @@ feature 'Searching' do
 
   context 'for basic user' do
 
-    scenario '' do
+    before :each do
+
+      login_as basic_user, scope: :user
+
+    end
+
+    context 'thumbnails rendering' do
+
+      before :each do
+
+        @collection = Fabricate(:collection) { items(count: 1) }
+
+        visit blacklight_advanced_search_engine.advanced_search_path
+        click_button 'Search'
+
+      end
+
+      scenario 'items have a thumbnail built from slugs' do
+
+        item = Item.last
+
+        image_url = "http://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
+
+        within '.document-position-1' do
+          expect(page).to have_xpath("//img[contains(@src,\"#{image_url}\")]")
+        end
+
+      end
+
+      scenario 'collections have thumbnails inherited from the repository' do
+
+        image_url = Repository.last.thumbnail_path
+
+        within '.document-position-0' do
+          expect(page).to have_xpath("//img[contains(@src,\"#{image_url}\")]")
+        end
 
 
+      end
 
     end
 

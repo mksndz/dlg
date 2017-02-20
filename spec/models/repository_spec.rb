@@ -29,6 +29,11 @@ RSpec.describe Repository, type: :model do
     expect(r.slug).not_to be_empty
   end
 
+  it 'has a thumbnail_path that is a url' do
+    r = Fabricate(:repository)
+    expect { URI.parse(r.thumbnail_path) }.not_to raise_exception
+  end
+
   it 'contains Items through Collection' do
     r = Fabricate(:repository) {
       collections { Fabricate.times(1, :collection) {
