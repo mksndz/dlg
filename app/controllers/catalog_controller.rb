@@ -205,6 +205,15 @@ class CatalogController < ApplicationController
       }
     end
 
+    # record id
+    config.add_search_field('record_id') do |field|
+      field.label = 'Record ID'
+      field.solr_local_parameters = {
+          qf: 'record_id_ng',
+          pf: 'record_id_ng'
+      }
+    end
+
     # title
     config.add_search_field('title') do |field|
       field.label = 'Title'

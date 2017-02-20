@@ -134,6 +134,24 @@ feature 'Searching' do
 
       end
 
+      scenario 'record id search returns relevant results based on substrings' do
+
+        Fabricate(:collection) {
+          slug 'polyester'
+          items(count: 1)
+        }
+        Sunspot.commit
+
+        visit blacklight_advanced_search_engine.advanced_search_path
+
+        fill_in 'record_id', with: 'ester'
+
+        click_button 'Search'
+
+        expect(all('.edit-record').count).to eq 2
+
+      end
+
       context 'facet behavior' do
 
         scenario 'there exists a portals facet' do
@@ -171,6 +189,24 @@ feature 'Searching' do
 
         before :each do
           Fabricate(:collection){ items(count:10) }
+        end
+
+        scenario 'record id search returns only relevant results' do
+
+          Fabricate(:item) {
+            dcterms_title ['ZZZZZZZZZZ']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'title', with: 'ZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
         end
 
         scenario 'title search returns only relevant results' do
