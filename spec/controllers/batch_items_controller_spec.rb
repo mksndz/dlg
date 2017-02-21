@@ -156,4 +156,68 @@ RSpec.describe BatchItemsController, type: :controller do
     end
   end
 
+  describe 'POST #bulk_add' do
+
+    it 'returns JSON' do
+
+      Fabricate.times(4, :item)
+
+      batch = Fabricate :batch
+
+      ids = Item.all.map(&:id)
+
+      post :bulk_add, { batch_id: batch.id , ids: ids.join(',') }
+
+      expect(response.content_type).to eq 'application/json'
+      expect(response.status).to eq 200
+      expect(response.body).to eq ''
+      expect(BatchItem.all.count).to eq 4
+
+    end
+
+    it 'can return error JSON if partial success' do
+
+      Fabricate.times(3, :item)
+
+      batch = Fabricate :batch
+
+      ids = Item.all.map(&:id)
+
+      ids << '0'
+
+      post :bulk_add, { batch_id: batch.id , ids: ids.join(',') }
+
+      response_object = JSON.parse response.body
+
+      expect(response.content_type).to eq 'application/json'
+      expect(response.status).to eq 207
+      expect(BatchItem.all.count).to eq 3
+      expect(response_object).to be_an Array
+      expect(response_object.length).to eq 1
+      expect(response_object[0]).to have_text 'not be found'
+
+    end
+
+    it 'can return error JSON on total failure' do
+
+
+      batch = Fabricate :batch
+
+      ids = [0]
+
+      post :bulk_add, { batch_id: batch.id , ids: ids.join(',') }
+
+      response_object = JSON.parse response.body
+
+      expect(response.content_type).to eq 'application/json'
+      expect(response.status).to eq 422
+      expect(BatchItem.all.count).to eq 0
+      expect(response_object).to be_an Array
+      expect(response_object.length).to eq 1
+      expect(response_object[0]).to have_text 'not be found'
+
+    end
+
+  end
+
 end

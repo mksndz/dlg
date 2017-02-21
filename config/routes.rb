@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     resources :batch_items do
       collection do
         post 'import',  to: 'batch_items#import', constraints: { format: :json }
+        post 'bulk_add', to: 'batch_items#bulk_add', constraints: { format: :json }
       end
     end
 

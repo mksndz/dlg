@@ -168,10 +168,6 @@ class Item < ActiveRecord::Base
     %w(collection_id public valid_item).freeze
   end
 
-  def has_thumbnail?
-    has_thumbnail
-  end
-
   def facet_years
     all_years = []
     dc_date.each do |date|
@@ -216,6 +212,21 @@ class Item < ActiveRecord::Base
         }
     }
     super(options.merge!(default_options))
+  end
+
+  def to_batch_item
+
+    attributes = self.attributes.except(
+      'id',
+      'created_at',
+      'updated_at',
+      'valid_item',
+    )
+
+    batch_item = BatchItem.new attributes
+    batch_item.item = self
+    batch_item
+
   end
 
   def other_collection_titles

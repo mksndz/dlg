@@ -80,6 +80,38 @@ class BatchItemsController < RecordController
     end
   end
 
+  # POST /bulk_add.json
+  def bulk_add
+
+    ids = params[:ids].split(',')
+
+    @batch_items = []
+    @errors = []
+
+    ids.each do |id|
+      begin
+        i = Item.find id
+        batch_item = i.to_batch_item
+        batch_item.batch = @batch
+        batch_item.save(validate: false)
+        @batch_items << batch_item
+      rescue ActiveRecord::RecordNotFound => ar_e
+        @errors << "Record with ID #{id} could not be found to add to Batch."
+      rescue StandardError => e
+        @errors << "Item #{i.record_id} could not be added to Batch: #{e}"
+      end
+    end
+
+    if @errors.empty?
+      render json: '', status: :ok
+    elsif @batch_items.empty?
+      render json: @errors, status: :unprocessable_entity
+    else
+      render json: @errors, status: 207
+    end
+
+  end
+
   private
 
   def set_batch

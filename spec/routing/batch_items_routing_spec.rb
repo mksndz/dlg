@@ -39,5 +39,9 @@ RSpec.describe BatchItemsController, type: :routing do
       expect(post: '/batches/1/batch_items/import').to route_to(controller: 'batch_items', action: 'import', batch_id: '1')
     end
 
+    it 'routes to #bulk_add' do
+      expect(post: '/batches/1/batch_items/bulk_add').to route_to(controller: 'batch_items', action: 'bulk_add', batch_id: '1')
+    end
+
   end
 end
