@@ -89,7 +89,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :solr_documents, only: [:show], controller: 'catalog', constraints: { id: /.*/, format: false } do
+  resources :solr_documents, only: [:show], path: '/record', controller: 'catalog', constraints: { id: /.*/, format: false } do
     concerns :exportable
   end
 
