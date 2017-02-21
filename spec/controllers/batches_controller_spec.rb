@@ -32,6 +32,36 @@ RSpec.describe BatchesController, type: :controller do
       get :index, {}, valid_session
       expect(assigns(:batches)).to eq([batch])
     end
+
+    context 'json' do
+
+      before :each do
+
+        @batch = Fabricate :batch
+        @committed_batch = Fabricate :committed_batch
+
+        get :index, { format: :json }
+
+        @response_object = JSON.parse(response.body)
+
+      end
+
+      it 'can return JSON' do
+        expect(response.content_type).to eq 'application/json'
+      end
+
+      it 'has batch info' do
+        expect(@response_object[0]['id']).to eq @batch.id
+      end
+
+      it 'only returns pending batches' do
+        ids = @response_object.map { |b| b['id]']  }
+        expect(ids).not_to include(@committed_batch.id)
+      end
+
+    end
+
+
   end
 
   describe 'GET #show' do

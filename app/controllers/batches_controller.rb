@@ -34,12 +34,17 @@ class BatchesController < ApplicationController
       end
     end
 
-    if params[:status] == 'committed'
-      @batches = bq.committed
-    elsif params[:status] == 'pending'
+    if params[:status] == 'pending' || request.content_type == 'application/json'
       @batches = bq.pending
+    elsif params[:status] == 'committed'
+      @batches = bq.committed
     else
       @batches = bq
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @batches, status: :ok }
     end
 
   end
