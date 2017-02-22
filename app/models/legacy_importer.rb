@@ -29,7 +29,7 @@ class LegacyImporter
     repository.color              = "##{get_value xml_node, 'color'}"
     repository.teaser             = get_value(xml_node, 'teaser') == 'true'
 
-    repository.thumbnail_url      = "#{THUMBNAIL_ROOT}#{slug}"
+    repository.thumbnail_path     = "#{THUMBNAIL_ROOT}#{slug}"
 
     portals = xml_node.css('portal')
 
