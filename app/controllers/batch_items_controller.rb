@@ -80,7 +80,7 @@ class BatchItemsController < RecordController
     end
   end
 
-  # POST /bulk_add.json
+  # POST /bulk_add
   def bulk_add
 
     ids = params[:ids].split(',')
@@ -102,12 +102,8 @@ class BatchItemsController < RecordController
       end
     end
 
-    if @errors.empty?
-      render json: '', status: :ok
-    elsif @batch_items.empty?
-      render json: @errors, status: :unprocessable_entity
-    else
-      render json: @errors, status: 207
+    respond_to do |format|
+      format.js { render layout: false }
     end
 
   end

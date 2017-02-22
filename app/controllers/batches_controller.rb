@@ -34,7 +34,7 @@ class BatchesController < ApplicationController
       end
     end
 
-    if params[:status] == 'pending' || request.content_type == 'application/json'
+    if params[:status] == 'pending'
       @batches = bq.pending
     elsif params[:status] == 'committed'
       @batches = bq.committed
@@ -44,7 +44,6 @@ class BatchesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @batches, status: :ok }
     end
 
   end
@@ -151,6 +150,18 @@ class BatchesController < ApplicationController
       else
         format.html { redirect_to @batch, notice: I18n.t('meta.batch.messages.errors.not_recreated') }
       end
+    end
+  end
+
+  def select
+
+    @ids = params[:ids]
+
+    @batches = Batch.pending
+    @batches.where(user_id: current_user.id) unless current_user.super?
+
+    respond_to do |format|
+      format.js { render layout: false }
     end
   end
 

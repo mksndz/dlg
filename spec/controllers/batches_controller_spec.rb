@@ -33,35 +33,6 @@ RSpec.describe BatchesController, type: :controller do
       expect(assigns(:batches)).to eq([batch])
     end
 
-    context 'json' do
-
-      before :each do
-
-        @batch = Fabricate :batch
-        @committed_batch = Fabricate :committed_batch
-
-        get :index, { format: :json }
-
-        @response_object = JSON.parse(response.body)
-
-      end
-
-      it 'can return JSON' do
-        expect(response.content_type).to eq 'application/json'
-      end
-
-      it 'has batch info' do
-        expect(@response_object[0]['id']).to eq @batch.id
-      end
-
-      it 'only returns pending batches' do
-        ids = @response_object.map { |b| b['id]']  }
-        expect(ids).not_to include(@committed_batch.id)
-      end
-
-    end
-
-
   end
 
   describe 'GET #show' do
@@ -202,6 +173,28 @@ RSpec.describe BatchesController, type: :controller do
       get :recreate, { id: batch.id }
       expect(response).to redirect_to Batch.last
     end
+  end
+
+  describe 'GET #select' do
+
+    before :each do
+      @ids = '1,2,3,4'
+      @batches = Fabricate.times(2, :batch)
+      xhr :get, :select, { ids: @ids, format: :js }
+    end
+
+    it 'assigns record ids as a comma separated string @ids' do
+      expect(assigns(:ids)).to eq @ids
+    end
+
+    it 'assigns batches to @batches' do
+      expect(assigns(:batches)).to eq @batches
+    end
+
+    it 'renders select template' do
+      expect(response).to render_template('select')
+    end
+
   end
 
 end

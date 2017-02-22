@@ -21,7 +21,7 @@
       <%= link_to t('meta.app.action_widget.xml'), '#', class: 'add-to-xml-action', data: { url: xml_items_path }  %>
     </li>
     <li>
-      <%= link_to t('meta.app.action_widget.batch'), '#', class: 'add-to-batch-action', data: { url: '' }  %>
+      <%= link_to t('meta.app.action_widget.batch'), select_batches_path, class: 'add-to-batch-action', data: { ajax_modal: 'trigger' }  %>
     </li>
   </ul>
 </div>

@@ -64,11 +64,14 @@ Rails.application.routes.draw do
       get 'import', to: 'batches#import'
       get 'results', to: 'batches#results'
     end
+    collection do
+      get 'select', to: 'batches#select'
+    end
 
     resources :batch_items do
       collection do
         post 'import',  to: 'batch_items#import', constraints: { format: :json }
-        post 'bulk_add', to: 'batch_items#bulk_add', constraints: { format: :json }
+        post 'bulk_add', to: 'batch_items#bulk_add'
       end
     end
 

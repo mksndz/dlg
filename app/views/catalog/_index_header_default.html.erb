@@ -23,7 +23,7 @@
     <% end %>
 
     <% if current_user.super? && klass == 'Item' %>
-        <%= check_box_tag(:action_item, id, false, { class: 'action-item'}) %>
+        <%= check_box_tag(:action_item, id, false, { id: "select-#{id}", class: 'action-item'}) %>
     <% end %>
 
     <%= link_to_document document, document_show_link_field(document), counter: counter %>

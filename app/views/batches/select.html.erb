@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <button type="button" class="ajax-modal-close close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 class="modal-title">Add To Which Batch?</h3>
+</div>
+
+<div class="modal-body">
+  <ul class="list-group">
+    <% @batches.each do |b| %>
+        <li class="list-group-item">
+          <%= form_tag(bulk_add_batch_batch_items_path(b.id), { method: :post, data: { ajax_modal: 'preserve' } } ) do %>
+            <%= hidden_field_tag :ids, @ids %>
+            <%= submit_tag(b.name, class: 'btn btn-lg btn-link') %>
+          <% end %>
+        </li>
+    <% end %>
+  </ul>
+
+</div>

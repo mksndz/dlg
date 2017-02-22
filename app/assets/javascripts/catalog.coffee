@@ -26,18 +26,16 @@ Blacklight.onLoad ->
 
   $("a.add-to-batch-action").on("click", (e, data, status, xhr) ->
     e.preventDefault()
-    alert('feature not yet implemented')
-#    entities = get_checked_items()
-#    url = $(this).data('url')
-#    if entities
-#      $.ajax url,
-#        type: "POST",
-#        data:
-#          entities: entities,
-#        error: (jqXHR, textStatus, errorThrown) ->
-#          alert('error')
-#        success: (data, textStatus, jqXHR) ->
-#          alert('success')
+    entities = get_checked_items()
+    return false unless entities
+    $this = $(this)
+    url = $this.attr('href')
+    index = url.indexOf('?ids=')
+    if index == -1
+      new_url = url + '?ids=' + entities
+    else
+      new_url = url.substring(0,index) + '?ids=' + entities
+    $this.attr('href', new_url)
   )
 
   $("a.select-all-action").on("click", (e, data, status, xhr) ->

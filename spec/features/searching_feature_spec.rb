@@ -466,6 +466,72 @@ feature 'Searching' do
 
     end
 
+    context 'add to batch functionality', js: true do
+
+      context 'when everything goes smoothly' do
+
+        before :each do
+
+          @items = Fabricate.times(3, :item)
+          @batches = Fabricate.times(2, :batch)
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+          click_button 'Search'
+
+        end
+
+        scenario 'actions drop down shows an option to "add to batch"' do
+
+          click_button I18n.t('meta.app.action_widget.name')
+
+          within '#action-dropdown' do
+            expect(page).to have_link I18n.t('meta.app.action_widget.batch')
+          end
+
+        end
+
+        scenario 'clicking "add to batch" with no records selected shows an alert' do
+
+          click_button I18n.t('meta.app.action_widget.name')
+
+          page.accept_confirm 'Please select at least one record to perform this action' do
+            click_on I18n.t('meta.app.action_widget.batch')
+          end
+
+        end
+
+        scenario 'selecting a record and add it to a batch' do
+
+          item = Item.last
+
+          find("#select-#{item.id}").click
+
+          click_button I18n.t('meta.app.action_widget.name')
+          click_on I18n.t('meta.app.action_widget.batch')
+
+          expect(page).to have_selector('#ajax-modal', visible: true)
+
+          within '#ajax-modal' do
+
+            expect(page).to have_selector('ul.list-group')
+            expect(page).to have_selector('li.list-group-item', count: 2)
+            expect(page).to have_button(@batches.first.name)
+
+            find_button(@batches.first.name).click
+
+            expect(page).to have_link 'View Batch'
+            expect(page).to have_text '1 Batch Items added!'
+
+          end
+
+        end
+
+      end
+
+    end
+
   end
 
   context 'for basic user' do

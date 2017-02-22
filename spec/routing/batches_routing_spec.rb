@@ -7,6 +7,10 @@ RSpec.describe BatchesController, type: :routing do
       expect(get: '/batches').to route_to('batches#index')
     end
 
+    it 'routes to #select' do
+      expect(get: '/batches/select').to route_to('batches#select')
+    end
+
     it 'routes to #new' do
       expect(get: '/batches/new').to route_to('batches#new')
     end

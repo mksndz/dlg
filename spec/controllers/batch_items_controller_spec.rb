@@ -158,63 +158,36 @@ RSpec.describe BatchItemsController, type: :controller do
 
   describe 'POST #bulk_add' do
 
-    it 'returns JSON' do
+    before :each do
 
-      Fabricate.times(4, :item)
-
-      batch = Fabricate :batch
-
-      ids = Item.all.map(&:id)
-
-      post :bulk_add, { batch_id: batch.id , ids: ids.join(',') }
-
-      expect(response.content_type).to eq 'application/json'
-      expect(response.status).to eq 200
-      expect(response.body).to eq ''
-      expect(BatchItem.all.count).to eq 4
+      @items = Fabricate :item
+      @batch = Fabricate :batch
 
     end
 
-    it 'can return error JSON if partial success' do
+    it 'assigns new batch_items as @batch_items' do
 
-      Fabricate.times(3, :item)
+      xhr :get, :bulk_add, { batch_id: @batch.id, ids: @items.id.to_s, format: :js }
 
-      batch = Fabricate :batch
-
-      ids = Item.all.map(&:id)
-
-      ids << '0'
-
-      post :bulk_add, { batch_id: batch.id , ids: ids.join(',') }
-
-      response_object = JSON.parse response.body
-
-      expect(response.content_type).to eq 'application/json'
-      expect(response.status).to eq 207
-      expect(BatchItem.all.count).to eq 3
-      expect(response_object).to be_an Array
-      expect(response_object.length).to eq 1
-      expect(response_object[0]).to have_text 'not be found'
+      expect(assigns(:batch_items)).to be_an Array
+      expect(assigns(:batch_items)[0]).to be_a BatchItem
 
     end
 
-    it 'can return error JSON on total failure' do
+    it 'renders the appropriate template' do
 
+      xhr :get, :bulk_add, { batch_id: @batch.id, ids: @items.id.to_s, format: :js }
 
-      batch = Fabricate :batch
+      expect(response).to render_template('bulk_add')
 
-      ids = [0]
+    end
 
-      post :bulk_add, { batch_id: batch.id , ids: ids.join(',') }
+    it 'assigns any error messages as @errors' do
 
-      response_object = JSON.parse response.body
+      xhr :get, :bulk_add, { batch_id: @batch.id, ids: '0', format: :js }
 
-      expect(response.content_type).to eq 'application/json'
-      expect(response.status).to eq 422
-      expect(BatchItem.all.count).to eq 0
-      expect(response_object).to be_an Array
-      expect(response_object.length).to eq 1
-      expect(response_object[0]).to have_text 'not be found'
+      expect(assigns(:errors)).to be_an Array
+      expect(assigns(:errors)[0]).to be_a String
 
     end
 
