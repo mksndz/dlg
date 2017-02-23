@@ -4,15 +4,22 @@
 </div>
 
 <div class="modal-body">
-  <ul class="list-group">
-    <% @batches.each do |b| %>
-        <li class="list-group-item">
-          <%= form_tag(bulk_add_batch_batch_items_path(b.id), { method: :post, data: { ajax_modal: 'preserve' } } ) do %>
-            <%= hidden_field_tag :ids, @ids %>
-            <%= submit_tag(b.name, class: 'btn btn-lg btn-link') %>
-          <% end %>
-        </li>
+    <% if @batches.any? %>
+        <ul class="list-group">
+      <% @batches.each do |b| %>
+          <li class="list-group-item">
+            <%= form_tag(bulk_add_batch_batch_items_path(b.id), { method: :post, data: { ajax_modal: 'preserve' } } ) do %>
+              <%= hidden_field_tag :ids, @ids %>
+              <%= submit_tag(b.name, class: 'btn btn-lg btn-link') %>
+            <% end %>
+          </li>
+      <% end %>
+        </ul>
+    <% else %>
+      <div class="alert alert-danger">
+        You don't have any pending Batches! <%= link_to 'Go Create One!', new_batch_path, target: '_blank' %>
+      </div>
     <% end %>
-  </ul>
+
 
 </div>

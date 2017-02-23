@@ -10,7 +10,7 @@
   <%= link_to 'View Batch', batch_path(@batch), class: 'btn btl-lg btn-primary' %>
 
   <% unless @errors.empty? %>
-  <div class="alert alert-error">
+  <div class="alert alert-danger">
       <p>There was an issue with <%= pluralize(@errors.length.to_i, 'record') %></p>
     <ul>
       <% @errors.each do |e| %>
