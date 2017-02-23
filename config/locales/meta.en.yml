@@ -12,7 +12,7 @@ en:
         inc_edu:
           label: 'Rightsstatements.org - In Copyright - Educational Use Permitted'
           uri: 'http://rightsstatements.org/vocab/InC-EDU/1.0/'
-          icon_url: 'rs_org_icons/InC-EDU.dark-white-interior-blue-type.svg'
+          icon_url: 'rs_org_icons/InC-EDUCATIONAL.dark-white-interior-blue-type.svg'
         inc_nc:
           label: 'Rightsstatements.org - In Copyright - Non-Commercial Use Permitted'
           uri: 'http://rightsstatements.org/vocab/InC-NC/1.0/'
