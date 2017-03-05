@@ -18,7 +18,8 @@ RSpec.describe OaiSupportController, type: :controller do
 
         response_object = JSON.parse(response.body)
 
-        expect(response_object['count']).to eq 50
+        expect(response_object['total_count']).to eq 51
+        expect(response_object['items'].length).to eq 50
 
       end
 
@@ -32,7 +33,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
         response_object = JSON.parse(response.body)
 
-        expect(response_object['count']).to eq 1
+        expect(response_object['total_count']).to eq 2
         expect(response_object['items'].last['id']).to eq(Item.last.id)
 
       end
@@ -43,7 +44,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
         response_object = JSON.parse(response.body)
 
-        expect(response_object['count']).to eq 0
+        expect(response_object['total_count']).to eq 0
 
       end
 
@@ -73,7 +74,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
       it 'returns a JSON object with a count' do
 
-        expect(@response_object).to have_key 'count'
+        expect(@response_object).to have_key 'total_count'
 
       end
 
@@ -130,7 +131,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
       it 'gets a JSON dump of all records updated since a provided date' do
 
-        expect(@response_object['count']).to eq 1
+        expect(@response_object['total_count']).to eq 1
 
       end
 

@@ -6,8 +6,8 @@ class OaiSupportController < ApplicationController
 
     if params[:rows].nil? || params[:rows].to_i <= 0
       rows = 50
-    elsif params[:rows].to_i > 50000
-      rows = 50000
+    # elsif params[:rows].to_i > 50000
+    #   rows = 50000
     else
       rows = params[:rows]
     end
@@ -26,6 +26,8 @@ class OaiSupportController < ApplicationController
                 .per(rows)
                 .includes(:collection)
                 .includes(:repository)
+
+    total_count = items.total_count
 
     dump = items.map do |i|
       {
@@ -50,7 +52,7 @@ class OaiSupportController < ApplicationController
     end
 
     response = {
-        count: dump.length,
+        total_count: total_count,
         page: params[:page],
         rows: rows,
         items: dump
