@@ -4,145 +4,166 @@ RSpec.describe OaiSupportController, type: :controller do
 
   describe 'GET #dump' do
 
-    context 'with many records' do
+    context 'without authorization' do
 
-      it 'it defaults to 50 rows' do
-
-        PaperTrail.enabled = true
-
-        Fabricate(:collection) {
-          items(count: 51)
-        }
+      it 'returns unauthorized' do
 
         get :dump
 
-        response_object = JSON.parse(response.body)
-
-        expect(response_object['total_count']).to eq 51
-        expect(response_object['items'].length).to eq 50
-
-      end
-
-      it 'can paginate through all the records' do
-
-        Fabricate(:collection) {
-          items(count: 2)
-        }
-
-        get :dump, { rows: 1, page: 2 }
-
-        response_object = JSON.parse(response.body)
-
-        expect(response_object['total_count']).to eq 2
-        expect(response_object['items'].last['id']).to eq(Item.last.id)
-
-      end
-
-      it 'can handle garbage params' do
-
-        get :dump, { rows: 'HAXXOR', page: 'PWNED' }
-
-        response_object = JSON.parse(response.body)
-
-        expect(response_object['total_count']).to eq 0
+        expect(response.code).to eq '401'
 
       end
 
     end
 
-    context 'with no parameters' do
+    context 'with authorization' do
 
       before :each do
+        request.headers['X-User-Token'] = Rails.application.secrets.oai_token
+      end
 
-        PaperTrail.enabled = true
+      context 'with many records' do
 
-        @item = Fabricate :item
-        fleeting_item = Fabricate :item
-        fleeting_item.destroy
+        it 'it defaults to 50 rows' do
 
-        get :dump
+          PaperTrail.enabled = true
 
-        @response_object = JSON.parse(response.body)
+          Fabricate(:collection) {
+            items(count: 51)
+          }
+
+          get :dump
+
+          response_object = JSON.parse(response.body)
+
+          expect(response_object['total_count']).to eq 51
+          expect(response_object['items'].length).to eq 50
+
+        end
+
+        it 'can paginate through all the records' do
+
+          Fabricate(:collection) {
+            items(count: 2)
+          }
+
+          get :dump, { rows: 1, page: 2 }
+
+          response_object = JSON.parse(response.body)
+
+          expect(response_object['total_count']).to eq 2
+          expect(response_object['items'].last['id']).to eq(Item.last.id)
+
+        end
+
+        it 'can handle garbage params' do
+
+          get :dump, { rows: 'HAXXOR', page: 'PWNED' }
+
+          response_object = JSON.parse(response.body)
+
+          expect(response_object['total_count']).to eq 0
+
+        end
 
       end
 
-      it 'returns JSON type' do
+      context 'with no parameters' do
 
-        expect(response.content_type).to eq 'application/json'
+        before :each do
+
+          PaperTrail.enabled = true
+
+          @item = Fabricate :item
+          fleeting_item = Fabricate :item
+          fleeting_item.destroy
+
+          get :dump
+
+          @response_object = JSON.parse(response.body)
+
+        end
+
+        it 'returns JSON type' do
+
+          expect(response.content_type).to eq 'application/json'
+
+        end
+
+        it 'returns a JSON object with a count' do
+
+          expect(@response_object).to have_key 'total_count'
+
+        end
+
+        it 'returns a JSON object with items' do
+
+          expect(@response_object).to have_key 'items'
+
+        end
+
+        it 'returns a JSON object with items array' do
+
+          expect(@response_object['items']).to be_an Array
+
+        end
+
+        it 'returns a JSON object with items array containing expected fields' do
+
+          item = @response_object['items'][0]
+
+          expect(item).to have_key 'id'
+          expect(item).to have_key 'public'
+          expect(item).to have_key 'record_id'
+          expect(item).to have_key 'updated_at'
+
+        end
+
+        it 'returns a JSON object with items array containing information about a deleted item' do
+
+          item = @response_object['items'][1]
+
+          expect(item['id']).to eq 'deleted'
+
+        end
 
       end
 
-      it 'returns a JSON object with a count' do
+      context 'with a date parameter' do
 
-        expect(@response_object).to have_key 'total_count'
+        before :each do
 
-      end
+          @i1 = Fabricate(:item) {
+            updated_at '2015-01-01'
+          }
 
-      it 'returns a JSON object with items' do
+          @i2 = Fabricate(:item) {
+            updated_at '2017-01-01'
+          }
 
-        expect(@response_object).to have_key 'items'
+          get :dump, { date: '2016-01-01' }
 
-      end
+          @response_object = JSON.parse(response.body)
 
-      it 'returns a JSON object with items array' do
+        end
 
-        expect(@response_object['items']).to be_an Array
+        it 'gets a JSON dump of all records updated since a provided date' do
 
-      end
+          expect(@response_object['total_count']).to eq 1
 
-      it 'returns a JSON object with items array containing expected fields' do
-
-        item = @response_object['items'][0]
-
-        expect(item).to have_key 'id'
-        expect(item).to have_key 'public'
-        expect(item).to have_key 'record_id'
-        expect(item).to have_key 'updated_at'
-
-      end
-
-      it 'returns a JSON object with items array containing information about a deleted item' do
-
-        item = @response_object['items'][1]
-
-        expect(item['id']).to eq 'deleted'
+        end
 
       end
 
     end
-
-    context 'with a date parameter' do
-
-      before :each do
-
-        @i1 = Fabricate(:item) {
-          updated_at '2015-01-01'
-        }
-
-        @i2 = Fabricate(:item) {
-          updated_at '2017-01-01'
-        }
-
-        get :dump, { date: '2016-01-01' }
-
-        @response_object = JSON.parse(response.body)
-
-      end
-
-      it 'gets a JSON dump of all records updated since a provided date' do
-
-        expect(@response_object['total_count']).to eq 1
-
-      end
-
-    end
-
 
   end
 
   describe 'GET #metadata' do
 
     before :each do
+
+      request.headers['X-User-Token'] = Rails.application.secrets.oai_token
 
       @items = Fabricate.times(3, :item)
 

@@ -2,12 +2,14 @@ class OaiSupportController < ApplicationController
 
   respond_to :json
 
+  before_action :authenticate_token
+
   def dump
 
     if params[:rows].nil? || params[:rows].to_i <= 0
       rows = 50
-    # elsif params[:rows].to_i > 50000
-    #   rows = 50000
+    elsif params[:rows].to_i > 50000
+      rows = 50000
     else
       rows = params[:rows]
     end
@@ -71,6 +73,15 @@ class OaiSupportController < ApplicationController
   end
 
   private
+
+  def authenticate_token
+    if Devise.secure_compare request.headers['X-User-Token'], Rails.application.secrets.oai_token
+      true
+    else
+      head :unauthorized
+    end
+
+  end
 
   def record_id(r)
     "#{r.repository.slug}_#{r.collection.slug}_#{r.slug}"
