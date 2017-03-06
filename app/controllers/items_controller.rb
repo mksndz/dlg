@@ -19,8 +19,6 @@ class ItemsController < RecordController
 
     item_query = Item.index_query(params)
                      .order(sort_column + ' ' + sort_direction)
-                     .page(params[:page])
-                     .per(params[:per_page])
                      .includes(:collection)
 
     if params[:portal_id]
@@ -34,10 +32,20 @@ class ItemsController < RecordController
       end
     end
 
-    if current_user.super?
-        @items = item_query
-    else
-        @items = item_query.where(collection: user_collection_ids)
+    unless current_user.super?
+        item_query = item_query.where(collection: user_collection_ids)
+    end
+
+    @items = item_query
+
+    respond_to do |format|
+      format.xml { send_data @items.to_xml }
+      format.html {
+        @items = @items
+          .page(params[:page])
+          .per(params[:per_page])
+      }
+      # format.json { send_data @items.as_json }
     end
 
   end

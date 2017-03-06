@@ -241,8 +241,9 @@ en:
     collection:
       actions:
         add: 'New Collection'
-        collection_xml: 'Collection XML'
-        item_xml: 'Item XML'
+        manage_items: 'Manage Items'
+        xml: 'View XML'
+        download_item_xml: 'Download Items XML'
       labels:
         columns:
           repository: 'Repository'
