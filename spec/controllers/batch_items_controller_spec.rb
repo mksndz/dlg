@@ -156,41 +156,4 @@ RSpec.describe BatchItemsController, type: :controller do
     end
   end
 
-  describe 'POST #bulk_add' do
-
-    before :each do
-
-      @items = Fabricate :item
-      @batch = Fabricate :batch
-
-    end
-
-    it 'assigns new batch_items as @batch_items' do
-
-      xhr :get, :bulk_add, { batch_id: @batch.id, ids: @items.id.to_s, format: :js }
-
-      expect(assigns(:batch_items)).to be_an Array
-      expect(assigns(:batch_items)[0]).to be_a BatchItem
-
-    end
-
-    it 'renders the appropriate template' do
-
-      xhr :get, :bulk_add, { batch_id: @batch.id, ids: @items.id.to_s, format: :js }
-
-      expect(response).to render_template('bulk_add')
-
-    end
-
-    it 'assigns any error messages as @errors' do
-
-      xhr :get, :bulk_add, { batch_id: @batch.id, ids: '0', format: :js }
-
-      expect(assigns(:errors)).to be_an Array
-      expect(assigns(:errors)[0]).to be_a String
-
-    end
-
-  end
-
 end

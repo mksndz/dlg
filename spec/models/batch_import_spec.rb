@@ -27,6 +27,10 @@ RSpec.describe BatchImport, type: :model do
       expect(b.batch).to be_kind_of Batch
     end
 
+    it 'belongs to a Batch' do
+      expect(b.item_ids).to be_an Array
+    end
+
     it 'returns false for completed' do
       expect(b.completed?).to be false
     end

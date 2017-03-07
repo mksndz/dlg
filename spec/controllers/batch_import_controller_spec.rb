@@ -64,15 +64,6 @@ RSpec.describe BatchImportsController, type: :controller do
         </item>
       </items>'
 
-  # let(:batch_import) { Fabricate :batch_import }
-
-  describe 'GET #index' do
-
-  end
-
-  describe 'GET #show' do
-
-  end
 
   describe 'GET #new' do
 
@@ -87,14 +78,15 @@ RSpec.describe BatchImportsController, type: :controller do
 
     context 'with valid params' do
 
-      it 'enqueues a job and redirects to show' do
+      it 'enqueues a job and redirects to show using XML' do
         post :create, { batch_id: batch.id, batch_import: { xml: test_xml } }
-
+        expect(assigns(:batch_import)).to eq BatchImport.last
       end
 
-    end
-
-    context 'with invalid params' do
+      it 'enqueues a job and redirects to show using item IDs' do
+        post :create, { batch_id: batch.id, batch_import: { item_ids: '1,2' } }
+        expect(assigns(:batch_import)).to eq BatchImport.last
+      end
 
     end
 

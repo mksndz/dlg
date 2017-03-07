@@ -123,7 +123,14 @@ feature 'Searching' do
         Fabricate(:item) {
           slug 'polyester'
         }
-        Sunspot.commit
+
+        collection = Collection.first
+
+        collection.slug = 'quack'
+        collection.save
+
+        Item.reindex
+        Collection.reindex
 
         visit blacklight_advanced_search_engine.advanced_search_path
 

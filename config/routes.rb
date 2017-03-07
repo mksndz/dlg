@@ -25,7 +25,6 @@ Rails.application.routes.draw do
     end
   end
 
-
   resources :repositories, :collections, :users, :roles, :subjects, :time_periods
 
   resources :item_versions, only: [] do
@@ -52,6 +51,7 @@ Rails.application.routes.draw do
     member do
       get 'copy'
     end
+
   end
 
   resources :collections
@@ -71,7 +71,6 @@ Rails.application.routes.draw do
     resources :batch_items do
       collection do
         post 'import',  to: 'batch_items#import', constraints: { format: :json }
-        post 'bulk_add', to: 'batch_items#bulk_add'
       end
     end
 
