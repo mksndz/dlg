@@ -61,7 +61,7 @@ feature 'Batch Importing Batch Items' do
         click_on I18n.t('meta.defaults.actions.save')
 
         expect(page).to have_current_path(new_batch_batch_import_path(@batch))
-        expect(page).to have_text I18n.t('meta.batch_import.messages.errors.neither_type')
+        expect(page).to have_text I18n.t('meta.batch_import.messages.errors.no_data')
 
       end
 
