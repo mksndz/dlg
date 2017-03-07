@@ -8,8 +8,8 @@
         <ul class="list-group">
       <% @batches.each do |b| %>
           <li class="list-group-item">
-            <%= form_tag(bulk_add_batch_batch_items_path(b.id), { method: :post, data: { ajax_modal: 'preserve' } } ) do %>
-              <%= hidden_field_tag :ids, @ids %>
+            <%= form_tag(batch_batch_imports_path(b.id), { method: :post, data: { ajax_modal: 'preserve' } } ) do %>
+              <%= hidden_field_tag :item_ids, @ids, { name: 'batch_import[item_ids]' } %>
               <%= submit_tag(b.name, class: 'btn btn-lg btn-link') %>
             <% end %>
           </li>

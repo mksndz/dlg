@@ -356,7 +356,6 @@ en:
           deleted: 'BatchImport and all associated Batch Items deleted'
         errors:
           both_types: 'You provided both a file and XML text. Choose one only!'
-          neither_type: 'No file or XML text provided!'
           file_error: 'Could not read from uploaded file.'
     versions:
       action:

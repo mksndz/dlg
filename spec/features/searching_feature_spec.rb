@@ -513,18 +513,14 @@ feature 'Searching' do
 
           expect(page).to have_selector('#ajax-modal', visible: true)
 
-          within '#ajax-modal' do
+          expect(page).to have_selector('ul.list-group')
+          expect(page).to have_selector('li.list-group-item', count: 2)
+          expect(page).to have_button(@batches.first.name)
 
-            expect(page).to have_selector('ul.list-group')
-            expect(page).to have_selector('li.list-group-item', count: 2)
-            expect(page).to have_button(@batches.first.name)
+          batch_button = find_button(@batches.first.name)
+          batch_button.click
 
-            find_button(@batches.first.name).click
-
-            expect(page).to have_link 'View Batch'
-            expect(page).to have_text '1 Batch Items added!'
-
-          end
+          expect(page).to have_link('here', href: batch_batch_imports_path(@batches.first))
 
         end
 

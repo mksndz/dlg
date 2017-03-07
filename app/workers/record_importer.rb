@@ -14,24 +14,52 @@ class RecordImporter
     @updated = []
     @failed = []
 
-    xml_data = Nokogiri::XML @batch_import.xml
+    case @batch_import.format
 
-    unless xml_data.is_a? Nokogiri::XML::Document and xml_data.errors.empty?
-      total_failure 'XML could not be parsed, probably due to invalid XML format.'
-      return
-    end
+        when 'file' || 'text'
 
-    records = xml_data.css('item')
-    n = records.length
+          xml_data = Nokogiri::XML @batch_import.xml
 
-    unless n > 0
-      total_failure 'No records could be extracted from the XML'
-      return
-    end
+          unless xml_data.is_a? Nokogiri::XML::Document and xml_data.errors.empty?
+            total_failure 'XML could not be parsed, probably due to invalid XML format.'
+            return
+          end
 
-    records.each_with_index do |r, i|
-      record = Hash.from_xml(r.to_s)
-      create_or_update_record i + 1, record['item']
+          records = xml_data.css('item')
+          n = records.length
+
+          unless n > 0
+            total_failure 'No records could be extracted from the XML'
+            return
+          end
+
+          records.each_with_index do |r, i|
+            record = Hash.from_xml(r.to_s)
+            create_or_update_record i + 1, record['item']
+          end
+        
+        when 'search query'
+
+          @batch_import.item_ids.each_with_index do |id, index|
+
+            begin
+              i = Item.find id
+              batch_item = i.to_batch_item
+              batch_item.batch = @batch
+              batch_item.save(validate: false)
+              add_updated i.slug, batch_item, i.id
+            rescue ActiveRecord::RecordNotFound => ar_e
+              add_failed index, "Record with ID #{id} could not be found to add to Batch."
+            rescue StandardError => e
+              add_failed index, "Item #{i.record_id} could not be added to Batch: #{e}"
+            end
+
+          end
+        
+        else
+
+          total_failure 'No format specified'
+
     end
 
     @batch_import.results = {

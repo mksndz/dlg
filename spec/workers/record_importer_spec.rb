@@ -4,6 +4,46 @@ describe RecordImporter, type: :model do
 
   describe '#perform' do
 
+    context 'with Item IDs' do
+
+      it 'creates a Batch Item from an Item ID' do
+
+        i = Fabricate :item
+
+        batch_import = Fabricate(:batch_import) {
+          item_ids { [i.id] }
+          format { 'search query' }
+        }
+
+        expect{
+          RecordImporter.perform(batch_import.id)
+        }.to change(BatchItem, :count).by(1)
+
+        results = BatchImport.last.results
+
+        expect(results['updated'].length).to eq 1
+
+      end
+
+      it 'records an error with an invalid ID' do
+
+        batch_import = Fabricate(:batch_import) {
+          item_ids { ['12345'] }
+          format { 'search query' }
+        }
+
+        expect{
+          RecordImporter.perform(batch_import.id)
+        }.to change(BatchItem, :count).by(0)
+
+        results = BatchImport.last.results
+
+        expect(results['failed'].length).to eq 1
+
+      end
+
+    end
+
     context 'with valid XML' do
 
       let(:batch_import) {

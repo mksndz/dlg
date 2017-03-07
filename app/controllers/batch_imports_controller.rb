@@ -30,9 +30,10 @@ class BatchImportsController < ApplicationController
   def create
 
     file = params[:batch_import][:xml_file]
+    text = batch_import_params[:xml]
+    ids = batch_import_params[:item_ids]
 
     raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.both_types')) if (batch_import_params[:xml].present? and file)
-    raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.neither_type')) unless (batch_import_params[:xml].present? or file)
 
     @batch_import = BatchImport.new
 
@@ -44,9 +45,14 @@ class BatchImportsController < ApplicationController
       else
         raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.file_error'))
       end
-    else
+    elsif text
       @batch_import.xml = batch_import_params[:xml]
       @batch_import.format = 'text'
+    elsif ids
+      @batch_import.item_ids = ids.split(',')
+      @batch_import.format = 'search query'
+    else
+      ImportFailedError.new('No source for batch items provided!')
     end
 
     @batch_import.user = current_user
@@ -59,6 +65,7 @@ class BatchImportsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to batch_batch_import_path(@batch, @batch_import), notice: I18n.t('meta.batch_import.messages.success.created') }
+      format.js { render :queued }
     end
 
   end
@@ -85,7 +92,7 @@ class BatchImportsController < ApplicationController
   end
 
   def batch_import_params
-    params.require(:batch_import).permit(:xml, :validations)
+    params.require(:batch_import).permit(:xml, :validations, :item_ids)
   end
 
   def run_validations?
