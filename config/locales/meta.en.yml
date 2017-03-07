@@ -357,6 +357,7 @@ en:
         errors:
           both_types: 'You provided both a file and XML text. Choose one only!'
           file_error: 'Could not read from uploaded file.'
+          no_data: 'No source for Batch Items provided!'
     versions:
       action:
         diff: 'Diff'

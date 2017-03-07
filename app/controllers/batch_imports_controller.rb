@@ -45,14 +45,14 @@ class BatchImportsController < ApplicationController
       else
         raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.file_error'))
       end
-    elsif text
+    elsif text && !text.empty?
       @batch_import.xml = batch_import_params[:xml]
       @batch_import.format = 'text'
     elsif ids
       @batch_import.item_ids = ids.split(',')
       @batch_import.format = 'search query'
     else
-      ImportFailedError.new('No source for batch items provided!')
+      raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.no_data'))
     end
 
     @batch_import.user = current_user
