@@ -14,9 +14,11 @@ class RecordImporter
     @updated = []
     @failed = []
 
-    case @batch_import.format
+    import_type = @batch_import.format
 
-        when 'file' || 'text'
+    case import_type
+
+        when 'file', 'text'
 
           xml_data = Nokogiri::XML @batch_import.xml
 
