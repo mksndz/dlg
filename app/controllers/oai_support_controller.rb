@@ -28,6 +28,7 @@ class OaiSupportController < ApplicationController
                 .per(rows)
                 .includes(:collection)
                 .includes(:repository)
+                .order(id: :asc)
 
     total_count = items.total_count
 
