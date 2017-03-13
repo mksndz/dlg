@@ -133,13 +133,15 @@ class OaiSupportController < ApplicationController
   end
 
   def record_id(r)
-    case @class
-      when Item
+    case r.class.name
+      when 'Item'
         "#{r.repository.slug}_#{r.collection.slug}_#{r.slug}"
-      when Collection
+      when 'Collection'
         "#{r.repository.slug}_#{r.slug}"
-      else
+      when 'Repository'
         "#{r.slug}"
+      else
+        'ERROR'
     end
   end
 

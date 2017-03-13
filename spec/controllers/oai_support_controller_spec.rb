@@ -109,6 +109,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
             expect(response_object['total_count']).to eq 2
             expect(response_object['records'].last['id']).to eq(Collection.last.id)
+            expect(response_object['records'].last['record_id']).to eq(Collection.last.record_id)
 
           end
 
