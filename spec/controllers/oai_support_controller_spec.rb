@@ -84,7 +84,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
         context 'pagination' do
 
-          it 'can paginate through all the records' do
+          it 'can paginate through all the items' do
 
             Fabricate(:collection) {
               items(count: 2)
@@ -96,6 +96,19 @@ RSpec.describe OaiSupportController, type: :controller do
 
             expect(response_object['total_count']).to eq 2
             expect(response_object['records'].last['id']).to eq(Item.last.id)
+
+          end
+
+          it 'can paginate through all the collections' do
+
+            Fabricate.times(2, :collection)
+
+            get :dump, { class: 'collection', rows: 1, page: 2 }
+
+            response_object = JSON.parse(response.body)
+
+            expect(response_object['total_count']).to eq 2
+            expect(response_object['records'].last['id']).to eq(Collection.last.id)
 
           end
 

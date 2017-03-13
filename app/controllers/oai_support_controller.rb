@@ -10,11 +10,13 @@ class OaiSupportController < ApplicationController
     q = @class
       .page(params[:page])
       .per(@rows)
-      .includes(:collection)
-      .includes(:repository)
       .order(id: :asc)
 
     q = q.updated_since(params[:date]) if params[:date]
+
+    q = q.includes(:collection).includes(:repository) if @class == Item
+    q = q.includes(:repository) if @class == Collection
+
 
     total_count = q.total_count
 
@@ -131,7 +133,14 @@ class OaiSupportController < ApplicationController
   end
 
   def record_id(r)
-    "#{r.repository.slug}_#{r.collection.slug}_#{r.slug}"
+    case @class
+      when Item
+        "#{r.repository.slug}_#{r.collection.slug}_#{r.slug}"
+      when Collection
+        "#{r.repository.slug}_#{r.slug}"
+      else
+        "#{r.slug}"
+    end
   end
 
 end
