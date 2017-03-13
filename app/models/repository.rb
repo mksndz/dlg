@@ -7,6 +7,8 @@ class Repository < ActiveRecord::Base
   has_many :items, through: :collections
   has_and_belongs_to_many :users
 
+  scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
+
   validates_presence_of :title
   validate :coordinates_format
 

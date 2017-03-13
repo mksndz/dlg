@@ -12,6 +12,8 @@ class Collection < ActiveRecord::Base
   has_and_belongs_to_many :time_periods
   has_and_belongs_to_many :users
 
+  scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
+
   validates_presence_of :repository
   validates_presence_of :display_title
   validates_uniqueness_of :slug, scope: :repository_id

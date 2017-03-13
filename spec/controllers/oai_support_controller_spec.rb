@@ -22,43 +22,59 @@ RSpec.describe OaiSupportController, type: :controller do
         request.headers['X-User-Token'] = Rails.application.secrets.oai_token
       end
 
-      context 'with many records' do
+      context 'parameter support' do
 
-        it 'it defaults to 50 rows' do
+        it 'sets a class to Repository' do
 
-          PaperTrail.enabled = true
+          get :dump, { class: 'repository' }
 
-          Fabricate(:collection) {
-            items(count: 51)
-          }
-
-          get :dump
-
-          response_object = JSON.parse(response.body)
-
-          expect(response_object['total_count']).to eq 51
-          expect(response_object['items'].length).to eq 50
+          expect(assigns(:class)).to eq Repository
 
         end
 
-        it 'can paginate through all the records' do
+        it 'sets a class to Collection' do
 
-          Fabricate(:collection) {
-            items(count: 2)
-          }
+          get :dump, { class: 'collection' }
 
-          get :dump, { rows: 1, page: 2 }
+          expect(assigns(:class)).to eq Collection
 
-          response_object = JSON.parse(response.body)
+        end
 
-          expect(response_object['total_count']).to eq 2
-          expect(response_object['items'].last['id']).to eq(Item.last.id)
+        it 'sets a class to Item' do
+
+          get :dump, { class: 'item' }
+
+          expect(assigns(:class)).to eq Item
+
+        end
+
+        it 'handles unsupported classes' do
+
+          get :dump, { class: 'User' }
+
+          expect(response.code).to eq '400'
+
+        end
+
+        it 'it defaults to 50 rows' do
+
+          get :dump, { class: 'item' }
+
+          expect(assigns(:rows)).to eq 50
+
+        end
+
+        it 'disallows over 50000 rows' do
+
+          get :dump, { class: 'item', rows: 50001 }
+
+          expect(assigns(:rows)).to eq 50000
 
         end
 
         it 'can handle garbage params' do
 
-          get :dump, { rows: 'HAXXOR', page: 'PWNED' }
+          get :dump, { rows: 'HAXXOR', page: 'PWNED', class: 'item' }
 
           response_object = JSON.parse(response.body)
 
@@ -66,9 +82,28 @@ RSpec.describe OaiSupportController, type: :controller do
 
         end
 
+        context 'pagination' do
+
+          it 'can paginate through all the records' do
+
+            Fabricate(:collection) {
+              items(count: 2)
+            }
+
+            get :dump, { class: 'item', rows: 1, page: 2 }
+
+            response_object = JSON.parse(response.body)
+
+            expect(response_object['total_count']).to eq 2
+            expect(response_object['records'].last['id']).to eq(Item.last.id)
+
+          end
+
+        end
+
       end
 
-      context 'with no parameters' do
+      context 'returned objects' do
 
         before :each do
 
@@ -78,7 +113,7 @@ RSpec.describe OaiSupportController, type: :controller do
           fleeting_item = Fabricate :item
           fleeting_item.destroy
 
-          get :dump
+          get :dump, { class: 'item' }
 
           @response_object = JSON.parse(response.body)
 
@@ -98,32 +133,24 @@ RSpec.describe OaiSupportController, type: :controller do
 
         it 'returns a JSON object with items' do
 
-          expect(@response_object).to have_key 'items'
+          expect(@response_object).to have_key 'records'
 
         end
 
         it 'returns a JSON object with items array' do
 
-          expect(@response_object['items']).to be_an Array
+          expect(@response_object['records']).to be_an Array
 
         end
 
         it 'returns a JSON object with items array containing expected fields' do
 
-          item = @response_object['items'][0]
+          item = @response_object['records'][0]
 
           expect(item).to have_key 'id'
           expect(item).to have_key 'public'
           expect(item).to have_key 'record_id'
           expect(item).to have_key 'updated_at'
-
-        end
-
-        it 'returns a JSON object with items array containing information about a deleted item' do
-
-          item = @response_object['items'][1]
-
-          expect(item['id']).to eq 'deleted'
 
         end
 
@@ -141,7 +168,7 @@ RSpec.describe OaiSupportController, type: :controller do
             updated_at '2017-01-01'
           }
 
-          get :dump, { date: '2016-01-01' }
+          get :dump, { class: 'item', date: '2016-01-01' }
 
           @response_object = JSON.parse(response.body)
 
@@ -159,6 +186,34 @@ RSpec.describe OaiSupportController, type: :controller do
 
   end
 
+  describe 'GET #deleted' do
+
+    before :each do
+
+      request.headers['X-User-Token'] = Rails.application.secrets.oai_token
+
+      PaperTrail.enabled = true
+
+      @item = Fabricate :item
+      fleeting_item = Fabricate :item
+      fleeting_item.destroy
+
+      get :deleted
+
+      @response_object = JSON.parse(response.body)
+
+    end
+
+    it 'returns a JSON object with items array containing information about a deleted item' do
+
+      record = @response_object['records'][0]
+
+      expect(record['id']).to eq 'deleted'
+
+    end
+
+  end
+
   describe 'GET #metadata' do
 
     before :each do
@@ -169,7 +224,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
       item_ids = @items.collect { |i| i.id }.join(',')
 
-      get :metadata, { ids: item_ids, format: :json }
+      get :metadata, { class: 'item', ids: item_ids, format: :json }
 
     end
 
@@ -181,7 +236,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
     it 'sets @items to the Items with the specified IDs' do
 
-      expect(assigns(:items)).to eq @items
+      expect(assigns(:records)).to eq @items
 
     end
 
@@ -193,7 +248,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
       get :metadata, { ids: ids, format: :json }
 
-      expect(assigns(:items).length).to eq 3
+      expect(assigns(:records).length).to eq 3
 
     end
 

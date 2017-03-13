@@ -7,8 +7,8 @@ RSpec.describe ItemsController, type: :routing do
       expect(get: '/oai_support/dump').to route_to('oai_support#dump')
     end
 
-    it 'routes to #dump' do
-      expect(get: '/oai_support/2016-01-01/dump').to route_to(controller: 'oai_support', action: 'dump', date: '2016-01-01')
+    it 'routes to #deleted' do
+      expect(get: '/oai_support/deleted').to route_to('oai_support#deleted')
     end
 
     it 'routes to #metadata' do

@@ -3,9 +3,9 @@ require 'resque/server'
 Rails.application.routes.draw do
 
   constraints(format: :json) do
-    get 'oai_support/dump', to: 'oai_support#dump', as: 'oai_support_dump'
-    get 'oai_support/:date/dump', to: 'oai_support#dump', as: 'oai_support_dump_since'
-    get 'oai_support/metadata', to: 'oai_support#metadata', as: 'oai_support_metadata'
+    get 'oai_support/dump',           to: 'oai_support#dump',     as: 'oai_support_dump'
+    get 'oai_support/deleted',        to: 'oai_support#deleted',  as: 'oai_support_deleted'
+    get 'oai_support/metadata',       to: 'oai_support#metadata', as: 'oai_support_metadata'
   end
 
   concern :searchable, Blacklight::Routes::Searchable.new
