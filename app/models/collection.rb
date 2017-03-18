@@ -24,6 +24,14 @@ class Collection < ActiveRecord::Base
     %w(repository_id public).freeze
   end
 
+  def self.find_by_record_id(record_id)
+    slugs = record_id.split('_')
+    return nil unless slugs.length == 2
+    repo = Repository.find_by_slug(slugs[0])
+    return nil unless repo
+    Collection.where({ repository: repo, slug: slugs[1] }).first
+  end
+
   def title
     display_title || 'No Title'
   end

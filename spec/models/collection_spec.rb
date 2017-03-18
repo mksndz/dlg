@@ -11,6 +11,11 @@ RSpec.describe Collection, type: :model do
     expect(Collection.count).to eq 1
   end
 
+  it 'can lookup by record id' do
+    c = Fabricate(:collection)
+    expect(Collection.find_by_record_id(c.record_id)).to eq c
+  end
+
   # duh
   it 'belongs to a Repository' do
     r = Fabricate(:repository) {
