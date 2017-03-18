@@ -208,6 +208,11 @@ class Item < ActiveRecord::Base
                 only: [
                     :slug
                 ]
+            },
+            portals: {
+                only: [
+                    :code
+                ]
             }
         }
     }
