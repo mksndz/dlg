@@ -66,6 +66,15 @@ RSpec.describe Item, type: :model do
     expect(i.record_id).not_to be_empty
   end
 
+  it 'has a record_id that tracks changes to collection' do
+    i = Fabricate :item
+    expect(i.record_id.include? i.slug).to be_truthy
+    c = Fabricate :collection
+    i.collection = c
+    i.save
+    expect(i.record_id.include? c.slug).to be_truthy
+  end
+
   it 'has a facet_years value that is an Array of years taken from dc_date' do
     i = Fabricate(:item) {
       dc_date { %w(text 991 1802 2001 1776-1791 1900/1901) }

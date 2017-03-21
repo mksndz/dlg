@@ -11,17 +11,21 @@ RSpec.describe Collection, type: :model do
     expect(Collection.count).to eq 1
   end
 
-  it 'can lookup by record id' do
-    c = Fabricate(:collection)
-    expect(Collection.find_by_record_id(c.record_id)).to eq c
-  end
-
   # duh
   it 'belongs to a Repository' do
     r = Fabricate(:repository) {
       collections(count: 1)
     }
     expect(r.collections.first.repository).to be_kind_of Repository
+  end
+
+  it 'has a record_id that tracks changes to repository' do
+    c = Fabricate :collection
+    expect(c.record_id.include? c.slug).to be_truthy
+    r = Fabricate :repository
+    c.repository = r
+    c.save
+    expect(c.record_id.include? r.slug).to be_truthy
   end
   
   it 'has a title' do

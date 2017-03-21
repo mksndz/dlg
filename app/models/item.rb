@@ -19,6 +19,7 @@ class Item < ActiveRecord::Base
   has_paper_trail class_name: 'ItemVersion'
 
   # after_save :check_for_thumbnail
+  before_save :set_record_id
 
   searchable do
 
@@ -184,29 +185,33 @@ class Item < ActiveRecord::Base
     (other_repository_titles << repository.title).reverse
   end
 
-  def record_id
-    "#{self.repository.slug}_#{self.collection.slug}_#{self.slug}"
-  end
-
   def title
     dcterms_title.first ? dcterms_title.first.strip : 'No Title'
   end
 
   def to_xml(options = {})
+
     default_options = {
         dasherize: false,
         # fields to not include
         except: [
             :id,
             :collection_id,
+            :other_collections,
             :valid_item,
             :created_at,
             :updated_at
         ],
         include: {
+            other_colls: {
+                skip_types: true,
+                only: [
+                    :record_id
+                ]
+            },
             collection: {
                 only: [
-                    :slug
+                    :record_id
                 ]
             },
             portals: {
@@ -235,10 +240,18 @@ class Item < ActiveRecord::Base
   end
 
   def other_collection_titles
-    Collection.find(other_collections).map(&:title)
+    other_colls.map(&:title)
+  end
+
+  def other_colls
+    Collection.find(other_collections)
   end
 
   private
+
+  def set_record_id
+    self.record_id = "#{repository.slug}_#{collection.slug}_#{slug}"
+  end
 
   def other_repository_titles
     Collection.find(other_collections).map(&:repository_title)

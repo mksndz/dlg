@@ -19,17 +19,10 @@ class Collection < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :repository_id
 
   before_destroy :clear_from_other_collections
+  before_save :set_record_id
 
   def self.index_query_fields
     %w(repository_id public).freeze
-  end
-
-  def self.find_by_record_id(record_id)
-    slugs = record_id.split('_')
-    return nil unless slugs.length == 2
-    repo = Repository.find_by_slug(slugs[0])
-    return nil unless repo
-    Collection.where({ repository: repo, slug: slugs[1] }).first
   end
 
   def title
@@ -173,7 +166,7 @@ class Collection < ActiveRecord::Base
 
   end
 
-  def record_id
+  def computed_record_id
     "#{repository.slug}_#{self.slug}"
   end
 
@@ -212,6 +205,10 @@ class Collection < ActiveRecord::Base
   end
 
   private
+
+  def set_record_id
+    self.record_id = "#{repository.slug}_#{slug}"
+  end
 
   def clear_from_other_collections
     is = Item.where "#{self.id} = ANY (other_collections)"
