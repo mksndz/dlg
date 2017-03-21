@@ -25,4 +25,4 @@ A [Blacklight](https://github.com/projectblacklight/blacklight)-based administra
 10. `rspec` to run all specs
 
 ### License
-© 2016 Digital Library of Georgia
+© 2017 Digital Library of Georgia
