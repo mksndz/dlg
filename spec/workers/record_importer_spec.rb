@@ -50,13 +50,25 @@ describe RecordImporter, type: :model do
         Fabricate :batch_import
       }
 
-      context 'with valid XML' do
+      context 'with just valid XML' do
 
-        before(:each) {
-          Fabricate(:collection) {
-            slug { '0091' } # to make the test xml fully valid
-          }
-        }
+        before(:each) do
+
+          Fabricate(:portal) do
+            code 'georgia'
+          end
+
+          Fabricate(:repository) do
+            slug 'lpb'
+            collections { [Fabricate(:collection) { slug 'aa' }] }
+          end
+
+          Fabricate(:repository) do
+            slug 'geh'
+            collections { [Fabricate(:collection) { slug '0091' }] }
+          end
+
+        end
 
         it 'should create a BatchItem' do
 
@@ -82,6 +94,30 @@ describe RecordImporter, type: :model do
 
         end
 
+        it 'should create a BatchItem with proper portal' do
+
+          RecordImporter.perform(batch_import.id)
+
+          expect(BatchItem.last.portals).to include Portal.last
+
+        end
+
+        it 'should create a BatchItem with proper collection' do
+
+          RecordImporter.perform(batch_import.id)
+
+          expect(BatchItem.last.collection.slug).to eq '0091'
+
+        end
+
+        it 'should create a BatchItem with proper other_collections array' do
+
+          RecordImporter.perform(batch_import.id)
+
+          expect(BatchItem.last.other_collections).to eq [Collection.find_by_record_id('lpb_aa').id]
+
+        end
+
         it 'should update BatchImport results appropriately' do
 
           RecordImporter.perform(batch_import.id)
@@ -96,12 +132,11 @@ describe RecordImporter, type: :model do
 
           i = Fabricate :item
 
-          c = Collection.last
-          c.slug = '0091' # todo retrieve collection slug from test xml
-          c.save
+          c = Collection.find_by_record_id 'geh_0091'
 
           slug = batch_import.xml[/<slug>(.*?)<\/slug>/, 1]
           i.slug = slug
+          i.collection = c
           i.save
 
           RecordImporter.perform(batch_import.id)

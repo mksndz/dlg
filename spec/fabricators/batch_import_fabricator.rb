@@ -9,13 +9,22 @@ Fabricator(:batch_import) do
     '<?xml version="1.0" encoding="UTF-8"?>
       <items type="array">
         <item>
+          <portals type="array">
+            <portal>
+              <code>georgia</code>
+            </portal>
+          </portals>
+          <collection>
+            <record_id>geh_0091</record_id>
+          </collection>
+          <other_colls type="array">
+            <other_coll>
+              <record_id>lpb_aa</record_id>
+            </other_coll>
+          </other_colls>
           <dpla type="boolean">true</dpla>
           <public type="boolean">true</public>
           <local type="boolean">true</local>
-          <portal>
-             <code>georgia</code>
-             <code>other</code>
-          </portal>
           <dc_format type="array">
             <dc_format>application/pdf</dc_format>
           </dc_format>
@@ -56,13 +65,9 @@ Fabricator(:batch_import) do
             <dcterms_provenance>Atlanta History Center</dcterms_provenance>
           </dcterms_provenance>
           <valid_item type="boolean">true</valid_item>
-          <has_thumbnail type="boolean">false</has_thumbnail>
           <dcterms_bibliographic_citation type="array">
             <dcterms_bibliographic_citation>Cite as: Leo Frank papers, MSS 91, Kenan Research Center at the Atlanta History Center.</dcterms_bibliographic_citation>
           </dcterms_bibliographic_citation>
-          <collection>
-            <slug>0091</slug>
-          </collection>
         </item>
       </items>'
   }

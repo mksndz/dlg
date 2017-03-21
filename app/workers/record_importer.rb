@@ -79,14 +79,17 @@ class RecordImporter
   def self.create_or_update_record(num, record_data)
 
     collection_info = record_data.delete('collection')
-    collection_slug = collection_info['slug']
+    collection_slug = collection_info.has_key?('slug') ? collection_info['slug'] : nil
+    collection_record_id = collection_info.has_key?('record_id') ? collection_info['record_id'] : nil
 
-    unless collection_slug
-      add_failed num, "Collection slug for record #{record_data['slug']} could not be extracted from XML."
+    unless collection_slug || collection_record_id
+      add_failed num, "Collection slug for record ##{num} could not be extracted from XML."
       return
     end
 
-    collection = Collection.find_by_slug collection_slug
+    collection = nil
+    collection = Collection.find_by_slug collection_slug if collection_slug
+    collection = Collection.find_by_record_id collection_record_id if collection_record_id
 
     unless collection
       add_failed num, "Collection for record #{record_data['slug']} could not be found using slug: #{collection_slug}."
@@ -145,12 +148,17 @@ class RecordImporter
   end
 
   def self.create_update_record(existing_item, record_data)
-    create_new_record(prepared_params(record_data))
+    create_new_record record_data
     @record.item = existing_item
   end
 
   def self.create_new_record(record_data)
+
+    portals = record_data.delete('portals')
+    other_colls = record_data.delete('other_colls')
     @record = BatchItem.new prepared_params(record_data)
+    set_record_portals(portals) if portals
+    set_record_other_colls(other_colls) if other_colls
     @record.batch_import = @batch_import
   end
 
@@ -198,6 +206,14 @@ class RecordImporter
 
   def self.save_batch_import
     raise JobFailedError("BatchImport could not be updated: #{@batch_import.errors.inspect}") unless @batch_import.save
+  end
+
+  def self.set_record_portals(portals_info)
+    @record.portals = portals_info.map { |portal| Portal.find_by_code portal['code'] }
+  end
+
+  def self.set_record_other_colls(other_colls_info)
+    @record.other_collections = other_colls_info.map { |other_coll| Collection.find_by_record_id(other_coll['record_id']).id }
   end
 
 end

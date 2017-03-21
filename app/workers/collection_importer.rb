@@ -46,11 +46,10 @@ class CollectionImporter
 
       hash = Hash.from_xml(i.to_s)
       item_hash = hash['item']
-      item_hash.delete('collection')
       item_hash.delete('dc_identifier_label')
       portal = item_hash.delete('portal')
-
-      other_collections = item_hash.delete('other_collection')
+      other_collections = item_hash.delete('other_colls')
+      collections = item_hash.delete('collection')
 
       item = Item.new(item_hash)
       item.collection = c
