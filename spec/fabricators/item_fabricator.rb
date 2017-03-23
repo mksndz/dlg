@@ -53,4 +53,6 @@ Fabricator(:robust_item, from: :item) do
       Faker::Name.name_with_middle
   ] }
 
+  portals(count: 1)
+
 end

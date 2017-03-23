@@ -234,7 +234,7 @@ RSpec.describe OaiSupportController, type: :controller do
 
       request.headers['X-User-Token'] = Rails.application.secrets.oai_token
 
-      @items = Fabricate.times(3, :item)
+      @items = Fabricate.times(3, :robust_item)
 
       item_ids = @items.collect { |i| i.id }.join(',')
 
@@ -248,9 +248,19 @@ RSpec.describe OaiSupportController, type: :controller do
 
     end
 
-    it 'sets @items to the Items with the specified IDs' do
+    it 'sets records to the Items with the specified IDs' do
 
       expect(assigns(:records)).to eq @items
+
+    end
+
+    it 'response to contain portal code' do
+
+      data = JSON.parse(response.body)
+
+      item_hash = data[0]
+
+      expect(item_hash['portals'][0]).to have_key 'code'
 
     end
 

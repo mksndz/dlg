@@ -82,7 +82,9 @@ class OaiSupportController < ApplicationController
 
     @records = @class.where(id: params[:ids].split(','))
 
-    render json: @records
+    render json: @records.to_json({
+        include: [ portals: { only: :code } ]
+                                 })
 
   end
 
