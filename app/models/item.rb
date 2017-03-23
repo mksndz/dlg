@@ -197,8 +197,10 @@ class Item < ActiveRecord::Base
         except: [
             :id,
             :collection_id,
+            :record_id,
             :other_collections,
             :valid_item,
+            :has_thumbnail,
             :created_at,
             :updated_at
         ],
