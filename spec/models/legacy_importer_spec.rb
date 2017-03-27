@@ -49,6 +49,7 @@ RSpec.describe LegacyImporter, type: :model do
   after :all do
     Subject.delete_all
     TimePeriod.delete_all
+    Portal.delete_all
   end
 
   context 'repository creation' do
