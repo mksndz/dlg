@@ -1,169 +1,107 @@
+#
+# This class provides methods that handle import from ultimate for Repositories
+# and Collections.
+#
 class LegacyImporter
 
-  THUMBNAIL_ROOT = 'http://dlg.galileo.usg.edu/do-th:'
+  @logger = Logger.new('./log/repo_and_coll_import.log')
 
-  def self.get_value(xml, field)
-    xml.css(field).inner_text.encode('UTF-8', invalid: :replace, undef: :replace)
-        # .gsub('&quot;',"'")
-        # .gsub('&apos;',"'")
-        # .gsub("\n",'')
-  end
+  THUMBNAIL_ROOT = 'http://dlg.galileo.usg.edu/do-th:'.freeze
 
-  def self.create_repository(xml_node)
+  def self.create_repository(repo_hash)
 
-    slug = get_value xml_node, 'slug'
+    repo_hash = repo_hash['repo']
 
     repository = Repository.new
 
-    repository.slug               = slug
-    repository.title              = get_value xml_node, 'title'
-    repository.short_description  = get_value xml_node, 'short_description'
-    repository.description        = get_value xml_node, 'description'
-    repository.strengths          = get_value xml_node, 'strengths'
-    repository.address            = get_value xml_node, 'address'
-    repository.coordinates        = get_value xml_node, 'coordinates'
-    repository.directions_url     = get_value xml_node, 'directions_url'
-    repository.homepage_url       = get_value xml_node, 'homepage_url'
-    repository.in_georgia         = get_value(xml_node, 'in_georgia') == 'true'
-    repository.public             = get_value(xml_node, 'public') == 'true'
-    repository.color              = "##{get_value xml_node, 'color'}"
-    repository.teaser             = get_value(xml_node, 'teaser') == 'true'
+    portals = repo_hash.delete 'portals'
+    color = repo_hash.delete 'color'
 
-    repository.thumbnail_path     = "#{THUMBNAIL_ROOT}#{slug}"
+    repository.update repo_hash
 
-    portals = xml_node.css('portal')
+    repository.color = "##{color}" if color && !color.empty?
+    repository.thumbnail_path = "#{THUMBNAIL_ROOT}#{repository.slug}"
 
-    if portals
-      set_portals repository, portals
-    end
+    assign_portals repository, portals
 
     repository.save(validate: false)
     repository
 
   end
 
-  def self.create_collection(xml_node)
+  def self.create_collection(collection_hash)
 
-    logger = Logger.new('./log/repo_and_coll_import.log')
+    collection_hash = collection_hash['coll']
+    repository_hash = collection_hash.delete('repository')
 
-    collection_attributes = Hash.from_xml xml_node.to_s
-
-    collection_attributes = collection_attributes['coll']
-
-    collection = Collection.find_by_slug collection_attributes['slug']
-    collection ||= Collection.new
-
-    # extract attributes for special treatment
-    repository = collection_attributes.delete('repository')
-    time_periods = collection_attributes.delete('time_period')
-    topics = collection_attributes.delete('topic')
-    other_repositories = collection_attributes.delete('other_repository')
-    color = collection_attributes.delete('color')
-    local = collection_attributes.delete('local')
-    portals = collection_attributes.delete('portal')
-
-    # ensure a display title is set
-    unless collection_attributes['display_title']
-      collection_attributes['display_title'] = collection_attributes['dcterms_title'].first
+    unless repository_hash
+      @logger.error "No Repository info for #{collection_hash['slug']}."
+      return false
     end
 
-    collection.assign_attributes(collection_attributes)
+    collection = Collection.find_by_record_id("#{repository_hash['slug']}_#{collection_hash['slug']}")
 
-    if portals
-      set_portals collection, xml_node.css('portal')
-    end
-
-    if time_periods
-      time_periods.each do |xml_tp|
-        tp_added = false
-        xml_tp.gsub!('Millenium','Millennium')
-        TimePeriod.all.each do |tp|
-          if xml_tp.index(tp.name)
-            collection.time_periods << tp
-            tp_added = true
-          end
-        end
-        logger.error "TimePeriod from XML not added: #{xml_tp}" unless tp_added
+    unless collection
+      collection = Collection.new
+      if repository_hash.key?('slug')
+        collection.repository = Repository.find_by_slug repository_hash['record_id']
+      else
+        @logger.error "No Repository could be set for collection #{collection_hash['slug']}."
       end
     end
 
-    if topics
-      topics.each do |s|
-        subj = Subject.find_by_name s
-        if subj
-          collection.subjects << subj
-        else
-          logger.error "Subject could not be added: #{s}"
-        end
-      end
-    end
+    collection_hash['display_title'] ||= collection_hash['dcterms_title'].first
 
-
-    if other_repositories
-      other_repositories.each do |r|
-        other_repository = Repository.find_by_slug(r)
-        if other_repository
-          collection.other_repositories << other_repository.id
-        else
-          logger.error "No Repository with slug #{r} found to add to other_repositories array for Collection #{collection.slug}."
-        end
-      end
-    end
-
+    local = collection_hash.delete('local')
+    color = collection_hash.delete('color')
     collection.color = "##{color}" if color && !color.empty?
 
-    # set repository unless already set
-    if collection.repository
-      collection.save(validate: false)
-    else
+    assign_portals collection, collection_hash.delete('portals')
+    assign_time_periods collection, collection_hash.delete('time_period')
+    assign_topics collection, collection_hash.delete('topic')
+    assign_other_repositories collection, collection_hash.delete('other_repository')
 
-      if repository and repository.has_key? 'slug'
-        repo = Repository.find_by_slug repository['slug']
-
-        if repo
-          collection.repository = repo
-          collection.save(validate: false)
-        else
-          logger.error "Needed repo but collection metadata for #{collection.slug} contains no or an unknown repo slug (#{repository['slug']})."
-          logger.error 'Collection not saved.'
-        end
-
-      else
-        logger.error "No Repository provided for #{collection.slug}"
-      end
-
+    if repository_hash && repository_hash.key?('slug') && !collection.repository
+      collection.repository = Repository.find_by_slug repository_hash['slug']
     end
 
-    if collection.errors.present?
-      logger.error 'Problem saving Collection. Check errors.'
-    end
-
+    collection.update collection_hash
+    collection.save(validate: false)
     collection
 
   end
 
-  def self.set_portals(entity, portals_node)
+  def self.assign_portals(object, portals_hash)
+    portals_hash.each do |portal_data|
+      portal = Portal.find_by_code portal_data['code']
+      object.portals << portal if portal
+    end if portals_hash
+  end
 
-    portals_hash = Hash.from_xml(portals_node.to_s)
-    portals = portals_hash['portal']['code']
-
-    if portals.respond_to? :each
-
-      portals.each do |c|
-
-        portal = Portal.find_by_code c
-
-        entity.portals << portal if portal
-
+  def self.assign_time_periods(object, time_periods_hash)
+    time_periods_hash.each do |xml_tp|
+      xml_tp.gsub!('Millenium', 'Millennium')
+      TimePeriod.all.each do |tp|
+        if xml_tp.index(tp.name)
+          object.time_periods << tp
+          next
+        end
       end
+    end if time_periods_hash
+  end
 
-    else
+  def self.assign_topics(object, topics_hash)
+    topics_hash.each do |s|
+      subj = Subject.find_by_name s
+      object.subjects << subj if subj
+    end if topics_hash
+  end
 
-      portal = Portal.find_by_code portals
-      entity.portals = [portal] if portal
-
-    end
-
+  def self.assign_other_repositories(object, other_repos_hash)
+    other_repos_hash.each do |r|
+      other_repository = Repository.find_by_slug(r)
+      object.other_repositories << other_repository.id if other_repository
+    end if other_repos_hash
   end
 
 end

@@ -29,7 +29,6 @@ task import_repositories: :environment do
   collection_node_name          = 'coll'.freeze
   slug_node_name                = 'code'.freeze
   name_node_name                = 'name'.freeze
-  portal_node_name              = 'portal'.freeze
 
   # define sources
   repository_hierarchy_source   = 'http://dlg.galileo.usg.edu/xml/dcq/Collections.xml'.freeze
@@ -113,9 +112,8 @@ task import_repositories: :environment do
   # start looping through metadata file
   repos_in_mfile.each do |repo_node|
     # create repository
-    repository = LegacyImporter.create_repository repo_node
+    repository = LegacyImporter.create_repository(Hash.from_xml(repo_node.to_s))
 
-    # set collection relations
     if repository
       @logger.info "Repository added: #{repository.title}."
       repositories_created += 1
@@ -128,7 +126,7 @@ task import_repositories: :environment do
   # COLLECTION METADATA PROCESSING
 
   colls_in_mfile.each do |coll_node|
-    collection = LegacyImporter.create_collection coll_node
+    collection = LegacyImporter.create_collection Hash.from_xml(coll_node.to_s)
     if collection
       @logger.info "Collection added: #{collection.display_title}."
       collections_created += 1

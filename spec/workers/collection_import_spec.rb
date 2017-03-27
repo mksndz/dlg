@@ -4,52 +4,45 @@ describe CollectionImporter, type: :model do
 
   describe '#perform' do
 
-    # todo does setting this here limit the config change to only these tests?
     RSpec::Expectations.configuration.on_potential_false_positives = :nothing
 
-    let(:collection) {
-      Fabricate :collection
-    }
-    
+    let(:collection) { Fabricate :collection }
+
     context 'with an invalid collection_id' do
-      
+
       it 'should raise a JobFailedError' do
-        
-        expect{
+
+        expect do
           CollectionImporter.perform('Z','foo')
-        }.to raise_exception JobFailedError
-        
+        end.to raise_exception JobFailedError
+
       end
-      
+
     end
-    
+
     context 'with an invalid xml url' do
-      
-      let(:bad_url) {
-        'zzz://web.page'
-      }
-      
+
+      let(:bad_url) { 'zzz://web.page' }
+
       it 'should not raise a JobFailedError' do
-        
-        expect{
+
+        expect do
           CollectionImporter.perform(collection.id, bad_url)
-        }.not_to raise_exception
-        
+        end.not_to raise_exception
+
       end
-      
+
     end
-    
+
     context 'with a url that leads to invalid xml' do
 
-      let(:bad_xml) {
-        'http://dlg.galileo.usg.edu/robots.txt'
-      }
+      let(:bad_xml) { 'http://dlg.galileo.usg.edu/robots.txt' }
 
       it 'should throw a JobFailedError if the passed xml_items_url provides bad xml' do
 
-        expect{
+        expect do
           CollectionImporter.perform(collection.id, bad_xml)
-        }.to raise_exception
+        end.to raise_exception
 
       end
 
@@ -57,20 +50,17 @@ describe CollectionImporter, type: :model do
 
     context 'with a valid url, valid xml, but a Collection that already has Items' do
 
-      let(:populated_collection) {
-        Fabricate(:collection){
-          items(count:1)
-        }
-      }
+      let(:populated_collection) { Fabricate(:collection){ items(count: 1) } }
 
-      let(:good_xml) {
-        # 'http://dlg.galileo.usg.edu/xml/dcq/cviog_gainfo.xml'
-        'http://dlg.galileo.usg.edu/xml/dcq/aarl_bss.xml'
-      }
+      let(:good_xml) { 'http://dlg.galileo.usg.edu/xml/dcq/aarl_bss.xml' }
 
       it 'should return true' do
 
-        expect(CollectionImporter.perform(populated_collection.id, good_xml)).to be true
+        expect(
+          CollectionImporter.perform(
+            populated_collection.id,
+            good_xml))
+          .to be true
 
       end
 
@@ -79,30 +69,28 @@ describe CollectionImporter, type: :model do
 
     context 'with a valid url, valid xml, and an empty Collection' do
 
-      let(:good_xml) {
-        'http://dlg.galileo.usg.edu/xml/dcq/cviog_gainfo.xml'
-      }
+      let(:good_xml) { 'http://dlg.galileo.usg.edu/xml/dcq/cviog_gainfo.xml' }
 
       let(:collection_item_count) { 1 }
 
       it 'should not raise any kind of exception' do
 
-        expect{
+        expect do
           CollectionImporter.perform(collection.id, good_xml)
-        }.not_to raise_exception
+        end.not_to raise_exception
 
       end
 
       it 'should populate collection with Items' do
 
-        expect{
-            CollectionImporter.perform(collection.id, good_xml)
-        }.to change(collection.items, :count).by(collection_item_count)
+        expect do
+          CollectionImporter.perform(collection.id, good_xml)
+        end.to change(collection.items, :count).by(collection_item_count)
 
       end
 
     end
-    
+
   end
 
 end
