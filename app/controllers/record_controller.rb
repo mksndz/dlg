@@ -24,16 +24,16 @@ class RecordController < ApplicationController
       dcterms_bibliographic_citation
       dlg_local_right
       dlg_subject_personal
-    )
-  VALID_TYPES = %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text)
+    ).freeze
+  VALID_TYPES = %w(Collection Dataset MovingImage StillImage Interactive Resource Software Sound Text).freeze
   RIGHTS_STATEMENTS = %w(inc inc_ow_eu inc_edu inc_nc inc_ruu noc_cr noc_nc noc_oklr noc_us cne und nkc zero mark by-nc-sa by-nc by-nd by-sa by)
 
   protected
 
   def prepare_params(params)
-    params.each do |f,v|
-      params[f] = v.reject(&:empty?) if v.kind_of? Array
-      params[f] = v.strip.split("\n") if MULTIVALUED_TEXT_FIELDS.include? f
+    params.each do |f, v|
+      params[f] = v.reject(&:empty?) if v.is_a? Array
+      params[f] = v.gsub("\r\n", "\n").strip.split("\n") if MULTIVALUED_TEXT_FIELDS.include? f
     end
   end
 

@@ -34,7 +34,7 @@ module ApplicationHelper
     html = '<div class="form-group">'
     # html += label_tag "#{term}", t("activerecord.attributes.#{klass}.#{term}")
     html += meta_textarea_label(klass, term)
-    html += text_area_tag "#{klass}[#{term}]", object.method(term).call.join("\n"), { rows: '5', class: 'form-control', id: term }
+    html += text_area_tag"#{klass}[#{term}]", object.method(term).call.join("\n"), { rows: '5', class: 'form-control', id: term }
     # html += content_tag :span, t("activerecord.help.#{klass}.#{term}", default: ''), { class: 'help-block'}
     html += '</div>'
     html.html_safe

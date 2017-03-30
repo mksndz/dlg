@@ -17,9 +17,7 @@ feature 'Item Management' do
 
       scenario 'item created from batch_item should link to batch and batch_item from whence it came' do
 
-        b = Fabricate(:batch) {
-          batch_items(count: 1)
-        }
+        b = Fabricate(:batch) { batch_items(count: 1) }
 
         b.commit
 
@@ -35,7 +33,7 @@ feature 'Item Management' do
 
       scenario 'saves a new item with no other_collection value' do
 
-        c1 = Fabricate(:collection) { items(count:1) }
+        c1 = Fabricate(:collection) { items(count: 1) }
 
         visit items_path
 
@@ -54,7 +52,7 @@ feature 'Item Management' do
 
       scenario 'super user saves a new item with other_collection value' do
 
-        c1 = Fabricate(:collection) { items(count:1) }
+        c1 = Fabricate(:collection) { items(count: 1) }
         c2 = Fabricate(:collection)
 
         visit items_path
@@ -77,9 +75,7 @@ feature 'Item Management' do
       scenario 'saves a new item removing other_collection value' do
 
         c0 = Fabricate(:collection)
-        c1 = Fabricate(:collection) {
-          items(count:1)
-        }
+        c1 = Fabricate(:collection) { items(count: 1) }
 
         c1.items.first.other_collections = [c0.id]
 
@@ -106,9 +102,7 @@ feature 'Item Management' do
 
       scenario 'portals are displayed as badges on index' do
 
-        Fabricate(:item) {
-          portals(count: 1)
-        }
+        Fabricate(:item) { portals(count: 1) }
 
         visit items_path
 
@@ -120,7 +114,7 @@ feature 'Item Management' do
 
       scenario 'saves a new item with no portal value' do
 
-        c1 = Fabricate(:collection) { items(count:1) }
+        c1 = Fabricate(:collection) { items(count: 1) }
 
         visit items_path
 
@@ -139,7 +133,7 @@ feature 'Item Management' do
 
       scenario 'super user saves a new item with a single portal value' do
 
-        c1 = Fabricate(:collection) { items(count:1) }
+        c1 = Fabricate(:collection) { items(count: 1) }
 
         p = Fabricate(:portal)
 
@@ -162,7 +156,7 @@ feature 'Item Management' do
 
       scenario 'super user saves a new item with a multiple portal values' do
 
-        c1 = Fabricate(:collection) { items(count:1) }
+        c1 = Fabricate(:collection) { items(count: 1) }
 
         p1 = Fabricate(:portal)
         p2 = Fabricate(:portal)
@@ -189,9 +183,7 @@ feature 'Item Management' do
 
       scenario 'saves a new item removing other_collection value' do
 
-        c = Fabricate(:collection) {
-          items(count:1)
-        }
+        c = Fabricate(:collection) { items(count: 1) }
 
         p = Fabricate :portal
 
@@ -220,12 +212,12 @@ feature 'Item Management' do
 
       scenario 'sorts items by title then sees items properly listed' do
 
-        Fabricate(:item) { dcterms_title [ 'L' ] }
-        Fabricate(:item) { dcterms_title [ 'F' ] }
-        Fabricate(:item) { dcterms_title [ 'A' ] }
-        Fabricate(:item) { dcterms_title [ 'Z' ] }
-        Fabricate(:item) { dcterms_title [ 'Q' ] }
-        Fabricate(:item) { dcterms_title [ '2' ] }
+        Fabricate(:item) { dcterms_title ['L'] }
+        Fabricate(:item) { dcterms_title ['F'] }
+        Fabricate(:item) { dcterms_title ['A'] }
+        Fabricate(:item) { dcterms_title ['Z'] }
+        Fabricate(:item) { dcterms_title ['Q'] }
+        Fabricate(:item) { dcterms_title ['2'] }
 
         visit items_path
 
@@ -330,6 +322,12 @@ feature 'Item Management' do
       expect(page).to have_content new_type
 
     end
+
+  end
+
+  private
+
+  def fill_in_default_values
 
   end
 
