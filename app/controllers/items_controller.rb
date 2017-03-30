@@ -1,3 +1,8 @@
+#
+# Handles CRUD for Items
+# TODO: Factor out de facto index method for deleted items (ItemVersion)
+# TODO: Factor out into Filterable the Portal filtering behavior
+#
 class ItemsController < RecordController
 
   load_and_authorize_resource
@@ -9,7 +14,7 @@ class ItemsController < RecordController
   include Sorting
   include Filterable
 
-  before_action :set_data, only: [ :new, :copy, :edit ]
+  before_action :set_data, only: [:new, :copy, :edit]
 
   def index
 
@@ -26,25 +31,25 @@ class ItemsController < RecordController
 
       unless portals_filter.empty?
         item_query = item_query
-                         .includes(:portals)
-                         .joins(:portals)
-                         .where(portals: { id: portals_filter } )
+                       .includes(:portals)
+                       .joins(:portals)
+                       .where(portals: { id: portals_filter })
       end
     end
 
     unless current_user.super?
-        item_query = item_query.where(collection: user_collection_ids)
+      item_query = item_query.where(collection: user_collection_ids)
     end
 
     @items = item_query
 
     respond_to do |format|
       format.xml { send_data @items.to_xml }
-      format.html {
+      format.html do
         @items = @items
-          .page(params[:page])
-          .per(params[:per_page])
-      }
+                   .page(params[:page])
+                   .per(params[:per_page])
+      end
       # format.json { send_data @items.as_json }
     end
 
@@ -94,7 +99,7 @@ class ItemsController < RecordController
     Item.destroy(multiple_action_params[:entities].split(','))
     Sunspot.commit
     respond_to do |format|
-      format.json { render json: {}, status: :ok  }
+      format.json { render json: {}, status: :ok }
     end
   end
 
@@ -110,11 +115,11 @@ class ItemsController < RecordController
     set_filter_options [:user]
 
     @item_versions = ItemVersion
-                         .index_query(params)
-                         .where(item_type: 'Item', event: 'destroy')
-                         .order(sort_column('item_versions') + ' ' + sort_direction)
-                         .page(params[:page])
-                         .per(params[:per_page])
+                       .index_query(params)
+                       .where(item_type: 'Item', event: 'destroy')
+                       .order(sort_column('item_versions') + ' ' + sort_direction)
+                       .page(params[:page])
+                       .per(params[:per_page])
   end
 
   private
@@ -128,38 +133,38 @@ class ItemsController < RecordController
   def item_params
     prepare_params(
       params.require(:item).permit(
-          :collection_id,
-          :slug,
-          :dpla,
-          :public,
-          :local,
-          :date_range,
-          :dc_right,
-          :dc_relation,
-          :dc_format,
-          :dc_date,
-          :dcterms_is_part_of,
-          :dcterms_contributor,
-          :dcterms_creator,
-          :dcterms_description,
-          :dcterms_extent,
-          :dcterms_medium,
-          :dcterms_identifier,
-          :dcterms_language,
-          :dcterms_spatial,
-          :dcterms_publisher,
-          :dcterms_rights_holder,
-          :dcterms_subject,
-          :dcterms_temporal,
-          :dcterms_title,
-          :dcterms_is_shown_at,
-          :dcterms_provenance,
-          :dcterms_bibliographic_citation,
-          :dlg_local_right,
-          :dlg_subject_personal,
-          :dcterms_type => [],
-          :other_collections => [],
-          :portal_ids => []
+        :collection_id,
+        :slug,
+        :dpla,
+        :public,
+        :local,
+        :date_range,
+        :dc_right,
+        :dc_relation,
+        :dc_format,
+        :dc_date,
+        :dcterms_is_part_of,
+        :dcterms_contributor,
+        :dcterms_creator,
+        :dcterms_description,
+        :dcterms_extent,
+        :dcterms_medium,
+        :dcterms_identifier,
+        :dcterms_language,
+        :dcterms_spatial,
+        :dcterms_publisher,
+        :dcterms_rights_holder,
+        :dcterms_subject,
+        :dcterms_temporal,
+        :dcterms_title,
+        :dcterms_is_shown_at,
+        :dcterms_provenance,
+        :dcterms_bibliographic_citation,
+        :dlg_local_right,
+        :dlg_subject_personal,
+        dcterms_type: [],
+        other_collections: [],
+        portal_ids: []
       )
     )
   end
