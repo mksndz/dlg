@@ -1,3 +1,7 @@
+#
+# BatchItem model describes relations to Batch and Item records, as well as the
+# BatchItem commit process
+#
 class BatchItem < ActiveRecord::Base
   include Slugged
   include ItemTypeValidatable
@@ -11,11 +15,19 @@ class BatchItem < ActiveRecord::Base
 
   after_save :lookup_coordinates
 
+  COMMIT_SCRUB_ATTRIBUTES = %w(
+    id
+    created_at
+    updated_at
+    batch_id
+    batch_import_id
+  ).freeze
+
   def title
     dcterms_title.first
   end
 
-  def has_thumbnail?
+  def thumbnail?
     has_thumbnail
   end
 
@@ -24,20 +36,15 @@ class BatchItem < ActiveRecord::Base
   end
 
   def commit
-    scrub_attributes = %w(id created_at updated_at batch_id batch_import_id)
-    attributes = self.attributes.except(*scrub_attributes)
+    attributes = self.attributes.except(*COMMIT_SCRUB_ATTRIBUTES)
     item_id = attributes.delete('item_id')
-    portals = self.portals
     if item_id
-      # replace existing
       item.update attributes
-      item.portals = portals
-      item
     else
-      item = Item.new attributes
-      item.portals = portals
-      item
+      self.item = Item.new attributes
     end
+    item.portals = portals
+    item
   end
 
   def next
@@ -47,6 +54,8 @@ class BatchItem < ActiveRecord::Base
   def previous
     batch.batch_items.where('id < ?', id).last
   end
+
+  private
 
   def lookup_coordinates
 
