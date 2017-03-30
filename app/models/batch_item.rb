@@ -20,7 +20,7 @@ class BatchItem < ActiveRecord::Base
   end
 
   def other_collection_titles
-    Collection.find(other_collections.reject{ |c| c.nil? }).map(&:title)
+    Collection.find(other_collections.reject(&:nil?)).map(&:title)
   end
 
   def commit
@@ -30,9 +30,9 @@ class BatchItem < ActiveRecord::Base
     portals = self.portals
     if item_id
       # replace existing
-      self.item.update attributes
-      self.item.portals = portals
-      self.item
+      item.update attributes
+      item.portals = portals
+      item
     else
       item = Item.new attributes
       item.portals = portals
@@ -41,11 +41,11 @@ class BatchItem < ActiveRecord::Base
   end
 
   def next
-    self.batch.batch_items.where('id > ?', id).first
+    batch.batch_items.where('id > ?', id).first
   end
 
   def previous
-    self.batch.batch_items.where('id < ?', id).last
+    batch.batch_items.where('id < ?', id).last
   end
 
   def lookup_coordinates
@@ -54,34 +54,26 @@ class BatchItem < ActiveRecord::Base
 
     dcterms_spatial.each do |spatial|
 
-      coordinates_found = false
-
-      m = Item.connection.select_all("
-        SELECT DISTINCT * FROM (
-          SELECT unnest(dcterms_spatial) spatial FROM items
-        ) s WHERE spatial LIKE '#{spatial}%';
-      ")
-
-      if m.any?
-
-        m.each do |v|
-
-          if v['spatial'][0..-25] == spatial
-
-            with_coordinates << v['spatial']
-            coordinates_found = true
-
-          end
-
-        end
-
+      get_matches_with_coordinates(spatial).each do |v|
+        with_coordinates << v['spatial'] if v['spatial'][0..-25] == spatial
       end
 
-      with_coordinates << spatial unless coordinates_found
+      with_coordinates << spatial if with_coordinates.empty?
 
-      self.update_columns dcterms_spatial: with_coordinates
+      update_columns dcterms_spatial: with_coordinates
 
     end
+
+  end
+
+  def get_matches_with_coordinates(spatial_term)
+
+    Item.connection.select_all("
+        SELECT DISTINCT * FROM (
+          SELECT unnest(dcterms_spatial) spatial FROM items
+        ) s WHERE spatial LIKE '#{spatial_term}%, %.%, %.%';
+      ")
+
   end
 
 end

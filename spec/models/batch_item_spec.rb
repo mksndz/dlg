@@ -137,6 +137,20 @@ RSpec.describe BatchItem, type: :model do
 
     end
 
+    it 'finds matching coordinates in existing Items and does not pick too many' do
+
+      Fabricate :item
+      Fabricate(:item) do
+        dcterms_spatial [['United States, Massachusetts, Shirley']]
+      end
+      Fabricate(:item) do
+        dcterms_spatial [['United States, North Carolina, Camden']]
+      end
+      bi = Fabricate.build(:batch_item, dcterms_spatial: ['United States'])
+      bi.save
+      expect(bi.dcterms_spatial).to eq ['United States']
+    end
+
   end
 
 end
