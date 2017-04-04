@@ -26,6 +26,12 @@ Fabricator(:item) do
   dcterms_spatial { [
       'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358'
   ]}
+  dcterms_provenance { [
+      'DLG'
+  ]}
+  dcterms_is_shown_at { [
+      'http://dlg.galileo.usg.edu'
+  ]}
   collection
 
 end

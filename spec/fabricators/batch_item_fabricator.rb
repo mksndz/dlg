@@ -28,5 +28,11 @@ Fabricator(:batch_item, from: 'BatchItem') do
   dcterms_spatial { [
       %w(Athens Atlanta Augusta Macon).sample,
   ]}
+  dcterms_provenance { [
+      'DLG'
+  ]}
+  dcterms_is_shown_at { [
+      'http://dlg.galileo.usg.edu'
+  ]}
 
 end

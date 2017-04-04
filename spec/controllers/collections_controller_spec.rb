@@ -6,7 +6,7 @@ RSpec.describe CollectionsController, type: :controller do
     Fabricate(:super)
   }
 
-  let (:repository) {
+  let(:repository) {
     Fabricate(:repository)
   }
 
@@ -16,17 +16,20 @@ RSpec.describe CollectionsController, type: :controller do
 
   let(:valid_attributes) {
     {
-        slug: 'test-collection-slug',
-        dcterms_title: "Test Collection DC Title\nTest Subtitle",
-        display_title: 'Test Collections Display Title',
-        dcterms_type: ['Text'],
-        repository_id: repository.id
+      slug: 'test-collection-slug',
+      dcterms_title: "Test Collection DC Title\nTest Subtitle",
+      display_title: 'Test Collections Display Title',
+      dcterms_type: ['Text'],
+      dcterms_is_shown_at: 'http://dlg.galileo.usg.edu',
+      dcterms_provenance: 'DLG',
+      dcterms_subject: 'Georgia',
+      repository_id: repository.id
     }
   }
 
   let(:invalid_attributes) {
     {
-        slug: 'invalid item slug'
+      slug: 'invalid item slug'
     }
   }
 

@@ -77,6 +77,10 @@ module ItemTypeValidatable
     end
   end
 
+  def valid_url?(url)
+    url =~ URI.regexp
+  end
+
   def update_validation_cache
     update_columns valid_item: valid?
   end

@@ -15,6 +15,9 @@ RSpec.describe ItemsController, type: :controller do
       dcterms_spatial: 'Location',
       dcterms_type: ['Text'],
       dc_right: 'CC-NA',
+      dcterms_is_shown_at: 'http://dlg.galileo.usg.edu',
+      dcterms_provenance: 'DLG',
+      dcterms_subject: 'Georgia',
       collection_id: collection.id
     }
   }

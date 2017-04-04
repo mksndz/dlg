@@ -12,4 +12,10 @@ Fabricator(:collection) do
   dcterms_spatial { [
       'United States, Georgia, Bibb County, 32.8064982, -83.69742'
   ] }
+  dcterms_provenance { [
+      'DLG'
+  ]}
+  dcterms_is_shown_at { [
+      'http://dlg.galileo.usg.edu'
+  ]}
 end

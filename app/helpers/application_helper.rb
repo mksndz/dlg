@@ -1,5 +1,3 @@
-require 'uri'
-
 module ApplicationHelper
 
   def boolean_facet_labels(value)
@@ -52,10 +50,6 @@ module ApplicationHelper
 
   def per_page_selected(pp)
     params[:per_page].to_i == pp ? 'btn-primary' : 'btn-default'
-  end
-
-  def valid_url?(url)
-    url =~ URI.regexp
   end
 
   def link_to_edit_previous_document(previous_document)

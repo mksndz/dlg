@@ -77,7 +77,7 @@ RSpec.describe Item, type: :model do
 
   it 'has a facet_years value that is an Array of years taken from dc_date' do
     i = Fabricate(:item) {
-      dc_date { %w(text 991 1802 2001 1776-1791 1900/1901) }
+      dc_date { %w(991 1802 2001 1776-1791 1900/1901) }
     }
     expect(i.facet_years).to eq %w(1802 2001 1776 1791 1900 1901)
   end
