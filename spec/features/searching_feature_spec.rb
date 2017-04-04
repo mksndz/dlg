@@ -328,14 +328,14 @@ feature 'Searching' do
         scenario 'date search returns only relevant results' do
 
           Fabricate(:item) {
-            dc_date ['ZZZZZZZZZZ']
+            dc_date ['9999']
           }
 
           Sunspot.commit
 
           visit blacklight_advanced_search_engine.advanced_search_path
 
-          fill_in 'date', with: 'ZZZZZZZZZZ'
+          fill_in 'date', with: '9999'
 
           click_button 'Search'
 
@@ -400,14 +400,14 @@ feature 'Searching' do
         scenario 'is shown at search returns only relevant results' do
 
           Fabricate(:item) {
-            dcterms_is_shown_at ['ZZZZZZZZZZ']
+            dcterms_is_shown_at ['http://www.google.com']
           }
 
           Sunspot.commit
 
           visit blacklight_advanced_search_engine.advanced_search_path
 
-          fill_in 'is_shown_at', with: 'ZZZZZZZZZZ'
+          fill_in 'is_shown_at', with: 'www.google.com'
 
           click_button 'Search'
 
@@ -418,14 +418,14 @@ feature 'Searching' do
         scenario 'is shown at search returns results using a part of the url hierarchy' do
 
           Fabricate(:item) {
-            dcterms_is_shown_at ['http://dlg.galileo.usg.edu/Topics/GovernmentPolitics.html']
+            dcterms_is_shown_at ['http://dl.ga/Topics/GovernmentPolitics.html']
           }
 
           Sunspot.commit
 
           visit blacklight_advanced_search_engine.advanced_search_path
 
-          fill_in 'is_shown_at', with: 'http://dlg.galileo.usg.edu'
+          fill_in 'is_shown_at', with: 'Topics'
 
           click_button 'Search'
 

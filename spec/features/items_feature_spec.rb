@@ -39,9 +39,6 @@ feature 'Item Management' do
 
         click_on I18n.t('meta.defaults.actions.edit')
 
-        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
         chosen_select 'Text', from: 'dcterms-type-select'
 
         click_button I18n.t('meta.defaults.actions.save')
@@ -59,9 +56,6 @@ feature 'Item Management' do
 
         click_on I18n.t('meta.defaults.actions.edit')
 
-        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
         chosen_select 'Text', from: 'dcterms-type-select'
 
         select c2.display_title, from: I18n.t('activerecord.attributes.item.other_collections')
@@ -83,9 +77,6 @@ feature 'Item Management' do
 
         click_on I18n.t('meta.defaults.actions.edit')
 
-        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
         chosen_select 'Text', from: 'dcterms-type-select'
 
         select '', from: I18n.t('activerecord.attributes.item.other_collections')
@@ -120,11 +111,6 @@ feature 'Item Management' do
 
         click_on I18n.t('meta.defaults.actions.edit')
 
-        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-        chosen_select 'Text', from: 'dcterms-type-select'
-
         click_button I18n.t('meta.defaults.actions.save')
 
         expect(page).to have_current_path item_path(c1.items.first)
@@ -140,11 +126,6 @@ feature 'Item Management' do
         visit items_path
 
         click_on I18n.t('meta.defaults.actions.edit')
-
-        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-        chosen_select 'Text', from: 'dcterms-type-select'
 
         select p.name, from: I18n.t('activerecord.attributes.item.portal_ids')
 
@@ -164,11 +145,6 @@ feature 'Item Management' do
         visit items_path
 
         click_on I18n.t('meta.defaults.actions.edit')
-
-        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-        chosen_select 'Text', from: 'dcterms-type-select'
 
         select p1.name, from: I18n.t('activerecord.attributes.item.portal_ids')
         select p2.name, from: I18n.t('activerecord.attributes.item.portal_ids')
@@ -192,11 +168,6 @@ feature 'Item Management' do
         visit items_path
 
         click_on I18n.t('meta.defaults.actions.edit')
-
-        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.item.dcterms_spatial'), with: 'Georgia'
-        chosen_select 'Text', from: 'dcterms-type-select'
 
         select '', from: I18n.t('activerecord.attributes.item.portal_ids')
 
