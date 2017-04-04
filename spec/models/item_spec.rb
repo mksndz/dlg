@@ -303,35 +303,23 @@ RSpec.describe Item, type: :model do
     expect(i.errors).not_to have_key :dlg_subject_personal
   end
 
-  # it 'should require rights information of some sort be set' do
-  #   i = Fabricate.build(:item, dc_right: [])
-  #   i.valid?
-  #   expect(i.errors).to have_key :entity
-  # end
+  it 'should require a value in dcterms_is_shown_at' do
+    i = Fabricate.build(:item, dcterms_is_shown_at: [])
+    i.valid?
+    expect(i.errors).to have_key :dcterms_is_shown_at
+  end
 
-  # it 'should have a valid (resolvable) URL in dc_identifier' do
-  #   i = Fabricate.build(:item, dc_identifier: ['http://dlg.galileo.usg.edu/items/do:4321'])
-  #   i.valid?
-  #   expect(i.errors).to have_key :dc_identifier
-  # end
-  #
-  # it 'should validate if the item has a valid (resolvable) URL in dc_identifier' do
-  #   i = Fabricate.build(:item, dc_identifier: ['http://dlg.galileo.usg.edu'])
-  #   i.valid?
-  #   expect(i.errors).not_to have_key :dc_identifier
-  # end
+  it 'should require a valid URL in dcterms_is_shown_at' do
+    i = Fabricate.build(:item, dcterms_is_shown_at: ['not/a.url'])
+    i.valid?
+    expect(i.errors).to have_key :dcterms_is_shown_at
+  end
 
-  # it 'should have a valid (resolvable) URL in dcterms_is_shown_at' do
-  #   i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu/items/do:4321'])
-  #   i.valid?
-  #   expect(i.errors).to have_key :dcterms_is_shown_at
-  # end
-  #
-  # it 'should validate if the item has a valid (resolvable) URL in dcterms_is_shown_at' do
-  #   i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu'])
-  #   i.valid?
-  #   expect(i.errors).not_to have_key :dcterms_is_shown_at
-  # end
+  it 'should be valid if there is a valid URL in dcterms_is_shown_at' do
+    i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu'])
+    i.valid?
+    expect(i.errors).not_to have_key :dcterms_is_shown_at
+  end
 
   context 'portal removal behavior' do
 

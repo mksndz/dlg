@@ -1,3 +1,5 @@
+require 'uri'
+
 module ItemTypeValidatable
   include MetadataHelper
   extend ActiveSupport::Concern
@@ -7,10 +9,12 @@ module ItemTypeValidatable
     after_save :update_validation_cache
 
     validates_presence_of :collection, message: I18n.t('activerecord.errors.messages.item_type.collection')
-    validates_presence_of :dc_date, :dcterms_spatial, :dcterms_title
+    validates_presence_of :dcterms_spatial, :dcterms_title
     validate :dcterms_temporal_characters
     validate :dcterms_type_required_value
     validate :subject_value_provided
+    validate :dc_date_characters
+    validate :url_in_dcterms_is_shown_at
 
   end
 
@@ -24,6 +28,19 @@ module ItemTypeValidatable
 
   end
 
+  def dc_date_characters
+    if dc_date.empty?
+      errors.add(:dc_date, I18n.t('activerecord.errors.messages.blank'))
+      return
+    end
+    dc_date.each do |v|
+      if v =~ /([^0-9\/-])/
+        errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.item_type.temporal_invalid_character'))
+        break
+      end
+    end
+  end
+
   def dcterms_temporal_characters
     unless dcterms_temporal
       errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.blank'))
@@ -32,7 +49,7 @@ module ItemTypeValidatable
     dcterms_temporal.each do |v|
       if v =~ /([^0-9\/-])/
         errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.item_type.temporal_invalid_character'))
-        return
+        break
       end
     end
   end
@@ -47,26 +64,21 @@ module ItemTypeValidatable
     end
   end
 
-  # def url_in_dc_identifier
-  #   dc_identifier.each do |v|
-  #     unless valid_url? v
-  #       errors.add(:dc_identifier, I18n.t('activerecord.errors.messages.item_type.invalid_url_provided'))
-  #       return
-  #     end
-  #   end
-  # end
-  #
-  # def url_in_dcterms_is_shown_at
-  #   dcterms_is_shown_at.each do |v|
-  #     unless valid_url? v
-  #       errors.add(:dcterms_is_shown_at, I18n.t('activerecord.errors.messages.item_type.invalid_url_provided'))
-  #       return
-  #     end
-  #   end
-  # end
+  def url_in_dcterms_is_shown_at
+    if dcterms_is_shown_at.empty?
+      errors.add(:dcterms_is_shown_at, I18n.t('activerecord.errors.messages.blank'))
+      return
+    end
+    dcterms_is_shown_at.each do |v|
+      unless valid_url? v
+        errors.add(:dcterms_is_shown_at, I18n.t('activerecord.errors.messages.item_type.invalid_url_provided'))
+        break
+      end
+    end
+  end
 
   def update_validation_cache
-    self.update_columns valid_item: valid?
+    update_columns valid_item: valid?
   end
 
 end

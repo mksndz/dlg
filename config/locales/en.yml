@@ -307,7 +307,7 @@ en:
           type_required_value: 'does not contain any required values.'
           collection: 'must be selected'
           no_rights_information: 'has no rights information set.'
-          invalid_url_provided: 'contains an unresolvable URL.'
+          invalid_url_provided: 'contains an invalid URL.'
           dcterms_subject: 'cannot be blank if Subject Personal is also blank'
         repository:
           coordinates: 'are not in the proper format. Use "latitude, longitude".'

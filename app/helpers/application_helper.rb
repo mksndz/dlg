@@ -1,3 +1,5 @@
+require 'uri'
+
 module ApplicationHelper
 
   def boolean_facet_labels(value)
@@ -53,22 +55,7 @@ module ApplicationHelper
   end
 
   def valid_url?(url)
-    # begin
-    #   open url do |r|
-    #     return false if r.status.include? '404'
-    #   end
-    # rescue OpenURI::HTTPError
-    #   return false
-    # rescue RuntimeError
-    #   begin
-    #     open url.gsub('http','https') do |r|
-    #       return false if r.status.include? '404'
-    #     end
-    #   rescue OpenURI::HTTPError
-    #     return false
-    #   end
-    # end
-    true
+    url =~ URI.regexp
   end
 
   def link_to_edit_previous_document(previous_document)
