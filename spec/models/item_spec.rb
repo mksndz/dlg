@@ -279,6 +279,12 @@ RSpec.describe Item, type: :model do
     expect(i.errors).to have_key :dcterms_temporal
   end
 
+  it 'should require a dcterms_title value' do
+    i = Fabricate.build(:item, dcterms_title: [])
+    i.valid?
+    expect(i.errors).to have_key :dcterms_title
+  end
+
   # it 'should require rights information of some sort be set' do
   #   i = Fabricate.build(:item, dc_right: [])
   #   i.valid?

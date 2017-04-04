@@ -7,7 +7,7 @@ module ItemTypeValidatable
     after_save :update_validation_cache
 
     validates_presence_of :collection, message: I18n.t('activerecord.errors.messages.item_type.collection')
-    validates_presence_of :dc_date, :dcterms_spatial
+    validates_presence_of :dc_date, :dcterms_spatial, :dcterms_title
     validate :dcterms_temporal_characters
     validate :dcterms_type_required_value
 
