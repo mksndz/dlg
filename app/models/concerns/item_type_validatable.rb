@@ -10,10 +10,19 @@ module ItemTypeValidatable
     validates_presence_of :dc_date, :dcterms_spatial, :dcterms_title
     validate :dcterms_temporal_characters
     validate :dcterms_type_required_value
+    validate :subject_value_provided
 
   end
 
   private
+
+  def subject_value_provided
+
+    if dcterms_subject.empty? && dlg_subject_personal.empty?
+      errors.add(:dcterms_subject, I18n.t('activerecord.errors.messages.item_type.dcterms_subject'))
+    end
+
+  end
 
   def dcterms_temporal_characters
     unless dcterms_temporal

@@ -308,6 +308,7 @@ en:
           collection: 'must be selected'
           no_rights_information: 'has no rights information set.'
           invalid_url_provided: 'contains an unresolvable URL.'
+          dcterms_subject: 'cannot be blank if Subject Personal is also blank'
         repository:
           coordinates: 'are not in the proper format. Use "latitude, longitude".'
         blank: "cannot be blank"

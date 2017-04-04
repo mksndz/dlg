@@ -285,6 +285,24 @@ RSpec.describe Item, type: :model do
     expect(i.errors).to have_key :dcterms_title
   end
 
+  it 'should require a subject in either subject field' do
+    i = Fabricate.build(:item, dcterms_subject: [], dlg_subject_personal: [])
+    i.valid?
+    expect(i.errors).to have_key :dcterms_subject
+  end
+
+  it 'should not require a dcterms_subject if dlg_subject_personal is provided' do
+    i = Fabricate.build(:item, dcterms_subject: [], dlg_subject_personal: ['Santa'])
+    i.valid?
+    expect(i.errors).not_to have_key :dcterms_subject
+  end
+
+  it 'should not require a dlg_subject_personal if dcterms_subject is provided' do
+    i = Fabricate.build(:item, dcterms_subject: ['Santa'], dlg_subject_personal: [])
+    i.valid?
+    expect(i.errors).not_to have_key :dlg_subject_personal
+  end
+
   # it 'should require rights information of some sort be set' do
   #   i = Fabricate.build(:item, dc_right: [])
   #   i.valid?
