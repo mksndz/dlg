@@ -303,6 +303,12 @@ RSpec.describe Item, type: :model do
     expect(i.errors).not_to have_key :dlg_subject_personal
   end
 
+  it 'should require a value in dcterms_provenance' do
+    i = Fabricate.build(:item, dcterms_provenance: [])
+    i.valid?
+    expect(i.errors).to have_key :dcterms_provenance
+  end
+
   it 'should require a value in dcterms_is_shown_at' do
     i = Fabricate.build(:item, dcterms_is_shown_at: [])
     i.valid?
