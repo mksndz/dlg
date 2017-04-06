@@ -6,18 +6,23 @@ class BatchImportsController < ApplicationController
   include Sorting
 
   before_action :set_batch, except: [:help]
+  before_action :ensure_uncommitted_batch, except: [:index, :show, :xml, :help]
 
   rescue_from ImportFailedError do |e|
     redirect_to new_batch_batch_import_path(@batch), alert: e.message
   end
 
+  rescue_from BatchCommittedError do |e|
+    redirect_to batch_batch_imports_path(@batch), alert: e.message
+  end
+
   # show imports for batch
   def index
     @batch_imports = BatchImport
+                         .where(batch_id: @batch.id)
                          .order(sort_column + ' ' + sort_direction)
                          .page(params[:page])
                          .per(params[:per_page])
-                         .where(batch_id: @batch.id)
   end
 
   # show form to create a new batch import
@@ -33,17 +38,23 @@ class BatchImportsController < ApplicationController
     text = batch_import_params[:xml]
     ids = batch_import_params[:item_ids]
 
-    raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.both_types')) if (batch_import_params[:xml].present? and file)
+    fail(
+      ImportFailedError,
+      I18n.t('meta.batch_import.messages.errors.both_types')
+    ) if batch_import_params[:xml].present? && file
 
     @batch_import = BatchImport.new
 
     # copy file contents to string if needed
     if file
       if file.respond_to? :read
-        @batch_import.xml = file.read # todo sanitize????
+        @batch_import.xml = file.read # TODO: sanitize xml input
         @batch_import.format = 'file'
       else
-        raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.file_error'))
+        fail(
+          ImportFailedError,
+          I18n.t('meta.batch_import.messages.errors.file_error')
+        )
       end
     elsif text && !text.empty?
       @batch_import.xml = batch_import_params[:xml]
@@ -52,7 +63,10 @@ class BatchImportsController < ApplicationController
       @batch_import.item_ids = ids.split(',')
       @batch_import.format = 'search query'
     else
-      raise ImportFailedError.new(I18n.t('meta.batch_import.messages.errors.no_data'))
+      fail(
+        ImportFailedError,
+        I18n.t('meta.batch_import.messages.errors.no_data')
+      )
     end
 
     @batch_import.user = current_user
@@ -64,13 +78,17 @@ class BatchImportsController < ApplicationController
     Resque.enqueue(RecordImporter, @batch_import.id)
 
     respond_to do |format|
-      format.html { redirect_to batch_batch_import_path(@batch, @batch_import), notice: I18n.t('meta.batch_import.messages.success.created') }
+      format.html do
+        redirect_to(
+          batch_batch_import_path(@batch, @batch_import),
+          notice: I18n.t('meta.batch_import.messages.success.created')
+        )
+      end
       format.js { render :queued }
     end
 
   end
 
-  # show info about completed import
   def show
   end
 
@@ -97,6 +115,13 @@ class BatchImportsController < ApplicationController
 
   def run_validations?
     batch_import_params[:validations] == '1'
+  end
+
+  def ensure_uncommitted_batch
+    fail(
+      BatchCommittedError,
+      I18n.t('meta.batch.messages.errors.batch_already_committed')
+    ) if @batch.committed?
   end
 
 end

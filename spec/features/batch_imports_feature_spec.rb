@@ -20,11 +20,19 @@ feature 'Batch Importing Batch Items' do
         @batch.save
       }
 
-      scenario 'the manage xml imports button should not be displayed' do
+      scenario 'the manage xml imports button should be displayed' do
 
         visit batch_path(@batch)
 
-        expect(page).not_to have_button I18n.t('meta.batch.actions.batch_imports')
+        expect(page).to have_link I18n.t('meta.batch.actions.batch_imports')
+
+      end
+
+      scenario 'the new import button should not be displayed' do
+
+        visit batch_batch_imports_path(@batch)
+
+        expect(page).not_to have_link I18n.t('meta.batch_import.action.new')
 
       end
 
@@ -67,17 +75,17 @@ feature 'Batch Importing Batch Items' do
 
       context 'and an incomplete batch import' do
 
-        before(:each) {
+        before(:each) do
 
-          @batch_import = BatchImport.new( {
-                              batch: @batch,
-                              user: uploader_user,
-                              xml: dummy_xml,
-                              format: 'text'
-                          } )
+          @batch_import = BatchImport.new(
+            batch: @batch,
+            user: uploader_user,
+            xml: dummy_xml,
+            format: 'text'
+          )
           @batch_import.save
 
-        }
+        end
 
         scenario 'can see and click on button to manage XML imports' do
 

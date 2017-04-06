@@ -10,7 +10,7 @@
 
 <% breadcrumb :batch_imports, @batch %>
 
-<%= link_to 'New XML Upload', new_batch_batch_import_path(@batch), class: 'btn btn-default' %>
+<%= link_to(t('meta.batch_import.action.new'), new_batch_batch_import_path(@batch), class: 'btn btn-default') unless @batch.committed? %>
 
 <%= render 'shared/per_pager' %>
 
@@ -64,9 +64,9 @@
             </td>
             <td>
               <div class="btn-group btn-group-xs">
-                <%= link_to 'Info', batch_batch_import_path(@batch, import) , class: 'btn btn-default' %>
-                <%= link_to 'XML', xml_batch_batch_import_path(@batch, import) , class: 'btn btn-default' %>
-                <%= link_to t('meta.defaults.actions.destroy'), batch_batch_import_path(@batch, import), method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
+                <%= link_to t('meta.batch_import.action.info'), batch_batch_import_path(@batch, import) , class: 'btn btn-default' %>
+                <%= link_to t('meta.batch_import.action.xml'), xml_batch_batch_import_path(@batch, import) , class: 'btn btn-default' %>
+                <%= link_to(t('meta.defaults.actions.destroy'), batch_batch_import_path(@batch, import), method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default') unless @batch.committed? %>
               </div>
             </td>
           </tr>

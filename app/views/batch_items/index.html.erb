@@ -11,9 +11,7 @@
 <% breadcrumb :batch_items, @batch %>
 
 <div class="btn-group" role="group" aria-label="Batch Items Actions">
-<% unless @batch.committed? %>
-  <%= link_to t('meta.batch_item.action.add'), new_batch_batch_item_path(@batch), class: 'btn btn-default' %>
-<% end %>
+  <%= link_to(t('meta.batch_item.action.add'), new_batch_batch_item_path(@batch), class: 'btn btn-default') unless @batch.committed? %>
   <%= link_to t('meta.batch.actions.batch_imports'), batch_batch_imports_path(@batch), class: 'btn btn-default' %>
 </div>
 
@@ -47,7 +45,11 @@
           <%= t('meta.defaults.labels.columns.portals') %>
         </th>
         <th>
-          <%= t('meta.batch_item.labels.columns.item_to_update') %>
+          <% if @batch.committed %>
+              <%= t('meta.batch_item.labels.columns.item_created_of_modified') %>
+          <% else %>
+              <%= t('meta.batch_item.labels.columns.item_to_update') %>
+          <% end %>
         </th>
         <th>
           <%= t('meta.batch_item.labels.columns.collection') %>

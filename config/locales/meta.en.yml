@@ -329,10 +329,10 @@ en:
         columns:
           collection: 'Collection'
           item_to_update: 'Item to Update'
+          item_created_or_modified: 'Item Created/Modified'
     batch_import:
       action:
         new: 'New XML Upload'
-        add: 'Create Batch Item'
         xml: 'XML'
         info: 'Info'
         undo: 'Undo'
