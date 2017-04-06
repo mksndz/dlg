@@ -19,28 +19,30 @@ class BatchesController < ApplicationController
 
     set_filter_options [:user, :status]
 
-    @user = User.find(params[:user_id]) unless !params[:user_id] or params[:user_id].empty?
+    @user = User.find(
+      params[:user_id]
+    ) unless !params[:user_id] || params[:user_id].empty?
 
-    bq = Batch.index_query(params)
-              .order(sort_column + ' ' + sort_direction)
-              .page(params[:page])
-              .per(params[:per_page])
+    batch_query = Batch
+                      .index_query(params)
+                      .order(sort_column + ' ' + sort_direction)
+                      .page(params[:page])
+                      .per(params[:per_page])
 
-    unless current_user.super?
-      if current_user.coordinator?
-        bq = bq.where(user: users_managed_by_and(current_user))
-      else
-        bq = bq.where(user: current_user)
-      end
-    end
 
-    if params[:status] == 'pending'
-      @batches = bq.pending
-    elsif params[:status] == 'committed'
-      @batches = bq.committed
-    else
-      @batches = bq
-    end
+    batch_query = if current_user.coordinator?
+                    batch_query.where(user: users_managed_by_and(current_user))
+                  else
+                    batch_query.where(user: current_user)
+                  end unless current_user.super?
+
+    @batches = if params[:status] == 'pending'
+                 batch_query.pending
+               elsif params[:status] == 'committed'
+                 batch_query.committed
+               else
+                 batch_query
+               end
 
     respond_to do |format|
       format.html
@@ -102,7 +104,7 @@ class BatchesController < ApplicationController
   def destroy
     @batch.destroy
     respond_to do |format|
-      format.html { redirect_to batches_url, notice: I18n.t('meta.defaults.messages.success.destroyed', entity: 'Batch')}
+      format.html { redirect_to batches_url, notice: I18n.t('meta.defaults.messages.success.destroyed', entity: 'Batch') }
       format.json { head :no_content }
     end
   end
@@ -118,20 +120,17 @@ class BatchesController < ApplicationController
 
   def commit
     respond_to do |format|
-      # todo do i need these checks here when i also do them before displaying the commit form?
       if @batch.batch_items.count == 0
         format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.empty_batch_commit') }
-        format.json { head :no_content }
       elsif @batch.has_invalid_batch_items?
         format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.has_invalid_batch_items') }
-        format.json { head :no_content }
       else
         @batch.queued_for_commit_at = Time.now
         @batch.save
         Resque.enqueue(BatchCommitter, @batch.id)
         format.html { redirect_to @batch, notice: I18n.t('meta.batch.messages.success.committed') }
-        format.json { head :no_content }
       end
+      format.json { head :no_content }
     end
   end
 
@@ -146,7 +145,7 @@ class BatchesController < ApplicationController
     recreated_batch.user = current_user
     respond_to do |format|
       if recreated_batch.save
-        format.html { redirect_to recreated_batch, notice: I18n.t('meta.batch.messages.success.recreated')}
+        format.html { redirect_to recreated_batch, notice: I18n.t('meta.batch.messages.success.recreated') }
       else
         format.html { redirect_to @batch, notice: I18n.t('meta.batch.messages.errors.not_recreated') }
       end
@@ -174,14 +173,17 @@ class BatchesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def batch_params
     params.require(:batch).permit(
-        :name,
-        :notes,
-        :user_id
+      :name,
+      :notes,
+      :user_id
     )
   end
 
   def check_if_committed
-    raise BatchCommittedError.new if @batch.committed?
+    fail(
+      BatchCommittedError,
+      I18n.t('meta.batch.messages.errors.batch_already_committed')
+    ) if @batch.committed?
   end
 
   def check_if_batch_is_not_ready

@@ -295,6 +295,7 @@ en:
         has_invalid_batch_items: 'You cannot commit a Batch with invalid items'
         columns:
           creator: 'Creator'
+          created: 'Created'
           committed: 'Committed'
           errors: 'Errors'
           batch_item: 'Batch Item'

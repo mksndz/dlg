@@ -48,7 +48,10 @@
           <%= t('meta.batch.labels.columns.creator') %>
         </th>
         <th>
-          <%= t('meta.batch.labels.columns.committed') %>
+          <%= sortable 'created_at', t('meta.batch.labels.columns.created') %>
+        </th>
+        <th>
+          <%= sortable 'committed_at', t('meta.batch.labels.columns.committed') %>
         </th>
         <th width="140px"></th>
       </tr>
@@ -71,6 +74,9 @@
             </td>
             <td>
               <%= batch.user.email %>
+            </td>
+            <td>
+              <%= batch.created_at %>
             </td>
             <td>
               <%= commit_status_for batch %>
