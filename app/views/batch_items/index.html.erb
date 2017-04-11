@@ -45,7 +45,7 @@
           <%= t('meta.defaults.labels.columns.portals') %>
         </th>
         <th>
-          <% if @batch.committed %>
+          <% if @batch.committed? %>
               <%= t('meta.batch_item.labels.columns.item_created_of_modified') %>
           <% else %>
               <%= t('meta.batch_item.labels.columns.item_to_update') %>
