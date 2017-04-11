@@ -23,7 +23,9 @@
 
 Blacklight.onLoad(function() {
 
-    $('select.advanced-search-facet-select').chosen();
+    $('select.advanced-search-facet-select').chosen({
+        search_contains: true
+    });
     $('select#dc-right-select').chosen({
         allow_single_deselect: true
     });

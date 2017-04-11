@@ -24,10 +24,10 @@ class BatchesController < ApplicationController
     ) unless !params[:user_id] || params[:user_id].empty?
 
     batch_query = Batch
-                      .index_query(params)
-                      .order(sort_column + ' ' + sort_direction)
-                      .page(params[:page])
-                      .per(params[:per_page])
+                    .index_query(params)
+                    .order(sort_column + ' ' + sort_direction)
+                    .page(params[:page])
+                    .per(params[:per_page])
 
 
     batch_query = if current_user.coordinator?
