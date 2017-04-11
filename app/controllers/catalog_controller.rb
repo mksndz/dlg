@@ -323,6 +323,15 @@ class CatalogController < ApplicationController
       }
     end
 
+    # identifier
+    config.add_search_field('standardized_rights_statement') do |field|
+      field.label = 'Std. Rights Stmt.'
+      field.solr_local_parameters = {
+          qf: 'dc_rights_text^500 dc_right_unstem_search^50 ',
+          pf: 'dc_rights_text^500 dc_right_unstem_search^50'
+      }
+    end
+
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc

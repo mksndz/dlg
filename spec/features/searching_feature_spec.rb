@@ -469,6 +469,24 @@ feature 'Searching' do
 
         end
 
+        scenario 'standardized rights search returns results only relevant results' do
+
+          Fabricate(:item) do
+            dc_right ['ZZZZZZZZZZZZZZZZZZZ']
+          end
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'standardized_rights_statement', with: 'ZZZZZZZZZZZZZZZZZZZ'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
       end
 
     end

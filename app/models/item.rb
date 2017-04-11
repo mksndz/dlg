@@ -117,7 +117,7 @@ class Item < ActiveRecord::Base
     text :dcterms_is_part_of
     text :dcterms_is_shown_at
     text :dcterms_identifier
-    # text :slug
+    text :dc_right
 
     # special indexing for url fields - now set via copyFields in solr config
     # string :dcterms_identifier, as: 'dcterms_identifier_url', multiple: true
