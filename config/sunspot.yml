@@ -7,12 +7,21 @@ production:
     log_level: WARNING
     path: /solr/blacklight-core
 
+# metasolr
 development:
   solr:
     hostname: localhost
     port: 8983
     log_level: INFO
     path: /solr/blacklight-core
+
+## solrcloud
+#development:
+#  solr:
+#    hostname: sc0.galib.uga.edu
+#    port: 8983
+#    log_level: INFO
+#    path: /solr/meta
 
 test:
   solr:
