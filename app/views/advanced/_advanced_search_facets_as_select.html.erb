@@ -20,9 +20,8 @@
                             id: display_facet.name.parameterize,
                             class: 'form-control advanced-search-facet-select') do %>
                 <% display_facet.items.each do |facet_item| %>
-                    <% value = truncate(facet_display_value(display_facet.name, facet_item), length: 250, omission: '...(truncated)') %>
-                    <%= content_tag :option, value: value, selected: facet_value_checked?(display_facet.name, facet_item.value) do %>
-                        <%= value %>&nbsp;&nbsp;(<%= number_with_delimiter facet_item.hits %>)
+                    <%= content_tag :option, value: facet_item.value, selected: facet_value_checked?(display_facet.name, facet_item.value) do %>
+                        <%= truncate(facet_display_value(display_facet.name, facet_item), length: 250, omission: '...(truncated)') %>&nbsp;&nbsp;(<%= number_with_delimiter facet_item.hits %>)
                     <% end %>
                 <% end %>
             <% end %>
