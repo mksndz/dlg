@@ -141,19 +141,19 @@
   <copyField source="dcterms_spatial_text"  dest="suggest" />
 
   <!-- unstemmed fields -->
-  <copyField source="dcterms_title_text"        dest="title_unstem_search" />
-  <copyField source="dcterms_creator_text"      dest="creator_unstem_search" />
-  <copyField source="dcterms_contributor_text"  dest="contributor_unstem_search" />
-  <copyField source="dcterms_subject_text"      dest="subject_unstem_search" />
-  <copyField source="dlg_subject_personal_text" dest="subject_personal_unstem_search" />
-  <copyField source="dcterms_description_text"  dest="description_unstem_search" />
-  <copyField source="dcterms_publisher_text"    dest="publisher_unstem_search" />
-  <copyField source="dc_date_text"              dest="date_unstem_search" />
-  <copyField source="dcterms_temporal_text"     dest="temporal_unstem_search" />
-  <copyField source="dcterms_spatial_text"      dest="spatial_unstem_search" />
-  <copyField source="dcterms_is_part_of_text"   dest="is_part_of_unstem_search" />
-  <copyField source="dc_identifier_text"        dest="identifier_unstem_search" />
-  <copyField source="dc_right_text"             dest="dc_right_unstem_search" />
+  <copyField source="dcterms_title_text"         dest="title_unstem_search" />
+  <copyField source="dcterms_creator_text"       dest="creator_unstem_search" />
+  <copyField source="dcterms_contributor_text"   dest="contributor_unstem_search" />
+  <copyField source="dcterms_subject_text"       dest="subject_unstem_search" />
+  <copyField source="dlg_subject_personal_text"  dest="subject_personal_unstem_search" />
+  <copyField source="dcterms_description_text"   dest="description_unstem_search" />
+  <copyField source="dcterms_publisher_text"     dest="publisher_unstem_search" />
+  <copyField source="dc_date_text"               dest="date_unstem_search" />
+  <copyField source="dcterms_temporal_text"      dest="temporal_unstem_search" />
+  <copyField source="dcterms_spatial_text"       dest="spatial_unstem_search" />
+  <copyField source="dcterms_is_part_of_text"    dest="is_part_of_unstem_search" />
+  <copyField source="dc_identifier_text"         dest="identifier_unstem_search" />
+  <copyField source="dcterms_rights_holder_text" dest="dcterms_rights_holder_unstem_search" />
 
   <!-- facet fields -->
   <copyField source="dcterms_provenance_display"     dest="provenance_facet" />

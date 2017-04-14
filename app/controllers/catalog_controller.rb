@@ -93,7 +93,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'location_facet',      label: I18n.t('meta.search.facets.location'), limit: true
     config.add_facet_field 'format_facet',        label: I18n.t('meta.search.facets.format'), limit: true
     config.add_facet_field 'rights_facet',        label: I18n.t('meta.search.facets.rights'), limit: true, helper_method: :rights_icon_label
-    config.add_facet_field 'rights_holder_facet', label: I18n.t('meta.search.facets.rights_holder'), limit: true
+    # config.add_facet_field 'rights_holder_facet', label: I18n.t('meta.search.facets.rights_holder'), limit: true
     config.add_facet_field 'relation_facet',      label: I18n.t('meta.search.facets.relation'), limit: true
     config.add_facet_field 'type_facet',          label: I18n.t('meta.search.facets.type'), limit: true
     config.add_facet_field 'medium_facet',        label: I18n.t('meta.search.facets.medium'), limit: true
@@ -183,7 +183,7 @@ class CatalogController < ApplicationController
         'f.temporal_facet.facet.limit' => ADVANCED_FACET_LIMIT,
         'f.location_facet.facet.limit' => ADVANCED_FACET_LIMIT,
         'f.rights_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_LIMIT,
+        # 'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_LIMIT,
         'f.relation_facet.facet.limit' => ADVANCED_FACET_LIMIT,
         'f.type_facet.facet.limit' => ADVANCED_FACET_LIMIT,
         'f.medium_facet.facet.limit' => ADVANCED_FACET_LIMIT,
@@ -324,11 +324,11 @@ class CatalogController < ApplicationController
     end
 
     # identifier
-    config.add_search_field('standardized_rights_statement') do |field|
-      field.label = 'Std. Rights Stmt.'
+    config.add_search_field('rights_holder') do |field|
+      field.label = 'Rights Holder'
       field.solr_local_parameters = {
-          qf: 'dc_rights_text^500 dc_right_unstem_search^50 ',
-          pf: 'dc_rights_text^500 dc_right_unstem_search^50'
+          qf: 'dcterms_rights_holder_text^500 dcterms_rights_holder_unstem_search^50',
+          pf: 'dcterms_rights_holder_text^500 dcterms_rights_holder_unstem_search^50'
       }
     end
 

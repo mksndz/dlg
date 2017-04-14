@@ -107,7 +107,6 @@ class Collection < ActiveRecord::Base
     text :dcterms_creator
     text :dcterms_contributor
     text :dcterms_subject
-    text :dlg_subject_personal
     text :dcterms_description
     text :dcterms_publisher
     text :dcterms_temporal
@@ -115,7 +114,8 @@ class Collection < ActiveRecord::Base
     text :dcterms_is_part_of
     text :dcterms_is_shown_at
     text :dcterms_identifier
-    text :dc_right
+    text :dcterms_rights_holder
+    text :dlg_subject_personal
 
     string :title, as: 'title' do
       dcterms_title.first ? dcterms_title.first : slug
@@ -167,7 +167,7 @@ class Collection < ActiveRecord::Base
   end
 
   def computed_record_id
-    "#{repository.slug}_#{self.slug}"
+    "#{repository.slug}_#{slug}"
   end
 
   def repository_title
@@ -176,21 +176,21 @@ class Collection < ActiveRecord::Base
 
   def to_xml(options = {})
     default_options = {
-        dasherize: false,
-        # fields to not include
-        except: [
-            :id,
-            :repository_id,
-            :created_at,
-            :updated_at,
-            :other_repositories,
-            :items_count,
-            :date_range
-        ]
+      dasherize: false,
+      # fields to not include
+      except: [
+        :id,
+        :repository_id,
+        :created_at,
+        :updated_at,
+        :other_repositories,
+        :items_count,
+        :date_range
+      ]
     }
 
     if options[:show_repository]
-      default_options[:include] = [ repository: { only: [ :slug ] } ]
+      default_options[:include] = [repository: { only: [:slug] }]
     end
 
     super(options.merge!(default_options))
@@ -211,9 +211,9 @@ class Collection < ActiveRecord::Base
   end
 
   def clear_from_other_collections
-    is = Item.where "#{self.id} = ANY (other_collections)"
+    is = Item.where "#{id} = ANY (other_collections)"
     is.each do |i|
-      i.other_collections = i.other_collections - [self.id]
+      i.other_collections = i.other_collections - [id]
       i.save(validate: false)
     end
   end

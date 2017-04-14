@@ -469,17 +469,17 @@ feature 'Searching' do
 
         end
 
-        scenario 'standardized rights search returns results only relevant results' do
+        scenario 'rights holder search returns results only relevant results' do
 
           Fabricate(:item) do
-            dc_right ['ZZZZZZZZZZZZZZZZZZZ']
+            dcterms_rights_holder ['ZZZZZZZZZZZZZZZZZZZ']
           end
 
           Sunspot.commit
 
           visit blacklight_advanced_search_engine.advanced_search_path
 
-          fill_in 'standardized_rights_statement', with: 'ZZZZZZZZZZZZZZZZZZZ'
+          fill_in 'rights_holder', with: 'ZZZZZZZZZZZZZZZZZZZ'
 
           click_button 'Search'
 

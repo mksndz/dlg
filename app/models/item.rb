@@ -109,7 +109,6 @@ class Item < ActiveRecord::Base
     text :dcterms_creator
     text :dcterms_contributor
     text :dcterms_subject
-    text :dlg_subject_personal
     text :dcterms_description
     text :dcterms_publisher
     text :dcterms_temporal
@@ -117,7 +116,8 @@ class Item < ActiveRecord::Base
     text :dcterms_is_part_of
     text :dcterms_is_shown_at
     text :dcterms_identifier
-    text :dc_right
+    text :dcterms_rights_holder
+    text :dlg_subject_personal
 
     # special indexing for url fields - now set via copyFields in solr config
     # string :dcterms_identifier, as: 'dcterms_identifier_url', multiple: true
