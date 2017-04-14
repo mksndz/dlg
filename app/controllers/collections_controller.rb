@@ -18,27 +18,32 @@ class CollectionsController < RecordController
     set_filter_options [:repository, :public]
 
     collection_query = Collection.index_query(params)
-                           .order(sort_column + ' ' + sort_direction)
-                           .page(params[:page])
-                           .per(params[:per_page])
-                           .includes(:repository)
+                         .order(sort_column + ' ' + sort_direction)
+                         .page(params[:page])
+                         .per(params[:per_page])
+                         .includes(:repository)
 
     if params[:portal_id]
       portals_filter = params[:portal_id].reject(&:empty?)
 
       unless portals_filter.empty?
         collection_query = collection_query
-                               .includes(:portals)
-                               .joins(:portals)
-                               .where(portals: { id: portals_filter } )
+                             .includes(:portals)
+                             .joins(:portals)
+                             .where(portals: { id: portals_filter })
       end
 
     end
 
-    if current_user.super?
-      @collections = collection_query
-    else
-      @collections = collection_query.where(id: user_collection_ids)
+    @collections = if current_user.super?
+                     collection_query
+                   else
+                     collection_query.where(id: user_collection_ids)
+                   end
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json
     end
 
   end
