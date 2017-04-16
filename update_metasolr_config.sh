@@ -5,12 +5,12 @@ curl http://metasolr.galib.uga.edu:8983/solr/blacklight-core/update --data '<del
 curl http://metasolr.galib.uga.edu:8983/solr/blacklight-core/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
 
 # backup old configs
-ssh solr@metasolr cp /opt/solr-5.5.2/server/solr/blacklight-core/conf/schema.xml /opt/solr-5.5.2/server/solr/blacklight-core/conf/schema.old
-ssh solr@metasolr cp /opt/solr-5.5.2/server/solr/blacklight-core/conf/solrconfig.xml /opt/solr-5.5.2/server/solr/blacklight-core/conf/solrconfig.old
+ssh solr@metasolr mv /opt/solr-5.5.2/server/solr/blacklight-core/conf/schema.xml /opt/solr-5.5.2/server/solr/blacklight-core/conf/schema.old
+ssh solr@metasolr mv /opt/solr-5.5.2/server/solr/blacklight-core/conf/solrconfig.xml /opt/solr-5.5.2/server/solr/blacklight-core/conf/solrconfig.old
 
 # copy new config
-scp solr/schema.xml solr@sc0.galib.uga.edu:solr-6.4.1/server/solr/configsets/meta/
-scp solr/solrconfig.xml solr@sc0.galib.uga.edu:solr-6.4.1/server/solr/configsets/meta/
+scp solr/schema.xml solr@metasolr:/opt/solr-5.5.2/server/solr/blacklight-core/conf/
+scp solr/solrconfig.xml solr@metasolr:/opt/solr-5.5.2/server/solr/blacklight-core/conf/
 
 # restart solr
 ssh solr@metasolr /opt/solr/bin/solr restart
