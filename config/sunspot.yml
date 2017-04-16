@@ -7,6 +7,16 @@ production:
     log_level: WARNING
     path: /solr/blacklight-core
 
+# solrcloud
+production:
+  solr:
+    read_timeout: 20
+    open_timeout: 10
+    hostname: sc0.galib.uga.edu
+    port: 8983
+    log_level: WARNING
+    path: /solr/meta
+
 # metasolr
 development:
   solr:
