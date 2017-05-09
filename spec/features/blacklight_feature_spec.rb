@@ -30,7 +30,8 @@ feature 'Blacklight Functionality' do
 
         visit solr_document_path(i.record_id)
 
-        expect(page).to have_text i.dcterms_is_shown_at.first
+        expect(page).to have_text i.edm_is_shown_at.first
+        expect(page).to have_text i.edm_is_shown_by.first
         expect(page).to have_text i.dcterms_identifier.first
         expect(page).to have_text i.dlg_subject_personal.first
 

@@ -20,7 +20,8 @@ RSpec.describe CollectionsController, type: :controller do
       dcterms_title: "Test Collection DC Title\nTest Subtitle",
       display_title: 'Test Collections Display Title',
       dcterms_type: ['Text'],
-      dcterms_is_shown_at: 'http://dlg.galileo.usg.edu',
+      edm_is_shown_at: 'http://dlg.galileo.usg.edu',
+      edm_is_shown_by: 'http://dlg.galileo.usg.edu',
       dcterms_provenance: 'DLG',
       dcterms_subject: 'Georgia',
       repository_id: repository.id

@@ -29,7 +29,10 @@ Fabricator(:item) do
   dcterms_provenance { [
       'DLG'
   ]}
-  dcterms_is_shown_at { [
+  edm_is_shown_at { [
+      'http://dlg.galileo.usg.edu'
+  ]}
+  edm_is_shown_by { [
       'http://dlg.galileo.usg.edu'
   ]}
   collection
@@ -47,7 +50,11 @@ end
 
 Fabricator(:robust_item, from: :item) do
 
-  dcterms_is_shown_at { [
+  edm_is_shown_at { [
+      Faker::Internet.url
+  ] }
+
+  edm_is_shown_by { [
       Faker::Internet.url
   ] }
 

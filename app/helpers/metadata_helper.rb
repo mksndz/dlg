@@ -14,7 +14,8 @@ module MetadataHelper
       dcterms_description
       dcterms_identifier
       dcterms_publisher
-      dcterms_is_shown_at
+      edm_is_shown_at
+      edm_is_shown_by
       dc_date
       dcterms_temporal
       dcterms_spatial

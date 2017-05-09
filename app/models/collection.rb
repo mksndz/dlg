@@ -83,7 +83,8 @@ class Collection < ActiveRecord::Base
     string :dcterms_subject,                as: 'dcterms_subject_display',                multiple: true
     string :dcterms_description,            as: 'dcterms_description_display',            multiple: true
     string :dcterms_publisher,              as: 'dcterms_publisher_display',              multiple: true
-    string :dcterms_is_shown_at,            as: 'dcterms_is_shown_at_display',            multiple: true
+    string :edm_is_shown_at,                as: 'edm_is_shown_at_display',                multiple: true
+    string :edm_is_shown_by,                as: 'edm_is_shown_by_display',                multiple: true
     string :dcterms_identifier,             as: 'dcterms_identifier_display',             multiple: true
     string :dc_date,                        as: 'dc_date_display',                        multiple: true
     string :dcterms_temporal,               as: 'dcterms_temporal_display',               multiple: true
@@ -112,7 +113,8 @@ class Collection < ActiveRecord::Base
     text :dcterms_temporal
     text :dcterms_spatial
     text :dcterms_is_part_of
-    text :dcterms_is_shown_at
+    text :edm_is_shown_at
+    text :edm_is_shown_by
     text :dcterms_identifier
     text :dcterms_rights_holder
     text :dlg_subject_personal

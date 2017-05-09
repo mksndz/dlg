@@ -153,9 +153,12 @@ RSpec.describe LegacyImporter, type: :model do
             <dcterms_type type='array'>
                 <dcterms_type>Text</dcterms_type>
             </dcterms_type>
-            <dcterms_is_shown_at type='array'>
-                <dcterms_is_shown_at>http://dlg.galileo.usg.edu/CollectionsA-Z/56000my_search.html</dcterms_is_shown_at>
-            </dcterms_is_shown_at>
+            <edm_is_shown_at type='array'>
+                <edm_is_shown_at>http://dlg.galileo.usg.edu/CollectionsA-Z/56000my_search.html</edm_is_shown_at>
+            </edm_is_shown_at>
+            <edm_is_shown_by type='array'>
+                <edm_is_shown_by>http://dlg.galileo.usg.edu/CollectionsA-Z/56000my_search.html</edm_is_shown_by>
+            </edm_is_shown_by>
             <dcterms_provenance type='array'>
                 <dcterms_provenance>Savannah (Ga.). Research Library and Municipal Archives</dcterms_provenance>
             </dcterms_provenance>

@@ -129,7 +129,8 @@
 
   <!-- for url field searching -->
   <copyField source="dcterms_identifier_display" dest="dcterms_identifier_url" />
-  <copyField source="dcterms_is_shown_at_display" dest="dcterms_is_shown_at_url" />
+  <copyField source="edm_is_shown_at_display" dest="edm_is_shown_at_url" />
+  <copyField source="edm_is_shown_by_display" dest="edm_is_shown_by_url" />
 
   <!-- for spellcheck, use chosen fields only -->
   <copyField source="dcterms_title_text"    dest="textSpell" />

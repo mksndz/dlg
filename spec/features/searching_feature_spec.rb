@@ -61,12 +61,12 @@ feature 'Searching' do
 
     context 'result URL display behavior' do
 
-      scenario 'item record dcterms_is_shown_at value displayed as URL link' do
+      scenario 'item record edm_is_shown_at value displayed as URL link' do
 
         url = 'http://dlg.galileo.usg.edu'
 
         Fabricate(:item) {
-          dcterms_is_shown_at [url]
+          edm_is_shown_at [url]
         }
 
         Sunspot.commit
@@ -74,8 +74,27 @@ feature 'Searching' do
         visit blacklight_advanced_search_engine.advanced_search_path
         click_button 'Search'
 
-        expect(page).to have_css('dt.blacklight-dcterms_is_shown_at_display', text: "#{I18n.t('meta.search.labels.dcterms_is_shown_at')}:")
-        expect(page).to have_css('dd.blacklight-dcterms_is_shown_at_display', text: url)
+        expect(page).to have_css('dt.blacklight-edm_is_shown_at_display', text: "#{I18n.t('meta.search.labels.edm_is_shown_at')}:")
+        expect(page).to have_css('dd.blacklight-edm_is_shown_at_display', text: url)
+        expect(page).to have_link url
+
+      end
+
+      scenario 'item record edm_is_shown_by value displayed as URL link' do
+
+        url = 'http://dlg.galileo.usg.edu'
+
+        Fabricate(:item) {
+          edm_is_shown_by [url]
+        }
+
+        Sunspot.commit
+
+        visit blacklight_advanced_search_engine.advanced_search_path
+        click_button 'Search'
+
+        expect(page).to have_css('dt.blacklight-edm_is_shown_by_display', text: "#{I18n.t('meta.search.labels.edm_is_shown_by')}:")
+        expect(page).to have_css('dd.blacklight-edm_is_shown_by_display', text: url)
         expect(page).to have_link url
 
       end
@@ -400,7 +419,7 @@ feature 'Searching' do
         scenario 'is shown at search returns only relevant results' do
 
           Fabricate(:item) {
-            dcterms_is_shown_at ['http://www.google.com']
+            edm_is_shown_at ['http://www.google.com']
           }
 
           Sunspot.commit
@@ -415,10 +434,28 @@ feature 'Searching' do
 
         end
 
+        scenario 'is shown by search returns only relevant results' do
+
+          Fabricate(:item) {
+            edm_is_shown_by ['http://www.google.com']
+          }
+
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          fill_in 'is_shown_by', with: 'www.google.com'
+
+          click_button 'Search'
+
+          expect(all('.edit-record').count).to eq 1
+
+        end
+
         scenario 'is shown at search returns results using a part of the url hierarchy' do
 
           Fabricate(:item) {
-            dcterms_is_shown_at ['http://dl.ga/Topics/GovernmentPolitics.html']
+            edm_is_shown_at ['http://dl.ga/Topics/GovernmentPolitics.html']
           }
 
           Sunspot.commit

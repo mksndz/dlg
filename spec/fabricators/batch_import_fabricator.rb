@@ -58,9 +58,12 @@ Fabricator(:batch_import) do
           <dcterms_type type="array">
             <dcterms_type>Text</dcterms_type>
           </dcterms_type>
-          <dcterms_is_shown_at type="array">
-            <dcterms_is_shown_at>http://dlg.galileo.usg.edu/id:geh_0091_ahc0091-002-004</dcterms_is_shown_at>
-          </dcterms_is_shown_at>
+          <edm_is_shown_at type="array">
+            <edm_is_shown_at>http://dlg.galileo.usg.edu/id:geh_0091_ahc0091-002-004</edm_is_shown_at>
+          </edm_is_shown_at>
+          <edm_is_shown_by type="array">
+            <edm_is_shown_by>http://dlg.galileo.usg.edu/id:geh_0091_ahc0091-002-004</edm_is_shown_by>
+          </edm_is_shown_by>
           <dcterms_provenance type="array">
             <dcterms_provenance>Atlanta History Center</dcterms_provenance>
           </dcterms_provenance>

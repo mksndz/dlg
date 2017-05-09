@@ -14,7 +14,8 @@ module ItemTypeValidatable
     validate :dcterms_type_required_value
     validate :subject_value_provided
     validate :dc_date_characters
-    validate :url_in_dcterms_is_shown_at
+    validate :url_in_edm_is_shown_at
+    validate :url_in_edm_is_shown_by
 
   end
 
@@ -64,14 +65,27 @@ module ItemTypeValidatable
     end
   end
 
-  def url_in_dcterms_is_shown_at
-    if dcterms_is_shown_at.empty?
-      errors.add(:dcterms_is_shown_at, I18n.t('activerecord.errors.messages.blank'))
+  def url_in_edm_is_shown_at
+    if edm_is_shown_at.empty?
+      errors.add(:edm_is_shown_at, I18n.t('activerecord.errors.messages.blank'))
       return
     end
-    dcterms_is_shown_at.each do |v|
+    edm_is_shown_at.each do |v|
       unless valid_url? v
-        errors.add(:dcterms_is_shown_at, I18n.t('activerecord.errors.messages.item_type.invalid_url_provided'))
+        errors.add(:edm_is_shown_at, I18n.t('activerecord.errors.messages.item_type.invalid_url_provided'))
+        break
+      end
+    end
+  end
+
+  def url_in_edm_is_shown_by
+    if edm_is_shown_by.empty?
+      errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.blank'))
+      return
+    end
+    edm_is_shown_by.each do |v|
+      unless valid_url? v
+        errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.item_type.invalid_url_provided'))
         break
       end
     end
@@ -84,5 +98,4 @@ module ItemTypeValidatable
   def update_validation_cache
     update_columns valid_item: valid?
   end
-
 end

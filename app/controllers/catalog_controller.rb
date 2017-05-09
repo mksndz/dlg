@@ -127,7 +127,8 @@ class CatalogController < ApplicationController
     config.add_index_field 'collection_name_sms',         label: I18n.t('meta.search.labels.collection'), link_to_search: true
     config.add_index_field 'repository_name_sms',         label: I18n.t('meta.search.labels.repository'), link_to_search: true
     config.add_index_field 'dcterms_identifier_display',  label: I18n.t('meta.search.labels.dcterms_identifier'), helper_method: 'linkify'
-    config.add_index_field 'dcterms_is_shown_at_display', label: I18n.t('meta.search.labels.dcterms_is_shown_at'), helper_method: 'linkify'
+    config.add_index_field 'edm_is_shown_at_display',     label: I18n.t('meta.search.labels.edm_is_shown_at'), helper_method: 'linkify'
+    config.add_index_field 'edm_is_shown_by_display',     label: I18n.t('meta.search.labels.edm_is_shown_by'), helper_method: 'linkify'
     config.add_index_field 'dcterms_creator_display',     label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
     config.add_index_field 'dc_format_display',           label: I18n.t('meta.search.labels.dc_format'), link_to_search: :format_facet
     config.add_index_field 'dcterms_spatial_display',     label: I18n.t('meta.search.labels.dcterms_spatial'), link_to_search: :location_facet
@@ -157,7 +158,8 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_type_display',                   label: I18n.t('meta.search.labels.dcterms_type')
     config.add_show_field 'dcterms_creator_display',                label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
     config.add_show_field 'dcterms_language_display',               label: I18n.t('meta.search.labels.dcterms_language')
-    config.add_show_field 'dcterms_is_shown_at_display',            label: I18n.t('meta.search.labels.dcterms_is_shown_at'), helper_method: 'linkify'
+    config.add_show_field 'edm_is_shown_at_display',                label: I18n.t('meta.search.labels.edm_is_shown_at'), helper_method: 'linkify'
+    config.add_show_field 'edm_is_shown_by_display',                label: I18n.t('meta.search.labels.edm_is_shown_by'), helper_method: 'linkify'
     config.add_show_field 'dcterms_rights_holder_display',          label: I18n.t('meta.search.labels.dcterms_rights_holder')
     config.add_show_field 'dcterms_bibliographic_citation_display', label: I18n.t('meta.search.labels.dcterms_bibliographic_citation')
     config.add_show_field 'dcterms_extent_display',                 label: I18n.t('meta.search.labels.dcterms_extent')
@@ -309,8 +311,17 @@ class CatalogController < ApplicationController
     config.add_search_field('is_shown_at') do |field|
       field.label = 'Is Shown At (URL)'
       field.solr_local_parameters = {
-          qf: 'dcterms_is_shown_at_url^1000 dcterms_is_shown_at_text^100',
-          pf: 'dcterms_is_shown_at_url^1000 dcterms_is_shown_at_text^100'
+          qf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^100',
+          pf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^100'
+      }
+    end
+
+    # is shown by
+    config.add_search_field('is_shown_by') do |field|
+      field.label = 'Is Shown By (URL)'
+      field.solr_local_parameters = {
+          qf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^100',
+          pf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^100'
       }
     end
 

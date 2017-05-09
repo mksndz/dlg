@@ -15,7 +15,10 @@ Fabricator(:collection) do
   dcterms_provenance { [
       'DLG'
   ]}
-  dcterms_is_shown_at { [
+  edm_is_shown_at { [
+      'http://dlg.galileo.usg.edu'
+  ]}
+  edm_is_shown_by { [
       'http://dlg.galileo.usg.edu'
   ]}
 end

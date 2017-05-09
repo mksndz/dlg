@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509190956) do
+ActiveRecord::Schema.define(version: 20170509195203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20170509190956) do
     t.text     "dcterms_temporal",               default: [],    null: false, array: true
     t.text     "dcterms_title",                  default: [],    null: false, array: true
     t.text     "dcterms_type",                   default: [],    null: false, array: true
-    t.text     "dcterms_is_shown_at",            default: [],    null: false, array: true
+    t.text     "edm_is_shown_at",                default: [],    null: false, array: true
     t.text     "dcterms_provenance",             default: [],    null: false, array: true
     t.integer  "item_id"
     t.integer  "other_collections",              default: [],                 array: true
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20170509190956) do
     t.boolean  "local",                          default: true,  null: false
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
     t.string   "record_id",                      default: "",    null: false
+    t.text     "edm_is_shown_by",                default: [],    null: false, array: true
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
@@ -136,7 +137,7 @@ ActiveRecord::Schema.define(version: 20170509190956) do
     t.text      "dcterms_temporal",               default: [],    null: false, array: true
     t.text      "dcterms_title",                  default: [],    null: false, array: true
     t.text      "dcterms_type",                   default: [],    null: false, array: true
-    t.text      "dcterms_is_shown_at",            default: [],    null: false, array: true
+    t.text      "edm_is_shown_at",                default: [],    null: false, array: true
     t.text      "dcterms_provenance",             default: [],    null: false, array: true
     t.text      "dcterms_license",                default: [],    null: false, array: true
     t.integer   "items_count",                    default: 0
@@ -144,6 +145,7 @@ ActiveRecord::Schema.define(version: 20170509190956) do
     t.text      "dlg_local_right",                default: [],    null: false, array: true
     t.text      "dlg_subject_personal",           default: [],    null: false, array: true
     t.string    "record_id",                      default: "",    null: false
+    t.text      "edm_is_shown_by",                default: [],    null: false, array: true
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
@@ -226,7 +228,7 @@ ActiveRecord::Schema.define(version: 20170509190956) do
     t.text     "dcterms_temporal",               default: [],    null: false, array: true
     t.text     "dcterms_title",                  default: [],    null: false, array: true
     t.text     "dcterms_type",                   default: [],    null: false, array: true
-    t.text     "dcterms_is_shown_at",            default: [],    null: false, array: true
+    t.text     "edm_is_shown_at",                default: [],    null: false, array: true
     t.text     "dcterms_provenance",             default: [],    null: false, array: true
     t.integer  "other_collections",              default: [],                 array: true
     t.text     "dlg_local_right",                default: [],    null: false, array: true
@@ -236,6 +238,7 @@ ActiveRecord::Schema.define(version: 20170509190956) do
     t.boolean  "local",                          default: true,  null: false
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
     t.string   "record_id",                      default: "",    null: false
+    t.text     "edm_is_shown_by",                default: [],    null: false, array: true
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree

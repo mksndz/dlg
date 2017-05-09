@@ -421,7 +421,8 @@
         spatial_unstem_search^100
         is_part_of_unstem_search^100
         identifier_unstem_search^100
-        dcterms_is_shown_at_text^100
+        edm_is_shown_at_text^100
+        edm_is_shown_by_text^100
         dc_right_text^100
         dc_right_unstem_search
         dcterms_title_text
@@ -452,7 +453,8 @@
         spatial_unstem_search^100
         is_part_of_unstem_search^100
         identifier_unstem_search^100
-        dcterms_is_shown_at_text^100
+        edm_is_shown_at_text^100
+        edm_is_shown_by_text^100
         dc_right_text^100
         dc_right_unstem_search
         dcterms_title_text
@@ -648,7 +650,8 @@
         spatial_unstem_search^100
         is_part_of_unstem_search^100
         identifier_unstem_search^100
-        dcterms_is_shown_at_text^100
+        edm_is_shown_at_text^100
+        edm_is_shown_by_text^100
         dcterms_title_text
         dcterms_creator_text
         dcterms_contributor_text
@@ -673,7 +676,8 @@
         spatial_unstem_search^100
         is_part_of_unstem_search^100
         identifier_unstem_search^100
-        dcterms_is_shown_at_text^100
+        edm_is_shown_at_text^100
+        edm_is_shown_by_text^100
         dcterms_title_text
         dcterms_creator_text
         dcterms_contributor_text

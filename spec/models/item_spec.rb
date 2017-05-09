@@ -309,22 +309,40 @@ RSpec.describe Item, type: :model do
     expect(i.errors).to have_key :dcterms_provenance
   end
 
-  it 'should require a value in dcterms_is_shown_at' do
-    i = Fabricate.build(:item, dcterms_is_shown_at: [])
+  it 'should require a value in edm_is_shown_at' do
+    i = Fabricate.build(:item, edm_is_shown_at: [])
     i.valid?
-    expect(i.errors).to have_key :dcterms_is_shown_at
+    expect(i.errors).to have_key :edm_is_shown_at
   end
 
-  it 'should require a valid URL in dcterms_is_shown_at' do
-    i = Fabricate.build(:item, dcterms_is_shown_at: ['not/a.url'])
+  it 'should require a valid URL in edm_is_shown_at' do
+    i = Fabricate.build(:item, edm_is_shown_at: ['not/a.url'])
     i.valid?
-    expect(i.errors).to have_key :dcterms_is_shown_at
+    expect(i.errors).to have_key :edm_is_shown_at
   end
 
-  it 'should be valid if there is a valid URL in dcterms_is_shown_at' do
-    i = Fabricate.build(:item, dcterms_is_shown_at: ['http://dlg.galileo.usg.edu'])
+  it 'should be valid if there is a valid URL in edm_is_shown_at' do
+    i = Fabricate.build(:item, edm_is_shown_at: ['http://dlg.galileo.usg.edu'])
     i.valid?
-    expect(i.errors).not_to have_key :dcterms_is_shown_at
+    expect(i.errors).not_to have_key :edm_is_shown_at
+  end
+
+  it 'should require a value in edm_is_shown_by' do
+    i = Fabricate.build(:item, edm_is_shown_by: [])
+    i.valid?
+    expect(i.errors).to have_key :edm_is_shown_by
+  end
+
+  it 'should require a valid URL in edm_is_shown_by' do
+    i = Fabricate.build(:item, edm_is_shown_by: ['not/a.url'])
+    i.valid?
+    expect(i.errors).to have_key :edm_is_shown_by
+  end
+
+  it 'should be valid if there is a valid URL in edm_is_shown_by' do
+    i = Fabricate.build(:item, edm_is_shown_by: ['http://dlg.galileo.usg.edu'])
+    i.valid?
+    expect(i.errors).not_to have_key :edm_is_shown_by
   end
 
   context 'portal removal behavior' do
