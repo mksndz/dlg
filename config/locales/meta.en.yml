@@ -128,7 +128,7 @@ en:
         dcterms_creator: 'Creator'
         dcterms_language: 'Language'
         edm_is_shown_at: 'URL (metadata)'
-        edm_is_shown_at: 'URL (digital object)'
+        edm_is_shown_by: 'URL (digital object)'
         dcterms_rights_holder: 'Rights Holder'
         dcterms_bibliographic_citation: 'Cite As'
         dcterms_extent: 'Extent'
