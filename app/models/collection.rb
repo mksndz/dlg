@@ -95,7 +95,7 @@ class Collection < ActiveRecord::Base
     string :dcterms_rights_holder,          as: 'dcterms_rights_holder_display',          multiple: true
     string :dcterms_bibliographic_citation, as: 'dcterms_bibliographic_citation_display', multiple: true
     string :dlg_local_right,                as: 'dlg_local_right_display',                multiple: true
-    string :dlg_subject_personal,           as: 'dlg_subject_personal',                   multiple: true
+    string :dlg_subject_personal,           as: 'dlg_subject_personal_display',           multiple: true
     string :dc_relation,                    as: 'dc_relation_display',                    multiple: true
     string :dcterms_type,                   as: 'dcterms_type_display',                   multiple: true
     string :dcterms_medium,                 as: 'dcterms_medium_display',                 multiple: true
