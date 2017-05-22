@@ -126,7 +126,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'dcterms_description_display', label: I18n.t('meta.search.labels.dcterms_description')
     config.add_index_field 'collection_name_sms',         label: I18n.t('meta.search.labels.collection'), link_to_search: true
     config.add_index_field 'repository_name_sms',         label: I18n.t('meta.search.labels.repository'), link_to_search: true
-    config.add_index_field 'dcterms_identifier_display',  label: I18n.t('meta.search.labels.dcterms_identifier'), helper_method: 'linkify'
+    config.add_index_field 'dcterms_identifier_display',  label: I18n.t('meta.search.labels.dcterms_identifier')
     config.add_index_field 'edm_is_shown_at_display',     label: I18n.t('meta.search.labels.edm_is_shown_at'), helper_method: 'linkify'
     config.add_index_field 'edm_is_shown_by_display',     label: I18n.t('meta.search.labels.edm_is_shown_by'), helper_method: 'linkify'
     config.add_index_field 'dcterms_creator_display',     label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
