@@ -3,6 +3,9 @@
 # TODO: Factor out de facto index method for deleted items (ItemVersion)
 # TODO: Factor out into Filterable the Portal filtering behavior
 #
+
+# http://dlgadmin.galileo.usg.edu/items?collection_id=&commit=Filter&direction=asc&per_page=250&portal_id%5B%5D=&portal_id%5B%5D=1&public=&sort=dcterms_title&utf8=%E2%9C%93&valid_item=
+
 class ItemsController < RecordController
 
   load_and_authorize_resource
@@ -30,10 +33,9 @@ class ItemsController < RecordController
       portals_filter = params[:portal_id].reject(&:empty?)
 
       unless portals_filter.empty?
-        item_query = item_query
-                       .includes(:portals)
-                       .joins(:portals)
-                       .where(portals: { id: portals_filter })
+        item_query = item_query.includes(:portals)
+                               .joins(:portals)
+                               .where(portals: { id: portals_filter })
       end
     end
 
@@ -46,9 +48,8 @@ class ItemsController < RecordController
     respond_to do |format|
       format.xml { send_data @items.to_xml }
       format.html do
-        @items = @items
-                   .page(params[:page])
-                   .per(params[:per_page])
+        @items = @items.page(params[:page])
+                       .per(params[:per_page])
       end
       # format.json { send_data @items.as_json }
     end

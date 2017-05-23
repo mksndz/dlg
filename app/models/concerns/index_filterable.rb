@@ -10,6 +10,7 @@ module IndexFilterable
       end
       options.present? ? where(options) : all
     end
+
     def self.index_query_fields
       INDEX_QUERY_FIELDS
     end
