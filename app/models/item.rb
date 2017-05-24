@@ -71,10 +71,10 @@ class Item < ActiveRecord::Base
     # for display in search results
 
     string :dpla, stored: true do
-      dpla == 'true' ? 'Yes' : 'No'
+      dpla ? 'Yes' : 'No'
     end
     string :public, stored: true do
-      public == 'true' ? 'Yes' : 'No'
+      public ? 'Yes' : 'No'
     end
 
     # *_display (not indexed, stored, multivalued)

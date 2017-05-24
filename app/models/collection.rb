@@ -58,6 +58,11 @@ class Collection < ActiveRecord::Base
     end
 
     boolean :public
+    # for display in search results
+
+    string :public, stored: true do
+      public ? 'Yes' : 'No'
+    end
 
     string :repository_name, stored: true, multiple: true do
       repository_titles
