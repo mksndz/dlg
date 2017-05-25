@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509195203) do
+ActiveRecord::Schema.define(version: 20170525133237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20170509195203) do
     t.boolean  "has_thumbnail",                  default: false, null: false
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
     t.integer  "batch_import_id"
-    t.boolean  "local",                          default: true,  null: false
+    t.boolean  "local",                          default: false, null: false
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
     t.string   "record_id",                      default: "",    null: false
     t.text     "edm_is_shown_by",                default: [],    null: false, array: true
@@ -235,7 +235,7 @@ ActiveRecord::Schema.define(version: 20170509195203) do
     t.boolean  "valid_item",                     default: false, null: false
     t.boolean  "has_thumbnail",                  default: false, null: false
     t.text     "dcterms_bibliographic_citation", default: [],    null: false, array: true
-    t.boolean  "local",                          default: true,  null: false
+    t.boolean  "local",                          default: false, null: false
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
     t.string   "record_id",                      default: "",    null: false
     t.text     "edm_is_shown_by",                default: [],    null: false, array: true
