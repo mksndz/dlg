@@ -534,6 +534,7 @@
       <str name="facet.field">creator_facet</str>
       <str name="facet.field">contributor_facet</str>
       <str name="facet.field">subject_facet</str>
+      <str name="facet.field">subject_personal_facet</str>
       <str name="facet.field">year_facet</str>
       <str name="facet.field">temporal_facet</str>
       <str name="facet.field">location_facet</str>
@@ -704,6 +705,7 @@
       <str name="facet.field">creator_facet</str>
       <str name="facet.field">contributor_facet</str>
       <str name="facet.field">subject_facet</str>
+      <str name="facet.field">subject_personal_facet</str>
       <str name="facet.field">year_facet</str>
       <str name="facet.field">temporal_facet</str>
       <str name="facet.field">location_facet</str>

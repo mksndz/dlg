@@ -89,6 +89,7 @@ en:
         creator: 'Creator'
         contributor: 'Contributor'
         subject: 'Subject'
+        subject_personal: 'Subject (Personal)'
         year: 'Year of Orig Pub'
         temporal: 'Coverage Temporal'
         location: 'Coverage Spatial'

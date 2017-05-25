@@ -82,26 +82,27 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'public_b',            label: I18n.t('meta.search.facets.public'), helper_method: :boolean_facet_labels, limit: true
-    config.add_facet_field 'dpla_b',              label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels, limit: true
-    config.add_facet_field 'provenance_facet',    label: I18n.t('meta.search.facets.provenance'), limit: true
-    config.add_facet_field 'creator_facet',       label: I18n.t('meta.search.facets.creator'), limit: true
-    config.add_facet_field 'contributor_facet',   label: I18n.t('meta.search.facets.contributor'), limit: true
-    config.add_facet_field 'subject_facet',       label: I18n.t('meta.search.facets.subject'), limit: true
-    config.add_facet_field 'year_facet',          label: I18n.t('meta.search.facets.year'), limit: true
-    config.add_facet_field 'temporal_facet',      label: I18n.t('meta.search.facets.temporal'), limit: true
-    config.add_facet_field 'location_facet',      label: I18n.t('meta.search.facets.location'), limit: true
-    config.add_facet_field 'format_facet',        label: I18n.t('meta.search.facets.format'), limit: true
-    config.add_facet_field 'rights_facet',        label: I18n.t('meta.search.facets.rights'), limit: true, helper_method: :rights_icon_label
-    # config.add_facet_field 'rights_holder_facet', label: I18n.t('meta.search.facets.rights_holder'), limit: true
-    config.add_facet_field 'relation_facet',      label: I18n.t('meta.search.facets.relation'), limit: true
-    config.add_facet_field 'type_facet',          label: I18n.t('meta.search.facets.type'), limit: true
-    config.add_facet_field 'medium_facet',        label: I18n.t('meta.search.facets.medium'), limit: true
-    config.add_facet_field 'language_facet',      label: I18n.t('meta.search.facets.language'), limit: true
-    config.add_facet_field 'repository_name_sms', label: I18n.t('meta.search.facets.repository'), limit: true
-    config.add_facet_field 'collection_name_sms', label: I18n.t('meta.search.facets.collection'), limit: true
-    config.add_facet_field 'portal_names_sms',    label: I18n.t('meta.search.facets.portals'), limit: true
-    config.add_facet_field 'class_name',          label: I18n.t('meta.search.facets.class'), limit: true
+    config.add_facet_field 'public_b',                label: I18n.t('meta.search.facets.public'), helper_method: :boolean_facet_labels, limit: true
+    config.add_facet_field 'dpla_b',                  label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels, limit: true
+    config.add_facet_field 'provenance_facet',        label: I18n.t('meta.search.facets.provenance'), limit: true
+    config.add_facet_field 'creator_facet',           label: I18n.t('meta.search.facets.creator'), limit: true
+    config.add_facet_field 'contributor_facet',       label: I18n.t('meta.search.facets.contributor'), limit: true
+    config.add_facet_field 'subject_facet',           label: I18n.t('meta.search.facets.subject'), limit: true
+    config.add_facet_field 'subject_personal_facet',  label: I18n.t('meta.search.facets.subject_personal'), limit: true
+    config.add_facet_field 'year_facet',              label: I18n.t('meta.search.facets.year'), limit: true
+    config.add_facet_field 'temporal_facet',          label: I18n.t('meta.search.facets.temporal'), limit: true
+    config.add_facet_field 'location_facet',          label: I18n.t('meta.search.facets.location'), limit: true
+    config.add_facet_field 'format_facet',            label: I18n.t('meta.search.facets.format'), limit: true
+    config.add_facet_field 'rights_facet',            label: I18n.t('meta.search.facets.rights'), limit: true, helper_method: :rights_icon_label
+    # config.add_facet_field 'rights_holder_facet'    , label: I18n.t('meta.search.facets.rights_holder'), limit: true
+    config.add_facet_field 'relation_facet',          label: I18n.t('meta.search.facets.relation'), limit: true
+    config.add_facet_field 'type_facet',              label: I18n.t('meta.search.facets.type'), limit: true
+    config.add_facet_field 'medium_facet',            label: I18n.t('meta.search.facets.medium'), limit: true
+    config.add_facet_field 'language_facet',          label: I18n.t('meta.search.facets.language'), limit: true
+    config.add_facet_field 'repository_name_sms',     label: I18n.t('meta.search.facets.repository'), limit: true
+    config.add_facet_field 'collection_name_sms',     label: I18n.t('meta.search.facets.collection'), limit: true
+    config.add_facet_field 'portal_names_sms',        label: I18n.t('meta.search.facets.portals'), limit: true
+    config.add_facet_field 'class_name',              label: I18n.t('meta.search.facets.class'), limit: true
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
