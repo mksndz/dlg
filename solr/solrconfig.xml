@@ -549,11 +549,11 @@
       <str name="facet.field">class_name</str>
       <str name="facet.field">portal_names_sms</str>
 
-      <str name="spellcheck">true</str>
+      <str name="spellcheck">false</str>
       <str name="spellcheck.dictionary">default</str>
       <str name="spellcheck.onlyMorePopular">true</str>
       <str name="spellcheck.extendedResults">true</str>
-      <str name="spellcheck.collate">false</str>
+      <str name="spellcheck.collate">true</str>
       <str name="spellcheck.count">5</str>
 
     </lst>
@@ -717,13 +717,13 @@
       <str name="facet.field">repository_name_sms</str>
       <str name="facet.field">collection_name_sms</str>
       <str name="facet.field">class_name</str>
-      <str name="facet.field">portals_sms</str>
+      <str name="facet.field">portals_names_sms</str>
 
-      <str name="spellcheck">true</str>
+      <str name="spellcheck">false</str>
       <str name="spellcheck.dictionary">default</str>
       <str name="spellcheck.onlyMorePopular">true</str>
       <str name="spellcheck.extendedResults">true</str>
-      <str name="spellcheck.collate">false</str>
+      <str name="spellcheck.collate">true</str>
       <str name="spellcheck.count">5</str>
     </lst>
     <arr name="last-components">
@@ -737,7 +737,7 @@
       <str name="name">mySuggester</str>
       <str name="lookupImpl">FuzzyLookupFactory</str>
       <str name="suggestAnalyzerFieldType">textSuggest</str>
-      <str name="buildOnCommit">true</str>
+      <str name="buildOnOptimize">true</str> <!-- originally was buildOnCommit, but that is costly -->
       <str name="field">suggest</str>
     </lst>
   </searchComponent>
