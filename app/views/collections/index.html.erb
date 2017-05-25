@@ -28,7 +28,7 @@
       <%= f.select :portal_id, options_for_select(@search_options[:portals].collect { |p| [p.name, p.id] }, selected: params[:portal_id]), { label: t('meta.defaults.labels.filter.portals'), include_blank: false }, { name: 'portal_id[]', class: 'fancy-multiselect portals-filter', multiple: true } %>
       <%= f.select :repository_id, options_for_select(@search_options[:repositories].collect { |c| [c.title, c.id] }, selected: params[:repository_id] ), { label: t('meta.defaults.labels.filter.repository'), include_blank: true }, { name: 'repository_id', class: 'fancy-select' } %>
       <%= f.select :public, options_for_select(@search_options[:public], selected: params[:public]), { label: t('meta.defaults.labels.filter.public')}, { name: 'public' } %>
-      <%= f.primary 'Filter' %>
+      <%= f.primary 'Filter' %>&nbsp;<span class="pull-right"><span class="badge"><%= @collections.count %></span> records shown of <span class="badge"><%= @collections.total_count %></span> total records</span>
   <% end %>
 </div>
 

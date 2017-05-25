@@ -20,7 +20,7 @@
       <%= f.hidden_field :sort, { value: h(params[:sort]), name: 'sort' } if params[:sort] %>
       <%= f.hidden_field :per_page, { value: h(params[:per_page]), name: 'per_page' } if params[:per_page] %>
       <%= f.select :portal_id, options_for_select(@data[:portals].collect { |p| [p.name, p.id] }, selected: params[:portal_id]), { label: t('meta.defaults.labels.filter.portals'), include_blank: false }, { name: 'portal_id[]', class: 'fancy-multiselect portals-filter', multiple: true } %>
-      <%= f.primary 'Filter' %>
+      <%= f.primary 'Filter' %>&nbsp;<span class="pull-right"><span class="badge"><%= @repositories.count %></span> records shown of <span class="badge"><%= @repositories.total_count %></span> total records</span>
   <% end %>
 </div>
 

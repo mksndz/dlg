@@ -181,6 +181,24 @@ feature 'Item Management' do
 
     context 'sorting and limiting behavior' do
 
+      scenario 'limited resutls show accurate total count' do
+
+        Fabricate(:item)
+        Fabricate(:item)
+        invalid_item = Fabricate.build(:item) { dcterms_spatial [] }
+        invalid_item.save(validate: false)
+
+        visit items_path
+
+        click_on I18n.t('meta.defaults.labels.columns.valid')
+
+        counts = page.all('.index-filter-area .badge')
+
+        expect(counts[0].text).to eq '3'
+        expect(counts[1].text).to eq '3'
+
+      end
+
       scenario 'sorts by validity status' do
 
         valid_item = Fabricate(:item)
@@ -314,12 +332,6 @@ feature 'Item Management' do
       expect(page).to have_content new_type
 
     end
-
-  end
-
-  private
-
-  def fill_in_default_values
 
   end
 
