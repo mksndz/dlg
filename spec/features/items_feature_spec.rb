@@ -181,6 +181,27 @@ feature 'Item Management' do
 
     context 'sorting and limiting behavior' do
 
+      scenario 'sorts by validity status' do
+
+        valid_item = Fabricate(:item)
+        valid_item2 = Fabricate(:item)
+        invalid_item = Fabricate.build(:item) { dcterms_spatial [] }
+        invalid_item.save(validate: false)
+
+        visit items_path
+
+        click_on I18n.t('meta.defaults.labels.columns.valid')
+
+        titles = []
+
+        page.all('table tbody tr').each do |row|
+          titles << row.all('td')[2].text
+        end
+
+        expect(titles).to eq [invalid_item.title, valid_item.title, valid_item2.title]
+
+      end
+
       scenario 'sorts items by title then sees items properly listed' do
 
         Fabricate(:item) { dcterms_title ['L'] }
