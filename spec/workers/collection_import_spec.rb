@@ -13,7 +13,7 @@ describe CollectionImporter, type: :model do
       it 'should raise a JobFailedError' do
 
         expect do
-          CollectionImporter.perform('Z','foo')
+          CollectionImporter.perform('Z', 'foo')
         end.to raise_exception JobFailedError
 
       end
@@ -70,7 +70,6 @@ describe CollectionImporter, type: :model do
     context 'with a valid url, valid xml, and an empty Collection' do
 
       let(:good_xml) { 'http://dlg.galileo.usg.edu/xml/dcq/cviog_gainfo.xml' }
-
       let(:collection_item_count) { 1 }
 
       it 'should not raise any kind of exception' do
