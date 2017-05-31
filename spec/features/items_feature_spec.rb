@@ -201,8 +201,7 @@ feature 'Item Management' do
 
       scenario 'sorts by validity status' do
 
-        valid_item = Fabricate(:item)
-        valid_item2 = Fabricate(:item)
+        Fabricate(:item, count: 2)
         invalid_item = Fabricate.build(:item) { dcterms_spatial [] }
         invalid_item.save(validate: false)
 
@@ -216,7 +215,7 @@ feature 'Item Management' do
           titles << row.all('td')[2].text
         end
 
-        expect(titles).to eq [invalid_item.title, valid_item.title, valid_item2.title]
+        expect(titles[0]).to eq invalid_item.title
 
       end
 
