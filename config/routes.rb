@@ -70,7 +70,7 @@ Rails.application.routes.draw do
 
     resources :batch_items do
       collection do
-        post 'import',  to: 'batch_items#import', constraints: { format: :json }
+        post 'import', to: 'batch_items#import', constraints: { format: :json }
       end
     end
 
@@ -90,6 +90,7 @@ Rails.application.routes.draw do
     collection do
       get 'facets', to: 'catalog#facets'
     end
+    get 'facet_values/:facet_field', to: 'catalog#all_facet_values', as: 'facet_values_csv', constraints: { format: :csv }
   end
 
   resources :solr_documents, only: [:show], path: '/record', controller: 'catalog', constraints: { id: /.*/, format: false } do

@@ -4,9 +4,12 @@
 
 <% breadcrumb :facets_browse %>
 
-<div class="list-group col-md-3">
+<ul class="list-group col-md-3">
   <% @facets.each do |f| %>
       <% field = f[:field] %>
-      <%= link_to f[:label], facet_catalog_path(field), class: 'list-group-item' %>
+      <li class="list-group-item">
+        <%= link_to f[:label], facet_catalog_path(field) %>
+        <span class="pull-right"><%= link_to 'CSV', facet_values_csv_catalog_path(field, format: :csv), class: 'pull-right' %></span>
+      </li>
   <% end %>
-</div>
+</ul>

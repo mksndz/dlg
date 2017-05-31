@@ -404,6 +404,19 @@ class CatalogController < ApplicationController
     @facets = displayed_facets
   end
 
+  def all_facet_values
+    facet = blacklight_config.facet_fields[params[:facet_field]]
+    response, _ = search_results({}) do |search_builder|
+      search_builder.except(:add_advanced_search_to_solr).append(:facets_for_advanced_search_form)
+    end
+    display_facet = response.aggregations[facet.key]
+    @field = display_facet.name
+    @values = display_facet.items.map { |v| { value: v.value, hits: v.hits } }
+    respond_to do |format|
+      format.csv { render :all_facets }
+    end
+  end
+
   private
 
   def displayed_facets
