@@ -2,7 +2,7 @@ require 'faker'
 
 Fabricator(:item) do
 
-  slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'),'-') }
+  slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'), '-') }
   dcterms_title { [
       Faker::Lorem.sentence(5),
       Faker::Lorem.sentence(4)

@@ -328,19 +328,25 @@ RSpec.describe Item, type: :model do
   end
 
   it 'should require a value in edm_is_shown_by' do
-    i = Fabricate.build(:item, edm_is_shown_by: [])
+    i = Fabricate.build(:item, edm_is_shown_by: [], local: true)
     i.valid?
     expect(i.errors).to have_key :edm_is_shown_by
   end
 
   it 'should require a valid URL in edm_is_shown_by' do
-    i = Fabricate.build(:item, edm_is_shown_by: ['not/a.url'])
+    i = Fabricate.build(:item, edm_is_shown_by: ['not/a.url'], local: true)
     i.valid?
     expect(i.errors).to have_key :edm_is_shown_by
   end
 
   it 'should be valid if there is a valid URL in edm_is_shown_by' do
-    i = Fabricate.build(:item, edm_is_shown_by: ['http://dlg.galileo.usg.edu'])
+    i = Fabricate.build(:item, edm_is_shown_by: ['http://dlg.galileo.usg.edu'], local: true)
+    i.valid?
+    expect(i.errors).not_to have_key :edm_is_shown_by
+  end
+
+  it 'should be valid if there is a no value in edm_is_shown_by but the item is not local' do
+    i = Fabricate.build(:item, edm_is_shown_by: [], local: false)
     i.valid?
     expect(i.errors).not_to have_key :edm_is_shown_by
   end

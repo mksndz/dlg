@@ -15,7 +15,7 @@ module ItemTypeValidatable
     validate :subject_value_provided
     validate :dc_date_characters
     validate :url_in_edm_is_shown_at
-    validate :url_in_edm_is_shown_by
+    validate :url_in_edm_is_shown_by_when_local
 
   end
 
@@ -78,16 +78,20 @@ module ItemTypeValidatable
     end
   end
 
-  def url_in_edm_is_shown_by
-    if edm_is_shown_by.empty?
-      errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.blank'))
-      return
-    end
-    edm_is_shown_by.each do |v|
-      unless valid_url? v
-        errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.item_type.invalid_url_provided'))
-        break
+  def url_in_edm_is_shown_by_when_local
+    if local
+      if edm_is_shown_by.empty?
+        errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.item_type.edm_is_shown_by_when_local.blank'))
+        return
       end
+      edm_is_shown_by.each do |v|
+        unless valid_url? v
+          errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.item_type.edm_is_shown_by_when_local.url'))
+          break
+        end
+      end
+    else
+      true
     end
   end
 

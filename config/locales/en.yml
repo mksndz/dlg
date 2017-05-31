@@ -313,7 +313,11 @@ en:
           no_rights_information: 'has no rights information set.'
           invalid_url_provided: 'contains an invalid URL.'
           dcterms_subject: 'cannot be blank if Subject Personal is also blank'
+          edm_is_shown_by_when_local:
+            blank: "cannot be blank when the item is local."
+            url: "cannot contain an invalid URL when the item is local."
         repository:
           coordinates: 'are not in the proper format. Use "latitude, longitude".'
+
         blank: "cannot be blank"
         taken: "must be unique"
