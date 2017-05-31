@@ -5,7 +5,7 @@ class CatalogController < ApplicationController
   include BlacklightMaps::ControllerOverride
   include MetadataHelper # for rights statement stuff
 
-  ADVANCED_FACET_LIMIT = 600
+  ADVANCED_FACET_DEFAULT_LIMIT = 300
 
   authorize_resource class: false
 
@@ -178,22 +178,22 @@ class CatalogController < ApplicationController
     config.advanced_search[:query_parser]         ||= 'dismax'
     config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
     config.advanced_search[:form_solr_parameters] ||= {
-        'f.provenance_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.creator_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.contributor_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.subject_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.year_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.temporal_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.location_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.rights_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        # 'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.relation_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.type_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.medium_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.language_facet.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.repository_name_sms.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.collection_name_sms.facet.limit' => ADVANCED_FACET_LIMIT,
-        'f.portals_sms.facet.limit' => ADVANCED_FACET_LIMIT,
+        'f.provenance_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.creator_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.contributor_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.subject_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.year_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.temporal_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.location_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.rights_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        # 'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.relation_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.type_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.medium_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.language_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+        'f.repository_name_sms.facet.limit' => -1,
+        'f.collection_name_sms.facet.limit' => -1,
+        'f.portals_sms.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
     }
 
     config.add_search_field('all_fields') do |field|
