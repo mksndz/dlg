@@ -30,11 +30,21 @@
 
     <%# todo: if user can edit this record... #%>
     <% if current_user.super? %>
-        <%= link_to(
-                raw('<span class="glyphicon glyphicon-edit"></span>'),
-                url_for(controller: klass.downcase.pluralize, action: 'edit', id: id),
-                session_tracking_params(document, counter).merge({class: 'edit-record'})
-            ) %>
+        <div class="btn-group btn-group-sm pull-right">
+          <%= link_to(
+                  'Edit',
+                  url_for(controller: klass.downcase.pluralize, action: :edit, id: id),
+                  session_tracking_params(document, counter).merge({class: 'edit-record btn btn-primary'})
+              ) %>
+          <%= link_to(
+                  'Show',
+                  url_for(controller: klass.downcase.pluralize, action: :show, id: id),
+                  session_tracking_params(document, counter).merge({class: 'edit-record btn btn-primary'})
+              ) %>
+        </div>
+
+
+
 
     <% end %>
   </h3>
