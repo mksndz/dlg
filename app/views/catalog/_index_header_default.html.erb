@@ -39,7 +39,7 @@
           <%= link_to(
                   'Show',
                   url_for(controller: klass.downcase.pluralize, action: :show, id: id),
-                  session_tracking_params(document, counter).merge({class: 'edit-record btn btn-primary'})
+                  session_tracking_params(document, counter).merge({class: 'show-record btn btn-primary'})
               ) %>
         </div>
 
