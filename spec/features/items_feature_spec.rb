@@ -201,7 +201,8 @@ feature 'Item Management' do
 
       scenario 'sorts by validity status' do
 
-        Fabricate(:item, count: 2)
+        Fabricate(:item)
+        Fabricate(:item)
         invalid_item = Fabricate.build(:item) { dcterms_spatial [] }
         invalid_item.save(validate: false)
 
