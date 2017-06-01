@@ -351,6 +351,12 @@ RSpec.describe Item, type: :model do
     expect(i.errors).not_to have_key :edm_is_shown_by
   end
 
+  it 'should always downcase the slug value' do
+    i = Fabricate.build(:robust_item, slug: 'CAPS')
+    i.save
+    expect(i.slug).to eq 'CAPS'.downcase
+  end
+
   context 'portal removal behavior' do
 
     before :each do

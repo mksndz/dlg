@@ -254,7 +254,7 @@ class Item < ActiveRecord::Base
   private
 
   def set_record_id
-    self.record_id = "#{repository.slug}_#{collection.slug}_#{slug}"
+    self.record_id = "#{repository.slug}_#{collection.slug}_#{slug}".downcase
   end
 
   def other_repository_titles
