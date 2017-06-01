@@ -21,7 +21,7 @@ Blacklight.onLoad ->
     e.preventDefault()
     if entities = get_checked_items()
       url = $(this).data('url') + '.xml' + '?entities=' + entities
-      window.location.href = url
+      window.open url, "_blank"
   )
 
   $("a.add-to-batch-action").on("click", (e, data, status, xhr) ->
