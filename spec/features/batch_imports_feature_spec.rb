@@ -5,12 +5,13 @@ Warden.test_mode!
 feature 'Batch Importing Batch Items' do
 
   let(:uploader_user) { Fabricate :uploader}
-
-  before :each do
-    login_as uploader_user, scope: :user
-  end
+  let(:super_user) { Fabricate :super}
 
   context 'as an uploader user' do
+
+    before :each do
+      login_as uploader_user, scope: :user
+    end
 
     context 'for a committed batch' do
 
@@ -140,6 +141,35 @@ feature 'Batch Importing Batch Items' do
       end
 
     end
+
+  end
+
+  context 'as a super user' do
+
+    before :each do
+      login_as super_user, scope: :user
+      ResqueSpec.reset!
+      @batch = Fabricate :batch
+    end
+
+    let(:xml) { Fabricate(:robust_item).to_xml }
+
+    context 'uploading xml with validates OFF' do
+
+      before :each do
+        visit new_batch_batch_import_path(@batch)
+        fill_in I18n.t('activerecord.attributes.batch_import.xml_text'), with: xml
+        uncheck(I18n.t('activerecord.attributes.batch_import.validations'))
+        click_on I18n.t('meta.defaults.actions.save')
+      end
+
+      scenario 'batch_items records are created and no error messages displayed' do
+        ResqueSpec.perform_all :xml
+        expect(page).not_to have_text 'Failed to import'
+      end
+
+    end
+
 
   end
 

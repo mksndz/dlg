@@ -17,57 +17,44 @@ class RecordImporter
     import_type = @batch_import.format
 
     case import_type
-
-        when 'file', 'text'
-
-          xml_data = Nokogiri::XML @batch_import.xml
-
-          unless xml_data.is_a? Nokogiri::XML::Document and xml_data.errors.empty?
-            total_failure 'XML could not be parsed, probably due to invalid XML format.'
-            return
-          end
-
-          records = xml_data.css('item')
-          n = records.length
-
-          unless n > 0
-            total_failure 'No records could be extracted from the XML'
-            return
-          end
-
-          records.each_with_index do |r, i|
-            record = Hash.from_xml(r.to_s)
-            create_or_update_record i + 1, record['item']
-          end
-        
-        when 'search query'
-
-          @batch_import.item_ids.each_with_index do |id, index|
-
-            begin
-              i = Item.find id
-              batch_item = i.to_batch_item
-              batch_item.batch = @batch
-              batch_item.save(validate: false)
-              add_updated i.slug, batch_item, i.id
-            rescue ActiveRecord::RecordNotFound => ar_e
-              add_failed index, "Record with ID #{id} could not be found to add to Batch."
-            rescue StandardError => e
-              add_failed index, "Item #{i.record_id} could not be added to Batch: #{e}"
-            end
-
-          end
-        
-        else
-
-          total_failure 'No format specified'
-
+    when 'file', 'text'
+      xml_data = Nokogiri::XML @batch_import.xml
+      unless xml_data.is_a?(Nokogiri::XML::Document) && xml_data.errors.empty?
+        total_failure 'XML could not be parsed, probably due to invalid XML format.'
+        return
+      end
+      records = xml_data.css('item')
+      n = records.length
+      unless n > 0
+        total_failure 'No records could be extracted from the XML'
+        return
+      end
+      records.each_with_index do |r, i|
+        record = Hash.from_xml(r.to_s)
+        create_or_update_record i + 1, record['item']
+      end
+    when 'search query'
+      @batch_import.item_ids.each_with_index do |id, index|
+        begin
+          i = Item.find id
+          batch_item = i.to_batch_item
+          batch_item.batch = @batch
+          batch_item.save(validate: false)
+          add_updated i.slug, batch_item, i.id
+        rescue ActiveRecord::RecordNotFound => ar_e
+          add_failed index, "Record with ID #{id} could not be found to add to Batch."
+        rescue StandardError => e
+          add_failed index, "Item #{i.record_id} could not be added to Batch: #{e}"
+        end
+      end
+    else
+      total_failure 'No format specified'
     end
 
     @batch_import.results = {
-        added: @added,
-        updated: @updated,
-        failed: @failed
+      added: @added,
+      updated: @updated,
+      failed: @failed
     }
 
     @batch_import.completed_at = Time.now
@@ -125,7 +112,7 @@ class RecordImporter
 
     begin
 
-      if @record.save(validates: @validate)
+      if @record.save(validate: @validate)
 
         if action == :update
           add_updated(@record.slug, @record.id, @record.item_id)
@@ -153,7 +140,6 @@ class RecordImporter
   end
 
   def self.create_new_record(record_data)
-
     portals = record_data.delete('portals')
     other_colls = record_data.delete('other_colls')
     @record = BatchItem.new prepared_params(record_data)
@@ -175,31 +161,31 @@ class RecordImporter
 
   def self.add_failed(num, message)
     @failed << {
-        number: num,
-        message: message
+      number: num,
+      message: message
     }
   end
 
   def self.add_added(slug, batch_item_id)
     @added << {
-        batch_item_id: batch_item_id,
-        slug: slug
+      batch_item_id: batch_item_id,
+      slug: slug
     }
   end
 
   def self.add_updated(slug, batch_item_id, item_id)
     @updated << {
-        batch_item_id: batch_item_id,
-        item_id: item_id,
-        slug: slug
+      batch_item_id: batch_item_id,
+      item_id: item_id,
+      slug: slug
     }
   end
 
   def self.total_failure(msg)
     @batch_import.results = {
-        added: @added,
-        updated: @updated,
-        failed: [{number: 0, message: msg}]
+      added: @added,
+      updated: @updated,
+      failed: [ {number: 0, message: msg} ]
     }
     save_batch_import
   end
