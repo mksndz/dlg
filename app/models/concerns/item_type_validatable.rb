@@ -32,7 +32,7 @@ module ItemTypeValidatable
     end
     dc_date.each do |v|
       if v =~ %r{([^0-9\/-])}
-        errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.item_type.temporal_invalid_character'))
+        errors.add(:dc_date, "#{I18n.t('activerecord.errors.messages.item_type.date_invalid_character')}: #{v}")
         break
       end
     end
@@ -41,7 +41,7 @@ module ItemTypeValidatable
   def dcterms_temporal_characters
     dcterms_temporal.each do |v|
       if v =~ %r{([^0-9\/-])}
-        errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.item_type.temporal_invalid_character'))
+        errors.add(:dcterms_temporal, "#{I18n.t('activerecord.errors.messages.item_type.temporal_invalid_character')}: #{v}")
         break
       end
     end
@@ -64,7 +64,7 @@ module ItemTypeValidatable
     end
     edm_is_shown_at.each do |v|
       unless valid_url? v
-        errors.add(:edm_is_shown_at, I18n.t('activerecord.errors.messages.item_type.invalid_url_provided'))
+        errors.add(:edm_is_shown_at, "#{I18n.t('activerecord.errors.messages.item_type.invalid_url_provided')}: #{v}")
         break
       end
     end
@@ -78,7 +78,7 @@ module ItemTypeValidatable
     end
     edm_is_shown_by.each do |v|
       unless valid_url? v
-        errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.item_type.edm_is_shown_by_when_local.url'))
+        errors.add(:edm_is_shown_by, "#{I18n.t('activerecord.errors.messages.item_type.edm_is_shown_by_when_local.url')}: #{v}")
         break
       end
     end
