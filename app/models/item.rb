@@ -234,7 +234,7 @@ class Item < ActiveRecord::Base
       'id',
       'created_at',
       'updated_at',
-      'valid_item',
+      'valid_item'
     )
 
     batch_item = BatchItem.new attributes

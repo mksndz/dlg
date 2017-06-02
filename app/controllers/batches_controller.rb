@@ -122,7 +122,7 @@ class BatchesController < ApplicationController
     respond_to do |format|
       if @batch.batch_items.count == 0
         format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.empty_batch_commit') }
-      elsif @batch.has_invalid_batch_items?
+      elsif @batch.invalid_batch_items?
         format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.has_invalid_batch_items') }
       else
         @batch.queued_for_commit_at = Time.now
@@ -189,7 +189,7 @@ class BatchesController < ApplicationController
   def check_if_batch_is_not_ready
     errors = []
     errors << I18n.t('meta.batch.labels.empty_batch_commit') if @batch.batch_items.count == 0
-    errors << I18n.t('meta.batch.labels.has_invalid_batch_items') if @batch.has_invalid_batch_items?
+    errors << I18n.t('meta.batch.labels.has_invalid_batch_items') if @batch.invalid_batch_items?
     errors
   end
 

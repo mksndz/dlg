@@ -62,6 +62,40 @@ describe BatchCommitter, type: :model do
 
     end
 
+    context 'with a mix of valid and invalid batch_items' do
+
+      let(:batch) do
+        Fabricate(:batch) { batch_items(count: 3) }
+      end
+
+      it 'should commit the Batch' do
+
+        item = Fabricate :item
+
+        batch.batch_items.last.dc_date = [] # validation error
+        batch.batch_items.last.save(validate: false)
+
+        batch.batch_items.first.item = item # update existing item
+        batch.batch_items.first.save
+
+        BatchCommitter.perform(batch.id)
+
+        batch.reload
+
+        results = batch.commit_results
+
+        expect(results['errors']).not_to be_empty
+        expect(results['items']).not_to be_empty
+        expect(results['items'][0]['item_updated']).to be_truthy
+        expect(results['items'][0]['item']).to eq item.id
+        expect(results['items'][1]['item_updated']).to be_falsey
+        expect(results['errors'][0]['errors']).not_to be_empty
+        expect(results['errors'][0]['errors'].length).to eq 1
+
+      end
+
+    end
+
   end
 
 end

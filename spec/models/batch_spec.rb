@@ -30,13 +30,13 @@ RSpec.describe Batch, type: :model do
 
   it 'responds with false for commit status when batch is not committed' do
     b = Fabricate :batch
-    expect(b.committed?).to be false
+    expect(b.committed?).to be_falsey
   end
 
   it 'responds with true for commit status when batch has been committed' do
     b = Fabricate :batch
     b.committed_at = Time.now
-    expect(b.committed?).to be true
+    expect(b.committed?).to be_truthy
   end
 
   it 'responds with boolean for pending status' do
@@ -47,7 +47,7 @@ RSpec.describe Batch, type: :model do
 
   it 'responds with false for has invalid batch items status when all batch_items are valid' do
     b = Fabricate(:batch) { batch_items(count: 2) }
-    expect(b.has_invalid_batch_items?).to be false
+    expect(b.invalid_batch_items?).to be false
   end
 
   it 'responds with true for has_invalid_ batch_items status at least one batch_item is not valid' do
@@ -55,7 +55,7 @@ RSpec.describe Batch, type: :model do
     i = b.batch_items.first
     i.dc_date = []
     i.save(validate: false)
-    expect(b.has_invalid_batch_items?).to be true
+    expect(b.invalid_batch_items?).to be true
   end
 
   it 'responds with boolean for pending status after batch is committed' do
@@ -63,7 +63,7 @@ RSpec.describe Batch, type: :model do
     b.queued_for_commit_at = Time.now
     b.committed_at = Time.now
     expect(b.pending?).to be false
-    expect(b.committed?).to be true
+    expect(b.committed?).to be_truthy
   end
 
   it 'commits the batch and saves itself with results as JSON' do

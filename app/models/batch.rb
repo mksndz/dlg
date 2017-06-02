@@ -14,16 +14,16 @@ class Batch < ActiveRecord::Base
     %w(user_id committed_at).freeze
   end
 
-  def has_invalid_batch_items?
+  def invalid_batch_items?
     batch_items.where(valid_item: false).exists?
   end
 
   def committed?
-    !!committed_at
+    committed_at
   end
 
   def pending?
-    !!queued_for_commit_at and not committed_at
+    queued_for_commit_at && !committed_at
   end
 
   def commit
@@ -31,16 +31,24 @@ class Batch < ActiveRecord::Base
     successes = []
     failures = []
     batch_items.each do |bi|
-      i = bi.commit
-      i.batch_items << bi
-      item_updated = i.persisted?
-      if i.save
-        # item properly committed, save Item and BI ids
-        successes << { batch_item: bi.id, item: i.id, slug: bi.slug, item_updated: item_updated }
+      if bi.invalid?
+        # if bi is invalid (it shouldn't be), dont bother trying to save the item
+        failures << { batch_item: bi.id, errors: bi.errors, slug: bi.slug }
       else
-        # item did not properly get built, add errors to array with BI id
-        failures << { batch_item: bi.id, errors: i.errors, slug: bi.slug }
+        i = bi.commit
+        i.batch_items << bi
+        item_updated = i.persisted?
+        if i.save
+          # item properly committed, save Item and BI ids
+          successes << { batch_item: bi.id, item: i.id, slug: bi.slug, item_updated: item_updated }
+        else
+          # item did not properly save, add errors to array with BI id
+          # this should only obtain on DB error or as a result of validation
+          # discrepancies between item and batchitem
+          failures << { batch_item: bi.id, errors: i.errors, slug: bi.slug }
+        end
       end
+
     end
     Sunspot.commit
     self.commit_results = { items: successes, errors: failures }
