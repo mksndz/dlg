@@ -1,0 +1,16 @@
+<ul>
+  <% messages.each do |f, m| %>
+    <li>
+      <%= f %>:
+        <% if m.length > 1 %>
+          <ol>
+            <% m.each do |sm| %>
+              <li><%= sm %></li>
+            <% end %>
+          </ol>
+        <% else %>
+          <%= m.first %>
+        <% end %>
+    </li>
+  <% end %>
+</ul>

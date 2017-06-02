@@ -78,6 +78,7 @@
     <tbody>
     <% i = 1 %>
     <% @batch.commit_results['items'].each do |r| %>
+      <% if r['item'] %>
         <tr>
           <td>
             <%= i %>
@@ -92,7 +93,8 @@
             <%= link_to 'View Item', item_path(r['item']), class: 'btn btn-default btn-xs' %>
           </td>
         </tr>
-    <% i += 1 %>
+        <% i += 1 %>
+      <% end %>
     <% end %>
     </tbody>
   </table>

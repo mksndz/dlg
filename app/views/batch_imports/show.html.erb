@@ -95,7 +95,7 @@
           <div class="panel-heading">
             <strong><%= t('meta.batch_import.labels.panels.results_failed') %></strong>
             <span class="pull-right badge">
-              <%= @batch_import.results['updated'].length %>
+              <%= @batch_import.results['failed'].length %>
             </span>
           </div>
 
@@ -110,7 +110,7 @@
             <% @batch_import.results['failed'].each do |f| %>
                 <tr>
                   <td><%= n %></td>
-                  <td><%= f['message'] %></td>
+                  <td><%= render 'error_messages', messages: f['message'] %></td>
                 </tr>
                 <% n += 1 %>
             <% end %>
