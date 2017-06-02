@@ -38,14 +38,19 @@ class Batch < ActiveRecord::Base
         i = bi.commit
         i.batch_items << bi
         item_updated = i.persisted?
-        if i.save
-          # item properly committed, save Item and BI ids
-          successes << { batch_item: bi.id, item: i.id, slug: bi.slug, item_updated: item_updated }
-        else
-          # item did not properly save, add errors to array with BI id
-          # this should only obtain on DB error or as a result of validation
-          # discrepancies between item and batchitem
-          failures << { batch_item: bi.id, errors: i.errors, slug: bi.slug }
+        begin
+          if i.save
+            # item properly committed, save Item and BI ids
+            successes << { batch_item: bi.id, item: i.id, slug: bi.slug, item_updated: item_updated }
+          else
+            # item did not properly save, add errors to array with BI id
+            # this should only obtain on DB error or as a result of validation
+            # discrepancies between item and batchitem
+            failures << { batch_item: bi.id, errors: i.errors, slug: bi.slug }
+          end
+        rescue StandardError => e
+          # exceptions can be raised during indexing...
+          failures << { batch_item: bi.id, errors: e, slug: bi.slug }
         end
       end
 

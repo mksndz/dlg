@@ -23,7 +23,6 @@ class BatchCommitter
       b.commit
     rescue => e
       @logger.error "Committing resulted in an error: #{e.message}"
-
     end
 
     Sunspot.commit_if_dirty
