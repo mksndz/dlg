@@ -5,8 +5,8 @@ class Batch < ActiveRecord::Base
   has_many :batch_items, dependent: :destroy
   has_many :batch_imports, dependent: :destroy
 
-  scope :committed,   -> { where('committed_at IS NOT NULL' ) }
-  scope :pending,     -> { where('committed_at IS NULL' ) }
+  scope :committed,   -> { where('committed_at IS NOT NULL') }
+  scope :pending,     -> { where('committed_at IS NULL') }
 
   validates_presence_of :user, :name
 
@@ -34,13 +34,7 @@ class Batch < ActiveRecord::Base
       i = bi.commit
       i.batch_items << bi
       item_updated = i.persisted?
-      begin
-        i.save
-        Sunspot.commit
-      rescue StandardError => e
-        failures << { batch_item: bi.id, errors: e, slug: bi.slug }
-      end
-      if i.errors.empty?
+      if i.save
         # item properly committed, save Item and BI ids
         successes << { batch_item: bi.id, item: i.id, slug: bi.slug, item_updated: item_updated }
       else
@@ -48,8 +42,9 @@ class Batch < ActiveRecord::Base
         failures << { batch_item: bi.id, errors: i.errors, slug: bi.slug }
       end
     end
+    Sunspot.commit
     self.commit_results = { items: successes, errors: failures }
-    self.save
+    save
   end
 
   # create a new batch and populate with batch_items that are copied from the
@@ -67,7 +62,7 @@ class Batch < ActiveRecord::Base
   private
 
   def get_created_item_ids
-    self.commit_results['items'].map do |r|
+    commit_results['items'].map do |r|
       r['item']
     end
   end
