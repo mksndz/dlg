@@ -1,18 +1,20 @@
 <ul>
-  <% messages.each do |f, m| %>
-    <li>
-      <%= f %>:
-        <% if m.is_a? String %>
-          <%= m %>
-        <% elsif m.length > 1 %>
-          <ol>
-            <% m.each do |sm| %>
-              <li><%= sm %></li>
-            <% end %>
-          </ol>
-        <% else %>
-          <%= m.first %>
-        <% end %>
-    </li>
+  <% if messages.is_a? String %>
+      <li><%= messages %></li>
+  <% elsif messages.respond_to? :each %>
+      <% messages.each do |f, m| %>
+      <li>
+        <%= f %>:
+          <% if m.length > 1 %>
+            <ol>
+              <% m.each do |sm| %>
+                <li><%= sm %></li>
+              <% end %>
+            </ol>
+          <% else %>
+            <%= m.first %>
+          <% end %>
+      </li>
+      <% end %>
   <% end %>
 </ul>
