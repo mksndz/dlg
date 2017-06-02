@@ -1,13 +1,12 @@
 require 'uri'
 
+# handles validation for Item and BatchItem records
 module ItemTypeValidatable
   include MetadataHelper
   extend ActiveSupport::Concern
 
   included do
-
     after_save :update_validation_cache
-
     validates_presence_of :collection, message: I18n.t('activerecord.errors.messages.item_type.collection')
     validates_presence_of :dcterms_spatial, :dcterms_title, :dcterms_provenance
     validate :dcterms_temporal_characters
@@ -15,18 +14,15 @@ module ItemTypeValidatable
     validate :subject_value_provided
     validate :dc_date_characters
     validate :url_in_edm_is_shown_at
-    validate :url_in_edm_is_shown_by_when_local
-
+    validate :url_in_is_shown_by_when_local
   end
 
   private
 
   def subject_value_provided
-
     if dcterms_subject.empty? && dlg_subject_personal.empty?
       errors.add(:dcterms_subject, I18n.t('activerecord.errors.messages.item_type.dcterms_subject'))
     end
-
   end
 
   def dc_date_characters
@@ -35,7 +31,7 @@ module ItemTypeValidatable
       return
     end
     dc_date.each do |v|
-      if v =~ /([^0-9\/-])/
+      if v =~ %r{([^0-9\/-])}
         errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.item_type.temporal_invalid_character'))
         break
       end
@@ -43,12 +39,8 @@ module ItemTypeValidatable
   end
 
   def dcterms_temporal_characters
-    unless dcterms_temporal
-      errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.blank'))
-      return
-    end
     dcterms_temporal.each do |v|
-      if v =~ /([^0-9\/-])/
+      if v =~ %r{([^0-9\/-])}
         errors.add(:dcterms_temporal, I18n.t('activerecord.errors.messages.item_type.temporal_invalid_character'))
         break
       end
@@ -56,7 +48,7 @@ module ItemTypeValidatable
   end
 
   def dcterms_type_required_value
-    unless dcterms_type
+    if dcterms_type.empty?
       errors.add(:dcterms_type, I18n.t('activerecord.errors.messages.blank'))
       return
     end
@@ -78,20 +70,17 @@ module ItemTypeValidatable
     end
   end
 
-  def url_in_edm_is_shown_by_when_local
-    if local
-      if edm_is_shown_by.empty?
-        errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.item_type.edm_is_shown_by_when_local.blank'))
-        return
+  def url_in_is_shown_by_when_local
+    return unless local
+    if edm_is_shown_by.empty?
+      errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.item_type.edm_is_shown_by_when_local.blank'))
+      return
+    end
+    edm_is_shown_by.each do |v|
+      unless valid_url? v
+        errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.item_type.edm_is_shown_by_when_local.url'))
+        break
       end
-      edm_is_shown_by.each do |v|
-        unless valid_url? v
-          errors.add(:edm_is_shown_by, I18n.t('activerecord.errors.messages.item_type.edm_is_shown_by_when_local.url'))
-          break
-        end
-      end
-    else
-      true
     end
   end
 

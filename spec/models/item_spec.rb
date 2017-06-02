@@ -273,6 +273,12 @@ RSpec.describe Item, type: :model do
     expect(i.errors).to have_key :dcterms_type
   end
 
+  it 'should not require a dcterms_temporal value' do
+    i = Fabricate.build(:item, dcterms_temporal: [])
+    i.valid?
+    expect(i.errors).not_to have_key :dcterms_temporal
+  end
+
   it 'should require each of the dcterms_temporal values use a limited character set' do
     i = Fabricate.build(:item, dcterms_temporal: ['Text'])
     i.valid?
