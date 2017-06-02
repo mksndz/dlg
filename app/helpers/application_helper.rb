@@ -41,6 +41,7 @@ module ApplicationHelper
   end
 
   def boolean_check_icon(value)
+    value = false if value == 'false'
     value ? content_tag(:span, nil, class: 'glyphicon glyphicon-ok') : ''
   end
 
