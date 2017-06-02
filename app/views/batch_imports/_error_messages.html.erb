@@ -2,7 +2,9 @@
   <% messages.each do |f, m| %>
     <li>
       <%= f %>:
-        <% if m.length > 1 %>
+        <% if m.is_a? String %>
+          <%= m %>
+        <% elsif m.length > 1 %>
           <ol>
             <% m.each do |sm| %>
               <li><%= sm %></li>
