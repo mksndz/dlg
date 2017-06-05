@@ -61,16 +61,21 @@ class Repository < ActiveRecord::Base
   private
 
   def coordinates_format
-    return false unless coordinates
+    if coordinates.empty?
+      errors.add(:coordinates, I18n.t('activerecord.errors.messages.repository.blank'))
+      return false
+    end
     lat, lon = coordinates.split(', ')
     begin
       lat = Float(lat)
       lon = Float(lon)
       if lat < -90 || lat > 90 || lon < -180 || lon > 180
         errors.add(:coordinates, I18n.t('activerecord.errors.messages.repository.coordinates'))
+        return false
       end
     rescue TypeError, ArgumentError
       errors.add(:coordinates, I18n.t('activerecord.errors.messages.repository.coordinates'))
+      return false
     end
   end
 

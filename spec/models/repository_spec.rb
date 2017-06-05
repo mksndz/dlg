@@ -67,6 +67,12 @@ RSpec.describe Repository, type: :model do
     expect(r.errors).to have_key :title
   end
 
+  it 'requires coordinates' do
+    r = Fabricate.build(:repository, coordinates: '')
+    r.valid?
+    expect(r.errors).to have_key :coordinates
+  end
+
   it 'requires a properly formatted set of coordinates' do
     r = Fabricate.build(:repository, coordinates: 'A, B')
     r.valid?

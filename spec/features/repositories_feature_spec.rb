@@ -14,6 +14,22 @@ feature 'Repositories Management' do
       login_as super_user, scope: :user
     end
 
+    context 'validation' do
+
+      scenario 'requires a coordinates value' do
+
+        Fabricate :portal
+        visit new_repository_path
+
+        fill_in I18n.t('activerecord.attributes.repository.title'), with: 'Test'
+        click_on I18n.t('meta.defaults.actions.save')
+
+        expect(page).to have_text I18n.t('activerecord.errors.messages.repository.blank')
+
+      end
+
+    end
+
     context 'index page filtering' do
 
       scenario 'can limit to just collections from a particular portal' do

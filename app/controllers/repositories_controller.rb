@@ -6,23 +6,23 @@ class RepositoriesController < ApplicationController
   include Sorting
   include Filterable
 
-  before_action :set_data, only: [:index, :new, :edit]
+  before_action :set_data, only: [:index, :new, :create, :edit]
 
   def index
 
     repository_query = Repository.index_query(params)
-                           .order(sort_column + ' ' + sort_direction)
-                           .page(params[:page])
-                           .per(params[:per_page])
+                         .order(sort_column + ' ' + sort_direction)
+                         .page(params[:page])
+                         .per(params[:per_page])
 
     if params[:portal_id]
       portals_filter = params[:portal_id].reject(&:empty?)
 
       unless portals_filter.empty?
         repository_query = repository_query
-                               .includes(:portals)
-                               .joins(:portals)
-                               .where(portals: { id: portals_filter } )
+                             .includes(:portals)
+                             .joins(:portals)
+                             .where(portals: { id: portals_filter })
       end
 
     end
@@ -74,22 +74,22 @@ class RepositoriesController < ApplicationController
 
   def repository_params
     params.require(:repository).permit(
-        :slug,
-        :title,
-        :teaser,
-        :short_description,
-        :description,
-        :coordinates,
-        :color,
-        :public,
-        :in_georgia,
-        :thumbnail_path,
-        :homepage_url,
-        :directions_url,
-        :address,
-        :strengths,
-        :contact,
-        :portal_ids => []
+      :slug,
+      :title,
+      :teaser,
+      :short_description,
+      :description,
+      :coordinates,
+      :color,
+      :public,
+      :in_georgia,
+      :thumbnail_path,
+      :homepage_url,
+      :directions_url,
+      :address,
+      :strengths,
+      :contact,
+      portal_ids: []
     )
   end
 
