@@ -205,6 +205,122 @@ describe RecordImporter, type: :model do
 
     end
 
+    context 'with troublesome xml' do
+
+      it 'should work' do
+
+        Fabricate(:portal) {
+          code { 'georgia' }
+        }
+
+        collection = Fabricate :collection
+
+        duplicate_date_xml = '<item>
+            <dpla type="boolean">true</dpla>
+            <public type="boolean">true</public>
+            <dcterms_creator type="array">
+              <dcterms_creator>WSB-TV (Television station : Atlanta, Ga.)</dcterms_creator>
+            </dcterms_creator>
+            <dcterms_subject type="array">
+              <dcterms_subject>Presidents--United States--Election--1960</dcterms_subject>
+              <dcterms_subject>International relations</dcterms_subject>
+              <dcterms_subject>Elections</dcterms_subject>
+            </dcterms_subject>
+            <dcterms_spatial type="array">
+              <dcterms_spatial>Cuba</dcterms_spatial>
+            </dcterms_spatial>
+            <dcterms_title type="array">
+              <dcterms_title>UNDERWOOD CRITICIZES KENNEDY FOR INEPT FOREIGN POLICY BELIEFS (1960)</dcterms_title>
+            </dcterms_title>
+            <dcterms_temporal type="array">
+              <dcterms_temporal>1960</dcterms_temporal>
+            </dcterms_temporal>
+            <dc_date type="array">
+              <dc_date>1960</dc_date>
+            </dc_date>
+            <dlg_subject_personal type="array">
+              <dlg_subject_personal>UNDERWOOD, NORMAN</dlg_subject_personal>
+              <dlg_subject_personal>Kennedy, John F. (John Fitzgerald), 1917-1963</dlg_subject_personal>
+              <dlg_subject_personal>Nixon, Richard M. (Richard Milhous), 1913-1994</dlg_subject_personal>
+            </dlg_subject_personal>
+            <dcterms_provenance type="array">
+              <dcterms_provenance>Walter J. Brown Media Archives and Peabody Awards Collection</dcterms_provenance>
+            </dcterms_provenance>
+            <dc_format type="array">
+              <dc_format>video/x-f4v</dc_format>
+            </dc_format>
+            <dcterms_type type="array">
+              <dcterms_type>MovingImage</dcterms_type>
+            </dcterms_type>
+            <dcterms_medium type="array">
+              <dcterms_medium>Moving images</dcterms_medium>
+              <dcterms_medium>News</dcterms_medium>
+              <dcterms_medium>Unedited footage</dcterms_medium>
+            </dcterms_medium>
+            <edm_is_shown_at type="array">
+              <edm_is_shown_at>http://dlg.galileo.usg.edu/news/id:wsbn43083</edm_is_shown_at>
+            </edm_is_shown_at>
+            <edm_is_shown_by type="array">
+              <edm_is_shown_by>http://dlg.galileo.usg.edu/news/do:wsbn43083</edm_is_shown_by>
+            </edm_is_shown_by>
+            <slug>wsbn43083</slug>
+            <dcterms_extent type="array">
+              <dcterms_extent>1 clip (about 8 min.): black-and-white, sound ; 16 mm.</dcterms_extent>
+            </dcterms_extent>
+            <dcterms_is_part_of type="array">
+              <dcterms_is_part_of>Original found in the WSB-TV newsfilm collection.</dcterms_is_part_of>
+            </dcterms_is_part_of>
+            <dcterms_temporal type="array">
+              <dcterms_temporal>1960</dcterms_temporal>
+            </dcterms_temporal>
+            <dc_date type="array">
+              <dc_date>1960</dc_date>
+            </dc_date>
+            <dcterms_identifier type="array">
+              <dcterms_identifier>Clip number: wsbn43083</dcterms_identifier>
+            </dcterms_identifier>
+            <dc_terms_bibliographic_citation type="array">
+              <dc_terms_bibliographic_citation>Cite as: wsbn43083, (No title), WSB-TV newsfilm collection, reel 0962, 28:19/36:32, Walter J. Brown Media Archives and Peabody Awards Collection, The University of Georgia Libraries, Athens, Ga</dc_terms_bibliographic_citation>
+            </dc_terms_bibliographic_citation>
+            <dc_right type="array">
+              <dc_right>http://rightsstatements.org/vocab/InC/1.0/</dc_right>
+            </dc_right>
+            <dcterms_spatial type="array">
+              <dcterms_spatial>United States</dcterms_spatial>
+            </dcterms_spatial>
+            <other_colls type="array"/>
+            <collection>
+              <record_id>ugabma_wsbn</record_id>
+            </collection>
+            <portals type="array">
+              <portal>
+                <code>georgia</code>
+              </portal>
+            </portals>
+            <dcterms_description type="array">
+              <dcterms_description>Title supplied by cataloger.</dcterms_description>
+            </dcterms_description>
+            <local type="boolean">true</local>
+          </item>'
+
+        duplicate_date_xml.sub! 'ugabma_wsbn', collection.record_id
+        bi = Fabricate(:batch_import) do
+          xml { duplicate_date_xml }
+        end
+        RecordImporter.perform(bi.id)
+        batch_item = bi.batch.batch_items.first
+        # no nested arrays
+        expect(batch_item.dc_date.first).not_to be_an Array
+        expect(batch_item.dcterms_spatial.first).not_to be_an Array
+        expect(batch_item.dcterms_temporal.first).not_to be_an Array
+        # no duplicates
+        expect(batch_item.dc_date).to eq ['1960']
+        expect(batch_item.dcterms_temporal).to eq ['1960']
+        expect(batch_item.dcterms_spatial).to eq ['Cuba', 'United States']
+      end
+
+    end
+
   end
 
 end

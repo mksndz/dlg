@@ -1,3 +1,5 @@
+include XmlImportHelper
+
 class RecordImporter
 
   @queue = :xml
@@ -64,6 +66,8 @@ class RecordImporter
   end
 
   def self.create_or_update_record(num, record_data)
+
+    record_data = XmlImportHelper.prepare_item_hash(record_data)
 
     collection_info = record_data.delete('collection')
     collection_slug = collection_info.has_key?('slug') ? collection_info['slug'] : nil
@@ -200,6 +204,10 @@ class RecordImporter
 
   def self.set_record_other_colls(other_colls_info)
     @record.other_collections = other_colls_info.map { |other_coll| Collection.find_by_record_id(other_coll['record_id']).id }
+  end
+
+  def self.prepare_hash(record_data)
+
   end
 
 end

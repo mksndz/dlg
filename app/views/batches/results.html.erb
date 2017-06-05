@@ -41,10 +41,14 @@
         </td>
         <td>
           <ul>
-            <% e['errors'].each do |key, array| %>
-              <% array.each do |m| %>
-                <li><%= "#{key.titleize} #{m}" %></li>
+            <% if e['errors'].respond_to? :each %>
+              <% e['errors'].each do |key, array| %>
+                <% array.each do |m| %>
+                  <li><%= "#{key.titleize} #{m}" %></li>
+                <% end %>
               <% end %>
+            <% else %>
+              <li><%= e['errors'] %></li>
             <% end %>
           </ul>
         </td>

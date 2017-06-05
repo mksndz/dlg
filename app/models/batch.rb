@@ -27,6 +27,7 @@ class Batch < ActiveRecord::Base
   end
 
   def commit
+    logger = Logger.new('./log/batch_commit.log')
     self.committed_at = Time.now
     successes = []
     failures = []
@@ -50,7 +51,8 @@ class Batch < ActiveRecord::Base
           end
         rescue StandardError => e
           # exceptions can be raised during indexing...
-          failures << { batch_item: bi.id, errors: e, slug: bi.slug }
+          logger.warn "Exception #{e.message} on batch item #{bi.id}"
+          failures << { batch_item: bi.id, errors: e.message, slug: bi.slug }
         end
       end
 

@@ -58,20 +58,19 @@ class BatchItem < ActiveRecord::Base
   private
 
   def lookup_coordinates
-
     with_coordinates = []
-
     dcterms_spatial.each do |spatial|
-
+      match_found = false
       get_matches_with_coordinates(spatial).each do |v|
-        with_coordinates << v['spatial'] if v['spatial'][0..-25] == spatial
+        if v['spatial'][0..-25] == spatial
+          with_coordinates << v['spatial']
+          match_found = true
+          next
+        end
       end
-
-      with_coordinates << spatial if with_coordinates.empty?
-
-      update_columns dcterms_spatial: with_coordinates
-
+      with_coordinates << spatial unless match_found
     end
+    update_columns dcterms_spatial: with_coordinates
 
   end
 
