@@ -406,9 +406,8 @@ class CatalogController < ApplicationController
 
   def all_facet_values
     facet = blacklight_config.facet_fields[params[:facet_field]]
-    response, _ = search_results({}) do |search_builder|
-      search_builder.except(:add_advanced_search_to_solr).append(:facets_for_advanced_search_form)
-    end
+    blacklight_config.default_facet_limit = -1 # return all values
+    response, _ = search_results({})
     display_facet = response.aggregations[facet.key]
     @field = display_facet.name
     @values = display_facet.items.map { |v| { value: v.value, hits: v.hits } }
