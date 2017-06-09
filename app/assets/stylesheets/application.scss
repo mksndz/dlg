@@ -32,6 +32,11 @@ $logo_image: 'dlg_logo_red.png';
   }
 }
 
+// striping for 'more facets' views
+.facet_extended_list > ul.facet-values > li:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
 // Meta Specific CSS
 
 html {
