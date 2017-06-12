@@ -1,11 +1,6 @@
-#
 # Handles CRUD for Items
 # TODO: Factor out de facto index method for deleted items (ItemVersion)
 # TODO: Factor out into Filterable the Portal filtering behavior
-#
-
-# http://dlgadmin.galileo.usg.edu/items?collection_id=&commit=Filter&direction=asc&per_page=250&portal_id%5B%5D=&portal_id%5B%5D=1&public=&sort=dcterms_title&utf8=%E2%9C%93&valid_item=
-
 class ItemsController < RecordController
 
   load_and_authorize_resource

@@ -50,6 +50,7 @@ module ApplicationHelper
   end
 
   def per_page_selected(pp)
+    return 'btn-primary' if !params[:per_page] && pp == 20
     params[:per_page].to_i == pp ? 'btn-primary' : 'btn-default'
   end
 
