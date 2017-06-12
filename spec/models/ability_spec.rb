@@ -3,14 +3,14 @@ require 'cancan/matchers'
 
 RSpec.describe Ability, type: :model do
 
-  let(:super_user)        { Fabricate :super }
-  let(:basic_user)        { Fabricate :basic }
-  let(:coordinator_user)  { Fabricate :coordinator }
-  let(:committer_user)    { Fabricate :committer }
-  let(:uploader_user)    { Fabricate :uploader }
+  let(:super_user) { Fabricate :super }
+  let(:basic_user) { Fabricate :basic }
+  let(:coordinator_user) { Fabricate :coordinator }
+  let(:committer_user) { Fabricate :committer }
+  let(:uploader_user) { Fabricate :uploader }
 
   context 'for a Super user' do
-    
+
     subject { Ability.new super_user }
 
     it 'can manage all things' do
@@ -18,9 +18,9 @@ RSpec.describe Ability, type: :model do
     end
 
   end
-  
+
   context 'for a Coordinator user' do
-    
+
     subject { Ability.new coordinator_user }
 
     it 'cannot manage all things' do
@@ -86,7 +86,7 @@ RSpec.describe Ability, type: :model do
     end
 
     context 'with Repository assigned' do
-      
+
       let(:repository) { Fabricate(:repository) { collections(count: 1)} }
 
       it 'can modify but not destroy Repositories if the Repository is assigned' do
@@ -155,7 +155,7 @@ RSpec.describe Ability, type: :model do
         is_expected.not_to be_able_to :destroy, item
 
       end
-      
+
     end
 
     context 'with Collection assigned' do
@@ -183,7 +183,7 @@ RSpec.describe Ability, type: :model do
         is_expected.not_to be_able_to :destroy, collection
 
       end
-      
+
       it 'cannot modify or delete Collections if the Collection is not assigned' do
 
         is_expected.not_to be_able_to :show, collection
@@ -201,7 +201,7 @@ RSpec.describe Ability, type: :model do
         is_expected.not_to be_able_to :destroy, collection
 
       end
-      
+
     end
 
     context 'working with Batches' do
@@ -377,10 +377,7 @@ RSpec.describe Ability, type: :model do
       batch = Fabricate :batch
       batch.user = uploader_user
 
-      batch_import = BatchImport.new({
-                         user: uploader_user,
-                         batch: batch
-                     })
+      batch_import = BatchImport.new(user: uploader_user, batch: batch)
 
       is_expected.to be_able_to :index, batch_import
       is_expected.to be_able_to :show, batch_import
