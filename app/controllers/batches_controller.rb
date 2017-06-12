@@ -29,7 +29,6 @@ class BatchesController < ApplicationController
                     .page(params[:page])
                     .per(params[:per_page])
 
-
     batch_query = if current_user.coordinator?
                     batch_query.where(user: users_managed_by_and(current_user))
                   else

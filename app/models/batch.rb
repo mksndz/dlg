@@ -5,6 +5,7 @@ class Batch < ActiveRecord::Base
   has_many :batch_items, dependent: :destroy
   has_many :batch_imports, dependent: :destroy
 
+  default_scope { order({ committed_at: :desc }, created_at: :asc) }
   scope :committed,   -> { where('committed_at IS NOT NULL') }
   scope :pending,     -> { where('committed_at IS NULL') }
 
