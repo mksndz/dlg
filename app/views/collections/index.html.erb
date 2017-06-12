@@ -37,6 +37,8 @@
     <p><%= t('meta.defaults.labels.no_records_found', entity: 'Collections') %></p>
 <% else %>
 
+    <%= paginate @collections %>
+
     <table class="table table-condensed table-hover">
       <thead>
         <tr>
