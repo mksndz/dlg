@@ -301,6 +301,7 @@ en:
           committed: 'Committed'
           errors: 'Errors'
           batch_item: 'Batch Item'
+          file_name: 'File Name'
           number: '#'
           updated_record: 'Existing Record Updated?'
       messages:

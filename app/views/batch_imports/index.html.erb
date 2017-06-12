@@ -37,6 +37,9 @@
           <%= t('meta.batch_import.labels.columns.batch_items') %>
         </th>
         <th>
+          <%= t('meta.batch_import.labels.columns.file_name') %>
+        </th>
+        <th>
           <%= t('meta.batch_import.labels.columns.user') %>
         </th>
         <th>
@@ -57,6 +60,13 @@
             </td>
             <td>
               <%= import.batch_items ? import.batch_items.count : '' %>
+            </td>
+            <td>
+              <% if import.file_name %>
+                <%= import.file_name %>
+              <% else %>
+                N/A
+              <% end %>
             </td>
             <td>
               <%= import.user.email %>

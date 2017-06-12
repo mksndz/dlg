@@ -170,6 +170,19 @@ feature 'Batch Importing Batch Items' do
 
     end
 
+    scenario 'uploading xml and seeing the original filename' do
+
+      bi = Fabricate :completed_batch_import_from_file
+      bi.batch = @batch
+      bi.save
+
+      visit batch_batch_imports_path(@batch)
+
+      expect(page).to have_text bi.file_name
+
+
+    end
+
 
   end
 

@@ -53,6 +53,10 @@ RSpec.describe BatchImport, type: :model do
       expect(b.validations?).to be_in([true, false])
     end
 
+    it 'has a filename' do
+      expect(Fabricate(:completed_batch_import_from_file).file_name).to eq 'xml_file.xml'
+    end
+
     it 'has hash results' do
       expect(b.results).to be_kind_of Hash
     end

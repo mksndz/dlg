@@ -117,7 +117,7 @@ Fabricator(:completed_batch_import_with_update, from: :batch_import) do
 
 end
 
-Fabricator(:completed_batch_import_with_failure, from: :batch_import) do
+Fabricator(:completed_batch_import_with_failure, from: :completed_batch_import) do
 
   results {
     {
@@ -133,5 +133,11 @@ Fabricator(:completed_batch_import_with_failure, from: :batch_import) do
   }
   validations { true }
   completed_at { Time.now.to_s }
+
+end
+
+Fabricator(:completed_batch_import_from_file, from: :batch_import) do
+
+  file_name { 'xml_file.xml'}
 
 end

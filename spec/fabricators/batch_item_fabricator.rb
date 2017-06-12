@@ -1,6 +1,6 @@
 require 'faker'
 
-Fabricator(:batch_item, from: 'BatchItem') do
+Fabricator :batch_item do
 
   batch
   slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'),'-') }
