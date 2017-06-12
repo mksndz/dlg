@@ -17,6 +17,8 @@
 
 <%= render 'shared/per_pager' %>
 
+<br><br>
+
 <% if @batch_items.empty? %>
 
     <p><%= t('meta.defaults.labels.no_records_found', entity: 'Batch Items') %></p>
@@ -38,10 +40,10 @@
           <%= sortable 'dcterms_title', t('meta.defaults.labels.columns.title') %>
         </th>
         <th>
-          <%= t('meta.defaults.labels.columns.valid') %>
+          <%= sortable 'valid_item', t('meta.defaults.labels.columns.valid') %>
         </th>
         <th>
-          <%= t('meta.defaults.labels.columns.public') %>
+          <%= sortable 'public', t('meta.defaults.labels.columns.public') %>
         </th>
         <th>
           <%= t('meta.defaults.labels.columns.portals') %>
