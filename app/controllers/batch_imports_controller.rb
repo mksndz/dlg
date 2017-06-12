@@ -37,7 +37,6 @@ class BatchImportsController < ApplicationController
     file = params[:batch_import][:xml_file]
     text = batch_import_params[:xml]
     ids = batch_import_params[:item_ids]
-    file_name = file.original_filename if file
 
     fail(
       ImportFailedError,
@@ -51,6 +50,7 @@ class BatchImportsController < ApplicationController
       if file.respond_to? :read
         @batch_import.xml = file.read # TODO: sanitize xml input
         @batch_import.format = 'file'
+        @batch_import.file_name = file.original_filename
       else
         fail(
           ImportFailedError,
