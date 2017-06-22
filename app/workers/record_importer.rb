@@ -44,9 +44,9 @@ class RecordImporter
           batch_item.save(validate: false)
           add_updated i.slug, batch_item, i.id
         rescue ActiveRecord::RecordNotFound => ar_e
-          add_failed index, "Record with ID #{id} could not be found to add to Batch."
+          add_failed(index, "Record with ID #{id} could not be found to add to Batch.",)
         rescue StandardError => e
-          add_failed index, "Item #{i.record_id} could not be added to Batch: #{e}"
+          add_failed(index, "Item #{i.record_id} could not be added to Batch: #{e}")
         end
       end
     else
@@ -125,17 +125,33 @@ class RecordImporter
         end
 
       else
-        add_failed(num, @record.errors) # todo how best to write these errors to hash? could contain multiple validation messages
+        add_failed(
+          num,
+          @record.errors,
+          safe_record_slug
+        ) # todo how best to write these errors to hash? could contain multiple validation messages
       end
 
     rescue ActiveRecord::RecordInvalid => e
-      add_failed(num, "XML contains invalid record #{record_data['slug']}. Validation message: #{e}")
+      add_failed(
+        num,
+        "XML contains invalid record #{record_data['slug']}. Validation message: #{e}",
+        safe_record_slug
+      )
 
     rescue StandardError => e
-      add_failed(num, "Could not save record #{record_data['slug']}. Error: #{e}")
+      add_failed(
+        num,
+        "Could not save record #{record_data['slug']}. Error: #{e}",
+        safe_record_slug
+      )
 
     end
 
+  end
+
+  def self.safe_record_slug
+    @record.try(:slug) ? @record.slug : 'Slug could not be determined'
   end
 
   def self.create_update_record(existing_item, record_data)
@@ -163,9 +179,10 @@ class RecordImporter
     end
   end
 
-  def self.add_failed(num, message)
+  def self.add_failed(num, message, slug = nil)
     @failed << {
       number: num,
+      slug: slug,
       message: message
     }
   end

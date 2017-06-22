@@ -103,6 +103,7 @@
             <thead>
             <tr>
               <th><%= t('meta.batch_import.labels.columns.number') %></th>
+              <th>Slug</th>
               <th><%= t('meta.batch_import.labels.columns.message') %></th>
             </tr>
             </thead>
@@ -110,6 +111,7 @@
             <% @batch_import.results['failed'].each do |f| %>
                 <tr>
                   <td><%= n %></td>
+                  <td><%= f['slug'] %></td>
                   <td><%= render 'error_messages', messages: f['message'] %></td>
                 </tr>
                 <% n += 1 %>
