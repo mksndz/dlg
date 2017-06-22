@@ -39,6 +39,16 @@ Fabricator(:item) do
 
 end
 
+Fabricator(:invalid_item) do
+
+  slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'), '-') }
+  dcterms_title { [
+      Faker::Lorem.sentence(5),
+      Faker::Lorem.sentence(4)
+  ] }
+
+end
+
 Fabricator(:item_with_two_spatial_values, from: :item) do
 
   dcterms_spatial { [
