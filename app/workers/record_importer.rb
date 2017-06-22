@@ -70,8 +70,8 @@ class RecordImporter
     record_data = XmlImportHelper.prepare_item_hash(record_data)
 
     collection_info = record_data.delete('collection')
-    collection_slug = collection_info.has_key?('slug') ? collection_info['slug'] : nil
-    collection_record_id = collection_info.has_key?('record_id') ? collection_info['record_id'] : nil
+    collection_slug = collection_info.key?('slug') ? collection_info['slug'] : nil
+    collection_record_id = collection_info.key?('record_id') ? collection_info['record_id'] : nil
 
     unless collection_slug || collection_record_id
       add_failed num, "Collection slug for record ##{num} could not be extracted from XML."
@@ -189,7 +189,7 @@ class RecordImporter
     @batch_import.results = {
       added: @added,
       updated: @updated,
-      failed: [ {number: 0, message: msg} ]
+      failed: [{number: 0, message: msg}]
     }
     save_batch_import
   end
@@ -203,11 +203,9 @@ class RecordImporter
   end
 
   def self.set_record_other_colls(other_colls_info)
-    @record.other_collections = other_colls_info.map { |other_coll| Collection.find_by_record_id(other_coll['record_id']).id }
-  end
-
-  def self.prepare_hash(record_data)
-
+    @record.other_collections = other_colls_info.map do |other_coll|
+      Collection.find_by_record_id(other_coll['record_id']).id if other_coll['record_id']
+    end
   end
 
 end
