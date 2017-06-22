@@ -150,9 +150,10 @@ feature 'Batch Importing Batch Items' do
       login_as super_user, scope: :user
       ResqueSpec.reset!
       @batch = Fabricate :batch
+      @robust_item = Fabricate :robust_item
     end
 
-    let(:xml) { Fabricate(:robust_item).to_xml }
+    let(:xml) { @robust_item.to_xml }
 
     context 'uploading xml with validates OFF' do
 
@@ -165,6 +166,8 @@ feature 'Batch Importing Batch Items' do
 
       scenario 'batch_items records are created and no error messages displayed' do
         ResqueSpec.perform_all :xml
+        visit batch_batch_import_path(@batch, BatchImport.last)
+        expect(page).to have_text @robust_item.slug
         expect(page).not_to have_text 'Failed to import'
       end
 
