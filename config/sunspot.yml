@@ -15,9 +15,8 @@ production:
     hostname: solrcloud.galib.uga.edu
     port: 8983
     log_level: WARNING
-    path: /solr/meta
+    path: /solr/meta-prod
 
-# metasolr
 development:
   solr:
     hostname: localhost
