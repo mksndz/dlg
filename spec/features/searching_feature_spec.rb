@@ -19,43 +19,39 @@ feature 'Searching' do
       Sunspot.remove_all! Repository
     end
 
-    scenario 'does a search and results are returned' do
+    context 'simple behaviors' do
 
-      Fabricate(:collection) { items(count:1 ) }
-      Sunspot.commit
+      before :each do
+        Fabricate(:collection) { items(count: 1) }
+        Sunspot.commit
+        visit root_path
+      end
 
-      visit root_path
+      scenario 'does a search and results are returned' do
+        fill_in 'title', with: ''
+        click_button 'Search'
+        expect(page).to have_css('.document')
+      end
 
-      fill_in 'title', with: ''
+      scenario 'does a search and can navigate the edit forms for the results across items and collections' do
+        fill_in 'title', with: ''
+        click_button 'Search'
+        expect(all('.edit-record').count).to eq 2
+        first('.edit-record').click
+        expect(page).to have_link 'Next Result'
+        expect(page).not_to have_link 'Previous Result'
+        click_on 'Next Result'
+        expect(page).not_to have_link 'Next Result'
+        expect(page).to have_link 'Previous Result'
+      end
 
-      click_button 'Search'
-
-      expect(page).to have_css('.document')
-
-    end
-
-    scenario 'does a search and can navigate the edit forms for the results across items and collections' do
-
-      c = Fabricate(:collection) { items(count: 1) }
-      Sunspot.commit
-
-      visit root_path
-
-      fill_in 'title', with: ''
-
-      click_button 'Search'
-
-      expect(all('.edit-record').count).to eq 2
-
-      first('.edit-record').click
-
-      expect(page).to have_link 'Next Result'
-      expect(page).not_to have_link 'Previous Result'
-
-      click_on 'Next Result'
-
-      expect(page).not_to have_link 'Next Result'
-      expect(page).to have_link 'Previous Result'
+      scenario 'deleted items are removed from the index and not displayed' do
+        Item.first.destroy
+        Sunspot.commit
+        fill_in 'title', with: ''
+        click_button 'Search'
+        expect(all('.edit-record').count).to eq 1
+      end
 
     end
 
