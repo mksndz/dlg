@@ -1,18 +1,18 @@
-production:
-  solr:
-    read_timeout: 20
-    open_timeout: 10
-    hostname: 192.168.122.60
-    port: 8983
-    log_level: WARNING
-    path: /solr/blacklight-core
+#production:
+#  solr:
+#    read_timeout: 20
+#    open_timeout: 10
+#    hostname: 192.168.122.60
+#    port: 8983
+#    log_level: WARNING
+#    path: /solr/blacklight-core
 
 # solrcloud
 production:
   solr:
     read_timeout: 20
     open_timeout: 10
-    hostname: sc0.galib.uga.edu
+    hostname: solrcloud.galib.uga.edu
     port: 8983
     log_level: WARNING
     path: /solr/meta
