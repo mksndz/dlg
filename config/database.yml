@@ -14,7 +14,15 @@ development:
 test:
   <<: *default
   database: meta_test
+#
+#production:
+#  <<: *default
+#  database: meta_production
 
 production:
   <<: *default
-  database: meta_production
+  host: pg.galib.uga.edu
+  port: 5432
+  username: <%= Rails.application.secrets.db_user %>
+  password: <%= Rails.application.secrets.db_password %>
+  database: meta_prod
