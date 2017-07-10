@@ -29,6 +29,34 @@ feature 'Batches Management' do
 
     end
 
+    context 'batch with deleted user handling' do
+
+      before :each do
+
+        Fabricate :batch
+
+        User.last.destroy
+
+      end
+
+      scenario 'batch index page' do
+
+        visit batches_path
+
+        expect(page).to have_text I18n.t('meta.batch.labels.deleted_user')
+
+      end
+
+      scenario 'batch show page' do
+
+        visit batch_path(Batch.last)
+
+        expect(page).to have_text I18n.t('meta.batch.labels.deleted_user')
+
+      end
+
+    end
+
     scenario 'super user can limit index listing to only committed batches' do
 
       pending_batch = Fabricate :batch

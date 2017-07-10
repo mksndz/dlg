@@ -75,7 +75,7 @@
               <%= link_to batch.batch_imports.size, batch_batch_imports_path(batch_id: batch.id), class: 'batch-imports-count' %>
             </td>
             <td>
-              <%= batch.user.email %>
+              <%= batch.try(:user) ? batch.user.email : I18n.t('meta.batch.labels.deleted_user') %>
             </td>
             <td>
               <%= batch.created_at %>

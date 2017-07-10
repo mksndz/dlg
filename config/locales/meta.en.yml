@@ -288,6 +288,7 @@ en:
         batch_items: 'Manage Batch Items'
         batch_imports: 'Manage XML Imports'
       labels:
+        deleted_user: 'Unknown'
         failed: 'Could not Commit'
         successful: 'Successfully Committed'
         not_yet_committed: 'Not Yet'

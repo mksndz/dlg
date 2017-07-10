@@ -2,8 +2,10 @@
     Show Batch
 <% end %>
 
+<% creator = @batch.try(:user) ? @batch.user.email : t('meta.batch.labels.deleted_user') %>
+
 <%= content_for :subtitle do %>
-    <%= @batch.name %> by <%= @batch.user.email %>
+    <%= @batch.name %> by <%= creator %>
 <% end %>
 
 <% breadcrumb :batch, @batch %>
@@ -18,7 +20,7 @@
 
 <br><br>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.user_id'),           value: @batch.user.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.user_id'),           value: creator  %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.name'),              value: @batch.name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.notes'), value: @batch.notes %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.committed_at'),      value: @batch.committed_at %>
