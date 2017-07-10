@@ -61,7 +61,7 @@ class Repository < ActiveRecord::Base
   private
 
   def coordinates_format
-    if coordinates.empty?
+    if !coordinates || coordinates.empty?
       errors.add(:coordinates, I18n.t('activerecord.errors.messages.repository.blank'))
       return false
     end
