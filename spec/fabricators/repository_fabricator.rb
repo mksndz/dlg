@@ -6,6 +6,7 @@ Fabricator(:repository) do
   title { Faker::Lorem.sentence(4) + ' Repo' }
   coordinates { '31.978987, -81.161760' }
   thumbnail_path { Faker::Internet.url }
+  color { '#eeeeee' }
   # collections(count: 2)
 
 end

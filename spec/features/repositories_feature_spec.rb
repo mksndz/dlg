@@ -172,6 +172,28 @@ feature 'Repositories Management' do
 
     end
 
+    context 'default color' do
+
+      scenario 'new form shows white as selected color' do
+
+        visit new_repository_path
+
+        expect(find_field(I18n.t('activerecord.attributes.repository.color')).value).to eq '#ffffff'
+
+      end
+
+      scenario 'created Repository shows non-white color' do
+
+        Fabricate :repository
+
+        visit edit_repository_path Repository.last
+
+        expect(find_field(I18n.t('activerecord.attributes.repository.color')).value).to eq '#eeeeee'
+
+      end
+
+    end
+
   end
 
 end
