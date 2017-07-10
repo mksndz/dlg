@@ -2,6 +2,7 @@ class OaiSupportController < ApplicationController
 
   respond_to :json
 
+  skip_before_action :authenticate_user!
   before_action :authenticate_token, :set_rows
   before_action :set_class, except: :deleted
 
