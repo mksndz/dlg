@@ -38,6 +38,14 @@ feature 'Logging In and Out' do
 
   end
 
+  scenario 'Unauthenticated User attempts to visit a protected page and is redirected to login page' do
+
+    visit items_path
+
+    expect(page).to have_current_path new_user_session_path
+
+  end
+
   scenario 'Logged in user Logs Out' do
 
     login_as Fabricate(:basic), scope: :user
