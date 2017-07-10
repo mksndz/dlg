@@ -168,10 +168,11 @@ RSpec.describe BatchesController, type: :controller do
 
   describe 'GET #recreate' do
     it 'recreates committed batch' do
-      batch = Fabricate(:batch){ batch_items(count: 1)}
+      batch = Fabricate(:batch) { batch_items(count: 1) }
       batch.commit
-      get :recreate, { id: batch.id }
-      expect(response).to redirect_to Batch.last
+      get :recreate, id: batch.id
+      recreated_batch = Batch.find_by_name('RECREATED ' + batch.name)
+      expect(response).to redirect_to recreated_batch
     end
   end
 

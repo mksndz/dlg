@@ -68,8 +68,7 @@ class Batch < ActiveRecord::Base
   # todo only for committed batches? consider
   def recreate
     batch = Batch.new
-    # batch.user = current_user
-    batch.name = "RECREATED #{self.name}"
+    batch.name = "RECREATED #{name}"
     item_ids = get_created_item_ids
     batch.batch_items << batch_items_from_items(item_ids)
     batch
