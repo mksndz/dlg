@@ -346,6 +346,7 @@ en:
           batch_items: 'Batch Items Created'
           finished: 'Finished'
           format: 'Format'
+          file_name: 'Filename'
           number: '#'
           batch_item: 'Batch Item'
           user: 'User'

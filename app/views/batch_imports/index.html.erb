@@ -28,10 +28,10 @@
       <thead>
       <tr>
         <th>
-          <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
+          <%= sortable 'batch_imports.id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'format', t('meta.batch_import.labels.columns.format') %>
+          <%= sortable 'batch_imports.format', t('meta.batch_import.labels.columns.format') %>
         </th>
         <th>
           <%= t('meta.batch_import.labels.columns.batch_items') %>
@@ -43,7 +43,7 @@
           <%= t('meta.batch_import.labels.columns.user') %>
         </th>
         <th>
-          <%= t('meta.batch_import.labels.columns.finished') %>
+          <%= sortable 'batch_imports.created_at', t('meta.batch_import.labels.columns.finished') %>
         </th>
         <th width="145px"></th>
       </tr>

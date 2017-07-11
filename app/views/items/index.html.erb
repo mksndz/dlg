@@ -49,19 +49,19 @@
       <thead>
         <tr>
           <th>
-            <%= sortable 'id', t('meta.defaults.labels.columns.id') %>
+            <%= sortable 'items.id', t('meta.defaults.labels.columns.id') %>
           </th>
           <th>
-            <%= sortable 'slug', t('meta.defaults.labels.columns.slug') %>
+            <%= sortable 'items.slug', t('meta.defaults.labels.columns.slug') %>
           </th>
           <th>
-            <%= sortable 'dcterms_title', t('meta.defaults.labels.columns.title') %>
+            <%= sortable 'items.dcterms_title', t('meta.defaults.labels.columns.title') %>
           </th>
           <th >
-            <%= sortable 'public', t('meta.defaults.labels.columns.public') %>
+            <%= sortable 'items.public', t('meta.defaults.labels.columns.public') %>
           </th>
           <th>
-            <%= sortable 'valid_item', t('meta.defaults.labels.columns.valid') %>
+            <%= sortable 'items.valid_item', t('meta.defaults.labels.columns.valid') %>
           </th>
           <th>
             <%= t('meta.item.labels.columns.collection') %>
@@ -70,10 +70,10 @@
             <%= t('meta.defaults.labels.columns.portals') %>
           </th>
           <th>
-            <%= sortable 'created_at', t('activerecord.attributes.item.created_at')  %>
+            <%= sortable 'items.created_at', t('activerecord.attributes.item.created_at')  %>
           </th>
           <th>
-            <%= sortable 'updated_at', t('activerecord.attributes.item.updated_at')  %>
+            <%= sortable 'items.updated_at', t('activerecord.attributes.item.updated_at')  %>
           </th>
           <th width="185px"></th>
         </tr>

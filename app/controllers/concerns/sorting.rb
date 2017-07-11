@@ -9,12 +9,12 @@ module Sorting
   def sort_column(table = nil)
     begin
       table = table ? table : controller_name.downcase
-      field = check_columns_for_field(controller_name, params[:sort]) ? params[:sort] : 'id'
+      field = check_columns_for_field(controller_name, params[:sort]) ? params[:sort] : "#{table}.id"
     rescue NameError
       table = table ? table : controller_path.downcase
-      field = check_columns_for_field(controller_path, params[:sort]) ? params[:sort] : 'id'
+      field = check_columns_for_field(controller_path, params[:sort]) ? params[:sort] : "#{table}.id"
     end
-    "#{table}.#{field}"
+    field.include?('.') ? field : "#{table}.#{field}"
   end
 
   def sort_direction
@@ -28,6 +28,8 @@ module Sorting
   end
 
   def check_columns_for_field(entity, field)
+    return false unless field
+    field = field[(field.index('.') + 1)..-1] if field.index('.')
     current_class(entity).column_names.include?(field)
   end
 
