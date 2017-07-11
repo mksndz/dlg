@@ -40,9 +40,10 @@ class RecordImporter
         begin
           i = Item.find id
           batch_item = i.to_batch_item
+          batch_item.batch_import = @batch_import
           batch_item.batch = @batch
           batch_item.save(validate: false)
-          add_updated i.slug, batch_item, i.id
+          add_updated i.slug, batch_item.id, i.id
         rescue ActiveRecord::RecordNotFound => ar_e
           add_failed(index, "Record with ID #{id} could not be found to add to Batch.",)
         rescue StandardError => e
