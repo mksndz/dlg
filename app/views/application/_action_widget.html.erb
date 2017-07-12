@@ -1,28 +1,29 @@
 <% if current_user.super? %>
-<div id="action-dropdown" class="btn-group">
-  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    <%= t('meta.app.action_widget.name') %> <span class="caret"></span>
-  </button>
+  <div id="action-dropdown" class="btn-group btn-default">
+    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <%= t('meta.app.action_widget.name') %> <span class="caret"></span>
+    </button>
 
-  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-    <li>
-      <%= link_to t('meta.app.action_widget.select_all'), '#', class: 'select-all-action' %>
-    </li>
-    <li>
-      <%= link_to t('meta.app.action_widget.deselect_all'), '#', class: 'deselect-all-action' %>
-    </li>
-    <li class="dropdown-header">
-      <%= t('meta.app.action_widget.divider') %>
-    </li>
-    <li>
-      <%= link_to t('meta.app.action_widget.delete'), '#', class: 'delete-action', data: { url: multiple_destroy_items_path } %>
-    </li>
-    <li>
-      <%= link_to t('meta.app.action_widget.xml'), '#', class: 'add-to-xml-action', data: { url: xml_items_path }  %>
-    </li>
-    <li>
-      <%= link_to t('meta.app.action_widget.batch'), select_batches_path, class: 'add-to-batch-action', data: { ajax_modal: 'trigger' }  %>
-    </li>
-  </ul>
-</div>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+      <li>
+        <%= link_to t('meta.app.action_widget.select_all'), '#', class: 'select-all-action' %>
+      </li>
+      <li>
+        <%= link_to t('meta.app.action_widget.deselect_all'), '#', class: 'deselect-all-action' %>
+      </li>
+      <li class="dropdown-header">
+        <%= t('meta.app.action_widget.divider') %>
+      </li>
+      <li>
+        <%= link_to t('meta.app.action_widget.delete'), '#', class: 'delete-action', data: { url: multiple_destroy_items_path } %>
+      </li>
+      <li>
+        <%= link_to t('meta.app.action_widget.xml'), '#', class: 'add-to-xml-btn' %>
+      </li>
+      <li>
+        <%= link_to t('meta.app.action_widget.batch'), select_batches_path, class: 'add-to-batch-action', data: { ajax_modal: 'trigger' }  %>
+      </li>
+    </ul>
+  </div>
+  <%= button_to t('meta.app.action_widget.xml'), xml_items_path(format: :xml), class: 'hide', form: { id: 'xml-generator-form', target: '_blank' } %>
 <% end %>

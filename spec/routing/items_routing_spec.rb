@@ -44,7 +44,7 @@ RSpec.describe ItemsController, type: :routing do
     end
 
     it 'routes to #xml' do
-      expect(get: '/items/xml').to route_to('items#xml')
+      expect(post: '/items/xml').to route_to('items#xml')
     end
 
   end

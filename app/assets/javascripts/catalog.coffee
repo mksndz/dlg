@@ -11,17 +11,23 @@ Blacklight.onLoad ->
         data:
           entities: entities,
         error: (jqXHR, textStatus, errorThrown) ->
-          alert('error')
+          alert('error: ' + textStatus)
         success: (data, textStatus, jqXHR) ->
           alert('Items destroyed!')
           window.location.reload(true)
   )
 
-  $("a.add-to-xml-action").on("click", (e, data, status, xhr) ->
+  $(".add-to-xml-btn").on("click", (e, data, status, xhr) ->
     e.preventDefault()
     if entities = get_checked_items()
-      url = $(this).data('url') + '.xml' + '?entities=' + entities
-      window.open url, "_blank"
+      $form = $('#xml-generator-form')
+      $form.append(
+        $('<input />')
+          .attr('type', 'hidden')
+          .attr('name', "entities")
+          .attr('value', entities))
+      $form.submit()
+      return true;
   )
 
   $("a.add-to-batch-action").on("click", (e, data, status, xhr) ->

@@ -100,7 +100,7 @@ class ItemsController < RecordController
   end
 
   def xml
-    @items = Item.where id: multiple_action_params[:entities].split(',')
+    @items = Item.where id: params[:entities].split(',')
     respond_to do |format|
       format.xml { render xml: @items }
     end

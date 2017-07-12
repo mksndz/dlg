@@ -55,6 +55,32 @@ feature 'Searching' do
 
     end
 
+    context 'xml generating functionality', js: true do
+
+      scenario 'items are selected and xml is generated' do
+
+        item = Fabricate :item
+        item2 = Fabricate :item
+        Sunspot.commit
+
+        visit search_catalog_path
+        click_button 'Search'
+
+        check "select-#{item.id}"
+        check "select-#{item2.id}"
+
+        click_button I18n.t('meta.app.action_widget.name')
+
+        page.switch_to_window window_opened_by { click_on I18n.t('meta.app.action_widget.xml') }
+
+        expect(page).to have_current_path xml_items_path(format: :xml)
+        expect(page.html).to include item.slug
+        expect(page.html).to include item2.slug
+
+      end
+
+    end
+
     context 'result URL display behavior' do
 
       scenario 'item record edm_is_shown_at value displayed as URL link' do
