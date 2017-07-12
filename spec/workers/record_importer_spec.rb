@@ -205,15 +205,16 @@ describe RecordImporter, type: :model do
 
     end
 
-    context 'with troublesome xml' do
+    context 'with realistic xml' do
 
       it 'should work' do
 
-        Fabricate(:portal) {
-          code { 'georgia' }
-        }
+        georgia_portal = Fabricate(:portal) { code { 'georgia' } }
+        crdl_portal = Fabricate(:portal) { code { 'crdl' } }
 
         collection = Fabricate :collection
+        other_collection = Fabricate :collection
+        other_collection2 = Fabricate :collection
 
         duplicate_date_xml = '<item>
             <dpla type="boolean">true</dpla>
@@ -288,13 +289,23 @@ describe RecordImporter, type: :model do
             <dcterms_spatial type="array">
               <dcterms_spatial>United States</dcterms_spatial>
             </dcterms_spatial>
-            <other_colls type="array"/>
+            <other_colls type="array">
+              <other_coll>
+                <record_id>__oc1__</record_id>
+              </other_coll>
+              <other_coll>
+                <record_id>__oc2__</record_id>
+              </other_coll>
+            </other_colls>
             <collection>
               <record_id>ugabma_wsbn</record_id>
             </collection>
             <portals type="array">
               <portal>
                 <code>georgia</code>
+              </portal>
+              <portal>
+                <code>crdl</code>
               </portal>
             </portals>
             <dcterms_description type="array">
@@ -304,6 +315,8 @@ describe RecordImporter, type: :model do
           </item>'
 
         duplicate_date_xml.sub! 'ugabma_wsbn', collection.record_id
+        duplicate_date_xml.sub! '__oc1__', other_collection.record_id
+        duplicate_date_xml.sub! '__oc2__', other_collection2.record_id
         bi = Fabricate(:batch_import) do
           xml { duplicate_date_xml }
         end
@@ -317,6 +330,12 @@ describe RecordImporter, type: :model do
         expect(batch_item.dc_date).to eq ['1960']
         expect(batch_item.dcterms_temporal).to eq ['1960']
         expect(batch_item.dcterms_spatial).to eq ['Cuba', 'United States']
+        # multiple portals
+        expect(batch_item.portals).to include georgia_portal
+        expect(batch_item.portals).to include crdl_portal
+        # multiple other_collections
+        expect(batch_item.other_collections).to include other_collection.id
+        expect(batch_item.other_collections).to include other_collection2.id
       end
 
     end
