@@ -363,6 +363,24 @@ RSpec.describe Item, type: :model do
     expect(i.slug).to eq 'CAPS'.downcase
   end
 
+  it 'should not allow spaces in the slug' do
+    i = Fabricate.build(:item, slug: 'slug/')
+    i.save
+    expect(i.errors).to have_key :slug
+  end
+
+  it 'should not allow slashes in the slug' do
+    i = Fabricate.build(:item, slug: 'slug\\')
+    i.save
+    expect(i.errors).to have_key :slug
+  end
+
+  it 'should not allow colons in the slug' do
+    i = Fabricate.build(:item, slug: 'slug:')
+    i.save
+    expect(i.errors).to have_key :slug
+  end
+
   context 'portal removal behavior' do
 
     before :each do
