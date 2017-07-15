@@ -4,8 +4,14 @@
 
     <%= f.text_field :slug %>
     <%= f.text_field :title %>
-    <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
+    <%= f.form_group :public do %>
+        <%= f.check_box :public %>
+    <% end %>
 
+    <%= f.form_group :in_georgia do %>
+        <%= f.check_box :in_georgia %>
+    <% end %>
+    <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
     <%= f.text_area :teaser %>
     <%= f.text_area :short_description %>
     <%= f.text_area :description %>
@@ -15,15 +21,6 @@
     <% else %>
         <%= f.color_field :color, value: '#ffffff' %>
     <% end %>
-
-    <%= f.form_group :public do %>
-      <%= f.check_box :public %>
-    <% end %>
-
-    <%= f.form_group :in_georgia do %>
-      <%= f.check_box :in_georgia %>
-    <% end %>
-
     <%= f.url_field :thumbnail_path %>
     <%= f.url_field :homepage_url %>
     <%= f.url_field :directions_url %>
