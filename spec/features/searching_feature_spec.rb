@@ -614,11 +614,50 @@ feature 'Searching' do
 
   end
 
-  context 'for basic user' do
+  context 'for basic user', js: true do
 
     before :each do
-
       login_as basic_user, scope: :user
+    end
+
+    after :each do
+      Sunspot.remove_all! Item
+      Sunspot.remove_all! Collection
+      Sunspot.remove_all! Repository
+    end
+
+    context 'edit button and checkbox functionality' do
+
+      before :each do
+        Fabricate(:collection) { items(count: 1) }
+        Fabricate(:collection) { items(count: 1) }
+        basic_user.collections << Collection.last
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+      end
+
+      scenario 'edit buttons, checkboxes and action menu are displayed' do
+        expect(page).to have_link 'Edit'
+        expect(page).to have_link 'Show'
+        expect(page).to have_css 'input.action-item'
+        expect(page).to have_button I18n.t('meta.app.action_widget.name')
+      end
+
+      scenario 'user sees an error when trying to edit item from unassigned collection' do
+        find("a[href='#{edit_item_path(Collection.first.items.first)}']").click
+        expect(page).to have_text I18n.t('unauthorized.manage.all', { action: :edit, subject: :item })
+      end
+
+      scenario 'user sees an error when trying to edit item from unassigned collection' do
+        find("a[href='#{edit_item_path(Collection.last.items.first)}']").click
+        expect(page).to have_current_path edit_item_path(Collection.last.items.first)
+      end
+
+      scenario 'user does not see the action to delete checked items' do
+        expect(page).not_to have_link multiple_destroy_items_path
+      end
 
     end
 

@@ -1,4 +1,4 @@
-<% if current_user.super? %>
+<% if current_user.super? || can?(:edit, Item) %>
   <div id="action-dropdown" class="btn-group btn-default">
     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
       <%= t('meta.app.action_widget.name') %> <span class="caret"></span>
@@ -14,9 +14,11 @@
       <li class="dropdown-header">
         <%= t('meta.app.action_widget.divider') %>
       </li>
+      <% if current_user.super? %>
       <li>
         <%= link_to t('meta.app.action_widget.delete'), '#', class: 'delete-action', data: { url: multiple_destroy_items_path } %>
       </li>
+      <% end %>
       <li>
         <%= link_to t('meta.app.action_widget.xml'), '#', class: 'add-to-xml-btn' %>
       </li>

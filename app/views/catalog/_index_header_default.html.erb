@@ -6,10 +6,10 @@
   -%>
   <% document_actions = capture do %>
     <% # bookmark functions for items/docs -%>
-    <%= render_index_doc_actions document, wrapping_class: "index-document-functions col-sm-3 col-lg-2" %>
+    <%= render_index_doc_actions document, wrapping_class: 'index-document-functions col-sm-3 col-lg-2' %>
   <% end %>
 
-  <h3 class="index_title document-title-heading <%= document_actions.present? ? "col-sm-9 col-lg-10" : "col-md-12" %>">
+  <h3 class="index_title document-title-heading <%= document_actions.present? ? 'col-sm-9 col-lg-10' : 'col-md-12' %>">
     <% if counter = document_counter_with_offset(document_counter) %>
       <span class="document-counter">
         <%= t('blacklight.search.documents.counter', counter: counter) %>
@@ -22,14 +22,14 @@
       <span class="label label-info">Collection</span>
     <% end %>
 
-    <% if current_user.super? && klass == 'Item' %>
+    <% if (current_user.super? || can?(:edit, Item)) && klass == 'Item' %>
         <%= check_box_tag(:action_item, id, false, { id: "select-#{id}", class: 'action-item'}) %>
     <% end %>
 
     <%= link_to_document document, document_show_link_field(document), counter: counter %>
 
     <%# todo: if user can edit this record... #%>
-    <% if current_user.super? %>
+    <% if current_user.super? || can?(:edit, Item) %>
         <div class="btn-group btn-group-sm pull-right">
           <%= link_to(
                   'Edit',
@@ -42,10 +42,6 @@
                   session_tracking_params(document, counter).merge({class: 'show-record btn btn-primary'})
               ) %>
         </div>
-
-
-
-
     <% end %>
   </h3>
 
