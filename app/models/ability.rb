@@ -57,6 +57,7 @@ class Ability
           user.collections.include?(collection)
     end
 
+    can :xml, Item
     can [:index, :show, :new, :create, :edit, :update, :copy, :destroy], Item do |item|
       user.repositories.include?(item.repository) ||
           user.collections.include?(item.collection)
@@ -71,7 +72,7 @@ class Ability
     can [:show, :edit, :update], BatchItem do |batch_item|
       if batch_item.persisted?
         user.repositories.include?(batch_item.collection.repository) ||
-            user.collections.include?(batch_item.collection)
+          user.collections.include?(batch_item.collection)
       else
         false
       end
