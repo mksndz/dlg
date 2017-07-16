@@ -89,6 +89,7 @@ class Batch < ActiveRecord::Base
       item_id = attributes.delete('id')
       batch_item = BatchItem.new attributes
       batch_item.item_id = item_id
+      batch_item.portals = item.portals
       batch_item
     end
   end
