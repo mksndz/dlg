@@ -16,7 +16,7 @@ class ItemVersionsController < ApplicationController
   def restore
     version = ItemVersion.find(params[:id])
     @item = version.reify
-    @item.save
+    @item.save(validate: false)
     version.delete
     redirect_to item_path(@item), notice: I18n.t('meta.versions.messages.success.restore')
   end

@@ -10,6 +10,8 @@ RSpec.describe CollectionsController, type: :controller do
     Fabricate(:repository)
   }
 
+  let(:portal) { Fabricate :portal }
+
   before(:each) {
     sign_in super_user
   }
@@ -24,7 +26,8 @@ RSpec.describe CollectionsController, type: :controller do
       edm_is_shown_by: 'http://dlg.galileo.usg.edu',
       dcterms_provenance: 'DLG',
       dcterms_subject: 'Georgia',
-      repository_id: repository.id
+      repository_id: repository.id,
+      portal_ids: [portal.id]
     }
   }
 

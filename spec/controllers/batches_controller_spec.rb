@@ -18,13 +18,9 @@ RSpec.describe BatchesController, type: :controller do
     }
   }
 
-  let(:invalid_attributes) {
-    {
-        name: nil
-    }
-  }
+  let(:invalid_attributes) { { name: nil } }
 
-  let(:valid_session) { { } }
+  let(:valid_session) { {} }
 
   describe 'GET #index' do
     it 'assigns all batches as @batches' do

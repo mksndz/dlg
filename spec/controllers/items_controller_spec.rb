@@ -6,6 +6,8 @@ RSpec.describe ItemsController, type: :controller do
     Fabricate(:collection)
   }
 
+  let(:portal) { Fabricate :portal }
+
   let(:valid_attributes) {
     {
       slug: 'test-item-slug',
@@ -19,7 +21,8 @@ RSpec.describe ItemsController, type: :controller do
       edm_is_shown_by: 'http://dlg.galileo.usg.edu',
       dcterms_provenance: 'DLG',
       dcterms_subject: 'Georgia',
-      collection_id: collection.id
+      collection_id: collection.id,
+      portal_ids: [portal.id]
     }
   }
 

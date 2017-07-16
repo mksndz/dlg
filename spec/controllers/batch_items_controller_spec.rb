@@ -15,6 +15,8 @@ RSpec.describe BatchItemsController, type: :controller do
     Fabricate(:collection)
   }
 
+  let(:portal) { Fabricate :portal }
+
   let(:valid_attributes) {
     {
         slug: 'test-item-slug',
@@ -29,7 +31,8 @@ RSpec.describe BatchItemsController, type: :controller do
         dcterms_provenance: 'DLG',
         dcterms_subject: 'Georgia',
         collection_id: collection.id,
-        batch_id: batch.id
+        batch_id: batch.id,
+        portal_ids: [portal.id]
     }
   }
 

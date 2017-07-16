@@ -34,21 +34,17 @@ feature 'Repositories Management' do
 
       scenario 'can limit to just collections from a particular portal' do
 
-        r = Fabricate(:repository) {
-          portals(count: 1)
-        }
-
+        r = Fabricate(:repository)
         r2 = Fabricate(:repository)
+        p = Fabricate :portal
 
-        p = Portal.last
+        r.portals = [p]
 
         visit repositories_path
 
         chosen_select p.name, from: '_portal_id'
 
-        within '.index-filter-area' do
-          find('.btn-primary').click
-        end
+        find_button(I18n.t('meta.defaults.actions.filter')).click
 
         expect(page).to have_text r.title
         expect(page).not_to have_text r2.title
@@ -57,27 +53,22 @@ feature 'Repositories Management' do
 
       scenario 'can limit to just collections from multiple portals' do
 
-        r = Fabricate(:repository) {
-          portals(count: 1)
-        }
-
-        r2 = Fabricate(:repository) {
-          portals(count: 1)
-        }
-
+        r = Fabricate(:repository)
+        r2 = Fabricate(:repository)
         r3 = Fabricate(:repository)
 
-        p1 = Portal.first
-        p2 = Portal.last
+        p1 = Fabricate :portal
+        p2 = Fabricate :portal
+
+        r.portals = [p1]
+        r2.portals = [p2]
 
         visit repositories_path
 
         chosen_select p1.name, from: '_portal_id'
         chosen_select p2.name, from: '_portal_id'
 
-        within '.index-filter-area' do
-          find('.btn-primary').click
-        end
+        find_button(I18n.t('meta.defaults.actions.filter')).click
 
         expect(page).to have_text r.title
         expect(page).to have_text r2.title
@@ -149,24 +140,22 @@ feature 'Repositories Management' do
 
       end
 
-      scenario 'saves a new repository removing other_repository value' do
+      scenario 'saves a new repository removing portal value', js: true do
 
-        c = Fabricate(:repository)
+        r = Fabricate :repository
         p = Fabricate :portal
 
-        c.portals = [p]
+        r.portals = [p]
 
-        visit repositories_path
+        visit edit_repository_path r
 
-        click_on I18n.t('meta.defaults.actions.edit')
-
-        fill_in I18n.t('activerecord.attributes.repository.slug'), with: 'test'
-
-        select '', from: I18n.t('activerecord.attributes.repository.portal_ids')
+        within '#repository_portal_ids_chosen' do
+          find('.search-choice-close').click
+        end
 
         click_button I18n.t('meta.defaults.actions.save')
 
-        expect(page).to have_current_path repository_path(c)
+        expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
 
       end
 

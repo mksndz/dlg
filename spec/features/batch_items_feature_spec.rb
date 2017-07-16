@@ -144,7 +144,7 @@ feature 'Batches Management' do
 
       end
 
-      scenario 'saves a new batch_item removing other_collection value' do
+      scenario 'saves a new batch_item removing portal value', js: true do
 
         b = Fabricate(:batch) { batch_items(count: 1) }
 
@@ -156,11 +156,13 @@ feature 'Batches Management' do
 
         click_on I18n.t('meta.defaults.actions.edit')
 
-        select '', from: I18n.t('activerecord.attributes.batch_item.portal_ids')
+        within '#batch_item_portal_ids_chosen' do
+          find('.search-choice-close').click
+        end
 
         click_button I18n.t('meta.defaults.actions.save')
 
-        expect(page).to have_current_path batch_batch_item_path(b, b.batch_items.first)
+        expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
 
       end
 

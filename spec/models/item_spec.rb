@@ -193,6 +193,7 @@ RSpec.describe Item, type: :model do
     p = Fabricate :portal
     p2 = Fabricate :portal
 
+    i.portals = []
     i.portals << p
     i.portals << p2
     i.portals << p

@@ -320,5 +320,6 @@ en:
         repository:
           blank: 'must be provided (and in "latitude, longitude" format).'
           coordinates: 'are not in the proper format. Use "latitude, longitude".'
+        portal: 'must have at least one value selected.'
         blank: "cannot be blank"
         taken: "must be unique"

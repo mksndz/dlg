@@ -24,13 +24,11 @@ feature 'Collections Management' do
 
       scenario 'can limit to just collections from a particular portal' do
 
-        c = Fabricate(:collection) {
-          portals(count: 1)
-        }
-
+        p = Fabricate :portal
+        c = Fabricate(:collection)
         c2 = Fabricate(:collection)
 
-        p = Portal.last
+        c.portals = [p]
 
         visit collections_path
 
@@ -47,18 +45,15 @@ feature 'Collections Management' do
 
       scenario 'can limit to just collections from multiple portals' do
 
-        c = Fabricate(:collection) {
-          portals(count: 1)
-        }
+        p1 = Fabricate :portal
+        p2 = Fabricate :portal
 
-        c2 = Fabricate(:collection) {
-          portals(count: 1)
-        }
-
+        c = Fabricate(:collection)
+        c2 = Fabricate(:collection)
         c3 = Fabricate(:collection)
 
-        p1 = Portal.first
-        p2 = Portal.last
+        c.portals = [p1]
+        c2.portals = [p1, p2]
 
         visit collections_path
 
@@ -79,13 +74,9 @@ feature 'Collections Management' do
 
     context 'portal behavior' do
 
-      scenario 'saves a new collection with no portal value' do
+      scenario 'cannot save a new collection with no portal value' do
 
-        c = Fabricate(:collection)
-
-        visit collections_path
-
-        click_on I18n.t('meta.defaults.actions.edit')
+        visit new_collection_path
 
         fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
         fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
@@ -94,7 +85,8 @@ feature 'Collections Management' do
 
         click_button I18n.t('meta.defaults.actions.save')
 
-        expect(page).to have_current_path collection_path(c)
+        screenshot_and_save_page
+        expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
 
       end
 
@@ -104,14 +96,7 @@ feature 'Collections Management' do
 
         p = Fabricate(:portal)
 
-        visit collections_path
-
-        click_on I18n.t('meta.defaults.actions.edit')
-
-        fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
-        chosen_select 'Text', from: 'dcterms-type-select'
+        visit edit_collection_path c
 
         select p.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
 
@@ -128,14 +113,7 @@ feature 'Collections Management' do
         p1 = Fabricate(:portal)
         p2 = Fabricate(:portal)
 
-        visit collections_path
-
-        click_on I18n.t('meta.defaults.actions.edit')
-
-        fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
-        chosen_select 'Text', from: 'dcterms-type-select'
+        visit edit_collection_path c
 
         select p1.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
         select p2.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
@@ -148,27 +126,22 @@ feature 'Collections Management' do
 
       end
 
-      scenario 'saves a new collection removing other_collection value' do
+      scenario 'saves a new collection removing portal value', js: true do
 
         c = Fabricate(:collection)
         p = Fabricate :portal
 
         c.portals = [p]
 
-        visit collections_path
+        visit edit_collection_path c
 
-        click_on I18n.t('meta.defaults.actions.edit')
-
-        fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
-        chosen_select 'Text', from: 'dcterms-type-select'
-
-        select '', from: I18n.t('activerecord.attributes.collection.portal_ids')
+        within '#collection_portal_ids_chosen' do
+          find('.search-choice-close').click
+        end
 
         click_button I18n.t('meta.defaults.actions.save')
 
-        expect(page).to have_current_path collection_path(c)
+        expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
 
       end
 
@@ -177,7 +150,6 @@ feature 'Collections Management' do
     scenario 'index shows all collections with actions' do
 
       collection = Fabricate :collection
-      # another_collection = Fabricate :collection
 
       visit collections_path
 

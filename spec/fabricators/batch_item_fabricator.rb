@@ -3,6 +3,7 @@ require 'faker'
 Fabricator :batch_item do
 
   batch
+  portals(count: 1)
   slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'),'-') }
   collection { Fabricate(:collection) }
   dcterms_title { [

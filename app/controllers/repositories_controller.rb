@@ -6,7 +6,7 @@ class RepositoriesController < ApplicationController
   include Sorting
   include Filterable
 
-  before_action :set_data, only: [:index, :new, :create, :edit]
+  before_action :set_data, only: [:index, :new, :create, :edit, :update]
 
   def index
 

@@ -11,7 +11,7 @@
     <%= f.form_group :in_georgia do %>
         <%= f.check_box :in_georgia %>
     <% end %>
-    <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
+    <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, {}, { multiple: true,  class: 'fancy-multiselect' } %>
     <%= f.text_area :teaser %>
     <%= f.text_area :short_description %>
     <%= f.text_area :description %>

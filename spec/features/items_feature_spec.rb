@@ -157,7 +157,7 @@ feature 'Item Management' do
 
       end
 
-      scenario 'saves a new item removing other_collection value' do
+      scenario 'saves a new item removing portal value', js: true do
 
         c = Fabricate(:collection) { items(count: 1) }
 
@@ -165,15 +165,15 @@ feature 'Item Management' do
 
         c.items.first.portals = [p]
 
-        visit items_path
+        visit edit_item_path(c.items.first)
 
-        click_on I18n.t('meta.defaults.actions.edit')
-
-        select '', from: I18n.t('activerecord.attributes.item.portal_ids')
+        within '#item_portal_ids_chosen' do
+          find('.search-choice-close').click
+        end
 
         click_button I18n.t('meta.defaults.actions.save')
 
-        expect(page).to have_current_path item_path(c.items.first)
+        expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
 
       end
 
@@ -243,23 +243,18 @@ feature 'Item Management' do
 
       end
 
-      scenario 'can limit to just items from a particular portal' do
+      scenario 'can limit to just items from a particular portal', js: true do
 
-        i = Fabricate(:item) {
-          portals(count: 1)
-        }
-
+        i = Fabricate(:item)
         i2 = Fabricate(:item)
 
-        p = Portal.last
+        p = Fabricate :portal
+        i.portals = [p]
 
         visit items_path
 
         chosen_select p.name, from: '_portal_id'
-
-        within '.index-filter-area' do
-          find('.btn-primary').click
-        end
+        find_button(I18n.t('meta.defaults.actions.filter')).click
 
         expect(page).to have_text i.dcterms_title.first
         expect(page).not_to have_text i2.dcterms_title.first
@@ -268,27 +263,21 @@ feature 'Item Management' do
 
       scenario 'can limit to just items from multiple portals' do
 
-        i = Fabricate(:item) {
-          portals(count: 1)
-        }
-
-        i2 = Fabricate(:item) {
-          portals(count: 1)
-        }
-
+        i = Fabricate(:item)
+        i2 = Fabricate(:item)
         i3 = Fabricate(:item)
+        p1 = Fabricate :portal
+        p2 = Fabricate :portal
 
-        p1 = Portal.first
-        p2 = Portal.last
+        i.portals = [p1]
+        i2.portals = [p2]
 
         visit items_path
 
         chosen_select p1.name, from: '_portal_id'
         chosen_select p2.name, from: '_portal_id'
 
-        within '.index-filter-area' do
-          find('.btn-primary').click
-        end
+        find_button(I18n.t('meta.defaults.actions.filter')).click
 
         expect(page).to have_text i.dcterms_title.first
         expect(page).to have_text i2.dcterms_title.first

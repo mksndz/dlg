@@ -666,6 +666,7 @@ feature 'Searching' do
       before :each do
 
         @collection = Fabricate(:collection) { items(count: 1) }
+        Sunspot.commit
 
         visit blacklight_advanced_search_engine.advanced_search_path
         click_button 'Search'

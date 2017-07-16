@@ -98,7 +98,7 @@ describe RecordImporter, type: :model do
 
           RecordImporter.perform(batch_import.id)
 
-          expect(BatchItem.last.portals).to include Portal.last
+           expect(BatchItem.last.portals).to include Portal.first
 
         end
 

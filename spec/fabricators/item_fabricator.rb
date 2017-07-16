@@ -2,6 +2,7 @@ require 'faker'
 
 Fabricator(:item) do
 
+  portals(count: 1)
   slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'), '-') }
   dcterms_title { [
       Faker::Lorem.sentence(5),
@@ -75,7 +76,5 @@ Fabricator(:robust_item, from: :item) do
   dlg_subject_personal { [
       Faker::Name.name_with_middle
   ] }
-
-  portals(count: 1)
 
 end

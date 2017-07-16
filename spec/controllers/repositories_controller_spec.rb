@@ -4,13 +4,16 @@ RSpec.describe RepositoriesController, type: :controller do
 
   let(:super_user) { Fabricate(:super) }
 
+  let(:portal) { Fabricate :portal }
+
   before(:each) { sign_in super_user }
 
   let(:valid_attributes) do
     {
       slug: 'test-controller-slug',
       title: 'Test Controller Title',
-      coordinates: '31.978987, -81.161760'
+      coordinates: '31.978987, -81.161760',
+      portal_ids: [portal.id]
     }
   end
 
