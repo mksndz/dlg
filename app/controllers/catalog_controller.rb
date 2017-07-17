@@ -124,7 +124,7 @@ class CatalogController < ApplicationController
     #   The ordering of the field names is the order of the display
     config.add_index_field 'record_id_ss',                label: I18n.t('meta.search.labels.record_id')
     config.add_index_field 'dcterms_title_display',       label: I18n.t('meta.search.labels.dcterms_title')
-    config.add_index_field 'dcterms_description_display', label: I18n.t('meta.search.labels.dcterms_description')
+    config.add_index_field 'dcterms_description_display', label: I18n.t('meta.search.labels.dcterms_description'), helper_method: 'truncate_index'
     config.add_index_field 'collection_name_sms',         label: I18n.t('meta.search.labels.collection'), link_to_search: true
     config.add_index_field 'repository_name_sms',         label: I18n.t('meta.search.labels.repository'), link_to_search: true
     config.add_index_field 'dcterms_identifier_display',  label: I18n.t('meta.search.labels.dcterms_identifier')

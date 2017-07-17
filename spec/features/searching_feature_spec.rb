@@ -612,6 +612,30 @@ feature 'Searching' do
 
     end
 
+    context 'field truncation on index page behavior' do
+
+      before :each do
+        long_description = []
+        501.times do
+          long_description << 'word '
+        end
+        Fabricate :item do
+          dcterms_description { [long_description.join] }
+        end
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+      end
+
+      scenario 'description field is truncated' do
+        description_displayed = find('dd.blacklight-dcterms_description_display').text
+        expect(description_displayed.length).to eq 2500
+        expect(description_displayed).to include I18n.t('meta.search.index.truncated_field')
+      end
+
+    end
+
   end
 
   context 'for basic user', js: true do

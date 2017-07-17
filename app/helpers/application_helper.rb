@@ -1,13 +1,24 @@
 module ApplicationHelper
 
+  INDEX_TRUNCATION_VALUE = 2500
+
   def boolean_facet_labels(value)
     value == 'true' ? 'Yes' : 'No'
   end
 
   # handle linking in catalog results
-  def linkify(options={})
+  def linkify(options = {})
     url = options[:value].first
     link_to url, url
+  end
+
+  # truncate when displaying search results
+  def truncate_index(options = {})
+    truncate(
+        options[:value].join(I18n.t('support.array.two_words_connector')),
+        length: INDEX_TRUNCATION_VALUE,
+        omission: I18n.t('meta.search.index.truncated_field')
+    )
   end
 
   def sortable(column, title = nil)
