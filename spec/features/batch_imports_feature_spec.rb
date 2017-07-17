@@ -183,7 +183,6 @@ feature 'Batch Importing Batch Items' do
 
       expect(page).to have_text bi.file_name
 
-
     end
 
 

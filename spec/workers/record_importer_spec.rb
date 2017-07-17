@@ -207,15 +207,12 @@ describe RecordImporter, type: :model do
 
     context 'with realistic xml' do
 
-      it 'should work' do
-
-        georgia_portal = Fabricate(:portal) { code { 'georgia' } }
-        crdl_portal = Fabricate(:portal) { code { 'crdl' } }
-
-        collection = Fabricate :collection
-        other_collection = Fabricate :collection
-        other_collection2 = Fabricate :collection
-
+      before :each do
+        @georgia_portal = Fabricate(:portal) { code { 'georgia' } }
+        @crdl_portal = Fabricate(:portal) { code { 'crdl' } }
+        @collection = Fabricate :collection
+        @other_collection = Fabricate :collection
+        @other_collection2 = Fabricate :collection
         duplicate_date_xml = '<item>
             <dpla type="boolean">true</dpla>
             <public type="boolean">true</public>
@@ -280,12 +277,15 @@ describe RecordImporter, type: :model do
             <dcterms_identifier type="array">
               <dcterms_identifier>Clip number: wsbn43083</dcterms_identifier>
             </dcterms_identifier>
-            <dc_terms_bibliographic_citation type="array">
-              <dc_terms_bibliographic_citation>Cite as: wsbn43083, (No title), WSB-TV newsfilm collection, reel 0962, 28:19/36:32, Walter J. Brown Media Archives and Peabody Awards Collection, The University of Georgia Libraries, Athens, Ga</dc_terms_bibliographic_citation>
-            </dc_terms_bibliographic_citation>
+            <dcterms_bibliographic_citation type="array">
+              <dcterms_bibliographic_citation>Cite as: wsbn43083, (No title), WSB-TV newsfilm collection, reel 0962, 28:19/36:32, Walter J. Brown Media Archives and Peabody Awards Collection, The University of Georgia Libraries, Athens, Ga</dcterms_bibliographic_citation>
+            </dcterms_bibliographic_citation>
             <dc_right type="array">
               <dc_right>http://rightsstatements.org/vocab/InC/1.0/</dc_right>
             </dc_right>
+            <dc_relation type="array">
+                  <dc_relation>\nForms part of the online collection: Individuals Active in Civil Disturbances Collection\nNew Line\n\t\t\t</dc_relation>
+            </dc_relation>
             <dcterms_spatial type="array">
               <dcterms_spatial>United States</dcterms_spatial>
             </dcterms_spatial>
@@ -314,28 +314,40 @@ describe RecordImporter, type: :model do
             <local type="boolean">true</local>
           </item>'
 
-        duplicate_date_xml.sub! 'ugabma_wsbn', collection.record_id
-        duplicate_date_xml.sub! '__oc1__', other_collection.record_id
-        duplicate_date_xml.sub! '__oc2__', other_collection2.record_id
+        duplicate_date_xml.sub! 'ugabma_wsbn', @collection.record_id
+        duplicate_date_xml.sub! '__oc1__', @other_collection.record_id
+        duplicate_date_xml.sub! '__oc2__', @other_collection2.record_id
         bi = Fabricate(:batch_import) do
           xml { duplicate_date_xml }
         end
         RecordImporter.perform(bi.id)
-        batch_item = bi.batch.batch_items.first
-        # no nested arrays
-        expect(batch_item.dc_date.first).not_to be_an Array
-        expect(batch_item.dcterms_spatial.first).not_to be_an Array
-        expect(batch_item.dcterms_temporal.first).not_to be_an Array
-        # no duplicates
-        expect(batch_item.dc_date).to eq ['1960']
-        expect(batch_item.dcterms_temporal).to eq ['1960']
-        expect(batch_item.dcterms_spatial).to eq ['Cuba', 'United States']
-        # multiple portals
-        expect(batch_item.portals).to include georgia_portal
-        expect(batch_item.portals).to include crdl_portal
-        # multiple other_collections
-        expect(batch_item.other_collections).to include other_collection.id
-        expect(batch_item.other_collections).to include other_collection2.id
+        @batch_item = bi.batch.batch_items.first
+      end
+
+      it 'should not contain nested arrays' do
+        expect(@batch_item.dc_date.first).not_to be_an Array
+        expect(@batch_item.dcterms_spatial.first).not_to be_an Array
+        expect(@batch_item.dcterms_temporal.first).not_to be_an Array
+      end
+
+      it 'should not contain duplicated array elements' do
+        expect(@batch_item.dc_date).to eq ['1960']
+        expect(@batch_item.dcterms_temporal).to eq ['1960']
+        expect(@batch_item.dcterms_spatial).to eq ['Cuba', 'United States']
+      end
+
+      it 'should set multiple portal values properly' do
+        expect(@batch_item.portals).to include @georgia_portal
+        expect(@batch_item.portals).to include @crdl_portal
+      end
+
+      it 'should set multiple other_collection values properly' do
+        expect(@batch_item.other_collections).to include @other_collection.id
+        expect(@batch_item.other_collections).to include @other_collection2.id
+      end
+
+      it 'should trim leading and trailing whitespace from arrays of strings' do
+        expect(@batch_item.dc_relation.first).to eq "Forms part of the online collection: Individuals Active in Civil Disturbances Collection\nNew Line"
       end
 
     end

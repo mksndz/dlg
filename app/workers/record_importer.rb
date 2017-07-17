@@ -171,13 +171,21 @@ class RecordImporter
 
   # reject any values the db is not prepared for...
   def self.prepared_params(record_data)
-    record_data.reject do |k,v|
-      if BatchItem.column_names.exclude?(k)
-        # @logger.warn "Param from XML discarded: #{k}" todo fix this (set logger)
-        k
-        true
-      end
+    # record_data.reject do |k, _|
+    #   BatchItem.column_names.exclude? k
+    # end
+    prepared_data = {}
+    record_data.each do |k, v|
+      next unless BatchItem.column_names.include?(k)
+      prepared_data[k] = if v.is_a? Array
+                           v.map do |val|
+                             val.gsub('\\n',"\n").gsub('\\t',"\t").strip if val.is_a? String
+                           end
+                         else
+                           v
+                         end
     end
+    prepared_data
   end
 
   def self.add_failed(num, message, slug = nil)
