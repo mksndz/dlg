@@ -86,6 +86,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'dpla_b',                  label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels, limit: true
     config.add_facet_field 'valid_item_b',            label: I18n.t('meta.search.facets.valid_item'), helper_method: :boolean_facet_labels, limit: true
     config.add_facet_field 'provenance_facet',        label: I18n.t('meta.search.facets.provenance'), limit: true
+    config.add_facet_field 'publisher_facet',         label: I18n.t('meta.search.facets.publisher'), limit: true
     config.add_facet_field 'creator_facet',           label: I18n.t('meta.search.facets.creator'), limit: true
     config.add_facet_field 'contributor_facet',       label: I18n.t('meta.search.facets.contributor'), limit: true
     config.add_facet_field 'subject_facet',           label: I18n.t('meta.search.facets.subject'), limit: true

@@ -239,10 +239,7 @@ feature 'Searching' do
 
         scenario 'there exists a portals facet' do
 
-          Fabricate(:item) {
-            portals(count: 1)
-          }
-
+          Fabricate :item
           Sunspot.commit
 
           visit blacklight_advanced_search_engine.advanced_search_path
@@ -251,10 +248,20 @@ feature 'Searching' do
 
         end
 
+        scenario 'there exists a publisher facet' do
+
+          Fabricate :item
+          Sunspot.commit
+
+          visit blacklight_advanced_search_engine.advanced_search_path
+
+          expect(page).to have_text I18n.t('meta.search.facets.publisher')
+
+        end
+
         scenario 'advanced search facets are not limited to 11' do
 
           Fabricate.times(20, :item)
-
           Sunspot.commit
 
           visit blacklight_advanced_search_engine.advanced_search_path

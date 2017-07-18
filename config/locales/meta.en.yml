@@ -89,6 +89,7 @@ en:
         dpla: 'DPLA'
         valid: 'Valid'
         provenance: 'Holding Inst'
+        publisher: 'Publisher'
         creator: 'Creator'
         contributor: 'Contributor'
         subject: 'Subject'

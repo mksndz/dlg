@@ -162,6 +162,7 @@
   <copyField source="dcterms_contributor_display"    dest="contributor_facet" />
   <copyField source="dcterms_subject_text"           dest="subject_facet" />
   <copyField source="dlg_subject_personal_text"      dest="subject_personal_facet" />
+  <copyField source="dcterms_publisher_text"         dest="publisher_facet" />
   <copyField source="year"                           dest="year_facet" />
   <copyField source="dcterms_temporal_text"          dest="temporal_facet" />
   <copyField source="dcterms_spatial_text"           dest="location_facet" />
@@ -172,6 +173,7 @@
   <copyField source="dcterms_type_display"           dest="type_facet" />
   <copyField source="dcterms_medium_display"         dest="medium_facet" />
   <copyField source="dcterms_language_display"       dest="language_facet" />
+  <copyField source="dcterms_publisher_text"         dest="publisher_facet" />
   <copyField source="coordinates"                    dest="coordinates_facet" />
 
   <!-- Similarity is the scoring routine for each document vs. a query.
