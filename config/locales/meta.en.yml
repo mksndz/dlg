@@ -87,6 +87,7 @@ en:
       facets:
         public: 'Public'
         dpla: 'DPLA'
+        valid: 'Valid'
         provenance: 'Holding Inst'
         creator: 'Creator'
         contributor: 'Contributor'
@@ -111,6 +112,7 @@ en:
         record_id: 'Record ID'
         dpla: 'Push to DPLA?'
         public: 'Show to Public?'
+        valid_item: 'Valid?'
         dcterms_title: 'Title'
         collection: 'Collection'
         repository: 'Repository'

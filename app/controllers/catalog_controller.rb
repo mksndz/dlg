@@ -84,6 +84,7 @@ class CatalogController < ApplicationController
     # facet bar
     config.add_facet_field 'public_b',                label: I18n.t('meta.search.facets.public'), helper_method: :boolean_facet_labels, limit: true
     config.add_facet_field 'dpla_b',                  label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels, limit: true
+    config.add_facet_field 'valid_item_b',            label: I18n.t('meta.search.facets.valid_item'), helper_method: :boolean_facet_labels, limit: true
     config.add_facet_field 'provenance_facet',        label: I18n.t('meta.search.facets.provenance'), limit: true
     config.add_facet_field 'creator_facet',           label: I18n.t('meta.search.facets.creator'), limit: true
     config.add_facet_field 'contributor_facet',       label: I18n.t('meta.search.facets.contributor'), limit: true
@@ -135,6 +136,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'dcterms_spatial_display',     label: I18n.t('meta.search.labels.dcterms_spatial'), link_to_search: :location_facet
     config.add_index_field 'dpla_ss',                     label: I18n.t('meta.search.labels.dpla')
     config.add_index_field 'public_ss',                   label: I18n.t('meta.search.labels.public')
+    config.add_index_field 'valid_item_ss',               label: 'Valid'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display

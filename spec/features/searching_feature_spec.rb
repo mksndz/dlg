@@ -81,6 +81,40 @@ feature 'Searching' do
 
     end
 
+    context 'results validity display', js: true do
+
+      scenario 'invalid items are shown as such' do
+        Fabricate.build(:item, dcterms_title: []).save(validate: false)
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        validity_dd = find('dd.blacklight-valid_item_ss')
+        expect(validity_dd.text).to eq 'No'
+      end
+
+      scenario 'valid items are shown as such' do
+        Fabricate :item
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        validity_dd = find('dd.blacklight-valid_item_ss')
+        expect(validity_dd.text).to eq 'Yes'
+      end
+
+      scenario 'validity facet is shown' do
+        Fabricate.build(:item, dcterms_title: []).save(validate: false)
+        Fabricate :item
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        expect(page).to have_css '.blacklight-valid_item_b'
+      end
+
+    end
+
     context 'result URL display behavior' do
 
       scenario 'item record edm_is_shown_at value displayed as URL link' do

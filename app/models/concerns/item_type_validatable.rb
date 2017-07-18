@@ -6,7 +6,7 @@ module ItemTypeValidatable
   extend ActiveSupport::Concern
 
   included do
-    after_save :update_validation_cache
+    before_save :update_validation_cache
     validates_presence_of :collection, message: I18n.t('activerecord.errors.messages.item_type.collection')
     validates_presence_of :dcterms_spatial, :dcterms_title, :dcterms_provenance
     validate :dcterms_temporal_characters
@@ -89,6 +89,7 @@ module ItemTypeValidatable
   end
 
   def update_validation_cache
-    update_columns valid_item: valid?
+    self.valid_item = valid?
+    true
   end
 end

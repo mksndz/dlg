@@ -68,7 +68,11 @@ class Item < ActiveRecord::Base
 
     boolean :dpla
     boolean :public
-    # for display in search results
+    boolean :valid_item
+
+    string :valid_item, stored: true do
+      valid_item ? 'Yes' : 'No'
+    end
 
     string :dpla, stored: true do
       dpla ? 'Yes' : 'No'
