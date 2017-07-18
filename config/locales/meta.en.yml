@@ -87,7 +87,7 @@ en:
       facets:
         public: 'Public'
         dpla: 'DPLA'
-        valid: 'Valid'
+        valid_item: 'Valid'
         provenance: 'Holding Inst'
         publisher: 'Publisher'
         creator: 'Creator'

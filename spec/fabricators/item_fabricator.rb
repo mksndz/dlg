@@ -61,6 +61,10 @@ end
 
 Fabricator(:robust_item, from: :item) do
 
+  dcterms_publisher { [
+      Faker::University.name
+  ]}
+
   edm_is_shown_at { [
       Faker::Internet.url
   ] }

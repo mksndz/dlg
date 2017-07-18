@@ -103,16 +103,6 @@ feature 'Searching' do
         expect(validity_dd.text).to eq 'Yes'
       end
 
-      scenario 'validity facet is shown' do
-        Fabricate.build(:item, dcterms_title: []).save(validate: false)
-        Fabricate :item
-        Sunspot.commit
-        visit root_path
-        fill_in 'title', with: ''
-        click_button 'Search'
-        expect(page).to have_css '.blacklight-valid_item_b'
-      end
-
     end
 
     context 'result URL display behavior' do
@@ -237,27 +227,27 @@ feature 'Searching' do
 
       context 'facet behavior' do
 
-        scenario 'there exists a portals facet' do
-
-          Fabricate :item
+        before :each do
+          Fabricate :robust_item
           Sunspot.commit
-
           visit blacklight_advanced_search_engine.advanced_search_path
+        end
 
-          expect(page).to have_text I18n.t('meta.search.facets.portals')
+        scenario 'there exists a portals facet' do
+          expect(page).to have_css '#portal_names_sms_chosen'
+        end
 
+        scenario 'there exists a validity facet' do
+          expect(page).to have_css '#valid_item_b_chosen'
         end
 
         scenario 'there exists a publisher facet' do
-
-          Fabricate :item
-          Sunspot.commit
-
-          visit blacklight_advanced_search_engine.advanced_search_path
-
-          expect(page).to have_text I18n.t('meta.search.facets.publisher')
-
+          expect(page).to have_css '#publisher_facet_chosen'
         end
+
+      end
+
+      context 'facet limit behavior' do
 
         scenario 'advanced search facets are not limited to 11' do
 
@@ -591,7 +581,7 @@ feature 'Searching' do
 
     end
 
-    context 'add to batch functionality', js: true do
+    context 'add to batch functionality' do
 
       context 'when everything goes smoothly' do
 
@@ -679,7 +669,7 @@ feature 'Searching' do
 
   end
 
-  context 'for basic user', js: true do
+  context 'for basic user' do
 
     before :each do
       login_as basic_user, scope: :user
