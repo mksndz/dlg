@@ -15,7 +15,7 @@ feature 'Versions' do
     scenario 'super user views an item and should see versions listed' do
 
       item = Fabricate :item
-      item.update(slug: 'NewSlug')
+      item.update(slug: 'newslug')
 
       visit item_path(item)
 
@@ -28,7 +28,7 @@ feature 'Versions' do
 
       item = Fabricate :item
       original_slug = item.slug
-      item.update(slug: 'NewSlug')
+      item.update(slug: 'newslug')
 
       visit item_path(item)
 

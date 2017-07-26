@@ -358,28 +358,25 @@ RSpec.describe Item, type: :model do
     expect(i.errors).not_to have_key :edm_is_shown_by
   end
 
-  it 'should always downcase the slug value' do
-    i = Fabricate.build(:robust_item, slug: 'CAPS')
-    i.save
-    expect(i.slug).to eq 'CAPS'.downcase
-  end
-
-  it 'should not allow spaces in the slug' do
-    i = Fabricate.build(:item, slug: 'slug/')
-    i.save
-    expect(i.errors).to have_key :slug
-  end
-
-  it 'should not allow slashes in the slug' do
-    i = Fabricate.build(:item, slug: 'slug\\')
-    i.save
-    expect(i.errors).to have_key :slug
-  end
-
-  it 'should not allow colons in the slug' do
-    i = Fabricate.build(:item, slug: 'slug:')
-    i.save
-    expect(i.errors).to have_key :slug
+  it 'should only allow valid characters in the slug' do
+    invalid1 = Fabricate.build(:item, slug: 'slug/')
+    invalid2 = Fabricate.build(:item, slug: 'Slug')
+    invalid3 = Fabricate.build(:item, slug: 'sl ug')
+    invalid4 = Fabricate.build(:item, slug: 'slug/')
+    invalid5 = Fabricate.build(:item, slug: 'slug:')
+    valid = Fabricate.build(:item, slug: 'valid-slug')
+    invalid1.valid?
+    invalid2.valid?
+    invalid3.valid?
+    invalid4.valid?
+    invalid5.valid?
+    valid.valid?
+    expect(invalid1.errors).to have_key :slug
+    expect(invalid2.errors).to have_key :slug
+    expect(invalid3.errors).to have_key :slug
+    expect(invalid4.errors).to have_key :slug
+    expect(invalid5.errors).to have_key :slug
+    expect(valid.errors).not_to have_key :slug
   end
 
   context 'portal removal behavior' do

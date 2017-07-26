@@ -12,7 +12,7 @@ RSpec.describe ItemVersionsController, type: :controller do
 
       it 'renders the diff template' do
         i1 = Fabricate(:item)
-        i1.update(slug: 'Changed-Slug')
+        i1.update(slug: 'changed-slug')
         v1 = i1.versions.last
         get :diff, { item_id: i1.id, id: v1.id }
         expect(response).to render_template('diff')
@@ -28,7 +28,7 @@ RSpec.describe ItemVersionsController, type: :controller do
 
       it 'rolls back to the designated version of item' do
         i1 = Fabricate(:item)
-        i1.update(slug: 'Changed-Slug')
+        i1.update(slug: 'changed-slug')
         v1 = i1.versions.last
         patch :rollback, { item_id: i1.id, id: v1.id }
         expect(assigns(:item)).to eq v1.reify
