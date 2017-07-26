@@ -5,7 +5,7 @@ class BatchImport < ActiveRecord::Base
   has_many :batch_items, dependent: :destroy
 
   def completed?
-    !!completed_at
+    !completed_at.nil?
   end
 
 end

@@ -16,6 +16,7 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.batch_id'), value: @batch_import.batch.name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.created_at'), value: @batch_import.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.validations'), value: @batch_import.validations %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.match_on_id'), value: @batch_import.match_on_id %>
 
 <% unless @batch_import.results.empty? %>
 

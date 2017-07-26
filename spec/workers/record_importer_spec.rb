@@ -187,9 +187,7 @@ describe RecordImporter, type: :model do
 
       let(:batch_import) {
         Fabricate(:batch_import) {
-          xml { '
-            <items><collection><slug>blah</slug></collection></items>
-          ' }
+          xml { '<items><collection><slug>blah</slug></collection></items>' }
         }
       }
 
@@ -198,7 +196,7 @@ describe RecordImporter, type: :model do
         RecordImporter.perform(batch_import.id)
 
         expect(
-            batch_import.reload.results['failed'][0]['message']
+          batch_import.reload.results['failed'][0]['message']
         ).to eq 'No records could be extracted from the XML'
 
       end
@@ -348,6 +346,26 @@ describe RecordImporter, type: :model do
 
       it 'should trim leading and trailing whitespace from arrays of strings' do
         expect(@batch_item.dc_relation.first).to eq "Forms part of the online collection: Individuals Active in Civil Disturbances Collection\nNew Line"
+      end
+
+    end
+
+    context 'with matching on db id' do
+
+      before :each do
+        c = Fabricate :collection
+        bi = Fabricate :batch_import_to_match_on_id
+        @item = Fabricate(:item) { collection { c } }
+        bi.xml = bi.xml.gsub '__ID__', @item.id.to_s
+        bi.xml = bi.xml.gsub '__COLLECTION_RECORD_ID__', c.record_id
+        bi.xml = bi.xml.gsub '__PORTAL_CODE__', Portal.last.code
+        bi.save
+        RecordImporter.perform(bi.id)
+        @batch_item = bi.batch.batch_items.first
+      end
+
+      it 'should link the BatchItem to the Item for updating' do
+        expect(@batch_item.item).to eq @item
       end
 
     end

@@ -176,6 +176,7 @@ en:
         batch_id: 'Batch'
         results: 'Results'
         validations: 'Run Validations?'
+        match_on_id: 'Match to Existing Records Using DB ID?'
         batch_items_count: 'Batch Item Count'
         created_at: "Created"
         updated_at: "Last Updated"

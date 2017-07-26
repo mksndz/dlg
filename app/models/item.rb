@@ -196,38 +196,29 @@ class Item < ActiveRecord::Base
   end
 
   def to_xml(options = {})
-
     default_options = {
-        dasherize: false,
-        # fields to not include
-        except: [
-            :id,
-            :collection_id,
-            :record_id,
-            :other_collections,
-            :valid_item,
-            :has_thumbnail,
-            :created_at,
-            :updated_at
-        ],
-        include: {
-            other_colls: {
-                skip_types: true,
-                only: [
-                    :record_id
-                ]
-            },
-            collection: {
-                only: [
-                    :record_id
-                ]
-            },
-            portals: {
-                only: [
-                    :code
-                ]
-            }
+      dasherize: false,
+      except: [
+        :collection_id,
+        :record_id,
+        :other_collections,
+        :valid_item,
+        :has_thumbnail,
+        :created_at,
+        :updated_at
+      ],
+      include: {
+        other_colls: {
+          skip_types: true,
+          only: [:record_id]
+        },
+        collection: {
+          only: [:record_id]
+        },
+        portals: {
+          only: [:code]
         }
+      }
     }
     super(options.merge!(default_options))
   end

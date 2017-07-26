@@ -88,18 +88,23 @@ class RecordImporter
       return
     end
 
-    # existing_item = Item.find_by_slug record_data['slug']
-
-    # look for existing item based on unique attributes
-    item_lookup = Item.where(slug: record_data['slug'], collection: collection)
-
-    if item_lookup.length > 1
-      add_failed num, "More than one existing Item match for #{record_data['slug']} in Collection #{collection_slug}. This should never happen!"
+    if @batch_import.match_on_id?
+      id = record_data['id'] || nil
+      add_failed num, "Item with database ID #{id} not found." unless id
+      item_lookup = Item.find record_data['id']
+    else
+      # look for existing item based on unique attributes
+      item_lookup = Item.where(slug: record_data['slug'], collection: collection)
+      if item_lookup.length > 1
+        add_failed num, "More than one existing Item match for #{record_data['slug']} in Collection #{collection_slug}. This should never happen!"
+      end
     end
 
     begin
-
-      if item_lookup.any?
+      if item_lookup.is_a?(Item)
+        action = :update
+        create_update_record(item_lookup, record_data)
+      elsif item_lookup.any?
         action = :update
         create_update_record(item_lookup.first, record_data)
       else
@@ -179,7 +184,7 @@ class RecordImporter
       next unless BatchItem.column_names.include?(k)
       prepared_data[k] = if v.is_a? Array
                            v.map do |val|
-                             val.gsub('\\n',"\n").gsub('\\t',"\t").strip if val.is_a? String
+                             val.gsub('\\n', "\n").gsub('\\t', "\t").strip if val.is_a? String
                            end
                          else
                            v

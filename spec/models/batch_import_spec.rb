@@ -35,6 +35,10 @@ RSpec.describe BatchImport, type: :model do
       expect(b.completed?).to be false
     end
 
+    it 'returns false for match_by_db_id' do
+      expect(b.match_on_id?).to be false
+    end
+
   end
 
   context :completed do
@@ -61,6 +65,18 @@ RSpec.describe BatchImport, type: :model do
       expect(b.results).to be_kind_of Hash
     end
 
+  end
+
+  context :match_on_id do
+    let(:b) { Fabricate :batch_import_to_match_on_id }
+
+    it 'returns true for match_on_id' do
+      expect(b.match_on_id).to be true
+    end
+
+    it 'has a placeholder for the ID in the xml' do
+      expect(b.xml).to include '__ID__'
+    end
   end
 
 end

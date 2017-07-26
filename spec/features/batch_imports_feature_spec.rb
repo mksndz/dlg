@@ -15,11 +15,11 @@ feature 'Batch Importing Batch Items' do
 
     context 'for a committed batch' do
 
-      before(:each) {
+      before(:each) do
         @batch = Fabricate :committed_batch
         @batch.user = uploader_user
         @batch.save
-      }
+      end
 
       scenario 'the manage xml imports button should be displayed' do
 
@@ -41,7 +41,7 @@ feature 'Batch Importing Batch Items' do
 
     context 'for an uncommited batch' do
 
-      let(:dummy_xml){ '<xml></xml>' }
+      let(:dummy_xml) { '<xml></xml>' }
 
       before(:each) {
         @batch = Fabricate :batch
@@ -184,7 +184,6 @@ feature 'Batch Importing Batch Items' do
       expect(page).to have_text bi.file_name
 
     end
-
 
   end
 
