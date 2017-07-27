@@ -15,12 +15,12 @@ class Reindexer
   end
 
   def self.reindex_model
-    @logger.info "Reindexing entire all #{model} objects."
+    @logger.info "Reindexing entire all #{@model} objects."
     @model.constantize.find_in_batches(batch_size: REINDEX_BATCH_SIZE) do |batch|
       Sunspot.index! batch
     end
   rescue StandardError => e
-    @logger.fatal "Reindexing failed for model #{model}: #{e}"
+    @logger.fatal "Reindexing failed for model #{@model}: #{e}"
   end
 
   def self.reindex_objects(object_ids)
