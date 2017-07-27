@@ -137,7 +137,8 @@ class CatalogController < ApplicationController
     config.add_index_field 'dcterms_spatial_display',     label: I18n.t('meta.search.labels.dcterms_spatial'), link_to_search: :location_facet
     config.add_index_field 'dpla_ss',                     label: I18n.t('meta.search.labels.dpla')
     config.add_index_field 'public_ss',                   label: I18n.t('meta.search.labels.public')
-    config.add_index_field 'valid_item_ss',               label: 'Valid'
+    config.add_index_field 'display_ss',                  label: I18n.t('meta.search.labels.display')
+    config.add_index_field 'valid_item_ss',               label: I18n.t('meta.search.labels.valid_item')
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -181,22 +182,23 @@ class CatalogController < ApplicationController
     config.advanced_search[:query_parser]         ||= 'dismax'
     config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
     config.advanced_search[:form_solr_parameters] ||= {
-        'f.provenance_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.creator_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.contributor_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.subject_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.year_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.temporal_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.location_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.rights_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        # 'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.relation_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.type_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.medium_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.language_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-        'f.repository_name_sms.facet.limit' => -1,
-        'f.collection_name_sms.facet.limit' => -1,
-        'f.portals_sms.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.provenance_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.creator_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.contributor_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.subject_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.year_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.temporal_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.location_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.rights_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.publisher_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      # 'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.relation_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.type_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.medium_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.language_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.repository_name_sms.facet.limit' => -1,
+      'f.collection_name_sms.facet.limit' => -1,
+      'f.portals_sms.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT
     }
 
     config.add_search_field('all_fields') do |field|

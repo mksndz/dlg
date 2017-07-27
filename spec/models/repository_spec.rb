@@ -91,4 +91,30 @@ RSpec.describe Repository, type: :model do
     expect(r.errors).to have_key :coordinates
   end
 
+  context 'public_display? behavior' do
+
+    context 'non-public repository' do
+      before :each do
+        @repository = Fabricate :repository
+      end
+
+      it 'repository should return false for public_display?' do
+        expect(@repository.public).to eq false
+        expect(@repository.display?).to eq false
+      end
+    end
+
+    context 'public repository' do
+      before :each do
+        @repository = Fabricate(:repository) { public { true } }
+      end
+
+      it 'repository should return false for public_display?' do
+        expect(@repository.public).to eq true
+        expect(@repository.display?).to eq true
+      end
+    end
+
+  end
+
 end

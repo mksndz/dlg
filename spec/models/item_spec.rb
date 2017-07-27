@@ -412,7 +412,7 @@ RSpec.describe Item, type: :model do
 
     it 'should be unassigned from a portal if its repository is unassigned from that portal' do
 
-      r = @item.collection
+      r = @item.repository
 
       r.portals << @portal
       @item.portals << @portal
@@ -422,6 +422,7 @@ RSpec.describe Item, type: :model do
 
       expect(r.portals).to include @portal
       expect(@item.portals).to include @portal
+      expect(@item.portals).to include @portal2
 
       r.portals = []
 
@@ -429,6 +430,27 @@ RSpec.describe Item, type: :model do
       expect(@item.portals).not_to include @portal
       expect(@item.portals).to include @portal2
 
+    end
+
+  end
+
+  context 'public_display? behavior' do
+
+    context 'non-public repository' do
+      before :each do
+        @item = Fabricate :item
+        @item.public = true
+        @item.save
+        @item.collection.public = true
+        @item.collection.save
+      end
+
+      it 'item should return false for display?' do
+        expect(@item.public).to eq true
+        expect(@item.collection.public).to eq true
+        expect(@item.repository.public).to eq false
+        expect(@item.display?).to eq false
+      end
     end
 
   end

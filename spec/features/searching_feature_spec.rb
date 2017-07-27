@@ -667,6 +667,132 @@ feature 'Searching' do
 
     end
 
+    context 'display to public value display' do
+
+      context 'when switching repository' do
+
+        before :each do
+          @item = Fabricate(:item) do
+            public { true }
+            collection { Fabricate(:collection) { public { true } } }
+          end
+          Sunspot.commit
+        end
+
+        context 'initial state' do
+
+          before :each do
+            visit root_path
+            fill_in 'title', with: ''
+            click_button 'Search'
+          end
+
+          scenario 'item and collection will be false initially' do
+            within '.document-position-0' do
+              display_dd = find('dd.blacklight-display_ss')
+              expect(display_dd.text).to eq 'No'
+            end
+            within '.document-position-1' do
+              display_dd = find('dd.blacklight-display_ss')
+              expect(display_dd.text).to eq 'No'
+            end
+          end
+
+        end
+
+        context 'after setting repository to public' do
+
+          before :each do
+            @item.repository.public = true
+            @item.repository.save
+            ResqueSpec.perform_all :reindex
+            visit root_path
+            fill_in 'title', with: ''
+            click_button 'Search'
+          end
+
+          scenario 'item and collection should show that they will be displayed' do
+            within '.document-position-0' do
+              display_dd = find('dd.blacklight-display_ss')
+              expect(display_dd.text).to eq 'Yes'
+            end
+            within '.document-position-1' do
+              display_dd = find('dd.blacklight-display_ss')
+              expect(display_dd.text).to eq 'Yes'
+            end
+          end
+
+        end
+
+      end
+
+      context 'when switching collection' do
+
+        before :each do
+          @item = Fabricate(:item) do
+            public { true }
+            collection do
+              Fabricate(:collection) do
+                public { false }
+                repository do
+                  Fabricate(:repository) { public { true } }
+                end
+              end
+            end
+          end
+          @item.collection = Collection.last
+          Sunspot.commit
+        end
+
+        context 'initial state' do
+
+          before :each do
+            visit root_path
+            fill_in 'title', with: ''
+            click_button 'Search'
+          end
+
+          scenario 'item and collection will be false initially' do
+            within '.document-position-0' do
+              display_dd = find('dd.blacklight-display_ss')
+              expect(display_dd.text).to eq 'No'
+            end
+            within '.document-position-1' do
+              display_dd = find('dd.blacklight-display_ss')
+              expect(display_dd.text).to eq 'No'
+            end
+          end
+
+        end
+
+        context 'after setting collection to public' do
+
+          before :each do
+            @item.collection.public = true
+            @item.collection.save
+            ResqueSpec.perform_all :reindex
+            visit root_path
+            fill_in 'title', with: ''
+            click_button 'Search'
+          end
+
+          scenario 'item and collection should show that they will be displayed' do
+            within '.document-position-0' do
+              display_dd = find('dd.blacklight-display_ss')
+              expect(display_dd.text).to eq 'Yes'
+            end
+            within '.document-position-1' do
+              display_dd = find('dd.blacklight-display_ss')
+              expect(display_dd.text).to eq 'Yes'
+            end
+          end
+
+        end
+
+      end
+
+    end
+
   end
 
   context 'for basic user' do
@@ -747,7 +873,6 @@ feature 'Searching' do
         within '.document-position-0' do
           expect(page).to have_xpath("//img[contains(@src,\"#{image_url}\")]")
         end
-
 
       end
 

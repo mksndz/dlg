@@ -12,6 +12,8 @@ class Repository < ActiveRecord::Base
   validates_presence_of :title
   validate :coordinates_format
 
+  after_update :reindex_display_values_for_children
+
   searchable do
 
     string :slug, stored: true
@@ -47,6 +49,9 @@ class Repository < ActiveRecord::Base
     boolean :teaser
     boolean :public
     boolean :dpla
+    boolean :display do
+      display?
+    end
 
   end
 
@@ -58,7 +63,17 @@ class Repository < ActiveRecord::Base
     slug
   end
 
+  def display?
+    public
+  end
+
   private
+
+  def reindex_display_values_for_children
+    Resque.enqueue(Reindexer, 'Collection', collections.map(&:id))
+    Resque.enqueue(Reindexer, 'Item', items.map(&:id))
+    true
+  end
 
   def coordinates_format
     if !coordinates || coordinates.empty?

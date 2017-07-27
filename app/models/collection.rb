@@ -20,6 +20,7 @@ class Collection < ActiveRecord::Base
 
   before_destroy :clear_from_other_collections
   before_save :set_record_id
+  after_update :reindex_display_values_for_children
 
   def self.index_query_fields
     %w(repository_id public).freeze
@@ -58,10 +59,13 @@ class Collection < ActiveRecord::Base
     end
 
     boolean :public
-    # for display in search results
 
     string :public, stored: true do
       public ? 'Yes' : 'No'
+    end
+
+    string :display, stored: true do
+      display? ? 'Yes' : 'No'
     end
 
     string :repository_name, stored: true, multiple: true do
@@ -181,6 +185,10 @@ class Collection < ActiveRecord::Base
     repository.title
   end
 
+  def display?
+    repository.public && public
+  end
+
   def to_xml(options = {})
     default_options = {
       dasherize: false,
@@ -212,6 +220,11 @@ class Collection < ActiveRecord::Base
   end
 
   private
+
+  def reindex_display_values_for_children
+    Resque.enqueue(Reindexer, 'Item', items.map(&:id))
+    true
+  end
 
   def set_record_id
     self.record_id = "#{repository.slug}_#{slug}"

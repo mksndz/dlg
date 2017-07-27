@@ -104,9 +104,9 @@ RSpec.describe Collection, type: :model do
 
       r = @collection.repository
 
+      r.portals << @portal
       @collection.portals << @portal
       @collection.portals << @portal2
-      r.portals << @portal
 
       @collection.reload
 
@@ -120,6 +120,24 @@ RSpec.describe Collection, type: :model do
       expect(@collection.portals).not_to include @portal
       expect(@collection.portals).to include @portal2
 
+    end
+
+  end
+
+  context 'public_display? behavior' do
+
+    context 'non-public repository' do
+      before :each do
+        @collection = Fabricate :collection
+        @collection.public = true
+        @collection.save
+      end
+
+      it 'collection should return false for public_display?' do
+        expect(@collection.public?).to eq true
+        expect(Repository.last.public?).to eq false
+        expect(@collection.display?).to be false
+      end
     end
 
   end

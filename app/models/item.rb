@@ -74,6 +74,10 @@ class Item < ActiveRecord::Base
       valid_item ? 'Yes' : 'No'
     end
 
+    string :display, stored: true do
+      display? ? 'Yes' : 'No'
+    end
+
     string :dpla, stored: true do
       dpla ? 'Yes' : 'No'
     end
@@ -173,6 +177,10 @@ class Item < ActiveRecord::Base
 
   def self.index_query_fields
     %w(collection_id public valid_item).freeze
+  end
+
+  def display?
+    repository.public && collection.public && public
   end
 
   def facet_years

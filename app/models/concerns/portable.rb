@@ -25,19 +25,20 @@ module Portable
   private
 
   def unassign_children(portal)
+    case self.class.to_s
+    when 'Collection'
+      remove_from items, portal
+    when 'Repository'
+      remove_from collections, portal
+      remove_from items, portal
+    end
+    true
+  end
 
-    children = if self.instance_of? Collection
-                 items
-               elsif self.instance_of? Repository
-                 collections
-               else
-                 []
-               end
-
+  def remove_from(children, portal)
     children.each do |c|
       c.portals = c.portals.to_a - [portal]
     end
-
   end
 
 end
