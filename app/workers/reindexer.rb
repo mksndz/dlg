@@ -9,7 +9,7 @@ class Reindexer
   def self.perform(model, ids = [])
     @model = model
     start_time = Time.now
-    ids ? reindex_objects(ids) : reindex_model
+    ids.any? ? reindex_objects(ids) : reindex_model
     end_time = Time.now
     @logger.info "Reindexing of #{model} complete! Job took #{end_time - start_time} seconds."
   end
