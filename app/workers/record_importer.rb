@@ -70,6 +70,7 @@ class RecordImporter
 
     record_data = XmlImportHelper.prepare_item_hash(record_data)
 
+    item_id = record_data.delete('id')
     collection_info = record_data.delete('collection')
     collection_slug = collection_info.key?('slug') ? collection_info['slug'] : nil
     collection_record_id = collection_info.key?('record_id') ? collection_info['record_id'] : nil
@@ -89,15 +90,15 @@ class RecordImporter
     end
 
     if @batch_import.match_on_id?
-      id = record_data['id'] || nil
-      add_failed num, "Item with database ID #{id} not found." unless id
-      item_lookup = Item.find record_data['id']
+      add_failed num, "Item with database ID #{id} not found." unless item_id
+      item_lookup = Item.find item_id
     else
       # look for existing item based on unique attributes
       item_lookup = Item.where(slug: record_data['slug'], collection: collection)
       if item_lookup.length > 1
         add_failed num, "More than one existing Item match for #{record_data['slug']} in Collection #{collection_slug}. This should never happen!"
       end
+      record_data.delete 'id'
     end
 
     begin
