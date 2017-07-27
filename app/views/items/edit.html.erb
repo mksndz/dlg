@@ -5,7 +5,7 @@
     <% end %>
 
     <%= content_for :subtitle do %>
-        <%= @item.title %>
+        <%= "#{@item.title} - #{@item.record_id}" %>
     <% end %>
 
     <% breadcrumb :item, @item %>
