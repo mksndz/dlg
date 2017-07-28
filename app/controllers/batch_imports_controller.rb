@@ -73,6 +73,7 @@ class BatchImportsController < ApplicationController
     @batch_import.user = current_user
     @batch_import.batch = @batch
     @batch_import.validations = run_validations?
+    @batch_import.match_on_id = match_on_id?
 
     @batch_import.save
 
@@ -116,6 +117,10 @@ class BatchImportsController < ApplicationController
 
   def run_validations?
     batch_import_params[:validations] == '1'
+  end
+
+  def match_on_id?
+    batch_import_params[:match_on_id] == '1'
   end
 
   def ensure_uncommitted_batch

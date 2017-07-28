@@ -55,9 +55,12 @@ feature 'Batch Importing Batch Items' do
 
         fill_in I18n.t('activerecord.attributes.batch_import.xml_text'), with: dummy_xml
         uncheck(I18n.t('activerecord.attributes.batch_import.validations'))
+        check(I18n.t('activerecord.attributes.batch_import.match_on_id'))
 
         click_on I18n.t('meta.defaults.actions.save')
 
+        expect(BatchImport.last.validations).to be false
+        expect(BatchImport.last.match_on_id).to be true
         expect(page).to have_current_path(batch_batch_import_path(@batch, BatchImport.last))
         expect(page).to have_text I18n.t('meta.batch_import.messages.success.created')
 
