@@ -210,6 +210,30 @@ feature 'Batches Management' do
 
     end
 
+    context 'updating record_id and indexing behavior', js: true do
+
+      before :each do
+        @new_slug = 'changed-slug'
+        @item = Fabricate :item
+        @old_slug = @item.slug
+        @batch = Fabricate :batch_for_updating_record_id
+        @batch_item = BatchItem.last
+        @batch_item.slug = @new_slug
+        @batch_item.item = @item
+        @batch.batch_items << @batch_item
+      end
+
+      scenario 'can index a new record when changing slugs for items without creating a duplicate' do
+        @batch.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        expect(page).to have_text @new_slug
+        expect(page).not_to have_text @old_slug
+      end
+
+    end
+
   end
 
   context :coordinator_user do

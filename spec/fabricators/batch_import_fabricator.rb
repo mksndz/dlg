@@ -212,3 +212,9 @@ Fabricator(:batch_import_to_match_on_id, from: :batch_import) do
       </items>'
   }
 end
+
+Fabricator(:batch_import_for_updating_record_id, from: :batch_import) do
+  match_on_id { true }
+  format { 'search result' }
+  batch_items { [Fabricate(:batch_item_without_batch)] }
+end

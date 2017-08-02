@@ -39,6 +39,7 @@ class BatchItem < ActiveRecord::Base
     attributes = self.attributes.except(*COMMIT_SCRUB_ATTRIBUTES)
     item_id = attributes.delete('item_id')
     if item_id
+      remove_existing_from_index(item) if batch_import.try(:match_on_id?) # de-index object since we are changing primary id
       item.update attributes
     else
       self.item = Item.new attributes
@@ -82,6 +83,10 @@ class BatchItem < ActiveRecord::Base
         ) s WHERE spatial LIKE '#{spatial_term}%, %.%, %.%';
       ")
 
+  end
+
+  def remove_existing_from_index(item)
+    Sunspot.remove item
   end
 
 end

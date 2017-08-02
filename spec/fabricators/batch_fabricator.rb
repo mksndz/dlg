@@ -24,3 +24,9 @@ Fabricator(:committed_batch, from: :batch) do
   batch_items_count { 1 }
   commit_results { test_results_hash }
 end
+
+Fabricator(:batch_for_updating_record_id, from: :batch) do
+  batch_imports do
+    [Fabricate(:batch_import_for_updating_record_id)]
+  end
+end
