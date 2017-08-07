@@ -177,7 +177,7 @@ describe RecordImporter, type: :model do
 
         expect(
             batch_import.reload.results['failed'][0]['message']
-        ).to eq 'XML could not be parsed, probably due to invalid XML format.'
+        ).to include 'Fundamental XML parsing error:'
 
       end
 

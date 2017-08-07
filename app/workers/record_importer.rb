@@ -1,8 +1,10 @@
 include XmlImportHelper
 
+# job to process source records into batch_items
 class RecordImporter
 
   @queue = :xml
+  @logger = Logger.new('./log/xml_import.log')
 
   def self.perform(batch_import_id)
 
@@ -20,21 +22,20 @@ class RecordImporter
 
     case import_type
     when 'file', 'text'
-      xml_data = Nokogiri::XML @batch_import.xml
-      unless xml_data.is_a?(Nokogiri::XML::Document) && xml_data.errors.empty?
-        total_failure 'XML could not be parsed, probably due to invalid XML format.'
-        return
+      count = 0
+      begin
+        Nokogiri::XML::Reader(@batch_import.xml).each do |node|
+          next unless
+            node.name == 'item' &&
+            node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
+          count += 1
+          record = Hash.from_xml(node.outer_xml)
+          create_or_update_record count, record['item']
+        end
+      rescue Nokogiri::XML::SyntaxError => e
+        total_failure "Fundamental XML parsing error: #{e.message}"
       end
-      records = xml_data.css('item')
-      n = records.length
-      unless n > 0
-        total_failure 'No records could be extracted from the XML'
-        return
-      end
-      records.each_with_index do |r, i|
-        record = Hash.from_xml(r.to_s)
-        create_or_update_record i + 1, record['item']
-      end
+      total_failure 'No records could be extracted from the XML' unless count > 0
     when 'search query'
       @batch_import.item_ids.each_with_index do |id, index|
         begin
@@ -218,12 +219,13 @@ class RecordImporter
   end
 
   def self.total_failure(msg)
-    @batch_import.results = {
-      added: @added,
-      updated: @updated,
-      failed: [{number: 0, message: msg}]
-    }
-    save_batch_import
+    add_failed 0, msg
+    # @batch_import.results = {
+    #   added: @added,
+    #   updated: @updated,
+    #   failed: [{ number: 0, message: msg }]
+    # }
+    # save_batch_import
   end
 
   def self.save_batch_import
