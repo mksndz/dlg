@@ -9,7 +9,11 @@
     <%= f.text_field :display_title %>
     <%= f.text_area :short_description %>
 
-    <%= f.color_field :color %>
+    <% if @repository.color %>
+        <%= f.color_field :color %>
+    <% else %>
+        <%= f.color_field :color, value: '#ffffff' %>
+    <% end %>
 
     <%= f.form_group :public do %>
         <%= f.check_box :public %>
