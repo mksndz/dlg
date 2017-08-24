@@ -9,7 +9,7 @@
     <%= f.text_field :display_title %>
     <%= f.text_area :short_description %>
 
-    <% if @repository.color %>
+    <% if @collection.color %>
         <%= f.color_field :color %>
     <% else %>
         <%= f.color_field :color, value: '#ffffff' %>
