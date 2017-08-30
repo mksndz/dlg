@@ -1,6 +1,5 @@
 # handles reindexing of models or objects
 class Reindexer
-
   @queue = :reindex
   @logger = Logger.new('./log/reindex.log')
 
@@ -11,7 +10,8 @@ class Reindexer
     start_time = Time.now
     ids.any? ? reindex_objects(ids) : reindex_model
     end_time = Time.now
-    @logger.info "Reindexing of #{model} complete! Job took #{end_time - start_time} seconds."
+    end_message = "Reindexing of #{model} complete! Job took #{end_time - start_time} seconds."
+    @logger.info end_message
   end
 
   def self.reindex_model

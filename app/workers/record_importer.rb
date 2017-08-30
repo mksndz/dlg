@@ -1,8 +1,6 @@
-include XmlImportHelper
-
 # job to process source records into batch_items
 class RecordImporter
-
+  include XmlImportHelper
   @queue = :xml
   @logger = Logger.new('./log/xml_import.log')
 

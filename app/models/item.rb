@@ -73,6 +73,9 @@ class Item < ActiveRecord::Base
     boolean :dpla
     boolean :public
     boolean :valid_item
+    boolean :display do
+      display?
+    end
 
     string :valid_item, stored: true do
       valid_item ? 'Yes' : 'No'

@@ -63,6 +63,9 @@ class Collection < ActiveRecord::Base
     end
 
     boolean :public
+    boolean :display do
+      display?
+    end
 
     string :public, stored: true do
       public ? 'Yes' : 'No'

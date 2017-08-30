@@ -68,7 +68,7 @@ class Repository < ActiveRecord::Base
   end
 
   def display?
-    public
+    public?
   end
 
   private
