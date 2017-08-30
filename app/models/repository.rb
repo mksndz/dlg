@@ -16,6 +16,10 @@ class Repository < ActiveRecord::Base
 
   searchable do
 
+    string :class_name, stored: true do
+      self.class
+    end
+
     string :slug, stored: true
     string :record_id, stored: true
 
