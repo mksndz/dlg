@@ -14,9 +14,9 @@ ExceptionNotification.configure do |config|
 
   # Adds a condition to decide when an exception must be ignored or not.
   # The ignore_if method can be invoked multiple times to add extra conditions.
-  # config.ignore_if do |_, _|
-  #   Rails.env.test? || Rails.env.development?
-  # end
+  config.ignore_if do |_, _|
+    Rails.env.test? || Rails.env.development?
+  end
 
   config.add_notifier :slack,
                       webhook_url: 'https://hooks.slack.com/services/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',
