@@ -110,7 +110,7 @@ Rails.application.routes.draw do
 
   # Resque Admin
   resque_constraint = lambda do |request|
-    request.env['warden'].authenticate!( { scope: :user } )
+    request.env['warden'].authenticate!(scope: :user)
   end
   constraints resque_constraint do
     mount Resque::Server.new => '/resque'
