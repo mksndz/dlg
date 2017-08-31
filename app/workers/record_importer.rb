@@ -2,10 +2,11 @@ include XmlImportHelper
 # job to process source records into batch_items
 class RecordImporter
   @queue = :xml
-  @logger = Logger.new('./log/xml_import.log')
+  # @logger = Logger.new('./log/xml_import.log')
+  @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
 
   def self.perform(batch_import_id)
-
+    t1 = Time.now
     @batch_import = BatchImport.find(batch_import_id)
 
     @added = 0
@@ -17,6 +18,7 @@ class RecordImporter
     @failed = []
 
     import_type = @batch_import.format
+    notify "Starting BatchImport from `#{import_type}` with ID `#{batch_import_id}`."
 
     case import_type
     when 'file', 'text'
@@ -63,6 +65,8 @@ class RecordImporter
     @batch_import.completed_at = Time.now
 
     save_batch_import
+    t2 = Time.now
+    notify "BatchImport `#{batch_import_id}` complete. Elapsed time: `#{t2 - t1}` seconds. Records created : `#{@added.length}`. Records updated: `#{@updated.length}`. Errors: `#{@failed.length}`"
 
   end
 
@@ -218,6 +222,7 @@ class RecordImporter
   end
 
   def self.total_failure(msg)
+    notify "Batch Import (`#{@batch_import.id}`) failed: #{msg}"
     add_failed 0, msg
     # @batch_import.results = {
     #   added: @added,
@@ -239,6 +244,10 @@ class RecordImporter
     @record.other_collections = other_colls_info.map do |other_coll|
       Collection.find_by_record_id(other_coll['record_id']).id if other_coll['record_id']
     end
+  end
+
+  def self.notify(msg)
+    @slack.ping msg if Rails.env.production?
   end
 
 end
