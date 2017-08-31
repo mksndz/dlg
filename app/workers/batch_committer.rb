@@ -36,7 +36,7 @@ class BatchCommitter
   end
 
   def self.notify(msg)
-    notify msg if Rails.env.production?
+    @slack.ping msg if Rails.env.production?
   end
 
 end
