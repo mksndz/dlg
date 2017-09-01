@@ -1,7 +1,7 @@
 # handles reindexing of models or objects
 class Reindexer
   @queue = :reindex
-  @logger = Logger.new('./log/reindex.log')
+  @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
 
   REINDEX_BATCH_SIZE = 1000
 
@@ -10,26 +10,26 @@ class Reindexer
     start_time = Time.now
     ids.any? ? reindex_objects(ids) : reindex_model
     end_time = Time.now
-    end_message = "Reindexing of #{model} complete! Job took #{end_time - start_time} seconds."
-    @logger.info end_message
+    end_message = "Reindexing of `#{model}` complete! Job took #{distance_of_time_in_words(end_time - start_time)}."
+    @slack.ping end_message
   end
 
   def self.reindex_model
-    @logger.info "Reindexing entire all #{@model} objects."
+    @slack.ping "Reindexing all `#{@model}` objects."
     @model.constantize.find_in_batches(batch_size: REINDEX_BATCH_SIZE) do |batch|
       Sunspot.index! batch
     end
   rescue StandardError => e
-    @logger.fatal "Reindexing failed for model #{@model}: #{e}"
+    @slack.ping "Reindexing failed for model `#{@model}`: ```#{e}```"
   end
 
   def self.reindex_objects(object_ids)
-    @logger.info "Reindexing selected objects from #{@model}."
+    @slack.ping "Reindexing selected objects from `#{@model}`."
     @model.constantize.where(id: object_ids).find_in_batches(batch_size: REINDEX_BATCH_SIZE) do |batch|
       Sunspot.index! batch
     end
   rescue StandardError => e
-    @logger.fatal "Reindexing failed for model #{@model} with object_ids: #{e}"
+    @slack.ping "Reindexing failed for model `#{@model}` with object_ids: ```#{e}```"
   end
 
 end
