@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724114255) do
+ActiveRecord::Schema.define(version: 20170906211640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20170724114255) do
     t.integer  "batch_items_count"
     t.datetime "completed_at"
     t.integer  "item_ids",          default: [],    null: false, array: true
-    t.string   "xml"
+    t.text     "xml"
     t.string   "file_name"
     t.boolean  "match_on_id",       default: false, null: false
   end
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20170724114255) do
   add_index "batch_items", ["valid_item"], name: "index_batch_items_on_valid_item", using: :btree
 
   create_table "batches", force: :cascade do |t|
+    t.integer  "contained_count"
     t.string   "name",                              null: false
     t.text     "notes"
     t.datetime "committed_at"
