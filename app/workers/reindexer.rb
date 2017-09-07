@@ -10,7 +10,7 @@ class Reindexer
     start_time = Time.now
     ids.any? ? reindex_objects(ids) : reindex_model
     end_time = Time.now
-    end_message = "Reindexing of `#{model}` complete! Job took #{distance_of_time_in_words(end_time - start_time)}."
+    end_message = "Reindexing of `#{model}` complete! Job took #{end_time - start_time} seconds."
     @slack.ping end_message
   end
 

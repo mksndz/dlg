@@ -7,8 +7,8 @@ class Optimizer
     t1 = Time.now
     @slack.ping 'Solr optimize starting'
     Sunspot.optimize
-    elapsed = distance_of_time_in_words(Time.now - t1)
-    @slack.ping("Solr optimize completed in #{elapsed}")
+    elapsed = Time.now - t1
+    @slack.ping("Solr optimize completed in #{elapsed} seconds")
   end
 
 end
