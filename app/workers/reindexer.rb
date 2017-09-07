@@ -11,25 +11,29 @@ class Reindexer
     ids.any? ? reindex_objects(ids) : reindex_model
     end_time = Time.now
     end_message = "Reindexing of `#{model}` complete! Job took #{end_time - start_time} seconds."
-    @slack.ping end_message
+    notify end_message
   end
 
   def self.reindex_model
-    @slack.ping "Reindexing all `#{@model}` objects."
+    notify "Reindexing all `#{@model}` objects."
     @model.constantize.find_in_batches(batch_size: REINDEX_BATCH_SIZE) do |batch|
       Sunspot.index! batch
     end
   rescue StandardError => e
-    @slack.ping "Reindexing failed for model `#{@model}`: ```#{e}```"
+    notify "Reindexing failed for model `#{@model}`: ```#{e}```"
   end
 
   def self.reindex_objects(object_ids)
-    @slack.ping "Reindexing selected objects from `#{@model}`."
+    notify "Reindexing selected objects from `#{@model}`."
     @model.constantize.where(id: object_ids).find_in_batches(batch_size: REINDEX_BATCH_SIZE) do |batch|
       Sunspot.index! batch
     end
   rescue StandardError => e
-    @slack.ping "Reindexing failed for model `#{@model}` with object_ids: ```#{e}```"
+    notify "Reindexing failed for model `#{@model}` with object_ids: ```#{e}```"
+  end
+
+  def self.notify(message)
+    @slack.ping(message) if Rails.env.production?
   end
 
 end
