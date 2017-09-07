@@ -48,7 +48,7 @@ class BatchImportsController < ApplicationController
     # copy file contents to string if needed
     if file
       if file.respond_to? :read
-        @batch_import.user_xml = file.read # TODO: sanitize xml input
+        @batch_import.xml = file.read # TODO: sanitize xml input
         @batch_import.format = 'file'
         @batch_import.file_name = file.original_filename
       else
@@ -58,7 +58,7 @@ class BatchImportsController < ApplicationController
         )
       end
     elsif text && !text.empty?
-      @batch_import.user_xml = batch_import_params[:xml]
+      @batch_import.xml = batch_import_params[:xml]
       @batch_import.format = 'text'
     elsif ids
       @batch_import.item_ids = ids.split(',')

@@ -75,7 +75,7 @@ RSpec.describe BatchImport, type: :model do
     end
 
     it 'has a placeholder for the ID in the xml' do
-      expect(b.user_xml).to include '__ID__'
+      expect(b.xml).to include '__ID__'
     end
   end
 

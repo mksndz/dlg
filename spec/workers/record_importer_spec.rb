@@ -134,7 +134,7 @@ describe RecordImporter, type: :model do
 
           c = Collection.find_by_record_id 'geh_0091'
 
-          slug = batch_import.user_xml[/<slug>(.*?)<\/slug>/, 1]
+          slug = batch_import.xml[/<slug>(.*?)<\/slug>/, 1]
           i.slug = slug
           i.collection = c
           i.save
@@ -165,7 +165,7 @@ describe RecordImporter, type: :model do
 
       let(:batch_import) {
         Fabricate(:batch_import) {
-          user_xml { '
+          xml { '
             <items><item>M</zzz>
           ' }
         }
@@ -187,7 +187,7 @@ describe RecordImporter, type: :model do
 
       let(:batch_import) {
         Fabricate(:batch_import) {
-          user_xml { '<items><collection><slug>blah</slug></collection></items>' }
+          xml { '<items><collection><slug>blah</slug></collection></items>' }
         }
       }
 
@@ -316,7 +316,7 @@ describe RecordImporter, type: :model do
         duplicate_date_xml.sub! '__oc1__', @other_collection.record_id
         duplicate_date_xml.sub! '__oc2__', @other_collection2.record_id
         bi = Fabricate(:batch_import) do
-          user_xml { duplicate_date_xml }
+          xml { duplicate_date_xml }
         end
         RecordImporter.perform(bi.id)
         @batch_item = bi.batch.batch_items.first
@@ -356,9 +356,9 @@ describe RecordImporter, type: :model do
         c = Fabricate :collection
         bi = Fabricate :batch_import_to_match_on_id
         @item = Fabricate(:item) { collection { c } }
-        bi.user_xml = bi.user_xml.gsub '__ID__', @item.id.to_s
-        bi.user_xml = bi.user_xml.gsub '__COLLECTION_RECORD_ID__', c.record_id
-        bi.user_xml = bi.user_xml.gsub '__PORTAL_CODE__', Portal.last.code
+        bi.xml = bi.xml.gsub '__ID__', @item.id.to_s
+        bi.xml = bi.xml.gsub '__COLLECTION_RECORD_ID__', c.record_id
+        bi.xml = bi.xml.gsub '__PORTAL_CODE__', Portal.last.code
         bi.save
         RecordImporter.perform(bi.id)
         @batch_item = bi.batch.batch_items.first

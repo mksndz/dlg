@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170907121231) do
+ActiveRecord::Schema.define(version: 20170724114255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20170907121231) do
     t.text     "xml"
     t.string   "file_name"
     t.boolean  "match_on_id",       default: false, null: false
-    t.text     "user_xml"
   end
 
   create_table "batch_items", force: :cascade do |t|
