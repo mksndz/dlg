@@ -24,7 +24,7 @@ class RecordImporter
     when 'file', 'text'
       count = 0
       begin
-        Nokogiri::XML::Reader(@batch_import.xml).each do |node|
+        Nokogiri::XML::Reader(@batch_import.user_xml).each do |node|
           next unless
             node.name == 'item' &&
             node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT

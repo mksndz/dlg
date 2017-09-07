@@ -41,14 +41,14 @@ class BatchImportsController < ApplicationController
     fail(
       ImportFailedError,
       I18n.t('meta.batch_import.messages.errors.both_types')
-    ) if batch_import_params[:xml].present? && file
+    ) if batch_import_params[:text].present? && file
 
     @batch_import = BatchImport.new
 
     # copy file contents to string if needed
     if file
       if file.respond_to? :read
-        @batch_import.xml = file.read # TODO: sanitize xml input
+        @batch_import.user_xml = file.read # TODO: sanitize xml input
         @batch_import.format = 'file'
         @batch_import.file_name = file.original_filename
       else
@@ -58,7 +58,7 @@ class BatchImportsController < ApplicationController
         )
       end
     elsif text && !text.empty?
-      @batch_import.xml = batch_import_params[:xml]
+      @batch_import.user_xml = batch_import_params[:xml]
       @batch_import.format = 'text'
     elsif ids
       @batch_import.item_ids = ids.split(',')

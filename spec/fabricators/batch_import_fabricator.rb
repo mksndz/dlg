@@ -6,7 +6,7 @@ Fabricator(:batch_import) do
   batch
   format { %w(file text).sample }
   match_on_id { false }
-  xml {
+  user_xml {
     '<?xml version="1.0" encoding="UTF-8"?>
       <items type="array">
         <item>
@@ -145,7 +145,7 @@ end
 
 Fabricator(:batch_import_to_match_on_id, from: :batch_import) do
   match_on_id { true }
-  xml {
+  user_xml {
     '<?xml version="1.0" encoding="UTF-8"?>
       <items type="array">
         <item>
