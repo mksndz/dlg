@@ -106,6 +106,12 @@ class CatalogController < ApplicationController
     config.add_facet_field 'portal_names_sms',        label: I18n.t('meta.search.facets.portals'), limit: true
     config.add_facet_field 'class_name',              label: I18n.t('meta.search.facets.class'), limit: true
 
+    # collection only facets
+    config.add_facet_field 'collection_provenance_facet', label: I18n.t('meta.search.facets.collection.provenance'), limit: true
+    config.add_facet_field 'collection_type_facet', label: I18n.t('meta.search.facets.collection.type'), limit: true
+    config.add_facet_field 'collection_spatial_facet', label: I18n.t('meta.search.facets.collection.spatial'), limit: true
+
+
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
     #

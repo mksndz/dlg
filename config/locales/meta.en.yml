@@ -108,6 +108,10 @@ en:
         collection: 'Collection'
         class: 'Class'
         portals: 'Portals'
+        collection:
+          provenance: 'Coll. Hold. Inst.'
+          type: 'Col. DCMI Type'
+          spatial: 'Col. Coverage Spatial'
       labels:
         item_id: 'Item ID'
         record_id: 'Record ID'

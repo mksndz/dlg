@@ -227,23 +227,50 @@ feature 'Searching' do
 
       context 'facet behavior' do
 
-        before :each do
-          Fabricate :robust_item
-          Sunspot.commit
-          visit blacklight_advanced_search_engine.advanced_search_path
+        context 'for Items' do
+
+          before :each do
+            Fabricate :robust_item
+            Sunspot.commit
+            visit blacklight_advanced_search_engine.advanced_search_path
+          end
+
+          scenario 'there exists a portals facet' do
+            expect(page).to have_css '#portal_names_sms_chosen'
+          end
+
+          scenario 'there exists a validity facet' do
+            expect(page).to have_css '#valid_item_b_chosen'
+          end
+
+          scenario 'there exists a publisher facet' do
+            expect(page).to have_css '#publisher_facet_chosen'
+          end
+
         end
 
-        scenario 'there exists a portals facet' do
-          expect(page).to have_css '#portal_names_sms_chosen'
+        context 'for Collections' do
+
+          before :each do
+            Fabricate :collection
+            Sunspot.commit
+            visit blacklight_advanced_search_engine.advanced_search_path
+          end
+
+          scenario 'there exists a collection_provenance_facet facet' do
+            expect(page).to have_css '#collection_provenance_facet_chosen'
+          end
+
+          scenario 'there exists a collection_type_facet facet' do
+            expect(page).to have_css '#collection_type_facet_chosen'
+          end
+
+          scenario 'there exists a collection_spatial_facet facet' do
+            expect(page).to have_css '#collection_spatial_facet_chosen'
+          end
+
         end
 
-        scenario 'there exists a validity facet' do
-          expect(page).to have_css '#valid_item_b_chosen'
-        end
-
-        scenario 'there exists a publisher facet' do
-          expect(page).to have_css '#publisher_facet_chosen'
-        end
 
       end
 
@@ -268,7 +295,7 @@ feature 'Searching' do
       context 'dublin core terms' do
 
         before :each do
-          Fabricate(:collection){ items(count:10) }
+          Fabricate(:collection){ items(count: 10) }
         end
 
         scenario 'record id search returns only relevant results' do

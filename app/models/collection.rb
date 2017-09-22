@@ -165,6 +165,9 @@ class Collection < ActiveRecord::Base
     integer :year_facet, multiple: true, trie: true, as: 'year_facet' do
       DateIndexer.new.get_valid_years_for(dc_date, self)
     end
+    string :dcterms_provenance, as: 'collection_provenance_facet', multiple: true
+    string :dcterms_type, as: 'collection_type_facet', multiple: true
+    string :dcterms_spatial, as: 'collection_spatial_facet', multiple: true
 
     # datetimes
     time :created_at, stored: true, trie: true

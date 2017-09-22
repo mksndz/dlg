@@ -15,11 +15,11 @@ Fabricator(:collection) do
     [Faker::Hipster.sentence(5),
      Faker::Hipster.sentence(4)]
   end
-
   dcterms_spatial do
     ['United States, Georgia, Bibb County, 32.8064982, -83.69742']
   end
   dcterms_provenance { ['DLG'] }
   edm_is_shown_at { ['http://dlg.galileo.usg.edu'] }
   edm_is_shown_by { ['http://dlg.galileo.usg.edu'] }
+  dcterms_type { ['Collection'] }
 end
