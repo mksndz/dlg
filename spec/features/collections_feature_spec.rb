@@ -72,79 +72,110 @@ feature 'Collections Management' do
 
     end
 
-    context 'portal behavior' do
+    context 'edit page' do
 
-      scenario 'cannot save a new collection with no portal value' do
+      context 'portal behavior' do
 
-        visit new_collection_path
+        scenario 'cannot save a new collection with no portal value' do
 
-        fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
-        fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
-        fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
-        chosen_select 'Text', from: 'dcterms-type-select'
+          visit new_collection_path
 
-        click_button I18n.t('meta.defaults.actions.save')
+          fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
+          fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
+          fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
+          chosen_select 'Text', from: 'dcterms-type-select'
 
-        screenshot_and_save_page
-        expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
+          click_button I18n.t('meta.defaults.actions.save')
 
-      end
+          expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
 
-      scenario 'super user saves a new collection with a single portal value' do
-
-        c = Fabricate(:collection)
-
-        p = Fabricate(:portal)
-
-        visit edit_collection_path c
-
-        select p.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
-
-        click_button I18n.t('meta.defaults.actions.save')
-
-        expect(page).to have_current_path collection_path(c)
-
-      end
-
-      scenario 'super user saves a new collection with a multiple portal values' do
-
-        c = Fabricate(:collection)
-
-        p1 = Fabricate(:portal)
-        p2 = Fabricate(:portal)
-
-        visit edit_collection_path c
-
-        select p1.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
-        select p2.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
-
-        click_button I18n.t('meta.defaults.actions.save')
-
-        expect(page).to have_current_path collection_path(c)
-        expect(page).to have_text p1.name
-        expect(page).to have_text p2.name
-
-      end
-
-      scenario 'saves a new collection removing portal value', js: true do
-
-        c = Fabricate(:collection)
-        p = Fabricate :portal
-
-        c.portals = [p]
-
-        visit edit_collection_path c
-
-        within '#collection_portal_ids_chosen' do
-          find('.search-choice-close').click
         end
 
-        click_button I18n.t('meta.defaults.actions.save')
+        scenario 'super user saves a new collection with a single portal value' do
 
-        expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
+          c = Fabricate(:collection)
+
+          p = Fabricate(:portal)
+
+          visit edit_collection_path c
+
+          select p.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
+
+          click_button I18n.t('meta.defaults.actions.save')
+
+          expect(page).to have_current_path collection_path(c)
+
+        end
+
+        scenario 'super user saves a new collection with a multiple portal values' do
+
+          c = Fabricate(:collection)
+
+          p1 = Fabricate(:portal)
+          p2 = Fabricate(:portal)
+
+          visit edit_collection_path c
+
+          select p1.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
+          select p2.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
+
+          click_button I18n.t('meta.defaults.actions.save')
+
+          expect(page).to have_current_path collection_path(c)
+          expect(page).to have_text p1.name
+          expect(page).to have_text p2.name
+
+        end
+
+        scenario 'saves a new collection removing portal value', js: true do
+
+          c = Fabricate(:collection)
+          p = Fabricate :portal
+
+          c.portals = [p]
+
+          visit edit_collection_path c
+
+          within '#collection_portal_ids_chosen' do
+            find('.search-choice-close').click
+          end
+
+          click_button I18n.t('meta.defaults.actions.save')
+
+          expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
+
+        end
 
       end
 
+      context 'other fields' do
+        before :each do
+          Fabricate(:collection) {
+            partner_homepage_url { 'http://lib.gsu.edu/collection' }
+            homepage_text { '<p>This is homepage text</p>' }
+          }
+        end
+
+        scenario 'can see other field values' do
+          visit collection_path Collection.last
+          expect(page).to have_text 'http://lib.gsu.edu/collection'
+          expect(page).to have_text '<p>This is homepage text</p>'
+        end
+
+        scenario 'can save partner homepage url' do
+          visit edit_collection_path(Collection.last)
+          fill_in I18n.t('activerecord.attributes.collection.partner_homepage_url'), with: 'http://change.homepage.url'
+          click_button I18n.t('meta.defaults.actions.save')
+          expect(page).to have_text 'http://change.homepage.url'
+        end
+
+        scenario 'can save homepage text' do
+          visit edit_collection_path(Collection.last)
+          fill_in I18n.t('activerecord.attributes.collection.homepage_text'), with: '<p>New homepage text</p>'
+          click_button I18n.t('meta.defaults.actions.save')
+          expect(page).to have_text '<p>New homepage text</p>'
+        end
+      end
     end
 
     scenario 'index shows all collections with actions' do

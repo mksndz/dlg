@@ -108,7 +108,7 @@ en:
         collection: 'Collection'
         class: 'Class'
         portals: 'Portals'
-        collection:
+        collection_only:
           provenance: 'Coll. Hold. Inst.'
           type: 'Col. DCMI Type'
           spatial: 'Col. Coverage Spatial'
@@ -124,6 +124,8 @@ en:
         repository: 'Repository'
         display_title: 'Display Title'
         short_description: 'Short Description'
+        partner_homepage_url: 'Partner Homepage URL'
+        homepage_text: 'Homepage Text'
         dcterms_is_part_of: 'Original Collection'
         dcterms_description: 'Description'
         dc_format: 'Format'

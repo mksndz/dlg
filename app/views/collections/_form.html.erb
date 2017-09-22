@@ -23,6 +23,9 @@
       <%= f.check_box :in_georgia %>
     <% end %>
 
+    <%= f.text_field :partner_homepage_url %>
+    <%= f.text_area :homepage_text %>
+
     <%= f.select :other_repositories, @data[:repositories].collect { |r| [r.title, r.id] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
 
     <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>

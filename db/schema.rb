@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724114255) do
+ActiveRecord::Schema.define(version: 20170922194037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,8 @@ ActiveRecord::Schema.define(version: 20170724114255) do
     t.text      "dlg_subject_personal",           default: [],    null: false, array: true
     t.string    "record_id",                      default: "",    null: false
     t.text      "edm_is_shown_by",                default: [],    null: false, array: true
+    t.string    "partner_homepage_url"
+    t.text      "homepage_text"
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree

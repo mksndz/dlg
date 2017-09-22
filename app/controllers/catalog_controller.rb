@@ -107,9 +107,9 @@ class CatalogController < ApplicationController
     config.add_facet_field 'class_name',              label: I18n.t('meta.search.facets.class'), limit: true
 
     # collection only facets
-    config.add_facet_field 'collection_provenance_facet', label: I18n.t('meta.search.facets.collection.provenance'), limit: true
-    config.add_facet_field 'collection_type_facet', label: I18n.t('meta.search.facets.collection.type'), limit: true
-    config.add_facet_field 'collection_spatial_facet', label: I18n.t('meta.search.facets.collection.spatial'), limit: true
+    config.add_facet_field 'collection_provenance_facet', label: I18n.t('meta.search.facets.collection_only.provenance'), limit: true
+    config.add_facet_field 'collection_type_facet',       label: I18n.t('meta.search.facets.collection_only.type'), limit: true
+    config.add_facet_field 'collection_spatial_facet',    label: I18n.t('meta.search.facets.collection_only.spatial'), limit: true
 
 
     #
@@ -153,8 +153,10 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_title_display',                  label: I18n.t('meta.search.labels.dcterms_title')
     config.add_show_field 'collection_name_sms',                    label: I18n.t('meta.search.labels.collection'), link_to_search: true
     config.add_show_field 'repository_name_sms',                    label: I18n.t('meta.search.labels.repository'), link_to_search: true
-    config.add_show_field 'display_title_ss',                       label: I18n.t('meta.search.labels.display_title')
-    config.add_show_field 'short_description_ss',                   label: I18n.t('meta.search.labels.short_description')
+    config.add_show_field 'display_title_display',                  label: I18n.t('meta.search.labels.display_title')
+    config.add_show_field 'short_description_display',              label: I18n.t('meta.search.labels.short_description')
+    config.add_show_field 'partner_homepage_url_display',           label: I18n.t('meta.search.labels.partner_homepage_url')
+    config.add_show_field 'homepage_text_display',                  label: I18n.t('meta.search.labels.homepage_text')
     config.add_show_field 'dcterms_is_part_of_display',             label: I18n.t('meta.search.labels.dcterms_is_part_of')
     config.add_show_field 'dcterms_description_display',            label: I18n.t('meta.search.labels.dcterms_description')
     config.add_show_field 'dc_format_display',                      label: I18n.t('meta.search.labels.dc_format')

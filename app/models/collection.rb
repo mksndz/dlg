@@ -91,8 +91,8 @@ class Collection < ActiveRecord::Base
       portal_names
     end
 
-    string :display_title, stored: true
-    string :short_description, stored: true
+    string :display_title, stored: true, as: 'display_title_display'
+    string :short_description, stored: true, as: 'short_description_display'
 
     # *_display (not indexed, stored, multivalued)
     string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
@@ -120,6 +120,10 @@ class Collection < ActiveRecord::Base
     string :dcterms_medium,                 as: 'dcterms_medium_display',                 multiple: true
     string :dcterms_extent,                 as: 'dcterms_extent_display',                 multiple: true
     string :dcterms_language,               as: 'dcterms_language_display',               multiple: true
+
+    # just stored content
+    string :partner_homepage_url,   as: 'partner_homepage_url_display'
+    string :homepage_text,          as: 'homepage_text_display'
 
     # Primary Search Fields (multivalued, indexed, stemming/tokenized)
     text :dc_date

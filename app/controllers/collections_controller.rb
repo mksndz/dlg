@@ -133,6 +133,8 @@ class CollectionsController < RecordController
         :dlg_local_right,
         :dcterms_bibliographic_citation,
         :dlg_subject_personal,
+        :partner_homepage_url,
+        :homepage_text,
         dcterms_type: [],
         subject_ids: [],
         time_period_ids: [],

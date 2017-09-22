@@ -64,6 +64,8 @@ en:
         public: "Public"
         dpla: "Push to DPLA"
         in_georgia: "Located in Georgia"
+        partner_homepage_url: 'Partner Homepage URL'
+        homepage_text: 'DLG Homepage Text'
         subject_ids: "Subjects"
         time_period_ids: "Time Periods"
         dcterms_provenance: 'Holding Institution (Use LCNAF or DLG Names for repository name)'
