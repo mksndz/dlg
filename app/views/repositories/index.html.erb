@@ -45,6 +45,9 @@
           <%= sortable 'repositories.title', t('meta.defaults.labels.columns.title') %>
         </th>
         <th>
+          <%= sortable 'repositories.public', t('meta.defaults.labels.columns.public') %>
+        </th>
+        <th>
           <%= t('meta.defaults.labels.columns.portals') %>
         </th>
         <th>
@@ -71,6 +74,9 @@
             </td>
             <td>
               <%= repository.title %>
+            </td>
+            <td>
+              <%= boolean_check_icon repository.public? %>
             </td>
             <td>
               <%= portal_badges repository %>
