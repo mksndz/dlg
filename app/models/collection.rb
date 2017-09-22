@@ -91,6 +91,9 @@ class Collection < ActiveRecord::Base
       portal_names
     end
 
+    string :display_title, stored: true
+    string :short_description, stored: true
+
     # *_display (not indexed, stored, multivalued)
     string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
     string :dcterms_title,                  as: 'dcterms_title_display',                  multiple: true

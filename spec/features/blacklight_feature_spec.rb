@@ -19,21 +19,45 @@ feature 'Blacklight Functionality' do
 
     context 'show page' do
 
-      before :each do
-        Fabricate(:robust_item)
-        Sunspot.commit_if_dirty
+      context 'for Item' do
+
+        before :each do
+          Fabricate(:robust_item)
+          Sunspot.commit_if_dirty
+        end
+
+        scenario 'includes all populated and indexed fields configured to show' do
+
+          i = Item.last
+
+          visit solr_document_path(i.record_id)
+
+          expect(page).to have_text i.edm_is_shown_at.first
+          expect(page).to have_text i.edm_is_shown_by.first
+          expect(page).to have_text i.dcterms_identifier.first
+          expect(page).to have_text i.dlg_subject_personal.first
+
+        end
+
       end
 
-      scenario 'includes all populated and indexed fields configured to show' do
+      context 'for Collection' do
 
-        i = Item.last
+        before :each do
+          Fabricate(:collection)
+          Sunspot.commit_if_dirty
+        end
 
-        visit solr_document_path(i.record_id)
+        scenario 'includes all populated and indexed fields configured to show' do
 
-        expect(page).to have_text i.edm_is_shown_at.first
-        expect(page).to have_text i.edm_is_shown_by.first
-        expect(page).to have_text i.dcterms_identifier.first
-        expect(page).to have_text i.dlg_subject_personal.first
+          c = Collection.last
+
+          visit solr_document_path(c.record_id)
+
+          expect(page).to have_text c.display_title
+          expect(page).to have_text c.short_description
+
+        end
 
       end
 

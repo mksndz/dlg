@@ -118,6 +118,8 @@ en:
         dcterms_title: 'Title'
         collection: 'Collection'
         repository: 'Repository'
+        display_title: 'Display Title'
+        short_description: 'Short Description'
         dcterms_is_part_of: 'Original Collection'
         dcterms_description: 'Description'
         dc_format: 'Format'

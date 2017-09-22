@@ -147,6 +147,8 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_title_display',                  label: I18n.t('meta.search.labels.dcterms_title')
     config.add_show_field 'collection_name_sms',                    label: I18n.t('meta.search.labels.collection'), link_to_search: true
     config.add_show_field 'repository_name_sms',                    label: I18n.t('meta.search.labels.repository'), link_to_search: true
+    config.add_show_field 'display_title_ss',                       label: I18n.t('meta.search.labels.display_title')
+    config.add_show_field 'short_description_ss',                   label: I18n.t('meta.search.labels.short_description')
     config.add_show_field 'dcterms_is_part_of_display',             label: I18n.t('meta.search.labels.dcterms_is_part_of')
     config.add_show_field 'dcterms_description_display',            label: I18n.t('meta.search.labels.dcterms_description')
     config.add_show_field 'dc_format_display',                      label: I18n.t('meta.search.labels.dc_format')
