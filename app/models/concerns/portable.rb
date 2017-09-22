@@ -1,3 +1,4 @@
+# shared behavior for entities belonging to a Portal
 module Portable
   extend ActiveSupport::Concern
 
@@ -6,7 +7,7 @@ module Portable
     has_many :portal_records, as: :portable
     has_many :portals, after_remove: :unassign_children, through: :portal_records do
       # ignore any attempt to add the same portal > 1 time
-      def << (value)
+      def <<(value)
         return self if include? value
         super value
       end

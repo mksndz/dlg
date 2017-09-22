@@ -83,7 +83,7 @@ class Collection < ActiveRecord::Base
       portal_names
     end
 
-    string :portals, multiple: true do
+    string :portals, stored: true, multiple: true do
       portal_codes
     end
 
@@ -199,22 +199,14 @@ class Collection < ActiveRecord::Base
   def to_xml(options = {})
     default_options = {
       dasherize: false,
-      # fields to not include
       except: [
-        :id,
-        :repository_id,
-        :created_at,
-        :updated_at,
-        :other_repositories,
-        :items_count,
-        :date_range
+        :id, :repository_id, :created_at, :updated_at, :other_repositories,
+        :items_count, :date_range
       ]
     }
-
     if options[:show_repository]
       default_options[:include] = [repository: { only: [:slug] }]
     end
-
     super(options.merge!(default_options))
   end
 

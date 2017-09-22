@@ -62,7 +62,7 @@ class Item < ActiveRecord::Base
       repository_titles
     end
 
-    string :portals, multiple: true do
+    string :portals, stored: true, multiple: true do
       portal_codes
     end
 
