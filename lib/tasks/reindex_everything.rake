@@ -4,7 +4,7 @@ task reindex_everything: :environment do
 
   @logger = Logger.new('./log/reindex.log')
 
-  INDEXED_MODELS = %W(Item Collection Repository)
+  INDEXED_MODELS = %W(Item Collection)
 
   INDEXED_MODELS.each do |model|
 

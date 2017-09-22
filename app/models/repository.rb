@@ -14,51 +14,6 @@ class Repository < ActiveRecord::Base
 
   after_update :reindex_display_values_for_children
 
-  searchable do
-
-    string :class_name, stored: true do
-      self.class
-    end
-
-    string :slug, stored: true
-    string :record_id, stored: true
-
-    # set empty proxy id field so sunspot knows about it
-    # value is set prior to save
-    # sunspot search will not work without this, but indexing will
-    # see monkeypatch @ config/initializers/sunspot_indexer_id.rb
-    string :sunspot_id, stored: true do
-      ''
-    end
-
-    string :portals, multiple: true do
-      portal_codes
-    end
-
-    string :portal_names, stored: true, multiple: true do
-      portal_names
-    end
-
-    string :title, stored: true
-    string :short_description, stored: true
-    string :description, stored: true
-    string :thumbnail_path, stored: true
-
-    text :title
-    text :short_description
-    text :description
-
-    string :coordinates, stored: true
-
-    boolean :teaser
-    boolean :public
-    boolean :dpla
-    boolean :display do
-      display?
-    end
-
-  end
-
   def self.index_query_fields
     %w().freeze
   end
