@@ -1,6 +1,16 @@
 module GeospatialIndexable
   extend ActiveSupport::Concern
 
+  GEORGIA_COUNTY_REGEX = /United States, Georgia, (\w*|\w*\s\w*) County/
+
+  def counties
+    counties = []
+    dcterms_spatial.each do |s|
+      counties << s.match(GEORGIA_COUNTY_REGEX).captures if s.match(GEORGIA_COUNTY_REGEX)
+    end
+    counties.flatten
+  end
+
   def has_coordinates?
     dcterms_spatial.each do |s|
       return true if element_has_coordinates s
@@ -11,7 +21,7 @@ module GeospatialIndexable
   def geojson
     multiple_geojson_objects = []
     coordinates(true).each_with_index do |c, i|
-      multiple_geojson_objects << %|{"type":"Feature","geometry":{"type":"Point","coordinates":[#{c}]},"properties":{"placename":"#{placename[i]}"}}|
+      multiple_geojson_objects << %({"type":"Feature","geometry":{"type":"Point","coordinates":[#{c}]},"properties":{"placename":"#{placename[i]}"}})
     end
     multiple_geojson_objects
   end

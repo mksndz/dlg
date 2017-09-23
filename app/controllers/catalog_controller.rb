@@ -94,6 +94,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'year_facet',              label: I18n.t('meta.search.facets.year'), limit: true
     config.add_facet_field 'temporal_facet',          label: I18n.t('meta.search.facets.temporal'), limit: true
     config.add_facet_field 'location_facet',          label: I18n.t('meta.search.facets.location'), limit: true
+    config.add_facet_field 'counties_facet',          label: I18n.t('meta.search.facets.county'), limit: true
     config.add_facet_field 'format_facet',            label: I18n.t('meta.search.facets.format'), limit: true
     config.add_facet_field 'rights_facet',            label: I18n.t('meta.search.facets.rights'), limit: true, helper_method: :rights_icon_label
     # config.add_facet_field 'rights_holder_facet'    , label: I18n.t('meta.search.facets.rights_holder'), limit: true

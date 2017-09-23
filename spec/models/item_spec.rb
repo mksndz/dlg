@@ -455,4 +455,24 @@ RSpec.describe Item, type: :model do
 
   end
 
+  context 'county extraction from dcterms_spatial' do
+
+    before :each do
+      Fabricate(:item) do
+        dcterms_spatial do
+          [
+            'United States, Georgia',
+            'United States, Georgia, Muscogee County, Columbus, 32.4609764, -84.9877094	7,519',
+            'United States, Georgia, Jeff Davis County, Test, 34.4212053, -84.1190804'
+          ]
+        end
+      end
+    end
+    it 'should have 2 county values' do
+      expect(Item.last.counties.count).to eq 2
+      expect(Item.last.counties).to eq ['Muscogee', 'Jeff Davis']
+    end
+
+  end
+
 end

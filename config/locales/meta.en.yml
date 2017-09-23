@@ -97,6 +97,7 @@ en:
         year: 'Year of Orig Pub'
         temporal: 'Coverage Temporal'
         location: 'Coverage Spatial'
+        county: 'County'
         format: 'Format'
         rights: 'Std. Rights Stmt.'
         rights_holder: 'Rights Holder'

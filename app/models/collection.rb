@@ -172,6 +172,7 @@ class Collection < ActiveRecord::Base
     string :dcterms_provenance, as: 'collection_provenance_facet', multiple: true
     string :dcterms_type, as: 'collection_type_facet', multiple: true
     string :dcterms_spatial, as: 'collection_spatial_facet', multiple: true
+    string :counties, as: 'counties_facet', multiple: true
 
     # datetimes
     time :created_at, stored: true, trie: true

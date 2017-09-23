@@ -226,9 +226,7 @@ feature 'Searching' do
       end
 
       context 'facet behavior' do
-
         context 'for Items' do
-
           before :each do
             Fabricate :robust_item
             Sunspot.commit
@@ -247,6 +245,9 @@ feature 'Searching' do
             expect(page).to have_css '#publisher_facet_chosen'
           end
 
+          scenario 'there exists a counties facet' do
+            expect(page).to have_css '#counties_facet_chosen'
+          end
         end
 
         context 'for Collections' do

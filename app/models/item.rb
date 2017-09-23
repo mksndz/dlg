@@ -170,6 +170,7 @@ class Item < ActiveRecord::Base
     integer :year_facet, multiple: true, trie: true, as: 'year_facet' do
       DateIndexer.new.get_valid_years_for(dc_date, self)
     end
+    string :counties, as: 'counties_facet', multiple: true
 
     # datetimes
     time :created_at, stored: true, trie: true
