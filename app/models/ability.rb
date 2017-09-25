@@ -63,6 +63,14 @@ class Ability
           user.collections.include?(item.collection)
     end
 
+    can [:rollback, :restore, :diff], ItemVersion do |item_version|
+      collection_id = item_version.object['collection_id']
+      collection = Collection.find collection_id
+      return false unless collection
+      user.collections.include?(collection) ||
+        user.repositories.include?(collection.repository)
+    end
+
     can [:show, :edit, :update, :destroy, :recreate], Batch, user_id: user.id
     can [:index, :new, :create], Batch
 

@@ -202,6 +202,18 @@ RSpec.describe Ability, type: :model do
 
       end
 
+      with_versioning do
+        it 'can manage ItemVersions if the Collection is assigned' do
+          collection_with_items = Fabricate(:collection) { items(count: 2) }
+          basic_user.collections << collection_with_items
+          collection_with_items.items.first.destroy
+          item_version = ItemVersion.last
+          is_expected.to be_able_to :rollback, item_version
+          is_expected.to be_able_to :restore, item_version
+          is_expected.to be_able_to :diff, item_version
+        end
+      end
+
     end
 
     context 'working with Batches' do
