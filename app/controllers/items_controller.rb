@@ -100,7 +100,12 @@ class ItemsController < RecordController
   end
 
   def xml
-    @items = Item.where id: params[:entities].split(',')
+    ids = if params[:entities].is_a? String
+            params[:entities].split(',')
+          else
+            params[:entities]
+          end
+    @items = Item.where id: ids
     respond_to do |format|
       format.xml { render xml: @items }
     end

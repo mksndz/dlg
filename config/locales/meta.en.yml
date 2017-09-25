@@ -354,6 +354,7 @@ en:
       action:
         new: 'New XML Upload'
         xml: 'XML'
+        download_xml: 'Download XML'
         info: 'Info'
         undo: 'Undo'
       labels:

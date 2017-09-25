@@ -126,7 +126,7 @@ RSpec.describe BatchItem, type: :model do
 
       Fabricate :item
       Fabricate(:item) do
-        dcterms_spatial [['United States, Georgia, Clarke County, Athens, Winterville, 33.960999, -83.3779399']]
+        dcterms_spatial ['United States, Georgia, Clarke County, Athens, Winterville, 33.960999, -83.3779399']
       end
       bi = Fabricate.build(:batch_item, dcterms_spatial: ['United States, Georgia, Clarke County, Athens'])
       bi.save
@@ -141,10 +141,10 @@ RSpec.describe BatchItem, type: :model do
 
       Fabricate :item
       Fabricate(:item) do
-        dcterms_spatial [['United States, Massachusetts, Shirley']]
+        dcterms_spatial ['United States, Massachusetts, Shirley']
       end
       Fabricate(:item) do
-        dcterms_spatial [['United States, North Carolina, Camden']]
+        dcterms_spatial ['United States, North Carolina, Camden']
       end
       bi = Fabricate.build(:batch_item, dcterms_spatial: ['United States'])
       bi.save

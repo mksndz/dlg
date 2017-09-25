@@ -143,6 +143,12 @@ Fabricator(:completed_batch_import_from_file, from: :batch_import) do
 
 end
 
+Fabricator(:completed_batch_import_from_search_result, from: :batch_import) do
+
+  format { 'search query' }
+
+end
+
 Fabricator(:batch_import_to_match_on_id, from: :batch_import) do
   match_on_id { true }
   xml {

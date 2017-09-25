@@ -6,7 +6,7 @@
 
 <div class="btn-group" role="group" aria-label="Batch Import Actions">
   <%= link_to t('meta.batch_import.action.new'), new_batch_batch_import_path(@batch), class: 'btn btn-default' %>
-  <%= link_to(t('meta.batch_import.action.xml'), xml_batch_batch_import_path(@batch, @batch_import), class: 'btn btn-default') if @batch_import.xml %>
+  <%= link_to(t('meta.batch_import.action.xml'), xml_batch_batch_import_path(@batch, @batch_import), class: 'btn btn-default') unless @batch_import.from_search_result? %>
 </div>
 
 <br><br>

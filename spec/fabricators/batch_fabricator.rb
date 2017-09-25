@@ -30,3 +30,7 @@ Fabricator(:batch_for_updating_record_id, from: :batch) do
     [Fabricate(:batch_import_for_updating_record_id)]
   end
 end
+
+Fabricator(:batch_from_search_results, from: :batch) do
+  batch_imports { [Fabricate(:completed_batch_import_from_search_result)] }
+end

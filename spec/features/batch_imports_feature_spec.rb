@@ -39,6 +39,19 @@ feature 'Batch Importing Batch Items' do
 
     end
 
+    context 'for a batch import from search results' do
+      before :each do
+        b = Fabricate :batch_from_search_results
+        i = Fabricate :item
+        b.batch_imports.first.item_ids = [i.id]
+      end
+      scenario 'a link to downlaod XML is shown on the index page' do
+        batch = Batch.last
+        visit batch_batch_imports_path(batch)
+        expect(page).to have_button I18n.t('meta.batch_import.action.download_xml')
+      end
+    end
+
     context 'for an uncommited batch' do
 
       let(:dummy_xml) { '<xml></xml>' }
