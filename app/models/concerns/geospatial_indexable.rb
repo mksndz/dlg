@@ -6,7 +6,9 @@ module GeospatialIndexable
   def counties
     counties = []
     dcterms_spatial.each do |s|
-      counties << s.match(GEORGIA_COUNTY_REGEX).captures if s.match(GEORGIA_COUNTY_REGEX)
+      if s.is_a?(String) && s.match(GEORGIA_COUNTY_REGEX)
+        counties << s.match(GEORGIA_COUNTY_REGEX).captures
+      end
     end
     counties.flatten
   end
