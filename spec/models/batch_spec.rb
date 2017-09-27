@@ -93,4 +93,5 @@ RSpec.describe Batch, type: :model do
     expect(recreated.batch_items.first.slug).to eq b.batch_items.first.slug
     expect(recreated.batch_items.first.item).to be_an Item
   end
+
 end

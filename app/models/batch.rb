@@ -74,6 +74,19 @@ class Batch < ActiveRecord::Base
     batch
   end
 
+  def inpermissable_items?(user)
+    return true unless user
+    return false if user.super?
+    included_collection_ids.each do |collection_id|
+      next if user.collection_ids.include? collection_id
+      collection = Collection.find collection_id
+      repository_id = collection.repository_id
+      next if user.repositories.include? repository_id
+      return true
+    end
+    false
+  end
+
   private
 
   def get_created_item_ids
@@ -92,6 +105,10 @@ class Batch < ActiveRecord::Base
       batch_item.portals = item.portals
       batch_item
     end
+  end
+
+  def included_collection_ids
+    batch_items.map(&:collection_id).uniq
   end
 
 end

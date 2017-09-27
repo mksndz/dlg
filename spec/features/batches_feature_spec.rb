@@ -8,7 +8,7 @@ feature 'Batches Management' do
   let(:basic_user) { Fabricate :basic }
   let(:coordinator_user) { Fabricate :coordinator }
   let(:committer_user) { Fabricate :committer }
-  let(:uploader_user) { Fabricate :uploader}
+  let(:uploader_user) { Fabricate :uploader }
 
   context :super_user do
 
@@ -183,6 +183,8 @@ feature 'Batches Management' do
       batch_item = BatchItem.last
       portal = Fabricate :portal
       batch_item.portals << portal
+      batch_item.collection = @collection
+      batch_item.save
 
       visit batch_path batch
 
@@ -275,16 +277,20 @@ feature 'Batches Management' do
 
     before :each do
       login_as committer_user, scope: :user
+      @assigned_collection = Fabricate :collection
+      committer_user.collections = [@assigned_collection]
     end
 
     scenario 'committer user can commit a valid batch (do not run background jobs)' do
 
-      batch_items = 2
+      batch_items = 1
 
       batch = Fabricate :batch do
         batch_items(count: batch_items)
       end
 
+      batch.batch_items.first.collection = @assigned_collection
+      batch.batch_items.first.save
       batch.user = committer_user
       batch.save
 
@@ -306,6 +312,30 @@ feature 'Batches Management' do
 
     end
 
+    scenario 'committer user cannot commit a valid batch when batch_items are members of collections the user is not assigned to' do
+
+      batch_items = 2
+
+      batch = Fabricate :batch do
+        batch_items(count: batch_items)
+      end
+
+      batch.batch_items.first.collection = @assigned_collection
+      batch.batch_items.first.save
+
+      batch.user = committer_user
+      batch.save
+
+      visit batch_path batch
+
+      expect(page).to have_link I18n.t('meta.batch.actions.commit')
+
+      click_on I18n.t('meta.batch.actions.commit')
+
+      expect(page).to have_text I18n.t('meta.batch.messages.errors.contains_unassigned_collections')
+
+    end
+
     scenario 'committer user can commit a valid batch (run background jobs) and can view the results' do
 
       ResqueSpec.reset!
@@ -316,6 +346,8 @@ feature 'Batches Management' do
         batch_items(count: batch_items)
       end
 
+      batch.batch_items.first.collection = @assigned_collection
+      batch.batch_items.first.save
       batch.user = committer_user
       batch.save
 

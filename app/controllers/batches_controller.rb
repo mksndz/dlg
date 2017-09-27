@@ -120,9 +120,9 @@ class BatchesController < ApplicationController
   def commit
     respond_to do |format|
       if @batch.batch_items.count == 0
-        format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.empty_batch_commit') }
+        format.html { redirect_to @batch, alert: I18n.t('meta.batch.messages.errors.empty_batch_commit') }
       elsif @batch.invalid_batch_items?
-        format.html { redirect_to @batch, alert: I18n.t('meta.batch.labels.has_invalid_batch_items') }
+        format.html { redirect_to @batch, alert: I18n.t('meta.batch.messages.errors.has_invalid_batch_items') }
       else
         @batch.queued_for_commit_at = Time.now
         @batch.save
@@ -189,6 +189,7 @@ class BatchesController < ApplicationController
     errors = []
     errors << I18n.t('meta.batch.labels.empty_batch_commit') if @batch.batch_items.count == 0
     errors << I18n.t('meta.batch.labels.has_invalid_batch_items') if @batch.invalid_batch_items?
+    errors << I18n.t('meta.batch.messages.errors.contains_unassigned_collections') if @batch.inpermissable_items?(current_user)
     errors
   end
 
