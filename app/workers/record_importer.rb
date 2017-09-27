@@ -31,6 +31,7 @@ class RecordImporter
           count += 1
           record = Hash.from_xml(node.outer_xml)
           add_failed(count, 'Item node could not be converted to hash.') unless record
+          add_failed(count, 'No Item node could be extraced from XML') unless record.key? 'item'
           create_or_update_record count, record['item']
         end
       rescue Nokogiri::XML::SyntaxError => e
