@@ -77,6 +77,7 @@ class RecordImporter
 
     item_id = record_data.delete('id')
     collection_info = record_data.delete('collection')
+    add_failed(num, "No collection node could be extracted for record #{num}.") unless collection_info
     collection_slug = collection_info.key?('slug') ? collection_info['slug'] : nil
     collection_record_id = collection_info.key?('record_id') ? collection_info['record_id'] : nil
 
