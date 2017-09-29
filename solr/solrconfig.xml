@@ -530,6 +530,7 @@
 
       <str name="facet.field">public_b</str>
       <str name="facet.field">dpla_b</str>
+      <str name="facet.field">counties_facet</str>
       <str name="facet.field">provenance_facet</str>
       <str name="facet.field">creator_facet</str>
       <str name="facet.field">contributor_facet</str>
