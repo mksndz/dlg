@@ -322,6 +322,23 @@ feature 'Item Management' do
 
     end
 
+    context 'changing slug values and indexing' do
+
+      before(:each) { Sunspot.remove_all Item, Collection }
+
+      scenario 'changing a slug should not cause a duplicate record in the index' do
+        item = Fabricate :item
+        visit edit_item_path item
+        fill_in I18n.t('activerecord.attributes.item.slug'), with: 'newslug'
+        find('.fixed-save-button').click
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        expect(all('.edit-record').count).to eq 2
+      end
+
+    end
+
   end
 
 end

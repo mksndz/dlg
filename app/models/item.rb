@@ -20,6 +20,7 @@ class Item < ActiveRecord::Base
 
   # after_save :check_for_thumbnail
   before_save :set_record_id
+  after_update :record_id_change_in_solr
 
   searchable do
 
@@ -270,6 +271,12 @@ class Item < ActiveRecord::Base
 
   def other_repository_titles
     Collection.find(other_collections).map(&:repository_title)
+  end
+
+  def record_id_change_in_solr
+    return true unless changes.include? :record_id
+    previous_record_id = changes[:record_id][0]
+    Sunspot.remove!(OpenStruct.new(record_id: previous_record_id))
   end
 
   # def date_facet
