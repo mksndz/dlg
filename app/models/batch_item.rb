@@ -6,7 +6,7 @@ class BatchItem < ActiveRecord::Base
   include Slugged
   include ItemTypeValidatable
   include Portable
-  include ItemTypeCleaner
+  # include ItemTypeCleaner
 
   belongs_to :batch, counter_cache: true
   belongs_to :batch_import, counter_cache: true
