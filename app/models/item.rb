@@ -6,6 +6,7 @@ class Item < ActiveRecord::Base
   include ItemTypeValidatable
   include GeospatialIndexable
   include Portable
+  include ItemTypeCleaner
 
   belongs_to :collection, counter_cache: true
   has_one :repository, through: :collection
