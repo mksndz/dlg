@@ -1,4 +1,3 @@
-require 'html/sanitizer'
 # handles cleanup tasks for Item and BatchItem records
 module ItemTypeCleaner
   include MetadataHelper
