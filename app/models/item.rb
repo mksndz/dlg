@@ -48,6 +48,10 @@ class Item < ActiveRecord::Base
       repository.id
     end
 
+    string :collection_record_id, stored: true do
+      collection.record_id
+    end
+
     string :collection_slug, stored: true do
       collection.slug
     end
