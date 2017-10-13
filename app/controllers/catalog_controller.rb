@@ -24,13 +24,12 @@ class CatalogController < ApplicationController
     config.default_solr_params = { 
       qt: 'search',
       fq: '-class_name:Repository'
-      # 'facet.limit' => 20
     }
 
     # facets are defined in query handler so this is not needed
     # makes debugging solr calls easier
     config.add_facet_fields_to_solr_request!
-    
+
     # solr path which will be added to solr base url before the other solr params.
     #config.solr_path = 'select' 
 
@@ -131,6 +130,7 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
+    config.add_index_field 'score',                       label: I18n.t('meta.search.labels.score'), helper_method: :score_display
     config.add_index_field 'record_id_ss',                label: I18n.t('meta.search.labels.record_id')
     config.add_index_field 'dcterms_title_display',       label: I18n.t('meta.search.labels.dcterms_title')
     config.add_index_field 'dcterms_description_display', label: I18n.t('meta.search.labels.dcterms_description'), helper_method: 'truncate_index'

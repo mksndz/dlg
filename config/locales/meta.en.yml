@@ -114,6 +114,7 @@ en:
           type: 'Col. DCMI Type'
           spatial: 'Col. Coverage Spatial'
       labels:
+        score: 'Score'
         item_id: 'Item ID'
         record_id: 'Record ID'
         dpla: 'Push to DPLA?'
@@ -154,7 +155,7 @@ en:
         created_at: 'Created'
         updated_at: 'Updated'
       sort:
-        relevance: 'Relevance'
+        relevance: 'Score'
         year: 'Year'
         title: 'Title'
         collection: 'Collection Name'

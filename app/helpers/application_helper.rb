@@ -2,6 +2,10 @@ module ApplicationHelper
 
   INDEX_TRUNCATION_VALUE = 2500
 
+  def score_display(options)
+    "<span class='badge'>#{options[:value].first}</span>".html_safe
+  end
+
   def boolean_facet_labels(value)
     value == 'true' ? 'Yes' : 'No'
   end
