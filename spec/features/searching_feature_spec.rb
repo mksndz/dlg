@@ -821,6 +821,39 @@ feature 'Searching' do
 
     end
 
+    context 'result sorting' do
+
+      before :each do
+        Fabricate :repository, slug: 'b'
+        Fabricate :repository, slug: 'a'
+        Fabricate :collection, slug: 'c', repository: Repository.first
+        Fabricate :collection, slug: 'z', repository: Repository.last
+        Fabricate :item, slug: 'd', collection: Collection.last
+        Fabricate :item, slug: 'e', collection: Collection.first
+        Fabricate :item, slug: 'f', collection: Collection.last
+        Sunspot.commit
+      end
+
+      scenario 'items are sorted by record_id' do
+        visit root_path
+        select I18n.t('meta.search.sort.record_id'), from: 'sort'
+        click_button 'Search'
+        record_ids_dds = all 'dd.blacklight-record_id_ss'
+        screenshot_and_save_page
+        expect(record_ids_dds.map(&:text)).to eq %w(a_z a_z_d a_z_f b_c b_c_e)
+      end
+
+      scenario 'items are sorted by slug' do
+        visit root_path
+        select I18n.t('meta.search.sort.slug'), from: 'sort'
+        click_button 'Search'
+        record_ids_dds = all 'dd.blacklight-record_id_ss'
+        screenshot_and_save_page
+        expect(record_ids_dds.map(&:text)).to eq %w(b_c a_z_d b_c_e a_z_f a_z)
+      end
+
+    end
+
   end
 
   context 'for basic user' do

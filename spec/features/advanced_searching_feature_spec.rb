@@ -19,7 +19,7 @@ feature 'Searching' do
 
     scenario 'does an advanced search and results are returned' do
 
-      Fabricate(:collection) { items(count: 1 ) }
+      Fabricate(:collection) { items(count: 1) }
       Sunspot.commit
 
       visit blacklight_advanced_search_engine.advanced_search_path

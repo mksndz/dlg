@@ -110,7 +110,7 @@ en:
         class: 'Class'
         portals: 'Portals'
         collection_only:
-          provenance: 'Coll. Hold. Inst.'
+          provenance: 'Col. Hold. Inst.'
           type: 'Col. DCMI Type'
           spatial: 'Col. Coverage Spatial'
       labels:
@@ -153,6 +153,16 @@ en:
         dlg_subject_personal: 'Subject Personal'
         created_at: 'Created'
         updated_at: 'Updated'
+      sort:
+        relevance: 'Relevance'
+        year: 'Year'
+        title: 'Title'
+        collection: 'Collection Name'
+        creator: 'Creator'
+        slug: 'Slug'
+        record_id: 'Record ID'
+        created: 'Created'
+        updated: 'Updated'
     app:
       advanced_search:
         title: 'Advanced Search'

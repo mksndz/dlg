@@ -364,13 +364,15 @@ class CatalogController < ApplicationController
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    config.add_sort_field 'score desc, title_sort asc', label: 'Relevance'
-    config.add_sort_field 'year asc', label: 'Year'
-    config.add_sort_field 'title_sort asc', label: 'DC Title'
-    config.add_sort_field 'collection_sort asc', label: 'Collection'
-    config.add_sort_field 'creator_sort asc', label: 'DC Creator'
-    config.add_sort_field 'created_at_dts desc', label: 'Latest Created'
-    config.add_sort_field 'updated_at_dts desc', label: 'Latest Updated'
+    config.add_sort_field 'score desc, title_sort asc', label: I18n.t('meta.search.sort.relevance')
+    config.add_sort_field 'year asc', label: I18n.t('meta.search.sort.year')
+    config.add_sort_field 'title_sort asc', label: I18n.t('meta.search.sort.title')
+    config.add_sort_field 'collection_sort asc', label: I18n.t('meta.search.sort.collection')
+    config.add_sort_field 'slug_ss asc', label: I18n.t('meta.search.sort.slug')
+    config.add_sort_field 'id asc', label: I18n.t('meta.search.sort.record_id')
+    config.add_sort_field 'creator_sort asc', label: I18n.t('meta.search.sort.creator')
+    config.add_sort_field 'created_at_dts desc', label: I18n.t('meta.search.sort.created')
+    config.add_sort_field 'updated_at_dts desc', label: I18n.t('meta.search.sort.updated')
 
     # If there are more than this many search results, no spelling ("did you 
     # mean") suggestion is offered.
