@@ -42,7 +42,7 @@ class ItemsController < RecordController
 
     respond_to do |format|
       format.xml { send_data @items.to_xml }
-      format.csv { render :item }
+      format.tsv { render :item }
       format.html do
         @items = @items.page(params[:page])
                        .per(params[:per_page])

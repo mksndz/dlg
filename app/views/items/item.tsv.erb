@@ -1,0 +1,3 @@
+<% @items.each do |i| %>
+<%= "#{i.record_id}\t#{i.dcterms_title.join(', ')}\t#{i.dc_right.first}".html_safe %>
+<% end %>
