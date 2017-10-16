@@ -102,7 +102,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'medium_facet',             label: I18n.t('meta.search.facets.medium'), limit: true
     config.add_facet_field 'language_facet',           label: I18n.t('meta.search.facets.language'), limit: true
     config.add_facet_field 'repository_name_sms',      label: I18n.t('meta.search.facets.repository'), limit: true
-    config.add_facet_field 'collection_record_id_sms', label: I18n.t('meta.search.facets.collection'), limit: true
+    config.add_facet_field 'collection_name_sms',      label: I18n.t('meta.search.facets.collection'), limit: true
     config.add_facet_field 'portal_names_sms',         label: I18n.t('meta.search.facets.portals'), limit: true
     config.add_facet_field 'class_name',               label: I18n.t('meta.search.facets.class'), limit: true
 
