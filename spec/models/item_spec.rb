@@ -248,6 +248,42 @@ RSpec.describe Item, type: :model do
 
   end
 
+  it 'is marked as updated when a portal value is changed' do
+
+    i = Fabricate :item
+    p1 = Fabricate :portal
+    p2 = Fabricate :portal
+
+    i.portals << [p1, p2]
+    i.save
+
+    updated_at = i.updated_at
+
+    i.portals = [p1]
+    i.save
+
+    expect(i.updated_at).not_to eq updated_at
+
+  end
+
+  it 'is marked as updated when a portal value is added' do
+
+    i = Fabricate :item
+    p1 = Fabricate :portal
+    p2 = Fabricate :portal
+
+    i.portals << [p2]
+    i.save
+
+    updated_at = i.updated_at
+
+    i.portals = [p1]
+    i.save
+
+    expect(i.updated_at).not_to eq updated_at
+
+  end
+
   # validations
 
   it 'should require a Collection' do
@@ -425,6 +461,7 @@ RSpec.describe Item, type: :model do
       expect(@item.portals).to include @portal2
 
       r.portals = []
+      @item.reload
 
       expect(r.portals).not_to include @portal
       expect(@item.portals).not_to include @portal

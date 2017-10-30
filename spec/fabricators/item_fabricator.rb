@@ -1,43 +1,33 @@
 require 'faker'
 
 Fabricator(:item) do
-
   portals(count: 1)
   slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'), '-') }
-  dcterms_title { [
+  dcterms_title do
+    [
       Faker::Lorem.sentence(5),
       Faker::Lorem.sentence(4)
-  ] }
-  dcterms_type { [
-      %w(StillImage Text).sample
-  ]}
-  dcterms_subject { [
+    ]
+  end
+  dcterms_type { [%w(StillImage Text).sample] }
+  dcterms_subject do
+    [
       %w(Athens Atlanta Augusta Macon).sample,
       'Georgia'
-  ]}
-  dc_date { [
-      '1999-2000'
-  ]}
-  dc_right { [
-      I18n.t('meta.rights.zero.uri')
-  ]}
-  dcterms_contributor { [
-      'DLG'
-  ]}
-  dcterms_spatial { [
+    ]
+  end
+  dc_date { ['1999-2000'] }
+  dc_right { [I18n.t('meta.rights.zero.uri')] }
+  dcterms_contributor { ['DLG'] }
+  dcterms_spatial do
+    [
       'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358'
-  ]}
-  dcterms_provenance { [
-      'DLG'
-  ]}
-  edm_is_shown_at { [
-      'http://dlg.galileo.usg.edu'
-  ]}
-  edm_is_shown_by { [
-      'http://dlg.galileo.usg.edu'
-  ]}
+    ]
+  end
+  dcterms_provenance { ['DLG'] }
+  edm_is_shown_at { ['http://dlg.galileo.usg.edu'] }
+  edm_is_shown_by { ['http://dlg.galileo.usg.edu'] }
   collection
-
 end
 
 Fabricator(:invalid_item) do

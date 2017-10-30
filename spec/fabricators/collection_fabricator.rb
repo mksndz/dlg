@@ -8,7 +8,7 @@ Fabricator(:collection) do
       '-'
     )
   end
-  repository { Fabricate(:repository)}
+  repository { Fabricate(:repository) }
   display_title { Faker::Lorem.sentence(3) }
   short_description { Faker::Lorem.sentence(12) }
   dcterms_title do
