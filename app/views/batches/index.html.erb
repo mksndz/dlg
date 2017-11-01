@@ -88,6 +88,8 @@
                 <%= link_to t('meta.defaults.actions.view'), batch, class: 'btn btn-default' %>
                 <% if batch.committed? %>
                     <%= link_to t('meta.batch.actions.results'), results_batch_path(batch), class: 'btn btn-default' %>
+                <% elsif batch.job_message %>
+                    <%= link_to t('meta.batch.actions.retry_commit'), commit_form_batch_path(batch), class: 'btn btn-default' %>
                 <% else %>
                     <%= link_to t('meta.batch.actions.commit'), commit_form_batch_path(batch), class: 'btn btn-default' %>
                     <%= link_to t('meta.defaults.actions.edit'), edit_batch_path(batch), class: 'btn btn-default' %>

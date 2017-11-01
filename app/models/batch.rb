@@ -29,37 +29,22 @@ class Batch < ActiveRecord::Base
 
   def commit
     logger = Logger.new('./log/batch_commit.log')
-    self.committed_at = Time.now
-    successes = []
-    failures = []
-    batch_items.each do |bi|
-      if bi.invalid?
-        # if bi is invalid (it shouldn't be), dont bother trying to save the item
-        failures << { batch_item: bi.id, errors: bi.errors, slug: bi.slug }
-      else
-        i = bi.commit
-        i.batch_items << bi
-        item_updated = i.persisted?
+    results = []
+    transaction do
+      batch_items.in_batches(of: 500).each_record do |bi|
         begin
-          if i.save
-            # item properly committed, save Item and BI ids
-            successes << { batch_item: bi.id, item: i.id, slug: bi.slug, item_updated: item_updated }
-          else
-            # item did not properly save, add errors to array with BI id
-            # this should only obtain on DB error or as a result of validation
-            # discrepancies between item and batchitem
-            failures << { batch_item: bi.id, errors: i.errors, slug: bi.slug }
-          end
+          results << convert_to_item(bi)
         rescue StandardError => e
-          # exceptions can be raised during indexing...
-          logger.warn "Exception #{e.message} on batch item #{bi.id}"
-          failures << { batch_item: bi.id, errors: e.message, slug: bi.slug }
+          msg = "Commit of Batch #{id} encountered an error on BatchItem #{bi.id}: #{e.message}"
+          logger.error msg
+          raise StandardError, msg # raises exception to BatchCommitter job
         end
       end
-
     end
+    self.job_message = nil # clear job message if job succeeds
+    self.committed_at = Time.now
     Sunspot.commit
-    self.commit_results = { items: successes, errors: failures }
+    self.commit_results = { items: results }
     save
   end
 
@@ -88,6 +73,19 @@ class Batch < ActiveRecord::Base
   end
 
   private
+
+  def convert_to_item(batch_item)
+    i = batch_item.commit
+    i.batch_items << batch_item
+    item_updated = i.persisted?
+    i.save!
+    {
+      batch_item: batch_item.id,
+      item: i.id,
+      slug: batch_item.slug,
+      item_updated: item_updated
+    }
+  end
 
   def get_created_item_ids
     commit_results['items'].map do |r|

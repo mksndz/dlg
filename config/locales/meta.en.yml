@@ -313,6 +313,7 @@ en:
         recreate: 'Recreate'
         batch_items: 'Manage Batch Items'
         batch_imports: 'Manage XML Imports'
+        retry_commit: 'Retry'
       labels:
         deleted_user: 'Unknown'
         failed: 'Could not Commit'
@@ -334,6 +335,7 @@ en:
           recreated: 'Batch was successfully recreated.'
           committed: 'This batch has been queued for committing.'
         errors:
+          could_not_commit: 'Commit Failed'
           empty_batch_commit: 'You cannot commit an empty Batch'
           has_invalid_batch_items: 'You cannot commit a Batch with invalid items'
           contains_unassigned_collections: 'This batch contains records that would be added to Collections to which you are not assigned. Have  Super User commit the batch or remove the Items intended for the unassigned Collection.'

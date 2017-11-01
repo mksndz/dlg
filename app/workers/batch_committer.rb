@@ -1,42 +1,42 @@
 # job to commit a given batch
 class BatchCommitter
   @queue = :batch_commit_queue
-  # @logger = Logger.new('./log/batch_commit.log')
   @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
 
   def self.perform(batch_id)
     t1 = Time.now
-    batch = validated_batch batch_id
-    start_msg = "Committing Batch `#{batch.id}` containing `#{batch.batch_items.count}` items"
-    # @logger.info start_msg
-    notify start_msg
+    @batch = batch_for batch_id
+    fail_with_message "Batch #{@batch.id} has no BatchItems and will not be committed" unless @batch.batch_items.any?
+    notify "Committing Batch `#{@batch.id}` containing `#{@batch.batch_items.count}` items"
     begin
-      batch.commit
+      @batch.commit
     rescue StandardError => e
       fail_with_message "Committing resulted in an error: #{e.message}"
     end
-    Sunspot.commit_if_dirty
     t2 = Time.now
-    finish_msg = "Finished committing Batch #{batch.name} (`#{batch.id}`). Elapsed time: `#{t2 - t1}` seconds."
-    # @logger.info finish_msg
-    notify finish_msg
+    notify "Finished committing Batch #{@batch.name} (`#{@batch.id}`). Elapsed time: `#{t2 - t1}` seconds."
+
   end
 
   def self.fail_with_message(msg)
-    # @logger.error msg
-    notify "Batch commit failed: #{msg}"
-    fail JobFailedError
+    add_job_error msg
+    notify msg
   end
 
-  def self.validated_batch(batch_id)
-    batch = Batch.find batch_id
-    fail_with_message "Batch with ID `#{batch_id}` could not be found." unless batch
-    fail_with_message "Batch with ID `#{batch_id}` could not be committed because it is empty." if batch.batch_items.count < 1
-    batch
+  def self.batch_for(batch_id)
+    Batch.find batch_id
+  rescue ActiveRecord::RecordNotFound
+    raise JobFailedError, "Batch with ID #{batch_id} could not be found!"
   end
 
   def self.notify(msg)
     @slack.ping msg if Rails.env.production?
+  end
+
+  def self.add_job_error(msg)
+    @batch.job_message = msg
+    @batch.queued_for_commit_at = nil
+    @batch.save
   end
 
 end

@@ -4,61 +4,6 @@
 
 <% breadcrumb :batch_results, @batch %>
 
-<% if @batch.commit_results['errors'].present? %>
-
-  <h3><%= t('meta.batch.labels.failed') %></h3>
-
-  <table class="table table-condensed table-hover failed-commit-results-table">
-    <thead>
-    <tr>
-      <th>
-        <%= t('meta.batch.labels.columns.number') %>
-      </th>
-      <th>
-        <%= t('meta.defaults.labels.columns.slug') %>
-      </th>
-      <th>
-        <%= t('meta.batch.labels.columns.batch_item') %>
-      </th>
-      <th>
-        <%= t('meta.batch.labels.columns.errors') %>
-      </th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% i = 1 %>
-    <% @batch.commit_results['errors'].each do |e| %>
-      <tr class="warning">
-        <td>
-          <%= i %>
-        </td>
-        <td>
-          <%= e['slug'] %>
-        </td>
-        <td>
-          <%= link_to 'View', batch_batch_item_path(@batch.id, e['batch_item']) %>
-        </td>
-        <td>
-          <ul>
-            <% if e['errors'].respond_to? :each %>
-              <% e['errors'].each do |key, array| %>
-                <% array.each do |m| %>
-                  <li><%= "#{key.titleize} #{m}" %></li>
-                <% end %>
-              <% end %>
-            <% else %>
-              <li><%= e['errors'] %></li>
-            <% end %>
-          </ul>
-        </td>
-      </tr>
-      <% i += 1 %>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
-
 <% if @batch.commit_results['items'].present? %>
 
   <h3><%= t('meta.batch.labels.successful') %></h3>

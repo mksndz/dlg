@@ -212,6 +212,40 @@ feature 'Batches Management' do
 
     end
 
+    context 'super user commits a batch with an invalid item (run background jobs)' do
+
+      scenario 'and the batch shows an error and a retry button' do
+
+        ResqueSpec.reset!
+
+        batch_items = 1
+
+        batch = Fabricate :batch do
+          batch_items(count: batch_items)
+        end
+
+        batch.user = committer_user
+        batch.save
+
+        batch_item = BatchItem.last
+        batch_item.dc_date = []
+        batch_item.save(validate: false)
+
+        Resque.enqueue(BatchCommitter, batch.id)
+        ResqueSpec.perform_all(:batch_commit_queue)
+
+        visit batches_path
+
+        expect(page).to have_text I18n.t('meta.batch.messages.errors.could_not_commit')
+        expect(page).to have_link I18n.t('meta.batch.actions.retry_commit')
+
+        visit batch_path batch
+
+        expect(page).to have_text batch.job_message
+      end
+
+    end
+
     context 'updating record_id and indexing behavior', js: true do
 
       before :each do

@@ -75,18 +75,8 @@ RSpec.describe Batch, type: :model do
     expect(b.commit_results['items'].first).to be_a Hash
   end
 
-  it 'commits the batch and saves itself with results as JSON including errors' do
-    b = Fabricate(:batch){ batch_items(count: 2)}
-    bi = b.batch_items.first
-    bi.update_attributes(slug: nil) # update record so that it will error
-    b.commit
-    error = b.commit_results['errors'].first
-    expect(error['batch_item']).to be_a Integer
-    expect(error['errors']).to be_a Hash
-  end
-
   it 'recreates itself as a fresh batch referencing the current state of Items' do
-    b = Fabricate(:batch){ batch_items(count: 1)}
+    b = Fabricate(:batch){ batch_items(count: 1) }
     b.commit
     recreated = b.recreate
     expect(recreated.batch_items.length).to eq b.batch_items.length

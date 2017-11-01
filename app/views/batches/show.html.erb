@@ -20,6 +20,17 @@
 
 <br><br>
 
+<% if @batch.job_message %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong><%= t('activerecord.attributes.batch.job_message') %></strong>
+      </div>
+      <div class="panel-body">
+        <%= @batch.job_message %>
+      </div>
+    </div>
+<% end %>
+
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.user_id'),           value: creator  %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.name'),              value: @batch.name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.notes'), value: @batch.notes %>

@@ -32,6 +32,7 @@ en:
         created_at: "Created At"
         updated_at: "Updated At"
         contained_count: "Included Count"
+        job_message: "Job Failure Message"
       repository:
         slug: "Slug"
         title: "Title"
