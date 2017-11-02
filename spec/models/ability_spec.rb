@@ -60,14 +60,16 @@ RSpec.describe Ability, type: :model do
     context 'with Repository assigned' do
       let(:repository) { Fabricate(:repository) }
       let(:other_item) { Fabricate(:repository).items.first }
-      it 'can modify but not destroy Repositories if the Repository is assigned' do
+      it 'can modify but not destroy Repositories if the Repository is
+          assigned' do
         basic_user.repositories << repository
         is_expected.to be_able_to :show, repository
         is_expected.to be_able_to :edit, repository
         is_expected.to be_able_to :update, repository
         is_expected.not_to be_able_to :destroy, repository
       end
-      it 'can modify but not destroy Collections if the Repository is assigned' do
+      it 'can modify but not destroy Collections if the Repository is
+          assigned' do
         basic_user.repositories << repository
         collection = repository.collections.first
         is_expected.to be_able_to :show, collection
@@ -121,7 +123,8 @@ RSpec.describe Ability, type: :model do
         is_expected.to be_able_to :update, collection
         is_expected.not_to be_able_to :destroy, collection
       end
-      it 'cannot modify or delete Collections if the Collection is not assigned' do
+      it 'cannot modify or delete Collections if the Collection is not
+          assigned' do
         is_expected.not_to be_able_to :show, collection
         is_expected.not_to be_able_to :edit, collection
         is_expected.not_to be_able_to :update, collection
@@ -173,11 +176,13 @@ RSpec.describe Ability, type: :model do
         is_expected.to be_able_to :create, batch_item
         is_expected.to be_able_to :update, batch_item
       end
-      it 'cannot modify BatchItems for Collections that have not been assigned' do
+      it 'cannot modify BatchItems for Collections that have not been
+          assigned' do
         batch_item = batch.batch_items.first
         is_expected.not_to be_able_to :update, batch_item
       end
-      it 'cannot update BatchItems for Collections in Repositories that have not been assigned' do
+      it 'cannot update BatchItems for Collections in Repositories that have not
+          been assigned' do
         batch_item = batch.batch_items.first
         is_expected.not_to be_able_to :update, batch_item
       end
