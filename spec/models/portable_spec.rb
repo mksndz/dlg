@@ -3,22 +3,14 @@ require 'rails_helper'
 describe Portable, type: :model do
 
   before :each do
-    @collection = Fabricate(:collection, repository: Fabricate(:repository))
-    @item = Fabricate(:item, collection: @collection)
-    @repository = @collection.repository
-    @portal1 = Fabricate :portal
-    @portal2 = Fabricate :portal
-    @item.portals = [@portal1]
-    @collection.portals = [@portal1]
-    @repository.portals = [@portal1]
+    @repository = Fabricate :repository
+    @portal = @repository.portals.last
   end
 
   it 'has portals assigned properly' do
-    expect(@item.repository).to eq @repository
-    expect(@collection.items).to eq [@item]
-    expect(@item.portals).to eq [@portal1]
-    expect(@collection.portals).to eq [@portal1]
-    expect(@repository.portals).to eq [@portal1]
+    expect(@repository.portals).to eq [@portal]
+    expect(@repository.collections.first.portals).to eq [@portal]
+    expect(@repository.items.first.portals).to eq [@portal]
   end
 
   context 'for Items' do
