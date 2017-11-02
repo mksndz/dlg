@@ -1,8 +1,11 @@
 require 'faker'
 
 Fabricator(:item) do
-  portals(count: 1)
-  slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'), '-') }
+  slug do
+    Faker::Internet.slug(
+      Faker::Lorem.sentence(3).chomp('.'),
+      '-')
+  end
   dcterms_title do
     [
       Faker::Lorem.sentence(5),
@@ -16,59 +19,42 @@ Fabricator(:item) do
       'Georgia'
     ]
   end
-  dc_date { ['1999-2000'] }
-  dc_right { [I18n.t('meta.rights.zero.uri')] }
-  dcterms_contributor { ['DLG'] }
-  dcterms_spatial do
-    [
-      'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358'
-    ]
-  end
-  dcterms_provenance { ['DLG'] }
-  edm_is_shown_at { ['http://dlg.galileo.usg.edu'] }
-  edm_is_shown_by { ['http://dlg.galileo.usg.edu'] }
-  collection
+  dc_date ['1999-2000']
+  dc_right [I18n.t('meta.rights.zero.uri')]
+  dcterms_contributor ['DLG']
+  dcterms_spatial [
+    'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358'
+  ]
+  dcterms_provenance ['DLG']
+  edm_is_shown_at ['http://dlg.galileo.usg.edu']
+  edm_is_shown_by ['http://dlg.galileo.usg.edu']
 end
 
 Fabricator(:invalid_item) do
-
-  slug { Faker::Internet.slug(Faker::Lorem.sentence(3).chomp('.'), '-') }
-  dcterms_title { [
+  slug do
+    Faker::Internet.slug(
+      Faker::Lorem.sentence(3).chomp('.'),
+      '-')
+  end
+  dcterms_title do
+    [
       Faker::Lorem.sentence(5),
       Faker::Lorem.sentence(4)
-  ] }
-
+    ]
+  end
 end
 
 Fabricator(:item_with_two_spatial_values, from: :item) do
-
-  dcterms_spatial { [
-      'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358',
-      'United States, Georgia, Fulton County, 33.7902836, -84.466986'
-  ] }
-
+  dcterms_spatial [
+    'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358',
+    'United States, Georgia, Fulton County, 33.7902836, -84.466986'
+  ]
 end
 
 Fabricator(:robust_item, from: :item) do
-
-  dcterms_publisher { [
-      Faker::University.name
-  ]}
-
-  edm_is_shown_at { [
-      Faker::Internet.url
-  ] }
-
-  edm_is_shown_by { [
-      Faker::Internet.url
-  ] }
-
-  dcterms_identifier { [
-      Faker::Internet.url
-  ] }
-
-  dlg_subject_personal { [
-      Faker::Name.name_with_middle
-  ] }
-
+  dcterms_publisher { [Faker::University.name] }
+  edm_is_shown_at { [Faker::Internet.url] }
+  edm_is_shown_by { [Faker::Internet.url] }
+  dcterms_identifier { [Faker::Internet.url] }
+  dlg_subject_personal { [Faker::Name.name_with_middle] }
 end
