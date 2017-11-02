@@ -78,17 +78,9 @@ RSpec.configure do |config|
   }
 
   # JS driver madness
-
-  # Capybara.register_driver :poltergeist do |app|
-  #   Capybara::Poltergeist::Driver.new(app, inspector: true)
-  # end
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, timeout: 60)
+  end
   Capybara.javascript_driver = :poltergeist
-
-  # Capybara::Webkit.configure do |wk_config|
-  #   # Enable debug mode. Prints a log of everything the driver is doing.
-  #   wk_config.debug = true
-  # end
-
-  # Capybara.javascript_driver = :webkit
 
 end
