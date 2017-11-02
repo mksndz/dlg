@@ -31,7 +31,7 @@ class Batch < ActiveRecord::Base
     logger = Logger.new('./log/batch_commit.log')
     results = []
     transaction do
-      batch_items.in_batches(of: 500).each_record do |bi|
+      batch_items.in_batches(of: 200).each_record do |bi|
         begin
           results << convert_to_item(bi)
         rescue StandardError => e
