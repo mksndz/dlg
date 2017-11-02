@@ -15,7 +15,6 @@ class BatchCommitter
     end
     t2 = Time.now
     notify "Finished committing Batch #{@batch.name} (`#{@batch.id}`). Elapsed time: `#{t2 - t1}` seconds."
-
   end
 
   def self.fail_with_message(msg)

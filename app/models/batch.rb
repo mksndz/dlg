@@ -30,6 +30,10 @@ class Batch < ActiveRecord::Base
   def commit
     logger = Logger.new('./log/batch_commit.log')
     results = []
+    # TODO: this remains a huge memory hog, most likely as a result of the
+    # ItemVersions being created by the BatchItem.commit operation
+    # Consider disabling this transaction or the use of PaperTrail
+    # There's also the Sunspot indexing of these objects
     transaction do
       batch_items.in_batches(of: 200).each_record do |bi|
         begin
