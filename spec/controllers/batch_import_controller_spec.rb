@@ -2,12 +2,9 @@ require 'rails_helper'
 require 'devise/test_helpers'
 
 RSpec.describe BatchImportsController, type: :controller do
-
   before(:each) { sign_in Fabricate(:super) }
-
   let(:batch) { Fabricate :batch }
   let(:committed_batch) { Fabricate :committed_batch }
-
   let(:test_xml) do
     <<-XML
     <?xml version="1.0" encoding="UTF-8"?>
@@ -82,7 +79,6 @@ RSpec.describe BatchImportsController, type: :controller do
     </item>
     XML
   end
-
   describe 'GET #new' do
     context 'with an uncommitted batch' do
       it 'assigns a new batch_import as @batch_import' do
@@ -97,9 +93,7 @@ RSpec.describe BatchImportsController, type: :controller do
       end
     end
   end
-
   describe 'POST #create' do
-
     context 'with valid params' do
       it 'enqueues a job and redirects to show using XML' do
         post :create, batch_id: batch.id, batch_import: { xml: test_xml }
@@ -110,7 +104,5 @@ RSpec.describe BatchImportsController, type: :controller do
         expect(assigns(:batch_import)).to eq BatchImport.last
       end
     end
-
   end
-
 end

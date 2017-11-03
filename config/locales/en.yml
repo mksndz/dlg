@@ -308,6 +308,10 @@ en:
 #        dlg_local_right: 'Any rights-related information not appropriate for inclusion in the DC Right field or DCQ Rights Holder field.'
     errors:
       messages:
+        portals:
+          parent_not_assigned: "Portal value could not be added because it is not assigned to this record's parent"
+          collections_still_assigned: "Portal value could not be removed because child collections are still assigned."
+          items_still_assigned: "Portal value could not be removed because child items are still assigned."
         batch_import:
           failed: 'The XML could not be processed due to the following errors:'
         item_type:
