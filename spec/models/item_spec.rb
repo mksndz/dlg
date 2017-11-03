@@ -5,7 +5,7 @@ RSpec.describe Item, type: :model do
     expect(Item.count).to eq 0
   end
   it 'has one after adding one' do
-    Fabricate :repository
+    Fabricate :item_with_parents
     expect(Item.count).to eq 1
   end
   it 'should require a Collection' do
@@ -147,69 +147,67 @@ RSpec.describe Item, type: :model do
     expect(valid.errors).not_to have_key :slug
   end
   context 'when created' do
-    before :each do
-      @item = Fabricate(:repository).items.first
-    end
+    let(:item) { Fabricate :item_with_parents }
     it 'has a scope that returns items updated after a provided date' do
-      @item.updated_at = '2015-01-01'
-      @item.save
+      item.updated_at = '2015-01-01'
+      item.save
       i2 = Fabricate(:repository).items.first
       i2.updated_at = '2017-01-01'
       i2.save
       selected_items = Item.updated_since('2016-01-01')
       expect(selected_items).to include i2
-      expect(selected_items).not_to include @item
+      expect(selected_items).not_to include item
     end
     it 'belongs to a Repository' do
-      expect(@item.repository).to be_kind_of Repository
+      expect(item.repository).to be_kind_of Repository
     end
     it 'belongs to a Collection' do
-      expect(@item.collection).to be_kind_of Collection
+      expect(item.collection).to be_kind_of Collection
     end
     it 'has a String title' do
-      expect(@item.title).to be_kind_of String
+      expect(item.title).to be_kind_of String
     end
     it 'has an Array dcterms_title' do
-      expect(@item.dcterms_title).to be_kind_of Array
+      expect(item.dcterms_title).to be_kind_of Array
     end
     it 'has an Array dlg_subject_personal' do
-      expect(@item.dcterms_title).to be_kind_of Array
+      expect(item.dcterms_title).to be_kind_of Array
     end
     it 'has a boolean method has_thumbnail' do
-      expect(@item.has_thumbnail?).to be false
+      expect(item.has_thumbnail?).to be false
     end
     it 'has a slug' do
-      expect(@item.slug).not_to be_empty
+      expect(item.slug).not_to be_empty
     end
     it 'has a record_id' do
-      expect(@item.record_id).not_to be_empty
+      expect(item.record_id).not_to be_empty
     end
     it 'has a record_id that tracks changes to collection' do
-      expect(@item.record_id).to include @item.slug
-      expect(@item.record_id).to include @item.collection.slug
-      expect(@item.record_id).to include @item.repository.slug
+      expect(item.record_id).to include item.slug
+      expect(item.record_id).to include item.collection.slug
+      expect(item.record_id).to include item.repository.slug
     end
     it 'has a facet_years value that is an Array of years taken from dc_date' do
-      @item.dc_date = %w(991 1802 2001 1776-1791 1900/1901)
-      expect(@item.facet_years).to eq %w(1802 2001 1776 1791 1900 1901)
+      item.dc_date = %w(991 1802 2001 1776-1791 1900/1901)
+      expect(item.facet_years).to eq %w(1802 2001 1776 1791 1900 1901)
     end
     it 'returns an array for coordinates' do
-      @item.dcterms_spatial = [
+      item.dcterms_spatial = [
         'United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123',
         'United States, Georgia, Fulton County, 33.7902836, -84.466986'
       ]
-      expect(@item.coordinates).to eq [
+      expect(item.coordinates).to eq [
         '33.7748275, -84.2963123',
         '33.7902836, -84.466986'
       ]
     end
     it 'returns an array containing parseable JSON strings geojson if
         coordinates are found present in the dcterms_spatial field' do
-      @item.dcterms_spatial = [
+      item.dcterms_spatial = [
         'United States, Georgia, DeKalb County, Decatur, 33.7748275, -84.2963123',
         'United States, Georgia, Fulton County, 33.7902836, -84.466986'
       ]
-      @item.geojson.each do |g|
+      item.geojson.each do |g|
         expect(JSON.parse(g)).to be_a Hash
       end
     end
@@ -217,39 +215,39 @@ RSpec.describe Item, type: :model do
       it 'by disallowing the creation of two items with the same slug related to
           the same collection' do
         i2 = Fabricate(:repository).items.first
-        i2.collection = @item.collection
-        i2.slug = @item.slug
+        i2.collection = item.collection
+        i2.slug = item.slug
         expect { i2.save! }.to raise_exception ActiveRecord::RecordInvalid
         expect(i2.errors).to include :slug
       end
       it 'when creating two items with the same slug related to different
           collection' do
         i2 = Fabricate(:repository).items.first
-        i2.repository = @item.repository
+        i2.repository = item.repository
         expect { i2.save! }.not_to raise_exception
       end
     end
     context 'has other_* values' do
+      let(:collection2) { Fabricate :empty_collection }
+      let(:collection3) { Fabricate :empty_collection }
       before :each do
-        @collection2 = Fabricate(:repository).collections.first
-        @collection3 = Fabricate(:repository).collections.first
-        @item.other_collections = [@collection2.id, @collection3.id]
+        item.other_collections = [collection2.id, collection3.id]
       end
       it 'that includes the titles of other_collections' do
-        expect(@item.collection_titles).to include @item.collection.title
-        expect(@item.collection_titles).to include @collection2.title
-        expect(@item.collection_titles).to include @collection3.title
+        expect(item.collection_titles).to include item.collection.title
+        expect(item.collection_titles).to include collection2.title
+        expect(item.collection_titles).to include collection3.title
       end
       it 'that includes the repository titles associated with other_collections' do
-        expect(@item.repository_titles).to include @item.repository.title
-        expect(@item.repository_titles).to include @collection2.repository.title
-        expect(@item.repository_titles).to include @collection3.repository.title
+        expect(item.repository_titles).to include item.repository.title
+        expect(item.repository_titles).to include collection2.repository.title
+        expect(item.repository_titles).to include collection3.repository.title
       end
     end
     context 'has validation status' do
       it 'of true if the item is valid' do
-        @item.valid?
-        expect(@item.valid_item).to be true
+        item.valid?
+        expect(item.valid_item).to be true
       end
       it 'of false if the item is invalid' do
         i1 = Fabricate.build :item
@@ -259,14 +257,14 @@ RSpec.describe Item, type: :model do
     end
     context 'has a counties method' do
       before :each do
-        @item.dcterms_spatial = [
+        item.dcterms_spatial = [
           'United States, Georgia',
           'United States, Georgia, Muscogee County, Columbus, 32.4609764, -84.9877094	7,519',
           'United States, Georgia, Jeff Davis County, Test, 34.4212053, -84.1190804'
         ]
       end
       it 'that extracts Georgia county values from dcterms_spatial' do
-        expect(@item.counties).to eq ['Muscogee', 'Jeff Davis']
+        expect(item.counties).to eq ['Muscogee', 'Jeff Davis']
       end
     end
     context 'has a display value' do
@@ -274,60 +272,60 @@ RSpec.describe Item, type: :model do
         context 'and a non-public Collection' do
           context 'and a non-public Item' do
             it 'that returns false' do
-              expect(@item.display?).to eq false
+              expect(item.display?).to eq false
             end
           end
           context 'and a public Item' do
             it 'that returns true' do
-              @item.public = true
-              expect(@item.display?).to eq false
+              item.public = true
+              expect(item.display?).to eq false
             end
           end
         end
         context 'and a public Collection' do
           before :each do
-            @item.collection.public = true
+            item.collection.public = true
           end
           context 'and a non-public Item' do
             it 'returns false' do
-              expect(@item.display?).to eq false
+              expect(item.display?).to eq false
             end
           end
           context 'and a public Item' do
             it 'returns true' do
-              @item.public = true
-              expect(@item.display?).to eq false
+              item.public = true
+              expect(item.display?).to eq false
             end
           end
         end
       end
       context 'for a public Repository' do
         before :each do
-          @item.repository.public = true
+          item.repository.public = true
         end
         context 'and a non-public Collection' do
           context 'and a non-public Item' do
             it 'returns false' do
-              expect(@item.display?).to eq false
+              expect(item.display?).to eq false
             end
           end
           context 'and a public Item' do
             it 'returns false' do
-              @item.public = true
-              expect(@item.display?).to eq false
+              item.public = true
+              expect(item.display?).to eq false
             end
           end
         end
         context 'and a public Collection' do
           context 'and a non-public Item' do
             it 'returns false' do
-              expect(@item.display?).to eq false
+              expect(item.display?).to eq false
             end
           end
           context 'and a public Item' do
             it 'returns true' do
-              @item.public = true
-              expect(@item.display?).to eq false
+              item.public = true
+              expect(item.display?).to eq false
             end
           end
         end

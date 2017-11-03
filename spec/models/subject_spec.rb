@@ -9,18 +9,16 @@ RSpec.describe Subject, type: :model do
     expect(Subject.count).to eq 1
   end
   context 'when created' do
-    before :each do
-      @subject = Fabricate :subject
-    end
+    let(:subject) { Fabricate :subject }
     it 'has a name' do
-      expect(@subject.name).not_to be_empty
-      expect(@subject.name).to be_a String
+      expect(subject.name).not_to be_empty
+      expect(subject.name).to be_a String
     end
     it 'can have Collections' do
       Fabricate :repository
-      Collection.last.subjects << @subject
-      expect(@subject).to respond_to 'collections'
-      expect(@subject.collections.first).to be_a Collection
+      Collection.last.subjects << subject
+      expect(subject).to respond_to 'collections'
+      expect(subject.collections.first).to be_a Collection
     end
   end
 end

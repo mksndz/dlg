@@ -9,26 +9,24 @@ RSpec.describe TimePeriod, type: :model do
     expect(TimePeriod.count).to eq 1
   end
   context 'when created' do
-    before :each do
-      @time_period = Fabricate :time_period
-    end
+    let(:time_period) { Fabricate :time_period }
     it 'has a name' do
-      expect(@time_period.name).not_to be_empty
-      expect(@time_period.name).to be_a String
+      expect(time_period.name).not_to be_empty
+      expect(time_period.name).to be_a String
     end
     it 'has a start' do
-      expect(@time_period.start).not_to be_nil
-      expect(@time_period.start).to be_a Integer
+      expect(time_period.start).not_to be_nil
+      expect(time_period.start).to be_a Integer
     end
     it 'has a finish' do
-      expect(@time_period.finish).not_to be_nil
-      expect(@time_period.finish).to be_a Integer
+      expect(time_period.finish).not_to be_nil
+      expect(time_period.finish).to be_a Integer
     end
     it 'can have Collections' do
       Fabricate :repository
-      Collection.last.time_periods << @time_period
-      expect(@time_period).to respond_to 'collections'
-      expect(@time_period.collections.first).to be_a Collection
+      Collection.last.time_periods << time_period
+      expect(time_period).to respond_to 'collections'
+      expect(time_period.collections.first).to be_a Collection
     end
   end
 end

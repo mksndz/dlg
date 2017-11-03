@@ -19,3 +19,16 @@ Fabricator(:collection) do
   edm_is_shown_by ['http://dlg.galileo.usg.edu']
   dcterms_type ['Collection']
 end
+
+Fabricator(:empty_collection, from: :collection) do
+  repository(fabricator: :empty_repository)
+  portals { |attrs| attrs[:repository].portals }
+end
+
+Fabricator(:collection_with_repo_and_item, from: :collection) do
+  repository(fabricator: :empty_repository)
+  portals { |attrs| attrs[:repository].portals }
+  items(count: 1) do |attrs|
+    Fabricate.build(:item, portals: attrs[:repository].portals)
+  end
+end

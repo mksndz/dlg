@@ -9,28 +9,26 @@ RSpec.describe Portal, type: :model do
     expect(Portal.count).to eq 1
   end
   context 'when created' do
-    before :each do
-      @portal = Fabricate(:repository).portals.first
-    end
+    let(:portal) { Fabricate(:repository).portals.first }
     it 'has a name' do
-      expect(@portal.name).not_to be_empty
-      expect(@portal.name).to be_a String
+      expect(portal.name).not_to be_empty
+      expect(portal.name).to be_a String
     end
     it 'has a code' do
-      expect(@portal.name).not_to be_empty
-      expect(@portal.name).to be_a String
+      expect(portal.name).not_to be_empty
+      expect(portal.name).to be_a String
     end
     it 'has Items' do
-      expect(@portal).to respond_to 'items'
-      expect(@portal.items.first).to be_an Item
+      expect(portal).to respond_to 'items'
+      expect(portal.items.first).to be_an Item
     end
     it 'has Collections' do
-      expect(@portal).to respond_to 'collections'
-      expect(@portal.collections.first).to be_a Collection
+      expect(portal).to respond_to 'collections'
+      expect(portal.collections.first).to be_a Collection
     end
     it 'has repositories' do
-      expect(@portal).to respond_to 'repositories'
-      expect(@portal.repositories.first).to be_a Repository
+      expect(portal).to respond_to 'repositories'
+      expect(portal.repositories.first).to be_a Repository
     end
   end
 end

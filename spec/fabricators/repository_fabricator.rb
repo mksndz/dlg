@@ -20,3 +20,7 @@ Fabricator(:repository) do
     )
   end
 end
+
+Fabricator(:empty_repository, from: :repository) do
+  collections []
+end

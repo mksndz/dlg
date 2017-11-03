@@ -30,6 +30,19 @@ Fabricator(:item) do
   edm_is_shown_by ['http://dlg.galileo.usg.edu']
 end
 
+Fabricator(:item_with_parents, from: :item) do
+  repository(fabricator: :empty_repository)
+  collection do |attrs|
+    Fabricate.build(
+      :empty_collection,
+      portals: attrs[:repository].portals
+    )
+  end
+  portals do |attrs|
+    attrs[:repository].portals
+  end
+end
+
 Fabricator(:invalid_item) do
   slug do
     Faker::Internet.slug(
