@@ -1,2 +1,2 @@
 testrepo1_testcoll1_testitem1
-testrepo2_testcoll2_testitem2
+testrepo1_testcoll1_testitem2
