@@ -29,6 +29,13 @@ Fabricator(:collection_with_repo_and_item, from: :collection) do
   repository(fabricator: :empty_repository)
   portals { |attrs| attrs[:repository].portals }
   items(count: 1) do |attrs|
-    Fabricate.build(:item, portals: attrs[:repository].portals)
+    Fabricate.build(:robust_item, portals: attrs[:repository].portals)
+  end
+end
+Fabricator(:collection_with_repo_and_robust_item, from: :collection) do
+  repository(fabricator: :empty_repository)
+  portals { |attrs| attrs[:repository].portals }
+  items(count: 1) do |attrs|
+    Fabricate.build(:robust_item, portals: attrs[:repository].portals)
   end
 end

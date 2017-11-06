@@ -57,17 +57,14 @@ Fabricator(:invalid_item) do
   end
 end
 
-Fabricator(:item_with_two_spatial_values, from: :item) do
-  dcterms_spatial [
-    'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358',
-    'United States, Georgia, Fulton County, 33.7902836, -84.466986'
-  ]
-end
-
 Fabricator(:robust_item, from: :item) do
   dcterms_publisher { [Faker::University.name] }
   edm_is_shown_at { [Faker::Internet.url] }
   edm_is_shown_by { [Faker::Internet.url] }
   dcterms_identifier { [Faker::Internet.url] }
   dlg_subject_personal { [Faker::Name.name_with_middle] }
+  dcterms_spatial [
+    'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358',
+    'United States, Georgia, Fulton County, 33.7902836, -84.466986'
+  ]
 end

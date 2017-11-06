@@ -268,6 +268,10 @@ class Item < ActiveRecord::Base
     Collection.find(other_collections)
   end
 
+  def parent
+    collection
+  end
+
   private
 
   def set_record_id

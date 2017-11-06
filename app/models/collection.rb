@@ -229,6 +229,10 @@ class Collection < ActiveRecord::Base
     (other_repository_titles << repository.title).reverse
   end
 
+  def parent
+    repository
+  end
+
   private
 
   def reindex_display_values_for_children

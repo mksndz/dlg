@@ -338,7 +338,7 @@ en:
           could_not_commit: 'Commit Failed'
           empty_batch_commit: 'You cannot commit an empty Batch'
           has_invalid_batch_items: 'You cannot commit a Batch with invalid items'
-          contains_unassigned_collections: 'This batch contains records that would be added to Collections to which you are not assigned. Have  Super User commit the batch or remove the Items intended for the unassigned Collection.'
+          contains_unassigned_collections: 'This batch contains records that would be added to Collections to which you are not assigned. Have a Super User commit the batch or remove the Items intended for the unassigned Collection.'
           not_recreated: 'Batch could not be recreated.'
           batch_already_committed: 'Batch has already been committed'
     subject:
