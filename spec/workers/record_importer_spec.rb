@@ -251,9 +251,10 @@ describe RecordImporter, type: :model do
     end
     context 'with matching on db id' do
       before :each do
-        c = Fabricate :collection
+        c = Fabricate :empty_collection
         bi = Fabricate :batch_import_to_match_on_id
-        @item = Fabricate(:item) { collection { c } }
+        @item = Fabricate(:repository).items.first
+        @item.collection = c
         bi.xml = bi.xml.gsub '__ID__', @item.id.to_s
         bi.xml = bi.xml.gsub '__COLLECTION_RECORD_ID__', c.record_id
         bi.xml = bi.xml.gsub '__PORTAL_CODE__', Portal.last.code
