@@ -1,216 +1,123 @@
 require 'rails_helper'
 
 describe RecordImporter, type: :model do
-
   describe '#perform' do
-
     context 'with Item IDs' do
-
       it 'creates a Batch Item from an Item ID' do
-
-        i = Fabricate :item
-
-        batch_import = Fabricate(:batch_import) {
+        i = Fabricate(:repository).items.first
+        batch_import = Fabricate(:batch_import) do
           item_ids { [i.id] }
           format { 'search query' }
-        }
-
+        end
         expect{
           RecordImporter.perform(batch_import.id)
-        }.to change(BatchItem, :count).by(1)
-
+        }.to change(BatchItem, :count).by 1
         results = BatchImport.last.results
-
         expect(results['updated'].length).to eq 1
-
       end
-
       it 'records an error with an invalid ID' do
-
-        batch_import = Fabricate(:batch_import) {
+        batch_import = Fabricate(:batch_import) do
           item_ids { ['12345'] }
           format { 'search query' }
-        }
-
-        expect{
+        end
+        expect do
           RecordImporter.perform(batch_import.id)
-        }.to change(BatchItem, :count).by(0)
-
+        end.to change(BatchItem, :count).by 0
         results = BatchImport.last.results
-
         expect(results['failed'].length).to eq 1
-
       end
-
     end
-
     context 'with valid XML' do
-
-      let(:batch_import) {
-        Fabricate :batch_import
-      }
-
+      let(:batch_import) { Fabricate :batch_import }
       context 'with just valid XML' do
-
         before(:each) do
-
-          Fabricate(:portal) do
-            code 'georgia'
-          end
-
-          Fabricate(:repository) do
-            slug 'lpb'
-            collections { [Fabricate(:collection) { slug 'aa' }] }
-          end
-
-          Fabricate(:repository) do
-            slug 'geh'
-            collections { [Fabricate(:collection) { slug '0091' }] }
-          end
-
+          p = Fabricate(:portal, code: 'georgia')
+          r1 = Fabricate(:repository, slug: 'lpb', portals: [p])
+          r2 = Fabricate(:repository, slug: 'geh', portals: [p])
+          Fabricate(:collection, slug: 'aa', repository: r1, portals: [p])
+          Fabricate(:collection, slug: '0091', repository: r2, portals: [p])
         end
-
         it 'should create a BatchItem' do
-
-          expect{
+          expect do
             RecordImporter.perform(batch_import.id)
-          }.to change(BatchItem, :count).by(1)
-
+          end.to change(BatchItem, :count).by 1
         end
-
         it 'should create a BatchItem with a boolean local value' do
-
           RecordImporter.perform(batch_import.id)
-
           expect(BatchItem.last.local).to be true
-
         end
-
         it 'should create a BatchItem with dlg_subject_personal value' do
-
           RecordImporter.perform(batch_import.id)
-
           expect(BatchItem.last.dlg_subject_personal).to be_an Array
-
         end
-
         it 'should create a BatchItem with proper portal' do
-
           RecordImporter.perform(batch_import.id)
-
-           expect(BatchItem.last.portals).to include Portal.first
-
+           expect(BatchItem.last.portals).to include Portal.last
         end
-
         it 'should create a BatchItem with proper collection' do
-
           RecordImporter.perform(batch_import.id)
-
           expect(BatchItem.last.collection.slug).to eq '0091'
-
         end
-
         it 'should create a BatchItem with proper other_collections array' do
-
           RecordImporter.perform(batch_import.id)
-
           expect(BatchItem.last.other_collections).to eq [Collection.find_by_record_id('lpb_aa').id]
-
         end
-
         it 'should update BatchImport results appropriately' do
-
           RecordImporter.perform(batch_import.id)
-
           expect(
               batch_import.reload.results['added'].length
           ).to eq 1
-
         end
-
         it 'should create a BatchItem linked to an existing Item' do
-
-          i = Fabricate :item
-
+          i = Item.last
           c = Collection.find_by_record_id 'geh_0091'
-
           slug = batch_import.xml[/<slug>(.*?)<\/slug>/, 1]
           i.slug = slug
           i.collection = c
           i.save
-
           RecordImporter.perform(batch_import.id)
-
           expect(BatchItem.last.item).to eq i
-
         end
-
       end
-
       context 'with valid XML but no existing collection' do
-
         it 'should not create a BatchItem' do
-
           expect{
             RecordImporter.perform(batch_import.id)
           }.to change(BatchItem, :count).by(0)
-
         end
-
       end
-
     end
-
     context 'with unparseable xml' do
-
-      let(:batch_import) {
-        Fabricate(:batch_import) {
-          xml { '
-            <items><item>M</zzz>
-          ' }
-        }
-      }
-
+      let(:batch_import) do
+        Fabricate(:batch_import) { xml { '<items><item>M</zzz>' } }
+      end
       it 'should store a verbose error in results saying the XML could not be parsed' do
-
         RecordImporter.perform(batch_import.id)
-
         expect(
             batch_import.reload.results['failed'][0]['message']
         ).to include 'Fundamental XML parsing error:'
-
       end
-
     end
-
     context 'with xml with no item nodes' do
-
       let(:batch_import) {
         Fabricate(:batch_import) {
           xml { '<items><collection><slug>blah</slug></collection></items>' }
         }
       }
-
       it 'should store a verbose error in results saying no records found' do
-
         RecordImporter.perform(batch_import.id)
-
         expect(
           batch_import.reload.results['failed'][0]['message']
         ).to eq 'No records could be extracted from the XML'
-
       end
-
     end
-
     context 'with realistic xml' do
-
       before :each do
         @georgia_portal = Fabricate(:portal) { code { 'georgia' } }
         @crdl_portal = Fabricate(:portal) { code { 'crdl' } }
-        @collection = Fabricate :collection
-        @other_collection = Fabricate :collection
-        @other_collection2 = Fabricate :collection
+        @collection = Fabricate :empty_collection
+        @other_collection = Fabricate :empty_collection
+        @other_collection2 = Fabricate :empty_collection
         duplicate_date_xml = '<item>
             <dpla type="boolean">true</dpla>
             <public type="boolean">true</public>
@@ -311,7 +218,6 @@ describe RecordImporter, type: :model do
             </dcterms_description>
             <local type="boolean">true</local>
           </item>'
-
         duplicate_date_xml.sub! 'ugabma_wsbn', @collection.record_id
         duplicate_date_xml.sub! '__oc1__', @other_collection.record_id
         duplicate_date_xml.sub! '__oc2__', @other_collection2.record_id
@@ -321,37 +227,29 @@ describe RecordImporter, type: :model do
         RecordImporter.perform(bi.id)
         @batch_item = bi.batch.batch_items.first
       end
-
       it 'should not contain nested arrays' do
         expect(@batch_item.dc_date.first).not_to be_an Array
         expect(@batch_item.dcterms_spatial.first).not_to be_an Array
         expect(@batch_item.dcterms_temporal.first).not_to be_an Array
       end
-
       it 'should not contain duplicated array elements' do
         expect(@batch_item.dc_date).to eq ['1960']
         expect(@batch_item.dcterms_temporal).to eq ['1960']
         expect(@batch_item.dcterms_spatial).to eq ['Cuba', 'United States']
       end
-
       it 'should set multiple portal values properly' do
         expect(@batch_item.portals).to include @georgia_portal
         expect(@batch_item.portals).to include @crdl_portal
       end
-
       it 'should set multiple other_collection values properly' do
         expect(@batch_item.other_collections).to include @other_collection.id
         expect(@batch_item.other_collections).to include @other_collection2.id
       end
-
       it 'should trim leading and trailing whitespace from arrays of strings' do
         expect(@batch_item.dc_relation.first).to eq "Forms part of the online collection: Individuals Active in Civil Disturbances Collection\nNew Line"
       end
-
     end
-
     context 'with matching on db id' do
-
       before :each do
         c = Fabricate :collection
         bi = Fabricate :batch_import_to_match_on_id
@@ -363,13 +261,9 @@ describe RecordImporter, type: :model do
         RecordImporter.perform(bi.id)
         @batch_item = bi.batch.batch_items.first
       end
-
       it 'should link the BatchItem to the Item for updating' do
         expect(@batch_item.item).to eq @item
       end
-
     end
-
   end
-
 end

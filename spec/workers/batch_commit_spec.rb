@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 describe BatchCommitter, type: :model do
-
   describe '#perform' do
-
     context 'with a batch with no batch_items' do
       let(:batch) { Fabricate :batch }
       it 'should fail silently' do
@@ -12,7 +10,6 @@ describe BatchCommitter, type: :model do
         end.not_to raise_error
       end
     end
-
     context 'with a defunct batch_id' do
       it 'should raise JobFailedError' do
         expect do
@@ -20,7 +17,6 @@ describe BatchCommitter, type: :model do
         end.to raise_error JobFailedError
       end
     end
-
     context 'with valid batch_items' do
       let(:batch) { Fabricate(:batch) { batch_items(count: 2) } }
       it 'should commit the Batch' do
@@ -30,7 +26,6 @@ describe BatchCommitter, type: :model do
         expect(results).not_to be_empty
       end
     end
-
     context 'with an invalid batch_item' do
       let(:batch) { Fabricate(:batch) { batch_items(count: 2) } }
       it 'should fail to commit the Batch' do
@@ -42,11 +37,10 @@ describe BatchCommitter, type: :model do
         expect(batch.committed?).to eq nil
       end
     end
-
     context 'with a batch_items that will update an existing item' do
       let(:batch) { Fabricate(:batch) { batch_items(count: 1) } }
       it 'should commit the Batch and set the item relation' do
-        item = Fabricate :item
+        item = Fabricate(:repository).items.first
         batch.batch_items.first.item = item # update existing item
         batch.batch_items.first.save
         BatchCommitter.perform(batch.id)
@@ -57,7 +51,5 @@ describe BatchCommitter, type: :model do
         expect(results['items'][0]['item']).to eq item.id
       end
     end
-
   end
-
 end
