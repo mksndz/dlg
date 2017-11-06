@@ -70,6 +70,7 @@ RSpec.configure do |config|
     Collection.destroy_all
     Repository.destroy_all
     User.destroy_all
+    Portal.destroy_all
   }
 
   config.before(:all){
