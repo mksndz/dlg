@@ -17,7 +17,7 @@ module Portable
       end
     end
     validates_presence_of :portals, message: I18n.t('activerecord.errors.messages.portal')
-    validate :parent_has_portal_assigned, :no_children_assigned_portal
+    validate :parent_has_portal_assigned
   end
 
   def portal_names
@@ -59,6 +59,11 @@ module Portable
       return
     end
   end
+
+  # def portals_updated?
+  #   c = self.changed
+  #   c.includes? 'portals'
+  # end
 
   # def unassign_children(portal)
   #   touch
