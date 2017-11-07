@@ -42,6 +42,10 @@ RSpec.describe Collection, type: :model do
     it 'has a slug' do
       expect(collection.slug).not_to be_empty
     end
+    it 'has a record_id' do
+      expect(collection.record_id).to include collection.slug
+      expect(collection.record_id).to include collection.repository.slug
+    end
     it 'contains Items' do
       expect(collection.items.first).to be_kind_of Item
     end
@@ -70,6 +74,11 @@ RSpec.describe Collection, type: :model do
       collection.destroy
       i.reload
       expect(i.other_collections).to be_empty
+    end
+    it 'updates record_id value when slug changes' do
+      collection.slug = 'newslug'
+      collection.save
+      expect(collection.record_id).to include 'newslug'
     end
     context 'has a display value' do
       context 'for a non-public repository' do

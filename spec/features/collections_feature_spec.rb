@@ -156,9 +156,9 @@ feature 'Collections Management' do
     end
     context 'working with subjects' do
       before :each do
-        Fabricate(:empty_collection) {
+        Fabricate(:empty_collection) do
           subjects(count: 2)
-        }
+        end
         visit edit_collection_path(Collection.last)
       end
       scenario 'collection has checkboxes designating assigned subject categories' do
@@ -171,9 +171,9 @@ feature 'Collections Management' do
     end
     context 'working with time_periods' do
       before :each do
-        Fabricate(:collection) {
-          time_periods(count:2)
-        }
+        Fabricate(:empty_collection) do
+          time_periods(count: 2)
+        end
         visit edit_collection_path(Collection.last)
       end
       scenario 'collection has checkboxes designating assigned time periods' do

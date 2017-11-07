@@ -54,7 +54,7 @@ feature 'Item Management' do
     end
     context 'portal behavior' do
       scenario 'portals are displayed as badges on index' do
-        Fabricate(:item) { portals(count: 1) }
+        Fabricate :repository
         visit items_path
         within 'tbody' do
           expect(page).to have_css '.label-primary'
@@ -104,7 +104,8 @@ feature 'Item Management' do
       end
       scenario 'sorts by validity status' do
         Fabricate.times 2, :repository
-        invalid_item = Fabricate.build(:item) { dcterms_spatial [] }
+        invalid_item = Item.last
+        invalid_item.dcterms_title = []
         invalid_item.save(validate: false)
         visit items_path
         click_on I18n.t('meta.defaults.labels.columns.valid')
