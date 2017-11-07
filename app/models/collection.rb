@@ -19,8 +19,8 @@ class Collection < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :repository_id
 
   before_destroy :clear_from_other_collections
-  before_save :set_record_id
-  after_update :reindex_display_values_for_children
+  before_save :update_record_id
+  after_update :reindex_children
 
   def self.index_query_fields
     %w(repository_id public).freeze
@@ -195,10 +195,6 @@ class Collection < ActiveRecord::Base
 
   end
 
-  def computed_record_id
-    "#{repository.slug}_#{slug}"
-  end
-
   def repository_title
     repository.title
   end
@@ -235,12 +231,12 @@ class Collection < ActiveRecord::Base
 
   private
 
-  def reindex_display_values_for_children
+  def reindex_children
     Resque.enqueue(Reindexer, 'Item', items.map(&:id))
     true
   end
 
-  def set_record_id
+  def update_record_id
     self.record_id = "#{repository.slug}_#{slug}"
   end
 
