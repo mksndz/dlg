@@ -35,6 +35,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :test do
   gem 'resque_spec'
   gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-mocks'
   gem 'faker'
   gem 'fabrication'
   gem 'capybara'
