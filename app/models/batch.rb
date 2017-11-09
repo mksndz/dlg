@@ -36,12 +36,22 @@ class Batch < ActiveRecord::Base
     # There's also the Sunspot indexing of these objects
     transaction do
       batch_items.in_batches(of: 200).each_record do |bi|
+        retried = false
         begin
           results << convert_to_item(bi)
-        rescue StandardError => e
-          msg = "Commit of Batch #{id} encountered an error on BatchItem #{bi.id}: #{e.message}"
+        rescue Net::ReadTimeout => e
+          raise(StandardError, "Network Issue saving BatchItem #{bi.id}") if retried
+          sleep 120
+          retried = true
+          retry
+        rescue ActiveRecord::RecordInvalid => e
+          msg = "BatchItem #{bi.id} failed validations: #{e.message}"
           logger.error msg
-          raise StandardError, msg # raises exception to BatchCommitter job
+          raise StandardError, msg
+        rescue StandardError => e
+          msg = "BatchItem #{bi.id} failed: #{e.message}"
+          logger.error msg
+          raise StandardError, msg
         end
       end
     end
@@ -58,7 +68,7 @@ class Batch < ActiveRecord::Base
   def recreate
     batch = Batch.new
     batch.name = "RECREATED #{name}"
-    item_ids = get_created_item_ids
+    item_ids = created_item_ids
     batch.batch_items << batch_items_from_items(item_ids)
     batch
   end
@@ -91,7 +101,7 @@ class Batch < ActiveRecord::Base
     }
   end
 
-  def get_created_item_ids
+  def created_item_ids
     commit_results['items'].map do |r|
       r['item']
     end

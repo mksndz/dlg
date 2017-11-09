@@ -60,6 +60,12 @@ RSpec.describe BatchItem, type: :model do
         expect(ni).to be_an Item
         expect(ni.slug).to eq batch_item.slug
       end
+      it 'raises a validation exception when the commit result is saved' do
+        Fabricate :repository
+        batch_item.collection = Collection.first
+        ni = batch_item.commit
+        expect { ni.save! }.to raise_error ActiveRecord::RecordInvalid
+      end
     end
     context 'has previous and next methods' do
       let(:batch) { Fabricate(:batch) { batch_items(count: 3) } }

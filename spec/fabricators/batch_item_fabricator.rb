@@ -8,7 +8,7 @@ Fabricator :batch_item do
       '-'
     )
   end
-  collection { Fabricate(:repository).collections.first }
+  collection { Fabricate :empty_collection }
   portals do |attrs|
     attrs[:collection].portals
   end

@@ -4,10 +4,11 @@ describe BatchCommitter, type: :model do
   describe '#perform' do
     context 'with a batch with no batch_items' do
       let(:batch) { Fabricate :batch }
-      it 'should fail silently' do
-        expect do
-          BatchCommitter.perform(batch.id)
-        end.not_to raise_error
+      it 'should fail silently and add job message' do
+        BatchCommitter.perform batch.id
+        batch.reload
+        expect(batch.job_message).not_to be_nil
+        expect(batch.queued_for_commit_at).to be_nil
       end
     end
     context 'with a defunct batch_id' do

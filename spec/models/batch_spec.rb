@@ -51,20 +51,28 @@ RSpec.describe Batch, type: :model do
         i.save(validate: false)
         expect(batch.invalid_batch_items?).to be true
       end
-      it 'commits the batch and saves itself with results as JSON' do
-        batch.commit
-        expect(batch).to be_persisted
-        expect(batch.commit_results).to be_a Hash
-        expect(batch.commit_results['items']).to be_an Array
-        expect(batch.commit_results['items'].first).to be_a Hash
-      end
-      it 'recreates itself as a fresh batch referencing the current state of
+      context 'commit behavior' do
+        it 'commits the batch and saves itself with results as JSON' do
+          batch.commit
+          expect(batch).to be_persisted
+          expect(batch.commit_results).to be_a Hash
+          expect(batch.commit_results['items']).to be_an Array
+          expect(batch.commit_results['items'].first).to be_a Hash
+        end
+        it 'recreates itself as a fresh batch referencing the current state of
           Items' do
-        batch.commit
-        recreated = batch.recreate
-        expect(recreated.batch_items.length).to eq batch.batch_items.length
-        expect(recreated.batch_items.first.slug).to eq batch.batch_items.first.slug
-        expect(recreated.batch_items.first.item).to be_an Item
+          batch.commit
+          recreated = batch.recreate
+          expect(recreated.batch_items.length).to eq batch.batch_items.length
+          expect(recreated.batch_items.first.slug).to eq batch.batch_items.first.slug
+          expect(recreated.batch_items.first.item).to be_an Item
+        end
+        it 'handles validation errors on items' do
+          bi = batch.batch_items.first
+          bi.collection = Fabricate :empty_collection
+          bi.save
+          expect { batch.commit }.to raise_error StandardError, /failed validations/
+        end
       end
     end
   end
