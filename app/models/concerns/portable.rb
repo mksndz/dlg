@@ -1,14 +1,10 @@
 # shared behavior for entities belonging to a Portal
 module Portable
   extend ActiveSupport::Concern
-
   included do
-    # after_update :touch_portable
-
     has_many :portal_records, as: :portable
     has_many :portals,
-             # after_remove: :unassign_children,
-             # after_add: :update_children,
+             before_remove: :no_children_assigned_portal?,
              through: :portal_records do
       # ignore any attempt to add the same portal > 1 time
       def <<(value)
@@ -37,63 +33,28 @@ module Portable
     end
   end
 
-  def no_children_assigned_portal
+  def no_children_assigned_portal?(p)
     case self.class.to_s
     when 'Repository'
-      if PortalRecord.where(
+      children = PortalRecord.where(
         portable_type: 'Collection',
-        portal_id: portals.collect(&:id),
+        portal_id: p.id,
         portable_id: collections.pluck(:id)
-      ).any?
-        errors.add(:portals, I18n.t('activerecord.errors.messages.portals.collections_still_assigned'))
+      )
+      if children.any?
+        fail PortalError, "Cant remove Portal because Collection(s) #{children.pluck(:portable_id).join(', ')} remain assigned."
       end
     when 'Collection'
-      if PortalRecord.where(
+      children = PortalRecord.where(
         portable_type: 'Item',
-        portal_id: portals.collect(&:id),
+        portal_id: p.id,
         portable_id: items.pluck(:id)
-      ).any?
-        errors.add(:portals, I18n.t('activerecord.errors.messages.portals.items_still_assigned'))
+      )
+      if children.any?
+        fail PortalError, "Cant remove Portal because Items(s) #{children.pluck(:portable_id).join(', ')} remain assigned."
       end
     else
       return
     end
   end
-
-  # def portals_updated?
-  #   c = self.changed
-  #   c.includes? 'portals'
-  # end
-
-  # def unassign_children(portal)
-  #   touch
-  #   case self.class.to_s
-  #   when 'Collection'
-  #     remove_from items, portal
-  #   when 'Repository'
-  #     remove_from collections, portal
-  #     remove_from items, portal
-  #   end
-  #   true
-  # end
-  #
-  # def remove_from(children, portal)
-  #   children.update_all(updated_at: Time.now)
-  #   children.each do |c|
-  #     c.portals = c.portals.to_a - [portal]
-  #   end
-  # end
-  #
-  # def update_children(_)
-  #   touch if persisted?
-  #   case self.class.to_s
-  #   when 'Collection'
-  #     items.update_all(updated_at: Time.now)
-  #   when 'Repository'
-  #     collections.update_all(updated_at: Time.now)
-  #     items.update_all(updated_at: Time.now)
-  #   end
-  #   true
-  # end
-
 end

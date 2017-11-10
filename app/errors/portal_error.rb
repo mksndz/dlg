@@ -1,0 +1,2 @@
+class PortalError < StandardError
+end
