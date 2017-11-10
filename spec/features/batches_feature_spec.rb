@@ -66,26 +66,34 @@ feature 'Batches Management' do
         expect(page).to have_text count
       end
     end
-    scenario 'can commit a valid batch (run background jobs) and the created
-              item has correct portal values' do
-      ResqueSpec.reset!
-      batch = Fabricate(:batch, user: committer_user) do
-        batch_items(count: 1)
+    context 'commiting (run background jobs)' do
+      before :each do
+        ResqueSpec.reset!
+        batch = Fabricate(:batch, user: committer_user) do
+          batch_items(count: 1)
+        end
+        visit batch_path batch
+        Resque.enqueue(BatchCommitter, batch.id)
+        ResqueSpec.perform_all(:batch_commit_queue)
+        visit batches_path
+        click_on I18n.t('meta.batch.actions.results')
       end
-      visit batch_path batch
-      Resque.enqueue(BatchCommitter, batch.id)
-      ResqueSpec.perform_all(:batch_commit_queue)
-      visit batches_path
-      click_on I18n.t('meta.batch.actions.results')
-      expect(page).to have_current_path(results_batch_path(batch))
-      expect(page).to have_text batch.batch_items.first.slug
-      expect(page).not_to have_text I18n.t('meta.batch.labels.failed')
-      within 'table.successfully-committed-results-table tbody' do
-        expect(all('tr').length).to eq 1
+      scenario 'a valid batch results in items with correct portals' do
+        batch = Batch.last
+        expect(page).to have_current_path(results_batch_path(batch))
+        expect(page).to have_text batch.batch_items.first.slug
+        expect(page).not_to have_text I18n.t('meta.batch.labels.failed')
+        within 'table.successfully-committed-results-table tbody' do
+          expect(all('tr').length).to eq 1
+        end
+        expect(page).to have_link I18n.t('meta.batch.actions.view_item')
+        click_on I18n.t('meta.batch.actions.view_item')
+        expect(page).to have_text Portal.last.name
       end
-      expect(page).to have_link I18n.t('meta.batch.actions.view_item')
-      click_on I18n.t('meta.batch.actions.view_item')
-      expect(page).to have_text Portal.last.name
+      scenario 'created items show the batch item that created them' do
+        click_on I18n.t('meta.batch.actions.view_item')
+        expect(page).to have_link Batch.last.committed_at
+      end
     end
     context 'with deleted user handling' do
       before :each do
@@ -141,7 +149,7 @@ feature 'Batches Management' do
         expect(page).to have_text batch.job_message
       end
     end
-    context 'updating record_id and indexing behavior' do
+    context 'committing and updating records' do
       before :each do
         @new_slug = 'changed-slug'
         @item = Fabricate(:repository).items.first
@@ -149,17 +157,25 @@ feature 'Batches Management' do
         @batch = Fabricate :batch_for_updating_record_id
         @batch_item = BatchItem.last
         @batch_item.slug = @new_slug
+        @batch_item.collection = @item.collection
+        @batch_item.portals = @item.portals
         @batch_item.item = @item
         @batch.batch_items << @batch_item
+        @batch.commit
       end
       scenario 'can index a new record when changing slugs for items without
-                creating a duplicate' do
-        @batch.commit
+              creating a duplicate' do
         visit root_path
         fill_in 'title', with: ''
         click_button 'Search'
         expect(page).to have_text @new_slug
         expect(page).not_to have_text @old_slug
+      end
+      scenario 'updated item displays a previous version', versioning: true do
+        @item.reload
+        visit item_path @item
+        expect(page).to have_link I18n.t('meta.versions.action.diff')
+        expect(page).to have_text @item.paper_trail.previous_version.created_at
       end
     end
   end

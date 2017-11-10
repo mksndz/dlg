@@ -56,6 +56,8 @@ RSpec.describe BatchItem, type: :model do
       it 'replaces an existing Item with its attributes using commit' do
         i = Fabricate(:repository).items.first
         batch_item.item = i
+        batch_item.collection = i.collection
+        batch_item.portals = i.portals
         ni = batch_item.commit
         expect(ni).to be_an Item
         expect(ni.slug).to eq batch_item.slug

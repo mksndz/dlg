@@ -42,8 +42,11 @@ describe BatchCommitter, type: :model do
       let(:batch) { Fabricate(:batch) { batch_items(count: 1) } }
       it 'should commit the Batch and set the item relation' do
         item = Fabricate(:repository).items.first
-        batch.batch_items.first.item = item # update existing item
-        batch.batch_items.first.save
+        batch_item = batch.batch_items.first
+        batch_item.item = item # update existing item
+        batch_item.collection = item.collection
+        batch_item.portals = item.portals
+        batch_item.save
         BatchCommitter.perform(batch.id)
         batch.reload
         results = batch.commit_results

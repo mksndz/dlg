@@ -41,7 +41,8 @@ class BatchItem < ActiveRecord::Base
     item_id = attributes.delete('item_id')
     if item_id
       remove_existing_from_index(item) if batch_import.try(:match_on_id?) # de-index object since we are changing primary id
-      item.update attributes
+
+      item.update_attributes! attributes
     else
       self.item = Item.new attributes
     end
