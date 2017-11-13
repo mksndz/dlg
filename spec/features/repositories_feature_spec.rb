@@ -24,7 +24,7 @@ feature 'Repositories Management' do
         r = Fabricate(:repository)
         r2 = Fabricate(:repository)
         p = Fabricate :portal
-        r.portals = [p]
+        r.portals << p
         visit repositories_path
         chosen_select p.name, from: '_portal_id'
         find_button(I18n.t('meta.defaults.actions.filter')).click
@@ -37,8 +37,8 @@ feature 'Repositories Management' do
         r3 = Fabricate(:repository)
         p1 = Fabricate :portal
         p2 = Fabricate :portal
-        r.portals = [p1]
-        r2.portals = [p2]
+        r.portals << p1
+        r2.portals << p2
         visit repositories_path
         chosen_select p1.name, from: '_portal_id'
         chosen_select p2.name, from: '_portal_id'
@@ -82,9 +82,7 @@ feature 'Repositories Management' do
         expect(page).to have_text p2.name
       end
       scenario 'saves a new repository removing portal value', js: true do
-        r = Fabricate :repository
-        p = Fabricate :portal
-        r.portals = [p]
+        r = Fabricate :empty_repository
         visit edit_repository_path r
         within '#repository_portal_ids_chosen' do
           find('.search-choice-close').click

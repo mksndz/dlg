@@ -4,7 +4,7 @@ module Portable
   included do
     has_many :portal_records, as: :portable
     has_many :portals,
-             before_remove: :no_children_assigned_portal?,
+             before_remove: :no_children_assigned_portal!,
              through: :portal_records do
       # ignore any attempt to add the same portal > 1 time
       def <<(value)
@@ -12,8 +12,8 @@ module Portable
         super value
       end
     end
-    validates_presence_of :portals, message: I18n.t('activerecord.errors.messages.portal')
     validate :parent_has_portal_assigned
+    validates_presence_of :portals, message: I18n.t('activerecord.errors.messages.portal')
   end
 
   def portal_names
@@ -27,13 +27,13 @@ module Portable
   private
 
   def parent_has_portal_assigned
-    return unless respond_to? :parent
-    if !parent || (portals - parent.portals).any?
-      errors.add(:portals, I18n.t('activerecord.errors.messages.portals.parent_not_assigned'))
+    return unless respond_to?(:parent) && parent
+    unless (portals - parent.portals).empty?
+      errors.add :portals, I18n.t('activerecord.errors.messages.portals.parent_not_assigned')
     end
   end
 
-  def no_children_assigned_portal?(p)
+  def no_children_assigned_portal!(p)
     case self.class.to_s
     when 'Repository'
       children = PortalRecord.where(
