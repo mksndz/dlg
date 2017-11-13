@@ -99,7 +99,7 @@ class CollectionsController < RecordController
   end
 
   def portals_for_form
-    if @collection.persisted?
+    if @collection && @collection.persisted?
       @collection.repository.portals
     else
       Portal.all.order(:name)

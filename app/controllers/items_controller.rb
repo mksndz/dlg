@@ -12,7 +12,7 @@ class ItemsController < RecordController
   include Sorting
   include Filterable
 
-  before_action :set_data, only: [:new, :copy, :edit]
+  before_action :set_data, only: [:index, :new, :create, :edit, :update]
 
   def index
 
@@ -64,7 +64,6 @@ class ItemsController < RecordController
     if @item.save
       redirect_to item_path(@item), notice: I18n.t('meta.defaults.messages.success.created', entity: 'Item')
     else
-      set_data
       render :new, alert: I18n.t('meta.defaults.messages.errors.not_created', entity: 'Item')
     end
   end
@@ -82,7 +81,6 @@ class ItemsController < RecordController
     if @item.update item_params
       redirect_to item_path(@item), notice: I18n.t('meta.defaults.messages.success.updated', entity: 'Item')
     else
-      set_data
       render :edit, alert: I18n.t('meta.defaults.messages.errors.not_updated', entity: 'Item')
     end
   end
@@ -133,7 +131,7 @@ class ItemsController < RecordController
   end
 
   def portals_for_form
-    if @item.persisted?
+    if @item && @item.persisted?
       @item.collection.portals
     else
       Portal.all.order(:name)
