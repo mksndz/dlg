@@ -240,12 +240,16 @@ class RecordImporter
 
   def self.set_record_portals(portals_info)
     @record.portals = portals_info.map { |portal| Portal.find_by_code portal['code'] }
+  rescue StandardError => e
+    raise StandardError, 'Portal values could not be set.'
   end
 
   def self.set_record_other_colls(other_colls_info)
     @record.other_collections = other_colls_info.map do |other_coll|
       Collection.find_by_record_id(other_coll['record_id']).id if other_coll['record_id']
     end
+  rescue StandardError => e
+    raise StandardError, 'Other Collections values could not be set.'
   end
 
   def self.notify(msg)

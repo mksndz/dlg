@@ -266,5 +266,14 @@ describe RecordImporter, type: :model do
         expect(@batch_item.item).to eq @item
       end
     end
+    context 'for debugging xml' do
+#       it 'works' do
+#         x = ''
+#         bi = Fabricate :batch_import, xml: x
+#         r = Fabricate :empty_repository, slug: 'valdosta'
+#         Fabricate :empty_collection, slug: 'blc', repository: r
+#         RecordImporter.perform(bi.id)
+#       end
+    end
   end
 end
