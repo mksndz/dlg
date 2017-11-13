@@ -55,10 +55,20 @@ feature 'Collections Management' do
           click_button I18n.t('meta.defaults.actions.save')
           expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
         end
+        scenario 'only portals from parent repository are shown as options', js: true do
+          r = Fabricate :repository
+          p = Fabricate :portal
+          visit edit_collection_path Collection.last
+          portal_options = find_all('#collection_portal_ids_chosen').collect(&:text)
+          expect(portal_options.count).to eq r.portals.count
+          expect(portal_options.first).to eq r.portals.first.name
+          expect(portal_options).not_to include p.name
+        end
         scenario 'super user saves a new collection with a multiple portal values' do
           c = Fabricate :empty_collection
           p1 = Fabricate :portal
           p2 = Fabricate :portal
+          c.repository.portals << [p1, p2]
           visit edit_collection_path c
           select p1.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
           select p2.name, from: I18n.t('activerecord.attributes.collection.portal_ids')
@@ -75,6 +85,21 @@ feature 'Collections Management' do
           end
           click_button I18n.t('meta.defaults.actions.save')
           expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
+        end
+        scenario 'removing a portal value with children still assigned shows an error', js: true do
+          r = Fabricate :repository
+          c = r.collections.first
+          p = Fabricate(:portal)
+          r.portals << p
+          c.portals << p
+          visit edit_collection_path c
+          find_all('.search-choice').map do |e|
+            within e do
+              find('.search-choice-close').click
+            end if e.text == c.items.first.portals.last.name
+          end
+          click_button I18n.t('meta.defaults.actions.save')
+          expect(page).to have_text /#{c.items.first.id}/
         end
       end
       context 'includes other fields' do

@@ -8,7 +8,7 @@ module ErrorHandling
     end
 
     rescue_from ActiveRecord::RecordNotFound do |e|
-      redirect_to({action: 'index'}, alert: 'Record not found: ' + e.message)
+      redirect_to({ action: 'index' }, alert: 'Record not found: ' + e.message)
     end
 
   end

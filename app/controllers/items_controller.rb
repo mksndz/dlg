@@ -129,7 +129,15 @@ class ItemsController < RecordController
   def set_data
     @data = {}
     @data[:collections] = Collection.all.order(:display_title)
-    @data[:portals] = Portal.all.order(:name)
+    @data[:portals] = portals_for_form
+  end
+
+  def portals_for_form
+    if @item.persisted?
+      @item.collection.portals
+    else
+      Portal.all.order(:name)
+    end
   end
 
   def item_params

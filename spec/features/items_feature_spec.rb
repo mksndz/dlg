@@ -67,29 +67,39 @@ feature 'Item Management' do
         click_button I18n.t('meta.defaults.actions.save')
         expect(page).to have_current_path item_path(r.items.first)
       end
-      # TODO redo after form and validation changes
-      # scenario 'super user saves a new item with a multiple portal values' do
-      #   c1 = Fabricate :empty_collection
-      #   p1 = Fabricate :portal
-      #   p2 = Fabricate :portal
-      #   visit items_path
-      #   click_on I18n.t('meta.defaults.actions.edit')
-      #   select p1.name, from: I18n.t('activerecord.attributes.item.portal_ids')
-      #   select p2.name, from: I18n.t('activerecord.attributes.item.portal_ids')
-      #   click_button I18n.t('meta.defaults.actions.save')
-      #   expect(page).to have_current_path item_path(c1.items.first)
-      #   expect(page).to have_text p1.name
-      #   expect(page).to have_text p2.name
-      # end
-      # scenario 'saves a new item removing portal value' do
-      #   r = Fabricate :repository
-      #   visit edit_item_path(r.items.first)
-      #   within '#item_portal_ids_chosen' do
-      #     find('.search-choice-close').click
-      #   end
-      #   click_button I18n.t('meta.defaults.actions.save')
-      #   expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
-      # end
+      scenario 'saves a new item with a multiple portal values' do
+        r = Fabricate :repository
+        c = r.collections.first
+        p1 = Fabricate :portal
+        p2 = Fabricate :portal
+        r.portals = r.portals << [p1, p2]
+        c.portals << [p1, p2]
+        visit edit_item_path Item.last
+        select p1.name, from: I18n.t('activerecord.attributes.item.portal_ids')
+        select p2.name, from: I18n.t('activerecord.attributes.item.portal_ids')
+        click_button I18n.t('meta.defaults.actions.save')
+        expect(page).to have_current_path item_path(c.items.first)
+        expect(page).to have_text p1.name
+        expect(page).to have_text p2.name
+      end
+      scenario 'only portals from parent collection are shown as options', js: true do
+        c = Fabricate(:repository).collections.first
+        p = Fabricate :portal
+        visit edit_item_path c.items.first
+        portal_options = find_all('#item_portal_ids_chosen').collect(&:text)
+        expect(portal_options.count).to eq c.portals.count
+        expect(portal_options.first).to eq c.portals.first.name
+        expect(portal_options).not_to include p.name
+      end
+      scenario 'removing the only portal shows validation error', js: true do
+        r = Fabricate :repository
+        visit edit_item_path(r.items.first)
+        within '#item_portal_ids_chosen' do
+          find('.search-choice-close').click
+        end
+        click_button I18n.t('meta.defaults.actions.save')
+        expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
+      end
     end
     context 'sorting and limiting behavior' do
       scenario 'limited results show accurate total count' do

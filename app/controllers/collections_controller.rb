@@ -9,7 +9,7 @@ class CollectionsController < RecordController
   include Sorting
   include Filterable
 
-  before_action :set_data, only: [:new, :edit]
+  before_action :set_data, only: [:index, :new, :create, :edit, :update]
 
   def index
 
@@ -63,7 +63,6 @@ class CollectionsController < RecordController
       if @collection.save
         format.html { redirect_to collection_path(@collection), notice: I18n.t('meta.defaults.messages.success.created', entity: 'Collection') }
       else
-        set_data
         format.html { render :new }
       end
     end
@@ -77,9 +76,11 @@ class CollectionsController < RecordController
     if @collection.update collection_params
       redirect_to collection_path(@collection), notice: I18n.t('meta.defaults.messages.success.updated', entity: ('Collection'))
     else
-      set_data
       render :edit, alert: I18n.t('meta.defaults.messages.errors.not_updated', entity: 'Collection')
     end
+  rescue PortalError => e
+    @collection.errors.add :portals, e.message
+    render :edit, alert: I18n.t('meta.defaults.messages.errors.not_updated', entity: 'Repository')
   end
 
   def destroy
@@ -94,7 +95,15 @@ class CollectionsController < RecordController
     @data[:subjects] = Subject.all.order(:name)
     @data[:time_periods] = TimePeriod.all.order(:name)
     @data[:repositories] = Repository.all.order(:title)
-    @data[:portals] = Portal.all.order(:name)
+    @data[:portals] = portals_for_form
+  end
+
+  def portals_for_form
+    if @collection.persisted?
+      @collection.repository.portals
+    else
+      Portal.all.order(:name)
+    end
   end
 
   def collection_params

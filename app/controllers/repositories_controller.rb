@@ -58,6 +58,9 @@ class RepositoriesController < ApplicationController
     else
       render :edit, alert: I18n.t('meta.defaults.messages.errors.not_updated', entity: 'Repository')
     end
+  rescue PortalError => e
+    @repository.errors.add :portals, e.message
+    render :edit, alert: I18n.t('meta.defaults.messages.errors.not_updated', entity: 'Repository')
   end
 
   def destroy

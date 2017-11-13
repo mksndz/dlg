@@ -81,7 +81,7 @@ feature 'Repositories Management' do
         expect(page).to have_text p1.name
         expect(page).to have_text p2.name
       end
-      scenario 'saves a new repository removing portal value', js: true do
+      scenario 'removing the only portal value', js: true do
         r = Fabricate :empty_repository
         visit edit_repository_path r
         within '#repository_portal_ids_chosen' do
@@ -89,6 +89,18 @@ feature 'Repositories Management' do
         end
         click_button I18n.t('meta.defaults.actions.save')
         expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
+      end
+      scenario 'removing a portal value with children still assigned shows an error', js: true do
+        r = Fabricate :repository
+        r.portals << Fabricate(:portal)
+        visit edit_repository_path r
+        find_all('.search-choice').map do |e|
+          within e do
+            find('.search-choice-close').click
+          end if e.text == r.collections.first.portals.last.name
+        end
+        click_button I18n.t('meta.defaults.actions.save')
+        expect(page).to have_text /#{r.collections.first.id}/
       end
     end
     context 'default color' do
