@@ -72,29 +72,27 @@ class RecordImporter
   end
 
   def self.create_or_update_record(num, record_data)
-
     record_data = XmlImportHelper.prepare_item_hash(record_data)
-
     item_id = record_data.delete('id')
     collection_info = record_data.delete('collection')
-    add_failed(num, "No collection node could be extracted for record #{num}.") unless collection_info
+    unless collection_info
+      add_failed(num, "No collection node could be extracted for record #{num}.")
+      return
+    end
     collection_slug = collection_info.key?('slug') ? collection_info['slug'] : nil
     collection_record_id = collection_info.key?('record_id') ? collection_info['record_id'] : nil
-
     unless collection_slug || collection_record_id
       add_failed num, "Collection slug for record ##{num} could not be extracted from XML."
       return
     end
-
     collection = nil
     collection = Collection.find_by_slug collection_slug if collection_slug
     collection = Collection.find_by_record_id collection_record_id if collection_record_id
-
     unless collection
-      add_failed num, "Collection for record #{record_data['slug']} could not be found using slug: #{collection_slug}."
+      add_failed num, "Collection for record #{record_data['slug']} could not be found using record id: #{collection_record_id}." if collection_record_id
+      add_failed num, "Collection for record #{record_data['slug']} could not be found using slug: #{collection_slug}." if collection_slug
       return
     end
-
     if @batch_import.match_on_id?
       add_failed num, "Item with database ID #{id} not found." unless item_id
       item_lookup = Item.find item_id
@@ -106,7 +104,6 @@ class RecordImporter
       end
       record_data.delete 'id'
     end
-
     begin
       if item_lookup.is_a?(Item)
         action = :update
@@ -118,25 +115,19 @@ class RecordImporter
         action = :add
         create_new_record(record_data)
       end
-
     rescue StandardError => e
       add_failed num, "Generating BatchItem failed for record #{record_data['slug']}. Error: #{e} "
       return
     end
-
     @record.batch = @batch
     @record.collection = collection
-
     begin
-
       if @record.save(validate: @validate)
-
         if action == :update
           add_updated(@record.slug, @record.id, @record.item_id)
         else
           add_added(@record.slug, @record.id)
         end
-
       else
         add_failed(
           num,
@@ -144,23 +135,19 @@ class RecordImporter
           safe_record_slug
         ) # todo how best to write these errors to hash? could contain multiple validation messages
       end
-
     rescue ActiveRecord::RecordInvalid => e
       add_failed(
         num,
         "XML contains invalid record #{record_data['slug']}. Validation message: #{e}",
         safe_record_slug
       )
-
     rescue StandardError => e
       add_failed(
         num,
         "Could not save record #{record_data['slug']}. Error: #{e}",
         safe_record_slug
       )
-
     end
-
   end
 
   def self.safe_record_slug

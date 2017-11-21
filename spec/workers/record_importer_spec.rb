@@ -29,6 +29,15 @@ describe RecordImporter, type: :model do
     end
     context 'with valid XML' do
       let(:batch_import) { Fabricate :batch_import }
+      context 'with valid XML but no existing collection' do
+        it 'should not create a BatchItem' do
+          RecordImporter.perform batch_import.id
+          batch_import.reload
+          expect(batch_import.results['failed'][0]['message']).to(
+            include 'could not be found using record id: geh_0091'
+          )
+        end
+      end
       context 'with just valid XML' do
         before(:each) do
           p = Fabricate(:portal, code: 'georgia')
@@ -52,7 +61,7 @@ describe RecordImporter, type: :model do
         end
         it 'should create a BatchItem with proper portal' do
           RecordImporter.perform(batch_import.id)
-           expect(BatchItem.last.portals).to include Portal.last
+          expect(BatchItem.last.portals).to include Portal.last
         end
         it 'should create a BatchItem with proper collection' do
           RecordImporter.perform(batch_import.id)
@@ -77,13 +86,6 @@ describe RecordImporter, type: :model do
           i.save
           RecordImporter.perform(batch_import.id)
           expect(BatchItem.last.item).to eq i
-        end
-      end
-      context 'with valid XML but no existing collection' do
-        it 'should not create a BatchItem' do
-          expect{
-            RecordImporter.perform(batch_import.id)
-          }.to change(BatchItem, :count).by(0)
         end
       end
     end
