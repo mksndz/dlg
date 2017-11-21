@@ -45,6 +45,12 @@ module MetadataHelper
     end
   end
 
+  def all_rights_statements_uris
+    rights_statements.map do |r|
+      I18n.t :uri, scope: [:meta, :rights, r.to_sym]
+    end
+  end
+
   def all_rights_statements_for_select
     rights_statements.map do |r|
       [I18n.t(:label, scope: [:meta, :rights, r.to_sym]), I18n.t(:uri, scope: [:meta, :rights, r.to_sym])]

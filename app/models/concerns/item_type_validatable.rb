@@ -15,9 +15,20 @@ module ItemTypeValidatable
     validate :dc_date_characters
     validate :url_in_edm_is_shown_at
     validate :url_in_is_shown_by_when_local
+    validate :one_dc_right_present_and_valid
   end
 
   private
+
+  def one_dc_right_present_and_valid
+    if dc_right.empty?
+      errors.add :dc_right, I18n.t('activerecord.errors.messages.blank')
+    elsif dc_right.size > 1
+      errors.add :dc_right, I18n.t('activerecord.errors.messages.item_type.dc_right_not_single_valued')
+    elsif !dc_right.first.in? all_rights_statements_uris.to_set
+      errors.add :dc_right, I18n.t('activerecord.errors.messages.item_type.dc_right_not_approved')
+    end
+  end
 
   def subject_value_provided
     if dcterms_subject.empty? && dlg_subject_personal.empty?

@@ -325,6 +325,8 @@ en:
           edm_is_shown_by_when_local:
             blank: "cannot be blank when the item is local."
             url: "cannot contain an invalid URL when the item is local."
+          dc_right_not_single_valued: "can only contain a single value."
+          dc_right_not_approved: "can only be an approved value."
         repository:
           blank: 'must be provided (and in "latitude, longitude" format).'
           coordinates: 'are not in the proper format. Use "latitude, longitude".'

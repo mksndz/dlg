@@ -79,6 +79,23 @@ RSpec.describe Item, type: :model do
     i.valid?
     expect(i.errors).to have_key :dcterms_provenance
   end
+  it 'should not be valid if dc_right is empty' do
+    i = Fabricate.build(:item, dc_right: [])
+    i.valid?
+    expect(i.errors).to have_key :dc_right
+  end
+  it 'should not be valid if dc_right has >1 value' do
+    i = Fabricate.build :item, dc_right: %w(a b)
+    i.valid?
+    expect(i.errors).to have_key :dc_right
+    expect(i.errors[:dc_right]).to include I18n.t('activerecord.errors.messages.item_type.dc_right_not_single_valued')
+  end
+  it 'should not be valid if dc_right is not an approved URI' do
+    i = Fabricate.build :item, dc_right: ['http://not.approved.uri']
+    i.valid?
+    expect(i.errors).to have_key :dc_right
+    expect(i.errors[:dc_right]).to include I18n.t('activerecord.errors.messages.item_type.dc_right_not_approved')
+  end
   it 'should require a value in edm_is_shown_at' do
     i = Fabricate.build(:item, edm_is_shown_at: [])
     i.valid?

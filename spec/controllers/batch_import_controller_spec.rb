@@ -14,7 +14,9 @@ RSpec.describe BatchImportsController, type: :controller do
       <dc_format type="array">
         <dc_format>application/pdf</dc_format>
       </dc_format>
-      <dc_right type="array"/>
+      <dc_right type="array">
+        <dc_right>http://rightsstatements.org/vocab/InC/1.0/</dc_right>
+      </dc_right>
       <dc_date type="array">
         <dc_date>1912</dc_date>
       </dc_date>

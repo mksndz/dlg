@@ -18,7 +18,7 @@ Fabricator :batch_item do
   dcterms_type { [%w(StillImage Text).sample] }
   dcterms_subject { [%w(Athens Atlanta Augusta Macon).sample, 'Georgia'] }
   dc_date ['1999-2000']
-  dc_right ['CC NA']
+  dc_right [I18n.t('meta.rights.zero.uri')]
   dcterms_contributor ['DLG']
   dcterms_spatial { [%w(Athens Atlanta Augusta Macon).sample] }
   dcterms_provenance ['DLG']
