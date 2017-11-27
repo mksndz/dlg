@@ -349,25 +349,4 @@ RSpec.describe Item, type: :model do
       end
     end
   end
-  # context 'metadata field cleaning' do
-  #   before :each do
-  #     Fabricate :item do
-  #       dcterms_description { ['Blah blah<br><BR/><br />blahblah'] }
-  #       dcterms_title { ['<p><b>Blah</b> <i>blah</i></p>', '<u>Blah</u>', '<em>Blah</em><sup>1</sup>'] }
-  #       dc_relation { ['<a href="http://www.blah.edu">Blah</a>', '<a href="http://blahblah.edu">Blah blah</a>'] }
-  #     end
-  #   end
-  #
-  #   context 'html tags are converted or stripped' do
-  #     it 'converts <br> tags to newlines' do
-  #       expect(Item.last.dcterms_description).to eq ["Blah blah\n\n\nblahblah"]
-  #     end
-  #     it 'removes presentation-related html tags' do
-  #       expect(Item.last.dcterms_title).to eq ['Blah blah', 'Blah', 'Blah1']
-  #     end
-  #     it 'removes <a> links leaving only the link text' do
-  #       expect(Item.last.dc_relation).to eq ['Blah', 'Blah blah']
-  #     end
-  #   end
-  # end
 end

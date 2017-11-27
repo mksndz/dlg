@@ -1,12 +1,10 @@
-#
 # BatchItem model describes relations to Batch and Item records, as well as the
 # BatchItem commit process
-#
 class BatchItem < ActiveRecord::Base
   include Slugged
   include ItemTypeValidatable
   include Portable
-  # include ItemTypeCleaner
+  include ItemTypeCleaner
 
   belongs_to :batch, counter_cache: true
   belongs_to :batch_import, counter_cache: true
@@ -41,7 +39,6 @@ class BatchItem < ActiveRecord::Base
     item_id = attributes.delete('item_id')
     if item_id
       remove_existing_from_index(item) if batch_import.try(:match_on_id?) # de-index object since we are changing primary id
-
       item.update_attributes! attributes
     else
       self.item = Item.new attributes
@@ -74,21 +71,17 @@ class BatchItem < ActiveRecord::Base
       with_coordinates << spatial unless match_found
     end
     update_columns dcterms_spatial: with_coordinates
-
   end
 
   def get_matches_with_coordinates(spatial_term)
-
     Item.connection.select_all("
         SELECT DISTINCT * FROM (
           SELECT unnest(dcterms_spatial) spatial FROM items
         ) s WHERE spatial LIKE '#{spatial_term}%, %.%, %.%';
       ")
-
   end
 
   def remove_existing_from_index(item)
     Sunspot.remove item
   end
-
 end
