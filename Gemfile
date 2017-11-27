@@ -52,7 +52,6 @@ group :development do
 end
 
 gem 'blacklight', '>= 6.0.0'
-gem 'jettywrapper', '>= 2.0'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'rsolr'
 gem 'devise'
@@ -65,15 +64,12 @@ gem 'sunspot_rails'
 gem 'cancancan', '~> 1.15'
 gem 'jquery-turbolinks'
 gem 'blacklight_advanced_search'
-gem 'draper', '~> 1.3'
 gem 'gretel'
-gem 'delayed_job_active_record'
 gem 'paper_trail'
 gem 'diffy'
 gem 'multi-select-rails'
 gem 'blacklight-maps'
 gem 'blacklight-gallery'
-gem 'daemons'
 gem 'chosen-rails'
 gem 'redis'
 gem 'resque'
