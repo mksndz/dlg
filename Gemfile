@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5'
+gem 'rails', '~> 4.2.7.1'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -54,6 +54,7 @@ end
 gem 'blacklight', '>= 6.0.0'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'rsolr'
+gem 'delayed_job_active_record'
 gem 'devise'
 gem 'devise-guests', '~> 0.3'
 gem 'devise_invitable'
