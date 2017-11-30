@@ -19,9 +19,10 @@ module ApplicationHelper
   # truncate when displaying search results
   def truncate_index(options = {})
     truncate(
-        options[:value].join(I18n.t('support.array.two_words_connector')),
-        length: INDEX_TRUNCATION_VALUE,
-        omission: I18n.t('meta.search.index.truncated_field')
+      options[:value].join(I18n.t('support.array.words_connector')),
+      length: INDEX_TRUNCATION_VALUE,
+      omission: I18n.t('meta.search.index.truncated_field'),
+      escape: false
     )
   end
 

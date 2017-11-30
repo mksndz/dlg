@@ -160,19 +160,17 @@ feature 'Searching' do
     end
     context 'field truncation on index page behavior' do
       before :each do
-        long_description = []
-        501.times do
-          long_description << 'word '
-        end
+        big_description = []
+        600.times { big_description << '0123456789' }
         item = Fabricate(:repository).items.first
-        item.dcterms_description = [long_description.join]
+        item.dcterms_description = [big_description.join(' ')]
         item.save
         Sunspot.commit
         visit root_path
         fill_in 'title', with: ''
         click_button 'Search'
       end
-      scenario 'description field is truncated' do
+      scenario 'description field is truncated and contains no <br> tags' do
         description_displayed = find('dd.blacklight-dcterms_description_display').text
         expect(description_displayed.length).to eq 2500
         expect(description_displayed).to include I18n.t('meta.search.index.truncated_field')
