@@ -30,8 +30,14 @@ class RecordImporter
             node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
           count += 1
           record = Hash.from_xml(node.outer_xml)
-          add_failed(count, 'Item node could not be converted to hash.') unless record
-          add_failed(count, 'No Item node could be extraced from XML') unless record.key? 'item'
+          unless record
+            add_failed(count, 'Item node could not be converted to hash.')
+            next
+          end
+          unless record.key? 'item'
+            add_failed(count, 'No Item node could be extraced from XML')
+            next
+          end
           create_or_update_record count, record['item']
         end
       rescue Nokogiri::XML::SyntaxError => e
@@ -47,7 +53,7 @@ class RecordImporter
           batch_item.batch = @batch
           batch_item.save(validate: false)
           add_updated i.slug, batch_item.id, i.id
-        rescue ActiveRecord::RecordNotFound => ar_e
+        rescue ActiveRecord::RecordNotFound
           add_failed(index, "Record with ID #{id} could not be found to add to Batch.",)
         rescue StandardError => e
           add_failed(index, "Item #{i.record_id} could not be added to Batch: #{e}")
