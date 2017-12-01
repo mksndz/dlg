@@ -107,7 +107,7 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.10.0)
+    coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     crass (1.0.3)
     debug_inspector (0.0.2)
@@ -361,8 +361,7 @@ GEM
     websocket-extensions (0.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    xray-rails (0.1.21)
-      coffee-rails
+    xray-rails (0.3.1)
       rails (>= 3.1.0)
     yell (2.0.6)
 
