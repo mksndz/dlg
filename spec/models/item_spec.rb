@@ -18,6 +18,11 @@ RSpec.describe Item, type: :model do
     i.valid?
     expect(i.errors).to have_key :dc_date
   end
+  it 'should require a dc_date value that is not blank' do
+    i = Fabricate.build(:item, dc_date: [''])
+    i.valid?
+    expect(i.errors).to have_key :dc_date
+  end
   it 'should require a dcterms_spatial value' do
     i = Fabricate.build(:item, dcterms_spatial: [])
     i.valid?

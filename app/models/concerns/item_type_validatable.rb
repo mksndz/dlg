@@ -37,7 +37,7 @@ module ItemTypeValidatable
   end
 
   def dc_date_characters
-    if dc_date.empty?
+    if dc_date.empty? || dc_date.reject(&:blank?).empty?
       errors.add(:dc_date, I18n.t('activerecord.errors.messages.blank'))
       return
     end
