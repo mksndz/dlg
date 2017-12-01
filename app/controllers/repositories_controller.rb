@@ -76,23 +76,12 @@ class RepositoriesController < ApplicationController
   end
 
   def repository_params
-    params.require(:repository).permit(
-      :slug,
-      :title,
-      :teaser,
-      :short_description,
-      :description,
-      :coordinates,
-      :color,
-      :public,
-      :in_georgia,
-      :thumbnail_path,
-      :homepage_url,
-      :directions_url,
-      :address,
-      :strengths,
-      :contact,
-      portal_ids: []
+    params
+      .require(:repository)
+      .permit(:slug, :title, :teaser, :short_description, :description,
+              :coordinates, :color, :public, :in_georgia, :homepage_url,
+              :directions_url, :address, :strengths, :contact, :thumbnail_path,
+              portal_ids: []
     )
   end
 
