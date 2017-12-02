@@ -47,12 +47,15 @@ describe BatchCommitter, type: :model do
         batch_item.collection = item.collection
         batch_item.portals = item.portals
         batch_item.save
-        BatchCommitter.perform(batch.id)
+        with_versioning do
+          BatchCommitter.perform(batch.id)
+        end
         batch.reload
         results = batch.commit_results
         expect(results['items']).not_to be_empty
         expect(results['items'][0]['item_updated']).to be_truthy
         expect(results['items'][0]['item']).to eq item.id
+        expect(item.paper_trail.previous_version).to be_truthy
       end
     end
   end

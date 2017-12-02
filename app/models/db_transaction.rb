@@ -11,7 +11,7 @@
 #
 # Usage:
 #
-# DatabaseTransaction.new.perform do
+# DbTransaction.new.perform do
 #   # Your code that creates a large number of ActiveRecord models
 # end
 #

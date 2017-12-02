@@ -30,11 +30,11 @@ class Batch < ActiveRecord::Base
   def commit
     logger = Logger.new('./log/batch_commit.log')
     results = []
-    # TODO: this remains a huge memory hog, most likely as a result of the
-    # ItemVersions being created by the BatchItem.commit operation
-    # Consider disabling this transaction or the use of PaperTrail
-    # There's also the Sunspot indexing of these objects
-    transaction do
+    # Special DbTransaction class used here to mitigate huge memory usage when
+    # committing large batches. Removes and holds Item callbacks in until
+    # transaction completes, then runs them. This prevents AR from holding the
+    # models in memory until the transaction completes.
+    DbTransaction.new(Item).perform do
       batch_items.in_batches(of: 200).each_record do |bi|
         retried = false
         begin

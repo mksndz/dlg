@@ -66,7 +66,7 @@ feature 'Batches Management' do
         expect(page).to have_text count
       end
     end
-    context 'commiting (run background jobs)' do
+    context 'committing (run background jobs)' do
       before :each do
         ResqueSpec.reset!
         batch = Fabricate(:batch, user: committer_user) do
@@ -75,24 +75,40 @@ feature 'Batches Management' do
         visit batch_path batch
         Resque.enqueue(BatchCommitter, batch.id)
         ResqueSpec.perform_all(:batch_commit_queue)
-        visit batches_path
-        click_on I18n.t('meta.batch.actions.results')
       end
-      scenario 'a valid batch results in items with correct portals' do
-        batch = Batch.last
-        expect(page).to have_current_path(results_batch_path(batch))
-        expect(page).to have_text batch.batch_items.first.slug
-        expect(page).not_to have_text I18n.t('meta.batch.labels.failed')
-        within 'table.successfully-committed-results-table tbody' do
-          expect(all('tr').length).to eq 1
+      context 'and viewing results' do
+        before :each do
+          visit batches_path
+          click_on I18n.t('meta.batch.actions.results')
         end
-        expect(page).to have_link I18n.t('meta.batch.actions.view_item')
-        click_on I18n.t('meta.batch.actions.view_item')
-        expect(page).to have_text Portal.last.name
+        scenario 'a valid batch results in items with correct portals' do
+          batch = Batch.last
+          expect(page).to have_current_path(results_batch_path(batch))
+          expect(page).to have_text batch.batch_items.first.slug
+          expect(page).not_to have_text I18n.t('meta.batch.labels.failed')
+          within 'table.successfully-committed-results-table tbody' do
+            expect(all('tr').length).to eq 1
+          end
+          expect(page).to have_link I18n.t('meta.batch.actions.view_item')
+          click_on I18n.t('meta.batch.actions.view_item')
+          expect(page).to have_text Portal.last.name
+        end
+        scenario 'created items show the batch item that created them' do
+          click_on I18n.t('meta.batch.actions.view_item')
+          expect(page).to have_link Batch.last.committed_at
+        end
       end
-      scenario 'created items show the batch item that created them' do
-        click_on I18n.t('meta.batch.actions.view_item')
-        expect(page).to have_link Batch.last.committed_at
+      context 'items are updated as expected in all areas' do
+        before :each do
+          Sunspot.commit
+          visit root_path
+          fill_in 'title', with: ''
+          click_button 'Search'
+        end
+        scenario 'items are indexed' do
+          expect(page).to have_css('.document')
+          expect(page).to have_text BatchItem.last.record_id
+        end
       end
     end
     context 'with deleted user handling' do
