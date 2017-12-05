@@ -18,7 +18,7 @@ class RecordImporter
     @failed = []
 
     import_type = @batch_import.format
-    notify "Starting BatchImport from `#{import_type}` with ID `#{batch_import_id}`."
+    notify "XML Import `#{batch_import_id}` initiated by `#{@batch_import.batch.user.email}`."
 
     case import_type
     when 'file', 'text'
@@ -35,7 +35,7 @@ class RecordImporter
             next
           end
           unless record.key? 'item'
-            add_failed(count, 'No Item node could be extraced from XML')
+            add_failed(count, 'No Item node could be extracted from XML')
             next
           end
           create_or_update_record count, record['item']
@@ -217,7 +217,7 @@ class RecordImporter
   end
 
   def self.total_failure(msg)
-    notify "Batch Import (`#{@batch_import.id}`) failed: #{msg}"
+    notify "Batch Import `#{@batch_import.id}` failed: #{msg}"
     add_failed 0, msg
     # @batch_import.results = {
     #   added: @added,

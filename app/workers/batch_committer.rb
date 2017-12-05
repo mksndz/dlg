@@ -10,7 +10,7 @@ class BatchCommitter
       note_failure "Batch #{@batch.id} has no BatchItems and will not be committed"
       return
     end
-    notify "Committing Batch `#{@batch.id}` containing `#{@batch.batch_items.count}` items"
+    notify "Committing Batch #{@batch.name} (`#{@batch.id}`) from `#{@batch.user.email}` containing `#{@batch.batch_items.count}` items."
     begin
       @batch.commit
     rescue StandardError => e
