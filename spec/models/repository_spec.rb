@@ -33,6 +33,12 @@ RSpec.describe Repository, type: :model do
     r.valid?
     expect(r.errors).to have_key :coordinates
   end
+  it 'requires a unique slug' do
+    r = Fabricate :repository
+    r2 = Fabricate.build(:repository, slug: r.slug)
+    r2.valid?
+    expect(r2.errors).to have_key :slug
+  end
   context 'when created' do
     let(:repository) { Fabricate :repository }
     it 'has a Portal value' do

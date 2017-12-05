@@ -10,6 +10,7 @@ class Repository < ActiveRecord::Base
   scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
 
   validates_presence_of :title
+  validates_uniqueness_of :slug
   validate :coordinates_format
 
   after_update :reindex_display_values_for_children

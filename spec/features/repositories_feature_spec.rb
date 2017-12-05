@@ -12,7 +12,7 @@ feature 'Repositories Management' do
     end
     context 'validation' do
       scenario 'requires a coordinates value' do
-        Fabricate :portal
+        Fabricate :empty_repository
         visit new_repository_path
         fill_in I18n.t('activerecord.attributes.repository.title'), with: 'Test'
         click_on I18n.t('meta.defaults.actions.save')
