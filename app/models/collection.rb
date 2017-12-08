@@ -219,11 +219,11 @@ class Collection < ActiveRecord::Base
   end
 
   def other_repository_titles
-    Repository.find(other_repositories).map(&:title)
+    Repository.find(other_repositories).map(&:title).uniq
   end
 
   def repository_titles
-    (other_repository_titles << repository.title).reverse
+    (other_repository_titles << repository.title).reverse.uniq
   end
 
   def parent

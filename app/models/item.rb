@@ -206,11 +206,11 @@ class Item < ActiveRecord::Base
   end
 
   def collection_titles
-    (other_collection_titles << collection.title).reverse
+    (other_collection_titles << collection.title).reverse.uniq
   end
 
   def repository_titles
-    (other_repository_titles << repository.title).reverse
+    (other_repository_titles << repository.title).reverse.uniq
   end
 
   def title

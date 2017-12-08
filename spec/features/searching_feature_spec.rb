@@ -118,6 +118,20 @@ feature 'Searching' do
       #   expect(page).to have_link url
       # end
     end
+    context 'other_* display' do
+      scenario 'with an other_collection value' do
+        Fabricate :repository
+        i = Item.last
+        i.other_collections << Fabricate(:empty_collection, repository: Repository.last, portals: i.portals).id
+        i.save
+        Sunspot.commit
+        visit blacklight_advanced_search_engine.advanced_search_path
+        fill_in 'record_id', with: i.record_id
+        click_button 'Search'
+        repo_name_dd = find_all('dd.blacklight-repository_name_sms')[0].text
+        expect(repo_name_dd.scan(/Repo/).length).to eq 1
+      end
+    end
     context 'add to batch functionality' do
       context 'when everything goes smoothly' do
         before :each do
