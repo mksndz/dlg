@@ -141,6 +141,7 @@ class Collection < ActiveRecord::Base
     text :dcterms_identifier
     text :dcterms_rights_holder
     text :dlg_subject_personal
+    text :dcterms_provenance
 
     string :title, as: 'title' do
       dcterms_title.first ? dcterms_title.first : slug

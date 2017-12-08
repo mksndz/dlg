@@ -234,5 +234,14 @@ feature 'Advanced Searching' do
       click_button 'Search'
       expect(all('.edit-record').count).to eq 1
     end
+    scenario 'provenance search returns results only relevant results' do
+      @item.dcterms_provenance = ['ZZZZZZZZZZZZZZZZZZZ']
+      @item.save
+      Sunspot.commit
+      visit blacklight_advanced_search_engine.advanced_search_path
+      fill_in 'provenance', with: 'ZZZZZZZZZZZZZZZZZZZ'
+      click_button 'Search'
+      expect(all('.edit-record').count).to eq 1
+    end
   end
 end

@@ -155,6 +155,7 @@
   <copyField source="dcterms_is_part_of_text"    dest="is_part_of_unstem_search" />
   <copyField source="dc_identifier_text"         dest="identifier_unstem_search" />
   <copyField source="dcterms_rights_holder_text" dest="dcterms_rights_holder_unstem_search" />
+  <copyField source="dcterms_provenance_text"    dest="dcterms_provenance_unstem_search" />
 
   <!-- facet fields -->
   <copyField source="dcterms_provenance_display"     dest="provenance_facet" />

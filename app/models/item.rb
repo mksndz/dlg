@@ -140,6 +140,7 @@ class Item < ActiveRecord::Base
     text :dcterms_identifier
     text :dcterms_rights_holder
     text :dlg_subject_personal
+    text :dcterms_provenance
 
     # special indexing for url fields - now set via copyFields in solr config
     # string :dcterms_identifier, as: 'dcterms_identifier_url', multiple: true

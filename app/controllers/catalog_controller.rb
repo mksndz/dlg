@@ -252,6 +252,15 @@ class CatalogController < ApplicationController
       }
     end
 
+    # provenance
+    config.add_search_field('provenance') do |field|
+      field.label = 'Holding Inst.'
+      field.solr_local_parameters = {
+          qf: 'dcterms_provenance_text^500 dcterms_provenance_unstem_search^50',
+          pf: 'dcterms_provenence_text^500 dcterms_provenance_unstem_search^50'
+      }
+    end
+
     # contributor
     config.add_search_field('contributor') do |field|
       field.label = 'Contributor'
@@ -351,7 +360,7 @@ class CatalogController < ApplicationController
       }
     end
 
-    # identifier
+    # rights holder
     config.add_search_field('rights_holder') do |field|
       field.label = 'Rights Holder'
       field.solr_local_parameters = {
