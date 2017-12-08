@@ -385,30 +385,14 @@
   <requestHandler name="/analysis/field" class="solr.FieldAnalysisRequestHandler" />
 
   <!-- Blacklight query handlers -->
+  <!--- "search" - for DLGAdmin -->
   <requestHandler name="search" class="solr.SearchHandler" default="true">
-    <!-- default values for query parameters can be specified, these
-         will be overridden by parameters in the request
-      -->
     <lst name="defaults">
       <str name="defType">dismax</str>
       <str name="echoParams">explicit</str>
       <int name="rows">10</int>
       <str name="q.alt">*:*</str>
       <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
-
-      <!-- this qf and pf are used by default, if not otherwise specified by
-           client. The default blacklight_config will use these for the
-           "keywords" search. See the author_qf/author_pf, title_qf, etc
-           below, which the default blacklight_config will specify for
-           those searches. You may also be interested in:
-           http://wiki.apache.org/solr/LocalParams
-      -->
-
-      <!--
-       You use the qf parameter to tell the dismax query parser which fields you want to
-       search and their corresponding score boosts.
-       -->
-
       <str name="qf">
         title_unstem_search^100
         creator_unstem_search^100
@@ -436,11 +420,6 @@
         dcterms_is_part_of_text
         dcterms_identifier_text
       </str>
-
-      <!-- the pf parameter, which is an abbreviation of "phrase fields". The syntax
-           is identical to qf. You should start with the same value and then make adjustments.
-           -->
-
       <str name="pf">
         title_unstem_search^100
         creator_unstem_search^100
@@ -468,66 +447,42 @@
         dcterms_is_part_of_text
         dcterms_identifier_text
       </str>
-
       <str name="title_qf">
         title_unstem_search^100
         dcterms_title_text
       </str>
-
       <str name="title_pf">
         title_unstem_search^100
         dcterms_title_text
       </str>
-
       <str name="description_qf">
         description_unstem_search^100
         dcterms_description
       </str>
-
       <str name="subject_qf">
         subject_unstem_search^100
         dcterms_subject_text
       </str>
-
       <str name="subject_pf">
         subject_unstem_search^100
         dcterms_subject_text
       </str>
-
       <str name="creator_qf">
         creator_unstem_search^100
         dcterms_creator_text
       </str>
-
       <str name="creator_pf">
         creator_unstem_search^100
         dcterms_creator_text
       </str>
-
-      <!-- phrase slop -->
       <int name="ps">3</int>
-
       <float name="tie">0.01</float>
-
-      <!--
-       This parameter can be used to specify a set of fields to return, limiting
-       the amount of information in the response. When returning the results to
-       the client, only fields in this list will be included.
-       The set of fields to be returned can be specified as a space (or comma)
-       separated list of field names. The string "score" can be used to
-       indicate that the score of each document for the particular query
-       should be returned as a field, and the string "*" can be used to
-       indicate all stored fields the document has.
-     -->
-
       <str name="fl">
         *,
         score
       </str>
-
       <str name="facet">true</str>
       <str name="facet.mincount">1</str>
-
       <str name="facet.field">public_b</str>
       <str name="facet.field">dpla_b</str>
       <str name="facet.field">counties_facet</str>
@@ -550,68 +505,149 @@
       <str name="facet.field">collection_name_sms</str>
       <str name="facet.field">class_name</str>
       <str name="facet.field">portal_names_sms</str>
-
       <str name="spellcheck">false</str>
       <str name="spellcheck.dictionary">default</str>
       <str name="spellcheck.onlyMorePopular">true</str>
       <str name="spellcheck.extendedResults">true</str>
       <str name="spellcheck.collate">true</str>
       <str name="spellcheck.count">5</str>
-
     </lst>
-    <!-- In addition to defaults, "appends" params can be specified
-         to identify values which should be appended to the list of
-         multi-val params from the query (or the existing "defaults").
-      -->
-    <!-- In this example, the param "fq=instock:true" would be appended to
-         any query time fq params the user may specify, as a mechanism for
-         partitioning the index, independent of any user selected filtering
-         that may also be desired (perhaps as a result of faceted searching).
-         NOTE: there is *absolutely* nothing a client can do to prevent these
-         "appends" values from being used, so don't use this mechanism
-         unless you are sure you always want it.
-      -->
-    <!--
-       <lst name="appends">
-         <str name="fq">inStock:true</str>
-       </lst>
-      -->
-    <!-- "invariants" are a way of letting the Solr maintainer lock down
-         the options available to Solr clients.  Any params values
-         specified here are used regardless of what values may be specified
-         in either the query, the "defaults", or the "appends" params.
-         In this example, the facet.field and facet.query params would
-         be fixed, limiting the facets clients can use.  Faceting is
-         not turned on by default - but if the client does specify
-         facet=true in the request, these are the only facets they
-         will be able to see counts for; regardless of what other
-         facet.field or facet.query params they may specify.
-         NOTE: there is *absolutely* nothing a client can do to prevent these
-         "invariants" values from being used, so don't use this mechanism
-         unless you are sure you always want it.
-      -->
-    <!--
-       <lst name="invariants">
-         <str name="facet.field">cat</str>
-         <str name="facet.field">manu_exact</str>
-         <str name="facet.query">price:[* TO 500]</str>
-         <str name="facet.query">price:[500 TO *]</str>
-       </lst>
-      -->
-    <!-- If the default list of SearchComponents is not desired, that
-         list can either be overridden completely, or components can be
-         prepended or appended to the default list.  (see below)
-      -->
-    <!--
-       <arr name="components">
-         <str>nameOfCustomComponent1</str>
-         <str>nameOfCustomComponent2</str>
-       </arr>
-      -->
     <arr name="last-components">
       <str>spellcheck</str>
     </arr>
-
+  </requestHandler>
+  <!--- "public" - for DLGAdmin -->
+  <requestHandler name="public" class="solr.SearchHandler" default="false">
+    <lst name="defaults">
+      <str name="defType">dismax</str>
+      <str name="echoParams">explicit</str>
+      <int name="rows">10</int>
+      <str name="q.alt">*:*</str>
+      <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
+      <str name="qf">
+        title_unstem_search^100
+        creator_unstem_search^100
+        contributor_unstem_search^100
+        subject_unstem_search^100
+        description_unstem_search^100
+        provenance_unstem_search^100
+        publisher_unstem_search^100
+        date_unstem_search^100
+        temporal_unstem_search^100
+        spatial_unstem_search^100
+        is_part_of_unstem_search^100
+        identifier_unstem_search^100
+        edm_is_shown_at_text^100
+        edm_is_shown_by_text^100
+        dc_right_text^100
+        dc_right_unstem_search
+        dcterms_title_text
+        dcterms_creator_text
+        dcterms_contributor_text
+        dcterms_subject_text
+        dcterms_description_text
+        dcterms_provenance_text
+        dcterms_publisher_text
+        dcterms_temporal_text
+        dcterms_spatial_text
+        dcterms_is_part_of_text
+        dcterms_identifier_text
+      </str>
+      <str name="pf">
+        title_unstem_search^100
+        creator_unstem_search^100
+        contributor_unstem_search^100
+        subject_unstem_search^100
+        description_unstem_search^100
+        provenance_unstem_search^100
+        publisher_unstem_search^100
+        date_unstem_search^100
+        temporal_unstem_search^100
+        spatial_unstem_search^100
+        is_part_of_unstem_search^100
+        identifier_unstem_search^100
+        edm_is_shown_at_text^100
+        edm_is_shown_by_text^100
+        dc_right_text^100
+        dc_right_unstem_search
+        dcterms_title_text
+        dcterms_creator_text
+        dcterms_contributor_text
+        dcterms_subject_text
+        dcterms_description_text
+        dcterms_provenance_text
+        dcterms_publisher_text
+        dcterms_temporal_text
+        dcterms_spatial_text
+        dcterms_is_part_of_text
+        dcterms_identifier_text
+      </str>
+      <str name="title_qf">
+        title_unstem_search^100
+        dcterms_title_text
+      </str>
+      <str name="title_pf">
+        title_unstem_search^100
+        dcterms_title_text
+      </str>
+      <str name="description_qf">
+        description_unstem_search^100
+        dcterms_description
+      </str>
+      <str name="description_pf">
+        description_unstem_search^100
+        dcterms_description
+      </str>
+      <str name="subject_qf">
+        subject_unstem_search^100
+        dcterms_subject_text
+      </str>
+      <str name="subject_pf">
+        subject_unstem_search^100
+        dcterms_subject_text
+      </str>
+      <str name="creator_qf">
+        creator_unstem_search^100
+        dcterms_creator_text
+      </str>
+      <str name="creator_pf">
+        creator_unstem_search^100
+        dcterms_creator_text
+      </str>
+      <int name="ps">3</int>
+      <float name="tie">0.01</float>
+      <str name="fl">
+        *,
+        score
+      </str>
+      <str name="facet">true</str>
+      <str name="facet.mincount">1</str>
+      <str name="facet.field">counties_facet</str>
+      <str name="facet.field">provenance_facet</str>
+      <str name="facet.field">creator_facet</str>
+      <str name="facet.field">contributor_facet</str>
+      <str name="facet.field">subject_facet</str>
+      <str name="facet.field">year_facet</str>
+      <str name="facet.field">temporal_facet</str>
+      <str name="facet.field">location_facet</str>
+      <str name="facet.field">format_facet</str>
+      <str name="facet.field">rights_facet</str>
+      <str name="facet.field">rights_holder_facet</str>
+      <str name="facet.field">relation_facet</str>
+      <str name="facet.field">type_facet</str>
+      <str name="facet.field">medium_facet</str>
+      <str name="facet.field">language_facet</str>
+      <str name="facet.field">collection_name_sms</str>
+      <str name="spellcheck">false</str>
+      <str name="spellcheck.dictionary">default</str>
+      <str name="spellcheck.onlyMorePopular">true</str>
+      <str name="spellcheck.extendedResults">true</str>
+      <str name="spellcheck.collate">true</str>
+      <str name="spellcheck.count">5</str>
+    </lst>
+    <arr name="last-components">
+      <str>spellcheck</str>
+    </arr>
   </requestHandler>
 
   <!-- for requests to get a single document; use id=666 instead of q=id:666 -->
