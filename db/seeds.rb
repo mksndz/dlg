@@ -21,7 +21,6 @@ end
     repositories_users
     collections_subjects
     searches
-    delayed_jobs
     bookmarks
 ).each do |j|
     ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{j} RESTART IDENTITY CASCADE;")
