@@ -48,6 +48,24 @@ feature 'Repositories Management' do
         expect(page).not_to have_text r3.title
       end
     end
+    context 'thumbnail_behavior' do
+      let(:repository) { Fabricate :empty_repository }
+      before :each do
+        visit edit_repository_path repository
+        attach_file I18n.t('activerecord.attributes.repository.thumbnail'), Rails.root.to_s + '/spec/files/aarl.gif'
+        click_button I18n.t('meta.defaults.actions.save')
+        repository.reload
+      end
+      scenario 'uploads a thumbnail that is then displayed on the show page' do
+        expect(page.html).to include repository.thumbnail.url
+      end
+      scenario 'can remove a thumb with the checkbox' do
+        visit edit_repository_path repository
+        check I18n.t('meta.defaults.labels.remove_thumbnail')
+        click_button I18n.t('meta.defaults.actions.save')
+        expect(repository.thumbnail?).to be_falsey
+      end
+    end
     context 'portal behavior' do
       scenario 'saves a new repository with no portal value' do
         c = Fabricate(:repository)
