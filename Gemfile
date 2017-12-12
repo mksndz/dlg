@@ -54,6 +54,7 @@ end
 gem 'blacklight', '>= 6.0.0'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'rsolr'
+gem 'carrierwave', '~> 1.0'
 gem 'delayed_job_active_record'
 gem 'devise'
 gem 'devise-guests', '~> 0.3'

@@ -9,7 +9,6 @@ Fabricator(:repository) do
   end
   title { 'Repo ' + Faker::Lorem.sentence(4) }
   coordinates '31.978987, -81.161760'
-  thumbnail_path { Faker::Internet.url }
   color '#eeeeee'
   portals(count: 1)
   collections(count: 1) do |attrs|

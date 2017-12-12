@@ -18,6 +18,9 @@
 # ignore data folder
 /data
 
+# ignore uploads folder
+/public/uploads/*
+
 # ignore uninteresting jetty/solr config files
 jetty/*
 !jetty/solr/blacklight-core/conf/schema.xml

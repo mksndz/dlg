@@ -50,9 +50,6 @@ RSpec.describe Repository, type: :model do
     it 'has a slug' do
       expect(repository.slug).not_to be_empty
     end
-    it 'has a thumbnail_path that is a url' do
-      expect { URI.parse(repository.thumbnail_path) }.not_to raise_exception
-    end
     it 'has a set of coordinates stored as a string' do
       expect(repository.coordinates).to be_a String
     end

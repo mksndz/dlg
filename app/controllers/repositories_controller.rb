@@ -71,8 +71,8 @@ class RepositoriesController < ApplicationController
       .require(:repository)
       .permit(:slug, :title, :teaser, :short_description, :description,
               :coordinates, :color, :public, :in_georgia, :homepage_url,
-              :directions_url, :address, :strengths, :contact, :thumbnail_path,
-              portal_ids: []
+              :directions_url, :address, :strengths, :contact, :thumbnail,
+              :remove_thumbnail, :thumbnail_cache, portal_ids: []
     )
   end
 

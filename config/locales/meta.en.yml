@@ -220,6 +220,8 @@ en:
         no_records_found: 'No %{entity} found.'
         per_page: 'Per Page'
         confirm: 'Are you sure?'
+        current_thumbnail: 'Current Thumbnail'
+        remove_thumbnail: 'Remove Thumbnail'
         filter:
           portals: 'Portals'
           repository: 'Repository'

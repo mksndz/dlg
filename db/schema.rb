@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171201143354) do
+ActiveRecord::Schema.define(version: 20171212152516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -271,7 +271,7 @@ ActiveRecord::Schema.define(version: 20171201143354) do
     t.integer  "collections_count", default: 0
     t.string   "coordinates"
     t.boolean  "teaser"
-    t.string   "thumbnail_path"
+    t.string   "thumbnail"
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree

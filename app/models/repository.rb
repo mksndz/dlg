@@ -15,6 +15,8 @@ class Repository < ActiveRecord::Base
 
   after_update :reindex_display_values_for_children
 
+  mount_uploader :thumbnail, ThumbnailUploader
+
   def self.index_query_fields
     %w().freeze
   end

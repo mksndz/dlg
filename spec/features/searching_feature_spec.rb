@@ -241,7 +241,8 @@ feature 'Searching' do
         end
       end
       scenario 'collections have thumbnails inherited from the repository' do
-        image_url = Repository.last.thumbnail_path
+        screenshot_and_open_image
+        image_url = "http://dlg.galileo.usg.edu/do-th:#{Repository.last.slug}"
         within '.document-position-0' do
           expect(page).to have_xpath("//img[contains(@src,\"#{image_url}\")]")
         end
