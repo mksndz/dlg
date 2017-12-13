@@ -112,9 +112,9 @@
     <dynamicField name="*_unstem_search" type="text_general" indexed="true" stored="false" multiValued="true" />
 
     <!-- for display only fields -->
-    <dynamicField name="*_display" type="string"         indexed="false" stored="true"   multiValued="true" />
-    <dynamicField name="*_facet"   type="string"         indexed="true"  stored="false"  multiValued="true" />
-    <dynamicField name="*_sort"    type="alphaOnlySort"  indexed="true"  stored="false"  multiValued="false" />
+    <dynamicField name="*_display" type="string"            indexed="false" stored="true"   multiValued="true" />
+    <dynamicField name="*_facet"   type="string"            indexed="true"  stored="false"  multiValued="true" />
+    <dynamicField name="*_sort"    type="numAlphaOnlySort"  indexed="true"  stored="false"  multiValued="false" />
 
   </fields>
 
@@ -346,6 +346,16 @@
         <filter class="solr.TrimFilterFactory" />
         <filter class="solr.PatternReplaceFilterFactory"
                 pattern="([^a-z])" replacement="" replace="all"
+        />
+      </analyzer>
+    </fieldType>
+    <fieldType name="numAlphaOnlySort" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+      <analyzer>
+        <tokenizer class="solr.KeywordTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory" />
+        <filter class="solr.TrimFilterFactory" />
+        <filter class="solr.PatternReplaceFilterFactory"
+                pattern="([^a-z0-9])" replacement="" replace="all"
         />
       </analyzer>
     </fieldType>
