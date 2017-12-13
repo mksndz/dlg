@@ -1,15 +1,10 @@
 <%= content_for :title do %>
      Batches
 <% end %>
-
 <% breadcrumb :batches %>
-
 <%= link_to t('meta.batch.actions.add'), new_batch_path, class: 'btn btn-default' %>
-
 <%= render 'shared/per_pager' %>
-
 <br><br>
-
 <% if current_user.super? or current_user.coordinator? %>
   <div class="well well-sm">
     <%= bootstrap_form_tag url: batches_path, method: :get, layout: :horizontal, label_col: 'col-sm-1', control_col: 'col-sm-11' do |f| %>
@@ -22,15 +17,10 @@
     <% end %>
   </div>
 <% end %>
-
 <% if @batches.empty? %>
-
     <p><%= t('meta.defaults.labels.no_records_found', entity: 'Batches') %></p>
-
 <% else %>
-
     <%= paginate @batches %>
-
     <table class="table table-condensed table-hover">
       <thead>
       <tr>
@@ -58,7 +48,6 @@
         <th width="140px"></th>
       </tr>
       </thead>
-
       <tbody>
       <% @batches.each do |batch| %>
           <tr>
@@ -87,13 +76,14 @@
               <div class="btn-group btn-group-xs">
                 <%= link_to t('meta.defaults.actions.view'), batch, class: 'btn btn-default' %>
                 <% if batch.committed? %>
-                    <%= link_to t('meta.batch.actions.results'), results_batch_path(batch), class: 'btn btn-default' %>
+                  <%= link_to t('meta.batch.actions.results'), results_batch_path(batch), class: 'btn btn-default' %>
                 <% elsif batch.job_message %>
-                    <%= link_to t('meta.batch.actions.retry_commit'), commit_form_batch_path(batch), class: 'btn btn-default' %>
+                  <%= link_to t('meta.batch.actions.retry_commit'), commit_form_batch_path(batch), class: 'btn btn-default' %>
+                  <%= link_to t('meta.defaults.actions.destroy'), batch, method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
                 <% else %>
-                    <%= link_to t('meta.batch.actions.commit'), commit_form_batch_path(batch), class: 'btn btn-default' %>
-                    <%= link_to t('meta.defaults.actions.edit'), edit_batch_path(batch), class: 'btn btn-default' %>
-                    <%= link_to t('meta.defaults.actions.destroy'), batch, method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
+                  <%= link_to t('meta.batch.actions.commit'), commit_form_batch_path(batch), class: 'btn btn-default' %>
+                  <%= link_to t('meta.defaults.actions.edit'), edit_batch_path(batch), class: 'btn btn-default' %>
+                  <%= link_to t('meta.defaults.actions.destroy'), batch, method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
                 <% end %>
               </div>
 
@@ -102,8 +92,6 @@
       <% end %>
       </tbody>
     </table>
-
     <%= paginate @batches %>
-
 <% end %>
 
