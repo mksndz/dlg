@@ -28,6 +28,10 @@ class Item < ActiveRecord::Base
       self.class
     end
 
+    string :local, stored: true do
+      local? ? '1' : '0'
+    end
+
     string :slug, stored: true
     string :record_id, stored: true
 
