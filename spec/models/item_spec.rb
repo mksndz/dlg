@@ -99,7 +99,7 @@ RSpec.describe Item, type: :model do
     i = Fabricate.build :item, dc_right: ['http://not.approved.uri']
     i.valid?
     expect(i.errors).to have_key :dc_right
-    expect(i.errors[:dc_right]).to include I18n.t('activerecord.errors.messages.item_type.dc_right_not_approved')
+    expect(i.errors[:dc_right]).to include I18n.t('activerecord.errors.messages.dc_right_not_approved')
   end
   it 'should require a value in edm_is_shown_at' do
     i = Fabricate.build(:item, edm_is_shown_at: [])

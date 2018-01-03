@@ -9,9 +9,11 @@ RSpec.describe CollectionsController, type: :controller do
       slug: 'test-collection-slug',
       dcterms_title: "Test Collection DC Title\nTest Subtitle",
       display_title: 'Test Collections Display Title',
-      dcterms_type: ['Text'],
       edm_is_shown_at: 'http://dlg.galileo.usg.edu',
       edm_is_shown_by: 'http://dlg.galileo.usg.edu',
+      dc_right: [I18n.t('meta.rights.noc_cr.uri')],
+      dc_date: '1999-2000',
+      dcterms_type: ['Collection'],
       dcterms_provenance: 'DLG',
       dcterms_subject: 'Georgia',
       repository_id: Fabricate(:empty_repository).id,
@@ -21,16 +23,14 @@ RSpec.describe CollectionsController, type: :controller do
   let(:invalid_attributes) { { slug: 'invalid item slug' } }
   describe 'GET #index' do
     it 'assigns all collections as @collections' do
-      collection = Collection.create! valid_attributes
       get :index
-      expect(assigns(:collections)).to eq [collection]
+      expect(assigns(:collections)).to eq [repository.collections.first]
     end
   end
   describe 'GET #show' do
     it 'assigns the requested collection as @collection' do
-      collection = Collection.create! valid_attributes
-      get :show, id: collection.id
-      expect(assigns(:collection)).to eq collection
+      get :show, id: repository.collections.first.id
+      expect(assigns(:collection)).to eq repository.collections.first
     end
   end
   describe 'GET #new' do
@@ -41,9 +41,8 @@ RSpec.describe CollectionsController, type: :controller do
   end
   describe 'GET #edit' do
     it 'assigns the requested collection as @collection' do
-      collection = Collection.create! valid_attributes
-      get :edit, id: collection.id
-      expect(assigns(:collection)).to eq collection
+      get :edit, id: repository.collections.first.id
+      expect(assigns(:collection)).to eq repository.collections.first
     end
   end
   describe 'POST #create' do
@@ -75,7 +74,7 @@ RSpec.describe CollectionsController, type: :controller do
     end
   end
   describe 'PUT #update' do
-    let(:collection) { Collection.create! valid_attributes }
+    let(:collection) { Fabricate :empty_collection }
     context 'with valid params' do
       let(:new_attributes) do
         { dcterms_title: "Updated Test DC Title\nNew Subtitle" }

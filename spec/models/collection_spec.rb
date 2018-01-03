@@ -28,6 +28,20 @@ RSpec.describe Collection, type: :model do
     c.valid?
     expect(c.errors).to have_key :slug
   end
+  context 'validations' do
+    let(:collection) { Fabricate.build :empty_collection }
+    it 'can be saved with >1 dc_right value' do
+      collection.dc_right << 'http://rightsstatements.org/vocab/NKC/1.0/'
+      collection.valid?
+      expect(collection.errors).to be_empty
+      expect(collection.dc_right.size).to eq 2
+    end
+    it 'is invalid if one dc_right value is not acceptable' do
+      collection.dc_right << 'http://rightsstatements.org/vocab/NKC/8.0/'
+      collection.valid?
+      expect(collection.errors).to have_key :dc_right
+    end
+  end
   context 'when created' do
     let(:collection) { Fabricate :collection_with_repo_and_item }
     it 'belongs to a Repository' do

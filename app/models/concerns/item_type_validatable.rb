@@ -22,12 +22,11 @@ module ItemTypeValidatable
 
   def one_dc_right_present_and_valid
     if dc_right.empty?
-      errors.add :dc_right, I18n.t('activerecord.errors.messages.blank')
-    elsif dc_right.size > 1
-      errors.add :dc_right, I18n.t('activerecord.errors.messages.item_type.dc_right_not_single_valued')
-    elsif !dc_right.first.in? all_rights_statements_uris.to_set
-      errors.add :dc_right, I18n.t('activerecord.errors.messages.item_type.dc_right_not_approved')
+      errors.add(:dc_right, I18n.t('activerecord.errors.messages.blank'))
+      return
     end
+    errors.add(:dc_right, I18n.t('activerecord.errors.messages.item_type.dc_right_not_single_valued')) if dc_right.size > 1
+    errors.add(:dc_right, I18n.t('activerecord.errors.messages.dc_right_not_approved')) if (dc_right & all_rights_statements_uris).empty?
   end
 
   def subject_value_provided
@@ -43,7 +42,7 @@ module ItemTypeValidatable
     end
     dc_date.each do |v|
       if v =~ %r{([^0-9\/-])}
-        errors.add(:dc_date, "#{I18n.t('activerecord.errors.messages.item_type.date_invalid_character')}: #{v}")
+        errors.add(:dc_date, "#{I18n.t('activerecord.errors.messages.date_invalid_character')}: #{v}")
         break
       end
     end
@@ -52,7 +51,7 @@ module ItemTypeValidatable
   def dcterms_temporal_characters
     dcterms_temporal.each do |v|
       if v =~ %r{([^0-9\/-])}
-        errors.add(:dcterms_temporal, "#{I18n.t('activerecord.errors.messages.item_type.temporal_invalid_character')}: #{v}")
+        errors.add(:dcterms_temporal, "#{I18n.t('activerecord.errors.messages.temporal_invalid_character')}: #{v}")
         break
       end
     end
@@ -64,7 +63,7 @@ module ItemTypeValidatable
       return
     end
     if (dcterms_type & dcmi_valid_types).empty?
-      errors.add(:dcterms_type, I18n.t('activerecord.errors.messages.item_type.type_required_value'))
+      errors.add(:dcterms_type, I18n.t('activerecord.errors.messages.type_required_value'))
     end
   end
 

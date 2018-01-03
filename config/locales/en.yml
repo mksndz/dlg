@@ -315,21 +315,23 @@ en:
         batch_import:
           failed: 'The XML could not be processed due to the following errors:'
         item_type:
-          date_invalid_character: "contains an invalid character. Only 0-9, '/' and '-' allowed."
-          temporal_invalid_character: "contains an invalid character. Only 0-9, '/' and '-' allowed."
-          type_required_value: 'does not contain any required values.'
           collection: 'must be selected'
-          no_rights_information: 'has no rights information set.'
           invalid_url_provided: 'contains an invalid URL.'
           dcterms_subject: 'cannot be blank if Subject Personal is also blank'
           edm_is_shown_by_when_local:
             blank: "cannot be blank when the item is local."
             url: "cannot contain an invalid URL when the item is local."
           dc_right_not_single_valued: "can only contain a single value."
-          dc_right_not_approved: "can only be an approved value."
+        collection:
+          repository: 'must be selected'
         repository:
           blank: 'must be provided (and in "latitude, longitude" format).'
           coordinates: 'are not in the proper format. Use "latitude, longitude".'
         portal: 'must have at least one value selected.'
         blank: "cannot be blank"
         taken: "must be unique"
+        type_required_value: 'does not contain any required values.'
+        no_rights_information: 'has no rights information set.'
+        temporal_invalid_character: "contains an invalid character. Only 0-9, '/' and '-' allowed."
+        dc_right_not_approved: "can only be an approved value."
+        date_invalid_character: "contains an invalid character. Only 0-9, '/' and '-' allowed."

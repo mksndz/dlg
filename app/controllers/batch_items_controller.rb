@@ -136,7 +136,6 @@ class BatchItemsController < RecordController
         :dpla,
         :public,
         :local,
-        :date_range,
         :dc_right,
         :dc_relation,
         :dc_format,

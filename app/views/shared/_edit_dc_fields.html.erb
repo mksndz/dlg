@@ -40,7 +40,7 @@
         :dc_right,
         all_rights_statements_for_select,
         { include_blank: true },
-        { class: 'form-control', id: 'dc-right-select' }
+        { class: 'form-control', id: 'dc-right-select', multiple: entity.class == Collection }
     )
   %>
 <% end %>

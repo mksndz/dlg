@@ -3,6 +3,7 @@ class Collection < ActiveRecord::Base
   include IndexFilterable
   include GeospatialIndexable
   include Portable
+  include CollectionValidations
 
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
@@ -15,8 +16,7 @@ class Collection < ActiveRecord::Base
   scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
 
   validates_presence_of :repository
-  validates_presence_of :display_title
-  validates_uniqueness_of :slug, scope: :repository_id
+
 
   before_destroy :clear_from_other_collections
   before_save :update_record_id
