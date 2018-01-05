@@ -113,5 +113,8 @@ class OaiSupportController < ApplicationController
     else
       'ERROR'
     end
+  rescue NoMethodError
+    # what if repository or collection were also deleted?
+    'ERROR'
   end
 end
