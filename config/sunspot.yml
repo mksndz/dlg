@@ -1,12 +1,3 @@
-#production:
-#  solr:
-#    read_timeout: 20
-#    open_timeout: 10
-#    hostname: 192.168.122.60
-#    port: 8983
-#    log_level: WARNING
-#    path: /solr/blacklight-core
-
 # solrcloud
 production:
   solr:
@@ -22,7 +13,7 @@ development:
     hostname: localhost
     port: 8983
     log_level: INFO
-    path: /solr/blacklight-core
+    path: /solr/meta-dev
 
 ## solrcloud
 #development:
@@ -37,5 +28,5 @@ test:
     hostname: localhost
     port: 8983
     log_level: WARNING
-    path: /solr/test-blacklight-core
+    path: /solr/meta-test
     
