@@ -1,10 +1,6 @@
 #!/bin/bash
 
 cd /opt/meta
-
-# build db
 rake db:setup
-
-# seed db
-rake db:seed
+rake db:migrate
 rake sample_data
