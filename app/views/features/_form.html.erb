@@ -1,0 +1,24 @@
+<%= bootstrap_form_for(@feature) do |f| %>
+
+  <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Feature' %>
+
+  <% if @feature.image? %>
+    <label><%= t('meta.features.labels.image') %></label><br>
+    <%= image_tag(@feature.image.url, class: 'thumbnail') if @feature.image %>
+    <%= f.check_box :remove_image, label: t('meta.features.labels.remove_image') %>
+  <% else %>
+    <%= f.file_field :image %>
+    <%= f.hidden_field :image_cache %>
+  <% end %>
+
+  <%= f.text_field :title %>
+  <%= f.url_field :title_link %>
+  <%= f.text_field :institution %>
+  <%= f.url_field :institution_link %>
+  <%= f.text_field :short_description %>
+  <%= f.url_field :external_link %>
+  <%= f.check_box :primary %>
+
+  <%= f.primary t('meta.defaults.actions.save') %>
+
+<% end %>

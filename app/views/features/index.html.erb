@@ -1,0 +1,52 @@
+<%= content_for :title do %>
+    Features
+<% end %>
+
+<% breadcrumb :features %>
+
+<%= link_to t('meta.features.action.add'), new_feature_path, class: 'btn btn-default' %>
+
+<% if @features.empty? %>
+
+    <p><%=  %></p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'features.id', t('meta.defaults.labels.columns.id') %>
+        </th>
+        <th>
+          <%= sortable 'features.title', t('meta.defaults.labels.columns.name') %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @features.each do |feature| %>
+          <tr>
+            <td>
+              <%= link_to feature.id, feature_path(feature) %>
+            </td>
+            <td>
+              <%= link_to feature.title, feature_path(feature) %>
+            </td>
+            <td>
+              <%= link_to feature.institution, feature_path(feature) %>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: feature_path(feature), edit_path: edit_feature_path(feature), entity: feature, show_bl: false } %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @features %>
+
+<% end %>
+
+

@@ -22,9 +22,10 @@
     <label><%= t('meta.defaults.labels.current_thumbnail') %></label><br>
     <%= image_tag(@repository.thumbnail.url, class: 'thumbnail') if @repository.thumbnail? %>
     <%= f.check_box :remove_thumbnail, label: t('meta.defaults.labels.remove_thumbnail') %>
+  <% else %>
+    <%= f.file_field :thumbnail %>
+    <%= f.hidden_field :thumbnail_cache %>
   <% end %>
-  <%= f.file_field :thumbnail %>
-  <%= f.hidden_field :thumbnail_cache %>
   <%= f.url_field :homepage_url %>
   <%= f.url_field :directions_url %>
   <%= f.text_area :address %>

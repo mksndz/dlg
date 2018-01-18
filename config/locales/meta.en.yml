@@ -187,6 +187,7 @@ en:
         roles: 'Roles'
         users: 'Users'
         subjects: 'Subjects'
+        features: 'Features'
         time_periods: 'Time Periods'
         resque: 'Background Jobs'
       user_menu:
@@ -429,5 +430,11 @@ en:
       messages:
         success:
           password_changed: 'Your password has been updated'
+    features:
+      action:
+        add: 'New Feature'
+      labels:
+        image: 'Image'
+        remove_image: 'Remove Image'
 
 

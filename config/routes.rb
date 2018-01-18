@@ -27,7 +27,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :repositories, :collections, :users, :subjects, :time_periods
+  resources :repositories, :collections, :users, :subjects, :time_periods,
+            :features
 
   resources :item_versions, only: [] do
     member do
@@ -55,8 +56,6 @@ Rails.application.routes.draw do
     end
 
   end
-
-  resources :collections
 
   resources :batches do
     member do

@@ -1,0 +1,11 @@
+<%= content_for :title do %>
+    Edit Feature
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @feature.title %>
+<% end %>
+
+<% breadcrumb :feature, @feature %>
+
+<%= render 'form' %>

@@ -11,30 +11,26 @@ class ApiController < ApplicationController
       render json: item_json_for(Item.find_by!(record_id: params[:record_id]))
     when 1
       render json: collection_json_for(Collection.find_by!(record_id: params[:record_id]))
-    when 0
-      render json: repository_json_for(Repository.find_by!(slug: params[:record_id]))
     else
       render json: {}
     end
   end
 
+  # get featured entities (items, collections)
   def featured
-    # get featured entities (items, collections)
     limit = params[:count] > 10 ? 10 : params[:count]
     records = case params[:type]
               when 'item'
-                # TODO: support Item.where(featured: true).limit limit
-                Item.all.limit limit
+                Feature.items.limit limit
               when 'collection'
-                # Collection.where(featured: true).limit limit
-                Collection.all.limit limit
+                Feature.collections.limit limit
               else
                 []
               end
     response = {
       type: params[:type],
       limit: limit,
-      records: featured_json_for(records)
+      records: records.to_json
     }
     render json: response
   end
@@ -47,15 +43,6 @@ class ApiController < ApplicationController
     else
       head :unauthorized
     end
-  end
-
-  def featured_json_for(record)
-    {
-      title: record.title,
-      # image_src: record.featured.image_src,
-      institution: institution_for(record),
-      # link_url: record.featured.link_url
-    }
   end
 
   def item_json_for(record)
@@ -72,10 +59,6 @@ class ApiController < ApplicationController
       title: record.title,
       institution: institution_for(record)
     }
-  end
-
-  def repository_json_for(record)
-    {}
   end
 
   def institution_for(record)

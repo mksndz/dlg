@@ -187,6 +187,21 @@ crumb :batch_item do |batch_item|
   end
 end
 
+# FEATURE
+
+crumb :features do
+  link 'Feature', features_path
+end
+
+crumb :feature do |feature|
+  if feature.persisted?
+    link feature.title
+  else
+    link 'New'
+  end
+  parent :features
+end
+
 # SUBJECT
 
 crumb :subjects do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171212152516) do
+ActiveRecord::Schema.define(version: 20180114000251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,21 @@ ActiveRecord::Schema.define(version: 20171212152516) do
 
   add_index "collections_users", ["collection_id", "user_id"], name: "index_collections_users_on_collection_id_and_user_id", using: :btree
   add_index "collections_users", ["user_id", "collection_id"], name: "index_collections_users_on_user_id_and_collection_id", using: :btree
+
+  create_table "features", force: :cascade do |t|
+    t.integer "featureable_id"
+    t.string  "featureable_type"
+    t.string  "title"
+    t.string  "title_link"
+    t.string  "institution"
+    t.string  "institution_link"
+    t.string  "short_description"
+    t.string  "external_link"
+    t.boolean "primary"
+    t.string  "image"
+  end
+
+  add_index "features", ["featureable_type", "featureable_id"], name: "index_features_on_featureable_type_and_featureable_id", using: :btree
 
   create_table "item_versions", force: :cascade do |t|
     t.string   "item_type",  null: false

@@ -1,8 +1,9 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
 <ul class="dropdown-menu">
   <%= content_tag :li, link_to(t('meta.app.admin_menu.repositories'), repositories_path) if can? :index, Repository %>
-  <%= content_tag :li, link_to(t('meta.app.admin_menu.collections'), collections_path) if can? :index, Collection%>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.collections'), collections_path) if can? :index, Collection %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.items'), items_path) if can? :index, Item %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.features'), features_path) if can? :index, Feature %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.batches'), batches_path) if can? :index, Batch %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.users'), users_path) if can? :index, User %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.subjects'), subjects_path) if can? :index, Subject %>

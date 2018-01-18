@@ -184,6 +184,15 @@ en:
         created_at: "Created"
         updated_at: "Last Updated"
         completed_at: 'Completed At'
+      feature:
+        image: 'Image'
+        title: 'Title'
+        title_link: 'Link for Title'
+        institution: 'Institution'
+        institution_link: 'Link for Institution'
+        short_description: 'Short Description'
+        external_link: 'External Link'
+        primary: 'Primary (shown first/foremost)'
     help:
       subject:
         name: "Display name for the Subject"
