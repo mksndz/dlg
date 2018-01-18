@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180114000251) do
+ActiveRecord::Schema.define(version: 20180118193112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(version: 20180114000251) do
     t.string  "external_link"
     t.boolean "primary"
     t.string  "image"
+    t.string  "area"
   end
 
   add_index "features", ["featureable_type", "featureable_id"], name: "index_features_on_featureable_type_and_featureable_id", using: :btree

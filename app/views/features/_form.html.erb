@@ -11,6 +11,7 @@
     <%= f.hidden_field :image_cache %>
   <% end %>
 
+  <%= f.select :area, Feature.available_areas %>
   <%= f.text_field :title %>
   <%= f.url_field :title_link %>
   <%= f.text_field :institution %>
