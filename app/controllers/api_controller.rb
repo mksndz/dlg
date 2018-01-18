@@ -2,6 +2,7 @@ class ApiController < ApplicationController
   respond_to :json
   skip_before_action :authenticate_user!
   before_action :authenticate_token
+  before_action :set_limit, only: [:tab_features, :carousel_features]
   rescue_from(ActiveRecord::RecordNotFound) { head :not_found }
 
   def info
@@ -16,26 +17,25 @@ class ApiController < ApplicationController
     end
   end
 
-  # get featured entities (items, collections)
-  def featured
-    limit = params[:count] > 10 ? 10 : params[:count]
-    records = case params[:type]
-              when 'item'
-                Feature.items.limit limit
-              when 'collection'
-                Feature.collections.limit limit
-              else
-                []
-              end
-    response = {
-      type: params[:type],
-      limit: limit,
-      records: records.to_json
-    }
+  # get features for the tabs
+  def tab_features
+    records = Feature.tabs.limit @limit
+    response = { limit: @limit, records: records.to_json }
+    render json: response
+  end
+
+  # get features for the carousel
+  def carousel_features
+    records = Feature.carousel.limit @limit
+    response = { limit: @limit, records: records.to_json }
     render json: response
   end
 
   private
+
+  def set_limit
+    @limit = params[:count] || 10
+  end
 
   def authenticate_token
     if Devise.secure_compare request.headers['X-User-Token'], Rails.application.secrets.api_token

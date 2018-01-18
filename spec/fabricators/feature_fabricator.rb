@@ -13,5 +13,5 @@ Fabricator(:external_feature, from: :feature) do
 end
 
 Fabricator(:tab_feature, from: :feature) do
-  area 'tab'
+  area 'tabs'
 end

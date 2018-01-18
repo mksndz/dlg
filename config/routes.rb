@@ -4,10 +4,12 @@ Rails.application.routes.draw do
 
   # API-ish endpoints
   constraints(format: :json) do
-    get 'oai_support/dump',       to: 'oai_support#dump',     as: 'oai_support_dump'
-    get 'oai_support/deleted',    to: 'oai_support#deleted',  as: 'oai_support_deleted'
-    get 'oai_support/metadata',   to: 'oai_support#metadata', as: 'oai_support_metadata'
-    get 'api/info',               to: 'api#info',             as: 'api_info'
+    get 'oai_support/dump',       to: 'oai_support#dump',      as: 'oai_support_dump'
+    get 'oai_support/deleted',    to: 'oai_support#deleted',   as: 'oai_support_deleted'
+    get 'oai_support/metadata',   to: 'oai_support#metadata',  as: 'oai_support_metadata'
+    get 'api/info',               to: 'api#info',              as: 'api_info'
+    get 'api/tab_features',       to: 'api#tab_features',      as: 'api_tab_features'
+    get 'api/carousel_features',  to: 'api#carousel_features', as: 'api_carousel_features'
   end
 
   concern :searchable, Blacklight::Routes::Searchable.new
