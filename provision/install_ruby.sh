@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-#source /usr/local/rvm/scripts/rvm || source /etc/profile.d/rvm.sh
-
-source /home/ubuntu/.rvm/scripts/rvm
+source /home/vagrant/.rvm/scripts/rvm
 
 rvm use --default --install $1
 

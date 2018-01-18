@@ -7,6 +7,10 @@ default: &default
 development:
   <<: *default
   database: meta_development
+  host: localhost
+  username: vagrant
+  password: vagrant
+  port: 4432
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -14,6 +18,10 @@ development:
 test:
   <<: *default
   database: meta_test
+  host: localhost
+  username: vagrant
+  password: vagrant
+  port: 4432
 #
 #production:
 #  <<: *default
