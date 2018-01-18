@@ -182,8 +182,6 @@ ActiveRecord::Schema.define(version: 20180118193112) do
   add_index "collections_users", ["user_id", "collection_id"], name: "index_collections_users_on_user_id_and_collection_id", using: :btree
 
   create_table "features", force: :cascade do |t|
-    t.integer "featureable_id"
-    t.string  "featureable_type"
     t.string  "title"
     t.string  "title_link"
     t.string  "institution"
@@ -194,8 +192,6 @@ ActiveRecord::Schema.define(version: 20180118193112) do
     t.string  "image"
     t.string  "area"
   end
-
-  add_index "features", ["featureable_type", "featureable_id"], name: "index_features_on_featureable_type_and_featureable_id", using: :btree
 
   create_table "item_versions", force: :cascade do |t|
     t.string   "item_type",  null: false
