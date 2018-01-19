@@ -1,11 +1,5 @@
 #!/bin/sh -e
 
-# install java
-#echo oracle-java9-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-##echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-#apt-get -y -qq install oracle-java9-installer
-#update-java-alternatives -s java-9-oracle
-
 # install solr
 wget http://archive.apache.org/dist/lucene/solr/6.5.1/solr-6.5.1.tgz
 tar -xvf solr-6.5.1.tgz
