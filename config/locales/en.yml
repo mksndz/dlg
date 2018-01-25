@@ -186,6 +186,7 @@ en:
         completed_at: 'Completed At'
       feature:
         image: 'Image'
+        area: 'Area'
         title: 'Title'
         title_link: 'Link for Title'
         institution: 'Institution'
