@@ -54,6 +54,6 @@ class FeaturesController < ApplicationController
     params.require(:feature).permit(:title, :title_link, :institution,
                                     :institution_link, :short_description,
                                     :external_link, :primary, :image,
-                                    :remove_image, :image_cache)
+                                    :remove_image, :image_cache, :area)
   end
 end
