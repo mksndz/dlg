@@ -12,13 +12,13 @@ class ItemsController < RecordController
   include Sorting
   include Filterable
 
-  before_action :set_data, only: [:index, :new, :create, :edit, :update]
+  before_action :set_data, only: %i[index new create edit update copy]
 
   def index
 
     session[:search] = {}
 
-    set_filter_options [:repository, :collection, :public, :valid_item]
+    set_filter_options %i[repository collection public valid_item]
 
     item_query = Item.index_query(params)
                      .order(sort_column + ' ' + sort_direction)
@@ -52,8 +52,7 @@ class ItemsController < RecordController
 
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @item = Item.new
