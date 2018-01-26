@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180118193112) do
+ActiveRecord::Schema.define(version: 20180126175136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,6 +191,8 @@ ActiveRecord::Schema.define(version: 20180118193112) do
     t.boolean "primary"
     t.string  "image"
     t.string  "area"
+    t.string  "large_image"
+    t.boolean "public",            default: false
   end
 
   create_table "item_versions", force: :cascade do |t|

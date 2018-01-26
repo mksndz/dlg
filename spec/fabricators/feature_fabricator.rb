@@ -8,10 +8,16 @@ Fabricator(:feature) do
 end
 
 Fabricator(:external_feature, from: :feature) do
-  short_description { Faker::Hipster.sentence(12) }
   external_link { Faker::Internet.url }
 end
 
 Fabricator(:tab_feature, from: :feature) do
+  short_description { Faker::Hipster.sentence(12) }
   area 'tabs'
+end
+
+Fabricator(:primary_tab_feature, from: :feature) do
+  short_description { Faker::Hipster.sentence(12) }
+  area 'tabs'
+  primary true
 end

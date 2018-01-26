@@ -13,6 +13,7 @@
 <br><br>
 
 <%= render 'shared/show_field', field_name: t(:image, scope: [:activerecord, :attributes, :feature]), value: link_to(image_tag(@feature.image.url, class: 'thumbnail'), @feature.image.url) %>
+<%= render 'shared/show_field', field_name: t(:large_image, scope: [:activerecord, :attributes, :feature]), value: link_to(image_tag(@feature.large_image.url, class: 'thumbnail'), @feature.large_image.url) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.area'), value: @feature.area %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.title'), value: @feature.title %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.title_link'), value: @feature.title_link %>
@@ -20,4 +21,5 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.institution_link'), value: @feature.institution_link %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.short_description'), value: @feature.short_description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.external_link'), value: @feature.external_link %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.public'), value: @feature.public %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.primary'), value: @feature.primary %>

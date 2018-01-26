@@ -37,11 +37,31 @@ RSpec.describe Feature, type: :model do
   end
   context 'when an external feature is created' do
     let(:feature) { Fabricate :external_feature }
+    it 'has a external link' do
+      expect(feature.external_link).not_to be_nil
+    end
+  end
+  context 'tab feature' do
+    let(:feature) { Fabricate :tab_feature }
     it 'has a short description' do
       expect(feature.short_description).not_to be_nil
     end
-    it 'has a external link' do
-      expect(feature.external_link).not_to be_nil
+  end
+  context 'validations' do
+    it 'requires title, title_link, institution, institution_link and image' do
+      feature = Feature.new
+      feature.save
+      expect(feature.errors.keys).to eq %i[title title_link institution institution_link image]
+    end
+    it 'does not require a large_image if non-primary tabs feature' do
+      feature = Fabricate.build :tab_feature
+      feature.save
+      expect(feature.errors).not_to have_key :large_image
+    end
+    it 'requires a large_image if primary tabs feature' do
+      feature = Fabricate.build :primary_tab_feature
+      feature.save
+      expect(feature.errors).to have_key :large_image
     end
   end
 end

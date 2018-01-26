@@ -11,8 +11,7 @@ class FeaturesController < ApplicationController
   end
 
   # GET /features/1
-  def show
-  end
+  def show; end
 
   # GET /features/new
   def new
@@ -20,8 +19,7 @@ class FeaturesController < ApplicationController
   end
 
   # GET /features/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /features
   def create
@@ -54,6 +52,8 @@ class FeaturesController < ApplicationController
     params.require(:feature).permit(:title, :title_link, :institution,
                                     :institution_link, :short_description,
                                     :external_link, :primary, :image,
-                                    :remove_image, :image_cache, :area)
+                                    :remove_image, :image_cache, :area,
+                                    :large_image, :remove_large_image,
+                                    :large_image_cache, :public)
   end
 end
