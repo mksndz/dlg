@@ -31,7 +31,7 @@ RSpec.describe ApiController do
           Fabricate.times 5, :tab_feature
           Fabricate :external_feature
           Fabricate :feature, primary: true
-          Fabricate :tab_feature, primary: true
+          Fabricate :primary_tab_feature
         end
         it 'retrieves featured items for tabs, properly ordered' do
           get :tab_features, count: 8

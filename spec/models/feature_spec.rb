@@ -59,7 +59,7 @@ RSpec.describe Feature, type: :model do
       expect(feature.errors).not_to have_key :large_image
     end
     it 'requires a large_image if primary tabs feature' do
-      feature = Fabricate.build :primary_tab_feature
+      feature = Fabricate.build(:tab_feature, primary: true)
       feature.save
       expect(feature.errors).to have_key :large_image
     end
