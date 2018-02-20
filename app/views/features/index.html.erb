@@ -19,7 +19,19 @@
           <%= sortable 'features.id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'features.title', t('meta.defaults.labels.columns.name') %>
+          <%= sortable 'features.title', t('activerecord.attributes.feature.title') %>
+        </th>
+        <th>
+          <%= sortable 'features.institution', t('activerecord.attributes.feature.institution') %>
+        </th>
+        <th>
+          <%= sortable 'features.area', t('activerecord.attributes.feature.area') %>
+        </th>
+        <th>
+          <%= sortable 'features.public', t('activerecord.attributes.feature.public') %>
+        </th>
+        <th>
+          <%= sortable 'features.primary', t('activerecord.attributes.feature.primary') %>
         </th>
         <th width="185px"></th>
       </tr>
@@ -35,7 +47,16 @@
               <%= link_to feature.title, feature_path(feature) %>
             </td>
             <td>
-              <%= link_to feature.institution, feature_path(feature) %>
+              <%= feature.institution %>
+            </td>
+            <td>
+              <%= feature.area %>
+            </td>
+            <td>
+              <%= boolean_check_icon feature.public %>
+            </td>
+            <td>
+              <%= boolean_check_icon feature.primary %>
             </td>
             <td>
               <%= render partial: 'shared/entity_actions', locals: { base_path: feature_path(feature), edit_path: edit_feature_path(feature), entity: feature, show_bl: false } %>
