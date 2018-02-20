@@ -117,5 +117,20 @@ RSpec.describe Collection, type: :model do
         end
       end
     end
+    context 'when deleting' do
+      it 'is deleted even if items have come from batch_items' do
+        collection = Fabricate :empty_collection
+        item = Fabricate :item, collection: collection, portals: collection.portals
+        batch_item = Fabricate :batch_item, item: item, collection: collection
+        collection.reload
+        expect(item.collection).to eq collection
+        expect(batch_item.collection).to eq collection
+        expect do
+          collection.destroy
+        end.not_to raise_exception
+        batch_item.reload
+        expect(batch_item.collection).to be_nil
+      end
+    end
   end
 end

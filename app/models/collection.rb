@@ -8,6 +8,7 @@ class Collection < ActiveRecord::Base
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
   has_many :dpla_items, -> { where dpla: true }, class_name: 'Item'
+  has_many :batch_items, dependent: :nullify
   belongs_to :repository, counter_cache: true
   has_and_belongs_to_many :subjects
   has_and_belongs_to_many :time_periods
