@@ -191,6 +191,8 @@ ActiveRecord::Schema.define(version: 20180220210320) do
     t.boolean "primary"
     t.string  "image"
     t.string  "area"
+    t.string  "large_image"
+    t.boolean "public",            default: false
   end
 
   create_table "item_versions", force: :cascade do |t|
