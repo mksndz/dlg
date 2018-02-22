@@ -1,8 +1,8 @@
 <%= bootstrap_form_for(@feature) do |f| %>
   <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Feature') %>
   <% if @feature.image? %>
-    <label><%= t('activerecord.attributes.feature.large_image') %></label><br>
-    <%= image_tag(@feature.image.url, class: 'thumbnail') if @feature.image %>
+    <label><%= t('activerecord.attributes.feature.image') %></label><br>
+    <%= image_tag(@feature.image.url, class: 'thumbnail') %>
     <%= f.check_box :remove_image, label: t('meta.features.labels.remove_image') %>
   <% else %>
     <%= f.file_field :image %>
@@ -10,7 +10,7 @@
   <% end %>
   <% if @feature.large_image? %>
     <label><%= t('activerecord.attributes.feature.large_image') %></label><br>
-    <%= image_tag(@feature.large_image.url, class: 'thumbnail') if @feature.large_image %>
+    <%= image_tag(@feature.large_image.url, class: 'thumbnail') %>
     <%= f.check_box :remove_large_image, label: t('meta.features.labels.remove_large_image') %>
   <% else %>
     <%= f.file_field :large_image %>

@@ -186,8 +186,8 @@ en:
         completed_at: 'Completed At'
       feature:
         public: 'Public?'
-        image: 'Image'
-        large_image: 'Large Image (tab features only)'
+        image: 'Image for Carousel or small Tab Feature'
+        large_image: 'Large Image for Tab Features only'
         area: 'Area'
         title: 'Title'
         title_link: 'Link for Title'
