@@ -22,8 +22,8 @@ RSpec.describe ApiController do
         expect(response.code).to eq '200'
         response_object = JSON.parse(response.body)
         expect(response_object['id']).to eq item.record_id
-        expect(response_object['title']).to eq item.title
-        expect(response_object['institution']).to eq item.dcterms_provenance.join ', '
+        expect(response_object['title']).to eq item.dcterms_title
+        expect(response_object['institution']).to eq item.dcterms_provenance
       end
       context 'getting featured records' do
         before :each do

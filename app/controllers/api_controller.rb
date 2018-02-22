@@ -20,14 +20,14 @@ class ApiController < ApplicationController
   # get features for the tabs
   def tab_features
     records = Feature.tabs.limit @limit
-    response = { limit: @limit, records: records.to_json }
+    response = { limit: @limit, records: records }
     render json: response
   end
 
   # get features for the carousel
   def carousel_features
     records = Feature.carousel.limit @limit
-    response = { limit: @limit, records: records.to_json }
+    response = { limit: @limit, records: records }
     render json: response
   end
 
@@ -47,21 +47,43 @@ class ApiController < ApplicationController
 
   def item_json_for(record)
     {
-      id: record.record_id,
-      title: record.title,
-      institution: institution_for(record)
+        id: record.record_id,
+        display_title: record.title,
+        title: record.dcterms_title,
+        institution: record.dcterms_provenance,
+        creator: record.dcterms_creator,
+        subject: record.dcterms_subject,
+        description: record.dcterms_description,
+        url: record.edm_is_shown_at,
+        date: record.dc_date,
+        location: record.dcterms_spatial,
+        format: record.dc_format,
+        rights: record.dc_right,
+        type: record.dcterms_type,
+        orig_coll: record.dcterms_is_part_of
     }
   end
 
   def collection_json_for(record)
     {
-      id: record.id,
-      title: record.title,
-      institution: institution_for(record)
+      id: record.record_id,
+      display_title: record.display_title,
+      title: record.dcterms_title,
+      institution: record.dcterms_provenance,
+      creator: record.dcterms_creator,
+      subject: record.dcterms_subject,
+      description: record.dcterms_description,
+      url: record.edm_is_shown_at,
+      date: record.dc_date,
+      location: record.dcterms_spatial,
+      format: record.dc_format,
+      rights: record.dc_right,
+      type: record.dcterms_type,
+      orig_coll: record.dcterms_is_part_of
     }
   end
 
-  def institution_for(record)
-    record.dcterms_provenance.join ', '
-  end
+  # def institution_for(record)
+  #   record.dcterms_provenance.join ', '
+  # end
 end
