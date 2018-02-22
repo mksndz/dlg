@@ -13,6 +13,11 @@ Fabricator(:coordinator, from: :user) do
   is_coordinator { true }
 end
 
+Fabricator(:coordinator_committer, from: :user) do
+  is_coordinator { true }
+  is_committer { true }
+end
+
 Fabricator(:committer, from: :user) do
   is_committer { true }
 end

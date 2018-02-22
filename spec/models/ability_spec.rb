@@ -5,6 +5,7 @@ RSpec.describe Ability, type: :model do
   let(:super_user) { Fabricate :super }
   let(:basic_user) { Fabricate :basic }
   let(:coordinator_user) { Fabricate :coordinator }
+  let(:coordinator_committer_user) { Fabricate :coordinator_committer }
   let(:committer_user) { Fabricate :committer }
   let(:uploader_user) { Fabricate :uploader }
 
@@ -39,16 +40,31 @@ RSpec.describe Ability, type: :model do
       is_expected.not_to be_able_to :destroy, user
     end
     context 'working with Batches' do
-      it 'can view, modify and delete Batches created by users they manage' do
+      let :user do
         user = Fabricate :user
         user.creator = coordinator_user
-        user.save
+      end
+      it 'can view, modify and delete Batches created by users they manage' do
         batch = Fabricate :batch
         batch.user = user
         is_expected.to be_able_to :show, batch
         is_expected.to be_able_to :edit, batch
         is_expected.to be_able_to :update, batch
         is_expected.to be_able_to :destroy, batch
+      end
+    end
+  end
+  context 'for a coordinator committer' do
+    subject { Ability.new coordinator_committer_user }
+    context 'working with Batches' do
+      let(:user) { Fabricate :user, creator: coordinator_committer_user }
+      let(:batch) { Fabricate :batch, user: user }
+      let(:other_batch) { Fabricate :batch }
+      it 'can commit batches created by created users' do
+        is_expected.to be_able_to :commit, batch
+      end
+      it 'cannot commit batches from non-created users' do
+        is_expected.not_to be_able_to :commit, other_batch
       end
     end
   end

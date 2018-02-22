@@ -46,6 +46,14 @@ class Ability
 
       end
 
+      if roles.include?('committer') && roles.include?('coordinator')
+
+        can [:commit], Batch do |batch|
+          user.manages? batch.user
+        end
+
+      end
+
     end
 
     can [:index, :show, :new, :create, :edit, :update], Repository do |repository|
