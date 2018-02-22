@@ -66,7 +66,7 @@ class Ability
     end
 
     can :xml, Item
-    can [:index, :show, :new, :create, :edit, :update, :copy, :destroy], Item do |item|
+    can [:index, :show, :new, :create, :edit, :update, :copy], Item do |item|
       user.repositories.include?(item.repository) ||
           user.collections.include?(item.collection)
     end

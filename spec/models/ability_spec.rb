@@ -96,7 +96,7 @@ RSpec.describe Ability, type: :model do
         is_expected.to be_able_to :update, collection
         is_expected.not_to be_able_to :destroy, collection
       end
-      it 'can modify and destroy Items if the Repository is assigned' do
+      it 'can modify but not destroy Items if the Repository is assigned' do
         basic_user.repositories << repository
         collection = repository.collections.first
         collection.items << other_item
@@ -104,7 +104,7 @@ RSpec.describe Ability, type: :model do
         is_expected.to be_able_to :edit, other_item
         is_expected.to be_able_to :copy, other_item
         is_expected.to be_able_to :update, other_item
-        is_expected.to be_able_to :destroy, other_item
+        is_expected.not_to be_able_to :destroy, other_item
       end
       it 'cannot modify Repositories if the Repository is not assigned' do
         is_expected.not_to be_able_to :show, repository
@@ -222,7 +222,7 @@ RSpec.describe Ability, type: :model do
         is_expected.not_to be_able_to :destroy, batch_item
       end
       context 'when Batch is owned by self' do
-        it 'can view, modify and recreate Batch' do
+        it 'can view, modify, destroy and recreate Batch' do
           batch.user = basic_user
           is_expected.to be_able_to :edit, batch
           is_expected.to be_able_to :update, batch
