@@ -46,6 +46,14 @@ class Ability
 
       end
 
+      if roles.include? 'viewer'
+
+        can [:index, :show], Item
+        can [:index, :show], Collection
+        can [:index, :show], Repository
+
+      end
+
       if roles.include?('committer') && roles.include?('coordinator')
 
         can [:commit], Batch do |batch|

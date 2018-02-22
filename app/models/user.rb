@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
     roles << 'coordinator' if is_coordinator
     roles << 'committer' if is_committer
     roles << 'uploader' if is_uploader
+    roles << 'viewer' if is_viewer
     roles
   end
 
@@ -55,6 +56,10 @@ class User < ActiveRecord::Base
 
   def uploader?
     is_uploader
+  end
+
+  def viewer?
+    is_viewer
   end
 
   def basic?

@@ -26,5 +26,9 @@ Fabricator(:uploader, from: :user) do
   is_uploader { true }
 end
 
+Fabricator(:viewer, from: :user) do
+  is_viewer { true }
+end
+
 # todo to support legacy code, remove
 Fabricator(:basic, from: :user)

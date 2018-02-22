@@ -78,6 +78,7 @@ class UsersController < ApplicationController
     if (tf_checkbox(user_params[:is_super]) ||
       tf_checkbox(user_params[:is_coordinator]) ||
       tf_checkbox(user_params[:is_uploader]) ||
+      tf_checkbox(user_params[:is_viewer]) ||
       tf_checkbox(user_params[:is_committer]))
       true
     else
@@ -86,7 +87,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, :is_super, :is_coordinator, :is_uploader, :is_committer, repository_ids: [], collection_ids: [])
+    params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, :is_super, :is_coordinator, :is_uploader, :is_viewer, :is_committer, repository_ids: [], collection_ids: [])
   end
 
   def set_user_creator

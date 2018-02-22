@@ -8,11 +8,23 @@ RSpec.describe Ability, type: :model do
   let(:coordinator_committer_user) { Fabricate :coordinator_committer }
   let(:committer_user) { Fabricate :committer }
   let(:uploader_user) { Fabricate :uploader }
+  let(:viewer_user) { Fabricate :viewer }
 
   context 'for a Super user' do
     subject { Ability.new super_user }
     it 'can manage all things' do
       is_expected.to be_able_to :manage, :all
+    end
+  end
+  context 'for a Viewer user' do
+    subject { Ability.new viewer_user }
+    it 'can index and show items, collections and repositories' do
+      is_expected.to be_able_to :index, Item
+      is_expected.to be_able_to :show,  Item
+      is_expected.to be_able_to :index, Collection
+      is_expected.to be_able_to :show,  Collection
+      is_expected.to be_able_to :index, Repository
+      is_expected.to be_able_to :show,  Repository
     end
   end
   context 'for a Coordinator user' do

@@ -20,7 +20,7 @@ class RepositoriesController < ApplicationController
                              .where(portals: { id: portals_filter })
       end
     end
-    repository_query = repository_query.where(id: current_user.repository_ids) unless current_user.super?
+    repository_query = repository_query.where(id: current_user.repository_ids) unless current_user.super? || current_user.viewer?
     @repositories = repository_query
   end
 

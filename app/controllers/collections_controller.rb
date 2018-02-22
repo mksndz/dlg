@@ -35,7 +35,7 @@ class CollectionsController < RecordController
 
     end
 
-    @collections = if current_user.super?
+    @collections = if current_user.super? || current_user.viewer?
                      collection_query
                    else
                      collection_query.where(id: user_collection_ids)

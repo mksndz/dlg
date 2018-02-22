@@ -34,7 +34,7 @@ class ItemsController < RecordController
       end
     end
 
-    unless current_user.super?
+    unless current_user.super? || current_user.viewer?
       item_query = item_query.where(collection: user_collection_ids)
     end
 
