@@ -36,7 +36,7 @@ RSpec.describe ApiController do
         it 'retrieves featured items for tabs, properly ordered' do
           get :tab_features, count: 8
           response_object = JSON.parse(response.body)
-          response_features = JSON.parse(response_object['records'])
+          response_features = response_object['records']
           expect(response_object['limit']).to eq '8'
           expect(response_features.length).to eq 6
           expect(response_features.first['primary']).to be true
@@ -44,7 +44,7 @@ RSpec.describe ApiController do
         it 'retrieves featured items for carousel, properly ordered' do
           get :carousel_features, count: 11
           response_object = JSON.parse(response.body)
-          response_features = JSON.parse(response_object['records'])
+          response_features = response_object['records']
           expect(response_object['limit']).to eq '11'
           expect(response_features.length).to eq 7
           expect(response_features.first['primary']).to be true
