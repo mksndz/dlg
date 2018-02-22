@@ -20,11 +20,19 @@
   <% end %>
   <% if @repository.thumbnail? %>
     <label><%= t('meta.defaults.labels.current_thumbnail') %></label><br>
-    <%= image_tag(@repository.thumbnail.url, class: 'thumbnail') if @repository.thumbnail? %>
+    <%= image_tag(@repository.thumbnail.url, class: 'thumbnail') %>
     <%= f.check_box :remove_thumbnail, label: t('meta.defaults.labels.remove_thumbnail') %>
   <% else %>
     <%= f.file_field :thumbnail %>
     <%= f.hidden_field :thumbnail_cache %>
+  <% end %>
+  <% if @repository.image? %>
+    <label><%= t('meta.defaults.labels.current_image') %></label><br>
+    <%= image_tag(@repository.image.url, class: 'thumbnail') %>
+    <%= f.check_box :remove_image, label: t('meta.defaults.labels.remove_image') %>
+  <% else %>
+    <%= f.file_field :image %>
+    <%= f.hidden_field :image_cache %>
   <% end %>
   <%= f.url_field :homepage_url %>
   <%= f.url_field :directions_url %>

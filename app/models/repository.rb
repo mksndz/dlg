@@ -16,9 +16,10 @@ class Repository < ActiveRecord::Base
   after_update :reindex_display_values_for_children
 
   mount_uploader :thumbnail, ThumbnailUploader
+  mount_uploader :image, ImageUploader
 
   def self.index_query_fields
-    %w().freeze
+    %w[].freeze
   end
 
   def record_id

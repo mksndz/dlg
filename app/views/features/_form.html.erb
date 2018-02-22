@@ -3,7 +3,7 @@
   <% if @feature.image? %>
     <label><%= t('activerecord.attributes.feature.image') %></label><br>
     <%= image_tag(@feature.image.url, class: 'thumbnail') %>
-    <%= f.check_box :remove_image, label: t('meta.features.labels.remove_image') %>
+    <%= f.check_box :remove_image, label: t('meta.defaults.labels.remove_image') %>
   <% else %>
     <%= f.file_field :image %>
     <%= f.hidden_field :image_cache %>

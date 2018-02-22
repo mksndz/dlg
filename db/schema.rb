@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220210320) do
+ActiveRecord::Schema.define(version: 20180222183659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -286,6 +286,7 @@ ActiveRecord::Schema.define(version: 20180220210320) do
     t.string   "coordinates"
     t.boolean  "teaser"
     t.string   "thumbnail"
+    t.string   "image"
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree

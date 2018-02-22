@@ -223,6 +223,8 @@ en:
         confirm: 'Are you sure?'
         current_thumbnail: 'Current Thumbnail'
         remove_thumbnail: 'Remove Thumbnail'
+        current_image: 'Current Image'
+        remove_image: 'Remove Image'
         filter:
           portals: 'Portals'
           repository: 'Repository'
@@ -434,7 +436,6 @@ en:
       action:
         add: 'New Feature'
       labels:
-        remove_image: 'Remove Image'
         remove_large_image: 'Remove Large Image'
         primary: 'Primary? (shown first/foremost)'
 

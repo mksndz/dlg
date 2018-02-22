@@ -44,6 +44,7 @@ en:
         public: "Public"
         in_georgia: "Located in Georgia"
         thumbnail: "Thumbnail"
+        image: "Image"
         homepage_url: "Repository Homepage URL"
         portal_ids: 'Portals'
         directions_url: "Driving Directions URL"
