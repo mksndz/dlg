@@ -52,7 +52,7 @@ class Ability
       user.repositories.include?(repository)
     end
 
-    can [:index, :show, :new, :create, :edit, :update], Collection do |collection|
+    can [:index, :show, :create, :edit, :update], Collection do |collection|
       user.repositories.include?(collection.repository) ||
           user.collections.include?(collection)
     end

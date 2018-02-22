@@ -68,6 +68,9 @@ RSpec.describe Ability, type: :model do
         is_expected.to be_able_to :update, repository
         is_expected.not_to be_able_to :destroy, repository
       end
+      it 'can load the new Collection form' do
+        is_expected.to be_able_to :new, Collection
+      end
       it 'can modify but not destroy Collections if the Repository is
           assigned' do
         basic_user.repositories << repository
