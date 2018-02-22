@@ -20,7 +20,7 @@ en:
         is_coordinator: "Coordinator"
         is_uploader: "Uploader"
         is_committer: "Committer"
-        is_viewer: "Committer"
+        is_viewer: "Viewer"
         creator: "Creator"
         repository_ids: "Assigned Repositories"
         collection_ids: "Assigned Collections"
