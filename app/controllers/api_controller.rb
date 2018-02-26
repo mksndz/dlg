@@ -69,6 +69,7 @@ class ApiController < ApplicationController
     {
       id: record.record_id,
       display_title: record.display_title,
+      short_description: record.short_description,
       title: record.dcterms_title,
       institution: record.dcterms_provenance,
       creator: record.dcterms_creator,
