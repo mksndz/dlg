@@ -60,7 +60,8 @@ class ApiController < ApplicationController
         format: record.dc_format,
         rights: record.dc_right,
         type: record.dcterms_type,
-        orig_coll: record.dcterms_is_part_of
+        orig_coll: record.dcterms_is_part_of,
+        is_shown_at: record.edm_is_shown_at
     }
   end
 
@@ -79,7 +80,8 @@ class ApiController < ApplicationController
       format: record.dc_format,
       rights: record.dc_right,
       type: record.dcterms_type,
-      orig_coll: record.dcterms_is_part_of
+      orig_coll: record.dcterms_is_part_of,
+      is_shown_at: record.edm_is_shown_at
     }
   end
 
