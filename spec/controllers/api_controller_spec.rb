@@ -25,6 +25,12 @@ RSpec.describe ApiController do
         expect(response_object['title']).to eq item.dcterms_title
         expect(response_object['institution']).to eq item.dcterms_provenance
       end
+      it 'returns a collection using record_id with expected values' do
+        get :info, record_id: item.collection.record_id
+        expect(response.code).to eq '200'
+        response_object = JSON.parse(response.body)
+        expect(response_object['image']).to eq item.repository.image.current_path
+      end
       context 'getting featured records' do
         before :each do
           Fabricate.times 5, :feature

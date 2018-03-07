@@ -82,7 +82,8 @@ class ApiController < ApplicationController
       rights: record.dc_right,
       type: record.dcterms_type,
       orig_coll: record.dcterms_is_part_of,
-      is_shown_at: record.edm_is_shown_at
+      is_shown_at: record.edm_is_shown_at,
+      image: record.repository.image.current_path
     }
   end
 
