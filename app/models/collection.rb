@@ -18,7 +18,6 @@ class Collection < ActiveRecord::Base
 
   validates_presence_of :repository
 
-
   before_destroy :clear_from_other_collections
   before_save :update_record_id
   after_update :reindex_children
@@ -195,6 +194,10 @@ class Collection < ActiveRecord::Base
     # subjects
     string :subjects, multiple: true, stored: true do
       subjects.map(&:name)
+    end
+
+    string :image, stored: true do
+      repository.image.url
     end
 
   end
