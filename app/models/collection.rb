@@ -239,7 +239,9 @@ class Collection < ActiveRecord::Base
   private
 
   def reindex_children
-    Resque.enqueue(Reindexer, 'Item', items.map(&:id))
+    if slug_changed? || display_title_changed?
+      Resque.enqueue(Reindexer, 'Item', items.map(&:id)) if items.any?
+    end
     true
   end
 

@@ -33,8 +33,10 @@ class Repository < ActiveRecord::Base
   private
 
   def reindex_display_values_for_children
-    Resque.enqueue(Reindexer, 'Collection', collections.map(&:id))
-    Resque.enqueue(Reindexer, 'Item', items.map(&:id))
+    if slug_changed? || title_changed?
+      Resque.enqueue(Reindexer, 'Collection', collections.map(&:id))
+      Resque.enqueue(Reindexer, 'Item', items.map(&:id)) if items.any?
+    end
     true
   end
 
