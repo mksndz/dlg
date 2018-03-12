@@ -81,9 +81,10 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'public_b',                 label: I18n.t('meta.search.facets.public'), helper_method: :boolean_facet_labels, limit: true
-    config.add_facet_field 'dpla_b',                   label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels, limit: true
-    config.add_facet_field 'valid_item_b',             label: I18n.t('meta.search.facets.valid_item'), helper_method: :boolean_facet_labels, limit: true
+    config.add_facet_field 'public_b',                 label: I18n.t('meta.search.facets.public'), helper_method: :boolean_facet_labels
+    config.add_facet_field 'display_b',                label: I18n.t('meta.search.facets.display'), helper_method: :boolean_facet_labels
+    config.add_facet_field 'dpla_b',                   label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels
+    config.add_facet_field 'valid_item_b',             label: I18n.t('meta.search.facets.valid_item'), helper_method: :boolean_facet_labels
     config.add_facet_field 'provenance_facet',         label: I18n.t('meta.search.facets.provenance'), limit: true
     config.add_facet_field 'publisher_facet',          label: I18n.t('meta.search.facets.publisher'), limit: true
     config.add_facet_field 'creator_facet',            label: I18n.t('meta.search.facets.creator'), limit: true
