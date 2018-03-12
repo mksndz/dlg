@@ -29,7 +29,7 @@ RSpec.describe ApiController do
         get :info, record_id: item.collection.record_id
         expect(response.code).to eq '200'
         response_object = JSON.parse(response.body)
-        expect(response_object['image']).to eq item.repository.image.current_path
+        expect(response_object['image']).to eq item.repository.image.url
       end
       context 'getting featured records' do
         before :each do

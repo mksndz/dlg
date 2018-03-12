@@ -18,6 +18,7 @@ Fabricator(:repository) do
       items: [Fabricate.build(:item, portals: attrs[:portals])]
     )
   end
+  image File.open("#{Rails.root}/spec/files/aarl.gif")
 end
 
 Fabricator(:empty_repository, from: :repository) do
