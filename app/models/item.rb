@@ -23,83 +23,34 @@ class Item < ActiveRecord::Base
   after_update :record_id_change_in_solr
 
   searchable do
-
-    string :class_name, stored: true do
-      self.class
-    end
-
-    string :local, stored: true do
-      local? ? '1' : '0'
-    end
-
-    string :slug, stored: true
-    string :record_id, stored: true
-
+    integer(:collection_id) { collection.id }
+    integer(:repository_id) { repository.id }
+    string(:class_name, stored: true) { self.class }
+    string(:local, stored: true) { local? ? '1' : '0' }
+    string(:slug, stored: true)
+    string(:record_id, stored: true)
     # set empty proxy id field so sunspot knows about it
     # value is set prior to save
     # sunspot search will not work without this, but indexing will
     # see monkeypatch @ config/initializers/sunspot_indexer_id.rb
-    string :sunspot_id, stored: true do
-      ''
-    end
+    string(:sunspot_id, stored: true) { '' }
+    string(:collection_record_id, stored: true) { collection.record_id }
+    string(:collection_slug, stored: true) { collection.slug }
+    string(:repository_slug, stored: true) { repository.slug }
+    string(:collection_name, stored: true, multiple: true) { collection_titles }
+    string(:repository_name, stored: true, multiple: true) { repository_titles } # TODO: consider for removal
+    string(:portals, stored: true, multiple: true) { portal_codes }
+    string(:portal_names, stored: true, multiple: true) { portal_names }
 
-    integer :collection_id do
-      collection.id
-    end
+    boolean(:dpla)
+    boolean(:public)
+    boolean(:valid_item)
+    boolean(:display) { display? }
 
-    integer :repository_id do
-      repository.id
-    end
-
-    string :collection_record_id, stored: true do
-      collection.record_id
-    end
-
-    string :collection_slug, stored: true do
-      collection.slug
-    end
-
-    string :repository_slug, stored: true do
-      repository.slug
-    end
-
-    string :collection_name, stored: true, multiple: true do
-      collection_titles
-    end
-
-    string :repository_name, stored: true, multiple: true do
-      repository_titles
-    end
-
-    string :portals, stored: true, multiple: true do
-      portal_codes
-    end
-
-    string :portal_names, stored: true, multiple: true do
-      portal_names
-    end
-
-    boolean :dpla
-    boolean :public
-    boolean :valid_item
-    boolean :display do
-      display?
-    end
-
-    string :valid_item, stored: true do
-      valid_item ? 'Yes' : 'No'
-    end
-
-    string :display, stored: true do
-      display? ? 'Yes' : 'No'
-    end
-
-    string :dpla, stored: true do
-      dpla ? 'Yes' : 'No'
-    end
-    string :public, stored: true do
-      public ? 'Yes' : 'No'
-    end
+    string(:valid_item, stored: true) { valid_item ? 'Yes' : 'No' }
+    string(:display, stored: true) { display? ? 'Yes' : 'No' }
+    string(:dpla, stored: true) { dpla ? 'Yes' : 'No' }
+    string(:public, stored: true) { public ? 'Yes' : 'No' }
 
     # *_display (not indexed, stored, multivalued)
     string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
@@ -146,50 +97,28 @@ class Item < ActiveRecord::Base
     text :dlg_subject_personal
     text :dcterms_provenance
 
-    # special indexing for url fields - now set via copyFields in solr config
-    # string :dcterms_identifier, as: 'dcterms_identifier_url', multiple: true
-    # string :edm_is_shown_at, as: 'edm_is_shown_at_url', multiple: true
-
-    string :title, as: 'title' do
-      dcterms_title.first ? dcterms_title.first : slug
-    end
-
-    # required for Blacklight - a single valued format field
-    string :format, as: 'format' do
-      dc_format.first ? dc_format.first : ''
-    end
+    # Blacklight 'Required' fields # TODO do we use them properly in DLG?
+    string(:title, as: 'title') { dcterms_title.first ? dcterms_title.first : slug }
+    string(:format, as: 'format') { dc_format.first ? dc_format.first : '' }
 
     # sort fields
-    string :collection_sort, as: 'collection_sort' do
-      collection.title.downcase.gsub(/^(an?|the)\b/, '')
-    end
-
-    string :title_sort, as: 'title_sort' do
-      dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : ''
-    end
-
-    string :creator_sort, as: 'creator_sort' do
-      dcterms_creator.first ? dcterms_creator.first.downcase.gsub(/^(an?|the)\b/, '') : ''
-    end
-
-    integer :year, as: 'year', trie: true do
-      DateIndexer.new.get_sort_date(dc_date)
-    end
+    string(:collection_sort, as: 'collection_sort') { collection.title.downcase.gsub(/^(an?|the)\b/, '') }
+    string(:title_sort, as: 'title_sort') { dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : '' }
+    string(:creator_sort, as: 'creator_sort') { dcterms_creator.first ? dcterms_creator.first.downcase.gsub(/^(an?|the)\b/, '') : '' }
+    integer(:year, as: 'year', trie: true) { DateIndexer.new.get_sort_date(dc_date) }
 
     # facet fields
-    integer :year_facet, multiple: true, trie: true, as: 'year_facet' do
-      DateIndexer.new.get_valid_years_for(dc_date, self)
-    end
-    string :counties, as: 'counties_facet', multiple: true
+    integer(:year_facet, multiple: true, trie: true, as: 'year_facet') { DateIndexer.new.get_valid_years_for(dc_date, self) }
+    string(:counties, as: 'counties_facet', multiple: true)
 
     # datetimes
-    time :created_at, stored: true, trie: true
-    time :updated_at, stored: true, trie: true
+    time(:created_at, stored: true, trie: true)
+    time(:updated_at, stored: true, trie: true)
 
     # spatial stuff
-    string :coordinates, as: 'coordinates', multiple: true
-    string :geojson, as: 'geojson', multiple: true
-    string :placename, as: 'placename', multiple: true
+    string(:coordinates, as: 'coordinates', multiple: true)
+    string(:geojson, as: 'geojson', multiple: true)
+    string(:placename, as: 'placename', multiple: true)
 
   end
 

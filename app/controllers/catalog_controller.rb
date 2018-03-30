@@ -210,7 +210,8 @@ class CatalogController < ApplicationController
       'f.language_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
       'f.repository_name_sms.facet.limit' => -1,
       'f.collection_name_sms.facet.limit' => -1,
-      'f.portals_sms.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT
+      'f.portals_sms.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.counties_facet.facet.limit' => 500,
     }
 
     config.add_search_field('all_fields') do |field|
@@ -257,8 +258,8 @@ class CatalogController < ApplicationController
     config.add_search_field('provenance') do |field|
       field.label = 'Holding Inst.'
       field.solr_local_parameters = {
-          qf: 'dcterms_provenance_text^500 dcterms_provenance_unstem_search^50',
-          pf: 'dcterms_provenence_text^500 dcterms_provenance_unstem_search^50'
+          qf: 'dcterms_provenance_unstem_search^1000 dcterms_provenance_text^50',
+          pf: 'dcterms_provenance_unstem_search^1000 dcterms_provenance_text^50'
       }
     end
 
