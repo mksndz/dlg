@@ -96,6 +96,7 @@ class Item < ActiveRecord::Base
     text :dcterms_rights_holder
     text :dlg_subject_personal
     text :dcterms_provenance
+    text :collection_titles, as: 'collection_names_text'
 
     # Blacklight 'Required' fields # TODO do we use them properly in DLG?
     string(:title, as: 'title') { dcterms_title.first ? dcterms_title.first : slug }
