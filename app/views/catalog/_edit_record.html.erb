@@ -1,0 +1,6 @@
+<% klass, id = @document['sunspot_id_ss'].split(' ') %>
+<% if klass == 'Item' %>
+  <%= link_to t('meta.defaults.actions.edit'), edit_item_path(id) %>
+<% elsif klass == 'Collection' %>
+  <%= link_to t('meta.defaults.actions.edit'), edit_collection_path(id) %>
+<% end %>

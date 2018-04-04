@@ -438,6 +438,12 @@ class CatalogController < ApplicationController
   # add "Export as XML" button on search results
   add_results_collection_tool :action_widget
 
+  add_show_tools_partial :edit_record, partial: 'edit_record'
+
+  def edit(document)
+    link = edit_item_path(document)
+  end
+
   def facets
     @facets = displayed_facets
   end
