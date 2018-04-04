@@ -243,5 +243,16 @@ feature 'Advanced Searching' do
       click_button 'Search'
       expect(all('.edit-record').count).to eq 1
     end
+    scenario 'collection name search returns results only relevant results' do
+      c = @item.collection
+      c.display_title = 'Vanishing Georgia'
+      c.save
+      @item.save
+      Sunspot.commit
+      visit blacklight_advanced_search_engine.advanced_search_path
+      fill_in 'collection_name', with: 'georgia'
+      click_button 'Search'
+      expect(all('.edit-record').count).to eq 1
+    end
   end
 end

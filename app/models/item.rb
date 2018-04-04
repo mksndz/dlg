@@ -37,7 +37,7 @@ class Item < ActiveRecord::Base
     string(:collection_record_id, stored: true) { collection.record_id }
     string(:collection_slug, stored: true) { collection.slug }
     string(:repository_slug, stored: true) { repository.slug }
-    string(:collection_name, stored: true, multiple: true) { collection_titles }
+    string(:collection_titles, stored: true, multiple: true) { collection_titles }
     string(:repository_name, stored: true, multiple: true) { repository_titles } # TODO: consider for removal
     string(:portals, stored: true, multiple: true) { portal_codes }
     string(:portal_names, stored: true, multiple: true) { portal_names }
@@ -96,17 +96,17 @@ class Item < ActiveRecord::Base
     text :dcterms_rights_holder
     text :dlg_subject_personal
     text :dcterms_provenance
-    text :collection_titles, as: 'collection_names_text'
+    text :collection_titles
 
     # Blacklight 'Required' fields # TODO do we use them properly in DLG?
     string(:title, as: 'title') { dcterms_title.first ? dcterms_title.first : slug }
     string(:format, as: 'format') { dc_format.first ? dc_format.first : '' }
 
     # sort fields
-    string(:collection_sort, as: 'collection_sort') { collection.title.downcase.gsub(/^(an?|the)\b/, '') }
-    string(:title_sort, as: 'title_sort') { dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : '' }
-    string(:creator_sort, as: 'creator_sort') { dcterms_creator.first ? dcterms_creator.first.downcase.gsub(/^(an?|the)\b/, '') : '' }
-    integer(:year, as: 'year', trie: true) { DateIndexer.new.get_sort_date(dc_date) }
+    string(:collection_sort,  as: 'collection_sort') { collection.title.downcase.gsub(/^(an?|the)\b/, '') }
+    string(:title_sort,       as: 'title_sort') { dcterms_title.first ? dcterms_title.first.downcase.gsub(/^(an?|the)\b/, '') : '' }
+    string(:creator_sort,     as: 'creator_sort') { dcterms_creator.first ? dcterms_creator.first.downcase.gsub(/^(an?|the)\b/, '') : '' }
+    integer(:year,            as: 'year', trie: true) { DateIndexer.new.get_sort_date(dc_date) }
 
     # facet fields
     integer(:year_facet, multiple: true, trie: true, as: 'year_facet') { DateIndexer.new.get_valid_years_for(dc_date, self) }
