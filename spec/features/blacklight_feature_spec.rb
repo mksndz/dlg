@@ -27,7 +27,10 @@ feature 'Blacklight Functionality' do
           expect(page).to have_text @item.dlg_subject_personal.first
         end
         scenario 'includes link to edit Item' do
-          expect(page).to have_link I18n.t('meta.defaults.actions.edit'), href: edit_item_path(@item)
+          expect(page).to have_link(
+            I18n.t('meta.defaults.actions.edit'),
+            href: edit_item_path(@item)
+          )
         end
       end
       context 'for Collection' do

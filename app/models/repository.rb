@@ -13,7 +13,7 @@ class Repository < ActiveRecord::Base
   validates_uniqueness_of :slug
   validate :coordinates_format
 
-  after_update :reindex_display_values_for_children
+  after_update :reindex_child_values
 
   mount_uploader :thumbnail, ThumbnailUploader
   mount_uploader :image, ImageUploader
@@ -32,12 +32,21 @@ class Repository < ActiveRecord::Base
 
   private
 
-  def reindex_display_values_for_children
+  def reindex_child_values
+    collection_queued = false
     if slug_changed? || title_changed?
-      Resque.enqueue(Reindexer, 'Collection', collections.map(&:id))
+      reindex_collections
       Resque.enqueue(Reindexer, 'Item', items.map(&:id)) if items.any?
+      collection_queued = true
+    end
+    if image_changed? && !collection_queued
+      reindex_collections
     end
     true
+  end
+
+  def reindex_collections
+    Resque.enqueue(Reindexer, 'Collection', collections.map(&:id))
   end
 
   def coordinates_format
