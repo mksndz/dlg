@@ -26,7 +26,7 @@ module ItemsHelper
 
   def version_author_name(version)
     user = User.get_version_author(version)
-    user ? user.email : ''
+    user ? user.email : 'A Deleted User'
   end
 
   def diff(version1, version2)
