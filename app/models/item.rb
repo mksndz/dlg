@@ -36,6 +36,7 @@ class Item < ActiveRecord::Base
     string(:sunspot_id, stored: true) { '' }
     string(:collection_record_id, stored: true) { collection.record_id }
     string(:collection_slug, stored: true) { collection.slug }
+    string(:collection_slug, stored: true, multiple: true) { collection_record_ids }
     string(:repository_slug, stored: true) { repository.slug }
     string(:collection_titles, stored: true, multiple: true) { collection_titles }
     string(:repository_name, stored: true, multiple: true) { repository_titles } # TODO: consider for removal
@@ -143,6 +144,10 @@ class Item < ActiveRecord::Base
     (other_collection_titles << collection.title).reverse.uniq
   end
 
+  def collection_record_ids
+    (other_collection_record_ids << collection.record_id).reverse.uniq
+  end
+
   def repository_titles
     (other_repository_titles << repository.title).reverse.uniq
   end
@@ -196,6 +201,10 @@ class Item < ActiveRecord::Base
 
   def other_collection_titles
     other_colls.map(&:title)
+  end
+
+  def other_collection_record_ids
+    other_colls.map(&:record_id)
   end
 
   def other_colls
