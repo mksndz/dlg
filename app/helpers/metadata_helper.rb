@@ -2,8 +2,7 @@ module MetadataHelper
 
   # TODO: this data is also set in the base RecordController...
   def dcmi_valid_types
-    ['Collection', 'Dataset', 'MovingImage', 'StillImage',
-     'Interactive Resource', 'Software', 'Sound', 'Text']
+    %w(Collection Dataset MovingImage StillImage InteractiveResource Software Sound Text)
   end
 
   def multivalued_fields
