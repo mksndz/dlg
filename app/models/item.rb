@@ -34,9 +34,8 @@ class Item < ActiveRecord::Base
     # sunspot search will not work without this, but indexing will
     # see monkeypatch @ config/initializers/sunspot_indexer_id.rb
     string(:sunspot_id, stored: true) { '' }
-    string(:collection_record_id, stored: true) { collection.record_id }
     string(:collection_slug, stored: true) { collection.slug }
-    string(:collection_slug, stored: true, multiple: true) { collection_record_ids }
+    string(:collection_record_id, stored: true, multiple: true) { collection_record_ids }
     string(:repository_slug, stored: true) { repository.slug }
     string(:collection_titles, stored: true, multiple: true) { collection_titles }
     string(:repository_name, stored: true, multiple: true) { repository_titles } # TODO: consider for removal
