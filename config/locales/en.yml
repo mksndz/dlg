@@ -69,7 +69,7 @@ en:
         in_georgia: "Located in Georgia"
         partner_homepage_url: 'Partner Homepage URL'
         homepage_text: 'DLG Homepage Text'
-        subject_ids: "Subjects"
+        subject_ids: "Topics"
         time_period_ids: "Time Periods"
         dcterms_provenance: 'Holding Institution (Use LCNAF or DLG Names for repository name)'
         dcterms_title: 'Title'
@@ -200,7 +200,7 @@ en:
         primary: 'Primary?'
     help:
       subject:
-        name: "Display name for the Subject"
+        name: "Display name for the Topic"
       user:
         email: "This will also be the username"
         password: "Make it a good one"
@@ -236,7 +236,7 @@ en:
         color: "Color highlighting for Collection in lists"
         public: "Check this to display the Collection to the public"
         in_georgia: "Check this to indicate the Collection is housed in Georgia"
-        subject_ids: "This will classify the Collection into a Subject category"
+        subject_ids: "This will classify the Collection into a Topic category"
         time_period_ids: "This will classify the Collection into a Time Period"
         dc_right: 'Information about rights held in and over the resource. 	Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights.'
         dc_relation: 'A related resource. 	Recommended best practice is to identify the related resource by means of a string conforming to a formal identification system.'
