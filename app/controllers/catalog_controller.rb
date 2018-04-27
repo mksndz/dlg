@@ -103,7 +103,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'medium_facet',             label: I18n.t('meta.search.facets.medium'), limit: true
     config.add_facet_field 'language_facet',           label: I18n.t('meta.search.facets.language'), limit: true
     config.add_facet_field 'repository_name_sms',      label: I18n.t('meta.search.facets.repository'), limit: true
-    config.add_facet_field 'collection_name_sms',      label: I18n.t('meta.search.facets.collection'), limit: true
+    config.add_facet_field 'collection_titles_sms',    label: I18n.t('meta.search.facets.collection'), limit: true
     config.add_facet_field 'portal_names_sms',         label: I18n.t('meta.search.facets.portals'), limit: true
     config.add_facet_field 'class_name',               label: I18n.t('meta.search.facets.class'), limit: true
 
@@ -135,7 +135,7 @@ class CatalogController < ApplicationController
     config.add_index_field 'record_id_ss',                label: I18n.t('meta.search.labels.record_id')
     config.add_index_field 'dcterms_title_display',       label: I18n.t('meta.search.labels.dcterms_title')
     config.add_index_field 'dcterms_description_display', label: I18n.t('meta.search.labels.dcterms_description'), helper_method: 'truncate_index'
-    config.add_index_field 'collection_name_sms',         label: I18n.t('meta.search.labels.collection'), link_to_search: true
+    config.add_index_field 'collection_titles_sms',       label: I18n.t('meta.search.labels.collection'), link_to_search: true
     config.add_index_field 'repository_name_sms',         label: I18n.t('meta.search.labels.repository'), link_to_search: true
     config.add_index_field 'dcterms_identifier_display',  label: I18n.t('meta.search.labels.dcterms_identifier')
     config.add_index_field 'edm_is_shown_at_display',     label: I18n.t('meta.search.labels.edm_is_shown_at'), helper_method: 'linkify'
@@ -153,7 +153,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'slug_ss',                                label: I18n.t('meta.search.labels.item_id')
     config.add_show_field 'record_id_ss',                           label: I18n.t('meta.search.labels.record_id')
     config.add_show_field 'dcterms_title_display',                  label: I18n.t('meta.search.labels.dcterms_title')
-    config.add_show_field 'collection_name_sms',                    label: I18n.t('meta.search.labels.collection'), link_to_search: true
+    config.add_show_field 'collection_titles_sms',                  label: I18n.t('meta.search.labels.collection'), link_to_search: true
     config.add_show_field 'repository_name_sms',                    label: I18n.t('meta.search.labels.repository'), link_to_search: true
     config.add_show_field 'display_title_display',                  label: I18n.t('meta.search.labels.display_title')
     config.add_show_field 'short_description_display',              label: I18n.t('meta.search.labels.short_description')
@@ -195,22 +195,36 @@ class CatalogController < ApplicationController
     config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
     config.advanced_search[:form_solr_parameters] ||= {
       'f.provenance_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.provenance_facet.facet.missing' => true,
       'f.creator_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.creator_facet.facet.missing' => true,
       'f.contributor_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.contributor_facet.facet.missing' => true,
       'f.subject_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.subject_facet.facet.missing' => true,
       'f.year_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.year_facet.facet.missing' => true,
       'f.temporal_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.temporal_facet.facet.missing' => true,
       'f.location_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.location_facet.facet.missing' => true,
       'f.rights_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.rights_facet.facet.missing' => true,
       'f.publisher_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
-      # 'f.rights_holder_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.publisher_facet.facet.missing' => true,
       'f.relation_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.relation_facet.facet.missing' => true,
       'f.type_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.type_facet.facet.missing' => true,
       'f.medium_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.medium_facet.facet.missing' => true,
       'f.language_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.language_facet.facet.missing' => true,
       'f.repository_name_sms.facet.limit' => -1,
-      'f.collection_name_sms.facet.limit' => -1,
-      'f.portals_sms.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT
+      'f.collection_titles_sms.facet.limit' => -1,
+      'f.portals_sms.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.counties_facet.facet.limit' => 500,
+      'f.counties_facet.facet.missing' => true,
     }
 
     config.add_search_field('all_fields') do |field|
@@ -257,8 +271,8 @@ class CatalogController < ApplicationController
     config.add_search_field('provenance') do |field|
       field.label = 'Holding Inst.'
       field.solr_local_parameters = {
-          qf: 'dcterms_provenance_text^500 dcterms_provenance_unstem_search^50',
-          pf: 'dcterms_provenence_text^500 dcterms_provenance_unstem_search^50'
+          qf: 'dcterms_provenance_unstem_search^1000 dcterms_provenance_text^50',
+          pf: 'dcterms_provenance_unstem_search^1000 dcterms_provenance_text^50'
       }
     end
 
@@ -284,8 +298,8 @@ class CatalogController < ApplicationController
     config.add_search_field('description') do |field|
       field.label = 'Description'
       field.solr_local_parameters = {
-          qf: 'description_unstem_search^100 dcterms_description_text^50',
-          pf: 'description_unstem_search^100 dcterms_description_text^50'
+          qf: 'description_unstem_search^1000 dcterms_description_text^50',
+          pf: 'description_unstem_search^1000 dcterms_description_text^50'
       }
     end
 
@@ -293,8 +307,8 @@ class CatalogController < ApplicationController
     config.add_search_field('publisher') do |field|
       field.label = 'Publisher'
       field.solr_local_parameters = {
-          qf: 'publisher_unstem_search^100 dcterms_publisher_text^50',
-          pf: 'publisher_unstem_search^100 dcterms_publisher_text^50'
+          qf: 'publisher_unstem_search^1000 dcterms_publisher_text^50',
+          pf: 'publisher_unstem_search^1000 dcterms_publisher_text^50'
       }
     end
 
@@ -302,8 +316,8 @@ class CatalogController < ApplicationController
     config.add_search_field('date') do |field|
       field.label = 'Date'
       field.solr_local_parameters = {
-          qf: 'date_unstem_search^100 dc_date_text^50',
-          pf: 'date_unstem_search^100 dc_date_text^50'
+          qf: 'date_unstem_search^1000 dc_date_text^50',
+          pf: 'date_unstem_search^1000 dc_date_text^50'
       }
     end
 
@@ -311,8 +325,8 @@ class CatalogController < ApplicationController
     config.add_search_field('temporal') do |field|
       field.label = 'Temporal'
       field.solr_local_parameters = {
-          qf: 'temporal_unstem_search^100 dcterms_temporal_text^50',
-          pf: 'temporal_unstem_search^100 dcterms_temporal_text^50'
+          qf: 'temporal_unstem_search^1000 dcterms_temporal_text^50',
+          pf: 'temporal_unstem_search^1000 dcterms_temporal_text^50'
       }
     end
 
@@ -320,8 +334,8 @@ class CatalogController < ApplicationController
     config.add_search_field('spatial') do |field|
       field.label = 'Spatial'
       field.solr_local_parameters = {
-          qf: 'spatial_unstem_search^100 dcterms_spatial_text^50',
-          pf: 'spatial_unstem_search^100 dcterms_spatial_text^50'
+          qf: 'spatial_unstem_search^1000 dcterms_spatial_text^50',
+          pf: 'spatial_unstem_search^1000 dcterms_spatial_text^50'
       }
     end
 
@@ -329,8 +343,8 @@ class CatalogController < ApplicationController
     config.add_search_field('is_part_of') do |field|
       field.label = 'Is Part Of'
       field.solr_local_parameters = {
-          qf: 'is_part_of_unstem_search^100 dcterms_is_part_of_text^50',
-          pf: 'is_part_of_unstem_search^100 dcterms_is_part_of_text^50'
+          qf: 'is_part_of_unstem_search^1000 dcterms_is_part_of_text^50',
+          pf: 'is_part_of_unstem_search^1000 dcterms_is_part_of_text^50'
       }
     end
 
@@ -338,8 +352,8 @@ class CatalogController < ApplicationController
     config.add_search_field('is_shown_at') do |field|
       field.label = 'Is Shown At (URL)'
       field.solr_local_parameters = {
-          qf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^100',
-          pf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^100'
+          qf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^50',
+          pf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^50'
       }
     end
 
@@ -347,8 +361,8 @@ class CatalogController < ApplicationController
     config.add_search_field('is_shown_by') do |field|
       field.label = 'Is Shown By (URL)'
       field.solr_local_parameters = {
-          qf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^100',
-          pf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^100'
+          qf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^50',
+          pf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^50'
       }
     end
 
@@ -365,8 +379,17 @@ class CatalogController < ApplicationController
     config.add_search_field('rights_holder') do |field|
       field.label = 'Rights Holder'
       field.solr_local_parameters = {
-          qf: 'dcterms_rights_holder_text^500 dcterms_rights_holder_unstem_search^50',
-          pf: 'dcterms_rights_holder_text^500 dcterms_rights_holder_unstem_search^50'
+          qf: 'dcterms_rights_holder_text^1000 dcterms_rights_holder_unstem_search^50',
+          pf: 'dcterms_rights_holder_text^1000 dcterms_rights_holder_unstem_search^50'
+      }
+    end
+
+    # collection name
+    config.add_search_field('collection_name') do |field|
+      field.label = 'Collection Name'
+      field.solr_local_parameters = {
+          qf: 'collection_titles_unstem_search^1000 collection_titles_text^50',
+          pf: 'collection_titles_unstem_search^1000 collection_titles_text^50'
       }
     end
 
@@ -427,6 +450,12 @@ class CatalogController < ApplicationController
 
   # add "Export as XML" button on search results
   add_results_collection_tool :action_widget
+
+  add_show_tools_partial :edit_record, partial: 'edit_record'
+
+  def edit(document)
+    link = edit_item_path(document)
+  end
 
   def facets
     @facets = displayed_facets

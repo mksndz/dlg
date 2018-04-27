@@ -1,7 +1,7 @@
 module BlacklightHelper
   include Blacklight::BlacklightHelperBehavior
 
-  NO_THUMB_ICON = 'no_thumb.gif'.freeze # todo replace with no thumb placeholder
+  NO_THUMB_ICON = 'no_thumb.png'.freeze # todo replace with no thumb placeholder
 
   def render_page_title
     if content_for?(:page_title)

@@ -70,12 +70,9 @@ feature 'Repositories Management' do
       let(:repository) { Fabricate :empty_repository }
       before :each do
         visit edit_repository_path repository
-        attach_file I18n.t('activerecord.attributes.repository.image'), Rails.root.to_s + '/spec/files/aarl.gif'
-        click_button I18n.t('meta.defaults.actions.save')
-        repository.reload
       end
       scenario 'uploads an image that is then displayed on the show page' do
-        expect(page.html).to include repository.thumbnail.url
+        expect(page.html).to include repository.image.url
       end
       scenario 'can remove a thumb with the checkbox' do
         visit edit_repository_path repository
