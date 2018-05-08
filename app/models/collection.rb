@@ -239,7 +239,8 @@ class Collection < ActiveRecord::Base
   private
 
   def reindex_children
-    if slug_changed? || display_title_changed?
+    if slug_changed? || display_title_changed? || repository_changed?
+      items.save #TODO: this could be more specific (in new title and repo case a single query)
       Resque.enqueue(Reindexer, 'Item', items.map(&:id)) if items.any?
     end
     true

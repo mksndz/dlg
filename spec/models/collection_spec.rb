@@ -28,6 +28,14 @@ RSpec.describe Collection, type: :model do
     c.valid?
     expect(c.errors).to have_key :slug
   end
+  it 'updates children items if the repository is changed' do
+    r = Fabricate :repository
+    c = r.collections.first
+    i = r.items.first
+    c.repository = Fabricate :repository
+    c.save
+    expect(i.record_id).to include Repository.last.slug
+  end
   context 'validations' do
     let(:collection) { Fabricate.build :empty_collection }
     it 'can be saved with >1 dc_right value' do
