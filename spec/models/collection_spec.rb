@@ -32,9 +32,11 @@ RSpec.describe Collection, type: :model do
     r = Fabricate :repository
     c = r.collections.first
     i = r.items.first
-    c.repository = Fabricate :repository
+    new_r = Fabricate(:repository, portals: r.portals)
+    c.repository = new_r
     c.save
-    expect(i.record_id).to include Repository.last.slug
+    i.reload
+    expect(i.record_id).to include new_r.slug
   end
   context 'validations' do
     let(:collection) { Fabricate.build :empty_collection }

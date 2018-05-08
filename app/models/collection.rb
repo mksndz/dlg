@@ -213,10 +213,8 @@ class Collection < ActiveRecord::Base
   def to_xml(options = {})
     default_options = {
       dasherize: false,
-      except: [
-        :id, :repository_id, :created_at, :updated_at, :other_repositories,
-        :items_count, :date_range
-      ]
+      except: %i[id repository_id created_at updated_at other_repositories
+                 items_count date_range]
     }
     if options[:show_repository]
       default_options[:include] = [repository: { only: [:slug] }]
@@ -239,11 +237,15 @@ class Collection < ActiveRecord::Base
   private
 
   def reindex_children
-    if slug_changed? || display_title_changed? || repository_changed?
-      items.save #TODO: this could be more specific (in new title and repo case a single query)
+    if slug_changed? || display_title_changed? || repository_id_changed?
+      resave_children if repository_id_changed? || slug_changed? # TODO: this should be a background job
       Resque.enqueue(Reindexer, 'Item', items.map(&:id)) if items.any?
     end
     true
+  end
+
+  def resave_children
+    items.reload.each(&:save)
   end
 
   def update_record_id
