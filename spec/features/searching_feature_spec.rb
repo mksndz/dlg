@@ -242,7 +242,7 @@ feature 'Searching' do
       end
       scenario 'collections have thumbnails inherited from the repository' do
         within '.document-position-0' do
-          expect(page.html).to include 'no_thumb'
+          expect(page.html).to include "http://dlg.galileo.usg.edu/do-th:#{@collection.repository.slug}"
         end
       end
     end
