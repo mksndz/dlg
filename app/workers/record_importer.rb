@@ -1,6 +1,6 @@
-include XmlImportHelper
 # job to process source records into batch_items
 class RecordImporter
+  include XmlImportHelper
   @queue = :xml
   # @logger = Logger.new('./log/xml_import.log')
   @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
@@ -18,7 +18,7 @@ class RecordImporter
     @failed = []
 
     import_type = @batch_import.format
-    notify "XML Import `#{batch_import_id}` initiated by `#{@batch_import.batch.user.email}`."
+    # notify "XML Import `#{batch_import_id}` initiated by `#{@batch_import.batch.user.email}`."
 
     case import_type
     when 'file', 'text'
@@ -73,7 +73,7 @@ class RecordImporter
 
     save_batch_import
     t2 = Time.now
-    notify "BatchImport `#{batch_import_id}` complete. Elapsed time: `#{t2 - t1}` seconds. Records created : `#{@added.length}`. Records updated: `#{@updated.length}`. Errors: `#{@failed.length}`"
+    notify "BatchImport `#{batch_import_id}` complete in `#{t2 - t1}` seconds. `#{@added.length}` new. `#{@updated.length}` updated and `#{@failed.length}` errors."
 
   end
 

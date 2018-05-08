@@ -10,14 +10,14 @@ class BatchCommitter
       note_failure "Batch #{@batch.id} has no BatchItems and will not be committed"
       return
     end
-    notify "Committing Batch #{@batch.name} (`#{@batch.id}`) from `#{@batch.user.email}` containing `#{@batch.batch_items.count}` items."
+    notify "Committing `#{@batch.name}` with `#{@batch.batch_items.count}` items."
     begin
       @batch.commit
     rescue StandardError => e
       note_failure "Committing resulted in an error: #{e.message}"
     else
       t2 = Time.now
-      notify "Finished committing Batch #{@batch.name} (`#{@batch.id}`). Elapsed time: `#{t2 - t1}` seconds."
+      notify "Commit finished for `#{@batch.name}` in `#{t2 - t1}` seconds."
     end
   end
 
