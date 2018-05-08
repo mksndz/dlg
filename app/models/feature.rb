@@ -1,5 +1,6 @@
 # a featured thing for the public DLG site
 class Feature < ActiveRecord::Base
+  scope :random, -> { order("RANDOM()") }
   scope :ordered, -> { order(primary: :desc) }
   scope :carousel, -> { ordered.where(area: 'carousel', public: true) }
   scope :tabs, -> { ordered.where(area: 'tabs', public: true) }

@@ -19,7 +19,7 @@ class ApiController < ApplicationController
 
   # get features for the tabs
   def tab_features
-    records = Feature.tabs.limit @limit
+    records = Feature.tabs.random.limit @limit
     response = { limit: @limit, records: records }
     render json: response
   end
