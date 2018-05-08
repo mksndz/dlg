@@ -1,6 +1,6 @@
 # job to process source records into batch_items
+include XmlImportHelper
 class RecordImporter
-  include XmlImportHelper
   @queue = :xml
   # @logger = Logger.new('./log/xml_import.log')
   @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
