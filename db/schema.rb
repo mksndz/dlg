@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180222205012) do
+ActiveRecord::Schema.define(version: 20180612202810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,10 +112,8 @@ ActiveRecord::Schema.define(version: 20180222205012) do
 
   create_table "collections", force: :cascade do |t|
     t.integer   "repository_id"
-    t.boolean   "in_georgia",                     default: true,  null: false
     t.text      "display_title",                                  null: false
     t.text      "short_description"
-    t.string    "color"
     t.text      "dc_format",                      default: [],    null: false, array: true
     t.text      "dc_right",                       default: [],    null: false, array: true
     t.text      "dc_date",                        default: [],    null: false, array: true
@@ -269,9 +267,7 @@ ActiveRecord::Schema.define(version: 20180222205012) do
   create_table "repositories", force: :cascade do |t|
     t.string   "slug",                              null: false
     t.boolean  "public",            default: false, null: false
-    t.boolean  "in_georgia",        default: true,  null: false
     t.string   "title",                             null: false
-    t.string   "color"
     t.string   "homepage_url"
     t.string   "directions_url"
     t.text     "short_description"

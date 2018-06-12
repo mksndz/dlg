@@ -111,11 +111,9 @@ class CollectionsController < RecordController
       params.require(:collection).permit(
         :repository_id,
         :slug,
-        :in_georgia,
         :public,
         :display_title,
         :short_description,
-        :color,
         :date_range,
         :dc_relation,
         :dc_format,

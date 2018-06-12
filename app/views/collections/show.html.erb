@@ -15,7 +15,6 @@
   <%= link_to t('meta.collection.actions.download_item_xml'), items_path( { collection_id: @collection.id, format: :xml } ) , class: 'btn btn-default' %>
 </div>
 
-
 <br><br>
 
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.repository_id'), value: @collection.repository.title %>
@@ -26,10 +25,7 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.short_description'), value: @collection.short_description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.partner_homepage_url'), value: @collection.partner_homepage_url %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.homepage_text'), value: @collection.homepage_text %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.in_georgia'), value: @collection.in_georgia %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.public'), value: @collection.public %>
-
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.color'), value: @collection.color %>
 
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @collection } %>
 

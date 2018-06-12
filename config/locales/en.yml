@@ -41,9 +41,7 @@ en:
         short_description: "Short Description"
         description: "Description"
         coordinates: "Coordinates"
-        color: "Highlight Color"
         public: "Public"
-        in_georgia: "Located in Georgia"
         thumbnail: "Thumbnail"
         image: "Image"
         homepage_url: "Repository Homepage URL"
@@ -63,10 +61,8 @@ en:
         other_repositories: "Other Repositories"
         description: "Description"
         date_range: "Date Range"
-        color: "Highlight Color"
         public: "Public"
         dpla: "Push to DPLA"
-        in_georgia: "Located in Georgia"
         partner_homepage_url: 'Partner Homepage URL'
         homepage_text: 'DLG Homepage Text'
         subject_ids: "Topics"
@@ -105,7 +101,6 @@ en:
         collection_id: "Collection"
         public: "Public"
         dpla: "Push to DPLA"
-        in_georgia: "Located in Georgia"
         local: "Locally Hosted Item"
         other_collections: "Other Collections"
         dcterms_provenance: 'Holding Institution (Use LCNAF or DLG Names for repository name)'
@@ -141,7 +136,6 @@ en:
         collection_id: "Collection"
         public: "Public"
         dpla: "Push to DPLA"
-        in_georgia: "Located in Georgia"
         local: "Locally Hosted Item"
         other_collections: "Other Collections"
         dcterms_provenance: 'Holding Institution (Use LCNAF or DLG Names for repository name)'
@@ -217,9 +211,7 @@ en:
         short_description: "Short description for Repository lists"
         description: "Full description for Repository main page"
         coordinates: "Must be in 'latitude, longitude' form"
-        color: "Color for highlighting repository in lists"
         public: "Check this to show the Repository to public users"
-        in_georgia: "Check this to indicate that the repository is located in Georgia"
         homepage_url: "URL for Repository main homepage"
         directions_url: "URL for driving directions to physical repository location"
         address: "Physical address of Repository"
@@ -233,9 +225,7 @@ en:
         other_repositories: "Other (Secondary) Repositories that house this Collection"
         description: "Full description for Collection main page"
         date_range: "Date range for temporal span of Collection items"
-        color: "Color highlighting for Collection in lists"
         public: "Check this to display the Collection to the public"
-        in_georgia: "Check this to indicate the Collection is housed in Georgia"
         subject_ids: "This will classify the Collection into a Topic category"
         time_period_ids: "This will classify the Collection into a Time Period"
         dc_right: 'Information about rights held in and over the resource. 	Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights.'
@@ -265,7 +255,6 @@ en:
 #        collection_id: "Primary Collection to which this Item belongs"
 #        public: "Check this to display the Item to the public"
 #        dpla: "Check this to include the Item in the OAI-PMH harvest by DPLA"
-#        in_georgia: "Check this to indicate the Item is located in Georgia"
 #        other_collections: "Other (Secondary) Collections that house this Item"
 #        dc_identifier: 'An unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string conforming to a formal identification system.'
 #        dc_right: 'Information about rights held in and over the resource. 	Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights.'
@@ -295,7 +284,6 @@ en:
 #        collection_id: "Primary Collection to which this Item belongs"
 #        public: "Check this to display the Collection to the public"
 #        dpla: "Check this to include the Item in the OAI-PMH harvest by DPLA"
-#        in_georgia: "Check this to indicate the Item is located in Georgia"
 #        other_collections: "Other (Secondary) Collections that house this Item"
 #        dc_identifier: 'An unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string conforming to a formal identification system.'
 #        dc_right: 'Information about rights held in and over the resource. 	Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights.'

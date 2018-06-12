@@ -70,10 +70,10 @@ class RepositoriesController < ApplicationController
     params
       .require(:repository)
       .permit(:slug, :title, :teaser, :short_description, :description,
-              :coordinates, :color, :public, :in_georgia, :homepage_url,
-              :directions_url, :address, :strengths, :contact, :thumbnail,
-              :remove_thumbnail, :thumbnail_cache, :image,
-              :remove_image, :image_cache, portal_ids: []
+              :coordinates, :public, :homepage_url, :directions_url, :address,
+              :strengths, :contact, :thumbnail, :remove_thumbnail,
+              :thumbnail_cache, :image, :remove_image, :image_cache,
+              portal_ids: []
     )
   end
 

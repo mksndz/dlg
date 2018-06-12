@@ -5,19 +5,11 @@
   <%= f.form_group :public do %>
       <%= f.check_box :public %>
   <% end %>
-  <%= f.form_group :in_georgia do %>
-      <%= f.check_box :in_georgia %>
-  <% end %>
   <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, {}, { multiple: true,  class: 'fancy-multiselect' } %>
   <%= f.text_area :teaser %>
   <%= f.text_area :short_description %>
   <%= f.text_area :description %>
   <%= f.text_field :coordinates %>
-  <% if @repository.color %>
-      <%= f.color_field :color %>
-  <% else %>
-      <%= f.color_field :color, value: '#ffffff' %>
-  <% end %>
   <% if @repository.thumbnail? %>
     <label><%= t('meta.defaults.labels.current_thumbnail') %></label><br>
     <%= image_tag(@repository.thumbnail.url, class: 'thumbnail') %>
