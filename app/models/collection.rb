@@ -97,9 +97,9 @@ class Collection < ActiveRecord::Base
     string :short_description, stored: true, as: 'short_description_display'
 
     # special handling for special fields that are duplicated, see copyFields in schema
-    string :dcterms_provenance, as: 'collection_provenance_text', multiple: true
-    string :dcterms_type,       as: 'collection_type_text',       multiple: true
-    string :dcterms_spatial,    as: 'collection_spatial_text',    multiple: true
+    string :dcterms_provenance, as: 'collection_provenance_display', multiple: true
+    string :dcterms_type,       as: 'collection_type_display',       multiple: true
+    string :dcterms_spatial,    as: 'collection_spatial_display',    multiple: true
 
     # *_display (not indexed, stored, multivalued)
     string :dcterms_title,                  as: 'dcterms_title_display',                  multiple: true
