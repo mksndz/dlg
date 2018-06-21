@@ -138,14 +138,12 @@ class Collection < ActiveRecord::Base
     text :dcterms_description
     text :dcterms_publisher
     text :dcterms_temporal
-    text :dcterms_spatial
     text :dcterms_is_part_of
     text :edm_is_shown_at
     text :edm_is_shown_by
     text :dcterms_identifier
     text :dcterms_rights_holder
     text :dlg_subject_personal
-    text :dcterms_provenance
 
     string :title, as: 'title' do
       dcterms_title.first ? dcterms_title.first : slug
