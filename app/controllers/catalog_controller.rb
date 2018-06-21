@@ -110,7 +110,7 @@ class CatalogController < ApplicationController
     # collection only facets
     config.add_facet_field 'collection_provenance_facet', label: I18n.t('meta.search.facets.collection_only.provenance'), limit: true
     config.add_facet_field 'collection_type_facet',       label: I18n.t('meta.search.facets.collection_only.type'), limit: true
-    config.add_facet_field 'collection_spatial_facet',    label: I18n.t('meta.search.facets.collection_only.spatial'), limit: true
+    config.add_facet_field 'collection_location_facet',   label: I18n.t('meta.search.facets.collection_only.spatial'), limit: true
 
 
     #
@@ -224,7 +224,7 @@ class CatalogController < ApplicationController
       'f.collection_titles_sms.facet.limit' => -1,
       'f.portals_sms.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
       'f.counties_facet.facet.limit' => 500,
-      'f.counties_facet.facet.missing' => true,
+      'f.counties_facet.facet.missing' => true
     }
 
     config.add_search_field('all_fields') do |field|

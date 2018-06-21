@@ -96,8 +96,12 @@ class Collection < ActiveRecord::Base
     string :display_title, stored: true, as: 'display_title_display'
     string :short_description, stored: true, as: 'short_description_display'
 
+    # special handling for special fields that are duplicated, see copyFields in schema
+    string :dcterms_provenance, as: 'collection_provenance_text', multiple: true
+    string :dcterms_type,       as: 'collection_type_text',       multiple: true
+    string :dcterms_spatial,    as: 'collection_spatial_text',    multiple: true
+
     # *_display (not indexed, stored, multivalued)
-    string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
     string :dcterms_title,                  as: 'dcterms_title_display',                  multiple: true
     string :dcterms_creator,                as: 'dcterms_creator_display',                multiple: true
     string :dcterms_contributor,            as: 'dcterms_contributor_display',            multiple: true
@@ -109,7 +113,6 @@ class Collection < ActiveRecord::Base
     string :dcterms_identifier,             as: 'dcterms_identifier_display',             multiple: true
     string :dc_date,                        as: 'dc_date_display',                        multiple: true
     string :dcterms_temporal,               as: 'dcterms_temporal_display',               multiple: true
-    string :dcterms_spatial,                as: 'dcterms_spatial_display',                multiple: true
     string :dc_format,                      as: 'dc_format_display',                      multiple: true
     string :dcterms_is_part_of,             as: 'dcterms_is_part_of_display',             multiple: true
     string :dc_right,                       as: 'dc_right_display',                       multiple: true
@@ -118,7 +121,6 @@ class Collection < ActiveRecord::Base
     string :dlg_local_right,                as: 'dlg_local_right_display',                multiple: true
     string :dlg_subject_personal,           as: 'dlg_subject_personal_display',           multiple: true
     string :dc_relation,                    as: 'dc_relation_display',                    multiple: true
-    string :dcterms_type,                   as: 'dcterms_type_display',                   multiple: true
     string :dcterms_medium,                 as: 'dcterms_medium_display',                 multiple: true
     string :dcterms_extent,                 as: 'dcterms_extent_display',                 multiple: true
     string :dcterms_language,               as: 'dcterms_language_display',               multiple: true
@@ -172,9 +174,6 @@ class Collection < ActiveRecord::Base
     integer :year_facet, multiple: true, trie: true, as: 'year_facet' do
       DateIndexer.new.get_valid_years_for(dc_date, self)
     end
-    string :dcterms_provenance, as: 'collection_provenance_facet', multiple: true
-    string :dcterms_type, as: 'collection_type_facet', multiple: true
-    string :dcterms_spatial, as: 'collection_spatial_facet', multiple: true
     string :counties, as: 'counties_facet', multiple: true
 
     # datetimes
