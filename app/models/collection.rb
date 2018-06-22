@@ -96,12 +96,10 @@ class Collection < ActiveRecord::Base
     string :display_title, stored: true, as: 'display_title_display'
     string :short_description, stored: true, as: 'short_description_display'
 
-    # special handling for special fields that are duplicated, see copyFields in schema
-    string :dcterms_provenance, as: 'collection_provenance_display', multiple: true
-    string :dcterms_type,       as: 'collection_type_display',       multiple: true
-    string :dcterms_spatial,    as: 'collection_spatial_display',    multiple: true
-
     # *_display (not indexed, stored, multivalued)
+    string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
+    string :dcterms_type,                   as: 'dcterms_type_display',                   multiple: true
+    string :dcterms_spatial,                as: 'dcterms_spatial_display',                multiple: true
     string :dcterms_title,                  as: 'dcterms_title_display',                  multiple: true
     string :dcterms_creator,                as: 'dcterms_creator_display',                multiple: true
     string :dcterms_contributor,            as: 'dcterms_contributor_display',            multiple: true
@@ -125,6 +123,17 @@ class Collection < ActiveRecord::Base
     string :dcterms_extent,                 as: 'dcterms_extent_display',                 multiple: true
     string :dcterms_language,               as: 'dcterms_language_display',               multiple: true
 
+    # special collection-only fields
+    string :collection_provenance_facet, multiple: true, as: 'collection_provenance_facet' do
+      dcterms_provenance
+    end
+    string :collection_type_facet, multiple: true, as: 'collection_type_facet' do
+      dcterms_type
+    end
+    string :collection_spatial_facet, multiple: true, as: 'collection_spatial_facet' do
+      dcterms_spatial
+    end
+
     # just stored content
     string :partner_homepage_url,   as: 'partner_homepage_url_display'
     string :homepage_text,          as: 'homepage_text_display'
@@ -138,12 +147,14 @@ class Collection < ActiveRecord::Base
     text :dcterms_description
     text :dcterms_publisher
     text :dcterms_temporal
+    text :dcterms_spatial
     text :dcterms_is_part_of
     text :edm_is_shown_at
     text :edm_is_shown_by
     text :dcterms_identifier
     text :dcterms_rights_holder
     text :dlg_subject_personal
+    text :dcterms_provenance
 
     string :title, as: 'title' do
       dcterms_title.first ? dcterms_title.first : slug

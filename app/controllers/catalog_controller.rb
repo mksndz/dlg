@@ -110,8 +110,7 @@ class CatalogController < ApplicationController
     # collection only facets
     config.add_facet_field 'collection_provenance_facet', label: I18n.t('meta.search.facets.collection_only.provenance'), limit: true
     config.add_facet_field 'collection_type_facet',       label: I18n.t('meta.search.facets.collection_only.type'), limit: true
-    config.add_facet_field 'collection_location_facet',   label: I18n.t('meta.search.facets.collection_only.spatial'), limit: true
-
+    config.add_facet_field 'collection_spatial_facet',    label: I18n.t('meta.search.facets.collection_only.spatial'), limit: true
 
     #
     # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
