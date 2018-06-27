@@ -45,6 +45,9 @@ RSpec.describe BatchItem, type: :model do
     it 'has a slug' do
       expect(batch_item.slug).not_to be_empty
     end
+    it 'has a string for full text' do
+      expect(batch_item.fulltext).to be_kind_of String
+    end
     it 'is not an Item' do
       expect(batch_item).not_to be_kind_of Item
     end
