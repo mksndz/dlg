@@ -24,6 +24,8 @@
 
     <%= render partial: 'shared/edit_dc_fields', locals: {f: f, entity: @item } %>
 
+    <%= f.text_area :fulltext, class: 'fulltext-input' %>
+
     <%= f.primary I18n.t('meta.defaults.actions.save'), class: 'btn btn-primary fixed-save-button' %>
 
 <% end %>

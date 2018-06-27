@@ -170,6 +170,7 @@ class ItemsController < RecordController
         :dcterms_bibliographic_citation,
         :dlg_local_right,
         :dlg_subject_personal,
+        :fulltext,
         dcterms_type: [],
         other_collections: [],
         portal_ids: []

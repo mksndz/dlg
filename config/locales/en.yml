@@ -131,6 +131,7 @@ en:
         portal_ids: 'Portals'
         created_at: "Created"
         updated_at: "Last Updated"
+        fulltext: "Full Text"
       batch_item:
         slug: "Slug"
         collection_id: "Collection"
@@ -166,6 +167,7 @@ en:
         portal_ids: 'Portals'
         created_at: "Created"
         updated_at: "Last Updated"
+        fulltext: "Full Text"
       batch_import:
         xml: 'XML'
         xml_text: 'XML Text'

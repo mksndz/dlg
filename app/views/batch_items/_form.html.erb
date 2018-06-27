@@ -24,7 +24,9 @@
 
     <%= render partial: 'shared/edit_dc_fields', locals: { f: f, entity: @batch_item } %>
 
-    <div class="action-buttons">
+    <%= f.text_area :fulltext, class: 'fulltext-input' %>
+
+  <div class="action-buttons">
       <%= f.primary I18n.t('meta.defaults.actions.save'), class: 'btn btn-primary fixed-save-button' %>
       <%= f.submit(t('meta.defaults.actions.save_and_goto_next'), name: 'next') if @next %>
       <%= f.submit(t('meta.defaults.actions.save_and_goto_previous'), name: 'previous') if @previous %>

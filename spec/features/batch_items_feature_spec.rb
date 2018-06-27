@@ -23,32 +23,50 @@ feature 'Batches Management' do
           expect(page).to have_text batch.batch_items.first.title
         end
       end
-      context 'edit first' do
-        before(:each) { visit edit_batch_batch_item_path(batch, batch.batch_items.first) }
-        scenario 'can load the batch_item edit form and save the record' do
-          expect(page).to have_text batch.batch_items.first.title
-          expect(page).to have_button I18n.t('meta.defaults.actions.save')
-          expect(page).to have_button I18n.t('meta.defaults.actions.save_and_goto_next')
-          expect(page).not_to have_button I18n.t('meta.defaults.actions.save_and_goto_previous')
+      context 'edit' do
+        scenario 'edit page has a fulltext field' do
+          visit edit_batch_batch_item_path(batch, batch.batch_items.first)
+          expect(page).to have_field I18n.t('activerecord.attributes.batch_item.fulltext')
         end
-        scenario 'can save a batch_item and be taken to the show page' do
+        scenario 'fulltext field saves fulltext to batch item, redirects and shows content on the show page' do
+          bi = batch.batch_items.first
+          visit edit_batch_batch_item_path(batch, bi)
+          fulltext = 'Test Fulltext'
+          fill_in I18n.t('activerecord.attributes.batch_item.fulltext'), with: fulltext
           within '.action-buttons' do
             click_on I18n.t('meta.defaults.actions.save')
           end
-          expect(page).to have_current_path batch_batch_item_path(batch, batch.batch_items.first)
+          expect(page).to have_current_path batch_batch_item_path(batch, bi)
+          expect(page).to have_text fulltext
         end
-        scenario 'can save a batch_item and be taken to the next record' do
-          click_on I18n.t('meta.defaults.actions.save_and_goto_next')
-          expect(page).to have_current_path edit_batch_batch_item_path(batch, batch.batch_items.first.next)
+        context 'edit first' do
+          before(:each) { visit edit_batch_batch_item_path(batch, batch.batch_items.first) }
+          scenario 'can load the batch_item edit form and save the record' do
+            expect(page).to have_text batch.batch_items.first.title
+            expect(page).to have_button I18n.t('meta.defaults.actions.save')
+            expect(page).to have_button I18n.t('meta.defaults.actions.save_and_goto_next')
+            expect(page).not_to have_button I18n.t('meta.defaults.actions.save_and_goto_previous')
+          end
+          scenario 'can save a batch_item and be taken to the show page' do
+            within '.action-buttons' do
+              click_on I18n.t('meta.defaults.actions.save')
+            end
+            expect(page).to have_current_path batch_batch_item_path(batch, batch.batch_items.first)
+          end
+          scenario 'can save a batch_item and be taken to the next record' do
+            click_on I18n.t('meta.defaults.actions.save_and_goto_next')
+            expect(page).to have_current_path edit_batch_batch_item_path(batch, batch.batch_items.first.next)
+          end
+        end
+        context 'edit last' do
+          scenario 'can save a batch_item and be taken to the previous record' do
+            visit edit_batch_batch_item_path(batch, batch.batch_items.last)
+            click_on I18n.t('meta.defaults.actions.save_and_goto_previous')
+            expect(page).to have_current_path edit_batch_batch_item_path(batch, batch.batch_items.last.previous)
+          end
         end
       end
-      context 'edit last' do
-        scenario 'can save a batch_item and be taken to the previous record' do
-          visit edit_batch_batch_item_path(batch, batch.batch_items.last)
-          click_on I18n.t('meta.defaults.actions.save_and_goto_previous')
-          expect(page).to have_current_path edit_batch_batch_item_path(batch, batch.batch_items.last.previous)
-        end
-      end
+
     end
     context 'with a committed batch' do
       let(:batch) do

@@ -43,6 +43,8 @@
   </div>
 </div>
 
+<%= render 'shared/show_field', field_name: I18n.t('activerecord.attributes.item.fulltext'), value: @item.fulltext %>
+
 <% if @item.batch_items.any? %>
 
 <div class="panel panel-default">
