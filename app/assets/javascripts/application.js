@@ -18,6 +18,7 @@
 //= require blacklight/blacklight
 //= require bootstrap/tooltip
 //= require bootstrap/popover
+//= require bootstrap/tab
 //= require chosen-jquery
 //= require_tree .
 
@@ -52,6 +53,10 @@ Blacklight.onLoad(function() {
         selectElementText(document.getElementById($(this).data('container-id')))
     });
 
+    $('.document-tabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    })
 });
 
 // thx http://stackoverflow.com/a/2838358

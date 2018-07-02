@@ -1,16 +1,46 @@
 <% doc_presenter = show_presenter(document) %>
 <%# default partial to display solr document fields in catalog show view -%>
-<%- if has_thumbnail?(document) %>
-    <div id="show-document-thumbnail" class="pull-right">
-      <%= render_thumbnail_tag(document, {}) %>
-    </div>
-<%- end %>
-<dl class="dl-horizontal  dl-invert">
-  <% document_show_fields(document).each do |field_name, field| -%>
-      <% if should_render_show_field? document, field %>
-          <dt class="blacklight-<%= field_name.parameterize %>"><%= render_document_show_field_label document, field: field_name %></dt>
-          <dd class="blacklight-<%= field_name.parameterize %>"><%= doc_presenter.field_value field_name %></dd>
-      <% end -%>
-  <% end -%>
-</dl>
 
+<div class="row document-tabs" role="tablist" data-turbolinks="false">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <li role="presentation" class="active">
+        <a href="#metadata" aria-controls="metadata" role="tab" data-toggle="tab">Metadata</a>
+      </li>
+      <% if document.fulltext? %>
+      <li role="presentation">
+        <a href="#fulltext" aria-controls="fulltext" role="tab" data-toggle="tab">Full Text</a>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="tab-content">
+      <div class="tab-pane active" role="tabpanel" id="metadata">
+        <%- if has_thumbnail?(document) %>
+          <div id="show-document-thumbnail" class="pull-right">
+            <%= render_thumbnail_tag(document, {}) %>
+          </div>
+        <%- end %>
+        <dl class="dl-horizontal  dl-invert">
+          <% document_show_fields(document).each do |field_name, field| -%>
+            <% if should_render_show_field? document, field %>
+              <dt class="blacklight-<%= field_name.parameterize %>"><%= render_document_show_field_label document, field: field_name %></dt>
+              <dd class="blacklight-<%= field_name.parameterize %>"><%= doc_presenter.field_value field_name %></dd>
+            <% end -%>
+          <% end -%>
+        </dl>
+      </div>
+      <% if document.fulltext? %>
+        <div class="tab-pane" role="tabpanel" id="fulltext">
+          <div class="fulltext-area" style="overflow-y: scroll; height: 500px">
+            <%= document.fulltext.first %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
