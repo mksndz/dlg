@@ -20,7 +20,7 @@ class Collection < ActiveRecord::Base
 
   before_destroy :clear_from_other_collections
   before_save :update_record_id
-  after_update :reindex_children
+  after_commit :reindex_children
 
   def self.index_query_fields
     %w(repository_id public).freeze
