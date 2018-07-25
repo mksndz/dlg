@@ -253,7 +253,9 @@ class Collection < ActiveRecord::Base
   end
 
   def resave_children
-    items.reload.each(&:save)
+    items.reload.each do |item|
+      item.save(validate: false)
+    end
   end
 
   def update_record_id
