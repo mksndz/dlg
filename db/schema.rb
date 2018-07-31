@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180627152551) do
+ActiveRecord::Schema.define(version: 20180731190538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,19 @@ ActiveRecord::Schema.define(version: 20180627152551) do
     t.string  "area"
     t.string  "large_image"
     t.boolean "public",            default: false
+  end
+
+  create_table "fulltext_ingests", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "file"
+    t.json     "results",     default: {}
+    t.integer  "user_id"
+    t.datetime "queued_at"
+    t.datetime "finished_at"
+    t.datetime "undone_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "item_versions", force: :cascade do |t|

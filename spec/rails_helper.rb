@@ -71,6 +71,7 @@ RSpec.configure do |config|
     Repository.destroy_all
     User.destroy_all
     Portal.destroy_all
+    FulltextIngest.destroy_all
   }
 
   config.before(:all){

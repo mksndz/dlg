@@ -1,32 +1,36 @@
 require 'rails_helper'
 
-RSpec.describe FulltextIngest, type: :model do
+describe FulltextIngest do
   it 'has none to begin with' do
-    expect(BatchImport.count).to eq 0
+    expect(FulltextIngest.count).to eq 0
   end
-  it 'has one after adding one' do
-    Fabricate(:fulltext_ingest)
-    expect(BatchImport.count).to eq 1
-  end
-  context :new do
-    let(:b) { Fabricate :fulltext_ingest }
-    it 'has a String format' do
-      expect(b.format).to be_kind_of String
+  context 'basic attributes' do
+    before :all do
+      Fabricate :fulltext_ingest
     end
-    it 'belongs to a User' do
-      expect(b.user).to be_kind_of User
+    it 'has a title' do
+      expect(FulltextIngest.last.title).not_to be_empty
     end
-    it 'belongs to a Batch' do
-      expect(b.batch).to be_kind_of Batch
+    it 'has a description' do
+      expect(FulltextIngest.last.description).not_to be_empty
     end
-    it 'belongs to a Batch' do
-      expect(b.item_ids).to be_an Array
+    it 'has an associated User' do
+      expect(FulltextIngest.last.user).to be_a User
     end
-    it 'returns false for completed' do
-      expect(b.completed?).to be false
+    it 'has a file name' do
+      expect(FulltextIngest.last.file).not_to be_empty
     end
-    it 'returns false for match_by_db_id' do
-      expect(b.match_on_id?).to be false
+    it 'has a JSON results' do
+      expect(FulltextIngest.last.results).to eq({})
+    end
+    it 'has a field for queued time' do
+      expect(FulltextIngest.last.queued_at).to be_nil
+    end
+    it 'has a field for finished time' do
+      expect(FulltextIngest.last.finished_at).to be_nil
+    end
+    it 'has a field for undone time' do
+      expect(FulltextIngest.last.undone_at).to be_nil
     end
   end
 end
