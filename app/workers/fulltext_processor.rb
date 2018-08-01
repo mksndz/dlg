@@ -76,7 +76,7 @@ class FulltextProcessor
 
   def self.success_file_results(file_name, item)
     @results[:files][file_name] = {
-      status: 'failed',
+      status: 'success',
       item: item
     }
   end

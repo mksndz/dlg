@@ -18,12 +18,25 @@ describe FulltextProcessor, type: :model do
         portals c.portals
       end
     end
-    it 'performs' do
+    it 'saves results and updates items' do
       performed = FulltextProcessor.perform(fti)
       expect(performed).to be_truthy
       expect(fti.success?).to be_falsey
       expect(fti.partial_failure?).to be_truthy
       expect(fti.failed?).to be_falsey
+      expect(fti.processed_files.length).to eq 3
+      expect(fti.processed_files['r1_c1_i1']).to(
+        eq('status' => 'success',
+           'item' => Item.find_by_record_id('r1_c1_i1').id)
+      )
+      expect(fti.processed_files['r1_c1_i2']).to(
+        eq('status' => 'success',
+           'item' => Item.find_by_record_id('r1_c1_i2').id)
+      )
+      expect(fti.processed_files['invalid_record_id']).to(
+        eq('status' => 'failed',
+           'reason' => 'No Item exists matching record_id')
+      )
     end
   end
 end
