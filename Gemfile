@@ -1,80 +1,58 @@
 source 'https://rubygems.org'
 
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.7'
-# Use sqlite3 as the database for Active Record
-# gem 'sqlite3'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
+gem 'activerecord-in_batches', git: 'git://github.com/siadat/in_batches.git'
+gem 'blacklight', '>= 6.0.0'
+gem 'blacklight-gallery'
+gem 'blacklight-maps'
+gem 'blacklight-marc' # TODO: remove
+gem 'blacklight_advanced_search'
+gem 'bootstrap_form'
+gem 'cancancan', '~> 1.15'
+gem 'carrierwave', '~> 1.0'
+gem 'chosen-rails'
 gem 'coffee-rails', '~> 4.1.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'delayed_job_active_record' # TODO: remove
+gem 'devise'
+gem 'devise-guests', '~> 0.3' # TODO: remove?
+gem 'devise_invitable'
+gem 'diffy'
+gem 'exception_notification'
+gem 'gretel'
 gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
+gem 'jquery-rails'
+gem 'jquery-turbolinks'
+gem 'multi-select-rails'
+gem 'paper_trail'
+gem 'pg'
+gem 'rails', '~> 4.2.7'
+gem 'redis'
+gem 'resque'
+gem 'rsolr'
+gem 'rubyzip'
+gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'slack-notifier'
+gem 'sunspot_rails'
+gem 'therubyracer', platforms: :ruby
+gem 'turbolinks'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+gem 'uglifier', '>= 1.3.0'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :test do
-  gem 'resque_spec'
-  gem 'rspec-rails', '~> 3.0'
-  gem 'rspec-mocks'
-  gem 'faker'
-  gem 'fabrication'
   gem 'capybara'
   gem 'capybara-screenshot'
-  # gem 'capybara-webkit'
+  gem 'fabrication'
+  gem 'faker'
   gem 'poltergeist'
+  gem 'resque_spec'
+  gem 'rspec-mocks'
+  gem 'rspec-rails', '~> 3.0'
 end
 
 group :development do
   gem 'quiet_assets'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'web-console', '~> 2.0'
   gem 'xray-rails'
 end
-
-gem 'blacklight', '>= 6.0.0'
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
-gem 'rsolr'
-gem 'carrierwave', '~> 1.0'
-gem 'delayed_job_active_record'
-gem 'devise'
-gem 'devise-guests', '~> 0.3'
-gem 'devise_invitable'
-gem 'blacklight-marc'
-gem 'pg'
-gem 'bootstrap_form'
-gem 'sunspot_rails'
-gem 'cancancan', '~> 1.15'
-gem 'jquery-turbolinks'
-gem 'blacklight_advanced_search'
-gem 'gretel'
-gem 'paper_trail'
-gem 'diffy'
-gem 'multi-select-rails'
-gem 'blacklight-maps'
-gem 'blacklight-gallery'
-gem 'chosen-rails'
-gem 'redis'
-gem 'resque'
-gem 'exception_notification'
-gem 'slack-notifier'
-gem 'activerecord-in_batches', git: 'git://github.com/siadat/in_batches.git'
