@@ -61,23 +61,23 @@ RSpec.configure do |config|
 
   config.include Devise::Test::ControllerHelpers, type: :controller
 
-  # clean up DB & Solr index after test suite
-  config.before(:suite){
+  # clean up DB & Solr index before test suite
+  config.before(:suite) do
+    User.destroy_all
+    FulltextIngest.destroy_all
     BatchItem.destroy_all
     Batch.destroy_all
     Item.destroy_all
     ItemVersion.destroy_all
     Collection.destroy_all
     Repository.destroy_all
-    User.destroy_all
     Portal.destroy_all
-    FulltextIngest.destroy_all
-  }
+  end
 
-  config.before(:all){
+  config.before(:all) do
     Sunspot.remove_all! Item
     Sunspot.remove_all! Collection
-  }
+  end
 
   # JS driver madness
   Capybara.register_driver :poltergeist do |app|

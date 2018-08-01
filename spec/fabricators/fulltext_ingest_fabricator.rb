@@ -13,6 +13,7 @@ Fabricator(:completed_fulltext_ingest_success, from: :fulltext_ingest) do
   results do
     {
       status: 'success',
+      message: 'Hooray',
       files: {
         r1_c1_i1: { status: 'success', item: Fabricate(:item_with_parents).id },
         r1_c1_i2: { status: 'success', item: Fabricate(:item_with_parents).id }
@@ -27,6 +28,7 @@ Fabricator(:completed_fulltext_ingest_with_errors, from: :fulltext_ingest) do
   results do
     {
       status: 'partial failure',
+      message: 'Message',
       files: {
         r1_c1_i1: { status: 'success', item: Fabricate(:item_with_parents).id },
         r1_c1_i2: { status: 'failed', reason: 'Exception message' }
@@ -41,6 +43,7 @@ Fabricator(:completed_fulltext_ingest_total_failure, from: :fulltext_ingest) do
   results do
     {
       status: 'failed',
+      message: 'Overall failure',
       files: {
         r1_c1_i1: { status: 'failed', reason: 'Exception message' },
         r1_c1_i2: { status: 'failed', reason: 'Exception message' }
