@@ -1,0 +1,63 @@
+<%= content_for :title do %>
+    Time Period
+<% end %>
+
+<% breadcrumb :time_periods %>
+
+<%= link_to t('meta.time_period.actions.add'), new_time_period_path, class: 'btn btn-default' %>
+
+<br><br>
+
+<% if @time_periods.empty? %>
+
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Time Period') %></p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'time_periods.id', t('meta.defaults.labels.columns.id') %>
+        </th>
+        <th>
+          <%= sortable 'time_periods.name', t('meta.defaults.labels.columns.name') %>
+        </th>
+        <th>
+          <%= sortable 'time_periods.start', t('meta.time_period.labels.columns.start') %>
+        </th>
+        <th>
+          <%= sortable 'time_periods.finish', t('meta.time_period.labels.columns.finish') %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @time_periods.each do |time_period| %>
+          <tr>
+            <td>
+              <%= link_to time_period.id, time_period_path(time_period) %>
+            </td>
+            <td>
+              <%= link_to time_period.name, time_period_path(time_period) %>
+            </td>
+            <td>
+              <%= time_period.start %>
+            </td>
+            <td>
+              <%= time_period.finish %>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: time_period_path(time_period), edit_path: edit_time_period_path(time_period), entity: time_period, show_bl: false } %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @time_periods %>
+
+<% end %>
+
+

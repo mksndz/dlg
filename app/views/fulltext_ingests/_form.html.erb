@@ -1,0 +1,11 @@
+<%= bootstrap_form_for(@time_period) do |f| %>
+
+    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Time Period' %>
+
+    <%= f.text_field :name %>
+    <%= f.number_field :start %>
+    <%= f.number_field :finish %>
+
+    <%= f.primary t('meta.defaults.actions.save') %>
+
+<% end %>

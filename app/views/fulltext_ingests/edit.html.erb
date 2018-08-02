@@ -1,0 +1,11 @@
+<%= content_for :title do %>
+    Edit Time Period
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @time_period.name %>
+<% end %>
+
+<% breadcrumb :time_period, @time_period %>
+
+<%= render 'form' %>
