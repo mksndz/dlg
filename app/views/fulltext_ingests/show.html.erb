@@ -14,3 +14,8 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.description'), value: @fulltext_ingest.description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.file'), value: @fulltext_ingest.file %>
 <%= render 'results' %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.queued_at'), value: @fulltext_ingest.queued_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.finished_at'), value: @fulltext_ingest.finished_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.undone_at'), value: @fulltext_ingest.undone_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.created_at'), value: @fulltext_ingest.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.updated_at'), value: @fulltext_ingest.updated_at %>

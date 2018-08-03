@@ -22,25 +22,28 @@ class FulltextIngestsController < ApplicationController
 
   # create a fulltext ingest and queue ingest job
   def create
+    @fulltext_ingest.user = current_user
     @fulltext_ingest.save(fulltext_ingest_params)
     Resque.enqueue(FulltextProcessor, @fulltext_ingest.id)
     respond_to do |format|
       format.html do
         redirect_to(
-          fulltext_ingest_path(@fti),
+          fulltext_ingest_path(@fulltext_ingest),
           notice: I18n.t('meta.fulltext_ingests.messages.success.queued')
         )
       end
     end
-
   end
 
   def show; end
 
   def destroy
     # clear fulltext field on modified records and set undone_at field
-    @fulltext_ingest.undo
-    redirect_to fulltext_ingest_path(@fulltext_ingest), notice: I18n.t('meta.fulltext_ingests.messages.success.undone')
+    if undo?
+      redirect_to fulltext_ingest_path(@fulltext_ingest), notice: I18n.t('meta.fulltext_ingests.messages.success.undone')
+    else
+      redirect_to fulltext_ingest_path(@fulltext_ingest), notice: I18n.t('meta.fulltext_ingests.messages.errors.could_not_undo')
+    end
   end
 
   private
@@ -48,6 +51,10 @@ class FulltextIngestsController < ApplicationController
   def fulltext_ingest_params
     params.require(:fulltext_ingest).permit(:title, :description, :file,
                                             :user_id)
+  end
+
+  def undo?
+    @fulltext_ingest.finished_at && @fulltext_ingest.undo
   end
 
 end

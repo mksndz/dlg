@@ -6,10 +6,16 @@ class FulltextIngest < ActiveRecord::Base
   belongs_to :user
 
   def undo
-    Item.update_all(
-      { fulltext: nil, updated_at: Date.today },
-      'record_id in ?', modified_record_ids
-    )
+    begin
+      Item.update_all(
+        { fulltext: nil, updated_at: Date.today },
+        'record_id in ?', modified_record_ids
+      )
+    rescue StandardError => e
+      return false
+    end
+    self.undone_at = Date.today
+    save
   end
 
   def success?

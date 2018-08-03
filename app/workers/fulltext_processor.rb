@@ -7,8 +7,8 @@ class FulltextProcessor
   @queue = :fulltext_ingest_queue
   @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
 
-  def self.perform(fulltext_ingest)
-    @fti = FulltextIngest.find fulltext_ingest
+  def self.perform(fulltext_ingest_id)
+    @fti = FulltextIngest.find fulltext_ingest_id
     exit unless @fti
     errors = 0
     init_results

@@ -442,10 +442,13 @@ en:
     fulltext_ingests:
       action:
         add: 'New Fulltext Ingest'
+        undo: 'Undo'
       messages:
         success:
           queued: 'Fulltext Ingest Queued'
           undone: 'Fulltext Ingest Undone'
+        errors:
+          could_not_undo: 'Could not undo'
 
 
 

@@ -19,7 +19,8 @@ describe FulltextProcessor, type: :model do
       end
     end
     it 'saves results and updates items' do
-      performed = FulltextProcessor.perform(fti)
+      performed = FulltextProcessor.perform(fti.id)
+      fti.reload
       expect(performed).to be_truthy
       expect(fti.success?).to be_falsey
       expect(fti.partial_failure?).to be_truthy

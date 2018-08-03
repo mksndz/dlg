@@ -4,7 +4,7 @@
 
 <% breadcrumb :fulltext_ingests %>
 
-<%= link_to t('meta.fulltext_ingests.actions.add'), new_fulltext_ingest_path, class: 'btn btn-default' %>
+<%= link_to t('meta.fulltext_ingests.action.add'), new_fulltext_ingest_path, class: 'btn btn-default' %>
 
 <br><br>
 
@@ -61,7 +61,10 @@
               <%= boolean_check_icon fulltext_ingest.undone_at %>
             </td>
             <td>
-
+              <div class="btn-group btn-group-xs">
+                <%= link_to t('meta.defaults.actions.view'), fulltext_ingest_path(fulltext_ingest), class: 'btn btn-default' %>
+                <%= link_to t('meta.fulltext_ingests.action.undo'), fulltext_ingest_path(fulltext_ingest), method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
+              </div>
             </td>
           </tr>
       <% end %>
