@@ -1,16 +1,16 @@
 <%= content_for :title do %>
-    Time Period
+    Full Text Ingests
 <% end %>
 
-<% breadcrumb :time_periods %>
+<% breadcrumb :fulltext_ingests %>
 
-<%= link_to t('meta.time_period.actions.add'), new_time_period_path, class: 'btn btn-default' %>
+<%= link_to t('meta.fulltext_ingests.actions.add'), new_fulltext_ingest_path, class: 'btn btn-default' %>
 
 <br><br>
 
-<% if @time_periods.empty? %>
+<% if @fulltext_ingests.empty? %>
 
-    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Time Period') %></p>
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Fulltext Ingests') %></p>
 
 <% else %>
 
@@ -18,45 +18,57 @@
       <thead>
       <tr>
         <th>
-          <%= sortable 'time_periods.id', t('meta.defaults.labels.columns.id') %>
+          <%= sortable 'fulltext_ingests.id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'time_periods.name', t('meta.defaults.labels.columns.name') %>
+          <%= sortable 'fulltext_ingests.title', t('meta.defaults.labels.columns.name') %>
         </th>
         <th>
-          <%= sortable 'time_periods.start', t('meta.time_period.labels.columns.start') %>
+          <%= t('activerecord.attributes.fulltext_ingest.user_id') %>
         </th>
         <th>
-          <%= sortable 'time_periods.finish', t('meta.time_period.labels.columns.finish') %>
+          <%= sortable 'fulltext_ingests.queued_at', t('activerecord.attributes.fulltext_ingest.queued_at') %>
+        </th>
+        <th>
+          <%= sortable 'fulltext_ingests.finished_at', t('activerecord.attributes.fulltext_ingest.finished_at') %>
+        </th>
+        <th>
+          <%= sortable 'fulltext_ingests.undone_at', 'Undone?' %>
         </th>
         <th width="185px"></th>
       </tr>
       </thead>
 
       <tbody>
-      <% @time_periods.each do |time_period| %>
+      <% @fulltext_ingests.each do |fulltext_ingest| %>
           <tr>
             <td>
-              <%= link_to time_period.id, time_period_path(time_period) %>
+              <%= link_to fulltext_ingest.id, fulltext_ingest_path(fulltext_ingest) %>
             </td>
             <td>
-              <%= link_to time_period.name, time_period_path(time_period) %>
+              <%= link_to fulltext_ingest.title, fulltext_ingest_path(fulltext_ingest) %>
             </td>
             <td>
-              <%= time_period.start %>
+              <%= fulltext_ingest.user.email %>
             </td>
             <td>
-              <%= time_period.finish %>
+              <%= fulltext_ingest.queued_at %>
             </td>
             <td>
-              <%= render partial: 'shared/entity_actions', locals: { base_path: time_period_path(time_period), edit_path: edit_time_period_path(time_period), entity: time_period, show_bl: false } %>
+              <%= fulltext_ingest.finished_at %>
+            </td>
+            <td>
+              <%= boolean_check_icon fulltext_ingest.undone_at %>
+            </td>
+            <td>
+
             </td>
           </tr>
       <% end %>
       </tbody>
     </table>
 
-    <%= paginate @time_periods %>
+    <%= paginate @fulltext_ingests %>
 
 <% end %>
 

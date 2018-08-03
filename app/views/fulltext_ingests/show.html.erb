@@ -1,28 +1,15 @@
 <%= content_for :title do %>
-    Show Time Period
+    Show Full Text Ingest
 <% end %>
 
 <%= content_for :subtitle do %>
-    <%= @time_period.name %>
+    <%= @fulltext_ingest.title %>
 <% end %>
 
-<% breadcrumb :time_period, @time_period %>
-
-<%= link_to t('meta.defaults.actions.edit'), edit_time_period_path(@time_period), class: 'btn btn-default' %>
+<% breadcrumb :fulltext_ingest, @fulltext_ingest %>
 
 <br><br>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.time_period.name'), value: @time_period.name %>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <strong><%= t('meta.time_period.labels.view.collections_for') %></strong>
-  </div>
-  <div class="panel-body">
-    <ul>
-      <% @time_period.collections.each do |c| %>
-          <li><%= link_to c.display_title, c %></li>
-      <% end %>
-    </ul>
-  </div>
-</div>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.title'), value: @fulltext_ingest.title %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.description'), value: @fulltext_ingest.description %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.fulltext_ingest.file'), value: @fulltext_ingest.file %>

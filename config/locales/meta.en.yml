@@ -439,5 +439,13 @@ en:
       labels:
         remove_large_image: 'Remove Large Image'
         primary: 'Primary? (shown first/foremost)'
+    fulltext_ingests:
+      action:
+        add: 'New Fulltext Ingest'
+      messages:
+        success:
+          queued: 'Fulltext Ingest Queued'
+          undone: 'Fulltext Ingest Undone'
+
 
 

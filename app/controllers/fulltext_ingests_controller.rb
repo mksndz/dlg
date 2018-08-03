@@ -22,17 +22,15 @@ class FulltextIngestsController < ApplicationController
 
   # create a fulltext ingest and queue ingest job
   def create
-
+    @fulltext_ingest.save(fulltext_ingest_params)
     Resque.enqueue(FulltextProcessor, @fulltext_ingest.id)
-
     respond_to do |format|
       format.html do
         redirect_to(
           fulltext_ingest_path(@fti),
-          notice: I18n.t('meta.fulltext_ingest.messages.success.created')
+          notice: I18n.t('meta.fulltext_ingests.messages.success.queued')
         )
       end
-      # format.js { render :queued }
     end
 
   end
@@ -40,8 +38,9 @@ class FulltextIngestsController < ApplicationController
   def show; end
 
   def destroy
-    @batch_import.destroy
-    redirect_to batch_batch_imports_path(@batch), notice: I18n.t('meta.batch_import.messages.success.deleted')
+    # clear fulltext field on modified records and set undone_at field
+    @fulltext_ingest.undo
+    redirect_to fulltext_ingest_path(@fulltext_ingest), notice: I18n.t('meta.fulltext_ingests.messages.success.undone')
   end
 
   private
