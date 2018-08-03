@@ -42,6 +42,9 @@ describe FulltextIngest do
         expect(fti.success?).to be_truthy
         expect(fti.finished_at).not_to be_blank
       end
+      it 'returns all modified record ids' do
+        expect(fti.modified_record_ids).to eq %w(r1_c1_i1 r1_c1_i2)
+      end
     end
     context 'on partial failure' do
       let(:fti) { Fabricate :completed_fulltext_ingest_with_errors }
