@@ -14,7 +14,7 @@ class FulltextProcessor
     init_results
 
     begin
-      Zip::File.open(@fti.file) do |zip_file|
+      Zip::File.open(@fti.file.current_path) do |zip_file|
         @files = zip_file.count
         if @files.zero?
           @results[:status] = 'failed'

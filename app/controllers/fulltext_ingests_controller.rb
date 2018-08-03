@@ -23,6 +23,7 @@ class FulltextIngestsController < ApplicationController
   # create a fulltext ingest and queue ingest job
   def create
     @fulltext_ingest.user = current_user
+    @fulltext_ingest.queued_at = Date.today
     @fulltext_ingest.save(fulltext_ingest_params)
     Resque.enqueue(FulltextProcessor, @fulltext_ingest.id)
     respond_to do |format|
@@ -50,7 +51,7 @@ class FulltextIngestsController < ApplicationController
 
   def fulltext_ingest_params
     params.require(:fulltext_ingest).permit(:title, :description, :file,
-                                            :user_id)
+                                            :file_cache, :user_id)
   end
 
   def undo?

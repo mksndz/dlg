@@ -2,8 +2,11 @@
 
 # represent an instance of an ingest of fulltext data
 class FulltextIngest < ActiveRecord::Base
-
   belongs_to :user
+  validates_presence_of :title
+  validates_uniqueness_of :title
+  validates_presence_of :file
+  mount_uploader :file, FulltextUploader
 
   def undo
     begin

@@ -1,11 +1,10 @@
 <%= bootstrap_form_for(@fulltext_ingest) do |f| %>
 
-    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Fulltext Ingest' %>
-
-    <%= f.text_field :title %>
-    <%= f.text_area :description %>
-    <%= f.file_field :file %>
-
-    <%= f.primary t('meta.defaults.actions.save') %>
+  <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Fulltext Ingest' %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description %>
+  <%= f.file_field :file %>
+  <%= f.hidden_field :file_cache %>
+  <%= f.primary t('meta.defaults.actions.save') %>
 
 <% end %>
