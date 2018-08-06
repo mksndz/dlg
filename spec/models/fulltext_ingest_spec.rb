@@ -31,6 +31,25 @@ describe FulltextIngest do
       expect(fti.undone_at).to be_nil
     end
   end
+  context 'has an undo action' do
+    it 'removes added fulltext' do
+      fti = Fabricate :completed_fulltext_ingest_for_undoing
+      r = Fabricate :empty_repository, slug: 'r1'
+      c = Fabricate(
+        :empty_collection,
+        slug: 'c1', repository: r, portals: r.portals
+      )
+      i = Fabricate(:item, slug: 'i1') do
+        collection c
+        portals c.portals
+        fulltext 'Fulltext'
+      end
+      fti.undo
+      expect(fti.undone_at).not_to be_blank
+      i.reload
+      expect(i.fulltext).to be_blank
+    end
+  end
   context 'stores outcomes in results' do
     context 'on full success' do
       let(:fti) { Fabricate :completed_fulltext_ingest_success }

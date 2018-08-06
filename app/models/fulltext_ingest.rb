@@ -10,14 +10,13 @@ class FulltextIngest < ActiveRecord::Base
 
   def undo
     begin
-      Item.update_all(
-        { fulltext: nil, updated_at: Date.today },
-        'record_id in ?', modified_record_ids
+      Item.where('record_id IN (?)', modified_record_ids).update_all(
+        fulltext: nil, updated_at: Time.now
       )
     rescue StandardError => e
       return false
     end
-    self.undone_at = Date.today
+    self.undone_at = Time.now
     save
   end
 

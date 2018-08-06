@@ -60,3 +60,17 @@ Fabricator(:undone_fulltext_ingest, from: :fulltext_ingest) do
   queued_at { Faker::Time.between(Date.today - 1, Date.today) }
   undone_at { Faker::Time.between(Date.today, Date.today + 1) }
 end
+
+Fabricator(:completed_fulltext_ingest_for_undoing, from: :fulltext_ingest) do
+  queued_at { Faker::Time.between(Date.today - 1, Date.today) }
+  finished_at { Faker::Time.between(Date.today, Date.today + 1) }
+  results do
+    {
+      status: 'success',
+      message: 'Hooray',
+      files: {
+        r1_c1_i1: { status: 'success', item: Fabricate(:item_with_parents).id }
+      }
+    }
+  end
+end
