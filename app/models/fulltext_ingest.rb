@@ -41,9 +41,7 @@ class FulltextIngest < ActiveRecord::Base
   def modified_record_ids
     ids = []
     processed_files.each do |record_id, outcome|
-      if outcome['status'] == 'success'
-        ids << record_id
-      end
+      ids << record_id if outcome['status'] == 'success'
     end
     ids
   end

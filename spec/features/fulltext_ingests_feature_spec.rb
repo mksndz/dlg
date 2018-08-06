@@ -37,25 +37,59 @@ feature 'Fulltext Ingests' do
         @fti = Fabricate :undone_fulltext_ingest
         visit fulltext_ingests_path
       end
-      scenario 'are listed a check' do
+      scenario 'are listed with a check' do
         expect(page).to have_css '.glyphicon-ok'
       end
     end
   end
   context 'on the show page' do
-    before(:each) do
-      @fti = Fabricate :completed_fulltext_ingest_success
-      visit fulltext_ingest_path(@fti)
+    context 'with a successful ingest' do
+      before(:each) do
+        @fti = Fabricate :completed_fulltext_ingest_success
+        visit fulltext_ingest_path(@fti)
+      end
+      scenario 'all attributes are displayed and results' do
+        expect(page).to have_text @fti.title
+        expect(page).to have_text @fti.description
+        expect(page).to have_text @fti.file_identifier
+        expect(page).to have_text @fti.queued_at
+        expect(page).to have_text @fti.finished_at
+        expect(page).to have_text @fti.created_at
+        expect(page).to have_text @fti.updated_at
+        within '.fulltext-ingest-results-table tbody' do
+          expect(all('tr').length).to eq 2
+          expect(page).to have_css 'tr.success'
+          expect(page).not_to have_css 'tr.danger'
+          expect(page).to have_text @fti.processed_files.first[0]
+          expect(page).to have_link 'Item Updated'
+        end
+      end
     end
-    scenario 'all attributes are displayed' do
-      expect(page).to have_text @fti.title
-      expect(page).to have_text @fti.description
-      expect(page).to have_text @fti.file_identifier
-      expect(page).to have_text @fti.queued_at
-      expect(page).to have_text @fti.finished_at
-      expect(page).to have_text @fti.created_at
-      expect(page).to have_text @fti.updated_at
-      # TODO: results
+    context 'with an ingest that includes errors' do
+      before(:each) do
+        @fti = Fabricate :completed_fulltext_ingest_with_errors
+        visit fulltext_ingest_path(@fti)
+      end
+      scenario 'results are displayed with error details' do
+        expect(page).to have_css '.panel-default'
+        within '.fulltext-ingest-results-table tbody' do
+          expect(all('tr').length).to eq 2
+          expect(page).to have_css 'tr.success'
+          expect(page).to have_css 'tr.danger'
+          expect(page).to have_text @fti.processed_files.first[0]
+          expect(page).to have_text @fti.processed_files['r1_c1_i2']['reason']
+        end
+      end
+    end
+    context 'with an ingest that completely fails' do
+      before(:each) do
+        @fti = Fabricate :completed_fulltext_ingest_total_failure
+        visit fulltext_ingest_path(@fti)
+      end
+      scenario 'results are displayed with error details' do
+        expect(page).to have_css '.panel-danger'
+        expect(page).to have_text @fti.results['message']
+      end
     end
   end
   context 'can be created using the form' do

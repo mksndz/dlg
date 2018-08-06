@@ -440,6 +440,11 @@ en:
         remove_large_image: 'Remove Large Image'
         primary: 'Primary? (shown first/foremost)'
     fulltext_ingests:
+      labels:
+        number: 'Number'
+        file: 'Zip File Name'
+        outcome: 'Outcome'
+        item_link: 'Item Updated'
       action:
         add: 'New Fulltext Ingest'
         undo: 'Undo'
