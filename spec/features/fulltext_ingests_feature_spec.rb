@@ -50,7 +50,7 @@ feature 'Fulltext Ingests' do
     scenario 'all attributes are displayed' do
       expect(page).to have_text @fti.title
       expect(page).to have_text @fti.description
-      expect(page).to have_text @fti.file
+      expect(page).to have_text @fti.file_identifier
       expect(page).to have_text @fti.queued_at
       expect(page).to have_text @fti.finished_at
       expect(page).to have_text @fti.created_at
@@ -65,17 +65,18 @@ feature 'Fulltext Ingests' do
     scenario 'and a success message is shown' do
       fill_in I18n.t('activerecord.attributes.fulltext_ingest.title'), with: 'Test'
       fill_in I18n.t('activerecord.attributes.fulltext_ingest.description'), with: 'Description'
-      # TODO: add file
+      attach_file I18n.t('activerecord.attributes.fulltext_ingest.file'), Rails.root.to_s + '/spec/files/fulltext.zip'
       click_on I18n.t('meta.defaults.actions.save')
       expect(page).to have_text I18n.t('meta.fulltext_ingests.messages.success.queued')
     end
   end
   context 'are created and background processes executed' do
     scenario 'successfully' do
+      ResqueSpec.reset!
       r = Fabricate :empty_repository, slug: 'r1'
       c = Fabricate(
-          :empty_collection,
-          slug: 'c1', repository: r, portals: r.portals
+        :empty_collection,
+        slug: 'c1', repository: r, portals: r.portals
       )
       Fabricate(:item, slug: 'i1') do
         collection c

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe FulltextProcessor, type: :model do
   describe '#perform' do
-    let(:fti) { Fabricate :fulltext_ingest, file: 'spec/files/fulltext.zip' }
+    let(:fti) { Fabricate :fulltext_ingest }
     before(:each) do
       r = Fabricate :empty_repository, slug: 'r1'
       c = Fabricate(

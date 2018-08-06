@@ -4,7 +4,7 @@ Fabricator(:fulltext_ingest) do
   title { Faker::Hipster.sentence(2) }
   description { Faker::Hipster.sentence(7) }
   user { Fabricate :super }
-  file { Faker::File.file_name }
+  file File.open("#{Rails.root}/spec/files/fulltext.zip")
 end
 
 Fabricator(:completed_fulltext_ingest_success, from: :fulltext_ingest) do

@@ -15,8 +15,8 @@ describe FulltextIngest do
     it 'has an associated User' do
       expect(fti.user).to be_a User
     end
-    it 'has a file name' do
-      expect(fti.file).not_to be_empty
+    it 'has a file' do
+      expect(fti.file).not_to be_nil
     end
     it 'has a JSON results' do
       expect(fti.results).to eq({})

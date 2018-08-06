@@ -22,17 +22,15 @@ class FulltextIngestsController < ApplicationController
 
   # create a fulltext ingest and queue ingest job
   def create
-    @fulltext_ingest.user = current_user
-    @fulltext_ingest.queued_at = Date.today
-    @fulltext_ingest.save(fulltext_ingest_params)
-    Resque.enqueue(FulltextProcessor, @fulltext_ingest.id)
-    respond_to do |format|
-      format.html do
-        redirect_to(
-          fulltext_ingest_path(@fulltext_ingest),
-          notice: I18n.t('meta.fulltext_ingests.messages.success.queued')
-        )
-      end
+    build_ingest
+    if @fulltext_ingest.save
+      Resque.enqueue(FulltextProcessor, @fulltext_ingest.id)
+      redirect_to(
+        fulltext_ingest_path(@fulltext_ingest),
+        notice: I18n.t('meta.fulltext_ingests.messages.success.queued')
+      )
+    else
+      render :new, I18n.t('meta.defaults.messages.errors.not_created', entity: 'Fulltext Ingest')
     end
   end
 
@@ -56,6 +54,12 @@ class FulltextIngestsController < ApplicationController
 
   def undo?
     @fulltext_ingest.finished_at && @fulltext_ingest.undo
+  end
+
+  def build_ingest
+    @fulltext_ingest = FulltextIngest.new fulltext_ingest_params
+    @fulltext_ingest.user = current_user
+    @fulltext_ingest.queued_at = Date.today
   end
 
 end
