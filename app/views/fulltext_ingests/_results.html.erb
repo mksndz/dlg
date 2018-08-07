@@ -1,7 +1,14 @@
 <div class="panel panel-<%= @fulltext_ingest.failed? ? 'danger' : 'default' %>">
   <div class="panel-heading">
-    Results
+    <strong>Results</strong>
   </div>
+  <% if @fulltext_ingest.undone_at %>
+  <div class="panel-body">
+    <div class="alert alert-warning">
+      This Ingest was undone at <%= @fulltext_ingest.undone_at %>, which removed the loaded fulltext from the Items linked to below.
+    </div>
+  </div>
+  <% end %>
   <% if @fulltext_ingest.success? or @fulltext_ingest.partial_failure? %>
     <table class="table table-hover fulltext-ingest-results-table">
       <thead>
@@ -15,7 +22,6 @@
         <th>
           <%= t('meta.fulltext_ingests.labels.outcome') %>
         </th>
-        <th></th>
       </tr>
       </thead>
       <tbody>

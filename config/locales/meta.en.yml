@@ -185,6 +185,7 @@ en:
         collections: 'Collections'
         items: 'Items'
         batches: 'Batches'
+        fulltext_ingests: 'Fulltext Ingests'
         roles: 'Roles'
         users: 'Users'
         subjects: 'Subjects'
@@ -263,6 +264,7 @@ en:
         versions: 'Previous Versions'
         deleted: 'Deleted Items'
         restore: 'Restore'
+        full_text: 'Full Text'
       labels:
         columns:
           collection: 'Collection'

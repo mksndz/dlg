@@ -2,9 +2,7 @@
 
 # controller for fulltext ingests actions
 class FulltextIngestsController < ApplicationController
-
   load_and_authorize_resource
-
   include ErrorHandling
   include Sorting
 

@@ -171,11 +171,14 @@ feature 'Item Management' do
       scenario 'edit page has a fulltext field' do
         expect(page).to have_field I18n.t('activerecord.attributes.item.fulltext')
       end
-      scenario 'fulltext field saves fulltext to item, redirects and shows content on the show page' do
+      scenario 'fulltext field saves fulltext to item, redirects to show page with a link to the fulltext page' do
         fulltext = 'Test Fulltext'
         fill_in I18n.t('activerecord.attributes.item.fulltext'), with: fulltext
         find('.fixed-save-button').click
         expect(page).to have_current_path item_path item
+        expect(page).to have_link I18n.t('activerecord.attributes.item.fulltext')
+        click_on I18n.t('activerecord.attributes.item.fulltext')
+        expect(page).to have_current_path fulltext_item_path item
         expect(page).to have_text fulltext
       end
       scenario 'can select and save a rights statement from a drop down' do

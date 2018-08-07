@@ -14,6 +14,8 @@ class FulltextIngest < ActiveRecord::Base
         fulltext: nil, updated_at: Time.now
       )
     rescue StandardError => e
+      results['status'] == 'undo failed'
+      results['message'] == e.message
       return false
     end
     self.undone_at = Time.now

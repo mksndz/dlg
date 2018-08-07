@@ -109,6 +109,8 @@ class ItemsController < RecordController
     end
   end
 
+  def fulltext; end
+
   def deleted
 
     set_filter_options [:user]

@@ -1,0 +1,15 @@
+<%= content_for :title do %>
+  Show Item
+<% end %>
+
+<%= content_for :subtitle do %>
+  <%= @item.title %>
+<% end %>
+
+<% breadcrumb :item, @item %>
+
+<%= link_to t('meta.defaults.actions.edit'), edit_item_path(@item), class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render 'shared/show_field', field_name: I18n.t('activerecord.attributes.item.fulltext'), value: @item.fulltext %>
