@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   belongs_to :creator, class_name: 'User', foreign_key: 'creator_id'
   belongs_to :invited_by, class_name: 'User'
   has_many :users, foreign_key: 'creator_id'
+  has_many :fulltext_ingests, dependent: :nullify
   has_and_belongs_to_many :repositories
   has_and_belongs_to_many :collections
 

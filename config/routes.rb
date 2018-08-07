@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
     member do
       get 'copy'
+      get 'fulltext'
     end
 
   end
@@ -85,8 +86,9 @@ Rails.application.routes.draw do
         get 'xml'
       end
     end
-
   end
+
+  resources :fulltext_ingests, except: [:edit, :update]
 
   resource :catalog, only: [:index], controller: 'catalog', constraints: { id: /.*/, format: false } do
     concerns :searchable

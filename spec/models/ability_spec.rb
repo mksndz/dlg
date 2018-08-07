@@ -85,6 +85,9 @@ RSpec.describe Ability, type: :model do
     it 'cannot manage all things' do
       is_expected.not_to be_able_to :manage, :all
     end
+    it 'cannot do fulltext ingests' do
+      is_expected.not_to be_able_to :manage, FulltextIngest
+    end
     context 'with Repository assigned' do
       let(:repository) { Fabricate(:repository) }
       let(:other_item) { Fabricate(:repository).items.first }

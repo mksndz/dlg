@@ -12,6 +12,7 @@
 <%= link_to t('meta.item.actions.copy'), copy_item_path(@item), class: 'btn btn-default', data: { confirm: 'Are you sure?' } %>
 <%= link_to t('meta.item.actions.xml'), '#xml' , class: 'btn btn-default', data: { turbolinks: false } %>
 <%= link_to t('meta.item.actions.versions'), '#versions' , class: 'btn btn-default', data: { turbolinks: false } %>
+<%= link_to(t('meta.item.actions.full_text'), fulltext_item_path , class: 'btn btn-default') unless @item.fulltext.blank? %>
 
 <br><br>
 

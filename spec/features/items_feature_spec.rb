@@ -163,25 +163,41 @@ feature 'Item Management' do
         expect(page).not_to have_text Item.third.dcterms_title.first
       end
     end
-    scenario 'can select and save a rights statement from a drop down' do
-      item = Fabricate(:repository).items.first
-      display_value = 'Rightsstatements.org - In Copyright'
-      saved_value   = 'http://rightsstatements.org/vocab/InC/1.0/'
-      visit edit_item_path item
-      chosen_select display_value, from: 'dc-right-select'
-      find('.fixed-save-button').click
-      expect(page).to have_current_path item_path(item)
-      expect(page).to have_content saved_value
+    context 'edit behavior' do
+      let(:item) { Fabricate(:repository).items.first }
+      before(:each) do
+        visit edit_item_path item
+      end
+      scenario 'edit page has a fulltext field' do
+        expect(page).to have_field I18n.t('activerecord.attributes.item.fulltext')
+      end
+      scenario 'fulltext field saves fulltext to item, redirects to show page with a link to the fulltext page' do
+        fulltext = 'Test Fulltext'
+        fill_in I18n.t('activerecord.attributes.item.fulltext'), with: fulltext
+        find('.fixed-save-button').click
+        expect(page).to have_current_path item_path item
+        expect(page).to have_link I18n.t('activerecord.attributes.item.fulltext')
+        click_on I18n.t('activerecord.attributes.item.fulltext')
+        expect(page).to have_current_path fulltext_item_path item
+        expect(page).to have_text fulltext
+      end
+      scenario 'can select and save a rights statement from a drop down' do
+        display_value = 'Rightsstatements.org - In Copyright'
+        saved_value   = 'http://rightsstatements.org/vocab/InC/1.0/'
+        chosen_select display_value, from: 'dc-right-select'
+        find('.fixed-save-button').click
+        expect(page).to have_current_path item_path(item)
+        expect(page).to have_content saved_value
+      end
+      scenario 'can select and save multiple DCMI Type values from a drop down' do
+        new_type = 'MovingImage'
+        chosen_select new_type, from: 'dcterms-type-select'
+        find('.fixed-save-button').click
+        expect(page).to have_current_path item_path(item)
+        expect(page).to have_content new_type
+      end
     end
-    scenario 'can select and save multiple DCMI Type values from a drop down' do
-      item = Fabricate(:repository).items.first
-      visit edit_item_path item
-      new_type = 'MovingImage'
-      chosen_select new_type, from: 'dcterms-type-select'
-      find('.fixed-save-button').click
-      expect(page).to have_current_path item_path(item)
-      expect(page).to have_content new_type
-    end
+
     context 'changing slug values and indexing' do
       before(:each) { Sunspot.remove_all Item, Collection }
       scenario 'changing a slug should not cause a duplicate record in the

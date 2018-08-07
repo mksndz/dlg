@@ -98,6 +98,9 @@ class Item < ActiveRecord::Base
     text :dcterms_provenance
     text :collection_titles
 
+    # Full Text
+    text :fulltext, stored: true
+
     # Blacklight 'Required' fields # TODO do we use them properly in DLG?
     string(:title, as: 'title') { dcterms_title.first ? dcterms_title.first : slug }
     string(:format, as: 'format') { dc_format.first ? dc_format.first : '' }
@@ -165,7 +168,8 @@ class Item < ActiveRecord::Base
         :valid_item,
         :has_thumbnail,
         :created_at,
-        :updated_at
+        :updated_at,
+        :fulltext
       ],
       include: {
         other_colls: {

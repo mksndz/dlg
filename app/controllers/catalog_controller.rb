@@ -391,6 +391,14 @@ class CatalogController < ApplicationController
           pf: 'collection_titles_unstem_search^1000 collection_titles_text^50'
       }
     end
+    # full text
+    config.add_search_field('full_text') do |field|
+      field.label = 'Full Text'
+      field.solr_local_parameters = {
+          qf: 'fulltext_text',
+          pf: 'fulltext_text'
+      }
+    end
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and

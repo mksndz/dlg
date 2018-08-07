@@ -189,6 +189,9 @@ RSpec.describe Item, type: :model do
     it 'has a String title' do
       expect(item.title).to be_kind_of String
     end
+    it 'has a string for full text' do
+      expect(item.fulltext).to be_kind_of String
+    end
     it 'has an Array dcterms_title' do
       expect(item.dcterms_title).to be_kind_of Array
     end

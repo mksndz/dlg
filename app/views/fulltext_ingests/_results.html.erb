@@ -1,0 +1,54 @@
+<div class="panel panel-<%= @fulltext_ingest.failed? ? 'danger' : 'default' %>">
+  <div class="panel-heading">
+    <strong>Results</strong>
+  </div>
+  <% if @fulltext_ingest.undone_at %>
+  <div class="panel-body">
+    <div class="alert alert-warning">
+      This Ingest was undone at <%= @fulltext_ingest.undone_at %>, which removed the loaded fulltext from the Items linked to below.
+    </div>
+  </div>
+  <% end %>
+  <% if @fulltext_ingest.success? or @fulltext_ingest.partial_failure? %>
+    <table class="table table-hover fulltext-ingest-results-table">
+      <thead>
+      <tr>
+        <th>
+          <%= t('meta.fulltext_ingests.labels.number') %>
+        </th>
+        <th>
+          <%= t('meta.fulltext_ingests.labels.file') %>
+        </th>
+        <th>
+          <%= t('meta.fulltext_ingests.labels.outcome') %>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% i = 1 %>
+      <% @fulltext_ingest.processed_files.each do |f| %>
+        <tr class="<%= f[1]['status'] == 'success' ? 'success' : 'danger' %>">
+          <td>
+            <%= i %>
+          </td>
+          <td>
+            <%= f[0] %>
+          </td>
+          <td>
+            <% if f[1]['status'] == 'success' %>
+              <%= link_to t('meta.fulltext_ingests.labels.item_link'), item_path(f[1]['item']) %>
+            <% else %>
+              <%= f[1]['reason'] %>
+            <% end %>
+          </td>
+        </tr>
+        <% i += 1 %>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="panel-body">
+      <%= @fulltext_ingest.results['message'] %>
+    </div>
+  <% end %>
+</div>

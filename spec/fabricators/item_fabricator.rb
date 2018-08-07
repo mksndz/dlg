@@ -28,6 +28,7 @@ Fabricator(:item) do
   dcterms_provenance ['DLG']
   edm_is_shown_at ['http://dlg.galileo.usg.edu']
   edm_is_shown_by ['http://dlg.galileo.usg.edu']
+  fulltext { Faker::Hipster.paragraph(1) }
 end
 
 Fabricator(:item_with_parents, from: :item) do

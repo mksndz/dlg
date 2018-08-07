@@ -24,6 +24,7 @@ Fabricator :batch_item do
   dcterms_provenance ['DLG']
   edm_is_shown_at ['http://dlg.galileo.usg.edu']
   edm_is_shown_by ['http://dlg.galileo.usg.edu']
+  fulltext { Faker::Hipster.paragraph(1) }
 end
 
 Fabricator :batch_item_without_batch, from: :batch_item do

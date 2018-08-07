@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612202810) do
+ActiveRecord::Schema.define(version: 20180731190538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20180612202810) do
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
     t.string   "record_id",                      default: "",    null: false
     t.text     "edm_is_shown_by",                default: [],    null: false, array: true
+    t.text     "fulltext"
   end
 
   add_index "batch_items", ["batch_id"], name: "index_batch_items_on_batch_id", using: :btree
@@ -193,6 +194,19 @@ ActiveRecord::Schema.define(version: 20180612202810) do
     t.boolean "public",            default: false
   end
 
+  create_table "fulltext_ingests", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "file"
+    t.json     "results",     default: {}
+    t.integer  "user_id"
+    t.datetime "queued_at"
+    t.datetime "finished_at"
+    t.datetime "undone_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "item_versions", force: :cascade do |t|
     t.string   "item_type",  null: false
     t.integer  "item_id",    null: false
@@ -241,6 +255,7 @@ ActiveRecord::Schema.define(version: 20180612202810) do
     t.text     "dlg_subject_personal",           default: [],    null: false, array: true
     t.string   "record_id",                      default: "",    null: false
     t.text     "edm_is_shown_by",                default: [],    null: false, array: true
+    t.text     "fulltext"
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree

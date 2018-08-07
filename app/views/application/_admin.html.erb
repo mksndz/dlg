@@ -5,6 +5,7 @@
   <%= content_tag :li, link_to(t('meta.app.admin_menu.items'), items_path) if can? :index, Item %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.features'), features_path) if can? :index, Feature %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.batches'), batches_path) if can? :index, Batch %>
+  <%= content_tag :li, link_to(t('meta.app.admin_menu.fulltext_ingests'), fulltext_ingests_path) if can? :index, FulltextIngest %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.users'), users_path) if can? :index, User %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.subjects'), subjects_path) if can? :index, Subject %>
   <%= content_tag :li, link_to(t('meta.app.admin_menu.time_periods'), time_periods_path) if can? :index, TimePeriod %>

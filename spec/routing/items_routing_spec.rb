@@ -23,6 +23,10 @@ RSpec.describe ItemsController, type: :routing do
       expect(get: '/items/1/edit').to route_to(controller: 'items', action: 'edit', id: '1')
     end
 
+    it 'routes to #fulltext' do
+      expect(get: '/items/1/fulltext').to route_to(controller: 'items', action: 'fulltext', id: '1')
+    end
+
     it 'routes to #create' do
       expect(post: '/items').to route_to('items#create')
     end

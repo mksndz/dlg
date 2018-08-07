@@ -231,3 +231,18 @@ crumb :time_period do |time_period|
   end
   parent :time_periods
 end
+
+# FULLTEXT INGESTS
+
+crumb :fulltext_ingests do
+  link 'Full Text Ingests', fulltext_ingests_path
+end
+
+crumb :fulltext_ingest do |fulltext_ingest|
+  if fulltext_ingest.persisted?
+    link fulltext_ingest.title
+  else
+    link 'New'
+  end
+  parent :fulltext_ingests
+end

@@ -185,6 +185,7 @@ en:
         collections: 'Collections'
         items: 'Items'
         batches: 'Batches'
+        fulltext_ingests: 'Fulltext Ingests'
         roles: 'Roles'
         users: 'Users'
         subjects: 'Subjects'
@@ -263,6 +264,7 @@ en:
         versions: 'Previous Versions'
         deleted: 'Deleted Items'
         restore: 'Restore'
+        full_text: 'Full Text'
       labels:
         columns:
           collection: 'Collection'
@@ -439,5 +441,21 @@ en:
       labels:
         remove_large_image: 'Remove Large Image'
         primary: 'Primary? (shown first/foremost)'
+    fulltext_ingests:
+      labels:
+        number: 'Number'
+        file: 'Zip File Name'
+        outcome: 'Outcome'
+        item_link: 'Item Updated'
+      action:
+        add: 'New Fulltext Ingest'
+        undo: 'Undo'
+      messages:
+        success:
+          queued: 'Fulltext Ingest Queued'
+          undone: 'Fulltext Ingest Undone'
+        errors:
+          could_not_undo: 'Could not undo'
+
 
 

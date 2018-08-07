@@ -6,6 +6,17 @@ en:
       last_word_connector: "<br> "
   activerecord:
     attributes:
+      fulltext_ingest:
+        title: 'Title'
+        description: 'Description'
+        file: 'File Name'
+        results: 'Results'
+        user_id: 'User'
+        queued_at: 'Queued At'
+        finished_at: 'Finished'
+        undone_at: 'Undone'
+        created_at: "Created At"
+        updated_at: "Updated At"
       subject:
         name: "Name"
       time_period:
@@ -131,6 +142,7 @@ en:
         portal_ids: 'Portals'
         created_at: "Created"
         updated_at: "Last Updated"
+        fulltext: "Full Text"
       batch_item:
         slug: "Slug"
         collection_id: "Collection"
@@ -166,6 +178,7 @@ en:
         portal_ids: 'Portals'
         created_at: "Created"
         updated_at: "Last Updated"
+        fulltext: "Full Text"
       batch_import:
         xml: 'XML'
         xml_text: 'XML Text'

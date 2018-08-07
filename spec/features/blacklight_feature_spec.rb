@@ -32,6 +32,11 @@ feature 'Blacklight Functionality' do
             href: edit_item_path(@item)
           )
         end
+        scenario 'shows fulltext tab with full text', js: true do
+          expect(page).to have_link 'Full Text'
+          click_on 'Full Text'
+          expect(page).to have_text @item.fulltext
+        end
       end
       context 'for Collection' do
         before :each do

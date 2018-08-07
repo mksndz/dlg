@@ -109,6 +109,8 @@ class ItemsController < RecordController
     end
   end
 
+  def fulltext; end
+
   def deleted
 
     set_filter_options [:user]
@@ -170,6 +172,7 @@ class ItemsController < RecordController
         :dcterms_bibliographic_citation,
         :dlg_local_right,
         :dlg_subject_personal,
+        :fulltext,
         dcterms_type: [],
         other_collections: [],
         portal_ids: []

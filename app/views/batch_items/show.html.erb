@@ -35,5 +35,7 @@
   </div>
 </div>
 
+<%= render 'shared/show_field', field_name: I18n.t('activerecord.attributes.batch_item.fulltext'), value: @batch_item.fulltext %>
+
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.created_at'), value: @batch_item.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.updated_at'), value: @batch_item.updated_at %>
