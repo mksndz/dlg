@@ -16,7 +16,7 @@ class Item < ActiveRecord::Base
 
   scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
 
-  has_paper_trail class_name: 'ItemVersion'
+  has_paper_trail class_name: 'ItemVersion', ignore: [:record_id]
 
   # after_save :check_for_thumbnail
   before_save :set_record_id
