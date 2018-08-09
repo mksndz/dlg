@@ -9,7 +9,13 @@ class FulltextProcessor
 
   def self.perform(fulltext_ingest_id)
     @fti = FulltextIngest.find fulltext_ingest_id
-    exit unless @fti
+    unless @fti
+      @results[:status] = 'failed'
+      @results[:message] = "Fulltext Ingest with ID = #{fulltext_ingest_id} could not be found."
+      @slack.ping "Fulltext ingest (#{@fti.title}) failed: Fulltext Ingest with ID = #{fulltext_ingest_id} could not be found." if Rails.env.production?
+      @fti.results = @results
+      @fti.save
+      exit    end
     errors = 0
     init_results
 
@@ -19,7 +25,7 @@ class FulltextProcessor
         if @files.zero?
           @results[:status] = 'failed'
           @results[:message] = 'Empty ZIP file'
-          @slack.ping "Fulltext ingest failed: #{@fti.title}" if Rails.env.production?
+          @slack.ping "Fulltext ingest (#{@fti.title}) failed: Empty Zip file" if Rails.env.production?
           @fti.results = @results
           @fti.save
           exit
@@ -50,7 +56,7 @@ class FulltextProcessor
     rescue StandardError => e
       @results[:status] = 'failed'
       @results[:message] = e.message
-      @slack.ping "Fulltext ingest failed: #{@fti.title}" if Rails.env.production?
+      @slack.ping "Fulltext ingest (#{@fti.title}) failed: #{e.message}" if Rails.env.production?
       @fti.results = @results
       @fti.save
       exit
