@@ -20,6 +20,7 @@ class FulltextProcessor
           @results[:status] = 'failed'
           @results[:message] = 'Empty ZIP file'
           @slack.ping "Fulltext ingest failed: #{@fti.title}" if Rails.env.production?
+          @fti.results = @results
           @fti.save
           exit
         end
@@ -50,6 +51,7 @@ class FulltextProcessor
       @results[:status] = 'failed'
       @results[:message] = e.message
       @slack.ping "Fulltext ingest failed: #{@fti.title}" if Rails.env.production?
+      @fti.results = @results
       @fti.save
       exit
     end
