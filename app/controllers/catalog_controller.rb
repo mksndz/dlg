@@ -1,89 +1,43 @@
-# -*- encoding : utf-8 -*-
+# frozen_string_literal: true
+
+
+# main blacklight controller
 class CatalogController < ApplicationController
-  include BlacklightAdvancedSearch::Controller
   include Blacklight::Catalog
   include BlacklightMaps::ControllerOverride
+  include BlacklightAdvancedSearch::Controller
+  include BlacklightAdvancedSearch::RenderConstraintsOverride
   include MetadataHelper # for rights statement stuff
+  helper BlacklightAdvancedSearch::RenderConstraintsOverride
 
   ADVANCED_FACET_DEFAULT_LIMIT = 300
 
   authorize_resource class: false
 
   configure_blacklight do |config|
-
-    ## Class for sending and receiving requests from a search index
-    # config.repository_class = Blacklight::Solr::Repository
-    #
-    ## Class for converting Blacklight's url parameters to into request parameters for the search index
-    # config.search_builder_class = ::SearchBuilder
-    #
-    ## Model that maps search index responses to the blacklight reponse model
-    # config.response_model = Blacklight::Solr::Response
-
-    ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
-    config.default_solr_params = { 
+    config.default_solr_params = {
       qt: 'search',
-      fq: '-class_name:Repository'
+      fq: ''
     }
 
-    # facets are defined in query handler so this is not needed
-    # makes debugging solr calls easier
     config.add_facet_fields_to_solr_request!
 
-    # solr path which will be added to solr base url before the other solr params.
-    #config.solr_path = 'select' 
-
-    # set maximum results per page (experimental)
     config.max_per_page = 20000
 
-    # items to show per page, each number in the array represent another option to choose from.
     config.per_page = [20,50,100,1000]
 
-    ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SearchHelper#solr_doc_params) or
-    ## parameters included in the Blacklight-jetty document requestHandler.
-    #
-    # config.default_document_solr_params = {
-    #  :qt => 'document',
-    #  ## These are hard-coded in the blacklight 'document' requestHandler
-    #  # :fl => '*',
-    #  # :rows => 1
-    #  # :q => '{!raw f=id v=$id}'
-    # }
-
-    # solr field configuration for search results/index views
     config.index.title_field = 'title'
     config.index.display_type_field = 'format'
 
-    # solr field configuration for document/show views
     config.show.title_field = 'title'
     config.show.display_type_field = 'format'
 
-    # show thumbnails on search results for most view types
-    # config.index.thumbnail_field = :thumbnail_url
     config.index.thumbnail_method = :record_thumbnail
 
-    # solr fields that will be treated as facets by the blacklight application
-    #   The ordering of the field names is the order of the display
-    #
-    # Setting a limit will trigger Blacklight's 'more' facet values link.
-    # * If left unset, then all facet values returned by solr will be displayed.
-    # * If set to an integer, then "f.somefield.facet.limit" will be added to
-    # solr request, with actual solr request being +1 your configured limit --
-    # you configure the number of items you actually want _displayed_ in a page.    
-    # * If set to 'true', then no additional parameters will be sent to solr,
-    # but any 'sniffed' request limit parameters will be used for paging, with
-    # paging at requested limit -1. Can sniff from facet.limit or 
-    # f.specific_field.facet.limit solr request params. This 'true' config
-    # can be used if you set limits in :default_solr_params, or as defaults
-    # on the solr side in the request handler itself. Request handler defaults
-    # sniffing requires solr requests to be made with "echoParams=all", for
-    # app code to actually have it echo'd back to see it.  
-    #
-    # :show may be set to false if you don't want the facet to be drawn in the 
-    # facet bar
     config.add_facet_field 'public_b',                 label: I18n.t('meta.search.facets.public'), helper_method: :boolean_facet_labels
     config.add_facet_field 'display_b',                label: I18n.t('meta.search.facets.display'), helper_method: :boolean_facet_labels
     config.add_facet_field 'dpla_b',                   label: I18n.t('meta.search.facets.dpla'), helper_method: :boolean_facet_labels
+    config.add_facet_field 'local_ss',                  label: I18n.t('meta.search.facets.local'), helper_method: :boolean_facet_labels
     config.add_facet_field 'valid_item_b',             label: I18n.t('meta.search.facets.valid_item'), helper_method: :boolean_facet_labels
     config.add_facet_field 'provenance_facet',         label: I18n.t('meta.search.facets.provenance'), limit: true
     config.add_facet_field 'publisher_facet',          label: I18n.t('meta.search.facets.publisher'), limit: true
@@ -111,22 +65,6 @@ class CatalogController < ApplicationController
     config.add_facet_field 'collection_provenance_facet', label: I18n.t('meta.search.facets.collection_only.provenance'), limit: true
     config.add_facet_field 'collection_type_facet',       label: I18n.t('meta.search.facets.collection_only.type'), limit: true
     config.add_facet_field 'collection_spatial_facet',    label: I18n.t('meta.search.facets.collection_only.spatial'), limit: true
-
-    #
-    # config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
-    #
-    # config.add_facet_field 'updated_at_dts', :label => 'Updated', :query => {
-    #   :day => { :label => 'within 1 day', :fq => "updated_at_dts:[#{Time.zone.now.day - 1 } TO *]" },
-    #   :week => { :label => 'within 1 week', :fq => "updated_at_dts:[#{Time.zone.now.day - 7 } TO *]" },
-    #   :month => { :label => 'within 1 month', :fq => "updated_at_dts:[#{Time.zone.now.month - 1 } TO *]" },
-    #   :year => { :label => 'within 1 year', :fq => "updated_at_dts:[#{Time.zone.now.year - 1 } TO *]" }
-    # }
-    # config.add_facet_field 'created_at_dts', :label => 'Created', :query => {
-    #   :day => { :label => 'within 1 day', :fq => "created_at_dts:[#{Time.zone.now.day - 1.day } TO *]" },
-    #   :week => { :label => 'within 1 week', :fq => "created_at_dts:[#{Time.zone.now.day - 7.days } TO *]" },
-    #   :month => { :label => 'within 1 month', :fq => "created_at_dts:[#{Time.zone.now.month - 1.month } TO *]" },
-    #   :year => { :label => 'within 1 year', :fq => "created_at_dts:[#{Time.zone.now.year - 1.year } TO *]" }
-    # }
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
@@ -457,7 +395,6 @@ class CatalogController < ApplicationController
 
   # add "Export as XML" button on search results
   add_results_collection_tool :action_widget
-
   add_show_tools_partial :edit_record, partial: 'edit_record'
 
   def edit(document)
@@ -471,7 +408,7 @@ class CatalogController < ApplicationController
   def all_facet_values
     facet = blacklight_config.facet_fields[params[:facet_field]]
     blacklight_config.default_facet_limit = -1 # return all values
-    response, _ = search_results({})
+    response, = search_results({})
     display_facet = response.aggregations[facet.key]
     @field = display_facet.name
     @values = display_facet.items.map { |v| { value: v.value, hits: v.hits } }
@@ -486,7 +423,7 @@ class CatalogController < ApplicationController
     facets = []
     blacklight_config.facet_fields.each do |f|
       facet = f[1]
-      facets << facet if facet[:show] == true
+      facets << facet if facet[:show]
     end
     facets
   end

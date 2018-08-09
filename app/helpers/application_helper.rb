@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def boolean_facet_labels(value)
-    value == 'true' ? 'Yes' : 'No'
+    %w[true 1].include?(value) ? 'Yes' : 'No'
   end
 
   # handle linking in catalog results

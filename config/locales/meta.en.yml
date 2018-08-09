@@ -89,6 +89,7 @@ en:
         dpla: 'DPLA'
         display: 'Display in DLG'
         valid_item: 'Valid'
+        local: 'Local'
         provenance: 'Holding Inst'
         publisher: 'Publisher'
         creator: 'Creator'

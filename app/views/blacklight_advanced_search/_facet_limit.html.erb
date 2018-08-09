@@ -1,0 +1,14 @@
+<div class="advanced_facet_limit">
+  <div class="inclusive_or well">
+    <p>Any of:</p>
+    <ul class="list-unstyled facet-values">
+      <% advanced_query.filters[solr_field].each do |value| %>
+        <li>
+          <span class="selected"><%= facet_display_value(solr_field, value) %></span>
+          <%= link_to('<span class="glyphicon glyphicon-remove"></span><span class="sr-only">[remove]</span>'.html_safe, remove_advanced_facet_param(solr_field, value, params), class: 'remove') %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <%= render_facet_limit display_facet, :layout => nil, :partial => advanced_search_facet_partial_name(display_facet) %>
+</div>
