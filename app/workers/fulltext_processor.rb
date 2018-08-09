@@ -43,7 +43,11 @@ class FulltextProcessor
             failed_file_results(record_id, 'No Item exists matching record_id')
             next
           end
-          item.fulltext = file.get_input_stream.read
+          # save text stripping any non utf-8 characters
+          item.fulltext = file.get_input_stream.read.encode(
+            Encoding.find('UTF-8'),
+            invalid: :replace, undef: :replace, replace: ''
+          )
           begin
             item.save!(validate: false)
             success_file_results record_id, item.id
