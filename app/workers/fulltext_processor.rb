@@ -15,10 +15,10 @@ class FulltextProcessor
       @slack.ping "Fulltext ingest (#{@fti.title}) failed: Fulltext Ingest with ID = #{fulltext_ingest_id} could not be found." if Rails.env.production?
       @fti.results = @results
       @fti.save
-      exit    end
+      exit
+    end
     errors = 0
     init_results
-
     begin
       Zip::File.open(@fti.file.current_path) do |zip_file|
         @files = zip_file.count
@@ -44,12 +44,12 @@ class FulltextProcessor
             next
           end
           item.fulltext = file.get_input_stream.read
-          success = item.save(validate: false)
-          if success
+          begin
+            item.save!(validate: false)
             success_file_results record_id, item.id
-          else
+          rescue StandardError => e
             errors += 1
-            failed_file_results record_id, item.errors.join(',')
+            failed_file_results record_id, e.message
           end
         end
       end
