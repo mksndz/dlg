@@ -99,7 +99,7 @@ class Item < ActiveRecord::Base
     text :collection_titles
 
     # Full Text
-    text :fulltext, stored: true
+    text :fulltext
 
     # Blacklight 'Required' fields # TODO do we use them properly in DLG?
     string(:title, as: 'title') { dcterms_title.first ? dcterms_title.first : slug }

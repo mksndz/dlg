@@ -78,7 +78,7 @@ class FulltextProcessor
     end
     @fti.finished_at = Date.today
     @fti.results = @results
-    @slack.ping "Fulltext ingest complete: #{@fti.title}" if Rails.env.production?
+    @slack.ping "Fulltext ingest complete: `#{@fti.title}`" if Rails.env.production?
     @fti.save
   end
 
