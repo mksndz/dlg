@@ -51,6 +51,7 @@ class RecordImporter
           batch_item = i.to_batch_item
           batch_item.batch_import = @batch_import
           batch_item.batch = @batch
+          batch_item.portals = i.portals
           batch_item.save(validate: false)
           add_updated i.slug, batch_item.id, i.id
         rescue ActiveRecord::RecordNotFound

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe RecordImporter, type: :model do
   describe '#perform' do
     context 'with Item IDs' do
-      it 'creates a Batch Item from an Item ID' do
+      it 'creates the expected Batch Item from an Item ID' do
         i = Fabricate(:repository).items.first
         batch_import = Fabricate(:batch_import) do
           item_ids { [i.id] }
@@ -14,6 +14,7 @@ describe RecordImporter, type: :model do
         }.to change(BatchItem, :count).by 1
         results = BatchImport.last.results
         expect(results['updated'].length).to eq 1
+        expect(BatchItem.last.portals).to eq i.portals
       end
       it 'records an error with an invalid ID' do
         batch_import = Fabricate(:batch_import) do
