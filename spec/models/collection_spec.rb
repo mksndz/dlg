@@ -29,12 +29,14 @@ RSpec.describe Collection, type: :model do
     expect(c.errors).to have_key :slug
   end
   it 'updates children items if the repository is changed' do
+    ResqueSpec.reset!
     r = Fabricate :repository
     c = r.collections.first
     i = r.items.first
     new_r = Fabricate(:repository, portals: r.portals)
     c.repository = new_r
     c.save
+    ResqueSpec.perform_all(:resave)
     i.reload
     expect(i.record_id).to include new_r.slug
   end

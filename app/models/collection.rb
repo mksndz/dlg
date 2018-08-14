@@ -252,9 +252,7 @@ class Collection < ActiveRecord::Base
   end
 
   def resave_children
-    items.reload.each do |item|
-      item.save(validate: false)
-    end
+    Resque.enqueue(Resaver, items.map(&:id))
   end
 
   def update_record_id
