@@ -1,28 +1,34 @@
 <%= content_for :title do %>
-    Show Subject
+    Show Project
 <% end %>
 
 <%= content_for :subtitle do %>
-    <%= @subject.name %>
+    <%= @project.title %>
 <% end %>
 
-<% breadcrumb :subject, @subject %>
+<% breadcrumb :project, @project %>
 
-<%= link_to t('meta.defaults.actions.edit'), edit_subject_path(@subject), class: 'btn btn-default' %>
+<%= link_to t('meta.defaults.actions.edit'), edit_project_path(@project), class: 'btn btn-default' %>
 
 <br><br>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.subject.name'), value: @subject.name %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.title'), value: @project.title %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.fiscal_year'), value: @project.fiscal_year %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.hosting'), value: @project.hosting %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.storage_used'), value: @project.storage_used %>
 
+
+<% if @project.collections.any? %>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong><%= t('meta.subject.labels.view.collections_for') %></strong>
+    <strong>Collection</strong>
   </div>
   <div class="panel-body">
     <ul>
-      <% @subject.collections.each do |c| %>
+      <% @project.collections.each do |c| %>
           <li><%= link_to c.display_title, c %></li>
       <% end %>
     </ul>
   </div>
 </div>
+<% end %>

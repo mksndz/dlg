@@ -242,6 +242,11 @@ ActiveRecord::Schema.define(version: 20180816110805) do
 
   add_index "holding_institutions", ["repository_id"], name: "index_holding_institutions_on_repository_id", using: :btree
 
+  create_table "holding_institutions_projects", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "project_id",             null: false
+  end
+
   create_table "item_versions", force: :cascade do |t|
     t.string   "item_type",  null: false
     t.integer  "item_id",    null: false
