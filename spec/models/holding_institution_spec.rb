@@ -27,5 +27,12 @@ RSpec.describe HoldingInstitution, type: :model do
       expect(holding_institution.collections.count).to eq 2
       expect(holding_institution.collections.first).to be_a Collection
     end
+    it 'has Portals' do
+      portals = Fabricate.times(2, :portal)
+      holding_institution.portals = portals
+      expect(holding_institution).to respond_to 'portals'
+      expect(holding_institution.portals.count).to eq 2
+      expect(holding_institution.portals.first).to be_a Portal
+    end
   end
 end
