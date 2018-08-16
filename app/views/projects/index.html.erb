@@ -1,0 +1,61 @@
+<%= content_for :title do %>
+    Projects
+<% end %>
+
+<% breadcrumb :projects %>
+
+<%= link_to t('meta.project.actions.add'), new_project_path, class: 'btn btn-default' %>
+
+<% if @projects.empty? %>
+
+    <p><%= 'No Projects Yet' %></p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'projects.id', t('meta.defaults.labels.columns.id') %>
+        </th>
+        <th>
+          <%= sortable 'projects.name', t('meta.defaults.labels.columns.name') %>
+        </th>
+        <th>
+          <%= sortable 'projects.fiscal_year', t('activerecord.attributes.project.fiscal_year') %>
+        </th>
+        <th>
+          <%= sortable 'projects.holding_institution.display_name', t('activerecord.attributes.project.holding_institution') %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @projects.each do |project| %>
+          <tr>
+            <td>
+              <%= link_to project.id, project_path(project) %>
+            </td>
+            <td>
+              <%= link_to project.title, project_path(project) %>
+            </td>
+            <td>
+              <%= project.fiscal_year %>
+            </td>
+            <td>
+              <%= project.holding_institution.display_name %>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: project_path(project), edit_path: edit_project_path(project), entity: project, show_bl: false } %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @projects %>
+
+<% end %>
+
+

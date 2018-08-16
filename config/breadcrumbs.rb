@@ -246,3 +246,18 @@ crumb :fulltext_ingest do |fulltext_ingest|
   end
   parent :fulltext_ingests
 end
+
+# PROJECTS
+
+crumb :projects do
+  link 'Projects', projects_path
+end
+
+crumb :project do |project|
+  if project.persisted?
+    link project.title
+  else
+    link 'New'
+  end
+  parent :projects
+end

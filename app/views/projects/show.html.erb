@@ -1,0 +1,28 @@
+<%= content_for :title do %>
+    Show Subject
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @subject.name %>
+<% end %>
+
+<% breadcrumb :subject, @subject %>
+
+<%= link_to t('meta.defaults.actions.edit'), edit_subject_path(@subject), class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.subject.name'), value: @subject.name %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong><%= t('meta.subject.labels.view.collections_for') %></strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @subject.collections.each do |c| %>
+          <li><%= link_to c.display_title, c %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

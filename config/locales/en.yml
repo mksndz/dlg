@@ -6,6 +6,12 @@ en:
       last_word_connector: "<br> "
   activerecord:
     attributes:
+      project:
+        title: 'Title'
+        fiscal_year: 'Fiscal Year'
+        hosting: 'Hosting'
+        storage_used: 'Storage Used'
+        holding_institution: 'Holding Institution'
       fulltext_ingest:
         title: 'Title'
         description: 'Description'

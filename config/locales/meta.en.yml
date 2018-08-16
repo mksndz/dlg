@@ -457,6 +457,9 @@ en:
           undone: 'Fulltext Ingest Undone'
         errors:
           could_not_undo: 'Could not undo'
+    project:
+      action:
+        add: 'New Project'
 
 
 

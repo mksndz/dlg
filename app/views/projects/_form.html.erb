@@ -1,0 +1,12 @@
+<%= bootstrap_form_for(@project) do |f| %>
+
+    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Project' %>
+
+    <%= f.text_field :title %>
+    <%= f.text_field :fiscal_year %>
+    <%= f.text_field :hosting %>
+    <%= f.text_field :storage_used %>
+
+    <%= f.primary t('meta.defaults.actions.save') %>
+
+<% end %>

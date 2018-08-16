@@ -1,0 +1,11 @@
+<%= content_for :title do %>
+    Edit Subject
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @subject.name %>
+<% end %>
+
+<% breadcrumb :subject, @subject %>
+
+<%= render 'form' %>
