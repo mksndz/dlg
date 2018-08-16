@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180815202116) do
+ActiveRecord::Schema.define(version: 20180816110805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,7 +227,7 @@ ActiveRecord::Schema.define(version: 20180815202116) do
     t.string   "coordinates"
     t.text     "strengths"
     t.text     "contact_information"
-    t.string   "type"
+    t.string   "institution_type"
     t.boolean  "galileo_member"
     t.string   "contact_name"
     t.string   "contact_email"
@@ -241,11 +241,6 @@ ActiveRecord::Schema.define(version: 20180815202116) do
   end
 
   add_index "holding_institutions", ["repository_id"], name: "index_holding_institutions_on_repository_id", using: :btree
-
-  create_table "holding_institutions_projects", id: false, force: :cascade do |t|
-    t.integer "holding_institution_id", null: false
-    t.integer "project_id",             null: false
-  end
 
   create_table "item_versions", force: :cascade do |t|
     t.string   "item_type",  null: false

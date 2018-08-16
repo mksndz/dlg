@@ -15,8 +15,17 @@ RSpec.describe Project, type: :model do
       expect(project.title).to be_a String
     end
     it 'has a Holding Institution' do
+      hi = Fabricate :holding_institution
+      project.holding_institution = hi
       expect(project).to respond_to 'holding_institution'
-      # expect(project.repository).to be_a Repository
+      expect(project.holding_institution).to be_a HoldingInstitution
+    end
+    it 'has Collections' do
+      collections = Fabricate.times(2, :empty_collection)
+      project.collections = collections
+      expect(project).to respond_to 'collections'
+      expect(project.collections.count).to eq 2
+      expect(project.collections.first).to be_a Collection
     end
   end
 end

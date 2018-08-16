@@ -1,4 +1,4 @@
 class Project < ActiveRecord::Base
-  has_one :holding_institution
-  has_many :collections
+  belongs_to :holding_institution
+  has_and_belongs_to_many :collections
 end
