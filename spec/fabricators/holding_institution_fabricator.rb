@@ -1,6 +1,4 @@
 Fabricator(:holding_institution) do
-  id                  1
-  repository_id       1
   display_name        "MyString"
   short_description   "MyText"
   description         "MyText"

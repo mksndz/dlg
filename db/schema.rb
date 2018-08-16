@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180731190538) do
+ActiveRecord::Schema.define(version: 20180815202116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,16 @@ ActiveRecord::Schema.define(version: 20180731190538) do
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
   add_index "collections", ["slug"], name: "index_collections_on_slug", using: :btree
 
+  create_table "collections_holding_institutions", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "collection_id",          null: false
+  end
+
+  create_table "collections_projects", id: false, force: :cascade do |t|
+    t.integer "project_id",    null: false
+    t.integer "collection_id", null: false
+  end
+
   create_table "collections_subjects", id: false, force: :cascade do |t|
     t.integer "collection_id", null: false
     t.integer "subject_id",    null: false
@@ -205,6 +215,36 @@ ActiveRecord::Schema.define(version: 20180731190538) do
     t.datetime "undone_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "holding_institutions", force: :cascade do |t|
+    t.integer  "repository_id"
+    t.string   "display_name"
+    t.text     "short_description"
+    t.text     "description"
+    t.string   "image"
+    t.string   "homepage_url"
+    t.string   "coordinates"
+    t.text     "strengths"
+    t.text     "contact_information"
+    t.string   "type"
+    t.boolean  "galileo_member"
+    t.string   "contact_name"
+    t.string   "contact_email"
+    t.string   "harvest_strategy"
+    t.string   "oai_url"
+    t.text     "ignored_collections"
+    t.datetime "last_harvested_at"
+    t.text     "analytics_emails",    default: [], array: true
+    t.text     "subgranting"
+    t.text     "grant_partnerships"
+  end
+
+  add_index "holding_institutions", ["repository_id"], name: "index_holding_institutions_on_repository_id", using: :btree
+
+  create_table "holding_institutions_projects", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "project_id",             null: false
   end
 
   create_table "item_versions", force: :cascade do |t|
@@ -277,6 +317,14 @@ ActiveRecord::Schema.define(version: 20180731190538) do
   create_table "portals", force: :cascade do |t|
     t.string "code"
     t.text   "name"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string  "title"
+    t.string  "fiscal_year"
+    t.string  "hosting"
+    t.integer "storage_used"
+    t.integer "holding_institution_id"
   end
 
   create_table "repositories", force: :cascade do |t|
