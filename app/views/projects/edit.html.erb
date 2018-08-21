@@ -1,11 +1,11 @@
 <%= content_for :title do %>
-    Edit Subject
+    Edit Project
 <% end %>
 
 <%= content_for :subtitle do %>
-    <%= @subject.name %>
+    <%= @project.title %>
 <% end %>
 
-<% breadcrumb :subject, @subject %>
+<% breadcrumb :project, @project %>
 
 <%= render 'form' %>
