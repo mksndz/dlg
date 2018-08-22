@@ -1,12 +1,10 @@
 <%= bootstrap_form_for(@project) do |f| %>
-
-    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Project' %>
-
-    <%= f.text_field :title %>
-    <%= f.text_field :fiscal_year %>
-    <%= f.text_field :hosting %>
-    <%= f.text_field :storage_used %>
-
-    <%= f.primary t('meta.defaults.actions.save') %>
-
+  <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Project' %>
+  <%= f.text_field :title %>
+  <%= f.text_field :fiscal_year %>
+  <%= f.text_field :hosting %>
+  <%= f.text_field :storage_used %>
+  <%= f.select :holding_institution_id, @data[:holding_institutions].collect { |c| [c.display_name, c.id] }, {}, { class: 'fancy-multiselect' } %>
+  <%= f.select :collection_ids, @data[:collections].collect { |c| [c.display_title, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
+  <%= f.primary t('meta.defaults.actions.save') %>
 <% end %>

@@ -192,6 +192,7 @@ en:
         subjects: 'Subjects'
         features: 'Features'
         time_periods: 'Time Periods'
+        projects: 'Projects'
         resque: 'Background Jobs'
       user_menu:
         profile: 'User Info'

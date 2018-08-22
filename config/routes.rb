@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :repositories, :collections, :users, :subjects, :time_periods,
-            :features, :projects
+            :features, :projects, :holding_institutions
 
   resources :item_versions, only: [] do
     member do

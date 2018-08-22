@@ -4,6 +4,8 @@ class ProjectsController < ApplicationController
   include ErrorHandling
   include Sorting
 
+  before_action :set_data, only: [:index, :new, :create, :edit, :update]
+
   # GET /projects
   def index
     @projects = Project
@@ -52,7 +54,13 @@ class ProjectsController < ApplicationController
   private
   def project_params
     params.require(:project).permit(:title, :fiscal_year, :hosting, 
-                                    :storage_used, :holding_institution_id)
+                                    :storage_used, :holding_institution_id,
+                                    collection_ids: [])
+  end
+  def set_data
+    @data = {}
+    @data[:holding_institutions] = HoldingInstitution.all.order(:display_name)
+    @data[:collections] = Collection.all.order(:display_title)
   end
 end
 
