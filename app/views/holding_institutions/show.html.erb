@@ -1,0 +1,73 @@
+<%= content_for :title do %>
+    Show Holding Institution
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @holding_institution.display_name %>
+<% end %>
+
+<% breadcrumb :holding_institution, @holding_institution %>
+
+<%= link_to t('meta.defaults.actions.edit'), edit_holding_institution_path(@holding_institution), class: 'btn btn-default' %>
+
+<br><br>
+
+<% if @holding_institution.collections.any? %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong><%= t('activerecord.attributes.holding_institution.collections') %></strong>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <td>Record ID</td>
+          <td>Slug</td>
+          <td>Repo Slug</td>
+          <td>Title</td>
+          <td>Items</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% total = 0 %>
+        <% @holding_institution.collections.each do |c| %>
+          <% total += c.items_count %>
+          <tr>
+            <td><%= link_to c.record_id, c %></td>
+            <td><%= link_to c.slug, c %></td>
+            <td><%= link_to c.repository.slug, c.repository %></td>
+            <td><%= link_to c.display_title, c %></td>
+            <td><%= c.items_count %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Total</td>
+          <td><%= total %></td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+<% end %>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.repository'), value: @holding_institution.repository.title if @holding_institution.repository %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.display_name'), value: @holding_institution.display_name %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.short_description'), value: @holding_institution.short_description %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.description'), value: @holding_institution.description %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.image'), value: @holding_institution.image %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.homepage_url'), value: link_to(@holding_institution.homepage_url) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.coordinates'), value: @holding_institution.coordinates %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.strengths'), value: @holding_institution.strengths %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_information'), value: @holding_institution.contact_information %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_name'), value: @holding_institution.contact_name %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_email'), value: link_to(@holding_institution.contact_email) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.harvest_strategy'), value: @holding_institution.harvest_strategy %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.oai_url'), value: @holding_institution.oai_url %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.ignored_collections'), value: @holding_institution.ignored_collections %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.last_harvested_at'), value: @holding_institution.last_harvested_at %>
+<%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.analytics_emails'), values: @holding_institution.analytics_emails %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.subgranting'), value: @holding_institution.subgranting %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.grant_partnerships'), value: @holding_institution.grant_partnerships %>

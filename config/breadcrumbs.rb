@@ -261,3 +261,18 @@ crumb :project do |project|
   end
   parent :projects
 end
+
+# HOLDING INSTITUTIONS
+
+crumb :holding_institutions do
+  link 'Holding Institutions', holding_institutions_path
+end
+
+crumb :holding_institution do |holding_institution|
+  if holding_institution.persisted?
+    link holding_institution.display_name
+  else
+    link 'New'
+  end
+  parent :holding_institutions
+end

@@ -1,0 +1,11 @@
+<%= content_for :title do %>
+    Edit Holding Institution
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @holding_institution.display_name %>
+<% end %>
+
+<% breadcrumb :holding_institution, @holding_institution %>
+
+<%= render 'form' %>

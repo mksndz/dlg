@@ -34,4 +34,11 @@ module HoldingInstitutionsHelper
     'University libraries',
     'University museums'
   ].freeze
+
+  HARVEST_STRATEGIES = %w[
+    OAI-PMH
+    ResourceSync
+    Other
+    None
+  ].freeze
 end
