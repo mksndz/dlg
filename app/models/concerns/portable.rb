@@ -13,7 +13,7 @@ module Portable
       end
     end
     validate :parent_has_portal_assigned
-    validates_presence_of :portals, message: I18n.t('activerecord.errors.messages.portal'), unless: :skip_validation_for
+    validates_presence_of :portals, message: I18n.t('activerecord.errors.messages.portal')
   end
 
   def portal_names
@@ -56,9 +56,5 @@ module Portable
     else
       return
     end
-  end
-
-  def skip_validation_for
-    self.is_a?(HoldingInstitution)
   end
 end
