@@ -12,6 +12,9 @@ en:
         hosting: 'Hosting'
         storage_used: 'Storage Used'
         holding_institution: 'Holding Institution'
+        collections: 'Collections'
+        created_at: 'Created At'
+        updated_at: 'Updated At'
       holding_institution:
         repository: 'Repository'
         portal_ids: 'Portals'
@@ -35,7 +38,9 @@ en:
         subgranting: 'Subgranting Notes'
         grant_partnerships: 'Grant Partnerships'
         projects: 'Projects'
-        collections: 'Collections'
+        collection_ids: 'Collections'
+        created_at: 'Created At'
+        updated_at: 'Updated At'
       fulltext_ingest:
         title: 'Title'
         description: 'Description'
@@ -45,8 +50,8 @@ en:
         queued_at: 'Queued At'
         finished_at: 'Finished'
         undone_at: 'Undone'
-        created_at: "Created At"
-        updated_at: "Updated At"
+        created_at: 'Created At'
+        updated_at: 'Updated At'
       subject:
         name: "Name"
       time_period:

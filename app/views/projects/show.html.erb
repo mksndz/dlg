@@ -26,11 +26,10 @@
     )
 %>
 
-
 <% if @project.collections.any? %>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong>Collection</strong>
+    <strong><%= t('activerecord.attributes.project.collections') %></strong>
   </div>
   <div class="panel-body">
     <ul>
@@ -41,3 +40,6 @@
   </div>
 </div>
 <% end %>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.created_at'), value: @project.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.updated_at'), value: @project.updated_at %>
