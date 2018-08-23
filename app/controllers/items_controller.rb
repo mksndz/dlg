@@ -127,6 +127,7 @@ class ItemsController < RecordController
 
   def set_data
     @data = {}
+    @data[:holding_institutions] = HoldingInstitution.all.order(:display_name)
     @data[:collections] = Collection.all.order(:display_title)
     @data[:portals] = portals_for_form
   end

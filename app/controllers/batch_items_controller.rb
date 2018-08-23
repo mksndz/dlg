@@ -124,6 +124,7 @@ class BatchItemsController < RecordController
   def set_data
     @data = {}
     @data[:collections] = Collection.all.order(:display_title)
+    @data[:holding_institutions] = HoldingInstitution.all.order(:display_name)
     @data[:portals] = Portal.all.order(:name)
   end
 

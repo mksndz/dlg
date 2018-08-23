@@ -1,7 +1,19 @@
 <% e = entity.class.name.demodulize.underscore %>
 
 <a name="dcterms_provenance"></a>
-<%= meta_textarea entity, :dcterms_provenance %>
+<%= content_tag :div, class: 'form-group' do %>
+  <%= meta_textarea_label e, 'dcterms_provenance' %>
+  <%=
+    select(
+        e,
+        :dcterms_provenance,
+        @data[:holding_institutions].collect { |hi| [hi.display_name] },
+        { include_blank: false },
+        { class: 'form-control', id: 'dcterms-provenance-select', multiple: false }
+    )
+  %>
+<% end %>
+
 <a name="dcterms_title"></a>
 <%= meta_textarea entity, :dcterms_title %>
 <a name="dcterms_creator"></a>

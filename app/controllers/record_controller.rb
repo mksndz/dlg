@@ -21,7 +21,6 @@ class RecordController < ApplicationController
     dcterms_title
     edm_is_shown_at
     edm_is_shown_by
-    dcterms_provenance
     dcterms_bibliographic_citation
     dlg_local_right
     dlg_subject_personal
