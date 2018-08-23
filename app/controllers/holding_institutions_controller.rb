@@ -52,11 +52,21 @@ class HoldingInstitutionsController < ApplicationController
 
   private
   def holding_institution_params
-    params.require(:holding_institution).permit()
+    params
+      .require(:holding_institution)
+      .permit(:display_name, :short_description, :description, :repository_id,
+              :homepage_url, :coordinates, :strengths, :contact_information,
+              :institution_type, :contact_name, :contact_email,
+              :harvest_strategy, :oai_url, :ignored_collections,
+              :analytics_emails, :subgranting, :grant_partnerships,
+              portal_ids: []
+      )
   end
+
   def set_data
     @data = {}
     @data[:repositories] = Repository.all.order(:title)
+    @data[:portals] = Portal.all.order(:name)
   end
 end
 

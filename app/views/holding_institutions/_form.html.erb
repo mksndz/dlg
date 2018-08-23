@@ -1,9 +1,23 @@
 <%= bootstrap_form_for(@holding_institution) do |f| %>
   <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Holding Institution' %>
-  <%= f.text_field :title %>
-  <%= f.text_field :fiscal_year %>
-  <%= f.text_field :hosting %>
-  <%= f.text_field :storage_used %>
-  <%= f.select :holding_institution_id, @data[:holding_institutions].collect { |c| [c.display_name, c.id] }, {}, { class: 'fancy-multiselect' } %>
+  <%= f.text_field :display_name %>
+  <%= f.text_area :short_description %>
+  <%= f.text_area :description %>
+  <%= f.select :repository_id, @data[:repositories].collect { |c| [c.title, c.id] }, {}, { class: 'fancy-multiselect' } %>
+  <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
+  <%= f.text_field :homepage_url %>
+  <%= f.text_field :coordinates %>
+  <%= f.text_area :strengths %>
+  <%= f.text_area :contact_information %>
+  <%= f.select :institution_type, HoldingInstitutionsHelper::HOLDING_INSTITUTION_TYPES, {}, { class: 'fancy-select' } %>
+  <%= f.text_field :contact_name %>
+  <%= f.text_field :contact_email %>
+  <%= f.select :harvest_strategy, HoldingInstitutionsHelper::HARVEST_STRATEGIES %>
+  <%= meta_textarea @holding_institution, :oai_url %>
+  <%= f.text_area :ignored_collections %>
+  <%= meta_textarea @holding_institution, :analytics_emails %>
+  <%= f.text_area :subgranting %>
+  <%= f.text_area :grant_partnerships %>
+
   <%= f.primary t('meta.defaults.actions.save') %>
 <% end %>

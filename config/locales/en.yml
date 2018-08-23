@@ -14,6 +14,7 @@ en:
         holding_institution: 'Holding Institution'
       holding_institution:
         repository: 'Repository'
+        portal_ids: 'Portals'
         display_name: 'Display Name'
         short_description: 'Short Description'
         description: 'Description'
@@ -27,7 +28,7 @@ en:
         contact_name: 'Contact Name'
         contact_email: 'Contact Email'
         harvest_strategy: 'Harvest Strategy'
-        oai_url: 'OAI URL'
+        oai_url: 'OAI URLs'
         ignored_collections: 'Ignored Collections (Do Not Harvest)'
         last_harvested_at: 'Last Harvested At'
         analytics_emails: 'Analytics Emails'

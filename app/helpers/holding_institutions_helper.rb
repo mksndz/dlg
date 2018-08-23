@@ -11,6 +11,7 @@ module HoldingInstitutionsHelper
     'Federal agencies',
     'Federal archives',
     'Federal museums',
+    'High Schools',
     'Historical Societies',
     'International',
     'Municipal agencies',
@@ -27,7 +28,6 @@ module HoldingInstitutionsHelper
     'State museums',
     'State libraries',
     'State/National parks',
-    'High Schools',
     'Theological organizations',
     'University archives',
     'University departments',
@@ -36,9 +36,9 @@ module HoldingInstitutionsHelper
   ].freeze
 
   HARVEST_STRATEGIES = %w[
+    Other
     OAI-PMH
     ResourceSync
-    Other
     None
   ].freeze
 end
