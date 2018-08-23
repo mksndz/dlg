@@ -1,6 +1,10 @@
 class HoldingInstitution < ActiveRecord::Base
-  belongs_to :repository
-  has_many :projects
+  has_and_belongs_to_many :repositories
   has_and_belongs_to_many :collections
+  has_many :projects
   mount_uploader :image, ImageUploader
+
+  def portals
+    repositories.collect(&:portals).flatten.uniq
+  end
 end

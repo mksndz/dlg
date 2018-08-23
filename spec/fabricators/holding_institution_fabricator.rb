@@ -2,7 +2,6 @@ Fabricator(:holding_institution) do
   display_name { Faker::Hipster.sentence(3) }
   short_description { Faker::Hipster.sentence(5) }
   description { Faker::Hipster.sentences(1) }
-  image "#{Rails.root}/spec/files/aarl.gif"
   homepage_url { Faker::Internet.url }
   coordinates '31.978987, -81.161760'
   strengths { Faker::Hipster.sentence(3) }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180823181850) do
+ActiveRecord::Schema.define(version: 20180823184031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,7 +218,6 @@ ActiveRecord::Schema.define(version: 20180823181850) do
   end
 
   create_table "holding_institutions", force: :cascade do |t|
-    t.integer  "repository_id"
     t.string   "display_name"
     t.text     "short_description"
     t.text     "description"
@@ -242,7 +241,10 @@ ActiveRecord::Schema.define(version: 20180823181850) do
     t.datetime "updated_at"
   end
 
-  add_index "holding_institutions", ["repository_id"], name: "index_holding_institutions_on_repository_id", using: :btree
+  create_table "holding_institutions_repositories", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "repository_id",          null: false
+  end
 
   create_table "item_versions", force: :cascade do |t|
     t.string   "item_type",  null: false
