@@ -1,6 +1,14 @@
 <%= bootstrap_form_for(@holding_institution) do |f| %>
   <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Holding Institution' %>
   <%= f.text_field :display_name %>
+  <% if @holding_institution.image? %>
+    <label><%= t('activerecord.attributes.holding_institution.image') %></label><br>
+    <%= image_tag(@holding_institution.image.url, class: 'thumbnail') %>
+    <%= f.check_box :remove_image, label: t('meta.defaults.labels.remove_image') %>
+  <% else %>
+    <%= f.file_field :image %>
+    <%= f.hidden_field :image_cache %>
+  <% end %>
   <%= f.text_area :short_description %>
   <%= f.text_area :description %>
   <%= f.select :repository_id, @data[:repositories].collect { |c| [c.title, c.id] }, {}, { class: 'fancy-multiselect' } %>
@@ -18,6 +26,5 @@
   <%= meta_textarea @holding_institution, :analytics_emails %>
   <%= f.text_area :subgranting %>
   <%= f.text_area :grant_partnerships %>
-
   <%= f.primary t('meta.defaults.actions.save') %>
 <% end %>

@@ -17,7 +17,7 @@
     <div class="panel-heading">
       <strong><%= t('activerecord.attributes.holding_institution.collections') %></strong>
     </div>
-    <table class="table">
+    <table class="table" id="hi-collections">
       <thead>
         <tr>
           <td>Record ID</td>
@@ -39,6 +39,8 @@
             <td><%= c.items_count %></td>
           </tr>
         <% end %>
+      </tbody>
+      <tfoot>
         <tr>
           <td></td>
           <td></td>
@@ -46,10 +48,46 @@
           <td>Total</td>
           <td><%= total %></td>
         </tr>
-      </tbody>
-
+      </tfoot>
     </table>
+  </div>
+<% end %>
 
+<% if @holding_institution.projects.any? %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong><%= t('activerecord.attributes.holding_institution.projects') %></strong>
+    </div>
+    <table class="table" id="hi-projects">
+      <thead>
+        <tr>
+          <td><%= t('activerecord.attributes.project.title') %></td>
+          <td><%= t('activerecord.attributes.project.fiscal_year') %></td>
+          <td><%= t('activerecord.attributes.project.hosting') %></td>
+          <td><%= t('activerecord.attributes.project.storage_used') %></td>
+        </tr>
+      </thead>
+      <tbody>
+        <% storage_used = 0 %>
+        <% @holding_institution.projects.each do |p| %>
+          <% storage_used += p.storage_used %>
+          <tr>
+            <td><%= link_to p.title, p %></td>
+            <td><%= p.fiscal_year %></td>
+            <td><%= p.hosting %></td>
+            <td><%= p.storage_used || 0 %> GB</td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Total</td>
+          <td><%= storage_used || 0 %> GB</td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 <% end %>
 
@@ -57,7 +95,7 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.display_name'), value: @holding_institution.display_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.short_description'), value: @holding_institution.short_description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.description'), value: @holding_institution.description %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.image'), value: @holding_institution.image %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.image'), value: image_tag(@holding_institution.image) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.homepage_url'), value: link_to(@holding_institution.homepage_url) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.coordinates'), value: @holding_institution.coordinates %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.strengths'), value: @holding_institution.strengths %>
@@ -65,7 +103,7 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_name'), value: @holding_institution.contact_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_email'), value: link_to(@holding_institution.contact_email) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.harvest_strategy'), value: @holding_institution.harvest_strategy %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.oai_url'), value: @holding_institution.oai_url %>
+<%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.oai_url'), values: @holding_institution.oai_url %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.ignored_collections'), value: @holding_institution.ignored_collections %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.last_harvested_at'), value: @holding_institution.last_harvested_at %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.analytics_emails'), values: @holding_institution.analytics_emails %>

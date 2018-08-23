@@ -5,6 +5,8 @@ class HoldingInstitutionsController < ApplicationController
   include ErrorHandling
   include Sorting
 
+  MULTIVALUED_TEXT_FIELDS = %w[oai_url analytics_emails]
+
   before_action :set_data, only: [:index, :new, :create, :edit, :update]
 
   # GET /holding_institutions
@@ -52,21 +54,33 @@ class HoldingInstitutionsController < ApplicationController
 
   private
   def holding_institution_params
-    params
-      .require(:holding_institution)
-      .permit(:display_name, :short_description, :description, :repository_id,
-              :homepage_url, :coordinates, :strengths, :contact_information,
-              :institution_type, :contact_name, :contact_email,
-              :harvest_strategy, :oai_url, :ignored_collections,
-              :analytics_emails, :subgranting, :grant_partnerships,
-              portal_ids: []
-      )
+    prepare_params(
+      params
+        .require(:holding_institution)
+        .permit(:display_name, :short_description, :description, :repository_id,
+                :homepage_url, :coordinates, :strengths, :contact_information,
+                :institution_type, :contact_name, :contact_email,
+                :harvest_strategy, :oai_url, :ignored_collections,
+                :analytics_emails, :subgranting, :grant_partnerships, :image,
+                :remove_image, :image_cache, portal_ids: []
+        )
+    )
   end
 
   def set_data
     @data = {}
     @data[:repositories] = Repository.all.order(:title)
     @data[:portals] = Portal.all.order(:name)
+  end
+
+  def prepare_params(params)
+    params.each do |f, v|
+      if v.is_a? Array
+        params[f] = v.reject(&:empty?)
+        next
+      end
+      params[f] = v.gsub("\r\n", "\n").strip.split("\n") if MULTIVALUED_TEXT_FIELDS.include? f
+    end
   end
 end
 

@@ -26,6 +26,6 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files
   def filename
-    'feature_image' + File.extname(original_filename) if original_filename
+    'record_image' + File.extname(original_filename) if original_filename
   end
 end
