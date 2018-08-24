@@ -33,7 +33,10 @@ Blacklight.onLoad(function() {
     $('select#dcterms-type-select').chosen({
         allow_single_deselect: true
     });
-    $('select#dcterms-provenance-select').chosen({
+    $('select#dcterms-provenance-select-item').chosen({
+        search_contains: true
+    });
+    $('select#dcterms-provenance-select-collection').chosen({
         search_contains: true
     });
     $('select.collection-select').chosen();

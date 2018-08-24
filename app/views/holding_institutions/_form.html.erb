@@ -11,8 +11,7 @@
   <% end %>
   <%= f.text_area :short_description %>
   <%= f.text_area :description %>
-  <%= f.select :repository_id, @data[:repositories].collect { |c| [c.title, c.id] }, {}, { class: 'fancy-multiselect' } %>
-  <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
+  <%= f.select :repository_ids, @data[:repositories].collect { |c| [c.title, c.id] }, { multiple: true }, { class: 'fancy-multiselect' } %>
   <%= f.text_field :homepage_url %>
   <%= f.text_field :coordinates %>
   <%= f.text_area :strengths %>

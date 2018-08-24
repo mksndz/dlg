@@ -91,7 +91,7 @@
   </div>
 <% end %>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.repository'), value: @holding_institution.repository.title if @holding_institution.repository %>
+<%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.repositories'), values: @holding_institution.repositories.collect(&:title) if @holding_institution.repositories.any? %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.display_name'), value: @holding_institution.display_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.short_description'), value: @holding_institution.short_description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.description'), value: @holding_institution.description %>

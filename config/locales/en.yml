@@ -12,11 +12,11 @@ en:
         hosting: 'Hosting'
         storage_used: 'Storage Used'
         holding_institution: 'Holding Institution'
-        collections: 'Collections'
+        collection_ids: 'Collections'
         created_at: 'Created At'
         updated_at: 'Updated At'
       holding_institution:
-        repository: 'Repository'
+        repository_ids: 'Repositories'
         portal_ids: 'Portals'
         display_name: 'Display Name'
         short_description: 'Short Description'
