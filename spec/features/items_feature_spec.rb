@@ -23,7 +23,7 @@ feature 'Item Management' do
         r = Fabricate(:repository)
         visit items_path
         click_on I18n.t('meta.defaults.actions.edit')
-        chosen_select 'Text', from: 'dcterms-type-select'
+        chosen_select 'Text', from: 'dcterms-type-select-multiple'
         click_button I18n.t('meta.defaults.actions.save')
         expect(page).to have_current_path item_path(r.items.first)
       end
@@ -32,7 +32,7 @@ feature 'Item Management' do
         c2 = Fabricate :empty_collection
         visit items_path
         click_on I18n.t('meta.defaults.actions.edit')
-        chosen_select 'Text', from: 'dcterms-type-select'
+        chosen_select 'Text', from: 'dcterms-type-select-multiple'
         select(
           c2.display_title,
           from: I18n.t('activerecord.attributes.item.other_collections')
@@ -46,7 +46,7 @@ feature 'Item Management' do
         c1.items.first.other_collections = [c1.id]
         visit items_path
         click_on I18n.t('meta.defaults.actions.edit')
-        chosen_select 'Text', from: 'dcterms-type-select'
+        chosen_select 'Text', from: 'dcterms-type-select-multiple'
         select '', from: I18n.t('activerecord.attributes.item.other_collections')
         click_button I18n.t('meta.defaults.actions.save')
         expect(page).to have_current_path item_path(c1.items.first)
@@ -166,6 +166,7 @@ feature 'Item Management' do
     context 'edit behavior' do
       let(:item) { Fabricate(:repository).items.first }
       before(:each) do
+        Fabricate(:holding_institution, display_name: 'DLG')
         visit edit_item_path item
       end
       scenario 'edit page has a fulltext field' do
@@ -191,7 +192,7 @@ feature 'Item Management' do
       end
       scenario 'can select and save multiple DCMI Type values from a drop down' do
         new_type = 'MovingImage'
-        chosen_select new_type, from: 'dcterms-type-select'
+        chosen_select new_type, from: 'dcterms-type-select-multiple'
         find('.fixed-save-button').click
         expect(page).to have_current_path item_path(item)
         expect(page).to have_content new_type

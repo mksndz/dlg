@@ -51,7 +51,7 @@ feature 'Collections Management' do
           fill_in I18n.t('activerecord.attributes.collection.slug'), with: 'test'
           fill_in I18n.t('activerecord.attributes.collection.dcterms_temporal'), with: '2000'
           fill_in I18n.t('activerecord.attributes.collection.dcterms_spatial'), with: 'Georgia'
-          chosen_select 'Text', from: 'dcterms-type-select'
+          chosen_select 'Text', from: 'dcterms-type-select-multiple'
           click_button I18n.t('meta.defaults.actions.save')
           expect(page).to have_text I18n.t('activerecord.errors.messages.portal')
         end

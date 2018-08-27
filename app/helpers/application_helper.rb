@@ -56,6 +56,20 @@ module ApplicationHelper
     html.html_safe
   end
 
+  def controlled_vocabulary_select(entity, field, values, multiple)
+    id = "#{field.to_s.gsub('_', '-')}-select#{'-multiple' if multiple}"
+    klass = entity.class.name.demodulize.underscore
+    html = '<div class="form-group">'
+    html += meta_textarea_label klass, field
+    html += select(
+        klass, field, values,
+        { include_blank: true },
+        { class: 'form-control', id: id, multiple: multiple }
+    )
+    html += '</div>'
+    html.html_safe
+  end
+
   def boolean_check_icon(value)
     value = false if value == 'false'
     value ? content_tag(:span, nil, class: 'glyphicon glyphicon-ok') : ''

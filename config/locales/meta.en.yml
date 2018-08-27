@@ -193,7 +193,7 @@ en:
         features: 'Features'
         time_periods: 'Time Periods'
         projects: 'Projects'
-        holding_institituions: 'Holding Institutions'
+        holding_instititutions: 'Holding Institutions'
         resque: 'Background Jobs'
       user_menu:
         profile: 'User Info'
