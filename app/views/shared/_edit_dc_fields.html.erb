@@ -9,7 +9,7 @@
         :dcterms_provenance,
         @data[:holding_institutions].collect { |hi| [hi.display_name] },
         { include_blank: false },
-        { class: 'form-control', id: 'dcterms-provenance-select', multiple: false }
+        { class: 'form-control', id: "dcterms-provenance-select-#{e}", multiple: e == 'collection' }
     )
   %>
 <% end %>

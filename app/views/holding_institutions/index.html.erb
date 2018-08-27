@@ -30,9 +30,6 @@
         <th>
           <%= t('activerecord.attributes.holding_institution.projects') %>
         </th>
-        <th>
-          <%= t('activerecord.attributes.holding_institution.collections') %>
-        </th>
         <th width="185px"></th>
       </tr>
       </thead>
@@ -53,9 +50,6 @@
             </td>
             <td>
               <span class="label label-info"><%= holding_institution.projects.length %></span>
-            </td>
-            <td>
-              <span class="label label-info"><%= holding_institution.collections.length %></span>
             </td>
             <td>
               <%= render partial: 'shared/entity_actions', locals: { base_path: holding_institution_path(holding_institution), edit_path: edit_holding_institution_path(holding_institution), entity: holding_institution, show_bl: false } %>

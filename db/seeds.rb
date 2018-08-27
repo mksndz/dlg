@@ -1,6 +1,6 @@
 # Truncate Tables
 [ItemVersion, TimePeriod, Subject, Portal, PortalRecord, BatchItem, Item, User,
- Batch, Collection, Repository, FulltextIngest].each do |t|
+ Batch, Collection, Repository, FulltextIngest HoldingInstitution].each do |t|
   ActiveRecord::Base.connection.execute(
     "TRUNCATE TABLE #{t.table_name} RESTART IDENTITY CASCADE;"
   )
@@ -8,7 +8,7 @@ end
 
 # Truncate Other Tables
 %w(collections_users repositories_users collections_subjects searches
-   bookmarks).each do |t|
+   bookmarks holding_institutions_repositories).each do |t|
   ActiveRecord::Base.connection.execute(
     "TRUNCATE TABLE #{t} RESTART IDENTITY CASCADE;")
 end

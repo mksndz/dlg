@@ -157,11 +157,11 @@ class BatchItemsController < RecordController
         :dcterms_title,
         :edm_is_shown_at,
         :edm_is_shown_by,
-        :dcterms_provenance,
         :dcterms_bibliographic_citation,
         :dlg_local_right,
         :dlg_subject_personal,
         :fulltext,
+        dcterms_provenance: [],
         dcterms_type: [],
         other_collections: [],
         portal_ids: []

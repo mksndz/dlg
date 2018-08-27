@@ -115,6 +115,7 @@ feature 'Collections Management' do
           expect(page).to have_text '<p>This is homepage text</p>'
         end
         scenario 'can save partner homepage url' do
+          Fabricate(:holding_institution, display_name: 'DLG')
           visit edit_collection_path(Collection.last)
           fill_in I18n.t('activerecord.attributes.collection.partner_homepage_url'), with: 'http://change.homepage.url'
           click_button I18n.t('meta.defaults.actions.save')

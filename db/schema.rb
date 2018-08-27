@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180823184031) do
+ActiveRecord::Schema.define(version: 20180827163701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,11 +155,6 @@ ActiveRecord::Schema.define(version: 20180823184031) do
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
   add_index "collections", ["slug"], name: "index_collections_on_slug", using: :btree
-
-  create_table "collections_holding_institutions", id: false, force: :cascade do |t|
-    t.integer "holding_institution_id", null: false
-    t.integer "collection_id",          null: false
-  end
 
   create_table "collections_projects", id: false, force: :cascade do |t|
     t.integer "project_id",    null: false

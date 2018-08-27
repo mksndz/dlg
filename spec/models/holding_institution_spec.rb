@@ -20,28 +20,12 @@ RSpec.describe HoldingInstitution, type: :model do
       expect(holding_institution).to respond_to 'projects'
       expect(holding_institution.projects.first).to be_a Project
     end
-    it 'has Collections' do
-      collections = Fabricate.times(2, :empty_collection)
-      holding_institution.collections = collections
-      expect(holding_institution).to respond_to 'collections'
-      expect(holding_institution.collections.count).to eq 2
-      expect(holding_institution.collections.first).to be_a Collection
-    end
     it 'has Repositories' do
       repositories = Fabricate.times(2, :empty_repository)
       holding_institution.repositories = repositories
       expect(holding_institution).to respond_to 'repositories'
       expect(holding_institution.repositories.count).to eq 2
       expect(holding_institution.repositories.first).to be_a Repository
-    end
-    it 'has Portals via Repositories' do
-      repositories = Fabricate.times(2, :empty_repository)
-      holding_institution.repositories = repositories
-      expect(holding_institution).to respond_to 'portals'
-      expect(holding_institution.portals.count).to eq 2
-      repositories.each do |r|
-        expect(holding_institution.portals).to include r.portals.first
-      end
     end
   end
 end

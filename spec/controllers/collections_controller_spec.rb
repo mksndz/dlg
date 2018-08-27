@@ -14,7 +14,7 @@ RSpec.describe CollectionsController, type: :controller do
       dc_right: [I18n.t('meta.rights.noc_cr.uri')],
       dc_date: '1999-2000',
       dcterms_type: ['Collection'],
-      dcterms_provenance: 'DLG',
+      dcterms_provenance: ['DLG'],
       dcterms_subject: 'Georgia',
       repository_id: Fabricate(:empty_repository).id,
       portal_ids: [Portal.last.id]

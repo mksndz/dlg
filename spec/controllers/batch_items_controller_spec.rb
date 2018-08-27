@@ -17,7 +17,7 @@ RSpec.describe BatchItemsController, type: :controller do
       dc_right: I18n.t('meta.rights.zero.uri'),
       edm_is_shown_at: 'http://dlg.galileo.usg.edu',
       edm_is_shown_by: 'http://dlg.galileo.usg.edu',
-      dcterms_provenance: 'DLG',
+      dcterms_provenance: ['DLG'],
       dcterms_subject: 'Georgia',
       collection_id: collection.id,
       batch_id: batch.id,
