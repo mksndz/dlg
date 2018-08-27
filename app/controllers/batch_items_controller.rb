@@ -161,7 +161,7 @@ class BatchItemsController < RecordController
         :dlg_local_right,
         :dlg_subject_personal,
         :fulltext,
-        dcterms_provenance: [],
+        :dcterms_provenance,
         dcterms_type: [],
         other_collections: [],
         portal_ids: []

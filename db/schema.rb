@@ -236,6 +236,11 @@ ActiveRecord::Schema.define(version: 20180827163701) do
     t.datetime "updated_at"
   end
 
+  create_table "holding_institutions_projects", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "project_id",             null: false
+  end
+
   create_table "holding_institutions_repositories", id: false, force: :cascade do |t|
     t.integer "holding_institution_id", null: false
     t.integer "repository_id",          null: false
