@@ -8,6 +8,6 @@ class HoldingInstitution < ActiveRecord::Base
   end
 
   def collections
-    Collection.where("'#{display_name}' = ANY (dcterms_provenance)")
+    Collection.where("? = ANY (dcterms_provenance)", display_name)
   end
 end
