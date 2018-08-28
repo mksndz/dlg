@@ -6,4 +6,8 @@ class HoldingInstitution < ActiveRecord::Base
   def portals
     repositories.collect(&:portals).flatten.uniq
   end
+
+  def collections
+    Collection.where("'#{display_name}' = ANY (dcterms_provenance)")
+  end
 end

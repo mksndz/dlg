@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827163701) do
+ActiveRecord::Schema.define(version: 20180828110553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(version: 20180827163701) do
     t.text      "homepage_text"
   end
 
+  add_index "collections", ["dcterms_provenance"], name: "index_collections_on_dcterms_provenance", using: :gin
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
   add_index "collections", ["slug"], name: "index_collections_on_slug", using: :btree
 
@@ -234,11 +235,6 @@ ActiveRecord::Schema.define(version: 20180827163701) do
     t.text     "oai_url",             default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "holding_institutions_projects", id: false, force: :cascade do |t|
-    t.integer "holding_institution_id", null: false
-    t.integer "project_id",             null: false
   end
 
   create_table "holding_institutions_repositories", id: false, force: :cascade do |t|

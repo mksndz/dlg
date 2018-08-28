@@ -38,7 +38,6 @@ en:
         subgranting: 'Subgranting Notes'
         grant_partnerships: 'Grant Partnerships'
         projects: 'Projects'
-        collection_ids: 'Collections'
         created_at: 'Created At'
         updated_at: 'Updated At'
       fulltext_ingest:

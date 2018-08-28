@@ -12,6 +12,47 @@
 
 <br><br>
 
+<% if @holding_institution.collections.any? %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong><%= t('activerecord.attributes.holding_institution.collections') %></strong>
+    </div>
+    <table class="table" id="hi-collections">
+      <thead>
+        <tr>
+          <td>Record ID</td>
+          <td>Slug</td>
+          <td>Repo Slug</td>
+          <td>Title</td>
+          <td>Items</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% total = 0 %>
+        <% @holding_institution.collections.each do |c| %>
+          <% total += c.items_count %>
+          <tr>
+            <td><%= link_to c.record_id, c %></td>
+            <td><%= link_to c.slug, c %></td>
+            <td><%= link_to c.repository.slug, c.repository %></td>
+            <td><%= link_to c.display_title, c %></td>
+            <td><%= c.items_count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Total</td>
+          <td><%= total %></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+<% end %>
+
 <% if @holding_institution.projects.any? %>
   <div class="panel panel-default">
     <div class="panel-heading">
