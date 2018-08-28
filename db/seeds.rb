@@ -1,16 +1,17 @@
 # Truncate Tables
 [ItemVersion, TimePeriod, Subject, Portal, PortalRecord, BatchItem, Item, User,
- Batch, Collection, Repository, FulltextIngest HoldingInstitution].each do |t|
+ Batch, Collection, Repository, FulltextIngest, HoldingInstitution].each do |t|
   ActiveRecord::Base.connection.execute(
     "TRUNCATE TABLE #{t.table_name} RESTART IDENTITY CASCADE;"
   )
 end
 
 # Truncate Other Tables
-%w(collections_users repositories_users collections_subjects searches
-   bookmarks holding_institutions_repositories).each do |t|
+%w[collections_users repositories_users collections_subjects searches
+   bookmarks holding_institutions_repositories].each do |t|
   ActiveRecord::Base.connection.execute(
-    "TRUNCATE TABLE #{t} RESTART IDENTITY CASCADE;")
+    "TRUNCATE TABLE #{t} RESTART IDENTITY CASCADE;"
+  )
 end
 
 # PERMANENT DATA
@@ -21,7 +22,7 @@ Portal.create!([
                  { name: 'The Civil War in the American South', code: 'amso' },
                  { name: 'The Civil Rights Digital Library', code: 'crdl' },
                  { name: 'Other', code: 'other' }
-])
+               ])
 
 # Default Subjects
 Subject.create!([
@@ -38,7 +39,7 @@ Subject.create!([
                   { name: 'Science & Medicine' },
                   { name: 'Sports & Recreation' },
                   { name: 'Transportation' }
-])
+                ])
 
 # Default Time Periods
 TimePeriod.create!([
@@ -51,7 +52,7 @@ TimePeriod.create!([
                      { name: 'Progressive Era to World War II', start: 1900, finish: 1945 },
                      { name: 'Civil Rights & Sunbelt Georgia', start: 1945, finish: 1980 },
                      { name: 'Georgia at the Turn of the Millennium', start: 1990 }
-])
+                   ])
 
 # Initial Super User
 User.create!(
