@@ -6,6 +6,7 @@ class AddProject < ActiveRecord::Migration
       t.string :fiscal_year
       t.string :hosting
       t.integer :storage_used
+      t.timestamps
     end
     create_join_table :projects, :collections
   end
