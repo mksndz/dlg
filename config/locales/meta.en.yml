@@ -463,6 +463,9 @@ en:
       action:
         add: 'New Project'
     holding_institution:
+      labels:
+        public: 'Public Information'
+        administrative: 'Administrative Information'
       action:
         add: 'New Holding Institution'
 
