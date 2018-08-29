@@ -8,7 +8,9 @@ end
 
 # Truncate Other Tables
 %w[collections_users repositories_users collections_subjects searches
-   bookmarks holding_institutions_repositories].each do |t|
+   bookmarks holding_institutions_repositories holding_institutions_items
+   collections_holding_institutions batch_items_holding_institutions]
+  .each do |t|
   ActiveRecord::Base.connection.execute(
     "TRUNCATE TABLE #{t} RESTART IDENTITY CASCADE;"
   )

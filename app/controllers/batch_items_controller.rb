@@ -24,8 +24,7 @@ class BatchItemsController < RecordController
 
   # GET /batch_items/1
   # GET /batch_items/1.json
-  def show
-  end
+  def show; end
 
   # GET /batch_items/new
   def new
@@ -161,7 +160,7 @@ class BatchItemsController < RecordController
         :dlg_local_right,
         :dlg_subject_personal,
         :fulltext,
-        :dcterms_provenance,
+        :holding_institution_ids,
         dcterms_type: [],
         other_collections: [],
         portal_ids: []

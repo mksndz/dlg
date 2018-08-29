@@ -8,7 +8,7 @@ module ItemTypeValidatable
   included do
     before_save :update_validation_cache
     validates_presence_of :collection, message: I18n.t('activerecord.errors.messages.item_type.collection')
-    validates_presence_of :dcterms_spatial, :dcterms_title, :dcterms_provenance
+    validates_presence_of :dcterms_spatial, :dcterms_title
     validate :dcterms_temporal_characters
     validate :dcterms_type_required_value
     validate :subject_value_provided

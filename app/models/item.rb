@@ -6,6 +6,7 @@ class Item < ActiveRecord::Base
   include ItemTypeValidatable
   include GeospatialIndexable
   include Portable
+  include Provenanced
 
   belongs_to :collection, counter_cache: true
   has_one :repository, through: :collection
@@ -53,7 +54,7 @@ class Item < ActiveRecord::Base
     string(:public, stored: true) { public ? 'Yes' : 'No' }
 
     # *_display (not indexed, stored, multivalued)
-    string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
+    string :holding_institution_names,      as: 'dcterms_provenance_display',             multiple: true
     string :dcterms_title,                  as: 'dcterms_title_display',                  multiple: true
     string :dcterms_creator,                as: 'dcterms_creator_display',                multiple: true
     string :dcterms_contributor,            as: 'dcterms_contributor_display',            multiple: true

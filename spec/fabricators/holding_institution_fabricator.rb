@@ -11,7 +11,7 @@ Fabricator(:holding_institution) do
   contact_name { Faker::Name.name }
   contact_email { Faker::Internet.email }
   harvest_strategy 'OAI'
-  oai_url { Faker::Internet.url }
+  oai_urls { Faker::Internet.url }
   ignored_collections 'None'
   analytics_emails { [Faker::Internet.email, Faker::Internet.email] }
   subgranting { Faker::Hipster.sentence(2) }

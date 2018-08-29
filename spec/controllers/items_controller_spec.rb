@@ -12,10 +12,10 @@ RSpec.describe ItemsController, type: :controller do
       dc_right: I18n.t('meta.rights.zero.uri'),
       edm_is_shown_at: 'http://dlg.galileo.usg.edu',
       edm_is_shown_by: 'http://dlg.galileo.usg.edu',
-      dcterms_provenance: 'DLG',
       dcterms_subject: 'Georgia',
       collection_id: Fabricate(:empty_collection).id,
-      portal_ids: [Portal.last.id]
+      portal_ids: [Portal.last.id],
+      holding_institution_ids: HoldingInstitution.last.id
     }
   end
   let(:invalid_attributes) { { slug: 'invalid item slug' } }

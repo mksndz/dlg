@@ -1,5 +1,9 @@
+# represents a Holding Institution (dcterms_provenance value)
 class HoldingInstitution < ActiveRecord::Base
   has_and_belongs_to_many :repositories
+  has_and_belongs_to_many :collections
+  has_and_belongs_to_many :items
+  has_and_belongs_to_many :batch_items
   has_many :projects
   mount_uploader :image, ImageUploader
 
@@ -10,11 +14,11 @@ class HoldingInstitution < ActiveRecord::Base
   end
 
   def collections
-    Collection.where("? = ANY (dcterms_provenance)", display_name)
+    Collection.where('? = ANY (dcterms_provenance)', display_name)
   end
 
   def items
-    Item.where("? = ANY (dcterms_provenance)", display_name)
+    Item.where('? = ANY (dcterms_provenance)', display_name)
   end
 
   def confirm_unassigned

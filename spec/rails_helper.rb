@@ -73,6 +73,7 @@ RSpec.configure do |config|
     Repository.destroy_all
     Portal.destroy_all
     HoldingInstitution.destroy_all
+    Project.destroy_all
   end
 
   config.before(:all) do

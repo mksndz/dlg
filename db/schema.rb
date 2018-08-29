@@ -226,7 +226,6 @@ ActiveRecord::Schema.define(version: 20180815202116) do
   end
 
   create_table "holding_institutions", force: :cascade do |t|
-    t.integer  "repository_id"
     t.string   "display_name"
     t.text     "short_description"
     t.text     "description"
@@ -235,7 +234,7 @@ ActiveRecord::Schema.define(version: 20180815202116) do
     t.string   "coordinates"
     t.text     "strengths"
     t.text     "contact_information"
-    t.string   "type"
+    t.string   "institution_type"
     t.boolean  "galileo_member"
     t.string   "contact_name"
     t.string   "contact_email"
@@ -251,7 +250,6 @@ ActiveRecord::Schema.define(version: 20180815202116) do
   end
 
   add_index "holding_institutions", ["display_name"], name: "index_holding_institutions_on_display_name", using: :btree
-  add_index "holding_institutions", ["repository_id"], name: "index_holding_institutions_on_repository_id", using: :btree
 
   create_table "holding_institutions_items", id: false, force: :cascade do |t|
     t.integer "holding_institution_id", null: false
@@ -260,6 +258,11 @@ ActiveRecord::Schema.define(version: 20180815202116) do
 
   add_index "holding_institutions_items", ["holding_institution_id"], name: "idx_item_hi_on_hi_id", using: :btree
   add_index "holding_institutions_items", ["item_id"], name: "idx_item_hi_on_item_id", using: :btree
+
+  create_table "holding_institutions_repositories", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "repository_id",          null: false
+  end
 
   create_table "item_versions", force: :cascade do |t|
     t.string   "item_type",  null: false

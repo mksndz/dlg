@@ -1,7 +1,7 @@
 <a name="dcterms_provenance"></a>
 <%= controlled_vocabulary_select(
-      entity, :dcterms_provenance,
-      @data[:holding_institutions].collect { |hi| [hi.display_name] },
+      entity, :holding_institution_ids,
+      HoldingInstitution.all.collect { |hi| [hi.display_name, hi.id] },
       entity.class == Collection
     )
 %>

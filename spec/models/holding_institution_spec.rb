@@ -34,10 +34,11 @@ RSpec.describe HoldingInstitution, type: :model do
     end
     it 'does not delete if an item still uses it' do
       Fabricate(
-          :item_with_parents,
-          dcterms_provenance: [holding_institution.display_name]
+        :item_with_parents,
+        dcterms_provenance: [holding_institution.display_name]
       )
-      expect(holding_institution.delete).to be_falsey
+      holding_institution.delete
+      expect(holding_institution.errors).to have_key :holding_institutions
     end
 
   end

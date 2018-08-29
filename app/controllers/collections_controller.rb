@@ -48,8 +48,7 @@ class CollectionsController < RecordController
 
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @collection = Collection.new
@@ -141,7 +140,7 @@ class CollectionsController < RecordController
         :dlg_subject_personal,
         :partner_homepage_url,
         :homepage_text,
-        dcterms_provenance: [],
+        holding_institution_ids: [],
         dc_right: [],
         dcterms_type: [],
         subject_ids: [],

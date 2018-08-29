@@ -14,7 +14,9 @@ Fabricator(:repository) do
     Fabricate.build(
       :collection,
       portals: attrs[:portals],
-      items: [Fabricate.build(:item, portals: attrs[:portals])]
+      items: [
+        Fabricate.build(:item, portals: attrs[:portals])
+      ]
     )
   end
   image File.open("#{Rails.root}/spec/files/aarl.gif")

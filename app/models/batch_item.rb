@@ -5,6 +5,7 @@ class BatchItem < ActiveRecord::Base
   include ItemTypeValidatable
   include Portable
   include ItemTypeCleaner
+  include Provenanced
 
   belongs_to :batch, counter_cache: true
   belongs_to :batch_import, counter_cache: true
@@ -14,13 +15,13 @@ class BatchItem < ActiveRecord::Base
 
   after_save :lookup_coordinates
 
-  COMMIT_SCRUB_ATTRIBUTES = %w(
+  COMMIT_SCRUB_ATTRIBUTES = %w[
     id
     created_at
     updated_at
     batch_id
     batch_import_id
-  ).freeze
+  ].freeze
 
   def title
     dcterms_title.first
@@ -44,6 +45,7 @@ class BatchItem < ActiveRecord::Base
       self.item = Item.new attributes
     end
     item.portals = portals
+    item.holding_institutions = holding_institutions
     item
   end
 

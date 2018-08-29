@@ -2,7 +2,6 @@
 class AddHoldingInstitution < ActiveRecord::Migration
   def change
     create_table :holding_institutions do |t|
-      t.references :repository, index: true
       t.string :display_name
       t.text :short_description
       t.text :description
@@ -11,7 +10,7 @@ class AddHoldingInstitution < ActiveRecord::Migration
       t.string :coordinates
       t.text :strengths
       t.text :contact_information
-      t.string :type
+      t.string :institution_type
       t.boolean :galileo_member
       t.string :contact_name
       t.string :contact_email
@@ -25,6 +24,7 @@ class AddHoldingInstitution < ActiveRecord::Migration
       t.timestamps
       t.index :display_name
     end
+    create_join_table :holding_institutions, :repositories
     create_join_table :holding_institutions, :collections do |t|
       t.index :holding_institution_id, name: 'idx_coll_hi_on_hi_id'
       t.index :collection_id, name: 'idx_coll_hi_on_coll_id'

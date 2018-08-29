@@ -173,7 +173,7 @@ class ItemsController < RecordController
         :dlg_local_right,
         :dlg_subject_personal,
         :fulltext,
-        :dcterms_provenance,
+        :holding_institution_ids,
         dcterms_type: [],
         other_collections: [],
         portal_ids: []

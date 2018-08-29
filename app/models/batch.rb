@@ -109,12 +109,13 @@ class Batch < ActiveRecord::Base
 
   def batch_items_from_items(item_ids)
     Item.find(item_ids).map do |item|
-      scrub_attributes = %w(created_at updated_at)
+      scrub_attributes = %w[created_at updated_at]
       attributes = item.attributes.except(*scrub_attributes)
       item_id = attributes.delete('id')
       batch_item = BatchItem.new attributes
       batch_item.item_id = item_id
       batch_item.portals = item.portals
+      batch_item.holding_institutions = item.holding_institutions
       batch_item
     end
   end

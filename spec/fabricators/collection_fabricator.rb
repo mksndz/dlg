@@ -16,10 +16,10 @@ Fabricator(:collection) do
   dc_date ['1999-2000']
   dc_right [I18n.t('meta.rights.zero.uri')]
   dcterms_spatial ['United States, Georgia, Bibb County, 32.8064982, -83.69742']
-  dcterms_provenance ['DLG']
   edm_is_shown_at ['http://dlg.galileo.usg.edu']
   edm_is_shown_by ['http://dlg.galileo.usg.edu']
   dcterms_type ['Collection']
+  holding_institutions(count: 1)
 end
 
 Fabricator(:empty_collection, from: :collection) do

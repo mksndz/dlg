@@ -4,6 +4,7 @@ class Collection < ActiveRecord::Base
   include GeospatialIndexable
   include Portable
   include CollectionValidations
+  include Provenanced
 
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
@@ -23,7 +24,7 @@ class Collection < ActiveRecord::Base
   after_update :reindex_children
 
   def self.index_query_fields
-    %w(repository_id public).freeze
+    %w[repository_id public].freeze
   end
 
   def title
@@ -97,7 +98,7 @@ class Collection < ActiveRecord::Base
     string :short_description, stored: true, as: 'short_description_display'
 
     # *_display (not indexed, stored, multivalued)
-    string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
+    string :holding_institution_names,      as: 'dcterms_provenance_display',             multiple: true
     string :dcterms_type,                   as: 'dcterms_type_display',                   multiple: true
     string :dcterms_spatial,                as: 'dcterms_spatial_display',                multiple: true
     string :dcterms_title,                  as: 'dcterms_title_display',                  multiple: true
@@ -125,7 +126,7 @@ class Collection < ActiveRecord::Base
 
     # special collection-only fields
     string :collection_provenance_facet, multiple: true, as: 'collection_provenance_facet' do
-      dcterms_provenance
+      holding_institution_names
     end
     string :collection_type_facet, multiple: true, as: 'collection_type_facet' do
       dcterms_type
