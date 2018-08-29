@@ -1,17 +1,17 @@
 class HoldingInstitutionsController < ApplicationController
-
   load_and_authorize_resource
   include HoldingInstitutionsHelper
   include ErrorHandling
   include Sorting
 
-  MULTIVALUED_TEXT_FIELDS = %w[oai_url analytics_emails]
+  MULTIVALUED_TEXT_FIELDS = %w[oai_url analytics_emails].freeze
 
-  before_action :set_data, only: [:index, :new, :create, :edit, :update]
+  before_action :set_data, only: %i[index new create edit update]
 
   # GET /holding_institutions
   def index
     @holding_institutions = HoldingInstitution
+                              .index_query(params)
                               .order(sort_column + ' ' + sort_direction)
                               .page(params[:page])
   end
@@ -53,22 +53,25 @@ class HoldingInstitutionsController < ApplicationController
   end
 
   private
+
   def holding_institution_params
     prepare_params(
       params
         .require(:holding_institution)
-        .permit(:display_name, :short_description, :description, :repository_id,
-                :homepage_url, :coordinates, :strengths, :contact_information,
-                :institution_type, :contact_name, :contact_email,
-                :harvest_strategy, :oai_url, :ignored_collections,
-                :analytics_emails, :subgranting, :grant_partnerships, :image,
-                :remove_image, :image_cache, portal_ids: []
+        .permit(:display_name, :short_description, :description,
+                :repository_ids, :homepage_url, :coordinates, :strengths,
+                :contact_information, :galileo_member, :institution_type,
+                :contact_name, :contact_email, :harvest_strategy, :oai_urls,
+                :ignored_collections, :analytics_emails, :subgranting,
+                :grant_partnerships, :image, :remove_image, :image_cache,
+                portal_ids: []
         )
     )
   end
 
   def set_data
     @data = {}
+    @data[:institution_types] = HOLDING_INSTITUTION_TYPES.dup.unshift('')
     @data[:repositories] = Repository.all.order(:title)
     @data[:portals] = Portal.all.order(:name)
   end

@@ -6,6 +6,20 @@
 
 <%= link_to t('meta.holding_institution.action.add'), new_holding_institution_path, class: 'btn btn-default' %>
 
+<%= render 'shared/per_pager' %>
+
+<br><br>
+
+<div class="well well-sm index-filter-area">
+  <%= bootstrap_form_tag url: holding_institutions_path, method: :get, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10' do |f| %>
+    <%= f.hidden_field :direction, { value: h(params[:direction]), name: 'direction' } if params[:direction] %>
+    <%= f.hidden_field :sort, { value: h(params[:sort]), name: 'sort' } if params[:sort] %>
+    <%= f.hidden_field :per_page, { value: h(params[:per_page]), name: 'per_page' } if params[:per_page] %>
+    <%= f.select :valid_item, options_for_select(@data[:institution_types], selected: h(params[:institution_type])), { label: 'Institution Type' }, { name: 'institution_type' } %>
+    <%= f.primary t('meta.defaults.labels.filter.filter_button') %>
+  <% end %>
+</div>
+
 <% if @holding_institutions.empty? %>
 
     <p>No Holding Institutions Yet</p>

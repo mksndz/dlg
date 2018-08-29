@@ -106,7 +106,7 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_email'), value: link_to(@holding_institution.contact_email) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.galileo_member'), value: @holding_institution.galileo_member %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.harvest_strategy'), value: @holding_institution.harvest_strategy %>
-<%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.oai_url'), values: @holding_institution.oai_url %>
+<%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.oai_url'), values: @holding_institution.oai_urls %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.ignored_collections'), value: @holding_institution.ignored_collections %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.last_harvested_at'), value: @holding_institution.last_harvested_at %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.analytics_emails'), values: @holding_institution.analytics_emails %>
