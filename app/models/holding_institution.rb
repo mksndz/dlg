@@ -22,6 +22,7 @@ class HoldingInstitution < ActiveRecord::Base
   end
 
   def confirm_unassigned
-    collections.any? || items.any?
+    return true unless  collections.empty? && items.empty?
+    raise HoldingInstitutionInUseError, "Cannot delete Holding Institution as it remains assigned to #{items.length} Items and #{collections.length} Collections"
   end
 end

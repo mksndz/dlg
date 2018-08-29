@@ -1,0 +1,2 @@
+class HoldingInstitutionInUseError < StandardError
+end
