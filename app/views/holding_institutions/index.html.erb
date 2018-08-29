@@ -15,7 +15,7 @@
     <%= f.hidden_field :direction, { value: h(params[:direction]), name: 'direction' } if params[:direction] %>
     <%= f.hidden_field :sort, { value: h(params[:sort]), name: 'sort' } if params[:sort] %>
     <%= f.hidden_field :per_page, { value: h(params[:per_page]), name: 'per_page' } if params[:per_page] %>
-    <%= f.select :valid_item, options_for_select(@data[:institution_types], selected: h(params[:institution_type])), { label: 'Institution Type' }, { name: 'institution_type' } %>
+    <%= f.select :institution_type, options_for_select(@data[:institution_types], selected: h(params[:institution_type])), { label: 'Institution Type' }, { name: 'institution_type' } %>
     <%= f.primary t('meta.defaults.labels.filter.filter_button') %>
   <% end %>
 </div>
