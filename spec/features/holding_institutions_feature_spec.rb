@@ -21,6 +21,7 @@ feature 'Holding Institution management' do
       it 'displays all record information' do
         holding_institution = Fabricate(:empty_collection).holding_institutions.first
         holding_institution.repositories << Repository.last
+        holding_institution.projects << Fabricate(:project)
         holding_institution.save
         visit holding_institution_path(holding_institution)
         expect(page).to have_text holding_institution.display_name
@@ -40,7 +41,7 @@ feature 'Holding Institution management' do
         expect(page).to have_text holding_institution.ignored_collections
         expect(page).to have_text holding_institution.last_harvested_at
         expect(page).to have_text holding_institution.analytics_emails.first
-        expect(page).to have_text holding_institution.subgranting_notes
+        expect(page).to have_text holding_institution.subgranting
         expect(page).to have_text holding_institution.grant_partnerships
       end
     end
