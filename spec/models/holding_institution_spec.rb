@@ -27,6 +27,29 @@ RSpec.describe HoldingInstitution, type: :model do
       expect(holding_institution.repositories.count).to eq 2
       expect(holding_institution.repositories.first).to be_a Repository
     end
+    it 'has Portals (via Repositories)' do
+      repositories = Fabricate.times(2, :empty_repository)
+      holding_institution.repositories = repositories
+      expect(holding_institution.portal_names).to include Repository.last.portals.first.name
+    end
+  end
+  context 'when Validating' do
+    it 'requires a display_name' do
+      holding_institution = Fabricate.build(:holding_institution, display_name: nil)
+      holding_institution.valid?
+      expect(holding_institution.errors).to have_key :display_name
+    end
+    it 'requires a unique display_name' do
+      Fabricate :holding_institution, display_name: 'Taken'
+      holding_institution = Fabricate.build(:holding_institution, display_name: 'Taken')
+      holding_institution.valid?
+      expect(holding_institution.errors).to have_key :display_name
+    end
+    it 'requires an institution_type' do
+      holding_institution = Fabricate.build(:holding_institution, institution_type: nil)
+      holding_institution.valid?
+      expect(holding_institution.errors).to have_key :institution_type
+    end
   end
   context 'when deleting' do
     let(:holding_institution) do
