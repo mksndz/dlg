@@ -3,6 +3,7 @@ class Repository < ActiveRecord::Base
   include Portable
   include IndexFilterable
 
+  has_and_belongs_to_many :holding_institutions
   has_many :collections, dependent: :destroy
   has_many :items, through: :collections
   has_and_belongs_to_many :users

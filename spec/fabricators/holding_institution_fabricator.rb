@@ -16,4 +16,5 @@ Fabricator(:holding_institution) do
   analytics_emails { [Faker::Internet.email, Faker::Internet.email] }
   subgranting { Faker::Hipster.sentence(2) }
   grant_partnerships { Faker::Hipster.sentence(2) }
+  projects(count: 2)
 end
