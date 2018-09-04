@@ -3,4 +3,5 @@ Fabricator(:project) do
   fiscal_year '2019'
   hosting 'archival'
   storage_used 100
+  holding_institution
 end

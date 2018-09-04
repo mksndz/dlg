@@ -28,4 +28,16 @@ RSpec.describe Project, type: :model do
       expect(project.collections.first).to be_a Collection
     end
   end
+  context 'when validating' do
+    it 'requires a title' do
+      project = Fabricate.build :project, title: nil
+      project.valid?
+      expect(project.errors).to have_key :title
+    end
+    it 'requires a holding institution' do
+      project = Fabricate.build :project, holding_institution: nil
+      project.valid?
+      expect(project.errors).to have_key :holding_institution
+    end
+  end
 end

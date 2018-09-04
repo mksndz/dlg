@@ -33,7 +33,7 @@ RSpec.describe HoldingInstitution, type: :model do
       expect(holding_institution.portal_names).to include Repository.last.portals.first.name
     end
   end
-  context 'when Validating' do
+  context 'when validating' do
     it 'requires a display_name' do
       holding_institution = Fabricate.build(:holding_institution, display_name: nil)
       holding_institution.valid?
