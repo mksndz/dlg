@@ -6,7 +6,6 @@ class RecordController < ApplicationController
     dc_date
     dc_right
     dcterms_type
-    dcterms_provenance
     dcterms_is_part_of
     dcterms_contributor
     dcterms_creator

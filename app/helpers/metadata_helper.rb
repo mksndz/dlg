@@ -7,7 +7,6 @@ module MetadataHelper
 
   def multivalued_fields
     %w(
-      dcterms_provenance
       dcterms_title
       dcterms_creator
       dcterms_contributor

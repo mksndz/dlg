@@ -83,7 +83,7 @@ class ApiController < ApplicationController
       type: record.dcterms_type,
       orig_coll: record.dcterms_is_part_of,
       is_shown_at: record.edm_is_shown_at,
-      image: record.repository.image.url
+      image: record.holding_institutions.first.image.url
     }
   end
 

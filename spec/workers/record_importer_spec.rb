@@ -46,6 +46,7 @@ describe RecordImporter, type: :model do
           r2 = Fabricate(:repository, slug: 'geh', portals: [p])
           Fabricate(:collection, slug: 'aa', repository: r1, portals: [p])
           Fabricate(:collection, slug: '0091', repository: r2, portals: [p])
+          Fabricate(:holding_institution, display_name: 'Atlanta History Center')
         end
         it 'should create a BatchItem' do
           expect do
@@ -63,6 +64,10 @@ describe RecordImporter, type: :model do
         it 'should create a BatchItem with proper portal' do
           RecordImporter.perform(batch_import.id)
           expect(BatchItem.last.portals).to include Portal.last
+        end
+        it 'should create a BatchItem with proper Holding Institution values' do
+          RecordImporter.perform(batch_import.id)
+          expect(BatchItem.last.holding_institutions).to include HoldingInstitution.last
         end
         it 'should create a BatchItem with proper collection' do
           RecordImporter.perform(batch_import.id)
@@ -119,6 +124,7 @@ describe RecordImporter, type: :model do
         @georgia_portal = Fabricate(:portal) { code { 'georgia' } }
         @crdl_portal = Fabricate(:portal) { code { 'crdl' } }
         @collection = Fabricate :empty_collection
+        @holding_institution = Fabricate(:holding_institution, display_name: 'Walter J. Brown Media Archives and Peabody Awards Collection')
         @other_collection = Fabricate :empty_collection
         @other_collection2 = Fabricate :empty_collection
         duplicate_date_xml = '<item>
@@ -248,6 +254,9 @@ describe RecordImporter, type: :model do
         expect(@batch_item.other_collections).to include @other_collection.id
         expect(@batch_item.other_collections).to include @other_collection2.id
       end
+      it 'should set Holding Institution values properly' do
+        expect(@batch_item.holding_institutions).to include @holding_institution
+      end
       it 'should trim leading and trailing whitespace from arrays of strings' do
         expect(@batch_item.dc_relation.first).to eq "Forms part of the online collection: Individuals Active in Civil Disturbances Collection\nNew Line"
       end
@@ -256,6 +265,7 @@ describe RecordImporter, type: :model do
       before :each do
         c = Fabricate :empty_collection
         bi = Fabricate :batch_import_to_match_on_id
+        Fabricate :holding_institution, display_name: 'Atlanta History Center'
         @item = Fabricate(:repository).items.first
         @item.collection = c
         bi.xml = bi.xml.gsub '__ID__', @item.id.to_s

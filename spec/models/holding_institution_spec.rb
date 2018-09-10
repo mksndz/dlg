@@ -14,6 +14,9 @@ RSpec.describe HoldingInstitution, type: :model do
       expect(holding_institution.display_name).not_to be_empty
       expect(holding_institution.display_name).to be_a String
     end
+    it 'has a set of coordinates stored as a string' do
+      expect(holding_institution.coordinates).to be_a String
+    end
     it 'has Projects' do
       projects = Fabricate.times(2, :project)
       holding_institution.projects = projects
@@ -49,6 +52,21 @@ RSpec.describe HoldingInstitution, type: :model do
       holding_institution = Fabricate.build(:holding_institution, institution_type: nil)
       holding_institution.valid?
       expect(holding_institution.errors).to have_key :institution_type
+    end
+    it 'requires a properly formatted set of coordinates' do
+      holding_institution = Fabricate.build(:holding_institution, coordinates: 'A, B')
+      holding_institution.valid?
+      expect(holding_institution.errors).to have_key :coordinates
+    end
+    it 'requires a coordinates to not be a single number' do
+      holding_institution = Fabricate.build(:holding_institution, coordinates: '1.1')
+      holding_institution.valid?
+      expect(holding_institution.errors).to have_key :coordinates
+    end
+    it 'requires a coordinates with acceptable values' do
+      holding_institution = Fabricate.build(:holding_institution, coordinates: '-99, 199')
+      holding_institution.valid?
+      expect(holding_institution.errors).to have_key :coordinates
     end
   end
   context 'when deleting' do

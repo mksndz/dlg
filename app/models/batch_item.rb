@@ -27,6 +27,10 @@ class BatchItem < ActiveRecord::Base
     dcterms_title.first
   end
 
+  def dcterms_provenance
+    holding_institutions.map(&:display_name)
+  end
+
   def thumbnail?
     has_thumbnail
   end

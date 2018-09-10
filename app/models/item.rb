@@ -54,7 +54,7 @@ class Item < ActiveRecord::Base
     string(:public, stored: true) { public ? 'Yes' : 'No' }
 
     # *_display (not indexed, stored, multivalued)
-    string :holding_institution_names,      as: 'dcterms_provenance_display',             multiple: true
+    string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
     string :dcterms_title,                  as: 'dcterms_title_display',                  multiple: true
     string :dcterms_creator,                as: 'dcterms_creator_display',                multiple: true
     string :dcterms_contributor,            as: 'dcterms_contributor_display',            multiple: true
@@ -129,6 +129,14 @@ class Item < ActiveRecord::Base
 
   def self.index_query_fields
     %w(collection_id public valid_item).freeze
+  end
+
+  def holding_institution
+    holding_institutions.first
+  end
+
+  def dcterms_provenance
+    holding_institutions.map(&:display_name)
   end
 
   def display?

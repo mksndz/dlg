@@ -206,9 +206,13 @@ class Collection < ActiveRecord::Base
     end
 
     string :image, stored: true do
-      repository.image.url
+      holding_institutions.first.image.url
     end
 
+  end
+
+  def dcterms_provenance
+    holding_institutions.map(&:display_name)
   end
 
   def repository_title
