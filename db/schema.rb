@@ -350,17 +350,17 @@ ActiveRecord::Schema.define(version: 20180815202116) do
     t.string   "slug",                              null: false
     t.boolean  "public",            default: false, null: false
     t.string   "title",                             null: false
+    t.text     "description"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "collections_count", default: 0
     t.string   "homepage_url"
     t.string   "directions_url"
     t.text     "short_description"
-    t.text     "description"
     t.text     "address"
     t.text     "strengths"
     t.text     "contact"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
     t.boolean  "dpla",              default: false, null: false
-    t.integer  "collections_count", default: 0
     t.string   "coordinates"
     t.boolean  "teaser"
     t.string   "thumbnail"
