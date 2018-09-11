@@ -20,7 +20,6 @@ RSpec.describe HoldingInstitution, type: :model do
     it 'has Projects' do
       projects = Fabricate.times(2, :project)
       holding_institution.projects = projects
-      expect(holding_institution).to respond_to 'projects'
       expect(holding_institution.projects.first).to be_a Project
     end
     it 'has Repositories' do
@@ -34,6 +33,30 @@ RSpec.describe HoldingInstitution, type: :model do
       repositories = Fabricate.times(2, :empty_repository)
       holding_institution.repositories = repositories
       expect(holding_institution.portal_names).to include Repository.last.portals.first.name
+    end
+    it 'has Batch Items' do
+      batch_item = Fabricate(
+        :batch_item,
+        holding_institutions: [holding_institution]
+      )
+      expect(holding_institution.batch_items).to include batch_item
+      expect(batch_item.holding_institutions).to include holding_institution
+    end
+    it 'has Items' do
+      item = Fabricate(
+        :item_with_parents,
+        holding_institutions: [holding_institution]
+      )
+      expect(holding_institution.items).to include item
+      expect(item.holding_institutions).to include holding_institution
+    end
+    it 'has Collections' do
+      collection = Fabricate(
+        :empty_collection,
+        holding_institutions: [holding_institution]
+      )
+      expect(holding_institution.collections).to include collection
+      expect(collection.holding_institutions).to include holding_institution
     end
   end
   context 'when validating' do

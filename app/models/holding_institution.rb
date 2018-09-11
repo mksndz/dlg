@@ -27,13 +27,13 @@ class HoldingInstitution < ActiveRecord::Base
 
   def confirm_unassigned
     return true if collections.empty? && items.empty?
+
     raise HoldingInstitutionInUseError, "Cannot delete Holding Institution as it remains assigned to #{items.length} Items and #{collections.length} Collections"
   end
 
   def coordinates_format
-    if !coordinates || coordinates.empty?
-      return true
-    end
+    return true if !coordinates || coordinates.empty?
+
     lat, lon = coordinates.split(', ')
     begin
       lat = Float(lat)
