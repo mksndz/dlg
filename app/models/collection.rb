@@ -60,7 +60,6 @@ class Collection < ActiveRecord::Base
     end
 
     string :thumbnail, stored: true do
-      # repository.thumbnail.url
       # TODO: use brad's thumb links for now
       "http://dlg.galileo.usg.edu/do-th:#{repository.slug}"
     end
@@ -209,10 +208,6 @@ class Collection < ActiveRecord::Base
       holding_institutions.first.image.url
     end
 
-  end
-
-  def dcterms_provenance
-    holding_institutions.map(&:display_name)
   end
 
   def repository_title

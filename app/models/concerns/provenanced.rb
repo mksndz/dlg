@@ -9,8 +9,17 @@ module Provenanced
     validates_presence_of :holding_institutions
   end
 
+  # for backwards compatibility
+  def dcterms_provenance
+    holding_institution_names
+  end
+
   def holding_institution_names
     holding_institutions.collect(&:display_name)
   end
 
+  # convenience method for Items
+  def holding_institution
+    holding_institutions.first
+  end
 end

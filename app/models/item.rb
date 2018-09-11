@@ -131,14 +131,6 @@ class Item < ActiveRecord::Base
     %w(collection_id public valid_item).freeze
   end
 
-  def holding_institution
-    holding_institutions.first
-  end
-
-  def dcterms_provenance
-    holding_institutions.map(&:display_name)
-  end
-
   def display?
     repository.public && collection.public && public
   end
