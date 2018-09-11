@@ -236,6 +236,7 @@ feature 'Advanced Searching' do
       expect(all('.edit-record').count).to eq 1
     end
     scenario 'provenance search returns results only relevant results' do
+      @item.save
       Sunspot.commit
       visit blacklight_advanced_search_engine.advanced_search_path
       fill_in 'provenance', with: 'PPPPPPPPPPPPPPP'
