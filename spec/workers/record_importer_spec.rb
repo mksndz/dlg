@@ -39,6 +39,20 @@ describe RecordImporter, type: :model do
           )
         end
       end
+      context 'with valid XML and existing collection but invalid holding institution' do
+        it 'should not create a BatchItem' do
+          p = Fabricate(:portal, code: 'georgia')
+          r1 = Fabricate(:repository, slug: 'lpb', portals: [p])
+          r2 = Fabricate(:repository, slug: 'geh', portals: [p])
+          Fabricate(:collection, slug: 'aa', repository: r1, portals: [p])
+          Fabricate(:collection, slug: '0091', repository: r2, portals: [p])
+          RecordImporter.perform batch_import.id
+          batch_import.reload
+          expect(batch_import.results['failed'][0]['message']).to(
+            include 'Atlanta History Center'
+          )
+        end
+      end
       context 'with just valid XML' do
         before(:each) do
           p = Fabricate(:portal, code: 'georgia')

@@ -249,11 +249,19 @@ class RecordImporter
   end
 
   def self.set_record_holding_institutions(holding_institution_names)
-    @record.holding_institutions = holding_institution_names.map do |holding_institution_name|
-      HoldingInstitution.find_by_display_name(holding_institution_name)
+    holding_institution_names.each do |holding_institution_name|
+      holding_institution_object = HoldingInstitution.find_by_display_name holding_institution_name
+      if holding_institution_object
+        @record.holding_institutions << holding_institution_object
+      else
+        raise(
+          StandardError,
+          "Could not find Holding Institution for '#{holding_institution_name}'."
+        )
+      end
     end
   rescue StandardError => e
-    raise StandardError, 'Holding Institution values could not be set.'
+    raise StandardError, "Problem setting Holding Institution: #{e}."
   end
 
   def self.notify(msg)
