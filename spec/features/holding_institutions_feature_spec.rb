@@ -1,15 +1,19 @@
 require 'rails_helper'
+require 'chosen-rails/rspec'
 include Warden::Test::Helpers
 Warden.test_mode!
 
 feature 'Holding Institution management' do
+  let(:holding_institution) do
+    Fabricate(:empty_collection).holding_institutions.first
+  end
   before :each do
     login_as Fabricate(:super), scope: :user
   end
   context 'basic CRUD functionality' do
     context 'index page' do
       scenario 'sees a list of all holding institutions and action buttons' do
-        holding_institution = Fabricate(:empty_collection).holding_institutions.first
+        holding_institution.reload
         visit holding_institutions_path
         expect(page).to have_text holding_institution.display_name
         expect(page).to have_link I18n.t('meta.defaults.actions.view')
@@ -19,7 +23,6 @@ feature 'Holding Institution management' do
     end
     context 'show page' do
       it 'displays all record information' do
-        holding_institution = Fabricate(:empty_collection).holding_institutions.first
         holding_institution.repositories << Repository.last
         holding_institution.projects << Fabricate(:project)
         holding_institution.save
@@ -47,7 +50,6 @@ feature 'Holding Institution management' do
     end
     context 'edit page', js: true do
       before :each do
-        holding_institution = Fabricate(:empty_collection).holding_institutions.first
         visit edit_holding_institution_path(holding_institution)
       end
       it 'shows a chosen multi-select for Repositories' do
@@ -55,6 +57,17 @@ feature 'Holding Institution management' do
       end
       it 'shows a chosen select for institution_type' do
         expect(page).to have_css '#holding_institution_institution_type_chosen'
+      end
+      context 'image uploading' do
+        it 'allows for image uploading, saving and display' do
+          attach_file(
+            I18n.t('activerecord.attributes.holding_institution.image'),
+            Rails.root.to_s + '/spec/files/aarl.gif'
+          )
+          click_button I18n.t('meta.defaults.actions.save')
+          expect(page).to have_current_path holding_institution_path holding_institution
+          expect(page).to have_css "img[src*='record_image']"
+        end
       end
     end
   end
