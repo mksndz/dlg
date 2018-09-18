@@ -39,16 +39,18 @@ class InvitationsController < Devise::InvitationsController
   # todo this is identical to that in UserController
   def set_data
     @data ||= {}
-    @data[:repositories]= current_user.super? ? Repository.all : current_user.repositories
+    @data[:repositories] = current_user.super? ? Repository.all : current_user.repositories
     @data[:collections] = current_user.super? ? Collection.all : current_user.collections
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:invite, keys: [
-       :is_super, :is_coordinator, :is_uploader, :is_committer,
-       { repository_ids: [] },
-       { collection_ids: [] }
-    ])
+    devise_parameter_sanitizer.permit(:invite, keys:
+      [
+        :is_super, :is_coordinator, :is_uploader, :is_committer, :is_viewer,
+        { repository_ids: [] },
+        { collection_ids: [] }
+      ]
+    )
   end
 
 end

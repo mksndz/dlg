@@ -56,9 +56,10 @@ feature 'Invitation Management' do
     expect(page).to have_field I18n.t('activerecord.attributes.user.is_coordinator')
     expect(page).to have_field I18n.t('activerecord.attributes.user.is_super')
     expect(page).to have_field I18n.t('activerecord.attributes.user.is_uploader')
+    expect(page).to have_field I18n.t('activerecord.attributes.user.is_viewer')
   end
   scenario 'invited user can complete invitation process' do
-    invited_user = User.invite!({email: Faker::Internet.email}, coordinator_user)
+    invited_user = User.invite!({ email: Faker::Internet.email }, coordinator_user)
     visit "#{accept_user_invitation_path}?invitation_token=#{invited_user.raw_invitation_token}"
     password = Faker::Internet.password
     fill_in I18n.t('activerecord.attributes.user.password'), with: password
