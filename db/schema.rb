@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180731190538) do
+ActiveRecord::Schema.define(version: 20180918155649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,17 +181,19 @@ ActiveRecord::Schema.define(version: 20180731190538) do
   add_index "collections_users", ["user_id", "collection_id"], name: "index_collections_users_on_user_id_and_collection_id", using: :btree
 
   create_table "features", force: :cascade do |t|
-    t.string  "title"
-    t.string  "title_link"
-    t.string  "institution"
-    t.string  "institution_link"
-    t.string  "short_description"
-    t.string  "external_link"
-    t.boolean "primary"
-    t.string  "image"
-    t.string  "area"
-    t.string  "large_image"
-    t.boolean "public",            default: false
+    t.string   "title"
+    t.string   "title_link"
+    t.string   "institution"
+    t.string   "institution_link"
+    t.string   "short_description"
+    t.string   "external_link"
+    t.boolean  "primary"
+    t.string   "image"
+    t.string   "area"
+    t.string   "large_image"
+    t.boolean  "public",            default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "fulltext_ingests", force: :cascade do |t|

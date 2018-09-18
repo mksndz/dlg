@@ -205,6 +205,8 @@ en:
         short_description: 'Short Description'
         external_link: 'External Link'
         primary: 'Primary?'
+        updated_at: "Last Updated"
+        created_at: 'Created At'
     help:
       subject:
         name: "Display name for the Topic"

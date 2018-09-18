@@ -33,6 +33,9 @@
         <th>
           <%= sortable 'features.primary', t('activerecord.attributes.feature.primary') %>
         </th>
+        <th>
+          <%= sortable 'features.created_at', t('activerecord.attributes.feature.created_at') %>
+        </th>
         <th width="185px"></th>
       </tr>
       </thead>
@@ -57,6 +60,9 @@
             </td>
             <td>
               <%= boolean_check_icon feature.primary %>
+            </td>
+            <td>
+              <%= feature.created_at %>
             </td>
             <td>
               <%= render partial: 'shared/entity_actions', locals: { base_path: feature_path(feature), edit_path: edit_feature_path(feature), entity: feature, show_bl: false } %>

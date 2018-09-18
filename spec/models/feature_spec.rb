@@ -34,6 +34,11 @@ RSpec.describe Feature, type: :model do
     it 'has no external link' do
       expect(feature.external_link).to be_nil
     end
+    it 'has timestamps' do
+      feature.touch
+      expect(feature.created_at).not_to be_nil
+      expect(feature.updated_at).not_to be_nil
+    end
   end
   context 'when an external feature is created' do
     let(:feature) { Fabricate :external_feature }
