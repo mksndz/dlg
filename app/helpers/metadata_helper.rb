@@ -12,6 +12,7 @@ module MetadataHelper
       dcterms_creator
       dcterms_contributor
       dcterms_subject
+      dlg_subject_personal
       dcterms_description
       dcterms_identifier
       dcterms_publisher
@@ -31,7 +32,6 @@ module MetadataHelper
       dcterms_extent
       dcterms_language
       dcterms_bibliographic_citation
-      dlg_subject_personal
     )
   end
 
