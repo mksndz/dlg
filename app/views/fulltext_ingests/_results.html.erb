@@ -5,7 +5,7 @@
   <% if @fulltext_ingest.undone_at %>
   <div class="panel-body">
     <div class="alert alert-warning">
-      This Ingest was undone at <%= @fulltext_ingest.undone_at %>, which removed the loaded fulltext from the Items linked to below.
+      This Ingest was undone at <%= display_date(@fulltext_ingest.undone_at) %>, which removed the loaded fulltext from the Items linked to below.
     </div>
   </div>
   <% end %>

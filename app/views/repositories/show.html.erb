@@ -27,5 +27,5 @@
 <%= render 'shared/show_field', field_name: t(:address,           scope: [:activerecord, :attributes, :repository]), value: @repository.address %>
 <%= render 'shared/show_field', field_name: t(:strengths,         scope: [:activerecord, :attributes, :repository]), value: @repository.strengths %>
 <%= render 'shared/show_field', field_name: t(:contact,           scope: [:activerecord, :attributes, :repository]), value: @repository.contact %>
-<%= render 'shared/show_field', field_name: t(:created_at,        scope: [:activerecord, :attributes, :repository]), value: @repository.created_at %>
-<%= render 'shared/show_field', field_name: t(:updated_at,        scope: [:activerecord, :attributes, :repository]), value: @repository.updated_at %>
+<%= render 'shared/show_field', field_name: t(:created_at,        scope: [:activerecord, :attributes, :repository]), value: display_date(@repository.created_at) %>
+<%= render 'shared/show_field', field_name: t(:updated_at,        scope: [:activerecord, :attributes, :repository]), value: display_date(@repository.updated_at) %>

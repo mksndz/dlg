@@ -67,7 +67,7 @@
               <%= batch.try(:user) ? batch.user.email : I18n.t('meta.batch.labels.deleted_user') %>
             </td>
             <td>
-              <%= batch.created_at %>
+              <%= display_date batch.created_at %>
             </td>
             <td>
               <%= commit_status_for batch %>

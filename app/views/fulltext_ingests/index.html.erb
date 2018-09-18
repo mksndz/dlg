@@ -52,10 +52,10 @@
               <%= fulltext_ingest.user.email %>
             </td>
             <td>
-              <%= fulltext_ingest.queued_at %>
+              <%= display_date fulltext_ingest.queued_at %>
             </td>
             <td>
-              <%= fulltext_ingest.finished_at %>
+              <%= display_date fulltext_ingest.finished_at %>
             </td>
             <td>
               <%= boolean_check_icon fulltext_ingest.undone_at %>

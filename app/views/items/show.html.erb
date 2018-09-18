@@ -28,8 +28,8 @@
 
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @item} %>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.created_at'), value: @item.created_at %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.updated_at'), value: @item.updated_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.created_at'), value: display_date(@item.created_at) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.item.updated_at'), value: display_date(@item.updated_at) %>
 
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -54,7 +54,7 @@
     <ul>
       <% @item.batch_items.each do |bi| %>
           <% if bi.batch.committed? %>
-            <li>Batch <em><%= bi.batch.name %></em>: <%= link_to bi.batch.committed_at, batch_batch_item_path(bi.batch, bi) %></li>
+            <li>Batch <em><%= bi.batch.name %></em>: <%= link_to display_date(bi.batch.committed_at), batch_batch_item_path(bi.batch, bi) %></li>
           <% end %>
       <% end %>
     </ul>

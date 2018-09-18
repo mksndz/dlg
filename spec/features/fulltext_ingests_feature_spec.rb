@@ -19,8 +19,8 @@ feature 'Fulltext Ingests' do
       scenario 'are listed with details and actions' do
         expect(page).to have_link @fti.title
         expect(page).to have_text @fti.user.email
-        expect(page).to have_text @fti.queued_at
-        expect(page).to have_text @fti.finished_at
+        expect(page).to have_text I18n.l(@fti.queued_at, format: :h)
+        expect(page).to have_text I18n.l(@fti.finished_at, format: :h)
       end
     end
     context 'when queued' do
@@ -29,7 +29,7 @@ feature 'Fulltext Ingests' do
         visit fulltext_ingests_path
       end
       scenario 'are listed with only a queued time' do
-        expect(page).to have_text @fti.queued_at
+        expect(page).to have_text I18n.l(@fti.queued_at, format: :h)
       end
     end
     context 'when undone' do
@@ -52,10 +52,10 @@ feature 'Fulltext Ingests' do
         expect(page).to have_text @fti.title
         expect(page).to have_text @fti.description
         expect(page).to have_text @fti.file_identifier
-        expect(page).to have_text @fti.queued_at
-        expect(page).to have_text @fti.finished_at
-        expect(page).to have_text @fti.created_at
-        expect(page).to have_text @fti.updated_at
+        expect(page).to have_text I18n.l(@fti.queued_at, format: :h)
+        expect(page).to have_text I18n.l(@fti.finished_at, format: :h)
+        expect(page).to have_text I18n.l(@fti.created_at, format: :h)
+        expect(page).to have_text I18n.l(@fti.updated_at, format: :h)
         within '.fulltext-ingest-results-table tbody' do
           expect(all('tr').length).to eq 2
           expect(page).to have_css 'tr.success'

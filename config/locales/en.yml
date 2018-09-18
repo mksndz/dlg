@@ -1,4 +1,7 @@
 en:
+  time:
+    formats:
+      h: '%b %e %Y, %l:%M %p'
   support:
     array:
       words_connector: "<br> "

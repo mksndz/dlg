@@ -3,7 +3,7 @@
 <% end %>
 
 <p>Current version changes are highlighted in green.</p>
-<p><%= "Version authored by #{version_author_name(@version)} on #{@version.created_at}." %></p>
+<p><%= "Version authored by #{version_author_name(@version)} on #{display_date(@version.created_at)}." %></p>
 <style><%= Diffy::CSS %></style>
 
 <% @item.attributes.symbolize_keys.except(:id, :created_at, :updated_at).each do |attr,val| %>

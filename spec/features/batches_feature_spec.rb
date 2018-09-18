@@ -95,7 +95,7 @@ feature 'Batches Management' do
         end
         scenario 'created items show the batch item that created them' do
           click_on I18n.t('meta.batch.actions.view_item')
-          expect(page).to have_link Batch.last.committed_at
+          expect(page).to have_text I18n.l(Batch.last.committed_at, format: :h)
         end
       end
       context 'items are updated as expected in all areas' do
@@ -191,7 +191,9 @@ feature 'Batches Management' do
         @item.reload
         visit item_path @item
         expect(page).to have_link I18n.t('meta.versions.action.diff')
-        expect(page).to have_text @item.paper_trail.previous_version.created_at
+        expect(page).to have_text(
+          I18n.l(@item.paper_trail.previous_version.created_at, format: :h)
+                        )
       end
     end
   end

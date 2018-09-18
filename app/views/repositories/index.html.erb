@@ -85,7 +85,7 @@
               <%= link_to(repository.collections.size, collections_path(repository_id: repository.id)) %>
             </td>
             <td>
-              <%= time_tag repository.created_at %>
+              <%= display_date repository.created_at %>
             </td>
             <td>
               <%= time_ago_in_words repository.updated_at %> ago

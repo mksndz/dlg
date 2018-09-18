@@ -51,7 +51,7 @@
           <td><%= item.slug %></td>
           <td><%= item.title %></td>
           <td><%= version_author_name(item_version) %></td>
-          <td><%= item_version.created_at %></td>
+          <td><%= display_date item_version.created_at %></td>
           <td><%= link_to t('meta.item.actions.restore'), restore_item_version_path(item_version), method: :patch, class: 'btn btn-xs btn-default' %></td>
         </tr>
     <% end %>

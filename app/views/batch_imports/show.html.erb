@@ -14,13 +14,13 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.format'), value: @batch_import.format %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.user_id'), value: @batch_import.user.email %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.batch_id'), value: @batch_import.batch.name %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.created_at'), value: @batch_import.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.created_at'), value: display_date(@batch_import.created_at) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.validations'), value: @batch_import.validations %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_import.match_on_id'), value: @batch_import.match_on_id %>
 
 <% unless @batch_import.results.empty? %>
 
-    <%= render 'shared/show_field', field_name: 'Completed', value: @batch_import.completed_at %>
+    <%= render 'shared/show_field', field_name: 'Completed', value: display_date(@batch_import.completed_at) %>
 
     <% unless @batch_import.results['added'].empty? %>
       <div class="panel panel-success">

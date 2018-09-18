@@ -61,12 +61,17 @@ module ApplicationHelper
     value ? content_tag(:span, nil, class: 'glyphicon glyphicon-ok') : ''
   end
 
+  def display_date(value)
+    value ? l(value, format: :h) : ''
+  end
+
   def per_page_values
     [20, 50, 100, 250]
   end
 
   def per_page_selected(pp)
     return 'btn-primary' if !params[:per_page] && pp == 20
+
     params[:per_page].to_i == pp ? 'btn-primary' : 'btn-default'
   end
 

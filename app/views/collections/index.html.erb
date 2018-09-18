@@ -98,7 +98,7 @@
                 <%= link_to(collection.items.size, items_path(collection_id: collection.id)) %>
               </td>
               <td>
-                <%= time_tag collection.created_at %>
+                <%= display_date collection.created_at %>
               </td>
               <td>
                 <%= time_ago_in_words collection.updated_at %> ago

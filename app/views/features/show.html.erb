@@ -23,5 +23,5 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.external_link'), value: @feature.external_link %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.public'), value: @feature.public %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.primary'), value: @feature.primary %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.updated_at'), value: @feature.updated_at %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.created_at'), value: @feature.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.updated_at'), value: display_date(@feature.updated_at) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.created_at'), value: display_date(@feature.created_at) %>

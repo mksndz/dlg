@@ -91,7 +91,7 @@ feature 'Batch Importing Batch Items' do
           expect(page).to have_link I18n.t('meta.batch_import.action.xml')
           expect(page).to have_text uploader_user.email
           expect(page).to have_text @batch_import.format
-          expect(page).to have_text @batch_import.created_at
+          expect(page).to have_text I18n.l(@batch_import.created_at, format: :h)
         end
         scenario 'can go to and view provided XML' do
           visit batch_batch_import_path @batch, @batch_import

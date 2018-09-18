@@ -31,9 +31,9 @@
     </div>
 <% end %>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.user_id'),           value: creator  %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.name'),              value: @batch.name %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.user_id'), value: creator  %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.name'), value: @batch.name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.notes'), value: @batch.notes %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.committed_at'),      value: @batch.committed_at %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.updated_at'),        value: @batch.updated_at %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.created_at'),        value: @batch.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.committed_at'), value: display_date(@batch.committed_at) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.updated_at'), value: display_date(@batch.updated_at) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch.created_at'), value: display_date(@batch.created_at) %>

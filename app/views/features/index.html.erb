@@ -62,7 +62,7 @@
               <%= boolean_check_icon feature.primary %>
             </td>
             <td>
-              <%= feature.created_at %>
+              <%= display_date feature.created_at %>
             </td>
             <td>
               <%= render partial: 'shared/entity_actions', locals: { base_path: feature_path(feature), edit_path: edit_feature_path(feature), entity: feature, show_bl: false } %>
