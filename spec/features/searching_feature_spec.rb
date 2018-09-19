@@ -54,7 +54,7 @@ feature 'Searching' do
         check "select-#{item.id}"
         check "select-#{item2.id}"
         click_button I18n.t('meta.app.action_widget.name')
-        page.switch_to_window window_opened_by { click_on I18n.t('meta.app.action_widget.xml') }
+        page.switch_to_window(window_opened_by { click_on I18n.t('meta.app.action_widget.xml') } )
         expect(page).to have_current_path xml_items_path(format: :xml)
         expect(page.html).to include item.slug
         expect(page.html).to include item2.slug

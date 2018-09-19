@@ -5,6 +5,7 @@ Blacklight.onLoad ->
     entities = get_checked_items()
     url = $(this).data('url')
     if entities
+      count = entities.length
       return unless window.confirm("Are you sure?")
       $.ajax url,
         type: "DELETE",
@@ -13,7 +14,7 @@ Blacklight.onLoad ->
         error: (jqXHR, textStatus, errorThrown) ->
           alert('error: ' + textStatus)
         success: (data, textStatus, jqXHR) ->
-          alert('Items destroyed!')
+          alert(count + ' Items destroyed!')
           window.location.reload(true)
   )
 
