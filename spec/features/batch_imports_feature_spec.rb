@@ -84,6 +84,7 @@ feature 'Batch Importing Batch Items' do
           expect(page).to have_link I18n.t('meta.batch_import.action.xml')
           expect(page).to have_link I18n.t('meta.defaults.actions.destroy')
           expect(page).to have_text uploader_user.email
+          expect(find('.error-count').text).to eq ''
         end
         scenario 'can view a batch import with details and actions' do
           visit batch_batch_import_path @batch, @batch_import
@@ -109,6 +110,14 @@ feature 'Batch Importing Batch Items' do
       @robust_item = Fabricate(:collection_with_repo_and_robust_item).items.first
     end
     let(:xml) { @robust_item.to_xml }
+    context 'finished with errors' do
+      let(:import_with_errors) { Fabricate :completed_batch_import_with_failure }
+      scenario 'index page shows the number fof errors' do
+        visit batch_batch_imports_path(import_with_errors.batch)
+        errors = find('.error-count')
+        expect(errors.text).to eq '1'
+      end
+    end
     context 'uploading xml with validates OFF' do
       before :each do
         visit new_batch_batch_import_path @batch

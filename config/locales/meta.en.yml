@@ -383,6 +383,7 @@ en:
       labels:
         columns:
           batch_items: 'Batch Items Created'
+          errors: 'Errors'
           finished: 'Finished'
           format: 'Format'
           file_name: 'Filename'

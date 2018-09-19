@@ -37,6 +37,9 @@
           <%= t('meta.batch_import.labels.columns.batch_items') %>
         </th>
         <th>
+          <%= t('meta.batch_import.labels.columns.errors') %>
+        </th>
+        <th>
           <%= t('meta.batch_import.labels.columns.file_name') %>
         </th>
         <th>
@@ -60,6 +63,11 @@
             </td>
             <td>
               <%= import.batch_items ? import.batch_items.count : '' %>
+            </td>
+            <td>
+              <span class="error-count">
+                <%= import.completed_at ? import.results['failed'].length : '' %>
+              </span>
             </td>
             <td>
               <% if import.file_name %>
