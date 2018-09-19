@@ -6,7 +6,7 @@ Blacklight.onLoad ->
     url = $(this).data('url')
     if entities
       count = entities.length
-      return unless window.confirm("Are you sure?")
+      return unless window.confirm("Are you sure you want to delete the " + count + " selected records?")
       $.ajax url,
         type: "DELETE",
         data:
