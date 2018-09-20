@@ -246,7 +246,11 @@ class Collection < ActiveRecord::Base
 
   def reindex_children
     if slug_changed? || display_title_changed? || repository_id_changed?
-      resave_children if repository_id_changed? || slug_changed? # TODO: this should be a background job
+      resave_children if repository_id_changed? || slug_changed?
+      resaved = true
+    end
+    if !resaved && items.any? && public_changed?
+      Resque.enqueue(Reindexer, 'Item', items.map(&:id))
     end
     true
   end

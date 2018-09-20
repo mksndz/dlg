@@ -23,3 +23,7 @@ end
 Fabricator(:empty_repository, from: :repository) do
   collections []
 end
+
+Fabricator(:repository_public_true, from: :repository) do
+  public true
+end

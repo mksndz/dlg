@@ -34,14 +34,12 @@ class Repository < ActiveRecord::Base
 
   def reindex_child_values
     collection_queued = false
-    if slug_changed? || title_changed?
+    if slug_changed? || title_changed? || public_changed?
       reindex_collections
       Resque.enqueue(Reindexer, 'Item', items.map(&:id)) if items.any?
       collection_queued = true
     end
-    if image_changed? && !collection_queued
-      reindex_collections
-    end
+    reindex_collections if image_changed? && !collection_queued
     true
   end
 

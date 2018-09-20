@@ -60,6 +60,112 @@ feature 'Searching' do
         expect(page.html).to include item2.slug
       end
     end
+    context 'display value and public value inheritance', js: true do
+      before :each do
+        ResqueSpec.reset!
+      end
+      scenario 'an item whose repository is not public is display: false' do
+        Fabricate :repository
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        display_values = all('dd.blacklight-display_ss')
+        display_values.each do |v|
+          expect(v.text).to eq 'No'
+        end
+      end
+      scenario 'an item whose collection is not public is display: false' do
+        Fabricate :repository_public_true
+        item = Item.last
+        item.public = true
+        item.save
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        display_values = all('dd.blacklight-display_ss')
+        display_values.each do |v|
+          expect(v.text).to eq 'No'
+        end
+      end
+      scenario 'an item whose repo and coll are not public is display: false' do
+        Fabricate :repository
+        item = Item.last
+        item.public = true
+        item.save
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        display_values = all('dd.blacklight-display_ss')
+        display_values.each do |v|
+          expect(v.text).to eq 'No'
+        end
+      end
+      scenario 'an item, repo and coll are public: true then the item and coll are display: true' do
+        Fabricate :repository_public_true
+        item = Item.last
+        item.public = true
+        item.save
+        collection = Collection.last
+        collection.public = true
+        collection.save
+        ResqueSpec.perform_all :resave
+        ResqueSpec.perform_all :reindex
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        display_values = all('dd.blacklight-display_ss')
+        display_values.each do |v|
+          expect(v.text).to eq 'Yes'
+        end
+      end
+      scenario 'an item is display: true after its repo is switched' do
+        Fabricate :repository
+        item = Item.last
+        item.public = true
+        item.save
+        collection = Collection.last
+        collection.public = true
+        collection.save
+        repository = Repository.last
+        repository.public = true
+        repository.save
+        ResqueSpec.perform_all :resave
+        ResqueSpec.perform_all :reindex
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        display_values = all('dd.blacklight-display_ss')
+        display_values.each do |v|
+          expect(v.text).to eq 'Yes'
+        end
+      end
+      scenario 'an item is display: true after its public value is switched' do
+        Fabricate :repository_public_true
+        collection = Collection.last
+        collection.public = true
+        collection.save
+        ResqueSpec.perform_all :resave
+        ResqueSpec.perform_all :reindex
+        item = Item.last
+        item.public = true
+        item.save
+        ResqueSpec.perform_all :resave
+        ResqueSpec.perform_all :reindex
+        Sunspot.commit
+        visit root_path
+        fill_in 'title', with: ''
+        click_button 'Search'
+        display_values = all('dd.blacklight-display_ss')
+        display_values.each do |v|
+          expect(v.text).to eq 'Yes'
+        end
+      end
+    end
     context 'results validity display' do
       scenario 'invalid items are shown as such' do
         Fabricate :repository
