@@ -1,0 +1,45 @@
+<%= content_for :title do %>
+    Show Project
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @project.title %>
+<% end %>
+
+<% breadcrumb :project, @project %>
+
+<%= link_to t('meta.defaults.actions.edit'), edit_project_path(@project), class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.title'), value: @project.title %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.fiscal_year'), value: @project.fiscal_year %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.hosting'), value: @project.hosting %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.storage_used'), value: @project.storage_used %>
+<%= render(
+      'shared/show_field',
+      field_name: t('activerecord.attributes.project.holding_institution'),
+      value: link_to(
+          @project.holding_institution.display_name,
+          holding_institution_path(@project.holding_institution_id)
+      )
+    )
+%>
+
+<% if @project.collections.any? %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong><%= t('activerecord.attributes.project.collections') %></strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% @project.collections.each do |c| %>
+          <li><%= link_to c.display_title, c %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.created_at'), value: @project.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.updated_at'), value: @project.updated_at %>

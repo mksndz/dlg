@@ -169,9 +169,11 @@ class RecordImporter
   def self.create_new_record(record_data)
     portals = record_data.delete('portals')
     other_colls = record_data.delete('other_colls')
+    holding_institutions = record_data.delete('dcterms_provenance')
     @record = BatchItem.new prepared_params(record_data)
     set_record_portals(portals) if portals
     set_record_other_colls(other_colls) if other_colls
+    set_record_holding_institutions(holding_institutions) if holding_institutions
     @record.batch_import = @batch_import
   end
 
@@ -244,6 +246,22 @@ class RecordImporter
     end
   rescue StandardError => e
     raise StandardError, 'Other Collections values could not be set.'
+  end
+
+  def self.set_record_holding_institutions(holding_institution_names)
+    holding_institution_names.each do |holding_institution_name|
+      holding_institution_object = HoldingInstitution.find_by_display_name holding_institution_name
+      if holding_institution_object
+        @record.holding_institutions << holding_institution_object
+      else
+        raise(
+          StandardError,
+          "Could not find Holding Institution for '#{holding_institution_name}'."
+        )
+      end
+    end
+  rescue StandardError => e
+    raise StandardError, "Problem setting Holding Institution: #{e}."
   end
 
   def self.notify(msg)

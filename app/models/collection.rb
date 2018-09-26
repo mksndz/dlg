@@ -4,6 +4,7 @@ class Collection < ActiveRecord::Base
   include GeospatialIndexable
   include Portable
   include CollectionValidations
+  include Provenanced
 
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
@@ -23,7 +24,7 @@ class Collection < ActiveRecord::Base
   after_update :reindex_children
 
   def self.index_query_fields
-    %w(repository_id public).freeze
+    %w[repository_id public].freeze
   end
 
   def title
@@ -59,7 +60,6 @@ class Collection < ActiveRecord::Base
     end
 
     string :thumbnail, stored: true do
-      # repository.thumbnail.url
       # TODO: use brad's thumb links for now
       "http://dlg.galileo.usg.edu/do-th:#{repository.slug}"
     end
@@ -97,7 +97,7 @@ class Collection < ActiveRecord::Base
     string :short_description, stored: true, as: 'short_description_display'
 
     # *_display (not indexed, stored, multivalued)
-    string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
+    string :holding_institution_names,      as: 'dcterms_provenance_display',             multiple: true
     string :dcterms_type,                   as: 'dcterms_type_display',                   multiple: true
     string :dcterms_spatial,                as: 'dcterms_spatial_display',                multiple: true
     string :dcterms_title,                  as: 'dcterms_title_display',                  multiple: true
@@ -125,7 +125,7 @@ class Collection < ActiveRecord::Base
 
     # special collection-only fields
     string :collection_provenance_facet, multiple: true, as: 'collection_provenance_facet' do
-      dcterms_provenance
+      holding_institution_names
     end
     string :collection_type_facet, multiple: true, as: 'collection_type_facet' do
       dcterms_type
@@ -205,7 +205,7 @@ class Collection < ActiveRecord::Base
     end
 
     string :image, stored: true do
-      repository.image.url
+      holding_institutions.first.image.url
     end
 
   end
@@ -221,6 +221,7 @@ class Collection < ActiveRecord::Base
   def to_xml(options = {})
     default_options = {
       dasherize: false,
+      methods: :dcterms_provenance,
       except: %i[id repository_id created_at updated_at other_repositories
                  items_count date_range]
     }
@@ -228,6 +229,11 @@ class Collection < ActiveRecord::Base
       default_options[:include] = [repository: { only: [:slug] }]
     end
     super(options.merge!(default_options))
+  end
+
+  def as_json(options = {})
+    new_options = { methods: :dcterms_provenance }
+    super(options.merge!(new_options))
   end
 
   def other_repository_titles

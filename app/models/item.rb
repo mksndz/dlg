@@ -6,6 +6,7 @@ class Item < ActiveRecord::Base
   include ItemTypeValidatable
   include GeospatialIndexable
   include Portable
+  include Provenanced
 
   belongs_to :collection, counter_cache: true
   has_one :repository, through: :collection
@@ -159,32 +160,26 @@ class Item < ActiveRecord::Base
   end
 
   def to_xml(options = {})
-    default_options = {
+    new_options = {
       dasherize: false,
-      except: [
-        :collection_id,
-        :record_id,
-        :other_collections,
-        :valid_item,
-        :has_thumbnail,
-        :created_at,
-        :updated_at,
-        :fulltext
-      ],
+      except: %i[collection_id record_id other_collections valid_item
+                 has_thumbnail created_at updated_at fulltext],
+      methods: :dcterms_provenance,
       include: {
         other_colls: {
           skip_types: true,
           only: [:record_id]
         },
-        collection: {
-          only: [:record_id]
-        },
-        portals: {
-          only: [:code]
-        }
+        collection: { only: [:record_id] },
+        portals: { only: [:code] }
       }
     }
-    super(options.merge!(default_options))
+    super(options.merge!(new_options))
+  end
+
+  def as_json(options = {})
+    new_options = { methods: :dcterms_provenance }
+    super(options.merge!(new_options))
   end
 
   def to_batch_item

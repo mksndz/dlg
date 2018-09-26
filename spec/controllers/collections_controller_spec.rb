@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CollectionsController, type: :controller do
   let(:repository) { Fabricate(:repository) }
-  let(:portal) { Fabricate :portal }
+  let(:holding_institution) { Fabricate :holding_institution }
   before(:each) { sign_in Fabricate :super }
   let(:valid_attributes) do
     {
@@ -14,10 +14,10 @@ RSpec.describe CollectionsController, type: :controller do
       dc_right: [I18n.t('meta.rights.noc_cr.uri')],
       dc_date: '1999-2000',
       dcterms_type: ['Collection'],
-      dcterms_provenance: 'DLG',
       dcterms_subject: 'Georgia',
       repository_id: Fabricate(:empty_repository).id,
-      portal_ids: [Portal.last.id]
+      portal_ids: [Portal.last.id],
+      holding_institution_ids: [holding_institution.id]
     }
   end
   let(:invalid_attributes) { { slug: 'invalid item slug' } }

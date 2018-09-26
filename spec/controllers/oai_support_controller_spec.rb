@@ -102,7 +102,6 @@ RSpec.describe OaiSupportController, type: :controller do
           end
         end
       end
-
     end
   end
   describe 'GET #deleted' do
@@ -135,10 +134,19 @@ RSpec.describe OaiSupportController, type: :controller do
     it 'sets records to the Items with the specified IDs' do
       expect(assigns(:records).collect(&:id)).to eq Item.pluck :id
     end
-    it 'response to contain portal code' do
-      data = JSON.parse response.body
-      item_hash = data[0]
-      expect(item_hash['portals'][0]).to have_key 'code'
+    context 'record metadata hash contents' do
+      before :each do
+        data = JSON.parse response.body
+        @record_hash = data[0]
+        @item = Item.find(data[0]['id'])
+      end
+      it 'response to contain portal code' do
+        expect(@record_hash['portals'][0]).to have_key 'code'
+      end
+      it 'contains dcterms_provenance fields corresponding to holding_institutions' do
+        expect(@record_hash).to have_key 'dcterms_provenance'
+        expect(@record_hash['dcterms_provenance']).to include @item.holding_institution.display_name
+      end
     end
     it 'returns nothing for a record where there is no ID match' do
       ids = Item.pluck(:id).join(',')

@@ -12,8 +12,8 @@
 
 <br><br>
 
-<%= render 'shared/show_field', field_name: t(:image, scope: [:activerecord, :attributes, :feature]), value: link_to(image_tag(@feature.image.url, class: 'thumbnail'), @feature.image.url) %>
-<%= render 'shared/show_field', field_name: t(:large_image, scope: [:activerecord, :attributes, :feature]), value: link_to(image_tag(@feature.large_image.url, class: 'thumbnail'), @feature.large_image.url) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.image'), value: image_tag(@feature.image.url) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.large_image'), value: image_tag(@feature.large_image.url) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.area'), value: @feature.area %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.title'), value: @feature.title %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.feature.title_link'), value: @feature.title_link %>

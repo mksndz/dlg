@@ -48,8 +48,7 @@ class CollectionsController < RecordController
 
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @collection = Collection.new
@@ -95,6 +94,7 @@ class CollectionsController < RecordController
     @data[:subjects] = Subject.all.order(:name)
     @data[:time_periods] = TimePeriod.all.order(:name)
     @data[:repositories] = Repository.all.order(:title)
+    @data[:holding_institutions] = HoldingInstitution.all.order(:display_name)
     @data[:portals] = portals_for_form
   end
 
@@ -134,13 +134,13 @@ class CollectionsController < RecordController
         :dcterms_title,
         :edm_is_shown_at,
         :edm_is_shown_by,
-        :dcterms_provenance,
         :dcterms_license,
         :dlg_local_right,
         :dcterms_bibliographic_citation,
         :dlg_subject_personal,
         :partner_homepage_url,
         :homepage_text,
+        holding_institution_ids: [],
         dc_right: [],
         dcterms_type: [],
         subject_ids: [],

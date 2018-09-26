@@ -1,0 +1,78 @@
+<%= content_for :title do %>
+    Holding Institutions
+<% end %>
+
+<% breadcrumb :holding_institutions %>
+
+<%= link_to t('meta.holding_institution.action.add'), new_holding_institution_path, class: 'btn btn-default' %>
+
+<%= render 'shared/per_pager' %>
+
+<br><br>
+
+<div class="well well-sm index-filter-area">
+  <%= bootstrap_form_tag url: holding_institutions_path, method: :get, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10' do |f| %>
+    <%= f.hidden_field :direction, { value: h(params[:direction]), name: 'direction' } if params[:direction] %>
+    <%= f.hidden_field :sort, { value: h(params[:sort]), name: 'sort' } if params[:sort] %>
+    <%= f.hidden_field :per_page, { value: h(params[:per_page]), name: 'per_page' } if params[:per_page] %>
+    <%= f.select :institution_type, options_for_select(@data[:institution_types], selected: h(params[:institution_type])), { label: 'Institution Type' }, { name: 'institution_type' } %>
+    <%= f.primary t('meta.defaults.labels.filter.filter_button') %>
+  <% end %>
+</div>
+
+<% if @holding_institutions.empty? %>
+
+    <p>No Holding Institutions Yet</p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'holding_institutions.id', t('meta.defaults.labels.columns.id') %>
+        </th>
+        <th>
+          <%= sortable 'holding_institutions.display_name', t('meta.defaults.labels.columns.name') %>
+        </th>
+        <th>
+          <%= sortable 'holding_institutions.institution_type', t('activerecord.attributes.holding_institution.institution_type') %>
+        </th>
+        <th>
+          <%= sortable 'holding_institution.created_at', t('activerecord.attributes.holding_institution.created_at') %>
+        </th>
+        <th>
+          <%= t('activerecord.attributes.holding_institution.projects') %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @holding_institutions.each do |holding_institution| %>
+          <tr>
+            <td>
+              <%= link_to holding_institution.id, holding_institution_path(holding_institution) %>
+            </td>
+            <td>
+              <%= link_to holding_institution.display_name, holding_institution_path(holding_institution) %>
+            </td>
+            <td>
+              <%= holding_institution.institution_type %>
+            </td>
+            <td>
+              <%= holding_institution.created_at %>
+            </td>
+            <td>
+              <span class="label label-info"><%= holding_institution.projects.length %></span>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: holding_institution_path(holding_institution), edit_path: edit_holding_institution_path(holding_institution), entity: holding_institution, show_bl: false } %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @holding_institutions %>
+<% end %>
+
+

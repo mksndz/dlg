@@ -27,11 +27,17 @@ Blacklight.onLoad(function() {
     $('select.advanced-search-facet-select').chosen({
         search_contains: true
     });
-    $('select#dc-right-select').chosen({
+    $('select#dc-right-select, select#dc-right-select-multiple').chosen({
         allow_single_deselect: true
     });
-    $('select#dcterms-type-select').chosen({
+    $('select#dcterms-type-select-multiple').chosen({
         allow_single_deselect: true
+    });
+    $('select#dcterms-provenance-select-item').chosen({
+        search_contains: true
+    });
+    $('select#dcterms-provenance-select-collection').chosen({
+        search_contains: true
     });
     $('select.collection-select').chosen();
     $('select.fancy-multiselect').chosen();

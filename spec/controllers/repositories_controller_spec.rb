@@ -7,7 +7,6 @@ RSpec.describe RepositoriesController, type: :controller do
     {
       slug: 'test-controller-slug',
       title: 'Test Controller Title',
-      coordinates: '31.978987, -81.161760',
       portal_ids: [portal.id]
     }
   end

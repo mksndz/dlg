@@ -1,0 +1,11 @@
+<%= content_for :title do %>
+    Edit Project
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @project.title %>
+<% end %>
+
+<% breadcrumb :project, @project %>
+
+<%= render 'form' %>

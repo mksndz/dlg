@@ -12,10 +12,10 @@ Fabricator(:item) do
       Faker::Lorem.sentence(4)
     ]
   end
-  dcterms_type { [%w(StillImage Text).sample] }
+  dcterms_type { [%w[StillImage Text].sample] }
   dcterms_subject do
     [
-      %w(Athens Atlanta Augusta Macon).sample,
+      %w[Athens Atlanta Augusta Macon].sample,
       'Georgia'
     ]
   end
@@ -25,10 +25,10 @@ Fabricator(:item) do
   dcterms_spatial [
     'United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358'
   ]
-  dcterms_provenance ['DLG']
   edm_is_shown_at ['http://dlg.galileo.usg.edu']
   edm_is_shown_by ['http://dlg.galileo.usg.edu']
   fulltext { Faker::Hipster.paragraph(1) }
+  holding_institutions(count: 1)
 end
 
 Fabricator(:item_with_parents, from: :item) do
@@ -42,6 +42,7 @@ Fabricator(:item_with_parents, from: :item) do
   portals do |attrs|
     attrs[:repository].portals
   end
+  holding_institutions(count: 1)
 end
 
 Fabricator(:invalid_item) do

@@ -127,6 +127,7 @@ class ItemsController < RecordController
 
   def set_data
     @data = {}
+    @data[:holding_institutions] = HoldingInstitution.all.order(:display_name)
     @data[:collections] = Collection.all.order(:display_title)
     @data[:portals] = portals_for_form
   end
@@ -148,10 +149,10 @@ class ItemsController < RecordController
         :public,
         :local,
         :date_range,
-        :dc_right,
         :dc_relation,
         :dc_format,
         :dc_date,
+        :dc_right,
         :dcterms_is_part_of,
         :dcterms_contributor,
         :dcterms_creator,
@@ -168,11 +169,11 @@ class ItemsController < RecordController
         :dcterms_title,
         :edm_is_shown_at,
         :edm_is_shown_by,
-        :dcterms_provenance,
         :dcterms_bibliographic_citation,
         :dlg_local_right,
         :dlg_subject_personal,
         :fulltext,
+        :holding_institution_ids,
         dcterms_type: [],
         other_collections: [],
         portal_ids: []

@@ -87,7 +87,8 @@ feature 'Advanced Searching' do
       @item = Fabricate.build(
         :item,
         collection: collection,
-        portals: collection.portals
+        portals: collection.portals,
+        holding_institutions: [Fabricate(:holding_institution, display_name: 'PPPPPPPPPPPPPPP')]
       )
     end
     scenario 'title search returns only relevant results' do
@@ -235,11 +236,10 @@ feature 'Advanced Searching' do
       expect(all('.edit-record').count).to eq 1
     end
     scenario 'provenance search returns results only relevant results' do
-      @item.dcterms_provenance = ['ZZZZZZZZZZZZZZZZZZZ']
       @item.save
       Sunspot.commit
       visit blacklight_advanced_search_engine.advanced_search_path
-      fill_in 'provenance', with: 'ZZZZZZZZZZZZZZZZZZZ'
+      fill_in 'provenance', with: 'PPPPPPPPPPPPPPP'
       click_button 'Search'
       expect(all('.edit-record').count).to eq 1
     end

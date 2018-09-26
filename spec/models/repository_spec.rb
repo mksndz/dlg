@@ -13,26 +13,7 @@ RSpec.describe Repository, type: :model do
     r.valid?
     expect(r.errors).to have_key :title
   end
-  it 'requires coordinates' do
-    r = Fabricate.build(:empty_repository, coordinates: '')
-    r.valid?
-    expect(r.errors).to have_key :coordinates
-  end
-  it 'requires a properly formatted set of coordinates' do
-    r = Fabricate.build(:empty_repository, coordinates: 'A, B')
-    r.valid?
-    expect(r.errors).to have_key :coordinates
-  end
-  it 'requires a coordinates to not be a single number' do
-    r = Fabricate.build(:empty_repository, coordinates: '1.1')
-    r.valid?
-    expect(r.errors).to have_key :coordinates
-  end
-  it 'requires a coordinates with acceptable values' do
-    r = Fabricate.build(:empty_repository, coordinates: '-99, 199')
-    r.valid?
-    expect(r.errors).to have_key :coordinates
-  end
+
   it 'requires a unique slug' do
     r = Fabricate :repository
     r2 = Fabricate.build(:repository, slug: r.slug)
@@ -49,9 +30,6 @@ RSpec.describe Repository, type: :model do
     end
     it 'has a slug' do
       expect(repository.slug).not_to be_empty
-    end
-    it 'has a set of coordinates stored as a string' do
-      expect(repository.coordinates).to be_a String
     end
     context 'with associated Collections' do
       it 'can return Collections' do

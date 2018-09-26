@@ -13,6 +13,11 @@ RSpec.describe Item, type: :model do
     i.valid?
     expect(i.errors).to have_key :collection
   end
+  it 'should require a Holding Institution' do
+    i = Fabricate.build(:item, holding_institutions: [])
+    i.valid?
+    expect(i.errors).to have_key :holding_institutions
+  end
   it 'should require a dc_date value' do
     i = Fabricate.build(:item, dc_date: [])
     i.valid?
@@ -78,11 +83,6 @@ RSpec.describe Item, type: :model do
     )
     i.valid?
     expect(i.errors).not_to have_key :dlg_subject_personal
-  end
-  it 'should require a value in dcterms_provenance' do
-    i = Fabricate.build(:item, dcterms_provenance: [])
-    i.valid?
-    expect(i.errors).to have_key :dcterms_provenance
   end
   it 'should not be valid if dc_right is empty' do
     i = Fabricate.build(:item, dc_right: [])

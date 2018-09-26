@@ -5,7 +5,6 @@ RSpec.describe BatchItemsController, type: :controller do
   before(:each) { sign_in Fabricate(:super) }
   let(:batch) { Fabricate(:batch) }
   let(:collection) { Fabricate(:empty_collection) }
-  let(:portal) { Fabricate :portal }
   let(:valid_attributes) do
     {
       slug: 'test-item-slug',
@@ -17,11 +16,11 @@ RSpec.describe BatchItemsController, type: :controller do
       dc_right: I18n.t('meta.rights.zero.uri'),
       edm_is_shown_at: 'http://dlg.galileo.usg.edu',
       edm_is_shown_by: 'http://dlg.galileo.usg.edu',
-      dcterms_provenance: 'DLG',
       dcterms_subject: 'Georgia',
       collection_id: collection.id,
       batch_id: batch.id,
-      portal_ids: [Portal.last.id]
+      portal_ids: [Portal.last.id],
+      holding_institution_ids: HoldingInstitution.last.id
     }
   end
   let(:invalid_attributes) { { slug: 'invalid item slug' } }

@@ -5,6 +5,7 @@ class RecordController < ApplicationController
     dc_format
     dc_date
     dc_right
+    dcterms_type
     dcterms_is_part_of
     dcterms_contributor
     dcterms_creator
@@ -21,7 +22,6 @@ class RecordController < ApplicationController
     dcterms_title
     edm_is_shown_at
     edm_is_shown_by
-    dcterms_provenance
     dcterms_bibliographic_citation
     dlg_local_right
     dlg_subject_personal

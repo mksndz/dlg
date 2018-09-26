@@ -9,6 +9,7 @@ feature 'Batches Management' do
     before(:each) { login_as super_user, scope: :user }
     context 'with an uncommitted batch' do
       let(:batch) do
+        Fabricate(:holding_institution, display_name: 'DLG')
         Fabricate(:batch) { batch_items(count: 3) }
       end
       scenario 'can load the batch_item new form and save the record (without seeing navigation buttons)' do

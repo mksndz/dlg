@@ -9,6 +9,41 @@ en:
       last_word_connector: "<br> "
   activerecord:
     attributes:
+      project:
+        title: 'Title'
+        fiscal_year: 'Fiscal Year'
+        hosting: 'Hosting'
+        storage_used: 'Storage Used'
+        holding_institution: 'Holding Institution'
+        collection_ids: 'Collections'
+        created_at: 'Created At'
+        updated_at: 'Updated At'
+      holding_institution:
+        repository_ids: 'Repositories'
+        portal_ids: 'Portals'
+        display_name: 'Display Name'
+        short_description: 'Short Description'
+        description: 'Description'
+        image: 'Image'
+        homepage_url: 'Homepage'
+        coordinates: 'Coordinates'
+        strengths: 'Strengths'
+        contact_information: 'Contact Information'
+        institution_type: 'Type'
+        galileo_member: 'GALILEO Member?'
+        contact_name: 'Contact Name'
+        contact_email: 'Contact Email'
+        harvest_strategy: 'Harvest Strategy'
+        oai_urls: 'OAI URLs'
+        ignored_collections: 'Ignored Collections (Do Not Harvest)'
+        last_harvested_at: 'Last Harvested At'
+        analytics_emails: 'Analytics Emails'
+        subgranting: 'Subgranting Notes'
+        grant_partnerships: 'Grant Partnerships'
+        projects: 'Projects'
+        collections: 'Collections'
+        created_at: 'Created At'
+        updated_at: 'Updated At'
       fulltext_ingest:
         title: 'Title'
         description: 'Description'
@@ -18,8 +53,8 @@ en:
         queued_at: 'Queued At'
         finished_at: 'Finished'
         undone_at: 'Undone'
-        created_at: "Created At"
-        updated_at: "Updated At"
+        created_at: 'Created At'
+        updated_at: 'Updated At'
       subject:
         name: "Name"
       time_period:
@@ -52,18 +87,9 @@ en:
         slug: "Slug"
         title: "Title"
         teaser: "Teaser"
-        short_description: "Short Description"
-        description: "Description"
-        coordinates: "Coordinates"
         public: "Public"
-        thumbnail: "Thumbnail"
-        image: "Image"
-        homepage_url: "Repository Homepage URL"
         portal_ids: 'Portals'
-        directions_url: "Driving Directions URL"
-        address: "Address"
-        strengths: "Strengths"
-        contact: "Contact Information"
+        notes: "Notes (old description field)"
         created_at: "Created"
         updated_at: "Last Updated"
       collection:
@@ -153,7 +179,6 @@ en:
         dpla: "Push to DPLA"
         local: "Locally Hosted Item"
         other_collections: "Other Collections"
-        dcterms_provenance: 'Holding Institution (Use LCNAF or DLG Names for repository name)'
         dcterms_title: 'Title'
         dcterms_creator: 'Creator'
         dcterms_contributor: 'Contributor to Resource'
@@ -178,10 +203,11 @@ en:
         dcterms_extent: 'Extent'
         dcterms_language: 'Language (use ISO 639-2)'
         dcterms_identifier: 'Identifier'
+        fulltext: "Full Text"
         portal_ids: 'Portals'
+        holding_institution_ids: 'Holding Institution'
         created_at: "Created"
         updated_at: "Last Updated"
-        fulltext: "Full Text"
       batch_import:
         xml: 'XML'
         xml_text: 'XML Text'
@@ -225,16 +251,8 @@ en:
       repository:
         slug: "This is formerly known as the Repository ID"
         title: "Primary display title for the Repository"
-        teaser: "Check this if a teaser image is available"
-        short_description: "Short description for Repository lists"
-        description: "Full description for Repository main page"
+        notes: "Notes about this Repository"
         coordinates: "Must be in 'latitude, longitude' form"
-        public: "Check this to show the Repository to public users"
-        homepage_url: "URL for Repository main homepage"
-        directions_url: "URL for driving directions to physical repository location"
-        address: "Physical address of Repository"
-        strengths: "Strengths of the Items housed in the Collections of this Repository"
-        contact: "Contact information for individuals working at this Repository"
       collection:
         slug: "This is formerly known as the Collection ID"
         repository_id: "Primary Repository to which this Collection belongs"
@@ -344,7 +362,7 @@ en:
           dc_right_not_single_valued: "can only contain a single value."
         collection:
           repository: 'must be selected'
-        repository:
+        holding_institution:
           blank: 'must be provided (and in "latitude, longitude" format).'
           coordinates: 'are not in the proper format. Use "latitude, longitude".'
         portal: 'must have at least one value selected.'

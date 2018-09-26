@@ -47,21 +47,21 @@ class ApiController < ApplicationController
 
   def item_json_for(record)
     {
-        id: record.record_id,
-        display_title: record.title,
-        title: record.dcterms_title,
-        institution: record.dcterms_provenance,
-        creator: record.dcterms_creator,
-        subject: record.dcterms_subject,
-        description: record.dcterms_description,
-        url: record.edm_is_shown_at,
-        date: record.dc_date,
-        location: record.dcterms_spatial,
-        format: record.dc_format,
-        rights: record.dc_right,
-        type: record.dcterms_type,
-        orig_coll: record.dcterms_is_part_of,
-        is_shown_at: record.edm_is_shown_at
+      id: record.record_id,
+      display_title: record.title,
+      title: record.dcterms_title,
+      institution: record.dcterms_provenance,
+      creator: record.dcterms_creator,
+      subject: record.dcterms_subject,
+      description: record.dcterms_description,
+      url: record.edm_is_shown_at,
+      date: record.dc_date,
+      location: record.dcterms_spatial,
+      format: record.dc_format,
+      rights: record.dc_right,
+      type: record.dcterms_type,
+      orig_coll: record.dcterms_is_part_of,
+      is_shown_at: record.edm_is_shown_at
     }
   end
 
@@ -83,11 +83,8 @@ class ApiController < ApplicationController
       type: record.dcterms_type,
       orig_coll: record.dcterms_is_part_of,
       is_shown_at: record.edm_is_shown_at,
-      image: record.repository.image.url
+      image: record.holding_institutions.first.image.url
     }
   end
 
-  # def institution_for(record)
-  #   record.dcterms_provenance.join ', '
-  # end
 end

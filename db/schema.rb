@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180918155649) do
+ActiveRecord::Schema.define(version: 20180731190538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 20180918155649) do
     t.text     "dcterms_title",                  default: [],    null: false, array: true
     t.text     "dcterms_type",                   default: [],    null: false, array: true
     t.text     "edm_is_shown_at",                default: [],    null: false, array: true
-    t.text     "dcterms_provenance",             default: [],    null: false, array: true
     t.integer  "item_id"
     t.integer  "other_collections",              default: [],                 array: true
     t.text     "dlg_local_right",                default: [],    null: false, array: true
@@ -82,6 +81,11 @@ ActiveRecord::Schema.define(version: 20180918155649) do
   add_index "batch_items", ["other_collections"], name: "index_batch_items_on_other_collections", using: :btree
   add_index "batch_items", ["slug"], name: "index_batch_items_on_slug", using: :btree
   add_index "batch_items", ["valid_item"], name: "index_batch_items_on_valid_item", using: :btree
+
+  create_table "batch_items_holding_institutions", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "batch_item_id",          null: false
+  end
 
   create_table "batches", force: :cascade do |t|
     t.integer  "contained_count"
@@ -141,7 +145,6 @@ ActiveRecord::Schema.define(version: 20180918155649) do
     t.text      "dcterms_title",                  default: [],    null: false, array: true
     t.text      "dcterms_type",                   default: [],    null: false, array: true
     t.text      "edm_is_shown_at",                default: [],    null: false, array: true
-    t.text      "dcterms_provenance",             default: [],    null: false, array: true
     t.text      "dcterms_license",                default: [],    null: false, array: true
     t.integer   "items_count",                    default: 0
     t.text      "dcterms_bibliographic_citation", default: [],    null: false, array: true
@@ -155,6 +158,19 @@ ActiveRecord::Schema.define(version: 20180918155649) do
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree
   add_index "collections", ["slug"], name: "index_collections_on_slug", using: :btree
+
+  create_table "collections_holding_institutions", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "collection_id",          null: false
+  end
+
+  add_index "collections_holding_institutions", ["collection_id"], name: "idx_coll_hi_on_coll_id", using: :btree
+  add_index "collections_holding_institutions", ["holding_institution_id"], name: "idx_coll_hi_on_hi_id", using: :btree
+
+  create_table "collections_projects", id: false, force: :cascade do |t|
+    t.integer "project_id",    null: false
+    t.integer "collection_id", null: false
+  end
 
   create_table "collections_subjects", id: false, force: :cascade do |t|
     t.integer "collection_id", null: false
@@ -209,6 +225,45 @@ ActiveRecord::Schema.define(version: 20180918155649) do
     t.datetime "updated_at"
   end
 
+  create_table "holding_institutions", force: :cascade do |t|
+    t.string   "display_name"
+    t.text     "short_description"
+    t.text     "description"
+    t.string   "image"
+    t.string   "homepage_url"
+    t.string   "coordinates"
+    t.text     "strengths"
+    t.text     "contact_information"
+    t.string   "institution_type"
+    t.boolean  "galileo_member"
+    t.string   "contact_name"
+    t.string   "contact_email"
+    t.string   "harvest_strategy"
+    t.string   "oai_urls",            default: [], array: true
+    t.text     "ignored_collections"
+    t.datetime "last_harvested_at"
+    t.text     "analytics_emails",    default: [], array: true
+    t.text     "subgranting"
+    t.text     "grant_partnerships"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "holding_institutions", ["display_name"], name: "index_holding_institutions_on_display_name", using: :btree
+
+  create_table "holding_institutions_items", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "item_id",                null: false
+  end
+
+  add_index "holding_institutions_items", ["holding_institution_id"], name: "idx_item_hi_on_hi_id", using: :btree
+  add_index "holding_institutions_items", ["item_id"], name: "idx_item_hi_on_item_id", using: :btree
+
+  create_table "holding_institutions_repositories", id: false, force: :cascade do |t|
+    t.integer "holding_institution_id", null: false
+    t.integer "repository_id",          null: false
+  end
+
   create_table "item_versions", force: :cascade do |t|
     t.string   "item_type",  null: false
     t.integer  "item_id",    null: false
@@ -247,7 +302,6 @@ ActiveRecord::Schema.define(version: 20180918155649) do
     t.text     "dcterms_title",                  default: [],    null: false, array: true
     t.text     "dcterms_type",                   default: [],    null: false, array: true
     t.text     "edm_is_shown_at",                default: [],    null: false, array: true
-    t.text     "dcterms_provenance",             default: [],    null: false, array: true
     t.integer  "other_collections",              default: [],                 array: true
     t.text     "dlg_local_right",                default: [],    null: false, array: true
     t.boolean  "valid_item",                     default: false, null: false
@@ -281,25 +335,24 @@ ActiveRecord::Schema.define(version: 20180918155649) do
     t.text   "name"
   end
 
+  create_table "projects", force: :cascade do |t|
+    t.string   "title"
+    t.string   "fiscal_year"
+    t.string   "hosting"
+    t.integer  "storage_used"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "holding_institution_id"
+  end
+
   create_table "repositories", force: :cascade do |t|
     t.string   "slug",                              null: false
     t.boolean  "public",            default: false, null: false
     t.string   "title",                             null: false
-    t.string   "homepage_url"
-    t.string   "directions_url"
-    t.text     "short_description"
-    t.text     "description"
-    t.text     "address"
-    t.text     "strengths"
-    t.text     "contact"
+    t.text     "notes"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.boolean  "dpla",              default: false, null: false
     t.integer  "collections_count", default: 0
-    t.string   "coordinates"
-    t.boolean  "teaser"
-    t.string   "thumbnail"
-    t.string   "image"
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree

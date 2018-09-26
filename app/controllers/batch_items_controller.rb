@@ -24,8 +24,7 @@ class BatchItemsController < RecordController
 
   # GET /batch_items/1
   # GET /batch_items/1.json
-  def show
-  end
+  def show; end
 
   # GET /batch_items/new
   def new
@@ -124,6 +123,7 @@ class BatchItemsController < RecordController
   def set_data
     @data = {}
     @data[:collections] = Collection.all.order(:display_title)
+    @data[:holding_institutions] = HoldingInstitution.all.order(:display_name)
     @data[:portals] = Portal.all.order(:name)
   end
 
@@ -156,11 +156,11 @@ class BatchItemsController < RecordController
         :dcterms_title,
         :edm_is_shown_at,
         :edm_is_shown_by,
-        :dcterms_provenance,
         :dcterms_bibliographic_citation,
         :dlg_local_right,
         :dlg_subject_personal,
         :fulltext,
+        :holding_institution_ids,
         dcterms_type: [],
         other_collections: [],
         portal_ids: []

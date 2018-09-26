@@ -7,7 +7,7 @@ module CollectionValidations
     validates_presence_of :repository, message: I18n.t('activerecord.errors.messages.collection.repository')
     validates_presence_of :display_title
     validates_uniqueness_of :slug, scope: :repository_id
-    validates_presence_of :dcterms_title, :dcterms_provenance
+    validates_presence_of :dcterms_title
     validate :dcterms_temporal_characters
     validate :dcterms_type_required_value
     validate :dc_date_characters

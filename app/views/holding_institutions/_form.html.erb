@@ -1,0 +1,34 @@
+<%= bootstrap_form_for(@holding_institution) do |f| %>
+  <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Holding Institution' %>
+  <h2><%= t('meta.holding_institution.labels.public') %></h2>
+  <hr>
+  <%= f.text_field :display_name %>
+  <% if @holding_institution.image? %>
+    <label><%= t('activerecord.attributes.holding_institution.image') %></label><br>
+    <%= image_tag(@holding_institution.image.url, class: 'thumbnail') %>
+    <%= f.check_box :remove_image, label: t('meta.defaults.labels.remove_image') %>
+  <% else %>
+    <%= f.file_field :image %>
+    <%= f.hidden_field :image_cache %>
+  <% end %>
+  <%= f.text_area :short_description %>
+  <%= f.text_area :description %>
+  <%= f.text_field :homepage_url %>
+  <%= f.text_field :coordinates %>
+  <%= f.text_area :strengths %>
+  <%= f.text_area :contact_information %>
+  <h2><%= t('meta.holding_institution.labels.administrative') %></h2>
+  <hr>
+  <%= f.select :repository_ids, @data[:repositories].collect { |c| [c.title, c.id] }.unshift(''), { multiple: true }, { class: 'fancy-multiselect' } %>
+  <%= f.check_box :galileo_member %>
+  <%= f.select :institution_type, HoldingInstitutionsHelper::HOLDING_INSTITUTION_TYPES, { }, { class: 'fancy-select' } %>
+  <%= f.text_field :contact_name %>
+  <%= f.text_field :contact_email %>
+  <%= f.select :harvest_strategy, HoldingInstitutionsHelper::HARVEST_STRATEGIES %>
+  <%= meta_textarea @holding_institution, :oai_urls %>
+  <%= f.text_area :ignored_collections %>
+  <%= meta_textarea @holding_institution, :analytics_emails %>
+  <%= f.text_area :subgranting %>
+  <%= f.text_area :grant_partnerships %>
+  <%= f.primary t('meta.defaults.actions.save') %>
+<% end %>

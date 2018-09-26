@@ -10,15 +10,6 @@ feature 'Repositories Management' do
     before :each do
       login_as super_user, scope: :user
     end
-    context 'validation' do
-      scenario 'requires a coordinates value' do
-        Fabricate :empty_repository
-        visit new_repository_path
-        fill_in I18n.t('activerecord.attributes.repository.title'), with: 'Test'
-        click_on I18n.t('meta.defaults.actions.save')
-        expect(page).to have_text I18n.t('activerecord.errors.messages.repository.blank')
-      end
-    end
     context 'index page filtering' do
       scenario 'can limit to just collections from a particular portal' do
         r = Fabricate(:repository)
@@ -46,39 +37,6 @@ feature 'Repositories Management' do
         expect(page).to have_text r.title
         expect(page).to have_text r2.title
         expect(page).not_to have_text r3.title
-      end
-    end
-    context 'thumbnail behavior' do
-      let(:repository) { Fabricate :empty_repository }
-      before :each do
-        visit edit_repository_path repository
-        attach_file I18n.t('activerecord.attributes.repository.thumbnail'), Rails.root.to_s + '/spec/files/aarl.gif'
-        click_button I18n.t('meta.defaults.actions.save')
-        repository.reload
-      end
-      scenario 'uploads a thumbnail that is then displayed on the show page' do
-        expect(page.html).to include repository.thumbnail.url
-      end
-      scenario 'can remove a thumb with the checkbox' do
-        visit edit_repository_path repository
-        check I18n.t('meta.defaults.labels.remove_thumbnail')
-        click_button I18n.t('meta.defaults.actions.save')
-        expect(repository.thumbnail?).to be_falsey
-      end
-    end
-    context 'image behavior' do
-      let(:repository) { Fabricate :empty_repository }
-      before :each do
-        visit edit_repository_path repository
-      end
-      scenario 'uploads an image that is then displayed on the show page' do
-        expect(page.html).to include repository.image.url
-      end
-      scenario 'can remove a thumb with the checkbox' do
-        visit edit_repository_path repository
-        check I18n.t('meta.defaults.labels.remove_image')
-        click_button I18n.t('meta.defaults.actions.save')
-        expect(repository.thumbnail?).to be_falsey
       end
     end
     context 'portal behavior' do

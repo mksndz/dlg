@@ -6,10 +6,9 @@ class OaiSupportController < ApplicationController
   before_action :set_class, except: :deleted
 
   def dump
-    q = @class
-          .page(params[:page])
-          .per(@rows)
-          .order(id: :asc)
+    q = @class.page(params[:page])
+              .per(@rows)
+              .order(id: :asc)
     q = q.updated_since(params[:date]) if params[:date]
     q = q.includes(:collection).includes(:repository) if @class == Item
     q = q.includes(:repository) if @class == Collection
@@ -32,11 +31,10 @@ class OaiSupportController < ApplicationController
   end
 
   def deleted
-    deleted_items = ItemVersion
-                      .unscoped
-                      .where(event: 'destroy')
-                      .page(params[:page])
-                      .per(@rows)
+    deleted_items = ItemVersion.unscoped
+                               .where(event: 'destroy')
+                               .page(params[:page])
+                               .per(@rows)
     if params[:date]
       deleted_items = deleted_items.where('created_at > ?', params[:date])
     end
@@ -61,7 +59,7 @@ class OaiSupportController < ApplicationController
 
   def metadata
     @records = @class.where id: params[:ids].split(',')
-    render json: @records.to_json(include: [portals: { only: :code }])
+    render json: @records.as_json(include: [portals: { only: :code }])
   end
 
   private
@@ -72,6 +70,7 @@ class OaiSupportController < ApplicationController
 
   def set_class
     return head(:bad_request) if params[:class].nil?
+
     @class = case params[:class].downcase
              when 'item'
                Item
@@ -102,14 +101,14 @@ class OaiSupportController < ApplicationController
     end
   end
 
-  def record_id(r)
-    case r.class.name
+  def record_id(rec)
+    case rec.class.name
     when 'Item'
-      "#{r.repository.slug}_#{r.collection.slug}_#{r.slug}"
+      "#{rec.repository.slug}_#{rec.collection.slug}_#{rec.slug}"
     when 'Collection'
-      "#{r.repository.slug}_#{r.slug}"
+      "#{rec.repository.slug}_#{rec.slug}"
     when 'Repository'
-      r.slug
+      rec.slug
     else
       'ERROR'
     end

@@ -246,3 +246,33 @@ crumb :fulltext_ingest do |fulltext_ingest|
   end
   parent :fulltext_ingests
 end
+
+# PROJECTS
+
+crumb :projects do
+  link 'Projects', projects_path
+end
+
+crumb :project do |project|
+  if project.persisted?
+    link project.title
+  else
+    link 'New'
+  end
+  parent :projects
+end
+
+# HOLDING INSTITUTIONS
+
+crumb :holding_institutions do
+  link 'Holding Institutions', holding_institutions_path
+end
+
+crumb :holding_institution do |holding_institution|
+  if holding_institution.persisted?
+    link holding_institution.display_name
+  else
+    link 'New'
+  end
+  parent :holding_institutions
+end

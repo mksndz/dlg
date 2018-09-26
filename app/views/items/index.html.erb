@@ -34,10 +34,9 @@
       <%= f.select :valid_item, options_for_select(@search_options[:valid_item], selected: h(params[:valid_item])), { label: t('meta.defaults.labels.filter.valid_item') }, { name: 'valid_item' } %>
       <%= f.primary t('meta.defaults.labels.filter.filter_button') %>&nbsp;<span class="pull-right"><span class="badge"><%= @items.count %></span> records shown of <span class="badge"><%= @items.total_count %></span> total records <div class="btn-group" role="group" aria-label="Download Formats"><% if @items.total_count < 100000 %><%= link_to '<span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span> Bag TSV</a></span>'.html_safe, params.merge(format: :tsv), class: 'btn btn-primary' %> <% if @items.total_count <= 5000 %><%= link_to '<span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span> XML</a></span>'.html_safe, params.merge(format: :xml), class: 'btn btn-primary' %><% end %><% end %></div></span>
   <% end %>
-
 </div>
 
-<% if @items.length.zero? %>
+<% if @items.empty? %>
 
     <p><%= t('meta.defaults.labels.no_records_found', entity: 'Items') %></p>
 

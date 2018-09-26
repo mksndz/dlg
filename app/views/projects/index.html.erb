@@ -1,0 +1,87 @@
+<%= content_for :title do %>
+    Projects
+<% end %>
+
+<% breadcrumb :projects %>
+
+<%= link_to t('meta.project.actions.add'), new_project_path, class: 'btn btn-default' %>
+
+<%= render 'shared/per_pager' %>
+
+<br><br>
+
+<div class="well well-sm index-filter-area">
+  <%= bootstrap_form_tag url: projects_path, method: :get, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10' do |f| %>
+    <%= f.hidden_field :direction, { value: h(params[:direction]), name: 'direction' } if params[:direction] %>
+    <%= f.hidden_field :sort, { value: h(params[:sort]), name: 'sort' } if params[:sort] %>
+    <%= f.hidden_field :per_page, { value: h(params[:per_page]), name: 'per_page' } if params[:per_page] %>
+    <%= f.select :fiscal_year, options_for_select(@data[:fiscal_years], selected: h(params[:fiscal_year])), { label: 'Fiscal Year' }, { name: 'fiscal_year' } %>
+    <%= f.select :holding_institution, options_for_select(@data[:holding_institutions].collect { |hi| [hi.display_name, hi.id] }.unshift(''), selected: h(params[:holding_institution_id])), { label: 'Holding Inst' }, { name: 'holding_institution_id' } %>
+    <%= f.primary t('meta.defaults.labels.filter.filter_button') %>
+  <% end %>
+</div>
+
+<% if @projects.empty? %>
+
+    <p><%= 'No Projects Yet' %></p>
+
+<% else %>
+    <% total_storage_used = 0 %>
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'projects.id', t('meta.defaults.labels.columns.id') %>
+        </th>
+        <th>
+          <%= sortable 'projects.name', t('meta.defaults.labels.columns.name') %>
+        </th>
+        <th>
+          <%= sortable 'projects.fiscal_year', t('activerecord.attributes.project.fiscal_year') %>
+        </th>
+        <th>
+          <%= sortable 'projects.storage_used', t('activerecord.attributes.project.storage_used') %>
+        </th>
+        <th>
+          <%= sortable 'projects.holding_institution.display_name', t('activerecord.attributes.project.holding_institution') %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @projects.each do |project| %>
+        <% total_storage_used += project.storage_used if project.storage_used %>
+          <tr>
+            <td>
+              <%= link_to project.id, project_path(project) %>
+            </td>
+            <td>
+              <%= link_to project.title, project_path(project) %>
+            </td>
+            <td>
+              <%= project.fiscal_year %>
+            </td>
+            <td>
+              <%= project.storage_used %>
+            </td>
+            <td>
+              <%= project.holding_institution.display_name %>
+            </td>
+            <td>
+              <%= render partial: 'shared/entity_actions', locals: { base_path: project_path(project), edit_path: edit_project_path(project), entity: project, show_bl: false } %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <div class="displayed-projects-storage-used">
+      Displayed projects total <span class="label label-primary"><%= total_storage_used %></span> GB of used storage
+    </div>
+
+    <%= paginate @projects %>
+
+<% end %>
+
+
