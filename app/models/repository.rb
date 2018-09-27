@@ -31,7 +31,7 @@ class Repository < ActiveRecord::Base
   private
 
   def reindex_child_values
-    if slug_changed? || title_changed?
+    if slug_changed? || title_changed? || public_changed?
       queue_reindex_collections
       queue_reindex_items
     end
