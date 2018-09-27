@@ -24,7 +24,7 @@
   <%= f.select :institution_type, HoldingInstitutionsHelper::HOLDING_INSTITUTION_TYPES, { }, { class: 'fancy-select' } %>
   <%= f.text_field :contact_name %>
   <%= f.text_field :contact_email %>
-  <%= f.select :harvest_strategy, HoldingInstitutionsHelper::HARVEST_STRATEGIES %>
+  <%= f.select :harvest_strategy, HoldingInstitutionsHelper::HARVEST_STRATEGIES, { }, { class: 'fancy-select' } %>
   <%= meta_textarea @holding_institution, :oai_urls %>
   <%= f.text_area :ignored_collections %>
   <%= meta_textarea @holding_institution, :analytics_emails %>

@@ -291,6 +291,7 @@ en:
           other_repositories: 'Other Repositories'
           subjects: 'Subjects'
           time_periods: 'Time Periods'
+          xml: 'XML'
     repository:
       actions:
         add: 'New Repository'

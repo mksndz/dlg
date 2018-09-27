@@ -14,12 +14,12 @@
 
 <h2><%= t('meta.holding_institution.labels.public') %></h2>
 <hr>
-<%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.repositories'), values: @holding_institution.repositories.collect(&:title) if @holding_institution.repositories.any? %>
+<%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.repository_ids'), values: @holding_institution.repositories.any? ? @holding_institution.repositories.collect(&:title) : nil %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.display_name'), value: @holding_institution.display_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.short_description'), value: @holding_institution.short_description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.description'), value: @holding_institution.description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.image'), value: image_tag(@holding_institution.image) %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.homepage_url'), value: link_to(@holding_institution.homepage_url) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.homepage_url'), value: @holding_institution.homepage_url ? link_to(@holding_institution.homepage_url): '' %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.coordinates'), value: @holding_institution.coordinates %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.strengths'), value: @holding_institution.strengths %>
 
@@ -103,7 +103,7 @@
 <% end %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_information'), value: @holding_institution.contact_information %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_name'), value: @holding_institution.contact_name %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_email'), value: link_to(@holding_institution.contact_email) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_email'), value: mail_to(@holding_institution.contact_email) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.galileo_member'), value: @holding_institution.galileo_member %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.harvest_strategy'), value: @holding_institution.harvest_strategy %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.oai_urls'), values: @holding_institution.oai_urls %>

@@ -57,14 +57,14 @@ module ApplicationHelper
   end
 
   def controlled_vocabulary_select(entity, field, values, multiple)
-    id = "#{field.to_s.gsub('_', '-')}-select#{'-multiple' if multiple}"
+    id = "#{field.to_s.tr('_', '-')}-select#{'-multiple' if multiple}"
     klass = entity.class.name.demodulize.underscore
     html = '<div class="form-group">'
     html += meta_textarea_label klass, field
     html += select(
-        klass, field, values,
-        { include_blank: true },
-        { class: 'form-control', id: id, multiple: multiple }
+      klass, field, values,
+      { include_blank: true },
+      { class: 'form-control', id: id, multiple: multiple }
     )
     html += '</div>'
     html.html_safe

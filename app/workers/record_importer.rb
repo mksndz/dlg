@@ -256,7 +256,7 @@ class RecordImporter
       else
         raise(
           StandardError,
-          "Could not find Holding Institution for '#{holding_institution_name}'."
+          "Could not find Holding Institution for '#{holding_institution_name}'"
         )
       end
     end

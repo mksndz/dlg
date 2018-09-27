@@ -74,9 +74,9 @@
 <a name="xml"></a>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <strong><%= t('meta.collection.actions.item_xml')%></strong><%= link_to 'Select All', '#xml', { data: { container_id: 'record_xml', turbolinks: false }, class: 'select-element-text btn btn-xs btn-primary pull-right' } %>
+    <strong><%= t('meta.collection.labels.view.xml')%></strong><%= link_to 'Select All', '#xml', { data: { container_id: 'record_xml', turbolinks: false }, class: 'select-element-text btn btn-xs btn-primary pull-right' } %>
   </div>
   <div class="panel-body">
-    <pre id="record_xml"><%= @collection.to_xml({show_repository: true}) %></pre>
+    <pre id="record_xml"><%= @collection.to_xml({ show_provenance: true, show_repository: true }) %></pre>
   </div>
 </div>

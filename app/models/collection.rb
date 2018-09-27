@@ -221,12 +221,15 @@ class Collection < ActiveRecord::Base
   def to_xml(options = {})
     default_options = {
       dasherize: false,
-      methods: :dcterms_provenance,
       except: %i[id repository_id created_at updated_at other_repositories
                  items_count date_range]
     }
     if options[:show_repository]
       default_options[:include] = [repository: { only: [:slug] }]
+    end
+    if options[:show_provenance]
+      default_options[:methods] ||= []
+      default_options[:methods] << :dcterms_provenance
     end
     super(options.merge!(default_options))
   end

@@ -15,8 +15,8 @@
     <%= f.hidden_field :direction, { value: h(params[:direction]), name: 'direction' } if params[:direction] %>
     <%= f.hidden_field :sort, { value: h(params[:sort]), name: 'sort' } if params[:sort] %>
     <%= f.hidden_field :per_page, { value: h(params[:per_page]), name: 'per_page' } if params[:per_page] %>
-    <%= f.select :fiscal_year, options_for_select(@data[:fiscal_years], selected: h(params[:fiscal_year])), { label: 'Fiscal Year' }, { name: 'fiscal_year' } %>
-    <%= f.select :holding_institution, options_for_select(@data[:holding_institutions].collect { |hi| [hi.display_name, hi.id] }.unshift(''), selected: h(params[:holding_institution_id])), { label: 'Holding Inst' }, { name: 'holding_institution_id' } %>
+    <%= f.select :fiscal_year, options_for_select(@data[:fiscal_years], selected: h(params[:fiscal_year])), { label: 'Fiscal Year' }, { name: 'fiscal_year', class: 'fancy-select' } %>
+    <%= f.select :holding_institution, options_for_select(@data[:holding_institutions].collect { |hi| [hi.display_name, hi.id] }.unshift(''), selected: h(params[:holding_institution_id])), { label: 'Holding Inst' }, { name: 'holding_institution_id', class: 'fancy-select' } %>
     <%= f.primary t('meta.defaults.labels.filter.filter_button') %>
   <% end %>
 </div>

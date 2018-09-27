@@ -3,10 +3,12 @@
     <strong><%= field_name %></strong>
   </div>
   <div class="panel-body">
+    <% if values %>
     <ul>
       <% values.each do |v| %>
           <li><%= v %></li>
       <% end %>
     </ul>
+    <% end %>
   </div>
 </div>

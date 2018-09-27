@@ -164,13 +164,13 @@ class Item < ActiveRecord::Base
       dasherize: false,
       except: %i[collection_id record_id other_collections valid_item
                  has_thumbnail created_at updated_at fulltext],
-      methods: :dcterms_provenance,
+      methods: [:dcterms_provenance],
       include: {
         other_colls: {
           skip_types: true,
           only: [:record_id]
         },
-        collection: { only: [:record_id] },
+        collection: { only: :record_id },
         portals: { only: [:code] }
       }
     }

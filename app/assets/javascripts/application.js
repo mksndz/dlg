@@ -33,10 +33,10 @@ Blacklight.onLoad(function() {
     $('select#dcterms-type-select-multiple').chosen({
         allow_single_deselect: true
     });
-    $('select#dcterms-provenance-select-item').chosen({
+    $('select#holding-institution-ids-select').chosen({
         search_contains: true
     });
-    $('select#dcterms-provenance-select-collection').chosen({
+    $('select#holding-institution-ids-select-multiple').chosen({
         search_contains: true
     });
     $('select.collection-select').chosen();
