@@ -65,7 +65,6 @@ class SimplifyRepository < ActiveRecord::Migration
       t.string 'coordinates'
       t.boolean 'teaser'
       t.string 'thumbnail'
-      t.string 'image'
     end
   end
 end
