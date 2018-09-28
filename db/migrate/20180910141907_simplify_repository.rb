@@ -2,6 +2,7 @@
 class SimplifyRepository < ActiveRecord::Migration
   def up
     HoldingInstitution.delete_all
+    ActiveRecord::Base.connection.reset_pk_sequence!('holding_institutions')
     # convert repos to holding institution prior to changing table
     Repository.all.each do |r|
       hi = HoldingInstitution.new
@@ -21,13 +22,17 @@ class SimplifyRepository < ActiveRecord::Migration
     # also set collection -> hi relations at this time
     Collection.all.each do |c|
       c.dcterms_provenance.each do |p|
-        next if HoldingInstitution.find_by_display_name(p)
+        ehi = HoldingInstitution.find_by_display_name(p)
+        if ehi
+          c.holding_institutions << ehi
+          next
+        end
         hi = HoldingInstitution.new
         hi.display_name = p
         hi.save(validate: false)
         c.holding_institutions << hi
-        c.save(validate: false)
       end
+      c.save(validate: false)
     end
 
     # remove tables no longer needed on repo model
