@@ -17,7 +17,7 @@
 <%= render 'shared/show_field', field_name: t(:portal_ids,        scope: [:activerecord, :attributes, :repository]), value: portals_list(@repository) %>
 <%= render 'shared/show_field', field_name: t(:public,            scope: [:activerecord, :attributes, :repository]), value: @repository.public %>
 <%= render 'shared/show_field', field_name: t(:title,             scope: [:activerecord, :attributes, :repository]), value: @repository.title %>
-<%= render 'shared/show_field', field_name: t(:notes,       scope: [:activerecord, :attributes, :repository]), value: @repository.notes %>
+<%#= render 'shared/show_field', field_name: t(:notes,       scope: [:activerecord, :attributes, :repository]), value: @repository.notes %>
 <%= render 'shared/show_field', field_name: t(:created_at,        scope: [:activerecord, :attributes, :repository]), value: @repository.created_at %>
 <%= render 'shared/show_field', field_name: t(:updated_at,        scope: [:activerecord, :attributes, :repository]), value: @repository.updated_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.image'), value: image_tag(@repository.image) %>
