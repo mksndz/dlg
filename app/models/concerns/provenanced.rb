@@ -9,9 +9,10 @@ module Provenanced
     validates_presence_of :holding_institutions
   end
 
-  # for backwards compatibility
-  def legacy_dcterms_provenance
-    dcterms_provenance
+  def dcterms_provenance
+    # todo: when everything is ready...
+    # holding_institution_names
+    legacy_dcterms_provenance
   end
 
   def holding_institution_names
