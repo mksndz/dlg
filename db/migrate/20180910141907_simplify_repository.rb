@@ -12,7 +12,7 @@ class SimplifyRepository < ActiveRecord::Migration
       hi.contact_information = r.contact
       hi.homepage_url = r.homepage_url
       hi.strengths = r.strengths
-      hi.image = File.open(r.image.current_path)
+      hi.image = r.image.file unless r.image.file.nil?
       hi.coordinates = r.coordinates
       hi.save(validate: false)
     end
