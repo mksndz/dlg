@@ -21,17 +21,21 @@ class SimplifyRepository < ActiveRecord::Migration
     # create stub holding institutions from collection provenance values
     # also set collection -> hi relations at this time
     Collection.all.each do |c|
+      puts "Updating #{p.slug}"
       c.dcterms_provenance.each do |p|
         ehi = HoldingInstitution.find_by_display_name(p)
         if ehi
+          puts "Adding #{ehi.display_name}"
           c.holding_institutions << ehi
           next
         end
+        puts "Creating #{p}"
         hi = HoldingInstitution.new
         hi.display_name = p
         hi.save(validate: false)
         c.holding_institutions << hi
       end
+      puts "Saving #{p.slug}"
       c.save(validate: false)
     end
 
@@ -45,7 +49,6 @@ class SimplifyRepository < ActiveRecord::Migration
       t.remove :strengths
       t.remove :contact
       t.remove :coordinates
-      t.remove :image
       t.remove :thumbnail
       t.remove :dpla
       t.remove :teaser
