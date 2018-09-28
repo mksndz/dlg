@@ -21,19 +21,31 @@ class SimplifyRepository < ActiveRecord::Migration
     # also set collection -> hi relations at this time
     Collection.all.each do |c|
       has_his = false
+      puts "Considering Collection #{c.slug}"
+      puts "Collection Provenance values: #{c.legacy_dcterms_provenance}"
       c.legacy_dcterms_provenance.each do |p|
         has_his = true
         ehi = HoldingInstitution.find_by_display_name(p)
         if ehi
+          puts "Existing HI Entity for #{p}"
           c.holding_institutions << ehi
           next
         end
+        puts "No HI Entity for #{p}. Will create."
         hi = HoldingInstitution.new
         hi.display_name = p
         hi.save(validate: false)
         c.holding_institutions << hi
       end
-      c.save(validate: false) if has_his
+      if has_his
+        puts "Saving #{c.slug}"
+        if c.save(validate: false)
+          puts "#{c.slug} saved OK"
+        else
+          puts "#{c.slug} error on save: #{c.errors}"
+        end
+      end
+
     end
 
     # remove tables no longer needed on repo model
