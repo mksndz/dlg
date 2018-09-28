@@ -10,8 +10,8 @@ module Provenanced
   end
 
   # for backwards compatibility
-  def dcterms_provenance
-    holding_institution_names
+  def legacy_dcterms_provenance
+    dcterms_provenance
   end
 
   def holding_institution_names
