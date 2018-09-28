@@ -21,7 +21,7 @@ class SimplifyRepository < ActiveRecord::Migration
     # create stub holding institutions from collection provenance values
     # also set collection -> hi relations at this time
     Collection.all.each do |c|
-      puts "Updating #{p.slug}"
+      puts "Updating #{c.slug}"
       c.dcterms_provenance.each do |p|
         ehi = HoldingInstitution.find_by_display_name(p)
         if ehi
