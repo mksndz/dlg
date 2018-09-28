@@ -205,9 +205,17 @@ class Collection < ActiveRecord::Base
     end
 
     string :image, stored: true do
-      holding_institutions.first.image.url
+      holding_institution_image
     end
 
+  end
+
+  def holding_institution_image
+    if holding_institutions.any?
+      holding_institutions.first.image.url
+    else
+      "http://dlg.galileo.usg.edu/do-th:#{repository.slug}"
+    end
   end
 
   def repository_title
