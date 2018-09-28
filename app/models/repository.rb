@@ -9,6 +9,8 @@ class Repository < ActiveRecord::Base
   has_many :items, through: :collections
   has_and_belongs_to_many :users
 
+  mount_uploader :image, ImageUploader
+
   scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
 
   after_update :reindex_child_values
