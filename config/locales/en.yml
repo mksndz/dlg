@@ -94,7 +94,7 @@ en:
         updated_at: "Last Updated"
       collection:
         slug: "Slug"
-        thumbnail: "Thumbnail (from Repository)"
+        thumbnail: "Thumbnail (from Holding Institution)"
         repository_id: "Repository"
         display_title: "Display Title"
         short_description: "Short Description"
