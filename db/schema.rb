@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180918155649) do
+ActiveRecord::Schema.define(version: 20180928224514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20180918155649) do
     t.text     "dcterms_title",                  default: [],    null: false, array: true
     t.text     "dcterms_type",                   default: [],    null: false, array: true
     t.text     "edm_is_shown_at",                default: [],    null: false, array: true
+    t.text     "legacy_dcterms_provenance",      default: [],    null: false, array: true
     t.integer  "item_id"
     t.integer  "other_collections",              default: [],                 array: true
     t.text     "dlg_local_right",                default: [],    null: false, array: true
@@ -145,6 +146,7 @@ ActiveRecord::Schema.define(version: 20180918155649) do
     t.text      "dcterms_title",                  default: [],    null: false, array: true
     t.text      "dcterms_type",                   default: [],    null: false, array: true
     t.text      "edm_is_shown_at",                default: [],    null: false, array: true
+    t.text      "legacy_dcterms_provenance",      default: [],    null: false, array: true
     t.text      "dcterms_license",                default: [],    null: false, array: true
     t.integer   "items_count",                    default: 0
     t.text      "dcterms_bibliographic_citation", default: [],    null: false, array: true
@@ -302,6 +304,7 @@ ActiveRecord::Schema.define(version: 20180918155649) do
     t.text     "dcterms_title",                  default: [],    null: false, array: true
     t.text     "dcterms_type",                   default: [],    null: false, array: true
     t.text     "edm_is_shown_at",                default: [],    null: false, array: true
+    t.text     "legacy_dcterms_provenance",      default: [],    null: false, array: true
     t.integer  "other_collections",              default: [],                 array: true
     t.text     "dlg_local_right",                default: [],    null: false, array: true
     t.boolean  "valid_item",                     default: false, null: false
@@ -353,6 +356,7 @@ ActiveRecord::Schema.define(version: 20180918155649) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.integer  "collections_count", default: 0
+    t.string   "image"
   end
 
   add_index "repositories", ["slug"], name: "index_repositories_on_slug", unique: true, using: :btree
