@@ -107,8 +107,8 @@ en:
         homepage_text: 'DLG Homepage Text'
         subject_ids: "Topics"
         time_period_ids: "Time Periods"
-        holding_institution_ids: 'Holding Institution'
-        dcterms_provenance: 'Holding Institution'
+        holding_institution_ids: 'Holding Institutions'
+        dcterms_provenance: 'Holding Institutions'
         dcterms_title: 'Title'
         dcterms_creator: 'Creator'
         dcterms_contributor: 'Contributor to Resource'
@@ -140,8 +140,8 @@ en:
         slug: "Item ID"
         record_id: "Record ID"
         collection_id: "Collection"
-        holding_institution_ids: 'Holding Institution'
-        dcterms_provenance: 'Holding Institution'
+        holding_institution_ids: 'Holding Institutions'
+        dcterms_provenance: 'Holding Institutions'
         legacy_dcterms_provenance: '(Legacy) Holding Institution'
         public: "Public"
         dpla: "Push to DPLA"
