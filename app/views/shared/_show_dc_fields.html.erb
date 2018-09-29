@@ -1,6 +1,7 @@
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.item.dcterms_title'), values: entity.dcterms_title %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.item.dcterms_creator'), values: entity.dcterms_creator %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.item.dcterms_provenance'), values: entity.dcterms_provenance %>
+<%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.item.legacy_dcterms_provenance'), values: entity.legacy_dcterms_provenance %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.item.dcterms_contributor'), values: entity.dcterms_contributor %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.item.dcterms_subject'), values: entity.dcterms_subject %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.item.dlg_subject_personal'), values: entity.dlg_subject_personal %>

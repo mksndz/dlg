@@ -142,6 +142,7 @@ en:
         collection_id: "Collection"
         holding_institution_ids: 'Holding Institution'
         dcterms_provenance: 'Holding Institution'
+        legacy_dcterms_provenance: '(Legacy) Holding Institution'
         public: "Public"
         dpla: "Push to DPLA"
         local: "Locally Hosted Item"
