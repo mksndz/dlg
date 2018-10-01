@@ -163,7 +163,8 @@ class Item < ActiveRecord::Base
     new_options = {
       dasherize: false,
       except: %i[collection_id record_id other_collections valid_item
-                 has_thumbnail created_at updated_at fulltext],
+                 has_thumbnail created_at updated_at fulltext
+                 legacy_dcterms_provenance],
       methods: [:dcterms_provenance],
       include: {
         other_colls: {
@@ -178,7 +179,10 @@ class Item < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    new_options = { methods: :dcterms_provenance }
+    new_options = {
+      except: :legacy_dcterms_provenance,
+      methods: :dcterms_provenance
+    }
     super(options.merge!(new_options))
   end
 

@@ -29,6 +29,9 @@ Fabricator(:item) do
   edm_is_shown_by ['http://dlg.galileo.usg.edu']
   fulltext { Faker::Hipster.paragraph(1) }
   holding_institutions(count: 1)
+  legacy_dcterms_provenance do |attrs|
+    attrs[:holding_institutions].collect(&:display_name)
+  end
 end
 
 Fabricator(:item_with_parents, from: :item) do

@@ -10,6 +10,10 @@ task :provenance_migrator, [:collection_record_id] => :environment do |t, args|
     next
   end
   collection.items.find_each do |i|
+    if i.holding_institutions.any?
+      logger.error "Item #{i.record_id} in #{collection.record_id} already has HI values!"
+      next
+    end
     i.legacy_dcterms_provenance.each do |lp|
       hi = HoldingInstitution.find_by_display_name lp
       unless hi

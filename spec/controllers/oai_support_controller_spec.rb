@@ -143,9 +143,16 @@ RSpec.describe OaiSupportController, type: :controller do
       it 'response to contain portal code' do
         expect(@record_hash['portals'][0]).to have_key 'code'
       end
-      it 'contains dcterms_provenance fields corresponding to holding_institutions' do
+      # TODO: re-enable after HI values are set
+      # it 'contains dcterms_provenance fields corresponding to holding_institutions' do
+      #   expect(@record_hash).to have_key 'dcterms_provenance'
+      #   expect(@record_hash['dcterms_provenance']).to include @item.holding_institution.display_name
+      # end
+      it 'has a dcterms_provenance value' do
         expect(@record_hash).to have_key 'dcterms_provenance'
-        expect(@record_hash['dcterms_provenance']).to include @item.holding_institution.display_name
+      end
+      it 'does not have a legacy_dcterms_provenance value' do
+        expect(@record_hash).not_to have_key 'legacy_dcterms_provenance'
       end
     end
     it 'returns nothing for a record where there is no ID match' do
