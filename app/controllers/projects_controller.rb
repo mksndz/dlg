@@ -12,6 +12,7 @@ class ProjectsController < ApplicationController
     @projects = Project.index_query(params)
                        .order(sort_column + ' ' + sort_direction)
                        .page(params[:page])
+                       .per(params[:per_page])
   end
 
   # GET /projects/1

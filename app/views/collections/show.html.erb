@@ -18,7 +18,7 @@
 <br><br>
 
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.repository_id'), value: @collection.repository.title %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.thumbnail'), value: image_tag(@collection.holding_institutions.first.image.url) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.thumbnail'), value: image_tag(@collection.holding_institution_image) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.portal_ids'), value: portals_list(@collection) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.slug'), value: @collection.slug %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.display_title'), value: @collection.display_title %>
