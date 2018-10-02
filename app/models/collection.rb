@@ -123,6 +123,10 @@ class Collection < ActiveRecord::Base
     string :dcterms_extent,                 as: 'dcterms_extent_display',                 multiple: true
     string :dcterms_language,               as: 'dcterms_language_display',               multiple: true
 
+    # Temporary
+    # TODO
+    string :holding_institution_names,      as: 'new_dcterms_provenance_display',         multiple: true
+
     # special collection-only fields
     string :collection_provenance_facet, multiple: true, as: 'collection_provenance_facet' do
       holding_institution_names
