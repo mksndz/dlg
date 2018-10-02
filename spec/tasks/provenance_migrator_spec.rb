@@ -7,14 +7,13 @@ describe 'migrates provenance values' do
     Rake::Task.define_task :environment
   end
   it 'should add holding institution relations based on legacy provenance data' do
-    repo = Fabricate :repository
-    coll = repo.collections.last
+    coll = Fabricate :empty_collection
     Fabricate(:holding_institution, display_name: 'Value 1')
     Fabricate(:holding_institution, display_name: 'Value 2')
     item = Fabricate.build(
       :item,
       collection: coll,
-      portals: repo.portals,
+      portals: coll.portals,
       holding_institutions: [],
       legacy_dcterms_provenance: ['Value 1', 'Value 2', 'Bad Value']
     )
@@ -26,14 +25,13 @@ describe 'migrates provenance values' do
     expect(item.holding_institution_names).to include 'Value 2'
     expect(item.holding_institution_names).not_to include 'Bad Value'
   end
-  it 'skips collection items that already have HI values' do
-    repo = Fabricate :repository
-    coll = repo.collections.last
+  it 'skips collections where items already have HI values' do
+    coll = Fabricate :empty_collection
     hi = Fabricate(:holding_institution, display_name: 'Value 1')
     item = Fabricate.build(
       :item,
       collection: coll,
-      portals: repo.portals,
+      portals: coll.portals,
       holding_institutions: [hi],
       legacy_dcterms_provenance: ['Value 1', 'Value 2', 'Bad Value']
     )
