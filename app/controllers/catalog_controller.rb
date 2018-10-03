@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 # main blacklight controller
 class CatalogController < ApplicationController
   include Blacklight::Catalog
@@ -108,6 +107,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_temporal_display',               label: I18n.t('meta.search.labels.dcterms_temporal')
     config.add_show_field 'dcterms_spatial_display',                label: I18n.t('meta.search.labels.dcterms_spatial'), link_to_search: :location_facet
     config.add_show_field 'dcterms_provenance_display',             label: I18n.t('meta.search.labels.dcterms_provenance')
+    config.add_show_field 'new_dcterms_provenance_display',         label: 'New Provenance'
     config.add_show_field 'dcterms_subject_display',                label: I18n.t('meta.search.labels.dcterms_subject'), link_to_search: :subject_facet
     config.add_show_field 'dcterms_type_display',                   label: I18n.t('meta.search.labels.dcterms_type')
     config.add_show_field 'dcterms_creator_display',                label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
