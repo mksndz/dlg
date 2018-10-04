@@ -71,11 +71,11 @@ RSpec.describe HoldingInstitution, type: :model do
       holding_institution.valid?
       expect(holding_institution.errors).to have_key :display_name
     end
-    it 'requires an institution_type' do
-      holding_institution = Fabricate.build(:holding_institution, institution_type: nil)
-      holding_institution.valid?
-      expect(holding_institution.errors).to have_key :institution_type
-    end
+    # it 'requires an institution_type' do
+    #   holding_institution = Fabricate.build(:holding_institution, institution_type: nil)
+    #   holding_institution.valid?
+    #   expect(holding_institution.errors).to have_key :institution_type
+    # end
     it 'requires a properly formatted set of coordinates' do
       holding_institution = Fabricate.build(:holding_institution, coordinates: 'A, B')
       holding_institution.valid?
