@@ -140,7 +140,7 @@ class RecordImporter
           num,
           @record.errors,
           safe_record_slug
-        ) # todo how best to write these errors to hash? could contain multiple validation messages
+        )
       end
     rescue ActiveRecord::RecordInvalid => e
       add_failed(
