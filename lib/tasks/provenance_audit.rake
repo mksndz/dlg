@@ -7,8 +7,14 @@ task provenance_audit: :environment do |t, args|
     n += 1
     legacy = i.legacy_dcterms_provenance
     newnew = i.holding_institution_names
-    if legacy != newnew
+    if legacy.sort != newnew.sort
       logger.warn "Mismatch on #{i.record_id}: \n Legacy: #{legacy}\n New:   #{newnew}"
+    end
+    if newnew.uniq != newnew
+      logger.warn "Suspected duplicate HI for #{i.record_id}: #{newnew}"
+    end
+    if legacy.empty? && newnew.empty?
+      logger.warn "No HI values anywhere for #{i.record_id}"
     end
     puts n
   end
