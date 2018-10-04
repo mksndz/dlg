@@ -97,7 +97,7 @@ class Collection < ActiveRecord::Base
     string :short_description, stored: true, as: 'short_description_display'
 
     # *_display (not indexed, stored, multivalued)
-    string :legacy_dcterms_provenance,      as: 'dcterms_provenance_display',             multiple: true
+    string :dcterms_provenance,             as: 'dcterms_provenance_display',             multiple: true
     string :dcterms_type,                   as: 'dcterms_type_display',                   multiple: true
     string :dcterms_spatial,                as: 'dcterms_spatial_display',                multiple: true
     string :dcterms_title,                  as: 'dcterms_title_display',                  multiple: true
@@ -122,10 +122,6 @@ class Collection < ActiveRecord::Base
     string :dcterms_medium,                 as: 'dcterms_medium_display',                 multiple: true
     string :dcterms_extent,                 as: 'dcterms_extent_display',                 multiple: true
     string :dcterms_language,               as: 'dcterms_language_display',               multiple: true
-
-    # Temporary
-    # TODO
-    string :holding_institution_names,      as: 'new_dcterms_provenance_display',         multiple: true
 
     # special collection-only fields
     string :collection_provenance_facet, multiple: true, as: 'collection_provenance_facet' do

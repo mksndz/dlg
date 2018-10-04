@@ -10,9 +10,7 @@ module Provenanced
   end
 
   def dcterms_provenance
-    # todo: when everything is ready...
-    # holding_institution_names
-    legacy_dcterms_provenance
+    holding_institution_names
   end
 
   def holding_institution_names
@@ -21,6 +19,6 @@ module Provenanced
 
   # convenience method for Items
   def holding_institution
-    holding_institutions.first
+    holding_institutions.first if holding_institutions.any?
   end
 end

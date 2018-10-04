@@ -80,10 +80,6 @@ class Item < ActiveRecord::Base
     string :dcterms_extent,                 as: 'dcterms_extent_display',                 multiple: true
     string :dcterms_language,               as: 'dcterms_language_display',               multiple: true
 
-    # Temporary
-    # TODO
-    string :holding_institution_names,      as: 'new_dcterms_provenance_display',         multiple: true
-
     # Primary Search Fields (multivalued, indexed, stemming/tokenized)
     text :dc_date
     text :dcterms_title
