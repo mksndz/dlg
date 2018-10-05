@@ -52,12 +52,18 @@ class HoldingInstitution < ActiveRecord::Base
   def reindex_child_values
     collection_queued = false
     if display_name_changed?
+      mark_children_updated
       queue_reindex_collections
       queue_reindex_items
       collection_queued = true
     end
     queue_reindex_collections if image_changed? && !collection_queued
     true
+  end
+
+  def mark_children_updated
+    items.update_all(updated_at: updated_at) if items.any?
+    collections.update_all(updated_at: updated_at) if collections.any?
   end
 
   def queue_reindex_collections
