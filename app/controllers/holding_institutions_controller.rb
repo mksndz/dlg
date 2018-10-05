@@ -60,13 +60,12 @@ class HoldingInstitutionsController < ApplicationController
       params
         .require(:holding_institution)
         .permit(:display_name, :short_description, :description,
-                :repository_ids, :homepage_url, :coordinates, :strengths,
+                :homepage_url, :coordinates, :strengths,
                 :contact_information, :galileo_member, :institution_type,
                 :contact_name, :contact_email, :harvest_strategy, :oai_urls,
                 :ignored_collections, :analytics_emails, :subgranting,
                 :grant_partnerships, :image, :remove_image, :image_cache,
-                portal_ids: []
-        )
+                repository_ids: [])
     )
   end
 

@@ -19,7 +19,7 @@
   <%= f.text_area :contact_information %>
   <h2><%= t('meta.holding_institution.labels.administrative') %></h2>
   <hr>
-  <%= f.select :repository_ids, @data[:repositories].collect { |c| [c.title, c.id] }.unshift(''), { multiple: true }, { class: 'fancy-multiselect' } %>
+  <%= f.select :repository_ids, @data[:repositories].collect { |c| [c.title, c.id] }.unshift(''), { include_blank: true }, { multiple: true, class: 'fancy-multiselect' } %>
   <%= f.check_box :galileo_member %>
   <%= f.select :institution_type, HoldingInstitutionsHelper::HOLDING_INSTITUTION_TYPES, { }, { class: 'fancy-select' } %>
   <%= f.text_field :contact_name %>
