@@ -13,7 +13,8 @@ class HoldingInstitution < ActiveRecord::Base
   before_destroy :confirm_unassigned
   after_update :reindex_child_values
 
-  validates_presence_of :display_name, :institution_type
+  validates_presence_of :display_name
+  # validates_presence_of :institution_type # TODO: after HI migration cleanup is complete
   validates_uniqueness_of :display_name
   validate :coordinates_format
 
