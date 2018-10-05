@@ -15,7 +15,7 @@ RSpec.describe ItemsController, type: :controller do
       dcterms_subject: 'Georgia',
       collection_id: Fabricate(:empty_collection).id,
       portal_ids: [Portal.last.id],
-      holding_institution_ids: HoldingInstitution.last.id
+      holding_institution_ids: [HoldingInstitution.last.id]
     }
   end
   let(:invalid_attributes) { { slug: 'invalid item slug' } }

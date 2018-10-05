@@ -20,7 +20,7 @@ RSpec.describe BatchItemsController, type: :controller do
       collection_id: collection.id,
       batch_id: batch.id,
       portal_ids: [Portal.last.id],
-      holding_institution_ids: HoldingInstitution.last.id
+      holding_institution_ids: [HoldingInstitution.last.id]
     }
   end
   let(:invalid_attributes) { { slug: 'invalid item slug' } }

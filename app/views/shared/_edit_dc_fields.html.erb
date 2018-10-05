@@ -2,7 +2,7 @@
 <%= controlled_vocabulary_select(
       entity, :holding_institution_ids,
       HoldingInstitution.all.collect { |hi| [hi.display_name, hi.id] },
-      entity.class == Collection
+      true
     )
 %>
 <a name="dcterms_title"></a>
