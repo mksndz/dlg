@@ -11,7 +11,8 @@ task provenance_audit: :environment do |t, args|
       logger.warn "Mismatch on #{i.record_id}: \n Legacy: #{legacy}\n New:   #{newnew}"
     end
     if newnew.uniq != newnew
-      logger.warn "Suspected duplicate HI for #{i.record_id}: #{newnew}"
+      logger.warn "Removing duplicate HI for #{i.record_id}: #{newnew}"
+      i.holding_institution_ids = i.holding_institution_ids.uniq
     end
     if legacy.empty? && newnew.empty?
       logger.warn "No HI values anywhere for #{i.record_id}"
