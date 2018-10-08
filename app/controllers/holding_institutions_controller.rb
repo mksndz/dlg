@@ -4,7 +4,7 @@ class HoldingInstitutionsController < ApplicationController
   include ErrorHandling
   include Sorting
 
-  MULTIVALUED_TEXT_FIELDS = %w[oai_url analytics_emails].freeze
+  MULTIVALUED_TEXT_FIELDS = %w[oai_urls analytics_emails].freeze
 
   before_action :set_data, only: %i[index new create edit update]
 
