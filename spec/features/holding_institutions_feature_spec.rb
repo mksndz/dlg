@@ -20,6 +20,15 @@ feature 'Holding Institution management' do
         expect(page).to have_link I18n.t('meta.defaults.actions.edit')
         expect(page).to have_link I18n.t('meta.defaults.actions.destroy')
       end
+      scenario 'deleting a holding institution still in use shows an error message', js: true do
+        Fabricate(:empty_collection, holding_institutions: [holding_institution])
+        visit holding_institutions_path
+        click_on I18n.t('meta.defaults.actions.destroy')
+        page.accept_confirm do
+          'Yes'
+        end
+        expect(page).to have_text 'Cannot delete Holding Institution as it remains assigned to'
+      end
     end
     context 'show page' do
       it 'displays all record information' do

@@ -1,3 +1,4 @@
+# actions for CRUD on Holding Institutions
 class HoldingInstitutionsController < ApplicationController
   load_and_authorize_resource
   include HoldingInstitutionsHelper
@@ -7,6 +8,10 @@ class HoldingInstitutionsController < ApplicationController
   MULTIVALUED_TEXT_FIELDS = %w[oai_urls analytics_emails].freeze
 
   before_action :set_data, only: %i[index new create edit update]
+
+  rescue_from HoldingInstitutionInUseError do |exception|
+    redirect_to({ action: 'index' }, alert: exception.message)
+  end
 
   # GET /holding_institutions
   def index
