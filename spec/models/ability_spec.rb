@@ -91,6 +91,19 @@ RSpec.describe Ability, type: :model do
     it 'cannot manage Projects' do
       is_expected.not_to be_able_to :manage, Project
     end
+    context 'Holding Institutions' do
+      let(:holding_institution) { Fabricate :holding_institution }
+      it 'can view Holding Institution info' do
+        is_expected.to be_able_to :index, HoldingInstitution
+        is_expected.to be_able_to :show, holding_institution
+      end
+      it 'cannot modify Holding Institutions' do
+        is_expected.not_to be_able_to :edit, holding_institution
+        is_expected.not_to be_able_to :update, holding_institution
+        is_expected.not_to be_able_to :destroy, holding_institution
+      end
+    end
+
     context 'with Repository assigned' do
       let(:repository) { Fabricate(:repository) }
       let(:other_item) { Fabricate(:repository).items.first }
