@@ -88,9 +88,6 @@ RSpec.describe Ability, type: :model do
     it 'cannot do fulltext ingests' do
       is_expected.not_to be_able_to :manage, FulltextIngest
     end
-    it 'cannot manage Projects' do
-      is_expected.not_to be_able_to :manage, Project
-    end
     context 'Holding Institutions' do
       let(:holding_institution) { Fabricate :holding_institution }
       it 'can view Holding Institution info' do
@@ -101,6 +98,18 @@ RSpec.describe Ability, type: :model do
         is_expected.not_to be_able_to :edit, holding_institution
         is_expected.not_to be_able_to :update, holding_institution
         is_expected.not_to be_able_to :destroy, holding_institution
+      end
+    end
+    context 'Projects' do
+      let(:project) { Fabricate :project }
+      it 'can view Project info' do
+        is_expected.to be_able_to :index, Project
+        is_expected.to be_able_to :show, project
+      end
+      it 'cannot modify a Project' do
+        is_expected.not_to be_able_to :edit, project
+        is_expected.not_to be_able_to :update, project
+        is_expected.not_to be_able_to :destroy, project
       end
     end
 

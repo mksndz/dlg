@@ -103,6 +103,7 @@ class Ability
     end
 
     can [:index, :show], HoldingInstitution
+    can [:index, :show], Project
 
     can [:show, :edit, :create, :update, :destroy], BatchItem, { batch: { user_id: user.id }  }
 
