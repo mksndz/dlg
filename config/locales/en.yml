@@ -70,6 +70,7 @@ en:
         is_uploader: "Uploader"
         is_committer: "Committer"
         is_viewer: "Viewer"
+        is_pm: "Project Manager"
         creator: "Creator"
         repository_ids: "Assigned Repositories"
         collection_ids: "Assigned Collections"

@@ -28,6 +28,8 @@ feature 'Users Management' do
       expect(page).to have_field(I18n.t('activerecord.attributes.user.is_coordinator'))
       expect(page).to have_field(I18n.t('activerecord.attributes.user.is_uploader'))
       expect(page).to have_field(I18n.t('activerecord.attributes.user.is_committer'))
+      expect(page).to have_field(I18n.t('activerecord.attributes.user.is_viewer'))
+      expect(page).to have_field(I18n.t('activerecord.attributes.user.is_pm'))
       expect(page).to have_field(I18n.t('activerecord.attributes.user.password'))
       expect(page).to have_field(I18n.t('activerecord.attributes.user.password_confirmation'))
     end
@@ -65,7 +67,7 @@ feature 'Users Management' do
     end
   end
   context 'Coordinator User' do
-    before :each  do
+    before :each do
       login_as coordinator_user, scope: :user
     end
     scenario 'Coordinator User sees actions and a list of only their created Users on index' do
@@ -98,6 +100,7 @@ feature 'Users Management' do
       expect(user.uploader?).to be false
       expect(user.committer?).to be false
       expect(user.basic?).to be true
+      expect(user.pm?).to be false
     end
     scenario 'Coordinator User can assign repositories and collections to users' do
       repository = Fabricate :repository

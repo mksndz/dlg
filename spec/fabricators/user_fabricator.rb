@@ -30,5 +30,9 @@ Fabricator(:viewer, from: :user) do
   is_viewer { true }
 end
 
+Fabricator(:pm, from: :user) do
+  is_pm { true }
+end
+
 # todo to support legacy code, remove
 Fabricator(:basic, from: :user)

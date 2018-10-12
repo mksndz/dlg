@@ -54,6 +54,8 @@ class Ability
 
       end
 
+      can(:manage, Project) if roles.include? 'pm'
+
       if roles.include?('committer') && roles.include?('coordinator')
 
         can [:commit], Batch do |batch|

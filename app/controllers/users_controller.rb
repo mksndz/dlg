@@ -18,22 +18,21 @@ class UsersController < ApplicationController
 
 
   def index
-    if current_user.coordinator?
-      @users = User.active
+    @users = if current_user.coordinator?
+               User.active
                    .where(creator_id: current_user.id)
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
                    .per(params[:per_page])
-    else
-      @users = User.active
+             else
+               User.active
                    .order(sort_column + ' ' + sort_direction)
                    .page(params[:page])
                    .per(params[:per_page])
-    end
+             end
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @user = User.new
@@ -71,15 +70,16 @@ class UsersController < ApplicationController
   private
 
   def tf_checkbox(value)
-    value === '1' ? true : false
+    value == '1'
   end
 
   def params_contain_role_info
-    if (tf_checkbox(user_params[:is_super]) ||
-      tf_checkbox(user_params[:is_coordinator]) ||
-      tf_checkbox(user_params[:is_uploader]) ||
-      tf_checkbox(user_params[:is_viewer]) ||
-      tf_checkbox(user_params[:is_committer]))
+    if tf_checkbox(user_params[:is_super]) ||
+       tf_checkbox(user_params[:is_coordinator]) ||
+       tf_checkbox(user_params[:is_uploader]) ||
+       tf_checkbox(user_params[:is_viewer]) ||
+       tf_checkbox(user_params[:is_committer]) ||
+       tf_checkbox(user_params[:is_pm])
       true
     else
       false
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, :is_super, :is_coordinator, :is_uploader, :is_viewer, :is_committer, repository_ids: [], collection_ids: [])
+    params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, :is_super, :is_coordinator, :is_uploader, :is_viewer, :is_committer, :is_pm, repository_ids: [], collection_ids: [])
   end
 
   def set_user_creator

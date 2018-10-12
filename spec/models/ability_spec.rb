@@ -9,6 +9,7 @@ RSpec.describe Ability, type: :model do
   let(:committer_user) { Fabricate :committer }
   let(:uploader_user) { Fabricate :uploader }
   let(:viewer_user) { Fabricate :viewer }
+  let(:pm_user) { Fabricate :pm }
 
   context 'for a Super user' do
     subject { Ability.new super_user }
@@ -25,6 +26,12 @@ RSpec.describe Ability, type: :model do
       is_expected.to be_able_to :show,  Collection
       is_expected.to be_able_to :index, Repository
       is_expected.to be_able_to :show,  Repository
+    end
+  end
+  context 'for a Project Manager user' do
+    subject { Ability.new pm_user }
+    it 'can manage Projects' do
+      is_expected.to be_able_to :manage, Project
     end
   end
   context 'for a Coordinator user' do
