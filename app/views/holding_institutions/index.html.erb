@@ -6,8 +6,6 @@
 
 <%= link_to t('meta.holding_institution.action.add'), new_holding_institution_path, class: 'btn btn-default' %>
 
-<%= render 'shared/per_pager' %>
-
 <br><br>
 
 <div class="well well-sm index-filter-area">
@@ -42,6 +40,9 @@
           <%= sortable 'holding_institutions.created_at', t('activerecord.attributes.holding_institution.created_at') %>
         </th>
         <th>
+          <%= t('meta.defaults.labels.columns.portals') %>
+        </th>
+        <th>
           <%= t('activerecord.attributes.holding_institution.projects') %>
         </th>
         <th width="185px"></th>
@@ -63,6 +64,9 @@
               <%= holding_institution.created_at %>
             </td>
             <td>
+              <%= portal_badges holding_institution %>
+            </td>
+            <td>
               <span class="label label-info"><%= holding_institution.projects.length %></span>
             </td>
             <td>
@@ -72,7 +76,6 @@
       <% end %>
       </tbody>
     </table>
-    <%= paginate @holding_institutions %>
 <% end %>
 
 

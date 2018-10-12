@@ -15,11 +15,9 @@ class HoldingInstitutionsController < ApplicationController
 
   # GET /holding_institutions
   def index
-    @holding_institutions = HoldingInstitution
-                              .index_query(params)
-                              .order(sort_column + ' ' + sort_direction)
-                              .page(params[:page])
-                              .per(params[:per_page])
+    @holding_institutions =
+      HoldingInstitution.index_query(params)
+                        .order(sort_column + ' ' + sort_direction)
   end
 
   # GET /holding_institutions/1
