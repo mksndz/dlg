@@ -101,6 +101,8 @@
     </table>
   </div>
 <% end %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.parent_institution'), value: @holding_institution.parent_institution %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.notes'), value: @holding_institution.notes %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_information'), value: @holding_institution.contact_information %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_name'), value: @holding_institution.contact_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_email'), value: mail_to(@holding_institution.contact_email) %>

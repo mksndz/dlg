@@ -23,11 +23,11 @@ class HoldingInstitution < ActiveRecord::Base
   end
 
   def portals
-    repositories.collect(&:portals).uniq
+    repositories.collect(&:portals).flatten.uniq
   end
 
   def portal_names
-    portals.flatten.collect(&:name)
+    portals.collect(&:name)
   end
 
   def confirm_unassigned

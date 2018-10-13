@@ -68,7 +68,7 @@ class HoldingInstitutionsController < ApplicationController
                 :contact_name, :contact_email, :harvest_strategy, :oai_urls,
                 :ignored_collections, :analytics_emails, :subgranting,
                 :grant_partnerships, :image, :remove_image, :image_cache,
-                repository_ids: [])
+                :notes, :parent_institution, repository_ids: [])
     )
   end
 
