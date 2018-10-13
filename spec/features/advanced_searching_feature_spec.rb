@@ -88,7 +88,7 @@ feature 'Advanced Searching' do
         :item,
         collection: collection,
         portals: collection.portals,
-        holding_institutions: [Fabricate(:holding_institution, display_name: 'PPPPPPPPPPPPPPP')]
+        holding_institutions: [Fabricate(:holding_institution, authorized_name: 'PPPPPPPPPPPPPPP')]
       )
     end
     scenario 'title search returns only relevant results' do

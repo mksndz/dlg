@@ -14,7 +14,7 @@ module Provenanced
   end
 
   def holding_institution_names
-    holding_institutions.collect(&:display_name)
+    holding_institutions.collect(&:authorized_name)
   end
 
   # convenience method for Items

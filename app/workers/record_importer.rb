@@ -250,7 +250,7 @@ class RecordImporter
 
   def self.set_record_holding_institutions(holding_institution_names)
     holding_institution_names.each do |holding_institution_name|
-      holding_institution_object = HoldingInstitution.find_by_display_name holding_institution_name
+      holding_institution_object = HoldingInstitution.find_by_authorized_name holding_institution_name
       if holding_institution_object
         @record.holding_institutions << holding_institution_object
       else

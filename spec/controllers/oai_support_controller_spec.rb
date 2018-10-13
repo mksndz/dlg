@@ -145,7 +145,7 @@ RSpec.describe OaiSupportController, type: :controller do
       end
       it 'contains dcterms_provenance fields corresponding to holding_institutions' do
         expect(@record_hash).to have_key 'dcterms_provenance'
-        expect(@record_hash['dcterms_provenance']).to include @item.holding_institution.display_name
+        expect(@record_hash['dcterms_provenance']).to include @item.holding_institution.authorized_name
       end
     end
     it 'returns nothing for a record where there is no ID match' do

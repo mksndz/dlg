@@ -6,7 +6,7 @@ task fix_hi_repo_relations: :environment do
     'TRUNCATE TABLE holding_institutions_repositories RESTART IDENTITY;'
   )
   Repository.all.each do |r|
-    hi = HoldingInstitution.find_by_display_name r.title
+    hi = HoldingInstitution.find_by_authorized_name r.title
     if hi
       hi.repositories << r
       hi.save(validates: false)

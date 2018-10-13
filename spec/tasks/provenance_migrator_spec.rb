@@ -8,8 +8,8 @@ describe 'migrates provenance values' do
   end
   it 'should add holding institution relations based on legacy provenance data' do
     coll = Fabricate :empty_collection
-    Fabricate(:holding_institution, display_name: 'Value 1')
-    Fabricate(:holding_institution, display_name: 'Value 2')
+    Fabricate(:holding_institution, authorized_name: 'Value 1')
+    Fabricate(:holding_institution, authorized_name: 'Value 2')
     item = Fabricate.build(
       :item,
       collection: coll,
@@ -27,7 +27,7 @@ describe 'migrates provenance values' do
   end
   it 'skips collections where items already have HI values' do
     coll = Fabricate :empty_collection
-    hi = Fabricate(:holding_institution, display_name: 'Value 1')
+    hi = Fabricate(:holding_institution, authorized_name: 'Value 1')
     item = Fabricate.build(
       :item,
       collection: coll,

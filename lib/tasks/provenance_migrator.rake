@@ -11,7 +11,7 @@ task provenance_migrator: :environment do |t, args|
           throw :already_done
         end
         i.legacy_dcterms_provenance.each do |lp|
-          hi = HoldingInstitution.find_by_display_name lp
+          hi = HoldingInstitution.find_by_authorized_name lp
           unless hi
             logger.warn "No Holding Institution for #{lp} in Collection #{collection.record_id}"
             next

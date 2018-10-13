@@ -10,9 +10,9 @@ RSpec.describe HoldingInstitution, type: :model do
   end
   context 'when created' do
     let(:holding_institution) { Fabricate :holding_institution }
-    it 'has a display_name' do
-      expect(holding_institution.display_name).not_to be_empty
-      expect(holding_institution.display_name).to be_a String
+    it 'has a authorized_name' do
+      expect(holding_institution.authorized_name).not_to be_empty
+      expect(holding_institution.authorized_name).to be_a String
     end
     it 'has a set of coordinates stored as a string' do
       expect(holding_institution.coordinates).to be_a String
@@ -60,16 +60,16 @@ RSpec.describe HoldingInstitution, type: :model do
     end
   end
   context 'when validating' do
-    it 'requires a display_name' do
-      holding_institution = Fabricate.build(:holding_institution, display_name: nil)
+    it 'requires a authorized_name' do
+      holding_institution = Fabricate.build(:holding_institution, authorized_name: nil)
       holding_institution.valid?
-      expect(holding_institution.errors).to have_key :display_name
+      expect(holding_institution.errors).to have_key :authorized_name
     end
-    it 'requires a unique display_name' do
-      Fabricate :holding_institution, display_name: 'Taken'
-      holding_institution = Fabricate.build(:holding_institution, display_name: 'Taken')
+    it 'requires a unique authorized_name' do
+      Fabricate :holding_institution, authorized_name: 'Taken'
+      holding_institution = Fabricate.build(:holding_institution, authorized_name: 'Taken')
       holding_institution.valid?
-      expect(holding_institution.errors).to have_key :display_name
+      expect(holding_institution.errors).to have_key :authorized_name
     end
     # it 'requires an institution_type' do
     #   holding_institution = Fabricate.build(:holding_institution, institution_type: nil)
@@ -94,7 +94,7 @@ RSpec.describe HoldingInstitution, type: :model do
   end
   context 'when deleting' do
     let(:holding_institution) do
-      Fabricate :holding_institution, display_name: 'Test'
+      Fabricate :holding_institution, authorized_name: 'Test'
     end
     it 'does not delete if an item still uses it' do
       Fabricate(

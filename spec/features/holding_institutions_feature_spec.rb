@@ -15,7 +15,7 @@ feature 'Holding Institution management' do
       scenario 'sees a list of all holding institutions and action buttons' do
         holding_institution.reload
         visit holding_institutions_path
-        expect(page).to have_text holding_institution.display_name
+        expect(page).to have_text holding_institution.authorized_name
         expect(page).to have_link I18n.t('meta.defaults.actions.view')
         expect(page).to have_link I18n.t('meta.defaults.actions.edit')
         expect(page).to have_link I18n.t('meta.defaults.actions.destroy')
@@ -36,7 +36,7 @@ feature 'Holding Institution management' do
         holding_institution.projects << Fabricate(:project)
         holding_institution.save
         visit holding_institution_path(holding_institution)
-        expect(page).to have_text holding_institution.display_name
+        expect(page).to have_text holding_institution.authorized_name
         expect(page).to have_text holding_institution.repositories.first.title
         expect(page).to have_text holding_institution.short_description
         expect(page).to have_text holding_institution.description
@@ -84,7 +84,7 @@ feature 'Holding Institution management' do
         visit new_holding_institution_path
       end
       it 'saves an array value for OAI URLs' do
-        fill_in I18n.t('activerecord.attributes.holding_institution.display_name'), with: 'Test'
+        fill_in I18n.t('activerecord.attributes.holding_institution.authorized_name'), with: 'Test'
         fill_in I18n.t('activerecord.attributes.holding_institution.oai_urls'), with: "URL 1\nURL 2"
         click_button I18n.t('meta.defaults.actions.save')
         expect(page).to have_text 'URL 1'

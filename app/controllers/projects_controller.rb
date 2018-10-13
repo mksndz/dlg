@@ -54,14 +54,14 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :fiscal_year, :hosting, 
+    params.require(:project).permit(:title, :fiscal_year, :hosting,
                                     :storage_used, :holding_institution_id,
                                     collection_ids: [])
   end
   def set_data
     @data = {}
     @data[:fiscal_years] = Project.fiscal_years.unshift ''
-    @data[:holding_institutions] = HoldingInstitution.all.order(:display_name)
+    @data[:holding_institutions] = HoldingInstitution.all.order(:authorized_name)
     @data[:collections] = Collection.all.order(:display_title)
   end
 end

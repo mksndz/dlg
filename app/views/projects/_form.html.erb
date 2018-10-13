@@ -4,7 +4,7 @@
   <%= f.text_field :fiscal_year %>
   <%= f.select :hosting, ProjectsHelper::HOSTING_TYPES, { multiple: false }, { class: 'fancy-multiselect' } %>
   <%= f.text_field :storage_used %>
-  <%= f.select :holding_institution_id, @data[:holding_institutions].collect { |c| [c.display_name, c.id] }, {}, { class: 'fancy-multiselect' } %>
+  <%= f.select :holding_institution_id, @data[:holding_institutions].collect { |c| [c.authorized_name, c.id] }, {}, { class: 'fancy-multiselect' } %>
   <%= f.select :collection_ids, @data[:collections].collect { |c| [c.display_title, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
   <%= f.primary t('meta.defaults.actions.save') %>
 <% end %>

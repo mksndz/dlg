@@ -16,7 +16,7 @@
     <%= f.hidden_field :sort, { value: h(params[:sort]), name: 'sort' } if params[:sort] %>
     <%= f.hidden_field :per_page, { value: h(params[:per_page]), name: 'per_page' } if params[:per_page] %>
     <%= f.select :fiscal_year, options_for_select(@data[:fiscal_years], selected: h(params[:fiscal_year])), { label: 'Fiscal Year' }, { name: 'fiscal_year', class: 'fancy-select' } %>
-    <%= f.select :holding_institution, options_for_select(@data[:holding_institutions].collect { |hi| [hi.display_name, hi.id] }.unshift(''), selected: h(params[:holding_institution_id])), { label: 'Holding Inst' }, { name: 'holding_institution_id', class: 'fancy-select' } %>
+    <%= f.select :holding_institution, options_for_select(@data[:holding_institutions].collect { |hi| [hi.authorized_name, hi.id] }.unshift(''), selected: h(params[:holding_institution_id])), { label: 'Holding Inst' }, { name: 'holding_institution_id', class: 'fancy-select' } %>
     <%= f.primary t('meta.defaults.labels.filter.filter_button') %>
   <% end %>
 </div>
@@ -43,7 +43,7 @@
           <%= sortable 'projects.storage_used', t('activerecord.attributes.project.storage_used') %>
         </th>
         <th>
-          <%= sortable 'projects.holding_institution.display_name', t('activerecord.attributes.project.holding_institution') %>
+          <%= sortable 'projects.holding_institution.authorized_name', t('activerecord.attributes.project.holding_institution') %>
         </th>
         <th width="185px"></th>
       </tr>
@@ -66,7 +66,7 @@
               <%= project.storage_used %>
             </td>
             <td>
-              <%= project.holding_institution.display_name %>
+              <%= project.holding_institution.authorized_name %>
             </td>
             <td>
               <%= render partial: 'shared/entity_actions', locals: { base_path: project_path(project), edit_path: edit_project_path(project), entity: project, show_bl: false } %>

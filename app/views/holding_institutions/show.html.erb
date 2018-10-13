@@ -3,7 +3,7 @@
 <% end %>
 
 <%= content_for :subtitle do %>
-    <%= @holding_institution.display_name %>
+    <%= @holding_institution.authorized_name %>
 <% end %>
 
 <% breadcrumb :holding_institution, @holding_institution %>
@@ -15,6 +15,7 @@
 <h2><%= t('meta.holding_institution.labels.public') %></h2>
 <hr>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.repository_ids'), values: @holding_institution.repositories.any? ? @holding_institution.repositories.collect(&:title) : nil %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.authorized_name'), value: @holding_institution.authorized_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.display_name'), value: @holding_institution.display_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.short_description'), value: @holding_institution.short_description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.description'), value: @holding_institution.description %>

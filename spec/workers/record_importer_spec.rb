@@ -60,7 +60,7 @@ describe RecordImporter, type: :model do
           r2 = Fabricate(:repository, slug: 'geh', portals: [p])
           Fabricate(:collection, slug: 'aa', repository: r1, portals: [p])
           Fabricate(:collection, slug: '0091', repository: r2, portals: [p])
-          Fabricate(:holding_institution, display_name: 'Atlanta History Center')
+          Fabricate(:holding_institution, authorized_name: 'Atlanta History Center')
         end
         it 'should create a BatchItem' do
           expect do
@@ -138,7 +138,7 @@ describe RecordImporter, type: :model do
         @georgia_portal = Fabricate(:portal) { code { 'georgia' } }
         @crdl_portal = Fabricate(:portal) { code { 'crdl' } }
         @collection = Fabricate :empty_collection
-        @holding_institution = Fabricate(:holding_institution, display_name: 'Walter J. Brown Media Archives and Peabody Awards Collection')
+        @holding_institution = Fabricate(:holding_institution, authorized_name: 'Walter J. Brown Media Archives and Peabody Awards Collection')
         @other_collection = Fabricate :empty_collection
         @other_collection2 = Fabricate :empty_collection
         duplicate_date_xml = '<item>
@@ -279,7 +279,7 @@ describe RecordImporter, type: :model do
       before :each do
         c = Fabricate :empty_collection
         bi = Fabricate :batch_import_to_match_on_id
-        Fabricate :holding_institution, display_name: 'Atlanta History Center'
+        Fabricate :holding_institution, authorized_name: 'Atlanta History Center'
         @item = Fabricate(:repository).items.first
         @item.collection = c
         bi.xml = bi.xml.gsub '__ID__', @item.id.to_s

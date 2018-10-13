@@ -23,6 +23,7 @@ en:
         notes: 'Notes'
         repository_ids: 'Repositories'
         portal_ids: 'Portals'
+        authorized_name: 'Authorized Name'
         display_name: 'Display Name'
         short_description: 'Short Description'
         description: 'Description'

@@ -166,7 +166,7 @@ feature 'Item Management' do
     context 'edit behavior' do
       let(:item) { Fabricate(:repository).items.first }
       before(:each) do
-        Fabricate(:holding_institution, display_name: 'DLG')
+        Fabricate(:holding_institution, authorized_name: 'DLG')
         visit edit_item_path item
       end
       scenario 'edit page has a fulltext field' do

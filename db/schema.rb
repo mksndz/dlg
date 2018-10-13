@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181013112402) do
+ActiveRecord::Schema.define(version: 20181013113856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,7 +228,7 @@ ActiveRecord::Schema.define(version: 20181013112402) do
   end
 
   create_table "holding_institutions", force: :cascade do |t|
-    t.string   "display_name"
+    t.string   "authorized_name"
     t.text     "short_description"
     t.text     "description"
     t.string   "image"
@@ -251,9 +251,10 @@ ActiveRecord::Schema.define(version: 20181013112402) do
     t.datetime "updated_at"
     t.string   "parent_institution"
     t.text     "notes"
+    t.string   "display_name"
   end
 
-  add_index "holding_institutions", ["display_name"], name: "index_holding_institutions_on_display_name", using: :btree
+  add_index "holding_institutions", ["authorized_name"], name: "index_holding_institutions_on_authorized_name", using: :btree
 
   create_table "holding_institutions_items", id: false, force: :cascade do |t|
     t.integer "holding_institution_id", null: false

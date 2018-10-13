@@ -31,7 +31,7 @@
           <%= sortable 'holding_institutions.id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'holding_institutions.display_name', t('meta.defaults.labels.columns.name') %>
+          <%= sortable 'holding_institutions.authorized_name', t('meta.defaults.labels.columns.name') %>
         </th>
         <th>
           <%= sortable 'holding_institutions.institution_type', t('activerecord.attributes.holding_institution.institution_type') %>
@@ -55,7 +55,7 @@
               <%= link_to holding_institution.id, holding_institution_path(holding_institution) %>
             </td>
             <td>
-              <%= link_to holding_institution.display_name, holding_institution_path(holding_institution) %>
+              <%= link_to holding_institution.authorized_name, holding_institution_path(holding_institution) %>
             </td>
             <td>
               <%= holding_institution.institution_type %>

@@ -2,6 +2,7 @@
   <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Holding Institution' %>
   <h2><%= t('meta.holding_institution.labels.public') %></h2>
   <hr>
+  <%= f.text_field :authorized_name %>
   <%= f.text_field :display_name %>
   <% if @holding_institution.image? %>
     <label><%= t('activerecord.attributes.holding_institution.image') %></label><br>

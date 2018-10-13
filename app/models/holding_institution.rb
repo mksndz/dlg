@@ -13,9 +13,9 @@ class HoldingInstitution < ActiveRecord::Base
   before_destroy :confirm_unassigned
   after_update :reindex_child_values
 
-  validates_presence_of :display_name
+  validates_presence_of :authorized_name
   # validates_presence_of :institution_type # TODO: after HI migration cleanup is complete
-  validates_uniqueness_of :display_name
+  validates_uniqueness_of :authorized_name
   validate :coordinates_format
 
   def self.index_query_fields
@@ -55,7 +55,7 @@ class HoldingInstitution < ActiveRecord::Base
 
   def reindex_child_values
     collection_queued = false
-    if display_name_changed?
+    if authorized_name_changed?
       mark_children_updated
       queue_reindex_collections
       queue_reindex_items

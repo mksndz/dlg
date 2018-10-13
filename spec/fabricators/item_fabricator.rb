@@ -30,7 +30,7 @@ Fabricator(:item) do
   fulltext { Faker::Hipster.paragraph(1) }
   holding_institutions(count: 1)
   legacy_dcterms_provenance do |attrs|
-    attrs[:holding_institutions].collect(&:display_name)
+    attrs[:holding_institutions].collect(&:authorized_name)
   end
 end
 

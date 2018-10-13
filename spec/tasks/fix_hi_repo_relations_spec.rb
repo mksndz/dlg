@@ -9,8 +9,8 @@ describe 'task to fix messy hi to repo relation' do
   it 'should set a relation for each repo to the corresponding holding inst' do
     r1 = Fabricate :repository
     r2 = Fabricate :repository
-    hi1 = Fabricate(:holding_institution, display_name: r1.title)
-    hi2 = Fabricate(:holding_institution, display_name: r2.title)
+    hi1 = Fabricate(:holding_institution, authorized_name: r1.title)
+    hi2 = Fabricate(:holding_institution, authorized_name: r2.title)
     hi3 = Fabricate :holding_institution
     hi4 = Fabricate :holding_institution
     r1.holding_institutions << hi1

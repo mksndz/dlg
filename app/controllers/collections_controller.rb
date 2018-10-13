@@ -94,7 +94,7 @@ class CollectionsController < RecordController
     @data[:subjects] = Subject.all.order(:name)
     @data[:time_periods] = TimePeriod.all.order(:name)
     @data[:repositories] = Repository.all.order(:title)
-    @data[:holding_institutions] = HoldingInstitution.all.order(:display_name)
+    @data[:holding_institutions] = HoldingInstitution.all.order(:authorized_name)
     @data[:portals] = portals_for_form
   end
 

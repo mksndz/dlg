@@ -270,7 +270,7 @@ end
 
 crumb :holding_institution do |holding_institution|
   if holding_institution.persisted?
-    link holding_institution.display_name
+    link holding_institution.authorized_name
   else
     link 'New'
   end
