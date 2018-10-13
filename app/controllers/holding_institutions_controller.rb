@@ -17,6 +17,8 @@ class HoldingInstitutionsController < ApplicationController
   def index
     @holding_institutions =
       HoldingInstitution.index_query(params)
+                        .includes(:projects)
+                        .includes(repositories: [:portals])
                         .order(sort_column + ' ' + sort_direction)
   end
 
