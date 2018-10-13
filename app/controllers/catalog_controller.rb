@@ -131,7 +131,7 @@ class CatalogController < ApplicationController
     config.advanced_search[:query_parser]         ||= 'dismax'
     config.advanced_search[:form_facet_partial]   ||= 'advanced_search_facets_as_select'
     config.advanced_search[:form_solr_parameters] ||= {
-      'f.provenance_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
+      'f.provenance_facet.facet.limit' => 600,
       'f.provenance_facet.facet.missing' => true,
       'f.creator_facet.facet.limit' => ADVANCED_FACET_DEFAULT_LIMIT,
       'f.creator_facet.facet.missing' => true,
