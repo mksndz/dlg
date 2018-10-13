@@ -2,6 +2,6 @@ Fabricator(:project) do
   title { Faker::Hipster.sentence(5) }
   fiscal_year '2019'
   hosting 'archival'
-  storage_used 100
+  storage_used 100.5
   holding_institution
 end

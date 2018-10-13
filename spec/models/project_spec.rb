@@ -27,6 +27,9 @@ RSpec.describe Project, type: :model do
       expect(project.collections.count).to eq 2
       expect(project.collections.first).to be_a Collection
     end
+    it 'has a decimal value for storage used' do
+      expect(project.storage_used).to eq 100.5
+    end
   end
   context 'when validating' do
     it 'requires a title' do
