@@ -93,6 +93,7 @@ RSpec.describe BatchItem, type: :model do
     end
   end
   context 'coordinate lookup on commit' do
+    # TODO: stub responses from Geocoder for API lookups
     it 'finds matching coordinates in existing Items' do
       Fabricate :item_with_parents
       bi = Fabricate.build(

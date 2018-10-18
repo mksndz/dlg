@@ -17,6 +17,7 @@ gem 'devise-guests', '~> 0.3' # TODO: remove?
 gem 'devise_invitable'
 gem 'diffy'
 gem 'exception_notification'
+gem 'geocoder'
 gem 'gretel'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'

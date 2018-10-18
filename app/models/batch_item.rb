@@ -63,11 +63,18 @@ class BatchItem < ActiveRecord::Base
     with_coordinates = []
     dcterms_spatial.each do |spatial|
       match_found = false
+      # lookup in existing records
       get_matches_with_coordinates(spatial).each do |v|
-        if v['spatial'][0..-25] == spatial
-          with_coordinates << v['spatial']
+        next unless v['spatial'][0..-25] == spatial
+
+        with_coordinates << v['spatial']
+        match_found = true
+      end
+      unless match_found
+        coordinates = MetaGeocoder.lookup spatial
+        if coordinates
+          with_coordinates << "#{spatial}, #{coordinates}"
           match_found = true
-          next
         end
       end
       with_coordinates << spatial unless match_found
