@@ -92,8 +92,7 @@ RSpec.describe BatchItem, type: :model do
       end
     end
   end
-  context 'coordinate lookup on commit' do
-    # TODO: stub responses from Geocoder for API lookups
+  context 'coordinate lookup on save' do
     it 'finds matching coordinates in existing Items' do
       Fabricate :item_with_parents
       bi = Fabricate.build(
@@ -105,14 +104,26 @@ RSpec.describe BatchItem, type: :model do
         eq ['United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358']
       )
     end
-    it 'saves original value if no match found in existing Items' do
+    it 'finds matching coordinates using Geocoder' do
+      Fabricate :item_with_parents
       bi = Fabricate.build(
         :batch_item,
-        dcterms_spatial: ['United States, Georgia, Clarke County, Normaltown']
+        dcterms_spatial: ['France, Paris']
       )
       bi.save
       expect(bi.dcterms_spatial).to(
-        eq ['United States, Georgia, Clarke County, Normaltown']
+        eq ['France, Paris, 12.3456789, -98.7654321']
+      )
+    end
+    it 'saves original value if no match found in existing Items or via Geocoder' do
+      Geocoder::Lookup::Test.add_stub('The Moon', [])
+      bi = Fabricate.build(
+        :batch_item,
+        dcterms_spatial: ['The Moon']
+      )
+      bi.save
+      expect(bi.dcterms_spatial).to(
+        eq ['The Moon']
       )
     end
     it 'finds matching coordinates in existing Items and picks the right one' do
@@ -142,7 +153,7 @@ RSpec.describe BatchItem, type: :model do
       item2.dcterms_spatial = ['United States, North Carolina, Camden']
       bi = Fabricate.build(:batch_item, dcterms_spatial: ['United States'])
       bi.save
-      expect(bi.dcterms_spatial).to eq ['United States']
+      expect(bi.dcterms_spatial).to eq ['United States, 12.3456789, -98.7654321']
     end
   end
 end

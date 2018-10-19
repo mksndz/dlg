@@ -41,4 +41,10 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # avoid live API Geocoder calls in test
+  Geocoder.configure(lookup: :test, ip_lookup: :test)
+  Geocoder::Lookup::Test.set_default_stub(
+    [{ 'coordinates': [12.3456789, -98.7654321] }]
+  )
 end

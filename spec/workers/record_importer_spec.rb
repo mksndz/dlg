@@ -258,7 +258,7 @@ describe RecordImporter, type: :model do
       it 'should not contain duplicated array elements' do
         expect(@batch_item.dc_date).to eq ['1960']
         expect(@batch_item.dcterms_temporal).to eq ['1960']
-        expect(@batch_item.dcterms_spatial).to eq ['Cuba', 'United States']
+        expect(@batch_item.dcterms_spatial).to eq ['Cuba, 12.3456789, -98.7654321', 'United States, 12.3456789, -98.7654321']
       end
       it 'should set multiple portal values properly' do
         expect(@batch_item.portals).to include @georgia_portal
