@@ -17,6 +17,12 @@ class ApiController < ApplicationController
     end
   end
 
+  def hi_info
+    render json: holding_institution_json_for(
+      HoldingInstitution.find_by_authorized_name(params[:authorized_name])
+    )
+  end
+
   # get features for the tabs
   def tab_features
     records = Feature.tabs.random.limit @limit
@@ -84,6 +90,21 @@ class ApiController < ApplicationController
       orig_coll: record.dcterms_is_part_of,
       is_shown_at: record.edm_is_shown_at,
       image: record.holding_institution_image
+    }
+  end
+
+  def holding_institution_json_for(holding_institution)
+    {
+      id: holding_institution.id,
+      display_name: holding_institution.display_name,
+      authorized_name: holding_institution.authorized_name,
+      short_description: holding_institution.short_description,
+      description: holding_institution.description,
+      homepage_url: holding_institution.homepage_url,
+      coordinates: holding_institution.coordinates,
+      strengths: holding_institution.strengths,
+      contact_information: holding_institution.contact_information,
+      image: holding_institution.image.url
     }
   end
 

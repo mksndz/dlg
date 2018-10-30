@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'oai_support/deleted',    to: 'oai_support#deleted',   as: 'oai_support_deleted'
     get 'oai_support/metadata',   to: 'oai_support#metadata',  as: 'oai_support_metadata'
     get 'api/info',               to: 'api#info',              as: 'api_info'
+    get 'api/hi_info',            to: 'api#hi_info',           as: 'api_hi_info'
     get 'api/tab_features',       to: 'api#tab_features',      as: 'api_tab_features'
     get 'api/carousel_features',  to: 'api#carousel_features', as: 'api_carousel_features'
   end
