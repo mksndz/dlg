@@ -34,6 +34,7 @@ RSpec.configure do |config|
     Portal.destroy_all
     HoldingInstitution.destroy_all
     Project.destroy_all
+    Feature.destroy_all
   end
 
   config.before(:all) do
