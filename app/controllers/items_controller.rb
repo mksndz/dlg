@@ -3,7 +3,7 @@
 # TODO: Factor out into Filterable the Portal filtering behavior
 class ItemsController < RecordController
 
-  load_res
+  load_and_authorize_resource
 
   include Blacklight::SearchContext
   include Blacklight::SearchHelper
