@@ -13,6 +13,19 @@ Rails.application.routes.draw do
     get 'api/carousel_features',  to: 'api#carousel_features', as: 'api_carousel_features'
   end
 
+  # API v2
+  namespace :api do
+    namespace :v2 do
+      constraints(format: :json) do
+        get 'ok', to: 'base#ok'
+        resources :items, only: %i[index show]
+        resources :collections, only: %i[index show]
+        resources :holding_institutions, only: %i[index show]
+        resources :features, only: :index
+      end
+    end
+  end
+
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :exportable, Blacklight::Routes::Exportable.new
 
