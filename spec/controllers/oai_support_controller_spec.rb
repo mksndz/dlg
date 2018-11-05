@@ -25,6 +25,10 @@ RSpec.describe OaiSupportController, type: :controller do
           get :dump, class: 'item'
           expect(assigns(:class)).to eq Item
         end
+        it 'sets a class to Holding Institution' do
+          get :dump, class: 'holding_institution'
+          expect(assigns(:class)).to eq HoldingInstitution
+        end
         it 'handles unsupported classes' do
           get :dump, class: 'User'
           expect(response.code).to eq '400'
@@ -56,6 +60,12 @@ RSpec.describe OaiSupportController, type: :controller do
             expect(response_object['total_count']).to eq 2
             expect(response_object['records'].last['id']).to eq Collection.last.id
             expect(response_object['records'].last['record_id']).to eq Collection.last.record_id
+          end
+          it 'can paginate through all the holding institutions' do
+            get :dump, class: 'holding_institution', rows: 3, page: 2
+            response_object = JSON.parse(response.body)
+            expect(response_object['total_count']).to eq HoldingInstitution.count
+            expect(response_object['records'].last['id']).to eq HoldingInstitution.last.id
           end
         end
       end

@@ -13,19 +13,11 @@ class OaiSupportController < ApplicationController
     q = q.includes(:collection).includes(:repository) if @class == Item
     q = q.includes(:repository) if @class == Collection
     total_count = q.total_count
-    dump = q.map do |i|
-      {
-        id: i.id,
-        public: i.public,
-        record_id: record_id(i),
-        updated_at: i.updated_at
-      }
-    end
     response = {
       total_count: total_count,
       page: params[:page],
       rows: @rows,
-      records: dump
+      records: class_dump(q)
     }
     render json: response
   end
@@ -64,6 +56,21 @@ class OaiSupportController < ApplicationController
 
   private
 
+  def class_dump(q)
+    if @class == HoldingInstitution
+      q.as_json
+    else
+      q.map do |i|
+        {
+          id: i.id,
+          public: i.public,
+          record_id: record_id(i),
+          updated_at: i.updated_at
+        }
+      end
+    end
+  end
+
   def strong_params
     params.permit :rows, :date, :class, :page
   end
@@ -78,6 +85,8 @@ class OaiSupportController < ApplicationController
                Repository
              when 'collection'
                Collection
+             when 'holding_institution'
+               HoldingInstitution
              else
                head :bad_request
              end
