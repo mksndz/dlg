@@ -37,8 +37,9 @@ end
 Fabricator(:item_with_parents, from: :item) do
   repository(fabricator: :empty_repository)
   collection do |attrs|
-    Fabricate.build(
+    Fabricate(
       :empty_collection,
+      repository: attrs[:repository],
       portals: attrs[:repository].portals
     )
   end

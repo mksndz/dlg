@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'API V2 for Features', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.api_token }
   context 'can list using #index' do
-    before(:all) do
+    before(:each) do
       Fabricate.times 5, :feature # carousel
       Fabricate.times 5, :tab_feature
       Fabricate :external_feature # carousel

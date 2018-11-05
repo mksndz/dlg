@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'API V2 for Holding Institutions', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.api_token }
   context 'can list using #index' do
-    before(:all) do
+    before(:each) do
       @collection = Fabricate :empty_collection
       Fabricate.times(3, :holding_institution)
       @holding_institution = HoldingInstitution.last
@@ -36,7 +36,7 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
     end
   end
   context 'can get single record info using #show' do
-    before(:all) do
+    before(:each) do
       @collection = Fabricate :empty_collection
       @holding_institution = HoldingInstitution.last
     end
