@@ -32,6 +32,21 @@ feature 'Blacklight Functionality' do
             href: edit_item_path(@item)
           )
         end
+        context 'is_part_of special linkification' do
+          before :each do
+            item = Fabricate(:item_with_parents,
+                             dcterms_is_part_of: [
+                               'Visit our home at https://mocaga.pastperfectonline.com/archive/ECB9517F-A5D9-4569-9C88-451577396987',
+                               'No link here!'
+                             ])
+            Sunspot.commit
+            visit solr_document_path(item.record_id)
+          end
+          scenario 'item is_part_of field should turn things that look like
+                    links into links' do
+            expect(page).to have_link 'https://mocaga.pastperfectonline.com/archive/ECB9517F-A5D9-4569-9C88-451577396987'
+          end
+        end
       end
       context 'for Collection' do
         before :each do

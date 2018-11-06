@@ -1,3 +1,6 @@
+require 'uri'
+
+# global app helpers
 module ApplicationHelper
 
   INDEX_TRUNCATION_VALUE = 2500
@@ -14,6 +17,17 @@ module ApplicationHelper
   def linkify(options = {})
     url = options[:value].first
     link_to url, url
+  end
+
+  def regex_linkify(options = {})
+    values = options[:value]
+    values.map! do |v|
+      URI.extract(v).each do |uri|
+        v = v.sub(uri, link_to(uri))
+      end
+      v
+    end
+    values.join('<br>').html_safe
   end
 
   # truncate when displaying search results

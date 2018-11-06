@@ -70,12 +70,12 @@ class CatalogController < ApplicationController
     config.add_index_field 'score',                       label: I18n.t('meta.search.labels.score'), helper_method: :score_display
     config.add_index_field 'record_id_ss',                label: I18n.t('meta.search.labels.record_id')
     config.add_index_field 'dcterms_title_display',       label: I18n.t('meta.search.labels.dcterms_title')
-    config.add_index_field 'dcterms_description_display', label: I18n.t('meta.search.labels.dcterms_description'), helper_method: 'truncate_index'
+    config.add_index_field 'dcterms_description_display', label: I18n.t('meta.search.labels.dcterms_description'), helper_method: :truncate_index
     config.add_index_field 'collection_titles_sms',       label: I18n.t('meta.search.labels.collection'), link_to_search: true
     config.add_index_field 'repository_name_sms',         label: I18n.t('meta.search.labels.repository'), link_to_search: true
     config.add_index_field 'dcterms_identifier_display',  label: I18n.t('meta.search.labels.dcterms_identifier')
-    config.add_index_field 'edm_is_shown_at_display',     label: I18n.t('meta.search.labels.edm_is_shown_at'), helper_method: 'linkify'
-    config.add_index_field 'edm_is_shown_by_display',     label: I18n.t('meta.search.labels.edm_is_shown_by'), helper_method: 'linkify'
+    config.add_index_field 'edm_is_shown_at_display',     label: I18n.t('meta.search.labels.edm_is_shown_at'), helper_method: :linkify
+    config.add_index_field 'edm_is_shown_by_display',     label: I18n.t('meta.search.labels.edm_is_shown_by'), helper_method: :linkify
     config.add_index_field 'dcterms_creator_display',     label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
     config.add_index_field 'dc_format_display',           label: I18n.t('meta.search.labels.dc_format'), link_to_search: :format_facet
     config.add_index_field 'dcterms_spatial_display',     label: I18n.t('meta.search.labels.dcterms_spatial'), link_to_search: :location_facet
@@ -95,11 +95,11 @@ class CatalogController < ApplicationController
     config.add_show_field 'short_description_display',              label: I18n.t('meta.search.labels.short_description')
     config.add_show_field 'partner_homepage_url_display',           label: I18n.t('meta.search.labels.partner_homepage_url')
     config.add_show_field 'homepage_text_display',                  label: I18n.t('meta.search.labels.homepage_text')
-    config.add_show_field 'dcterms_is_part_of_display',             label: I18n.t('meta.search.labels.dcterms_is_part_of')
+    config.add_show_field 'dcterms_is_part_of_display',             label: I18n.t('meta.search.labels.dcterms_is_part_of'), helper_method: :regex_linkify
     config.add_show_field 'dcterms_description_display',            label: I18n.t('meta.search.labels.dcterms_description')
     config.add_show_field 'dc_format_display',                      label: I18n.t('meta.search.labels.dc_format')
     config.add_show_field 'dcterms_identifier_display',             label: I18n.t('meta.search.labels.dcterms_identifier')
-    config.add_show_field 'dc_right_display',                       label: I18n.t('meta.search.labels.dc_right'), helper_method: 'rights_icon_tag'
+    config.add_show_field 'dc_right_display',                       label: I18n.t('meta.search.labels.dc_right'), helper_method: :rights_icon_tag
     config.add_show_field 'dc_date_display',                        label: I18n.t('meta.search.labels.dc_date')
     config.add_show_field 'dc_relation_display',                    label: I18n.t('meta.search.labels.dc_relation')
     config.add_show_field 'dcterms_publisher_display',              label: I18n.t('meta.search.labels.dcterms_publisher')
@@ -112,8 +112,8 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_type_display',                   label: I18n.t('meta.search.labels.dcterms_type')
     config.add_show_field 'dcterms_creator_display',                label: I18n.t('meta.search.labels.dcterms_creator'), link_to_search: :creator_facet
     config.add_show_field 'dcterms_language_display',               label: I18n.t('meta.search.labels.dcterms_language')
-    config.add_show_field 'edm_is_shown_at_display',                label: I18n.t('meta.search.labels.edm_is_shown_at'), helper_method: 'linkify'
-    config.add_show_field 'edm_is_shown_by_display',                label: I18n.t('meta.search.labels.edm_is_shown_by'), helper_method: 'linkify'
+    config.add_show_field 'edm_is_shown_at_display',                label: I18n.t('meta.search.labels.edm_is_shown_at'), helper_method: :linkify
+    config.add_show_field 'edm_is_shown_by_display',                label: I18n.t('meta.search.labels.edm_is_shown_by'), helper_method: :linkify
     config.add_show_field 'dcterms_rights_holder_display',          label: I18n.t('meta.search.labels.dcterms_rights_holder')
     config.add_show_field 'dcterms_bibliographic_citation_display', label: I18n.t('meta.search.labels.dcterms_bibliographic_citation')
     config.add_show_field 'dcterms_extent_display',                 label: I18n.t('meta.search.labels.dcterms_extent')
