@@ -23,7 +23,7 @@ module ApplicationHelper
     values = options[:value]
     values.map! do |v|
       URI.extract(v).each do |uri|
-        v = v.sub(uri, link_to(uri))
+        v = v.sub(uri, link_to(uri, uri))
       end
       v
     end
