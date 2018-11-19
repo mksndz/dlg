@@ -19,12 +19,20 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
       expect(JSON.parse(response.body).length).to eq 2
     end
     it 'returns holding institutions filtered by institution type' do
+      Fabricate(:holding_institution, institution_type: '###')
       get '/api/v2/holding_institutions.json',
-          { page: 4, per_page: 1, type: @holding_institution.institution_type },
+          { page: 1, per_page: 1, type: '###' },
           headers
       expect(JSON.parse(response.body)[0]['institution_type']).to(
-        eq(@holding_institution.institution_type)
+        eq('###')
       )
+    end
+    it 'returns holding institutions filtered by starting letter' do
+      Fabricate(:holding_institution, authorized_name: '# Holding Inst')
+      get '/api/v2/holding_institutions.json',
+          { page: 1, per_page: 10, letter: '#' },
+          headers
+      expect(JSON.parse(response.body).length).to eq 1
     end
     it 'includes collection information' do
       get '/api/v2/holding_institutions.json', { page: 1, per_page: 1 }, headers
