@@ -144,5 +144,33 @@ RSpec.describe Collection, type: :model do
         expect(batch_item.collection).to be_nil
       end
     end
+    context 'geocoding' do
+      context 'coordinate lookup on save' do
+        it 'finds matching coordinates in existing Items' do
+          Fabricate :item_with_parents
+          bi = Fabricate.build(
+            :batch_item,
+            dcterms_spatial: ['United States, Georgia, Clarke County, Athens']
+          )
+          bi.save
+          expect(bi.dcterms_spatial).to(
+            eq ['United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358']
+          )
+        end
+        it 'finds matching coordinates using Geocoder' do
+          Fabricate :item_with_parents
+          collection = Fabricate.build(
+            :collection,
+            repository: Repository.last,
+            portals: Repository.last.portals,
+            dcterms_spatial: ['United States, Georgia, Clarke County, Athens']
+          )
+          collection.save
+          expect(collection.dcterms_spatial).to(
+            eq ['United States, Georgia, Clarke County, Athens, 33.960948, -83.3779358']
+          )
+        end
+      end
+    end
   end
 end

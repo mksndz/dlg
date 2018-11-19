@@ -1,3 +1,4 @@
+# represent a DLG Collection
 class Collection < ActiveRecord::Base
   include Slugged
   include IndexFilterable
@@ -5,6 +6,7 @@ class Collection < ActiveRecord::Base
   include Portable
   include CollectionValidations
   include Provenanced
+  include MetaGeocodable
 
   has_many :items, dependent: :destroy
   has_many :public_items, -> { where public: true }, class_name: 'Item'
@@ -22,6 +24,7 @@ class Collection < ActiveRecord::Base
   before_destroy :clear_from_other_collections
   before_save :update_record_id
   after_update :reindex_children
+  after_save :lookup_coordinates
 
   def self.index_query_fields
     %w[repository_id public].freeze
@@ -285,6 +288,5 @@ class Collection < ActiveRecord::Base
       i.save(validate: false)
     end
   end
-
 end
 
