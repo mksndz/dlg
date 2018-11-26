@@ -21,7 +21,7 @@ module Api
       private
 
       def record_id?(id)
-        id =~ /^[a-zA-Z0-9-]+_[a-zA-Z0-9-]+$/
+        id =~ /^[a-z0-9-]+_[a-z0-9-]+$/
       end
 
       def filter_collections_by_portal
