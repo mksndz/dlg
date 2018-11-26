@@ -37,9 +37,10 @@ RSpec.describe 'API V2 for Items', type: :request do
           headers
       json = JSON.parse(response.body)
       expect(json['id']).to eq @collection.id
+      expect(json['holding_institution_image']).to eq @collection.holding_institution_image
     end
     it 'returns all data about an item using database ID' do
-      get "/api/v2/collections/#{@collection.record_id}.json",
+      get "/api/v2/collections/#{@collection.id}.json",
           {},
           headers
       json = JSON.parse(response.body)

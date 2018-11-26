@@ -243,7 +243,7 @@ class Collection < ActiveRecord::Base
   def as_json(options = {})
     new_options = {
       except: :legacy_dcterms_provenance,
-      methods: :dcterms_provenance
+      methods: %i[dcterms_provenance holding_institution_image]
     }
     super(options.merge!(new_options))
   end

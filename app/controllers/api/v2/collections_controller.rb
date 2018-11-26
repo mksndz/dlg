@@ -10,22 +10,23 @@ module Api
       end
 
       def show
-        collection = if numerical? params[:id]
-                       Collection.find params[:id]
-                     else
+        collection = if record_id? params[:id]
                        Collection.find_by_record_id params[:id]
+                     else
+                       Collection.find params[:id]
                      end
         render json: collection, include: %i[portals]
       end
 
       private
 
-      def numerical?(id)
-        id =~ /^[0-9]+$/
+      def record_id?(id)
+        id =~ /^[a-zA-Z0-9-]+_[a-zA-Z0-9-]+$/
       end
 
       def filter_collections_by_portal
         return unless params[:portal]
+
         @collections = @collections.includes(:portals)
                                    .joins(:portals)
                                    .where(portals: { code: params[:portal] })

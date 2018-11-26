@@ -69,6 +69,9 @@ feature 'Holding Institution management' do
       end
       context 'image uploading' do
         it 'allows for image uploading, saving and display' do
+          holding_institution.remove_image!
+          holding_institution.save
+          visit edit_holding_institution_path(holding_institution)
           attach_file(
             I18n.t('activerecord.attributes.holding_institution.image'),
             Rails.root.to_s + '/spec/files/aarl.gif'

@@ -18,4 +18,5 @@ Fabricator(:holding_institution) do
   grant_partnerships { Faker::Hipster.sentence(2) }
   notes { Faker::Hipster.sentence(10) }
   parent_institution { Faker::University.name }
+  image File.open("#{Rails.root}/spec/files/aarl.gif")
 end
