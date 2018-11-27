@@ -29,6 +29,7 @@ module Sorting
 
   def check_columns_for_field(entity, field)
     return false unless field
+
     field = field[(field.index('.') + 1)..-1] if field.index('.')
     current_class(entity).column_names.include?(field)
   end

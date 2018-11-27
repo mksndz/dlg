@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     get 'auth/invitations', to: 'invitations#index'
   end
 
-  resource :profile, only: [:show, :edit], controller: 'profile' do
+  resource :profile, only: %i[show edit], controller: 'profile' do
     collection do
       patch 'update', as: 'update'
     end
@@ -92,7 +92,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :batch_imports, except: [:edit, :update] do
+    resources :batch_imports, except: %i[edit update] do
       collection do
         get 'help'
       end
@@ -102,7 +102,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :fulltext_ingests, except: [:edit, :update]
+  resources :fulltext_ingests, except: %i[edit update]
 
   resource :catalog, only: [:index], controller: 'catalog', constraints: { id: /.*/, format: false } do
     concerns :searchable
