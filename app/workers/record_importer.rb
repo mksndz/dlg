@@ -28,6 +28,7 @@ class RecordImporter
           next unless
             node.name == 'item' &&
             node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
+
           count += 1
           record = Hash.from_xml(node.outer_xml)
           unless record
@@ -185,6 +186,7 @@ class RecordImporter
     prepared_data = {}
     record_data.each do |k, v|
       next unless BatchItem.column_names.include?(k)
+
       prepared_data[k] = if v.is_a? Array
                            v.map do |val|
                              val.gsub('\\n', "\n").gsub('\\t', "\t").strip if val.is_a? String

@@ -35,6 +35,7 @@ RSpec.configure do |config|
     HoldingInstitution.destroy_all
     Project.destroy_all
     Feature.destroy_all
+    Page.destroy_all
   end
 
   config.before(:all) do

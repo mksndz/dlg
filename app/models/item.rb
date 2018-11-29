@@ -11,6 +11,7 @@ class Item < ActiveRecord::Base
   belongs_to :collection, counter_cache: true
   has_one :repository, through: :collection
   has_many :batch_items
+  has_many :pages
 
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection
@@ -100,7 +101,7 @@ class Item < ActiveRecord::Base
     text :collection_titles
 
     # Full Text
-    text :fulltext
+    text :pages_or_item_fulltext
 
     # Blacklight 'Required' fields # TODO do we use them properly in DLG?
     string(:title, as: 'title') { dcterms_title.first ? dcterms_title.first : slug }
@@ -128,7 +129,18 @@ class Item < ActiveRecord::Base
   end
 
   def self.index_query_fields
-    %w(collection_id public valid_item).freeze
+    %w[collection_id public valid_item].freeze
+  end
+
+  def pages_or_item_fulltext
+    pages_fulltext || fulltext
+  end
+
+  def pages_fulltext
+    txt = pages.map(&:fulltext).reject(&:blank?).join("\n")
+    return nil if txt.empty?
+
+    txt
   end
 
   def display?
@@ -192,7 +204,8 @@ class Item < ActiveRecord::Base
       'id',
       'created_at',
       'updated_at',
-      'valid_item'
+      'valid_item',
+      'pages_count'
     )
 
     batch_item = BatchItem.new attributes
