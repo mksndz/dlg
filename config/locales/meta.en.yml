@@ -254,11 +254,20 @@ en:
           invalid_on_save: 'The %{entity} could not be saved due to the following errors:'
           not_created: '%{entity} could not be created!'
           not_updated: '%{entity} could not be updated!'
+          not_deleted: '%{entity} could not be deleted!'
         success:
           created: '%{entity} created'
           updated: '%{entity} updated'
           destroyed: '%{entity} deleted'
       errors:
+    page:
+      actions:
+        add: 'New Page'
+      labels:
+        columns:
+          title: 'Title'
+          number: 'Number'
+          fulltext: 'Full Text'
     item:
       actions:
         add: 'New Item'

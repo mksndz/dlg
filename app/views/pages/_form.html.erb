@@ -1,0 +1,10 @@
+<%= bootstrap_form_for [@item, @page] do |f| %>
+  <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save',
+                        entity: 'Page') %>
+  <%= f.text_field :number %>
+  <%= f.text_field :title %>
+  <%= f.text_area :fulltext, class: 'fulltext-input' %>
+  <div class="action-buttons">
+      <%= f.primary I18n.t('meta.defaults.actions.save'), class: 'btn btn-primary' %>
+  </div>
+<% end %>

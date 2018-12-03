@@ -1,0 +1,24 @@
+<%= content_for :title do %>
+    Show Page
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @page.title %>
+<% end %>
+
+<% breadcrumb :page, @page %>
+
+<%= link_to t('meta.defaults.actions.edit'), edit_item_page_path(@page.item, @page),
+            class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render 'shared/show_field',
+           field_name: t('meta.page.labels.columns.number'),
+           value: @page.number %>
+<%= render 'shared/show_field',
+           field_name: t('meta.page.labels.columns.title'),
+           value: @page.title %>
+<%= render 'shared/show_field',
+           field_name: t('meta.page.labels.columns.fulltext'),
+           value: @page.fulltext %>

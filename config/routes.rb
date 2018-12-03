@@ -53,25 +53,22 @@ Rails.application.routes.draw do
   end
 
   resources :items do
-
+    resources :pages
     resources :item_versions, only: [] do
       member do
         get :diff, to: 'item_versions#diff'
         patch :rollback, to: 'item_versions#rollback'
       end
     end
-
     collection do
       delete 'multiple_destroy', constraints: { format: :json }
       post 'xml'
       get 'deleted'
     end
-
     member do
       get 'copy'
       get 'fulltext'
     end
-
   end
 
   resources :batches do

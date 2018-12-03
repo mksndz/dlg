@@ -1,0 +1,70 @@
+<%= content_for :title do %>
+    Pages for Item
+<% end %>
+
+<%=
+  content_for :subtitle do
+    @item.record_id
+  end
+%>
+
+<%# breadcrumb :batch_items, @batch %>
+
+<div class="btn-group" role="group" aria-label="Batch Items Actions">
+  <%= link_to(t('meta.page.actions.add'), new_item_page_path(@item), class: 'btn btn-default') %>
+</div>
+
+<%= render 'shared/per_pager' %>
+
+<br><br>
+
+<% if @pages.empty? %>
+
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Pages') %></p>
+
+<% else %>
+
+    <%= paginate @pages %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'page.number', t('meta.page.labels.columns.number') %>
+        </th>
+        <th>
+          <%= sortable 'page.title', t('meta.page.labels.columns.title') %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @pages.each do |page| %>
+          <tr>
+            <td>
+              <%= link_to page.number, item_page_path(page.item, page) %>
+            </td>
+            <td>
+              <%= link_to page.title, edit_item_page_path(page.item, page) %>
+            </td>
+            <td>
+              <div class="btn-group btn-group-xs">
+                <%= link_to t('meta.defaults.actions.view'), item_page_path(page.item, page),
+                            class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.edit'), edit_item_page_path(page.item, page),
+                            class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.destroy'), item_page_path(page.item, page),
+                            method: :delete,
+                            data: { confirm: t('meta.defaults.labels.confirm') },
+                            class: 'btn btn-default' %>
+              </div>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @pages %>
+
+<% end %>

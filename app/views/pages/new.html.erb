@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-sm-12 col-md-11">
+    <%= content_for :title do %>
+        New Page
+    <% end %>
+
+    <% breadcrumb :page, @page %>
+
+    <%= render 'form' %>
+  </div>
+</div>
