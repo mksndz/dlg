@@ -19,27 +19,15 @@ class PagesController < ApplicationController
   end
 
   def create
-    @page = Page.new page_params
-    @page.item = @item
+    @page = Page.new page_params.merge!(item: @item)
     respond_to do |format|
       if @page.save
         format.html do
-          redirect_to item_page_path(@page.item, @page),
-                      notice: I18n.t(
-                        'meta.defaults.messages.success.created',
-                        entity: 'Page'
-                      )
+          redirect_to item_page_path(@page.item, @page), notice:
+            I18n.t('meta.defaults.messages.success.created', entity: 'Page')
         end
-        format.json { render json: :show, status: :created, location: @page }
       else
-        format.html do
-          redirect_to new_item_page_path,
-                      alert: I18n.t(
-                        'meta.defaults.messages.errors.not_created',
-                        entity: 'Page'
-                      )
-        end
-        format.json { render json: @page.errors, status: :unprocessable_entity }
+        format.html { render :new }
       end
     end
   end
@@ -50,20 +38,11 @@ class PagesController < ApplicationController
     respond_to do |format|
       if @page.update page_params
         format.html do
-          redirect_to item_page_path(@page.item, @page),
-                      notice: I18n.t(
-                        'meta.defaults.messages.success.updated',
-                        entity: 'Page'
-                      )
+          redirect_to item_page_path(@page.item, @page), notice:
+            I18n.t('meta.defaults.messages.success.updated', entity: 'Page')
         end
       else
-        format.html do
-          render :edit,
-                 alert: I18n.t(
-                   'meta.defaults.messages.errors.not_updated',
-                   entity: 'Page'
-                 )
-        end
+        format.html { render :edit }
       end
     end
   end
@@ -72,17 +51,13 @@ class PagesController < ApplicationController
     respond_to do |format|
       if @page.destroy
         format.html do
-          redirect_to item_pages_path(@page.item),
-                      notice: I18n.t(
-                        'meta.defaults.messages.success.destroyed',
-                        entitiy: 'Page'
-                      )
+          redirect_to item_pages_path(@page.item), notice:
+            I18n.t('meta.defaults.messages.success.destroyed', entity: 'Page')
         end
       else
         format.html do
-          render :index,
-                 alert: I18n.t('meta.defaults.messages.errors.not_deleted',
-                               entity: 'Page')
+          redirect_to :index, alert:
+            I18n.t('meta.defaults.messages.errors.not_deleted', entity: 'Page')
         end
       end
     end

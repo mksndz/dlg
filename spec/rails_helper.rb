@@ -24,6 +24,10 @@ RSpec.configure do |config|
   # clean up DB & Solr index before test suite
   config.before(:suite) do
     User.destroy_all
+    HoldingInstitution.destroy_all
+    Project.destroy_all
+    Feature.destroy_all
+    Page.destroy_all
     FulltextIngest.destroy_all
     BatchItem.destroy_all
     Batch.destroy_all
@@ -32,10 +36,6 @@ RSpec.configure do |config|
     Collection.destroy_all
     Repository.destroy_all
     Portal.destroy_all
-    HoldingInstitution.destroy_all
-    Project.destroy_all
-    Feature.destroy_all
-    Page.destroy_all
   end
 
   config.before(:all) do

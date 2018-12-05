@@ -254,6 +254,7 @@ en:
           invalid_on_save: 'The %{entity} could not be saved due to the following errors:'
           not_created: '%{entity} could not be created!'
           not_updated: '%{entity} could not be updated!'
+          not_saved: '%{entity} could not be saved!'
           not_deleted: '%{entity} could not be deleted!'
         success:
           created: '%{entity} created'
@@ -273,6 +274,7 @@ en:
         add: 'New Item'
         copy: 'Copy Item'
         xml: 'XML for Item'
+        pages: 'Pages'
         versions: 'Previous Versions'
         deleted: 'Deleted Items'
         restore: 'Restore'

@@ -9,6 +9,11 @@ en:
       last_word_connector: "<br> "
   activerecord:
     attributes:
+      page:
+        item_id: 'Item'
+        number: 'Number'
+        title: 'Title'
+        fulltext: 'Full Text'
       project:
         title: 'Title'
         fiscal_year: 'Fiscal Year'
