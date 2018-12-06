@@ -14,6 +14,7 @@
 
 <h2><%= t('meta.holding_institution.labels.public') %></h2>
 <hr>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.slug'), value: @holding_institution.slug %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.repository_ids'), values: @holding_institution.repositories.any? ? @holding_institution.repositories.collect(&:title) : nil %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.authorized_name'), value: @holding_institution.authorized_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.display_name'), value: @holding_institution.display_name %>

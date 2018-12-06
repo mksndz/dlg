@@ -19,6 +19,7 @@ en:
         created_at: 'Created At'
         updated_at: 'Updated At'
       holding_institution:
+        slug: 'Slug'
         parent_institution: 'Parent Institution'
         notes: 'Notes'
         repository_ids: 'Repositories'

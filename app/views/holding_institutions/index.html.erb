@@ -31,6 +31,9 @@
           <%= sortable 'holding_institutions.id', t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
+          <%= sortable 'holding_institutions.slug', t('meta.defaults.labels.columns.slug') %>
+        </th>
+        <th>
           <%= sortable 'holding_institutions.authorized_name', t('meta.defaults.labels.columns.name') %>
         </th>
         <th>
@@ -53,6 +56,9 @@
           <tr>
             <td>
               <%= link_to holding_institution.id, holding_institution_path(holding_institution) %>
+            </td>
+            <td>
+              <%= link_to holding_institution.slug, holding_institution_path(holding_institution) %>
             </td>
             <td>
               <%= link_to holding_institution.authorized_name, holding_institution_path(holding_institution) %>
