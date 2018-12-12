@@ -8,7 +8,7 @@
   end
 %>
 
-<%# breadcrumb :batch_items, @batch %>
+<% breadcrumb :pages, @item %>
 
 <div class="btn-group" role="group" aria-label="Batch Items Actions">
   <%= link_to(t('meta.page.actions.add'), new_item_page_path(@item), class: 'btn btn-default') %>

@@ -278,10 +278,10 @@ end
 
 # PAGE
 
-crumb :pages do |page|
-  link page.item.record_id, page.item
-  link 'Pages', item_page_path(page)
-  parent :item
+crumb :pages do |item|
+  link item.record_id, item
+  link 'Pages', item_pages_path(item)
+  parent :items
 end
 
 crumb :page do |page|
