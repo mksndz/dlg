@@ -61,6 +61,8 @@ feature 'Page Management' do
         new_number = pg.number.to_i + 1
         fill_in(I18n.t('activerecord.attributes.page.number'),
                 with: new_number)
+        fill_in(I18n.t('activerecord.attributes.page.file_type'),
+                with: 'jpg')
         click_on I18n.t('meta.defaults.actions.save')
         expect(page).to have_current_path item_page_path(pg.item, Page.last)
         expect(page).to have_text new_number

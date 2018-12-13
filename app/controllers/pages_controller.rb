@@ -15,7 +15,7 @@ class PagesController < ApplicationController
   def show; end
 
   def new
-    @page = Page.new item: @item
+    @page = Page.new item: @item, file_type: item_file_type
   end
 
   def create
@@ -66,10 +66,23 @@ class PagesController < ApplicationController
   private
 
   def page_params
-    params.require(:page).permit(:item_id, :fulltext, :title, :number)
+    params.require(:page).permit(:item_id, :fulltext, :title, :number,
+                                 :file_type)
   end
 
   def set_item
     @item = Item.find params[:item_id]
+  end
+
+  def item_file_type
+    case @item.dc_format.first
+    # jpg
+    when /jpg/
+      'jpg'
+    when /jpeg/
+      'jpeg'
+    when /pdf/
+      'pdf'
+    end
   end
 end

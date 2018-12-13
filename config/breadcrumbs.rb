@@ -285,7 +285,8 @@ crumb :pages do |item|
 end
 
 crumb :page do |page|
-  parent :item, page.item
+  link 'Items', items_path
+  link page.item.record_id, page.item
   link 'Pages', item_pages_path(page.item)
   if page.id
     link page.number

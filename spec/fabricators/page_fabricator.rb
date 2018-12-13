@@ -1,5 +1,6 @@
 Fabricator(:page) do
   number { Fabricate.sequence(1) }
+  file_type 'jpg'
   title { Faker::Hipster.sentence }
 end
 

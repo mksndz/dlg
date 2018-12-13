@@ -3,6 +3,7 @@
                         entity: 'Page') %>
   <%= f.text_field :number %>
   <%= f.text_field :title %>
+  <%= f.text_field :file_type %>
   <%= f.text_area :fulltext, class: 'fulltext-input' %>
   <div class="action-buttons">
       <%= f.primary I18n.t('meta.defaults.actions.save'), class: 'btn btn-primary' %>

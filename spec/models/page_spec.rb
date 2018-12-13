@@ -15,6 +15,9 @@ describe Page do
     it 'has fulltext' do
       expect(page.fulltext).to be_a String
     end
+    it 'has a file type' do
+      expect(page.file_type).to be_a String
+    end
   end
   context 'validations' do
     it 'requires a number' do

@@ -10,15 +10,22 @@
 
 <%= link_to t('meta.defaults.actions.edit'), edit_item_page_path(@page.item, @page),
             class: 'btn btn-default' %>
+<%= link_to t('meta.defaults.labels.iiif_info'), @page.iiif_info_link,
+            class: 'btn btn-default', target: '_blank' %>
+<%= link_to t('meta.defaults.labels.iiif_file'), @page.iiif_file_link,
+            class: 'btn btn-default', target: '_blank' %>
 
 <br><br>
 
 <%= render 'shared/show_field',
-           field_name: t('meta.page.labels.columns.number'),
+           field_name: t('activerecord.attributes.page.title'),
            value: @page.number %>
 <%= render 'shared/show_field',
-           field_name: t('meta.page.labels.columns.title'),
+           field_name: t('activerecord.attributes.page.title'),
            value: @page.title %>
 <%= render 'shared/show_field',
-           field_name: t('meta.page.labels.columns.fulltext'),
+           field_name: t('activerecord.attributes.page.file_type'),
+           value: @page.file_type %>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.page.fulltext'),
            value: @page.fulltext %>

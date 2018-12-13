@@ -16,6 +16,10 @@ module ItemsHelper
     end
   end
 
+  def pages_count(rec)
+    rec.pages_count ? rec.pages_count : '0'
+  end
+
   def portal_badges(rec)
     labels = []
     rec.portals.each do |p|

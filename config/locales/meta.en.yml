@@ -219,6 +219,8 @@ en:
         save_and_goto_previous: 'Save and Go To Previous'
         filter: 'Filter'
       labels:
+        iiif_info: 'IIIF Info'
+        iiif_file: 'IIIF File'
         na: 'N/A'
         unfiltered_index_subtitle: 'All of Them'
         filtered_by_subtitle: 'For %{title}'
@@ -281,6 +283,7 @@ en:
         full_text: 'Full Text'
       labels:
         columns:
+          pages: 'Pages'
           collection: 'Collection'
           deleted_by: 'Deleted By'
           deleted_at: 'At'

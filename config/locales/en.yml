@@ -12,6 +12,7 @@ en:
       page:
         item_id: 'Item'
         number: 'Number'
+        file_type: 'File Type'
         title: 'Title'
         fulltext: 'Full Text'
       project:
