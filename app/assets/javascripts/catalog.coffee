@@ -3,9 +3,10 @@ Blacklight.onLoad ->
   $("a.delete-action").on("click", (e, data, status, xhr) ->
     e.preventDefault()
     entities = get_checked_items()
+    console.log('Checked IDs: ' + entities)
     url = $(this).data('url')
     if entities
-      count = entities.length
+      count = (entities.match(/,/g) || []).length + 1
       return unless window.confirm("Are you sure you want to delete the " + count + " selected records?")
       $.ajax url,
         type: "DELETE",
