@@ -2,6 +2,8 @@
 
 A [Blacklight](https://github.com/projectblacklight/blacklight)-based administration app for the [Digital Library of Georgia](http://dlg.galileo.usg.edu/). Currently a work in progress!
 
+See [this project on GitHub](https://github.com/GIL-GALILEO/dlg)
+
 ### Developer Information
 
 #### Requirements
