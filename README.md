@@ -9,7 +9,7 @@ See [this project on GitHub](https://github.com/GIL-GALILEO/meta)
 #### Requirements
 + Ruby 2.2.2
 + Rails 4.2.5
-+ PostgresSQL running *(elaborate)*
++ PostgreSQL running *(elaborate)*
 + Solr 5
 + Redis
 

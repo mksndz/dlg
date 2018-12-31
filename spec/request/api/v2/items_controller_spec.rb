@@ -4,7 +4,7 @@ RSpec.describe 'API V2 for Items', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.api_token }
   context 'can list using #index' do
     before(:each) do
-      Fabricate.times(11, :item_with_parents)
+      Fabricate.times 11, :item_with_parents, public: true
       @item = Item.last
     end
     it 'returns an array of items' do
@@ -45,7 +45,7 @@ RSpec.describe 'API V2 for Items', type: :request do
   end
   context 'can get single record info using #show' do
     before(:each) do
-      @item = Fabricate :item_with_parents
+      @item = Fabricate :item_with_parents, public: true
     end
     it 'returns all data about an item using record_id' do
       get "/api/v2/items/#{@item.record_id}.json",

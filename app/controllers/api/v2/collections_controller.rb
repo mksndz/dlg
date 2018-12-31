@@ -3,7 +3,7 @@ module Api
     # API v2 controller for Collections
     class CollectionsController < BaseController
       def index
-        @collections = Collection.all
+        @collections = Collection.where public: true
         filter_collections_by_portal
         render json: @collections.page(params[:page])
                                  .per(params[:per_page])
@@ -15,6 +15,8 @@ module Api
                      else
                        Collection.find params[:id]
                      end
+        raise ActiveRecord::RecordNotFound unless collection.public?
+
         render json: collection, include: %i[portals]
       end
 

@@ -3,7 +3,7 @@ module Api
     # API v2 controller for Items
     class ItemsController < BaseController
       def index
-        @items = Item.all
+        @items = Item.where public: true
         filter_items_by_portal
         filter_items_by_collection
         render json: @items.page(params[:page])
@@ -17,6 +17,8 @@ module Api
                else
                  Item.find_by_record_id params[:id]
                end
+        raise ActiveRecord::RecordNotFound unless item.public?
+
         render json: item, include: %i[portals collection]
       end
 
@@ -28,6 +30,7 @@ module Api
 
       def filter_items_by_portal
         return unless params[:portal]
+
         @items = @items.includes(:portals)
                        .joins(:portals)
                        .where(portals: { code: params[:portal] })
@@ -35,6 +38,7 @@ module Api
 
       def filter_items_by_collection
         return unless params[:collection]
+
         @items = if numerical? params[:collection]
                    @items.where(collection_id: params[:collection])
                  else

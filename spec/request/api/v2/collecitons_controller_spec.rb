@@ -4,7 +4,7 @@ RSpec.describe 'API V2 for Items', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.api_token }
   context 'can list using #index' do
     before(:each) do
-      Fabricate.times(11, :empty_collection)
+      Fabricate.times 11, :empty_collection, public: true
       @collection = Collection.last
     end
     it 'returns an array of collections' do
@@ -26,10 +26,24 @@ RSpec.describe 'API V2 for Items', type: :request do
         eq(@collection.portals.first.code)
       )
     end
+    it 'returns only public collections' do
+      Fabricate(
+        :collection,
+        public: false,
+        portals: @collection.portals,
+        repository: @collection.repository
+      )
+      get '/api/v2/collections.json',
+          { portal: @collection.portals.first.code },
+          headers
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response.length).to eq 1
+      expect(parsed_response[0]['public']).to be_truthy
+    end
   end
   context 'can get single record info using #show' do
     before(:each) do
-      @collection = Fabricate :empty_collection
+      @collection = Fabricate :empty_collection, public: true
     end
     it 'returns all data about an collection using record_id' do
       get "/api/v2/collections/#{@collection.record_id}.json",
