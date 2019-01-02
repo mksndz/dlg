@@ -5,7 +5,8 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
   context 'can list using #index' do
     before(:each) do
       @collection = Fabricate :empty_collection
-      Fabricate.times(3, :holding_institution, repositories: [@collection.repository])
+      Fabricate.times(3, :holding_institution,
+                      repositories: [@collection.repository])
       @holding_institution = HoldingInstitution.last
     end
     it 'returns an array of holding institutions' do
@@ -59,7 +60,8 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
       portal = Fabricate :portal
       hi = Fabricate(:holding_institution,
                      repositories: [
-                       Fabricate(:empty_repository, portals: [portal])])
+                       Fabricate(:empty_repository, portals: [portal])
+                     ])
       get(
         '/api/v2/holding_institutions.json',
         { portal: portal.code, letter: hi.authorized_name[0],
