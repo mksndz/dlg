@@ -5,7 +5,7 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
   context 'can list using #index' do
     before(:each) do
       @collection = Fabricate :empty_collection
-      Fabricate.times(3, :holding_institution)
+      Fabricate.times(3, :holding_institution, repositories: [@collection.repository])
       @holding_institution = HoldingInstitution.last
     end
     it 'returns an array of holding institutions' do
@@ -42,6 +42,36 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
         eq(@collection.id)
       )
     end
+    it 'returns holding institutions filtered by portal' do
+      portal = Fabricate :portal
+      Fabricate(:holding_institution,
+                repositories: [Fabricate(:empty_repository, portals: [portal])])
+      get(
+        '/api/v2/holding_institutions.json',
+        { portal: portal.code },
+        headers
+      )
+      json = JSON.parse(response.body)
+      expect(json.length).to eq 1
+      expect(json[0]['portals'][0]['code']).to eq portal.code
+    end
+    it 'returns holding institutions filtered by portal, letter and type' do
+      portal = Fabricate :portal
+      hi = Fabricate(:holding_institution,
+                     repositories: [
+                       Fabricate(:empty_repository, portals: [portal])])
+      get(
+        '/api/v2/holding_institutions.json',
+        { portal: portal.code, letter: hi.authorized_name[0],
+          type: hi.institution_type },
+        headers
+      )
+      json = JSON.parse(response.body)
+      expect(json.length).to eq 1
+      expect(json[0]['authorized_name']).to eq hi.authorized_name
+      expect(json[0]['portals'][0]['code']).to eq portal.code
+    end
+
   end
   context 'can get single record info using #show' do
     before(:each) do
