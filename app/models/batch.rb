@@ -12,7 +12,7 @@ class Batch < ActiveRecord::Base
   validates_presence_of :user, :name
 
   def self.index_query_fields
-    %w(user_id committed_at).freeze
+    %w[user_id committed_at].freeze
   end
 
   def invalid_batch_items?

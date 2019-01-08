@@ -143,6 +143,13 @@ class Item < ActiveRecord::Base
     txt
   end
 
+  def page_urls
+    urls = pages.map(&:iiif_info_link).reject(&:blank?)
+    return nil unless urls.any?
+
+    urls
+  end
+
   def display?
     repository.public && collection.public && public
   end

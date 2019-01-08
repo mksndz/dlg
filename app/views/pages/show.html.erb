@@ -17,6 +17,15 @@
 
 <br><br>
 
+<%# TODO: viewer does not show correct page when using not-iiif-spec PDF pagination param with cantaloupe %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="well">
+      <%= openseadragon_picture_tag @page.iiif_info_link %>
+    </div>
+  </div>
+</div>
+
 <%= render 'shared/show_field',
            field_name: t('activerecord.attributes.page.title'),
            value: @page.number %>

@@ -63,8 +63,6 @@ class PagesController < ApplicationController
     end
   end
 
-  def iiif; end
-
   private
 
   def page_params

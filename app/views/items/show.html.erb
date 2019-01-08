@@ -19,6 +19,16 @@
 
 <br><br>
 
+<% if @item.pages.any? %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="well">
+        <%= openseadragon_picture_tag @item.page_urls, { data: { openseadragon: { sequenceMode: true }}} %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <%= render 'shared/show_field', field_name: t('meta.item.labels.view.thumbnail'), value: legacy_thumbnail_tag(@item) %>
 
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.item.portal_ids'), value: portals_list(@item) %>
