@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181213185026) do
+ActiveRecord::Schema.define(version: 20190108185821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(version: 20181213185026) do
     t.string   "parent_institution"
     t.text     "notes"
     t.string   "display_name"
+    t.string   "slug"
   end
 
   add_index "holding_institutions", ["authorized_name"], name: "index_holding_institutions_on_authorized_name", using: :btree
@@ -327,6 +328,19 @@ ActiveRecord::Schema.define(version: 20181213185026) do
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
   add_index "items", ["valid_item"], name: "index_items_on_valid_item", using: :btree
+
+  create_table "page_ingests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "description"
+    t.string   "file"
+    t.json     "results_json", default: {}
+    t.json     "page_json",    default: {}
+    t.datetime "queued_at"
+    t.datetime "finished_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "pages", force: :cascade do |t|
     t.integer  "item_id"
