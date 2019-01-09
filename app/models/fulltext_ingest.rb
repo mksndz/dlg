@@ -3,22 +3,22 @@
 # represent an instance of an ingest of fulltext data
 class FulltextIngest < ActiveRecord::Base
   belongs_to :user
-  validates_presence_of :title
-  validates_uniqueness_of :title
-  validates_presence_of :file
+  validates :title, presence: true
+  validates :title, uniqueness: true
+  validates :file, presence: true
   mount_uploader :file, FulltextUploader
 
   def undo
     begin
       Item.where('record_id IN (?)', modified_record_ids).update_all(
-        fulltext: nil, updated_at: Time.now
+        fulltext: nil, updated_at: Time.zone.now
       )
     rescue StandardError => e
-      results['status'] == 'undo failed'
-      results['message'] == e.message
+      results['status'] = 'undo failed'
+      results['message'] = e.message
       return false
     end
-    self.undone_at = Time.now
+    self.undone_at = Time.zone.now
     save
   end
 
@@ -36,6 +36,7 @@ class FulltextIngest < ActiveRecord::Base
 
   def processed_files
     return nil unless results.key? 'files'
+
     results['files']
   end
 
