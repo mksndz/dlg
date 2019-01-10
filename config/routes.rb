@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   end
 
   resources :items do
+    resources :pages
     resources :item_versions, only: [] do
       member do
         get :diff, to: 'item_versions#diff'

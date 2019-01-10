@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe PageImporter, type: :model do
+describe PageIngest, type: :model do
   describe '#perform' do
     let(:page_ingest) { Fabricate :page_ingest }
     before(:each) do
@@ -18,8 +18,8 @@ describe PageImporter, type: :model do
         portals c.portals
       end
     end
-    it 'builds pages and saves results' do
-
-    end
+    # it 'builds pages and saves results' do
+    #
+    # end
   end
 end

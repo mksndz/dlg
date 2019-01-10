@@ -32,13 +32,13 @@ Fabricator(:page_ingest_with_json_and_results, from: :page_ingest) do
   page_json do
     [
       {
-        id: 'r1_c1_i1',
+        id: Fabricate(:item_with_parents).record_id,
         fulltext: 'First page fulltext',
         file_type: 'jp2',
         number: 1
       },
       {
-        id: 'r1_c1_i2',
+        id: Fabricate(:item_with_parents).record_id,
         fulltext: 'Second page fulltext',
         file_type: 'jp2',
         number: 2

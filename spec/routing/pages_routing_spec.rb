@@ -55,13 +55,5 @@ RSpec.describe PagesController, type: :routing do
         id: '1'
       )
     end
-    it 'routes to #iiif' do
-      expect(get: 'items/1/pages/1/iiif').to route_to(
-        controller: 'pages',
-        action: 'iiif',
-        item_id: '1',
-        id: '1'
-      )
-    end
   end
 end

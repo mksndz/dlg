@@ -252,7 +252,6 @@ ActiveRecord::Schema.define(version: 20190108185821) do
     t.string   "parent_institution"
     t.text     "notes"
     t.string   "display_name"
-    t.string   "slug"
   end
 
   add_index "holding_institutions", ["authorized_name"], name: "index_holding_institutions_on_authorized_name", using: :btree

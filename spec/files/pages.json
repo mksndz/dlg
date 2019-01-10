@@ -1,0 +1,14 @@
+[
+  {
+    "id": "r1_c1_i1",
+    "fulltext": "First page fulltext",
+    "file_type": "jp2",
+    "number": 1
+  },
+  {
+    "id": "r1_c1_i2",
+    "fulltext": "Second page fulltext",
+    "file_type": "jp2",
+    "number": 2
+  }
+]
