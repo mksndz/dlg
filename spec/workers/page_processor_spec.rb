@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe PageIngest, type: :model do
+describe PageProcessor, type: :model do
   describe '#perform' do
-    let(:page_ingest) { Fabricate :page_ingest }
+    let(:page_ingest) { Fabricate :page_ingest_with_json }
     before(:each) do
       r = Fabricate :empty_repository, slug: 'r1'
       c = Fabricate(
@@ -18,8 +18,10 @@ describe PageIngest, type: :model do
         portals c.portals
       end
     end
-    # it 'builds pages and saves results' do
-    #
-    # end
+    it 'builds pages and saves results' do
+      performed = PageProcessor.perform(page_ingest.id)
+      page_ingest.reload
+      expect(performed).to be_truthy
+    end
   end
 end

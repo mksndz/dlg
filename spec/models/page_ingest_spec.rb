@@ -16,7 +16,7 @@ describe PageIngest do
       expect(page_ingest.user).to be_a User
     end
     it 'has a file' do
-      expect(page_ingest.file).not_to be_nil
+      expect(page_ingest.file).to be_a PageJsonUploader
     end
     it 'has a JSON results' do
       expect(page_ingest.results_json).to eq({})

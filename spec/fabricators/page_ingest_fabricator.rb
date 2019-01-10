@@ -1,8 +1,9 @@
 require 'faker'
 
 Fabricator(:page_ingest) do
-  title { Faker::Hipster.words 3 }
-  description { Faker::Hipster.words 7 }
+  title { Faker::Hipster.sentence 3 }
+  description { Faker::Hipster.sentence 7 }
+  file File.open(Rails.root.join('spec', 'files', 'pages.json'))
   user
 end
 
@@ -11,13 +12,13 @@ Fabricator(:page_ingest_with_json, from: :page_ingest) do
   page_json do
     [
       {
-        id: 'a_b_c1',
+        id: Fabricate(:item_with_parents).record_id,
         fulltext: 'First page fulltext',
         file_type: 'jp2',
         number: 1
       },
       {
-        id: 'a_b_c2',
+        id: Fabricate(:item_with_parents).record_id,
         fulltext: 'Second page fulltext',
         file_type: 'jp2',
         number: 2
