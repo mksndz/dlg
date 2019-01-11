@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get 'api/hi_info',            to: 'api#hi_info',           as: 'api_hi_info'
     get 'api/tab_features',       to: 'api#tab_features',      as: 'api_tab_features'
     get 'api/carousel_features',  to: 'api#carousel_features', as: 'api_carousel_features'
+    get 'dpla', to: 'dpla#index'
   end
 
   # API v2
