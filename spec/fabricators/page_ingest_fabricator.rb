@@ -40,22 +40,17 @@ Fabricator(:page_ingest_with_json, from: :page_ingest) do
   end
 end
 
-Fabricator(:page_ingest_with_bad_json, from: :page_ingest) do
+Fabricator(:page_ingest_with_bad_id, from: :page_ingest) do
   queued_at { Faker::Time.between(Time.zone.today - 1, Time.zone.today) }
   page_json do
     [
       {
-        id: Fabricate(:item_with_parents).record_id,
+        id: 'bad id',
         pages: [
           {
             fulltext: 'First page fulltext',
             file_type: 'jp2',
             number: 1
-          },
-          {
-            fulltext: 'Second page fulltext',
-            file_type: 'jp2',
-            number: 2
           }
         ]
       },
@@ -66,6 +61,23 @@ Fabricator(:page_ingest_with_bad_json, from: :page_ingest) do
             fulltext: 'First page fulltext',
             file_type: 'jp2',
             number: 1
+          }
+        ]
+      }
+    ]
+  end
+end
+
+Fabricator(:page_ingest_with_bad_page, from: :page_ingest) do
+  queued_at { Faker::Time.between(Time.zone.today - 1, Time.zone.today) }
+  page_json do
+    [
+      {
+        id: Fabricate(:item_with_parents).record_id,
+        pages: [
+          {
+            text: 'First page fulltext',
+            file_type: 'jp2'
           }
         ]
       }

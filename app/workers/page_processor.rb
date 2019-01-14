@@ -9,10 +9,18 @@ class PageProcessor
     @pi.page_json.each do |item_pages|
       record_id = item_pages.delete('id')
       item = Item.find_by record_id: record_id
-      add_error record_id, 'No Item for record_id' unless item
+      unless item
+        add_error record_id, 'No Item for record_id'
+        next
+      end
       item_pages['pages'].each do |protopage|
-        page = Page.create protopage.merge(item: item)
-        page.save ? page_added(page) : page_failed(page)
+        begin
+          page = Page.create protopage.merge(item: item)
+          page.save ? page_added(page) : page_failed(page)
+        rescue StandardError => e
+          add_error record_id, "Bad Page data for #{record_id}: #{e}"
+          next
+        end
       end
     end
     Sunspot.commit
@@ -20,7 +28,7 @@ class PageProcessor
     @pi.finished_at = Time.zone.today
     @pi.results_json = @results
     @slack.ping "Page ingest complete: `#{@pi.title}`" if Rails.env.production?
-    @pi.save
+    @pi.save!
   rescue StandardError => e
     @slack.ping "Page ingest (#{@pi.title}) failed: #{e}" if Rails.env.production?
     @pi.results_json = @results
@@ -70,7 +78,7 @@ class PageProcessor
         job_success 'All Pages created successfully'
       elsif @results[:errors].any? && @results[:added].any?
         job_partial 'Some Pages failed to be created'
-      elsif @results[:errors].any? && @results[:added].zero?
+      elsif @results[:errors].any? && @results[:added].empty?
         job_failed 'All Pages failed to be created'
       else
         job_failed 'Transcendent error state achieved'
