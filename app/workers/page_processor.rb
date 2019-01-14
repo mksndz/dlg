@@ -5,56 +5,75 @@ class PageProcessor
 
   def self.perform(page_ingest_id)
     @pi = PageIngest.find page_ingest_id
-    unless @pi
-      @results[:status] = 'failed'
-      @results[:message] = "Page Ingest with ID = #{page_ingest_id} could not be found."
-      @slack.ping "Page ingest (#{@pi.title}) failed: Page Ingest with ID = #{page_ingest_id} could not be found." if Rails.env.production?
-      @pi.results_json = @results
-      @pi.save
-      exit
-    end
     init_results
-    begin
-      @pi.page_json.each do |protopage|
-        record_id = protopage.delete('id')
-        item = Item.find_by record_id: record_id
-        unless item
-          @results[:errors] << { "#{record_id}": 'Could not find an Item using this record ID.' }
-        end
-        page = Page.create protopage.merge(item: item)
-        if page.save
-          @results[:added] << { "#{item.record_id}": "Page #{page.number} successfully added." }
-        else
-          @results[:errors] << { "#{item.record_id}": "Page #{page.number} save failed: #{page.errors}" }
-        end
-      end
-    rescue StandardError => e
-      # write error message to results
-      @results[:status] = 'failed'
-      @results[:message] = e.message
-      @slack.ping "Page ingest (#{@pi.title}) failed: #{e.message}" if Rails.env.production?
-      @pi.results_json = @results
-      @pi.save
-      exit
+    @pi.page_json.each do |protopage|
+      record_id = protopage.delete('id')
+      item = Item.find_by record_id: record_id
+      add_error record_id, 'No Item for record_id' unless item
+      page = Page.create protopage.merge(item: item)
+      page.save ? page_added(page) : page_failed(page)
     end
     Sunspot.commit
-    if @results[:errors].empty?
-      @results[:status] = 'success'
-      @results[:message] = 'All Pages created successfully'
-    elsif @results[:errors].any? && @results[:added].any?
-      @results[:status] = 'partial failure'
-      @results[:message] = 'Some Pages failed to be created'
-    elsif @results[:errors].any? && @results[:added].zero?
-      @results[:status] = 'failed'
-      @results[:message] = 'All Pages failed ot be created'
-    end
+    judge_job_outcome
     @pi.finished_at = Time.zone.today
     @pi.results_json = @results
     @slack.ping "Page ingest complete: `#{@pi.title}`" if Rails.env.production?
+    @pi.save
+  rescue StandardError => e
+    @slack.ping "Page ingest (#{@pi.title}) failed: #{e}" if Rails.env.production?
+    @pi.results_json = @results
     @pi.save
   end
 
   def self.init_results
     @results = { status: nil, message: nil, added: [], errors: [] }
   end
+
+  class << self
+    private
+
+    def page_added(page)
+      @results[:added] << {
+        page.id => "Page #{page.number} successfully added."
+      }
+    end
+
+    def page_failed(page)
+      @results[:errors] << {
+        page.id => "Page #{page.number} save failed: #{page.errors}"
+      }
+    end
+
+    def job_success(message)
+      @results[:status] = 'success'
+      @results[:message] = message
+    end
+
+    def job_partial(message)
+      @results[:status] = 'partial failure'
+      @results[:message] = message
+    end
+
+    def job_failed(message)
+      @results[:status] = 'failed'
+      @results[:message] = message
+    end
+
+    def add_error(record_id, message)
+      @results[:errors] << { record_id => message }
+    end
+
+    def judge_job_outcome
+      if @results[:errors].empty?
+        job_success 'All Pages created successfully'
+      elsif @results[:errors].any? && @results[:added].any?
+        job_partial 'Some Pages failed to be created'
+      elsif @results[:errors].any? && @results[:added].zero?
+        job_failed 'All Pages failed to be created'
+      else
+        job_failed 'Transcendent error state achieved'
+      end
+    end
+  end
+
 end

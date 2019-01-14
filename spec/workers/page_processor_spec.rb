@@ -10,5 +10,6 @@ describe PageProcessor, type: :model do
       expect(page_ingest.success?).to be_truthy
       expect(page_ingest.failed?).to be_falsey
     end
+
   end
 end
