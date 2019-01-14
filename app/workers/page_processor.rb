@@ -6,12 +6,14 @@ class PageProcessor
   def self.perform(page_ingest_id)
     @pi = PageIngest.find page_ingest_id
     init_results
-    @pi.page_json.each do |protopage|
-      record_id = protopage.delete('id')
+    @pi.page_json.each do |item_pages|
+      record_id = item_pages.delete('id')
       item = Item.find_by record_id: record_id
       add_error record_id, 'No Item for record_id' unless item
-      page = Page.create protopage.merge(item: item)
-      page.save ? page_added(page) : page_failed(page)
+      item_pages['pages'].each do |protopage|
+        page = Page.create protopage.merge(item: item)
+        page.save ? page_added(page) : page_failed(page)
+      end
     end
     Sunspot.commit
     judge_job_outcome

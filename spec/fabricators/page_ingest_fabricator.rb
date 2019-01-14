@@ -13,15 +13,61 @@ Fabricator(:page_ingest_with_json, from: :page_ingest) do
     [
       {
         id: Fabricate(:item_with_parents).record_id,
-        fulltext: 'First page fulltext',
-        file_type: 'jp2',
-        number: 1
+        pages: [
+          {
+            fulltext: 'First page fulltext',
+            file_type: 'jp2',
+            number: 1
+          },
+          {
+            fulltext: 'Second page fulltext',
+            file_type: 'jp2',
+            number: 2
+          }
+        ]
       },
       {
         id: Fabricate(:item_with_parents).record_id,
-        fulltext: 'Second page fulltext',
-        file_type: 'jp2',
-        number: 2
+        pages: [
+          {
+            fulltext: 'First page fulltext',
+            file_type: 'jp2',
+            number: 1
+          }
+        ]
+      }
+    ]
+  end
+end
+
+Fabricator(:page_ingest_with_bad_json, from: :page_ingest) do
+  queued_at { Faker::Time.between(Time.zone.today - 1, Time.zone.today) }
+  page_json do
+    [
+      {
+        id: Fabricate(:item_with_parents).record_id,
+        pages: [
+          {
+            fulltext: 'First page fulltext',
+            file_type: 'jp2',
+            number: 1
+          },
+          {
+            fulltext: 'Second page fulltext',
+            file_type: 'jp2',
+            number: 2
+          }
+        ]
+      },
+      {
+        id: Fabricate(:item_with_parents).record_id,
+        pages: [
+          {
+            fulltext: 'First page fulltext',
+            file_type: 'jp2',
+            number: 1
+          }
+        ]
       }
     ]
   end
@@ -34,15 +80,28 @@ Fabricator(:page_ingest_with_json_and_results, from: :page_ingest) do
     [
       {
         id: Fabricate(:item_with_parents).record_id,
-        fulltext: 'First page fulltext',
-        file_type: 'jp2',
-        number: 1
+        pages: [
+          {
+            fulltext: 'First page fulltext',
+            file_type: 'jp2',
+            number: 1
+          },
+          {
+            fulltext: 'Second page fulltext',
+            file_type: 'jp2',
+            number: 2
+          }
+        ]
       },
       {
         id: Fabricate(:item_with_parents).record_id,
-        fulltext: 'Second page fulltext',
-        file_type: 'jp2',
-        number: 2
+        pages: [
+          {
+            fulltext: 'First page fulltext',
+            file_type: 'jp2',
+            number: 1
+          }
+        ]
       }
     ]
   end
@@ -50,7 +109,7 @@ Fabricator(:page_ingest_with_json_and_results, from: :page_ingest) do
     {
       status: 'Success',
       message: '2 pages created',
-      items: %w[r1_c1_i1 r1_c1_i2]
+      items: [Item.last.record_id, Item.find(Item.last.id - 1).record_id]
     }
   end
 end
