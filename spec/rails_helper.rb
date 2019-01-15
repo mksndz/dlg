@@ -27,6 +27,7 @@ RSpec.configure do |config|
     HoldingInstitution.destroy_all
     Project.destroy_all
     Feature.destroy_all
+    PageIngest.destroy_all
     Page.destroy_all
     FulltextIngest.destroy_all
     BatchItem.destroy_all
