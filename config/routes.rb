@@ -100,6 +100,7 @@ Rails.application.routes.draw do
   end
 
   resources :fulltext_ingests, except: %i[edit update]
+  resources :page_ingests, except: %i[edit update]
 
   resource :catalog, only: [:index], controller: 'catalog', constraints: { id: /.*/, format: false } do
     concerns :searchable
