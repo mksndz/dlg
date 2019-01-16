@@ -119,9 +119,27 @@ Fabricator(:page_ingest_with_json_and_results, from: :page_ingest) do
   end
   results_json do
     {
-      status: 'Success',
+      status: 'partial success',
       message: '2 pages created',
-      items: [Item.last.record_id, Item.find(Item.last.id - 1).record_id]
+      outcomes: {
+        failed: [
+          {
+            id: 'a_b_c',
+            page_title: 'Failed Page Title',
+            message: 'Could not import'
+          }
+        ],
+        succeeded: [
+          {
+            id: 'a_b_c',
+            page_title: 'Succeeded Page Title'
+          },
+          {
+            id: 'a_b_d',
+            page_title: 'Second Succeeded Page Title'
+          }
+        ]
+      }
     }
   end
 end
