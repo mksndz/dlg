@@ -33,14 +33,14 @@ class PageIngestsController < ApplicationController
   def show; end
 
   def destroy
-    # TODO why have this?
+    # TODO sould pages be deleted?
   end
 
   private
 
   def page_ingest_params
-    params.require(:fulltext_ingest).permit(:title, :description, :file,
-                                            :file_cache, :user_id)
+    params.require(:page_ingest).permit(:title, :description, :file,
+                                        :file_cache, :page_json)
   end
 
   def build_ingest

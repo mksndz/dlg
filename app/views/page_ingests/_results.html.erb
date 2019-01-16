@@ -1,0 +1,47 @@
+<div class="panel panel-<%= @page_ingest.failed? ? 'danger' : 'default' %>">
+  <div class="panel-heading">
+    <strong>Results</strong>
+  </div>
+  <% if @page_ingest.success? or @page_ingest.partial_failure? %>
+    <table class="table table-hover page-ingest-results-table">
+      <thead>
+      <tr>
+        <th>
+          <%= t('meta.page_ingests.labels.number') %>
+        </th>
+        <th>
+          <%= t('meta.page_ingests.labels.file') %>
+        </th>
+        <th>
+          <%= t('meta.page_ingests.labels.outcome') %>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% i = 1 %>
+      <% @page_ingest.results_json['items'].each do |i| %>
+        <tr class="<%= f[1]['status'] == 'success' ? 'success' : 'danger' %>">
+          <td>
+            <%= i %>
+          </td>
+          <td>
+            <%= f[0] %>
+          </td>
+          <td>
+            <% if f[1]['status'] == 'success' %>
+              <%= link_to t('meta.page_ingests.labels.item_link'), item_path(f[1]['item']) %>
+            <% else %>
+              <%= f[1]['reason'] %>
+            <% end %>
+          </td>
+        </tr>
+        <% i += 1 %>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="panel-body">
+      <%= @page_ingest.results['message'] %>
+    </div>
+  <% end %>
+</div>

@@ -246,6 +246,21 @@ crumb :fulltext_ingest do |fulltext_ingest|
   parent :fulltext_ingests
 end
 
+# PAGE INGESTS
+
+crumb :page_ingests do
+  link 'Page Ingests', page_ingests_path
+end
+
+crumb :page_ingest do |page_ingest|
+  if page_ingest.persisted?
+    link page_ingest.title
+  else
+    link 'New'
+  end
+  parent :page_ingests
+end
+
 # PROJECTS
 
 crumb :projects do
