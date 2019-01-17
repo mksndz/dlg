@@ -11,6 +11,14 @@ class PageIngest < ActiveRecord::Base
     results_json['status'] == 'success'
   end
 
+  def succeeded
+    results_json['outcomes']['succeeded']
+  end
+
+  def failed
+    results_json['outcomes']['failed']
+  end
+
   def failed?
     results_json['status'] == 'failed'
   end

@@ -482,6 +482,8 @@ en:
         file: 'JSON File Name'
         outcome: 'Outcome'
         item_link: 'Item Updated'
+        id: 'Item Record ID'
+        message: 'Error'
       action:
         add: 'New Page Ingest'
         undo: 'Undo'
