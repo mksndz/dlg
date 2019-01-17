@@ -30,9 +30,15 @@ class PageProcessor
     @slack.ping "Page ingest complete: `#{@pi.title}`" if Rails.env.production?
     @pi.save!
   rescue StandardError => e
-    @slack.ping "Page ingest (#{@pi.title}) failed: #{e}" if Rails.env.production?
-    @pi.results_json = @results
-    @pi.save
+    if @pi
+      @slack.ping "Page ingest (#{@pi.title}) failed: #{e}" if Rails.env.production?
+      @pi.results_json = @results
+      @pi.save
+    else
+      if Rails.env.production?
+        @slack.ping "Page ingest could not be found by PageProcessor: #{e}"
+      end
+    end
   end
 
   def self.init_results

@@ -488,11 +488,15 @@ en:
         add: 'New Page Ingest'
         undo: 'Undo'
       messages:
+        not_yet_run: 'Job has not yet run.'
         success:
           queued: 'Fulltext Ingest Queued'
           undone: 'Fulltext Ingest Undone'
         errors:
           could_not_undo: 'Could not undo'
+          both_types: 'You provided both a file and XML text. Choose one only!'
+          file_error: 'Could not read from uploaded file.'
+          no_data: 'No source for Batch Items provided!'
     project:
       action:
         add: 'New Project'

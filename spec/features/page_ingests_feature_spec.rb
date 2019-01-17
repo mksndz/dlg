@@ -84,45 +84,45 @@ feature 'Page Ingests' do
       end
     end
   end
-  # context 'can be created using the form' do
-  #   before(:each) do
-  #     visit new_fulltext_ingest_path
-  #   end
-  #   scenario 'and a success message is shown' do
-  #     fill_in I18n.t('activerecord.attributes.fulltext_ingest.title'), with: 'Test'
-  #     fill_in I18n.t('activerecord.attributes.fulltext_ingest.description'), with: 'Description'
-  #     attach_file I18n.t('activerecord.attributes.fulltext_ingest.file'), Rails.root.to_s + '/spec/files/fulltext.zip'
-  #     click_on I18n.t('meta.defaults.actions.save')
-  #     expect(page).to have_text I18n.t('meta.fulltext_ingests.messages.success.queued')
-  #   end
-  # end
-  # context 'are created and background processes executed' do
-  #   scenario 'successfully' do
-  #     ResqueSpec.reset!
-  #     r = Fabricate :empty_repository, slug: 'r1'
-  #     c = Fabricate(
-  #       :empty_collection,
-  #       slug: 'c1', repository: r, portals: r.portals
-  #     )
-  #     Fabricate(:item, slug: 'i1') do
-  #       collection c
-  #       portals c.portals
-  #     end
-  #     Fabricate(:item, slug: 'i2') do
-  #       collection c
-  #       portals c.portals
-  #     end
-  #     visit new_fulltext_ingest_path
-  #     fill_in I18n.t('activerecord.attributes.fulltext_ingest.title'), with: 'Test'
-  #     fill_in I18n.t('activerecord.attributes.fulltext_ingest.description'), with: 'Description'
-  #     attach_file I18n.t('activerecord.attributes.fulltext_ingest.file'), Rails.root.to_s + '/spec/files/fulltext.zip'
-  #     click_button I18n.t('meta.defaults.actions.save')
-  #     ResqueSpec.perform_all :fulltext_ingest_queue
-  #     fti = FulltextIngest.last
-  #     expect(fti.finished_at).not_to be_nil
-  #     expect(fti.queued_at).not_to be_nil
-  #     expect(Item.first.fulltext).not_to be_empty
-  #     expect(Item.last.fulltext).not_to be_empty
-  #   end
-  # end
+  context 'can be created using the form' do
+    before(:each) do
+      visit new_page_ingest_path
+    end
+    scenario 'and a success message is shown' do
+      fill_in I18n.t('activerecord.attributes.page_ingest.title'), with: 'Test'
+      fill_in I18n.t('activerecord.attributes.page_ingest.description'), with: 'Description'
+      attach_file I18n.t('activerecord.attributes.page_ingest.file'), Rails.root.to_s + '/spec/files/pages.json'
+      click_on I18n.t('meta.defaults.actions.save')
+      expect(page).to have_text I18n.t('meta.page_ingests.messages.success.queued')
+    end
+  end
+  context 'are created and background processes executed' do
+    scenario 'successfully' do
+      ResqueSpec.reset!
+      r = Fabricate :empty_repository, slug: 'a'
+      c = Fabricate(
+        :empty_collection,
+        slug: 'b', repository: r, portals: r.portals
+      )
+      Fabricate(:item, slug: 'c') do
+        collection c
+        portals c.portals
+      end
+      Fabricate(:item, slug: 'd') do
+        collection c
+        portals c.portals
+      end
+      visit new_page_ingest_path
+      fill_in I18n.t('activerecord.attributes.page_ingest.title'), with: 'Test'
+      fill_in I18n.t('activerecord.attributes.page_ingest.description'), with: 'Description'
+      attach_file I18n.t('activerecord.attributes.page_ingest.file'), Rails.root.to_s + '/spec/files/pages.json'
+      click_button I18n.t('meta.defaults.actions.save')
+      ResqueSpec.perform_all :page_ingest_queue
+      fti = PageIngest.last
+      expect(fti.finished_at).not_to be_nil
+      expect(fti.queued_at).not_to be_nil
+      expect(Item.find_by(record_id: 'a_b_c').pages).not_to be_empty
+      expect(Item.find_by(record_id: 'a_b_d').pages).not_to be_empty
+    end
+  end
 end
