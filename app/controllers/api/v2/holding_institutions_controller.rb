@@ -15,7 +15,8 @@ module Api
       end
 
       def show
-        render json: HoldingInstitution.find(params[:id]), include: :collections
+        render json: HoldingInstitution.find_by(slug: params[:id]),
+               include: :collections
       end
 
       private

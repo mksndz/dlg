@@ -1,4 +1,5 @@
 Fabricator(:holding_institution) do
+  slug { Faker::Internet.slug(nil, '-') }
   authorized_name { Faker::Hipster.sentence(3) }
   short_description { Faker::Hipster.sentence(5) }
   description { Faker::Hipster.sentence(10) }
