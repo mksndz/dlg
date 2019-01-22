@@ -126,10 +126,16 @@ class Item < ActiveRecord::Base
     string(:geojson, as: 'geojson', multiple: true)
     string(:placename, as: 'placename', multiple: true)
 
+    integer :files, stored: true
+
   end
 
   def self.index_query_fields
     %w[collection_id public valid_item].freeze
+  end
+
+  def files
+    pages_count
   end
 
   def pages_or_item_fulltext
