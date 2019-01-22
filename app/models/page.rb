@@ -12,12 +12,7 @@ class Page < ActiveRecord::Base
   end
 
   def iiif_file_link
-    case file_type
-    when 'pdf'
-      "#{iiif_link_with_id}/full/full/0/default.jpg?page=#{number}"
-    else
-      "#{iiif_link_with_id}/full/full/0/default.jpg"
-    end
+    "#{iiif_link_with_id}/full/full/0/default.jpg"
   end
 
   private
@@ -30,11 +25,6 @@ class Page < ActiveRecord::Base
     id = item.record_id
     parts = id.split '_'
     page = number.rjust 4, '0'
-    case file_type
-    when 'pdf'
-      "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}.#{file_type}"
-    else
-      "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}-#{page}.#{file_type}"
-    end
+    "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}-#{page}.#{file_type}"
   end
 end
