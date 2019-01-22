@@ -13,8 +13,15 @@ class PageProcessor
         add_error record_id, 'No Item for record_id'
         next
       end
+      item.fulltext = item_pages['fulltext'] if item_pages.key?('fulltext')
       item_pages['pages'].each do |protopage|
         begin
+          if item.fulltext? && protopage.key?('fulltext') &&
+             !protopage['fulltext'].empty?
+            raise StandardError(
+              'Item already has full text added - remove it if you want to add paginated full text'
+            )
+          end
           page = Page.create protopage.merge(item: item)
           page.save ? page_added(page) : page_failed(page)
         rescue StandardError => e

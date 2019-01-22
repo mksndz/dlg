@@ -3,7 +3,7 @@ require 'rails_helper'
 describe PageProcessor, type: :model do
   describe '#perform' do
     it 'builds pages and saves results' do
-      page_ingest = Fabricate :page_ingest_with_json_and_results
+      page_ingest = Fabricate :page_ingest_with_json_and_success
       PageProcessor.perform(page_ingest.id)
       page_ingest.reload
       expect(page_ingest.success?).to be_truthy

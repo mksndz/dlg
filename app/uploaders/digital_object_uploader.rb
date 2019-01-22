@@ -27,6 +27,8 @@ class DigitalObjectUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files
   def filename
-    "#{model.item.record_id}-#{model.number.rjust 4, '0'}.#{file.extension}"
+    if original_filename
+      "#{model.item.record_id}-#{model.number.rjust 4, '0'}.#{file.extension}"
+    end
   end
 end

@@ -50,7 +50,7 @@ Fabricator(:item_with_parents, from: :item) do
 end
 
 Fabricator(:item_with_parents_and_pages, from: :item_with_parents) do
-  pages Fabricate.times(3, :page)
+  pages(count: 3)
 end
 
 Fabricator(:invalid_item) do

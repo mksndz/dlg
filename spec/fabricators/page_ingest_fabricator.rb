@@ -28,6 +28,42 @@ Fabricator(:page_ingest_with_json, from: :page_ingest) do
   end
 end
 
+Fabricator(:page_ingest_with_unpaginated_fulltext, from: :page_ingest) do
+  queued_at { Faker::Time.between(Time.zone.today - 1, Time.zone.today) }
+  page_json do
+    [
+      { id: Fabricate(:item_with_parents).record_id,
+        fulltext: 'Item-level un-paginated full text',
+        pages: [
+          { file_type: 'jp2', number: 1 },
+          { file_type: 'jp2', number: 2 }
+        ] },
+      { id: Fabricate(:item_with_parents).record_id,
+        pages: [
+          { fulltext: '', file_type: 'jp2', number: 1 }
+        ] }
+    ]
+  end
+end
+
+Fabricator(:page_ingest_with_fulltext_conflict, from: :page_ingest) do
+  queued_at { Faker::Time.between(Time.zone.today - 1, Time.zone.today) }
+  page_json do
+    [
+      { id: Fabricate(:item_with_parents).record_id,
+        fulltext: 'Item-level un-paginated full text',
+        pages: [
+          { file_type: 'jp2', number: 1 },
+          { file_type: 'jp2', number: 2 }
+        ] },
+      { id: Fabricate(:item_with_parents).record_id,
+        pages: [
+          { fulltext: '', file_type: 'jp2', number: 1 }
+        ] }
+    ]
+  end
+end
+
 Fabricator(:page_ingest_with_bad_id, from: :page_ingest) do
   queued_at { Faker::Time.between(Time.zone.today - 1, Time.zone.today) }
   page_json do
@@ -35,7 +71,7 @@ Fabricator(:page_ingest_with_bad_id, from: :page_ingest) do
        pages: [
          { fulltext: 'First page fulltext', file_type: 'jp2', number: 1 }
        ] },
-     { id: Fabricate(:item_with_parents).record_id,
+     { id: Fabricate(:item_with_parents, fulltext: nil).record_id,
        pages: [
          { fulltext: 'First page fulltext', file_type: 'jp2', number: 1 }
        ] }]

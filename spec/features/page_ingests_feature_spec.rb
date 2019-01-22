@@ -10,7 +10,7 @@ feature 'Page Ingests' do
   context 'on the index page' do
     context 'when successfully completed' do
       before(:each) do
-        @pi = Fabricate :page_ingest_with_json_and_results
+        @pi = Fabricate :page_ingest_with_json_and_success
         visit page_ingests_path
       end
       scenario 'has a button to create a new ingest' do
@@ -107,10 +107,12 @@ feature 'Page Ingests' do
       Fabricate(:item, slug: 'c') do
         collection c
         portals c.portals
+        fulltext nil
       end
       Fabricate(:item, slug: 'd') do
         collection c
         portals c.portals
+        fulltext nil
       end
       visit new_page_ingest_path
       fill_in I18n.t('activerecord.attributes.page_ingest.title'), with: 'Test'
