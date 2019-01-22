@@ -4,6 +4,8 @@ class Page < ActiveRecord::Base
   validates :file_type, presence: true
   validates :number, presence: true
   validates :number, uniqueness: { scope: :item }
+  mount_uploader :file, DigitalObjectUploader
+
 
   def iiif_info_link
     "#{iiif_link_with_id}/info.json"

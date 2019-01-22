@@ -268,6 +268,7 @@ en:
       actions:
         add: 'New Page'
       labels:
+        remove_file: 'Remove Uploaded File'
         columns:
           title: 'Title'
           number: 'Number'

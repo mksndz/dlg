@@ -67,7 +67,7 @@ class PagesController < ApplicationController
 
   def page_params
     params.require(:page).permit(:item_id, :fulltext, :title, :number,
-                                 :file_type)
+                                 :file, :file_cache, :remove_file, :file_type)
   end
 
   def set_item

@@ -15,6 +15,7 @@ en:
         file_type: 'File Type'
         title: 'Title'
         fulltext: 'Full Text'
+        file: 'Image File'
       project:
         title: 'Title'
         fiscal_year: 'Fiscal Year'

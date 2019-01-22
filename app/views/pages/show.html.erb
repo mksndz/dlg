@@ -18,6 +18,7 @@
 <br><br>
 
 <%# TODO: viewer does not show correct page when using not-iiif-spec PDF pagination param with cantaloupe %>
+<label>IIF View</label>
 <div class="row">
   <div class="col-md-12">
     <div class="well">
@@ -38,3 +39,6 @@
 <%= render 'shared/show_field',
            field_name: t('activerecord.attributes.page.fulltext'),
            value: @page.fulltext %>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.page.file'),
+           value: image_tag(@page.file.url) %>
