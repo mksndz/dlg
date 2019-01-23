@@ -23,18 +23,25 @@ RSpec.configure do |config|
 
   # clean up DB & Solr index before test suite
   config.before(:suite) do
-    User.destroy_all
-    FulltextIngest.destroy_all
-    BatchItem.destroy_all
-    Batch.destroy_all
-    Item.destroy_all
-    ItemVersion.destroy_all
-    Collection.destroy_all
-    Repository.destroy_all
-    Portal.destroy_all
-    HoldingInstitution.destroy_all
-    Project.destroy_all
-    Feature.destroy_all
+    # User.destroy_all
+    # Feature.destroy_all
+    # FulltextIngest.destroy_all
+    # BatchImport.destroy_all
+    # BatchItem.destroy_all
+    # Batch.destroy_all
+    # Item.destroy_all
+    # ItemVersion.destroy_all
+    # Collection.destroy_all
+    # Repository.destroy_all
+    # Portal.destroy_all
+    # HoldingInstitution.destroy_all
+    # Project.destroy_all
+    Dir[Rails.root.join('app/models/*.rb').to_s].each do |filename|
+      klass = File.basename(filename, '.rb').camelize.constantize
+      next unless klass.ancestors.include?(ActiveRecord::Base)
+      next if klass.abstract_class?
+      ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{klass.table_name} RESTART IDENTITY CASCADE")
+    end
   end
 
   config.before(:all) do
