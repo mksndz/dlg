@@ -81,13 +81,13 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
       @holding_institution = HoldingInstitution.last
     end
     it 'returns all data about a holding institution' do
-      get "/api/v2/holding_institutions/#{@holding_institution.id}.json",
+      get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
           {},
           headers
       json = JSON.parse(response.body)
       expect(response.content_type).to eq 'application/json'
       expect(response.status).to eq 200
-      expect(json['id']).to eq @holding_institution.id
+      expect(json['slug']).to eq @holding_institution.slug
       expect(json['collections'].length).to eq 1
       expect(json['collections'][0]['id']).to(
         eq(@collection.id)
