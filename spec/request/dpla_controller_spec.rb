@@ -3,11 +3,15 @@ require 'rails_helper'
 RSpec.describe 'DPLA Harvesting Support endpoint', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.dpla_token }
   context 'can list using #index' do
-    before(:all) do
+    before(:each) do
       repo = Fabricate :empty_repository, public: true
       coll = Fabricate :empty_collection, repository: repo, portals: repo.portals, public: true
       Fabricate.times(11, :robust_item, collection: coll, portals: repo.portals, public: true, dpla: true)
       Sunspot.commit
+    end
+    after(:each) do
+      Sunspot.remove_all! Item
+      Sunspot.remove_all! Collection
     end
     it 'returns records and request specifications' do
       get '/dpla', {}, headers
