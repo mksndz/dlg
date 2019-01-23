@@ -319,7 +319,6 @@ ActiveRecord::Schema.define(version: 20181206182638) do
     t.string   "record_id",                      default: "",    null: false
     t.text     "edm_is_shown_by",                default: [],    null: false, array: true
     t.text     "fulltext"
-    t.integer  "pages_count"
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
@@ -328,15 +327,6 @@ ActiveRecord::Schema.define(version: 20181206182638) do
   add_index "items", ["public"], name: "index_items_on_public", using: :btree
   add_index "items", ["slug"], name: "index_items_on_slug", using: :btree
   add_index "items", ["valid_item"], name: "index_items_on_valid_item", using: :btree
-
-  create_table "pages", force: :cascade do |t|
-    t.integer  "item_id"
-    t.text     "fulltext"
-    t.string   "title"
-    t.string   "number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "portal_records", force: :cascade do |t|
     t.integer "portal_id"
