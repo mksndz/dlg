@@ -16,6 +16,7 @@ RSpec.describe 'DPLA Harvesting Support endpoint', type: :request do
     it 'returns records and request specifications' do
       get '/dpla', {}, headers
       body = JSON.parse(response.body)
+      expect(response.code).to eq 200
       expect(body['items'].length).to eq 11
       expect(body['numFound']).to eq 11
       expect(body['nextCursorMark']).not_to be_empty
