@@ -41,7 +41,7 @@ class DplaController < ApplicationController
   end
 
   def cursor_mark
-    params[:cursormark] ? CGI.unescape(params[:cursormark]) : '*'
+    params[:cursormark] || '*'
   end
 
   def authenticate_token
