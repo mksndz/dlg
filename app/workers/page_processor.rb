@@ -6,26 +6,30 @@ class PageProcessor
   def self.perform(page_ingest_id)
     @pi = PageIngest.find page_ingest_id
     init_results
-    @pi.page_json.each do |item_pages|
-      record_id = item_pages.delete('id')
+    @pi.page_json.each do |item_data|
+      record_id = item_data.delete('id')
       item = Item.find_by record_id: record_id
       unless item
         add_error record_id, 'No Item for record_id'
         next
       end
-      item.fulltext = item_pages['fulltext'] if item_pages.key?('fulltext')
-      item_pages['pages'].each do |protopage|
+      if item.fulltext.present? && includes_item_fulltext(item_data)
+        add_error(
+          record_id,
+          'Item already has full text added - remove it from the Item if you want to update via this process.'
+        )
+        next
+      elsif includes_item_fulltext(item_data)
+        item.fulltext = item_data['fulltext']
+      end
+      item_data['pages'].each do |page_data|
         begin
-          if item.fulltext? && protopage.key?('fulltext') &&
-             !protopage['fulltext'].empty?
-            raise StandardError(
-              'Item already has full text added - remove it if you want to add paginated full text'
-            )
-          end
-          page = Page.create protopage.merge(item: item)
+          raise StandardError, 'Item already has full text added - remove it if you want to add paginated full text' if item.fulltext? && includes_page_fulltext(page_data)
+
+          page = Page.create page_data.merge(item: item)
           page.save ? page_added(page) : page_failed(page)
         rescue StandardError => e
-          add_error record_id, "Bad Page data for #{record_id}: #{e}"
+          add_error record_id, "Problem creating Page for #{record_id}: #{e}"
           next
         end
       end
@@ -48,12 +52,20 @@ class PageProcessor
     end
   end
 
-  def self.init_results
-    @results = { status: nil, message: nil, added: [], errors: [] }
-  end
-
   class << self
     private
+
+    def init_results
+      @results = { status: nil, message: nil, added: [], errors: [] }
+    end
+
+    def includes_item_fulltext(item_data)
+      item_data.key?('fulltext') && item_data['fulltext'].present?
+    end
+
+    def includes_page_fulltext(page_data)
+      page_data.key?('fulltext') && page_data['fulltext'].present?
+    end
 
     def page_added(page)
       @results[:added] << {

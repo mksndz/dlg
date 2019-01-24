@@ -7,6 +7,10 @@ class PageIngest < ActiveRecord::Base
   validates :title, uniqueness: true
   mount_uploader :file, PageJsonUploader
 
+  def results
+    results_json
+  end
+
   def success?
     results_json['status'] == 'success'
   end
