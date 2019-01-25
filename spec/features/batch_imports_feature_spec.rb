@@ -111,7 +111,9 @@ feature 'Batch Importing Batch Items' do
     end
     let(:xml) { @robust_item.to_xml }
     context 'finished with errors' do
-      let(:import_with_errors) { Fabricate :completed_batch_import_with_failure }
+      let(:import_with_errors) do
+        Fabricate :completed_batch_import_with_mixed_results
+      end
       scenario 'index page shows the number of errors' do
         visit batch_batch_imports_path(import_with_errors.batch)
         errors = find('.error-count')

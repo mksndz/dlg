@@ -134,6 +134,35 @@ Fabricator(
   completed_at { Time.now.to_s }
 end
 
+Fabricator(
+  :completed_batch_import_with_mixed_results,
+  from: :completed_batch_import
+) do
+  results do
+    {
+      added: [
+        {
+          batch_item_id: 1,
+          slug: 'ahc0091-002-004'
+        }
+      ],
+      updated: [
+        batch_item_id: 1,
+        item_id: 1,
+        slug: 'ahc0091-002-004'
+      ],
+      failed: [
+        {
+          number: 1,
+          message: 'Validation Failed'
+        }
+      ]
+    }
+  end
+  validations { true }
+  completed_at { Time.now.to_s }
+end
+
 Fabricator(:completed_batch_import_from_file, from: :batch_import) do
   file_name { 'xml_file.xml' }
 end
