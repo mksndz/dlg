@@ -25,6 +25,10 @@ class Page < ActiveRecord::Base
     id = item.record_id
     parts = id.split '_'
     page = number.rjust 4, '0'
-    "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}-#{page}.#{file_type}"
+    if file_type.casecmp('PDF').zero?
+      "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}.#{file_type}"
+    else
+      "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}-#{page}.#{file_type}"
+    end
   end
 end
