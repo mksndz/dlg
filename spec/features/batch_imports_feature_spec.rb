@@ -112,10 +112,17 @@ feature 'Batch Importing Batch Items' do
     let(:xml) { @robust_item.to_xml }
     context 'finished with errors' do
       let(:import_with_errors) { Fabricate :completed_batch_import_with_failure }
-      scenario 'index page shows the number fof errors' do
+      scenario 'index page shows the number of errors' do
         visit batch_batch_imports_path(import_with_errors.batch)
         errors = find('.error-count')
         expect(errors.text).to eq '1'
+      end
+      scenario 'show page error panel is directly below "Completed" panel' do
+        visit batch_batch_import_path import_with_errors.batch, import_with_errors
+        expect(page).to have_text 'Completed'
+        headings = page.all('.panel-heading').map(&:text)
+        panel_after_completed = headings[(headings.index('Completed') + 1)]
+        expect(panel_after_completed).to have_text 'Failed to import'
       end
     end
     context 'uploading xml with validates OFF' do
