@@ -5,7 +5,7 @@ module Api
       def index
         inst_type = params[:type]
         letter = params[:letter]
-        @his = HoldingInstitution.all
+        @his = HoldingInstitution.all.order(:authorized_name)
         filter_institutions_by_portal
         @his = @his.where(institution_type: inst_type) if inst_type
         @his = @his.where('authorized_name LIKE ?', "#{letter}%") if letter

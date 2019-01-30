@@ -9,11 +9,18 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
                       repositories: [@collection.repository])
       @holding_institution = HoldingInstitution.last
     end
-    it 'returns an array of holding institutions' do
+    it 'returns a sorted array of holding institutions' do
       get '/api/v2/holding_institutions.json', {}, headers
       expect(response.content_type).to eq 'application/json'
       expect(response.status).to eq 200
-      expect(JSON.parse(response.body).length).to eq 4
+      records = JSON.parse(response.body)
+      expect(records.length).to eq 4
+      authorized_names = records.map do |r|
+        r['authorized_name']
+      end
+      expect(authorized_names).to eq(
+        HoldingInstitution.all.order(:authorized_name).pluck(:authorized_name)
+      )
     end
     it 'paginates list of holding institutions' do
       get '/api/v2/holding_institutions.json', { page: 2, per_page: 2 }, headers
