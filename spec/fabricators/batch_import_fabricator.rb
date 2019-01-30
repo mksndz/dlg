@@ -67,7 +67,6 @@ Fabricator(:batch_import) do
         <dcterms_provenance type="array">
           <dcterms_provenance>Atlanta History Center</dcterms_provenance>
         </dcterms_provenance>
-        <valid_item type="boolean">true</valid_item>
         <dcterms_bibliographic_citation type="array">
           <dcterms_bibliographic_citation>Cite as: Leo Frank papers, MSS 91, Kenan Research Center at the Atlanta History Center.</dcterms_bibliographic_citation>
         </dcterms_bibliographic_citation>
@@ -232,7 +231,6 @@ Fabricator(:batch_import_to_match_on_id, from: :batch_import) do
         <dcterms_provenance type="array">
           <dcterms_provenance>Atlanta History Center</dcterms_provenance>
         </dcterms_provenance>
-        <valid_item type="boolean">true</valid_item>
         <dcterms_bibliographic_citation type="array">
           <dcterms_bibliographic_citation>Cite as: Leo Frank papers, MSS 91, Kenan Research Center at the Atlanta History Center.</dcterms_bibliographic_citation>
         </dcterms_bibliographic_citation>
@@ -245,4 +243,61 @@ Fabricator(:batch_import_for_updating_record_id, from: :batch_import) do
   match_on_id { true }
   format { 'search result' }
   batch_items { [Fabricate(:batch_item)] }
+end
+
+Fabricator(:batch_import_with_xml_containing_cdata, from: :batch_import) do
+  xml {
+    '<?xml version="1.0" encoding="UTF-8"?>
+    <items type="array">
+      <item>
+        <portals type="array">
+          <portal>
+            <code>georgia</code>
+          </portal>
+        </portals>
+        <collection>
+          <record_id>geh_0091</record_id>
+        </collection>
+        <dpla type="boolean">true</dpla>
+        <public type="boolean">true</public>
+        <local type="boolean">true</local>
+        <dc_format type="array">
+          <dc_format>application/pdf</dc_format>
+        </dc_format>
+        <dc_right type="array"/>
+        <dc_date type="array">
+          <dc_date>1915-06-22/1915-06-30</dc_date>
+        </dc_date>
+        <dc_relation type="array"/>
+        <slug>ahc0091-002-004</slug>
+        <dcterms_medium type="array">
+          <dcterms_medium>PDF</dcterms_medium>
+        </dcterms_medium>
+        <dcterms_language type="array"/>
+        <dcterms_spatial type="array">
+          <dcterms_spatial>United States, Georgia, Fulton County, Atlanta, 33.7489954, -84.3879824</dcterms_spatial>
+        </dcterms_spatial>
+        <dcterms_rights_holder type="array"/>
+        <dcterms_subject type="array">
+          <dcterms_subject>Jews--Georgia--Atlanta</dcterms_subject>
+        </dcterms_subject>
+        <dcterms_temporal type="array"/>
+        <dcterms_title type="array">
+          <dcterms_title>Testing CDATA</dcterms_title>
+        </dcterms_title>
+        <dcterms_type type="array">
+          <dcterms_type>Text</dcterms_type>
+        </dcterms_type>
+        <edm_is_shown_at type="array">
+          <edm_is_shown_at><![CDATA[http://metis.galib.uga.edu/ssp/cgi-bin/legis-idx.pl?sessionid=518e2e7a-03c20a8e54-3823&type=toc&byte=362951]]></edm_is_shown_at>
+        </edm_is_shown_at>
+        <edm_is_shown_by type="array">
+          <edm_is_shown_by><![CDATA[http://metis.galib.uga.edu/ssp/cgi-bin/legis-idx.pl?sessionid=518e2e7a-03c20a8e54-3823&type=toc&byte=362951]]></edm_is_shown_by>
+        </edm_is_shown_by>
+        <dcterms_provenance type="array">
+          <dcterms_provenance>Atlanta History Center</dcterms_provenance>
+        </dcterms_provenance>
+      </item>
+    </items>'
+  }
 end

@@ -95,7 +95,7 @@ module ItemTypeValidatable
   end
 
   def valid_url?(url)
-    url =~ URI.regexp
+    url =~ URI::DEFAULT_PARSER.make_regexp
   end
 
   def update_validation_cache

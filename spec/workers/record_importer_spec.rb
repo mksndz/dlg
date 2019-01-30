@@ -133,6 +133,20 @@ describe RecordImporter, type: :model do
         ).to eq 'No records could be extracted from the XML'
       end
     end
+    context 'with URLs in CDATA sections' do
+      let(:batch_import) { Fabricate :batch_import_with_xml_containing_cdata }
+      before(:each) do
+        p = Fabricate(:portal, code: 'georgia')
+        r = Fabricate(:repository, slug: 'geh', portals: [p])
+        Fabricate(:collection, slug: '0091', repository: r, portals: [p])
+        Fabricate(:holding_institution, authorized_name: 'Atlanta History Center')
+      end
+      it 'should create a batch item with the expected URLs' do
+        RecordImporter.perform(batch_import.id)
+        expect(BatchItem.last.edm_is_shown_at.first).to eq 'http://metis.galib.uga.edu/ssp/cgi-bin/legis-idx.pl?sessionid=518e2e7a-03c20a8e54-3823&type=toc&byte=362951'
+        expect(BatchItem.last.edm_is_shown_by.first).to eq 'http://metis.galib.uga.edu/ssp/cgi-bin/legis-idx.pl?sessionid=518e2e7a-03c20a8e54-3823&type=toc&byte=362951'
+      end
+    end
     context 'with realistic xml' do
       before :each do
         @georgia_portal = Fabricate(:portal) { code { 'georgia' } }
