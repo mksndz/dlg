@@ -12,6 +12,7 @@ class Repository < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
+  scope :are_public, -> { where(public: true) }
 
   after_update :reindex_child_values
 

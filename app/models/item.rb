@@ -16,6 +16,7 @@ class Item < ActiveRecord::Base
   validates_presence_of :collection
 
   scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
+  scope :are_public, -> { where(public: true) }
 
   has_paper_trail class_name: 'ItemVersion', ignore: [:record_id]
 

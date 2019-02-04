@@ -22,6 +22,10 @@ class HoldingInstitution < ActiveRecord::Base
     %w[institution_type]
   end
 
+  def public_collections
+    collections.are_public
+  end
+
   def portals
     repositories.collect(&:portals).flatten.uniq
   end

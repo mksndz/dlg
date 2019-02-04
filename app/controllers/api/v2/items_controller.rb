@@ -2,6 +2,7 @@ module Api
   module V2
     # API v2 controller for Items
     class ItemsController < BaseController
+      # TODO: will include titles of non-public collections
       def index
         @items = Item.where public: true
         filter_items_by_portal

@@ -4,28 +4,28 @@ class RepositoriesController < ApplicationController
   include ErrorHandling
   include Sorting
   include Filterable
-  before_action :set_data, only: [:index, :new, :create, :edit, :update]
+  before_action :set_data, only: %i[index new create edit update]
+
   def index
     repository_query = Repository.index_query(params)
-                         .order(sort_column + ' ' + sort_direction)
-                         .page(params[:page])
-                         .per(params[:per_page])
+                                 .order(sort_column + ' ' + sort_direction)
+                                 .page(params[:page])
+                                 .per(params[:per_page])
 
     if params[:portal_id]
       portals_filter = params[:portal_id].reject(&:empty?)
       unless portals_filter.empty?
         repository_query = repository_query
-                             .includes(:portals)
-                             .joins(:portals)
-                             .where(portals: { id: portals_filter })
+                           .includes(:portals)
+                           .joins(:portals)
+                           .where(portals: { id: portals_filter })
       end
     end
     repository_query = repository_query.where(id: current_user.repository_ids) unless current_user.super? || current_user.viewer?
     @repositories = repository_query
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @repository = Repository.new
@@ -40,8 +40,7 @@ class RepositoriesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @repository.update(repository_params)

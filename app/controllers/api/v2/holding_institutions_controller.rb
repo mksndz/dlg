@@ -11,12 +11,13 @@ module Api
         @his = @his.where('authorized_name LIKE ?', "#{letter}%") if letter
         render json: @his.page(params[:page])
                          .per(params[:per_page]),
-               include: %i[collections portals]
+               include: %i[portals],
+               methods: :public_collections
       end
 
       def show
         render json: HoldingInstitution.find_by(slug: params[:id]),
-               include: :collections
+               methods: :public_collections
       end
 
       private

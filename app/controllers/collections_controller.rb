@@ -9,13 +9,13 @@ class CollectionsController < RecordController
   include Sorting
   include Filterable
 
-  before_action :set_data, only: [:index, :new, :create, :edit, :update]
+  before_action :set_data, only: %i[index new create edit update]
 
   def index
 
     session[:search] = {}
 
-    set_filter_options [:repository, :public]
+    set_filter_options %i[repository public]
 
     collection_query = Collection.index_query(params)
                          .order(sort_column + ' ' + sort_direction)

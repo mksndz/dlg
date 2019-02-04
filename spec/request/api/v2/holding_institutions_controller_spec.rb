@@ -4,10 +4,17 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.api_token }
   context 'can list using #index' do
     before(:each) do
-      @collection = Fabricate :empty_collection
-      Fabricate.times(3, :holding_institution,
-                      repositories: [@collection.repository])
+      @collection = Fabricate :empty_collection,
+                              public: true
       @holding_institution = HoldingInstitution.last
+      Fabricate.times 3, :holding_institution, repositories: [@collection.repository]
+      @np_coll = Fabricate :collection,
+                           public: false,
+                           repository: @collection.repository,
+                           holding_institutions: [@holding_institution],
+                           portals: @collection.portals
+      @holding_institution.collections = [@collection, @np_coll]
+      @holding_institution.save
     end
     it 'returns a sorted array of holding institutions' do
       get '/api/v2/holding_institutions.json', {}, headers
@@ -42,14 +49,6 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
           headers
       expect(JSON.parse(response.body).length).to eq 1
     end
-    it 'includes collection information' do
-      get '/api/v2/holding_institutions.json', { page: 1, per_page: 1 }, headers
-      json = JSON.parse(response.body)
-      expect(json[0]['collections'].length).to eq 1
-      expect(json[0]['collections'][0]['id']).to(
-        eq(@collection.id)
-      )
-    end
     it 'returns holding institutions filtered by portal' do
       portal = Fabricate :portal
       Fabricate(:holding_institution,
@@ -80,11 +79,15 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
       expect(json[0]['authorized_name']).to eq hi.authorized_name
       expect(json[0]['portals'][0]['code']).to eq portal.code
     end
-
+    it 'includes information about assigned public collections' do
+      get '/api/v2/holding_institutions.json', { page: 1, per_page: 1 }, headers
+      json = JSON.parse(response.body)
+      expect(json[0]).to have_key'public_collections'
+    end
   end
   context 'can get single record info using #show' do
     before(:each) do
-      @collection = Fabricate :empty_collection
+      @collection = Fabricate :empty_collection, public: true
       @holding_institution = HoldingInstitution.last
     end
     it 'returns all data about a holding institution' do
@@ -95,10 +98,20 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
       expect(response.content_type).to eq 'application/json'
       expect(response.status).to eq 200
       expect(json['slug']).to eq @holding_institution.slug
-      expect(json['collections'].length).to eq 1
-      expect(json['collections'][0]['id']).to(
+
+    end
+    it 'includes data about public collections' do
+      get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
+          {},
+          headers
+      json = JSON.parse(response.body)
+      expect(json['public_collections'].length).to eq 1
+      expect(json['public_collections'][0]['id']).to(
         eq(@collection.id)
       )
+      json['public_collections'].each do |c|
+        expect(c['public']).to be_truthy
+      end
     end
   end
 end
