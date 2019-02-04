@@ -23,7 +23,7 @@ class HoldingInstitution < ActiveRecord::Base
   end
 
   def public_collections
-    collections.are_public
+    collections.are_public.order(authorized_name: :asc)
   end
 
   def portals
