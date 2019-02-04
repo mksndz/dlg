@@ -97,6 +97,10 @@ class Collection < ActiveRecord::Base
       portal_names
     end
 
+    string(:institution_slug, stored: true, multiple: true) do
+      institution_slugs
+    end
+
     string :display_title, stored: true, as: 'display_title_display'
     string :short_description, stored: true, as: 'short_description_display'
 

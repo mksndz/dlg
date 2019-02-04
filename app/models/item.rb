@@ -43,6 +43,7 @@ class Item < ActiveRecord::Base
     string(:repository_name, stored: true, multiple: true) { repository_titles } # TODO: consider for removal
     string(:portals, stored: true, multiple: true) { portal_codes }
     string(:portal_names, stored: true, multiple: true) { portal_names }
+    string(:institution_slug, stored: true, multiple: true) { institution_slugs }
 
     boolean(:dpla)
     boolean(:public)
@@ -129,7 +130,7 @@ class Item < ActiveRecord::Base
   end
 
   def self.index_query_fields
-    %w(collection_id public valid_item).freeze
+    %w[collection_id public valid_item].freeze
   end
 
   def display?

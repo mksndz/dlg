@@ -17,6 +17,10 @@ module Provenanced
     holding_institutions.collect(&:authorized_name)
   end
 
+  def institution_slugs
+    holding_institutions.pluck(:slug)
+  end
+
   # convenience method for Items
   def holding_institution
     holding_institutions.first if holding_institutions.any?
