@@ -19,6 +19,7 @@ class Collection < ActiveRecord::Base
 
   scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
   scope :are_public, -> { where(public: true) }
+  scope :alphabetized, -> { order(display_title: :asc) }
 
   validates_presence_of :repository
 
