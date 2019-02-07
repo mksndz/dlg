@@ -59,7 +59,7 @@ class HoldingInstitution < ActiveRecord::Base
 
   def reindex_child_values
     collection_queued = false
-    if authorized_name_changed?
+    if authorized_name_changed? || slug_changed?
       mark_children_updated
       queue_reindex_collections
       queue_reindex_items
