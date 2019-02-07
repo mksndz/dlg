@@ -15,7 +15,7 @@ module Api
                      else
                        Collection.find params[:id]
                      end
-        raise ActiveRecord::RecordNotFound unless collection.public?
+        raise ActiveRecord::RecordNotFound unless collection && collection.public?
 
         render json: collection, include: %i[portals]
       end
