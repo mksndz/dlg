@@ -5,7 +5,7 @@ module Api
       def index
         inst_type = params[:type]
         letter = params[:letter]
-        @his = HoldingInstitution.all.order(:authorized_name)
+        @his = HoldingInstitution.are_public.order(:authorized_name)
         filter_institutions_by_portal
         @his = @his.where(institution_type: inst_type) if inst_type
         @his = @his.where('authorized_name LIKE ?', "#{letter}%") if letter
@@ -16,7 +16,12 @@ module Api
       end
 
       def show
-        render json: HoldingInstitution.find_by(slug: params[:id]),
+        holding_institution = HoldingInstitution.find_by(slug: params[:id])
+        unless holding_institution && holding_institution.public?
+          raise ActiveRecord::RecordNotFound
+        end
+
+        render json: holding_institution,
                methods: :public_collections
       end
 

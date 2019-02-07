@@ -17,6 +17,9 @@ RSpec.describe HoldingInstitution, type: :model do
     it 'has a set of coordinates stored as a string' do
       expect(holding_institution.coordinates).to be_a String
     end
+    it 'has a boolean public value' do
+      expect(holding_institution.public?).to be_truthy
+    end
     it 'has Projects' do
       projects = Fabricate.times(2, :project)
       holding_institution.projects = projects

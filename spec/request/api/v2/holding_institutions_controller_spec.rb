@@ -33,6 +33,14 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
       get '/api/v2/holding_institutions.json', { page: 2, per_page: 2 }, headers
       expect(JSON.parse(response.body).length).to eq 2
     end
+    it 'only returns public holding institutions' do
+      non_public = Fabricate :holding_institution, public: false
+      get '/api/v2/holding_institutions.json', { }, headers
+      slugs = JSON.parse(response.body).collect do |hi|
+        hi['slug']
+      end
+      expect(slugs).not_to include non_public.slug
+    end
     it 'returns holding institutions filtered by institution type' do
       Fabricate(:holding_institution, institution_type: '###')
       get '/api/v2/holding_institutions.json',

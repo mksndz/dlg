@@ -18,6 +18,7 @@
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.repository_ids'), values: @holding_institution.repositories.any? ? @holding_institution.repositories.collect(&:title) : nil %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.authorized_name'), value: @holding_institution.authorized_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.display_name'), value: @holding_institution.display_name %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.public'), value: @holding_institution.public %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.short_description'), value: @holding_institution.short_description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.description'), value: @holding_institution.description %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.image'), value: image_tag(@holding_institution.image) %>

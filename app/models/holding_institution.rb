@@ -8,6 +8,8 @@ class HoldingInstitution < ActiveRecord::Base
   has_and_belongs_to_many :batch_items
   has_many :projects
 
+  scope :are_public, -> { where(public: true) }
+
   mount_uploader :image, ImageUploader
 
   before_destroy :confirm_unassigned

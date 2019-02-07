@@ -27,6 +27,7 @@ en:
         authorized_name: 'Authorized Name'
         display_name: 'Display Name'
         short_description: 'Short Description'
+        public: 'Public'
         description: 'Description'
         image: 'Image'
         homepage_url: 'Homepage'

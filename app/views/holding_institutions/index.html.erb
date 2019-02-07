@@ -40,6 +40,9 @@
           <%= sortable 'holding_institutions.institution_type', t('activerecord.attributes.holding_institution.institution_type') %>
         </th>
         <th>
+          <%= sortable 'holding_institutions.public', t('activerecord.attributes.holding_institution.public') %>
+        </th>
+        <th>
           <%= sortable 'holding_institutions.created_at', t('activerecord.attributes.holding_institution.created_at') %>
         </th>
         <th>
@@ -65,6 +68,9 @@
             </td>
             <td>
               <%= holding_institution.institution_type %>
+            </td>
+            <td>
+              <%= boolean_check_icon holding_institution.public %>
             </td>
             <td>
               <%= holding_institution.created_at %>

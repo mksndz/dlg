@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181206182638) do
+ActiveRecord::Schema.define(version: 20190207103708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,10 +241,10 @@ ActiveRecord::Schema.define(version: 20181206182638) do
     t.string   "contact_name"
     t.string   "contact_email"
     t.string   "harvest_strategy"
-    t.string   "oai_urls",            default: [], array: true
+    t.string   "oai_urls",            default: [],   array: true
     t.text     "ignored_collections"
     t.datetime "last_harvested_at"
-    t.text     "analytics_emails",    default: [], array: true
+    t.text     "analytics_emails",    default: [],   array: true
     t.text     "subgranting"
     t.text     "grant_partnerships"
     t.datetime "created_at"
@@ -253,6 +253,7 @@ ActiveRecord::Schema.define(version: 20181206182638) do
     t.text     "notes"
     t.string   "display_name"
     t.string   "slug"
+    t.boolean  "public",              default: true
   end
 
   add_index "holding_institutions", ["authorized_name"], name: "index_holding_institutions_on_authorized_name", using: :btree
