@@ -20,6 +20,15 @@ RSpec.describe HoldingInstitution, type: :model do
     it 'has a boolean public value' do
       expect(holding_institution.public?).to be_truthy
     end
+    it 'has a public_contact_address field' do
+      expect(holding_institution).to respond_to :public_contact_address
+    end
+    it 'has a public_contact_email field' do
+      expect(holding_institution).to respond_to :public_contact_email
+    end
+    it 'has a public_contact_phone field' do
+      expect(holding_institution).to respond_to :public_contact_phone
+    end
     it 'has Projects' do
       projects = Fabricate.times(2, :project)
       holding_institution.projects = projects

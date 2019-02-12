@@ -6,7 +6,9 @@ Fabricator(:holding_institution) do
   homepage_url { Faker::Internet.url }
   coordinates '31.978987, -81.161760'
   strengths { Faker::Hipster.sentence(3) }
-  contact_information { Faker::Address.full_address }
+  public_contact_address { Faker::Address.full_address }
+  public_contact_email { Faker::Internet.email }
+  public_contact_phone { Faker::PhoneNumber.phone_number }
   institution_type 'Museum'
   galileo_member false
   contact_name { Faker::Name.name }
