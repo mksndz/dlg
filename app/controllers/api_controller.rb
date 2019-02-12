@@ -103,7 +103,9 @@ class ApiController < ApplicationController
       homepage_url: holding_institution.homepage_url,
       coordinates: holding_institution.coordinates,
       strengths: holding_institution.strengths,
-      contact_information: holding_institution.contact_information,
+      contact_address: holding_institution.public_contact_address,
+      contact_email: holding_institution.public_contact_email,
+      contact_phone: holding_institution.public_contact_phone,
       image: holding_institution.image.url
     }
   end
