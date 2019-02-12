@@ -150,10 +150,19 @@ class Item < ActiveRecord::Base
   end
 
   def page_urls
+    # because IIIF spec doesn't support PDF pagination,
+    # provide only url for first page if the document is a PDF
+    return [pages.first.iiif_info_link] if pdf?
+
     urls = pages.map(&:iiif_info_link).reject(&:blank?)
     return nil unless urls.any?
 
     urls
+  end
+
+  def pdf?
+    # items is considered a PDF here if any page is a PDF
+    pages.map(&:pdf?).include? true
   end
 
   def display?

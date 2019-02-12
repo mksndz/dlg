@@ -19,10 +19,15 @@
 
 <br><br>
 
-<% if @item.pages.any? %>
+<% if @item.pages.any? && @item.page_urls.any? %>
   <div class="row">
     <div class="col-md-12">
       <div class="well">
+        <% if @item.pdf? %>
+        <div class="alert alert-warning">
+          This document has PDF pages - the viewer here renders the first page as a JPG.
+        </div>
+        <% end %>
         <%= openseadragon_picture_tag @item.page_urls, { data: { openseadragon: { sequenceMode: true }}} %>
       </div>
     </div>

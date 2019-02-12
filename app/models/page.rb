@@ -15,6 +15,10 @@ class Page < ActiveRecord::Base
     "#{iiif_link_with_id}/full/full/0/default.jpg"
   end
 
+  def pdf?
+    file_type.casecmp('PDF').zero?
+  end
+
   private
 
   def iiif_link_with_id
@@ -25,7 +29,7 @@ class Page < ActiveRecord::Base
     id = item.record_id
     parts = id.split '_'
     page = number.rjust 4, '0'
-    if file_type.casecmp('PDF').zero?
+    if pdf?
       "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}.#{file_type}"
     else
       "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}-#{page}.#{file_type}"

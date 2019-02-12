@@ -1,4 +1,8 @@
 module ItemsHelper
+  def show_item_iiif_viewer?
+    @item.pages.any? && show_iiif_viewer?
+  end
+
   def legacy_thumbnail_tag(item) # todo this duplicates functionality in BlacklightHelper
     url = "http://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
     image_tag url, class: 'img-thumbnail'
