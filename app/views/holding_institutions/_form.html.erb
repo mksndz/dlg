@@ -21,7 +21,9 @@
   <%= f.text_field :homepage_url %>
   <%= f.text_field :coordinates %>
   <%= f.text_area :strengths %>
-  <%= f.text_area :contact_information %>
+  <%= f.text_area :public_contact_address %>
+  <%= f.text_field :public_contact_email %>
+  <%= f.text_field :public_contact_phone %>
   <h2><%= t('meta.holding_institution.labels.administrative') %></h2>
   <hr>
   <%= f.text_area :notes %>

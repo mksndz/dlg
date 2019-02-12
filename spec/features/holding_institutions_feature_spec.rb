@@ -43,6 +43,9 @@ feature 'Holding Institution management' do
         expect(page).to have_text holding_institution.homepage_url
         expect(page).to have_text holding_institution.coordinates
         expect(page).to have_text holding_institution.strengths
+        expect(page).to have_text holding_institution.public_contact_address
+        expect(page).to have_text holding_institution.public_contact_email
+        expect(page).to have_text holding_institution.public_contact_phone
         expect(page).to have_text holding_institution.collections.first.display_title
         expect(page).to have_text holding_institution.projects.first.title
         expect(page).to have_text holding_institution.contact_name
