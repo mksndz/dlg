@@ -44,5 +44,13 @@ describe PageProcessor, type: :model do
       expect(page_ingest.results['errors'].length).to eq 1
       expect(page_ingest.results['errors'].first.values[0]).to match /paginated/
     end
+    it 'handles item level file_type' do
+      page_ingest = Fabricate :page_ingest_with_item_file_type
+      PageProcessor.perform(page_ingest.id)
+      page_ingest.reload
+      expect(page_ingest.success?).to be_truthy
+      expect(page_ingest.failed?).to be_falsey
+      # expect(page_ingest)
+    end
   end
 end

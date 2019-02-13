@@ -22,11 +22,13 @@ class PageProcessor
       elsif includes_item_fulltext(item_data)
         item.fulltext = item_data['fulltext']
       end
+      item_file_type = item_data.key?('file_type') ? item_data['file_type'] : nil
       item_data['pages'].each do |page_data|
         begin
           raise StandardError, 'Item already has full text added - remove it if you want to add paginated full text' if item.fulltext? && includes_page_fulltext(page_data)
 
           page = Page.create page_data.merge(item: item)
+          page.file_type = item_file_type if item_file_type
           page.save ? page_added(page) : page_failed(page)
         rescue StandardError => e
           add_error record_id, "Problem creating Page for #{record_id}: #{e}"
