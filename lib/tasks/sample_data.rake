@@ -9,6 +9,7 @@ task sample_data: :environment do
   load Rails.root.join 'db', 'data', 'collections.rb'
   load Rails.root.join 'db', 'data', 'items.rb'
   load Rails.root.join 'db', 'data', 'pages.rb'
+  Item.reindex
   puts 'Records loaded!'
   Sunspot.commit
 end
