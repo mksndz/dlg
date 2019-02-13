@@ -7,6 +7,8 @@ class Page < ActiveRecord::Base
   validates :number, numericality: true
   mount_uploader :file, DigitalObjectUploader
 
+  PAGE_PATH_LENGTH = 5
+
   def iiif_info_link
     "#{iiif_link_with_id}/info.json"
   end
@@ -22,7 +24,7 @@ class Page < ActiveRecord::Base
   def iiif_identifier
     id = item.record_id
     parts = id.split '_'
-    page = number.rjust 4, '0'
+    page = number.rjust PAGE_PATH_LENGTH, '0'
     if pdf?
       "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}.#{file_type}"
     else
