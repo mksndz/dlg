@@ -126,7 +126,7 @@ class Item < ActiveRecord::Base
     string(:geojson, as: 'geojson', multiple: true)
     string(:placename, as: 'placename', multiple: true)
 
-    integer :files, stored: true
+    string :iiif_ids, stored: true, multiple: true
 
   end
 
@@ -134,8 +134,8 @@ class Item < ActiveRecord::Base
     %w[collection_id public valid_item].freeze
   end
 
-  def files
-    pages_count
+  def iiif_ids
+    pages.map(&:iiif_identifier)
   end
 
   def pages_or_item_fulltext

@@ -19,12 +19,6 @@ class Page < ActiveRecord::Base
     file_type.casecmp('PDF').zero?
   end
 
-  private
-
-  def iiif_link_with_id
-    "#{Rails.application.secrets.iiif_base_uri}#{iiif_identifier}"
-  end
-
   def iiif_identifier
     id = item.record_id
     parts = id.split '_'
@@ -34,5 +28,11 @@ class Page < ActiveRecord::Base
     else
       "dlg%2F#{parts[0]}%2F#{parts[1]}%2F#{id}%2F#{id}-#{page}.#{file_type}"
     end
+  end
+
+  private
+
+  def iiif_link_with_id
+    "#{Rails.application.secrets.iiif_base_uri}#{iiif_identifier}"
   end
 end

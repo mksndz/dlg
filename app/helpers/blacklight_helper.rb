@@ -3,6 +3,15 @@ module BlacklightHelper
 
   NO_THUMB_ICON = 'no_thumb.png'.freeze # todo replace with no thumb placeholder
 
+  def iiif_urls(document, _options = {})
+    iiif_ids = document['iiif_ids_sms']
+    return nil if iiif_ids.blank?
+
+    iiif_ids.map do |id|
+      "#{Rails.application.secrets.iiif_base_uri}#{id}/info.json"
+    end
+  end
+
   def render_page_title
     if content_for?(:page_title)
       head_page_titleify content_for(:page_title)
