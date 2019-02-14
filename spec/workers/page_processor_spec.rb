@@ -50,7 +50,9 @@ describe PageProcessor, type: :model do
       page_ingest.reload
       expect(page_ingest.success?).to be_truthy
       expect(page_ingest.failed?).to be_falsey
-      # expect(page_ingest)
+      expect(Page.find(page_ingest.results_json['added'][0].keys[0]).file_type).to eq 'jp2'
+      expect(Page.find(page_ingest.results_json['added'][1].keys[0]).file_type).to eq 'jp2'
+      expect(Page.find(page_ingest.results_json['added'][2].keys[0]).file_type).to eq 'tiff'
     end
   end
 end

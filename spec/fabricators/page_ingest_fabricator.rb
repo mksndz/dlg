@@ -54,7 +54,7 @@ Fabricator(:page_ingest_with_item_file_type, from: :page_ingest) do
         file_type: 'jp2',
         pages: [
           { number: 1 },
-          { number: 2 }
+          { number: 2, file_type: 'jpeg' }
         ] },
       { id: Fabricate(:item_with_parents).record_id,
         pages: [

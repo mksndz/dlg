@@ -1,4 +1,7 @@
 # job to ingest a JSON file of Page records
+# FULLTEXT and FILE TYPE can be set at Item level in JSON
+# FULLTEXT conflicts between Item and Page will result in errors
+# FILE TYPE values set at Page level will be overridden if set at Item level
 class PageProcessor
   @queue = :page_ingest_queue
   @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
