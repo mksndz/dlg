@@ -105,7 +105,7 @@ Rails.application.routes.draw do
 
   resources :fulltext_ingests, except: %i[edit update]
 
-  resource :catalog, only: [:index], controller: 'catalog', constraints: { id: /.*/, format: false } do
+  resource :catalog, only: [:index], controller: 'catalog', constraints: { id: /.*/ } do
     concerns :searchable
     collection do
       get 'facets', to: 'catalog#facets'
