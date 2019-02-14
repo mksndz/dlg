@@ -172,8 +172,8 @@ class CatalogController < ApplicationController
     config.add_search_field('slug') do |field|
       field.label = 'ID (slug)'
       field.solr_local_parameters = {
-          qf: 'slug_ng',
-          pf: 'slug_ng'
+        qf: 'slug_ng',
+        pf: 'slug_ng'
       }
     end
 
@@ -181,8 +181,17 @@ class CatalogController < ApplicationController
     config.add_search_field('record_id') do |field|
       field.label = 'Record ID'
       field.solr_local_parameters = {
-          qf: 'record_id_ng',
-          pf: 'record_id_ng'
+        qf: 'record_id_ng',
+        pf: 'record_id_ng'
+      }
+    end
+
+    # explicit ID
+    config.add_search_field('id') do |field|
+      field.label = 'Explicit ID'
+      field.solr_local_parameters = {
+        qf: 'record_id_ss^50000',
+        pf: 'record_id_ss^50000'
       }
     end
 
@@ -190,8 +199,8 @@ class CatalogController < ApplicationController
     config.add_search_field('title') do |field|
       field.label = 'Title'
       field.solr_local_parameters = {
-          qf: 'title_unstem_search^100 dcterms_title_text^50',
-          pf: 'title_unstem_search^100 dcterms_title_text^50'
+        qf: 'title_unstem_search^100 dcterms_title_text^50',
+        pf: 'title_unstem_search^100 dcterms_title_text^50'
       }
     end
 
@@ -199,8 +208,8 @@ class CatalogController < ApplicationController
     config.add_search_field('creator') do |field|
       field.label = 'Creator'
       field.solr_local_parameters = {
-          qf: 'creator_unstem_search^100 dcterms_creator_text^50',
-          pf: 'creator_unstem_search^100 dcterms_creator_text^50'
+        qf: 'creator_unstem_search^100 dcterms_creator_text^50',
+        pf: 'creator_unstem_search^100 dcterms_creator_text^50'
       }
     end
 
@@ -208,8 +217,8 @@ class CatalogController < ApplicationController
     config.add_search_field('provenance') do |field|
       field.label = 'Holding Inst.'
       field.solr_local_parameters = {
-          qf: 'dcterms_provenance_unstem_search^1000 dcterms_provenance_text^50',
-          pf: 'dcterms_provenance_unstem_search^1000 dcterms_provenance_text^50'
+        qf: 'dcterms_provenance_unstem_search^1000 dcterms_provenance_text^50',
+        pf: 'dcterms_provenance_unstem_search^1000 dcterms_provenance_text^50'
       }
     end
 
@@ -217,8 +226,8 @@ class CatalogController < ApplicationController
     config.add_search_field('contributor') do |field|
       field.label = 'Contributor'
       field.solr_local_parameters = {
-          qf: 'contributor_unstem_search^100 dcterms_contributor_text^50',
-          pf: 'contributor_unstem_search^100 dcterms_contributor_text^50'
+        qf: 'contributor_unstem_search^100 dcterms_contributor_text^50',
+        pf: 'contributor_unstem_search^100 dcterms_contributor_text^50'
       }
     end
 
@@ -226,8 +235,8 @@ class CatalogController < ApplicationController
     config.add_search_field('subject') do |field|
       field.label = 'Subject'
       field.solr_local_parameters = {
-          qf: 'subject_unstem_search^100 dcterms_subject_text^50',
-          pf: 'subject_unstem_search^100 dcterms_subject_text^50'
+        qf: 'subject_unstem_search^100 dcterms_subject_text^50',
+        pf: 'subject_unstem_search^100 dcterms_subject_text^50'
       }
     end
 
@@ -235,8 +244,8 @@ class CatalogController < ApplicationController
     config.add_search_field('description') do |field|
       field.label = 'Description'
       field.solr_local_parameters = {
-          qf: 'description_unstem_search^1000 dcterms_description_text^50',
-          pf: 'description_unstem_search^1000 dcterms_description_text^50'
+        qf: 'description_unstem_search^1000 dcterms_description_text^50',
+        pf: 'description_unstem_search^1000 dcterms_description_text^50'
       }
     end
 
@@ -244,8 +253,8 @@ class CatalogController < ApplicationController
     config.add_search_field('publisher') do |field|
       field.label = 'Publisher'
       field.solr_local_parameters = {
-          qf: 'publisher_unstem_search^1000 dcterms_publisher_text^50',
-          pf: 'publisher_unstem_search^1000 dcterms_publisher_text^50'
+        qf: 'publisher_unstem_search^1000 dcterms_publisher_text^50',
+        pf: 'publisher_unstem_search^1000 dcterms_publisher_text^50'
       }
     end
 
@@ -253,8 +262,8 @@ class CatalogController < ApplicationController
     config.add_search_field('date') do |field|
       field.label = 'Date'
       field.solr_local_parameters = {
-          qf: 'date_unstem_search^1000 dc_date_text^50',
-          pf: 'date_unstem_search^1000 dc_date_text^50'
+        qf: 'date_unstem_search^1000 dc_date_text^50',
+        pf: 'date_unstem_search^1000 dc_date_text^50'
       }
     end
 
@@ -262,8 +271,8 @@ class CatalogController < ApplicationController
     config.add_search_field('temporal') do |field|
       field.label = 'Temporal'
       field.solr_local_parameters = {
-          qf: 'temporal_unstem_search^1000 dcterms_temporal_text^50',
-          pf: 'temporal_unstem_search^1000 dcterms_temporal_text^50'
+        qf: 'temporal_unstem_search^1000 dcterms_temporal_text^50',
+        pf: 'temporal_unstem_search^1000 dcterms_temporal_text^50'
       }
     end
 
@@ -271,8 +280,8 @@ class CatalogController < ApplicationController
     config.add_search_field('spatial') do |field|
       field.label = 'Spatial'
       field.solr_local_parameters = {
-          qf: 'spatial_unstem_search^1000 dcterms_spatial_text^50',
-          pf: 'spatial_unstem_search^1000 dcterms_spatial_text^50'
+        qf: 'spatial_unstem_search^1000 dcterms_spatial_text^50',
+        pf: 'spatial_unstem_search^1000 dcterms_spatial_text^50'
       }
     end
 
@@ -280,8 +289,8 @@ class CatalogController < ApplicationController
     config.add_search_field('is_part_of') do |field|
       field.label = 'Is Part Of'
       field.solr_local_parameters = {
-          qf: 'is_part_of_unstem_search^1000 dcterms_is_part_of_text^50',
-          pf: 'is_part_of_unstem_search^1000 dcterms_is_part_of_text^50'
+        qf: 'is_part_of_unstem_search^1000 dcterms_is_part_of_text^50',
+        pf: 'is_part_of_unstem_search^1000 dcterms_is_part_of_text^50'
       }
     end
 
@@ -289,8 +298,8 @@ class CatalogController < ApplicationController
     config.add_search_field('is_shown_at') do |field|
       field.label = 'Is Shown At (URL)'
       field.solr_local_parameters = {
-          qf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^50',
-          pf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^50'
+        qf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^50',
+        pf: 'edm_is_shown_at_url^1000 edm_is_shown_at_text^50'
       }
     end
 
@@ -298,8 +307,8 @@ class CatalogController < ApplicationController
     config.add_search_field('is_shown_by') do |field|
       field.label = 'Is Shown By (URL)'
       field.solr_local_parameters = {
-          qf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^50',
-          pf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^50'
+        qf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^50',
+        pf: 'edm_is_shown_by_url^1000 edm_is_shown_by_text^50'
       }
     end
 
@@ -307,8 +316,8 @@ class CatalogController < ApplicationController
     config.add_search_field('identifier') do |field|
       field.label = 'Identifier'
       field.solr_local_parameters = {
-          qf: 'dcterms_identifier_url^1000 identifier_unstem_search^100 dcterms_identifier_text^50',
-          pf: 'dcterms_identifier_url^1000 identifier_unstem_search^100 dcterms_identifier_text^50'
+        qf: 'dcterms_identifier_url^1000 identifier_unstem_search^100 dcterms_identifier_text^50',
+        pf: 'dcterms_identifier_url^1000 identifier_unstem_search^100 dcterms_identifier_text^50'
       }
     end
 
@@ -316,8 +325,8 @@ class CatalogController < ApplicationController
     config.add_search_field('rights_holder') do |field|
       field.label = 'Rights Holder'
       field.solr_local_parameters = {
-          qf: 'dcterms_rights_holder_text^1000 dcterms_rights_holder_unstem_search^50',
-          pf: 'dcterms_rights_holder_text^1000 dcterms_rights_holder_unstem_search^50'
+        qf: 'dcterms_rights_holder_text^1000 dcterms_rights_holder_unstem_search^50',
+        pf: 'dcterms_rights_holder_text^1000 dcterms_rights_holder_unstem_search^50'
       }
     end
 
@@ -325,16 +334,16 @@ class CatalogController < ApplicationController
     config.add_search_field('collection_name') do |field|
       field.label = 'Collection Name'
       field.solr_local_parameters = {
-          qf: 'collection_titles_unstem_search^1000 collection_titles_text^50',
-          pf: 'collection_titles_unstem_search^1000 collection_titles_text^50'
+        qf: 'collection_titles_unstem_search^1000 collection_titles_text^50',
+        pf: 'collection_titles_unstem_search^1000 collection_titles_text^50'
       }
     end
     # full text
     config.add_search_field('full_text') do |field|
       field.label = 'Full Text'
       field.solr_local_parameters = {
-          qf: 'fulltext_text',
-          pf: 'fulltext_text'
+        qf: 'fulltext_text',
+        pf: 'fulltext_text'
       }
     end
 
