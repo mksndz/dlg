@@ -83,6 +83,17 @@ RSpec.describe HoldingInstitution, type: :model do
       holding_institution.valid?
       expect(holding_institution.errors).to have_key :authorized_name
     end
+    it 'requires a slug' do
+      holding_institution = Fabricate.build(:holding_institution, slug: nil)
+      holding_institution.valid?
+      expect(holding_institution.errors).to have_key :slug
+    end
+    it 'requires a unique slug' do
+      Fabricate :holding_institution, slug: 'taken'
+      holding_institution = Fabricate.build(:holding_institution, slug: 'taken')
+      holding_institution.valid?
+      expect(holding_institution.errors).to have_key :slug
+    end
     # it 'requires an institution_type' do
     #   holding_institution = Fabricate.build(:holding_institution, institution_type: nil)
     #   holding_institution.valid?
