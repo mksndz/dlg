@@ -187,7 +187,7 @@ class CatalogController < ApplicationController
     end
 
     # explicit ID
-    config.add_search_field('id') do |field|
+    config.add_search_field('explicit_id') do |field|
       field.label = 'Explicit ID'
       field.solr_local_parameters = {
         qf: 'record_id_ss^50000',
