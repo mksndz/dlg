@@ -1,5 +1,6 @@
 # support DPLA harvesting
 class DplaController < ApplicationController
+  include Blacklight::Catalog
   respond_to :json
 
   skip_before_action :authenticate_user!
@@ -17,6 +18,16 @@ class DplaController < ApplicationController
       items: response['response']['docs'],
       nextCursorMark: response['nextCursorMark']
     }
+  end
+
+  def show
+    response = Blacklight.default_index.find(
+      params[:id], facet: false,
+                   wt: 'json',
+                   fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
+                   fl: dpla_fields.join(', ')
+    )
+    render json: response['response']['docs'][0]
   end
 
   private

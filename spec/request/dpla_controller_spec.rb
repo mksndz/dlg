@@ -47,4 +47,41 @@ RSpec.describe 'DPLA Harvesting Support endpoint', type: :request do
       expect(body['nextCursorMark']).not_to be_empty
     end
   end
+  context 'can show using #show' do
+    before(:each) do
+      repo = Fabricate :empty_repository, public: true
+      coll = Fabricate :empty_collection, repository: repo, portals: repo.portals, public: true
+      @item = Fabricate :robust_item, collection: coll, portals: repo.portals, public: true, dpla: true
+      @nonpublic_item = Fabricate :robust_item, collection: coll, portals: repo.portals, public: false, dpla: true
+      @nondpla_item = Fabricate :robust_item, collection: coll, portals: repo.portals, public: true, dpla: false
+      Sunspot.commit
+    end
+    after(:each) do
+      Sunspot.remove_all! Item
+      Sunspot.remove_all! Collection
+    end
+    it 'returns data for appropriate items' do
+      get "/dpla/#{@item.record_id}", {}, headers
+      expect(response.code).to eq '200'
+      body = JSON.parse(response.body)
+      expect(body['id']).to eq @item.record_id
+    end
+    it 'fails to return data for non public items' do
+      get "/dpla/#{@nonpublic_item.record_id}", {}, headers
+      expect(response.code).to eq '404'
+    end
+    it 'fails to return data for non DPLA items' do
+      get "/dpla/#{@nondpla_item.record_id}", {}, headers
+      expect(response.code).to eq '404'
+    end
+    it 'returns a record with a . in the record_id' do
+      @item.record_id = @item.record_id + '.abc'
+      @item.save
+      Sunspot.commit
+      get "/dpla/#{@item.record_id}", {}, headers
+      expect(response.code).to eq '200'
+      body = JSON.parse(response.body)
+      expect(body['id']).to eq @item.record_id
+    end
+  end
 end
