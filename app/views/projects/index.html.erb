@@ -43,6 +43,9 @@
           <%= sortable 'projects.storage_used', t('activerecord.attributes.project.storage_used') %>
         </th>
         <th>
+          <%= t('activerecord.attributes.project.funding_sources') %>
+        </th>
+        <th>
           <%= sortable 'projects.holding_institution.authorized_name', t('activerecord.attributes.project.holding_institution') %>
         </th>
         <th width="185px"></th>
@@ -64,6 +67,9 @@
             </td>
             <td>
               <%= project.storage_used %>
+            </td>
+            <td>
+              <%= project.funding_sources.join('<br>').html_safe %>
             </td>
             <td>
               <%= project.holding_institution.authorized_name %>

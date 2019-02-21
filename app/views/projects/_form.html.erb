@@ -3,6 +3,7 @@
   <%= f.text_field :title %>
   <%= f.text_field :fiscal_year %>
   <%= f.select :hosting, ProjectsHelper::HOSTING_TYPES, { multiple: false }, { class: 'fancy-multiselect' } %>
+  <%= f.select :funding_sources, ProjectsHelper::FUNDING_SOURCES, { }, { multiple: true, class: 'fancy-multiselect' } %>
   <%= f.text_field :storage_used %>
   <%= f.select :holding_institution_id, @data[:holding_institutions].collect { |c| [c.authorized_name, c.id] }, {}, { class: 'fancy-multiselect' } %>
   <%= f.select :collection_ids, @data[:collections].collect { |c| [c.display_title, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>

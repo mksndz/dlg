@@ -13,6 +13,7 @@ en:
         title: 'Title'
         fiscal_year: 'Fiscal Year'
         hosting: 'Hosting'
+        funding_sources: 'Funding Sources'
         storage_used: 'Storage Used'
         holding_institution: 'Holding Institution'
         collection_ids: 'Collections'

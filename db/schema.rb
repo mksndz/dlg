@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190212191739) do
+ActiveRecord::Schema.define(version: 20190221160515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -353,6 +353,7 @@ ActiveRecord::Schema.define(version: 20190212191739) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "holding_institution_id"
+    t.string   "funding_sources",        default: [], null: false, array: true
   end
 
   create_table "repositories", force: :cascade do |t|

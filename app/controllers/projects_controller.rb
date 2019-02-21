@@ -54,15 +54,27 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :fiscal_year, :hosting,
-                                    :storage_used, :holding_institution_id,
-                                    collection_ids: [])
+    clean_params(
+      params.require(:project).permit(:title, :fiscal_year, :hosting,
+                                      :storage_used, :holding_institution_id,
+                                      collection_ids: [], funding_sources: [])
+    )
   end
+
   def set_data
     @data = {}
     @data[:fiscal_years] = Project.fiscal_years.unshift ''
-    @data[:holding_institutions] = HoldingInstitution.all.order(:authorized_name)
+    @data[:holding_institutions] = HoldingInstitution.all.order :authorized_name
     @data[:collections] = Collection.all.order(:display_title)
+  end
+
+  def clean_params(params)
+    params.each do |f, v|
+      if v.is_a? Array
+        params[f] = v.reject(&:empty?)
+        next
+      end
+    end
   end
 end
 
