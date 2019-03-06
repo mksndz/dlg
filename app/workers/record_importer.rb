@@ -1,9 +1,25 @@
 # job to process source records into batch_items
 include XmlImportHelper
 class RecordImporter
+  MAX_BATCH_SIZE = 8_000
   @queue = :xml
   # @logger = Logger.new('./log/xml_import.log')
   @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
+
+  def self.batch_too_large?
+    item_nodes = @batch_import.xml.match(/<item>/)
+    return unless item_nodes.present?
+
+    item_nodes_count = item_nodes.length
+    batch_size = @batch_import.batch.batch_items_count
+    new_size = item_nodes_count + batch_size
+    if new_size > MAX_BATCH_SIZE
+      raise(
+        JobTooBigError,
+        "This XML Ingest would result in a Batch over the limit of #{MAX_BATCH_SIZE} batch items."
+      )
+    end
+  end
 
   def self.perform(batch_import_id)
     t1 = Time.now
@@ -23,6 +39,7 @@ class RecordImporter
     when 'file', 'text'
       count = 0
       begin
+        batch_too_large?
         Nokogiri::XML::Reader(@batch_import.xml).each do |node|
           next unless
             node.name == 'item' &&
@@ -42,6 +59,8 @@ class RecordImporter
         end
       rescue Nokogiri::XML::SyntaxError => e
         total_failure "Fundamental XML parsing error: #{e.message}"
+      rescue JobTooBigError => e
+        total_failure e.message
       end
       total_failure 'No records could be extracted from the XML' unless count > 0
     when 'search query'
