@@ -1,0 +1,2 @@
+class JobTooBigError < StandardError
+end

@@ -94,7 +94,7 @@ describe RecordImporter, type: :model do
         it 'should update BatchImport results appropriately' do
           RecordImporter.perform(batch_import.id)
           expect(
-              batch_import.reload.results['added'].length
+            batch_import.reload.results['added'].length
           ).to eq 1
         end
         it 'should create a BatchItem linked to an existing Item' do
@@ -116,7 +116,7 @@ describe RecordImporter, type: :model do
       it 'should store a verbose error in results saying the XML could not be parsed' do
         RecordImporter.perform(batch_import.id)
         expect(
-            batch_import.reload.results['failed'][0]['message']
+          batch_import.reload.results['failed'][0]['message']
         ).to include 'Fundamental XML parsing error:'
       end
     end
