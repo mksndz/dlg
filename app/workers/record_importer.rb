@@ -21,10 +21,16 @@ class RecordImporter
     end
   end
 
+  # method executed when background job is run
   def self.perform(batch_import_id)
     t1 = Time.now
+
+    # get BI object from passed parameter
+    # NOTE: sometimes this fails becasue DLG staff delete the batch_import
+    # before the job gets executed
     @batch_import = BatchImport.find(batch_import_id)
 
+    # setup variables for results tracking, etc.
     @added = 0
     @failed = 0
     @batch = @batch_import.batch
@@ -35,18 +41,26 @@ class RecordImporter
 
     import_type = @batch_import.format
 
+    # act based on the type of BatchImport (xml or query)
     case import_type
     when 'file', 'text'
       count = 0
       begin
+        # check if batch is too big after hypothetical import
         batch_too_large?
+
+        # use XML Reader to 'efficiently' iterate through XML nodes
         Nokogiri::XML::Reader(@batch_import.xml).each do |node|
+          # skip nodes not of <item> type
           next unless
             node.name == 'item' &&
             node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
 
           count += 1
+          # convert node contents to hash
           record = Hash.from_xml(node.outer_xml)
+
+          # handle errors
           unless record
             add_failed(count, 'Item node could not be converted to hash.')
             next
@@ -55,6 +69,7 @@ class RecordImporter
             add_failed(count, 'No Item node could be extracted from XML')
             next
           end
+          # convert to BatchItem
           create_or_update_record count, record['item']
         end
       rescue Nokogiri::XML::SyntaxError => e
@@ -98,13 +113,21 @@ class RecordImporter
   end
 
   def self.create_or_update_record(num, record_data)
+    # do some shitty magic on the hash
     record_data = XmlImportHelper.prepare_item_hash(record_data)
+
+    # remove item id from hash, if present, so that AR doesn't try to set it when creating a BatchItem
+    # also, we may want to use it later to link to an existing Item
     item_id = record_data.delete('id')
+
+    # pull out collection node from XML so we can handle setting the relation later and avoid AR errors
     collection_info = record_data.delete('collection')
     unless collection_info
       add_failed(num, "No collection node could be extracted for record #{num}.")
       return
     end
+
+    # lookup collection info using slug or record_id TODO: only support one?
     collection_slug = collection_info.key?('slug') ? collection_info['slug'] : nil
     collection_record_id = collection_info.key?('record_id') ? collection_info['record_id'] : nil
     unless collection_slug || collection_record_id
@@ -114,11 +137,15 @@ class RecordImporter
     collection = nil
     collection = Collection.find_by_slug collection_slug if collection_slug
     collection = Collection.find_by_record_id collection_record_id if collection_record_id
+
+    # log error if a collection cannot be set
     unless collection
       add_failed num, "Collection for record #{record_data['slug']} could not be found using record id: #{collection_record_id}." if collection_record_id
       add_failed num, "Collection for record #{record_data['slug']} could not be found using slug: #{collection_slug}." if collection_slug
       return
     end
+
+    # handle special case whereby records from XML will be updating the slug values of Items and therefore need to be linked to existing records using the db id
     if @batch_import.match_on_id?
       add_failed num, "Item with database ID #{id} not found." unless item_id
       item_lookup = Item.find item_id
@@ -126,17 +153,24 @@ class RecordImporter
       # look for existing item based on unique attributes
       item_lookup = Item.where(slug: record_data['slug'], collection: collection)
       if item_lookup.length > 1
+        # add impossible error message :/
         add_failed num, "More than one existing Item match for #{record_data['slug']} in Collection #{collection_slug}. This should never happen!"
       end
+      # remove ID again from record data...
       record_data.delete 'id'
     end
+
+    # try and update or create record
     begin
+      # if one items was retunred...
       if item_lookup.is_a?(Item)
         action = :update
         create_update_record(item_lookup, record_data)
+      # if multiple items found - again, should never happen...
       elsif item_lookup.any?
         action = :update
         create_update_record(item_lookup.first, record_data)
+      # create new item
       else
         action = :add
         create_new_record(record_data)
@@ -145,9 +179,16 @@ class RecordImporter
       add_failed num, "Generating BatchItem failed for record #{record_data['slug']}. Error: #{e} "
       return
     end
+
+    # @record should now be set
+    # set batch for batch item
     @record.batch = @batch
+    # set collection for batch item
     @record.collection = collection
+
+    # save batch_item, finally
     begin
+      # check if validation run was requested, save accordingly
       if @record.save(validate: @validate)
         if action == :update
           add_updated(@record.slug, @record.id, @record.item_id)
@@ -158,15 +199,17 @@ class RecordImporter
         add_failed(
           num,
           @record.errors,
-          safe_record_slug
+          safe_record_slug # handles case where incoming record has no slug set
         )
       end
+    # this should never be thrown because `save` is used above, not `save!`
     rescue ActiveRecord::RecordInvalid => e
       add_failed(
         num,
         "XML contains invalid record #{record_data['slug']}. Validation message: #{e}",
         safe_record_slug
       )
+    # not sure if this could ever obtain...
     rescue StandardError => e
       add_failed(
         num,
@@ -185,14 +228,19 @@ class RecordImporter
     @record.item = existing_item
   end
 
+
   def self.create_new_record(record_data)
+    # remove attributes from hash for bespoke relations
     portals = record_data.delete('portals')
     other_colls = record_data.delete('other_colls')
     holding_institutions = record_data.delete('dcterms_provenance')
+    # initialize BatchItem
     @record = BatchItem.new prepared_params(record_data)
+    # set other relations
     set_record_portals(portals) if portals
     set_record_other_colls(other_colls) if other_colls
     set_record_holding_institutions(holding_institutions) if holding_institutions
+    # link record to BI
     @record.batch_import = @batch_import
   end
 
@@ -202,6 +250,8 @@ class RecordImporter
     #   BatchItem.column_names.exclude? k
     # end
     prepared_data = {}
+    # for each param, reject it if that field is not an attribute of BatchItem
+    # also convert newline and tab characters for array values
     record_data.each do |k, v|
       next unless BatchItem.column_names.include?(k)
 
@@ -216,6 +266,7 @@ class RecordImporter
     prepared_data
   end
 
+  # add to results array for failed records
   def self.add_failed(num, message, slug = nil)
     @failed << {
       number: num,
@@ -224,6 +275,7 @@ class RecordImporter
     }
   end
 
+  # add to results array for created records
   def self.add_added(slug, batch_item_id)
     @added << {
       batch_item_id: batch_item_id,
@@ -231,6 +283,7 @@ class RecordImporter
     }
   end
 
+  # add to results array for updated records
   def self.add_updated(slug, batch_item_id, item_id)
     @updated << {
       batch_item_id: batch_item_id,
@@ -239,6 +292,7 @@ class RecordImporter
     }
   end
 
+  # handle total failure of import
   def self.total_failure(msg)
     notify "Batch Import `#{@batch_import.id}` failed: #{msg}"
     add_failed 0, msg
