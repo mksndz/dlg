@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ItemXmlService, type: :model do
+RSpec.describe ItemXmlHashProcessor, type: :model do
   let(:service) do
     ItemXmlService.new(
       xml: Fabricate(:batch_import).xml,

@@ -32,7 +32,7 @@ class RecordImporter
 
     # setup variables for results tracking, etc.
     @added = 0
-    @failed = 0
+    @failed = 0 # lol
     @batch = @batch_import.batch
     @validate = @batch_import.validations?
     @added = []
