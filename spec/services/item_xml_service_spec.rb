@@ -6,7 +6,7 @@ RSpec.describe ItemXmlService, type: :model do
       xml: Fabricate(:batch_import).xml,
       results_service: nil,
       hash_processor: ItemXmlHashProcessor
-    ) # TODO: inject results service
+    )
   end
 
   it 'produces hashes' do

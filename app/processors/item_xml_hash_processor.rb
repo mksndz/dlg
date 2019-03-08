@@ -1,34 +1,30 @@
 # handle conversion of hash fields to format appropriate for #create
 class ItemXmlHashProcessor
 
-  def initialize(hash:, results_service:)
+  FIELDS = %w[id portals collection other_colls dcterms_provenance].freeze
+
+  def initialize(hash)
     @hash = hash
-    @results_service = results_service
   end
 
-  def record_id
-    @hash.fetch 'record_id', 'Record ID not set'
-  end
-
-  def converted_hash(fields)
-    fields.each do |f|
-      begin
-        send(f) if @hash.key? f
-      rescue StandardError => e
-        @results_service.error record_id, e.message
-      end
+  def convert
+    FIELDS.each do |field|
+      send(field) if @hash.key? field
     end
     @hash
   end
 
+  private
+
   def id
-    val = @hash.delete('id')
-    @hash['item_id'] = val
+    @hash['item_id'] = @hash.delete('id')
   end
 
   def portals
-    val = @hash.delete('portals')
-    @hash['portal_ids'] = Portal.where(code: val.map(&:values).flatten).pluck(:id)
+    portals = @hash.delete('portals')
+    @hash['portal_ids'] = portals.map do |portal_info|
+      Portal.find_by!(portal_info).id
+    end
   end
 
   def collection
@@ -37,12 +33,16 @@ class ItemXmlHashProcessor
   end
 
   def other_colls
-    val = @hash.delete('other_colls')
-    @hash['other_collection_ids'] = Collection.where(record_id: val.map(&:values).flatten).pluck(:id)
+    other_collections = @hash.delete('other_colls')
+    @hash['other_collections'] = other_collections.map do |other|
+      Collection.find_by!(other).id
+    end
   end
 
   def dcterms_provenance
-    val = @hash.delete('dcterms_provenance')
-    @hash['holding_institution_ids'] = HoldingInstitution.where(authorized_name: val).pluck(:id)
+    provenances = @hash.delete('dcterms_provenance')
+    @hash['holding_institution_ids'] = provenances.map do |provenance|
+      HoldingInstitution.find_by!(authorized_name: provenance).id
+    end
   end
 end
