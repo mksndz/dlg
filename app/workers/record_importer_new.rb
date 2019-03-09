@@ -8,7 +8,7 @@ class RecordImporterNew
     raw_hashes = XmlToHashService.hashes_from batch_import.xml
 
     # convert array of hashes into #create-able form, handling AR errors
-    products = BatchItemFactory.build_from raw_hashes, batch_import.validations?, batch_import.batch
+    products = BatchItemFactory.build_from raw_hashes, batch_import
 
     # build results from factory products
     results = { added: [], failed: [] }
