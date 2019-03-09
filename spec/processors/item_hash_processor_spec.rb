@@ -6,7 +6,7 @@ RSpec.describe ItemXmlHashProcessor, type: :model do
   it 'properly translates ID value' do
     hash = { 'id' => '1' }
     expect(
-      ItemXmlHashProcessor.new(hash).convert
+      ItemXmlHashProcessor.new(hash).process
     ).to eq('item_id' => '1')
   end
 
@@ -14,7 +14,7 @@ RSpec.describe ItemXmlHashProcessor, type: :model do
     it 'properly sets the item_id attribute' do
       hash = { 'id' => 1 }
       expect(
-        ItemXmlHashProcessor.new(hash).convert
+        ItemHashProcessor.new(hash).process
       ).to eq('item_id' => 1)
     end
   end
@@ -24,13 +24,13 @@ RSpec.describe ItemXmlHashProcessor, type: :model do
       collection = Fabricate :empty_collection
       hash = { 'collection' => { 'record_id' => collection.record_id } }
       expect(
-        ItemXmlHashProcessor.new(hash).convert
+        ItemHashProcessor.new(hash).process
       ).to eq('collection_id' => collection.id)
     end
     it 'raises an error if collection is not found' do
       hash = { 'collection' => { 'record_id' => 'a_b' } }
       expect do
-        ItemXmlHashProcessor.new(hash).convert
+        ItemHashProcessor.new(hash).process
       end.to raise_error ActiveRecord::RecordNotFound
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe ItemXmlHashProcessor, type: :model do
         { 'code' => portal1.code }, { 'code' => portal2.code }
       ] }
       expect(
-        ItemXmlHashProcessor.new(hash).convert
+        ItemHashProcessor.new(hash).process
       ).to eq('portal_ids' => [portal1.id, portal2.id])
     end
     it 'raises an error if any portals cannot be found' do
@@ -52,7 +52,7 @@ RSpec.describe ItemXmlHashProcessor, type: :model do
         { 'code' => portal.code }, { 'code' => 'quux' }
       ] }
       expect do
-        ItemXmlHashProcessor.new(hash).convert
+        ItemHashProcessor.new(hash).process
       end.to raise_error ActiveRecord::RecordNotFound
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe ItemXmlHashProcessor, type: :model do
         { 'record_id' => collection2.record_id }
       ] }
       expect(
-        ItemXmlHashProcessor.new(hash).convert
+        ItemHashProcessor.new(hash).process
       ).to eq('other_collections' => [collection1.id, collection2.id])
     end
     it 'raises an error if any Collections cannot be found' do
@@ -75,7 +75,7 @@ RSpec.describe ItemXmlHashProcessor, type: :model do
         { 'record_id' => collection.record_id }, { 'record_id' => 'foo_bar' }
       ] }
       expect do
-        ItemXmlHashProcessor.new(hash).convert
+        ItemHashProcessor.new(hash).process
       end.to raise_error ActiveRecord::RecordNotFound
     end
   end
@@ -87,7 +87,7 @@ RSpec.describe ItemXmlHashProcessor, type: :model do
       hash = { 'dcterms_provenance' =>
                  [hi1.authorized_name, hi2.authorized_name] }
       expect(
-        ItemXmlHashProcessor.new(hash).convert
+        ItemHashProcessor.new(hash).process
       ).to eq('holding_institution_ids' => [hi1.id, hi2.id])
     end
     it 'raises an error if any Holding Institutions cannot be found' do
@@ -95,7 +95,7 @@ RSpec.describe ItemXmlHashProcessor, type: :model do
       hash = { 'dcterms_provenance' =>
                  [hi.authorized_name, 'MK Institute for Advanced Study'] }
       expect do
-        ItemXmlHashProcessor.new(hash).convert
+        ItemHashProcessor.new(hash).process
       end.to raise_error ActiveRecord::RecordNotFound
     end
   end

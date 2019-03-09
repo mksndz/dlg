@@ -14,6 +14,7 @@ class BatchItem < ActiveRecord::Base
   belongs_to :item
   has_one :repository, through: :collection
 
+  before_save :set_record_id
   after_save :lookup_coordinates
 
   COMMIT_SCRUB_ATTRIBUTES = %w[
@@ -59,6 +60,10 @@ class BatchItem < ActiveRecord::Base
   end
 
   private
+
+  def set_record_id
+    self.record_id = "#{collection.record_id}_#{slug}".downcase
+  end
 
   def remove_existing_from_index(item)
     Sunspot.remove item

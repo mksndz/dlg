@@ -1,18 +1,23 @@
 # new job to import XML and create BatchItems
-class NewRecordImporter
+class RecordImporterNew
   def self.perform(batch_import_id)
-    @batch_import = BatchImport.find batch_import_id
-    @results_service = JobResultsService.new @batch_import
+    batch_import = BatchImport.find batch_import_id
 
-    # build array of hashes with BI data
-    item_hashes = ItemXmlService.new(
-      xml: @batch_import.xml,
-      results_service: @results_service
-    ).hashes
+    # parse XML, handling XML errors that can cause total failure
+    # support future JSON format here?
+    raw_hashes = XmlToHashService.hashes_from batch_import.xml
 
-    # build BatchItems - validation?
-    BatchItemBuilder.build_from item_hashes, validate:
+    # convert array of hashes into #create-able form, handling AR errors
+    products = BatchItemFactory.build_from raw_hashes, batch_import.validations?, batch_import.batch
 
-    @batch_import.save
+    # build results from factory products
+    results = { added: [], failed: [] }
+    products.each do |p|
+      p.key?(:batch_item) ? results[:added] << p : results[:failed] << p
+    end
+
+    batch_import.results = results
+    batch_import.completed_at = Time.now
+    batch_import.save
   end
 end

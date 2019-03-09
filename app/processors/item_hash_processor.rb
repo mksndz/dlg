@@ -1,5 +1,5 @@
 # handle conversion of hash fields to format appropriate for #create
-class ItemXmlHashProcessor
+class ItemHashProcessor
 
   FIELDS = %w[id portals collection other_colls dcterms_provenance].freeze
 
@@ -7,7 +7,7 @@ class ItemXmlHashProcessor
     @hash = hash
   end
 
-  def convert
+  def process
     FIELDS.each do |field|
       send(field) if @hash.key? field
     end
