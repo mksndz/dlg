@@ -20,7 +20,7 @@ deploy_to_staging:
     - metaweb2-shell
 
 deploy_to_production:
- stage: deploy_production
+  stage: deploy_production
   only:
   - ci_config
   script:
