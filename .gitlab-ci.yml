@@ -11,6 +11,8 @@ deploy_to_staging:
   - rsync -rv --exclude=.git* . /deploy/meta/
   - cd /deploy/meta
   - bundle install --path vendor/bundle
+  - echo Testing 1 $TESTVAR
+  - echo Testing 2 $SECUREVAR
   - RAILS_ENV=production bundle exec rake db:migrate --trace
   - RAILS_ENV=production bundle exec rake assets:precompile --trace
   - passenger-config restart-app $(pwd)
