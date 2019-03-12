@@ -33,6 +33,8 @@ class RecordImporter
     @updated = []
     @failed = []
 
+    @records = []
+
     import_type = @batch_import.format
 
     case import_type
@@ -46,23 +48,35 @@ class RecordImporter
             node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
 
           count += 1
-          record = Hash.from_xml(node.outer_xml)
+          record = Hash.from_xml(node.outer_xml)['item']
           unless record
             add_failed(count, 'Item node could not be converted to hash.')
             next
           end
-          unless record.key? 'item'
-            add_failed(count, 'No Item node could be extracted from XML')
-            next
-          end
-          create_or_update_record count, record['item']
+          # unless record.key? 'item'
+          #   add_failed(count, 'No Item node could be extracted from XML')
+          #   next
+          # end
+
+          # MK 3/12/2019
+          # Moved this outside fo the XML Reader to hopefully save some memory
+          # create_or_update_record count, record['item']
+          @records << record
         end
       rescue Nokogiri::XML::SyntaxError => e
         total_failure "Fundamental XML parsing error: #{e.message}"
       rescue JobTooBigError => e
         total_failure e.message
       end
-      total_failure 'No records could be extracted from the XML' unless count > 0
+
+      if @records.any?
+        @records.each_with_index do |record, i|
+          create_or_update_record i + 1, record
+        end
+      else
+        total_failure 'No records could be extracted from the XML'
+      end
+
     when 'search query'
       @batch_import.item_ids.each_with_index do |id, index|
         begin
@@ -99,7 +113,6 @@ class RecordImporter
 
   def self.create_or_update_record(num, record_data)
     record_data = XmlImportHelper.prepare_item_hash(record_data)
-    item_id = record_data.delete('id')
     collection_info = record_data.delete('collection')
     unless collection_info
       add_failed(num, "No collection node could be extracted for record #{num}.")
@@ -119,24 +132,18 @@ class RecordImporter
       add_failed num, "Collection for record #{record_data['slug']} could not be found using slug: #{collection_slug}." if collection_slug
       return
     end
+    item_id = record_data.delete('id')
     if @batch_import.match_on_id?
-      add_failed num, "Item with database ID #{id} not found." unless item_id
       item_lookup = Item.find item_id
+      add_failed num, "Item with database ID #{item_id} not found." unless item_lookup
     else
       # look for existing item based on unique attributes
-      item_lookup = Item.where(slug: record_data['slug'], collection: collection)
-      if item_lookup.length > 1
-        add_failed num, "More than one existing Item match for #{record_data['slug']} in Collection #{collection_slug}. This should never happen!"
-      end
-      record_data.delete 'id'
+      item_lookup = Item.find_by(slug: record_data['slug'], collection: collection)
     end
     begin
-      if item_lookup.is_a?(Item)
+      if item_lookup
         action = :update
         create_update_record(item_lookup, record_data)
-      elsif item_lookup.any?
-        action = :update
-        create_update_record(item_lookup.first, record_data)
       else
         action = :add
         create_new_record(record_data)
@@ -148,7 +155,7 @@ class RecordImporter
     @record.batch = @batch
     @record.collection = collection
     begin
-      if @record.save(validate: @validate)
+      if @record.save!(validate: @validate)
         if action == :update
           add_updated(@record.slug, @record.id, @record.item_id)
         else
