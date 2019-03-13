@@ -14,7 +14,7 @@ deploy_to_staging:
   - bundle install --path vendor/bundle
   - RAILS_ENV=production bundle exec rake db:migrate --trace
   - RAILS_ENV=production bundle exec rake assets:precompile --trace
-  - passenger-config restart-app $(pwd)
+  - passenger-config restart-app /app/meta
   - ./restart_workers.sh
   environment: staging
   tags:
@@ -35,7 +35,6 @@ restart_passenger_staging:
   only:
   - ci_config
   script:
-  - cd /app/meta
   - passenger-config restart-app $(pwd)
   when: manual
   environment: staging
