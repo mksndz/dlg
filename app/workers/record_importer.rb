@@ -48,25 +48,26 @@ class RecordImporter
             node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
 
           count += 1
-          record = Hash.from_xml(node.outer_xml)['item']
+          record = Hash.from_xml(node.outer_xml)
           unless record
             add_failed(count, 'Item node could not be converted to hash.')
             next
           end
-          # unless record.key? 'item'
-          #   add_failed(count, 'No Item node could be extracted from XML')
-          #   next
-          # end
-
+          unless record.key? 'item'
+            add_failed(count, 'No Item node could be extracted from XML')
+            next
+          end
           # MK 3/12/2019
           # Moved this outside fo the XML Reader to hopefully save some memory
           # create_or_update_record count, record['item']
-          @records << record
+          @records << record['item']
         end
       rescue Nokogiri::XML::SyntaxError => e
         total_failure "Fundamental XML parsing error: #{e.message}"
       rescue JobTooBigError => e
         total_failure e.message
+      rescue StandardError => e
+        total_failure "Problem extracting data in record #{count}: #{e.message}"
       end
 
       if @records.any?
