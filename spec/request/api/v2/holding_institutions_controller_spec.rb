@@ -147,6 +147,22 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
         expect(returned_collection).to have_key'collection_institution_item_count'
         expect(returned_collection['collection_institution_item_count']).to eq 1
       end
+      it 'returns item counts for collections that only count items with the
+          holding institution assigned and respects the other_collections field' do
+        oc = Fabricate :empty_collection, holding_institutions: [@holding_institution]
+        Fabricate :item,
+                  repository: oc.repository,
+                  collection: oc,
+                  portals: oc.portals,
+                  holding_institutions: @collection.holding_institutions,
+                  other_collections: [@collection.id]
+        get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
+            {},
+            headers
+        json = JSON.parse(response.body)
+        returned_collection = json['public_collections'][0]
+        expect(returned_collection['collection_institution_item_count']).to eq 2
+      end
     end
   end
 end
