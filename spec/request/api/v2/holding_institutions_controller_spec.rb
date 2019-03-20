@@ -87,38 +87,65 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
       expect(json[0]['authorized_name']).to eq hi.authorized_name
       expect(json[0]['portals'][0]['code']).to eq portal.code
     end
-    it 'includes information about assigned public collections' do
-      get '/api/v2/holding_institutions.json', { page: 1, per_page: 1 }, headers
-      json = JSON.parse(response.body)
-      expect(json[0]).to have_key'public_collections'
-    end
   end
   context 'can get single record info using #show' do
-    before(:each) do
-      @collection = Fabricate :empty_collection, public: true
-      @holding_institution = HoldingInstitution.last
-    end
-    it 'returns all data about a holding institution' do
-      get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
-          {},
-          headers
-      json = JSON.parse(response.body)
-      expect(response.content_type).to eq 'application/json'
-      expect(response.status).to eq 200
-      expect(json['slug']).to eq @holding_institution.slug
+    context 'entity metadata' do
+      before(:each) do
+        @collection = Fabricate :empty_collection, public: true
+        @holding_institution = HoldingInstitution.last
+      end
+      it 'returns all data about a holding institution' do
+        get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
+            {},
+            headers
+        json = JSON.parse(response.body)
+        expect(response.content_type).to eq 'application/json'
+        expect(response.status).to eq 200
+        expect(json['slug']).to eq @holding_institution.slug
 
+      end
     end
-    it 'includes data about public collections' do
-      get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
-          {},
-          headers
-      json = JSON.parse(response.body)
-      expect(json['public_collections'].length).to eq 1
-      expect(json['public_collections'][0]['id']).to(
-        eq(@collection.id)
-      )
-      json['public_collections'].each do |c|
-        expect(c['public']).to be_truthy
+    context 'associated collection info' do
+      before :each do
+        @collection = Fabricate :collection_with_repo_and_item, public: true
+        Fabricate :item,
+                  collection: @collection, repository: @collection.repository,
+                  portals: @collection.portals,
+                  holding_institutions: @collection.holding_institutions
+        other_hi = Fabricate :holding_institution
+        @collection.items.last.holding_institution_ids = [other_hi.id]
+        @collection.items.last.save
+        @holding_institution = @collection.holding_institutions.first
+      end
+      it 'includes data about public collections' do
+        get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
+            {},
+            headers
+        json = JSON.parse(response.body)
+        expect(json['public_collections'].length).to eq 1
+        expect(json['public_collections'][0]['id']).to(
+          eq(@collection.id)
+        )
+        json['public_collections'].each do |c|
+          expect(c['public']).to be_truthy
+        end
+      end
+      it 'includes information about assigned public collections' do
+        get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
+            {},
+            headers
+        json = JSON.parse(response.body)
+        expect(json).to have_key'public_collections'
+      end
+      it 'returns item counts for collections that only count items with the
+          holding institution assigned' do
+        get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
+            {},
+            headers
+        json = JSON.parse(response.body)
+        returned_collection = json['public_collections'][0]
+        expect(returned_collection).to have_key'collection_institution_item_count'
+        expect(returned_collection['collection_institution_item_count']).to eq 1
       end
     end
   end
