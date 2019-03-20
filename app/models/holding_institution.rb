@@ -27,13 +27,15 @@ class HoldingInstitution < ActiveRecord::Base
   def public_collections
     collections.are_public.alphabetized.map do |collection|
       collection.attributes.merge(
-        collection_institution_item_count: collection_count_for(collection.id)
+        collection_institution_item_count: item_count_for(collection.id)
       )
     end
   end
 
-  def collection_count_for(collection_id)
-    items.where(collection_id: collection_id).count
+  def item_count_for(collection_id)
+    items.where(collection_id: collection_id).count +
+      items.where("':collection_id' = ANY (other_collections)",
+                  collection_id: collection_id).count
   end
 
   def portals
