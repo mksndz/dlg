@@ -12,7 +12,7 @@ module Api
         render json: @his.page(params[:page])
                          .per(params[:per_page]),
                include: %i[portals],
-               methods: :public_collections
+               methods: %i[public_collections item_count]
       end
 
       def show
