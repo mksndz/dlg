@@ -87,6 +87,12 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
       expect(json[0]['authorized_name']).to eq hi.authorized_name
       expect(json[0]['portals'][0]['code']).to eq portal.code
     end
+    it 'includes a count of items' do
+      get '/api/v2/holding_institutions.json',
+          { page: 1, per_page: 1 },
+          headers
+      expect(JSON.parse(response.body)[0]).to have_key 'item_count'
+    end
   end
   context 'can get single record info using #show' do
     context 'entity metadata' do
@@ -129,39 +135,6 @@ RSpec.describe 'API V2 for Holding Institutions', type: :request do
         json['public_collections'].each do |c|
           expect(c['public']).to be_truthy
         end
-      end
-      it 'includes information about assigned public collections' do
-        get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
-            {},
-            headers
-        json = JSON.parse(response.body)
-        expect(json).to have_key'public_collections'
-      end
-      it 'returns item counts for collections that only count items with the
-          holding institution assigned' do
-        get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
-            {},
-            headers
-        json = JSON.parse(response.body)
-        returned_collection = json['public_collections'][0]
-        expect(returned_collection).to have_key'collection_institution_item_count'
-        expect(returned_collection['collection_institution_item_count']).to eq 1
-      end
-      it 'returns item counts for collections that only count items with the
-          holding institution assigned and respects the other_collections field' do
-        oc = Fabricate :empty_collection, holding_institutions: [@holding_institution]
-        Fabricate :item,
-                  repository: oc.repository,
-                  collection: oc,
-                  portals: oc.portals,
-                  holding_institutions: @collection.holding_institutions,
-                  other_collections: [@collection.id]
-        get "/api/v2/holding_institutions/#{@holding_institution.slug}.json",
-            {},
-            headers
-        json = JSON.parse(response.body)
-        returned_collection = json['public_collections'][0]
-        expect(returned_collection['collection_institution_item_count']).to eq 2
       end
     end
   end
