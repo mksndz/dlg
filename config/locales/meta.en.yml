@@ -206,7 +206,7 @@ en:
         meta_view: 'Meta View'
         action: ' Action'
     footer:
-      left: '© 2016 Digital Library of Georgia'
+      left: '© %{year} Digital Library of Georgia'
       to_top: 'Return to Top'
     defaults:
       actions:
