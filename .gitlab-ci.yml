@@ -26,6 +26,7 @@ deploy_to_production:
   - RAILS_ENV=production bundle exec rake assets:precompile --trace
   - passenger-config restart-app /app/meta
   - ./restart_workers.sh
+  when: manual
   environment: production
   tags:
     - metaweb2-shell
