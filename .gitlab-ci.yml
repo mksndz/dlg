@@ -1,0 +1,55 @@
+stages:
+  - deploy_staging
+  - deploy_production
+  - manual_actions
+
+deploy_to_staging:
+  stage: deploy_staging
+  only:
+  - ci_config
+  script:
+  - echo This is a placeholder action
+  environment: staging
+  tags:
+    - metaweb2-shell
+    
+deploy_to_production:
+  stage: deploy_production
+  only:
+  - ci_config
+  script:
+  - rsync -rv --exclude=.git* . /deploy/meta/
+  - cd /deploy/meta
+  - /deploy/scripts/post_fetch.sh
+  - bundle install --path vendor/bundle
+  - RAILS_ENV=production bundle exec rake db:migrate --trace
+  - RAILS_ENV=production bundle exec rake assets:precompile --trace
+  - passenger-config restart-app /app/meta
+  - ./restart_workers.sh
+  when: manual
+  environment: production
+  tags:
+    - metaweb2-shell
+
+restart_passenger_staging:
+  stage: manual_actions
+  only:
+  - ci_config
+  script:
+  - echo This is a placeholder action
+  when: manual
+  environment: staging
+  tags:
+   - metaweb2-shell
+   
+restart_passenger_prod:
+  stage: manual_actions
+  only:
+  - ci_config
+  script:
+  - passenger-config restart-app $(pwd)
+  when: manual
+  environment: production
+  tags:
+   - metaweb2-shell
+
