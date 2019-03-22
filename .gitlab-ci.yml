@@ -5,8 +5,6 @@ stages:
 
 deploy_to_staging:
   stage: deploy_staging
-  only:
-  - ci_config
   script:
   - echo This is a placeholder action
   environment: staging
@@ -16,7 +14,7 @@ deploy_to_staging:
 deploy_to_production:
   stage: deploy_production
   only:
-  - ci_config
+  - master
   script:
   - rsync -rv --exclude=.git* . /deploy/meta/
   - cd /deploy/meta
@@ -33,8 +31,6 @@ deploy_to_production:
 
 restart_passenger_staging:
   stage: manual_actions
-  only:
-  - ci_config
   script:
   - echo This is a placeholder action
   when: manual
@@ -45,7 +41,7 @@ restart_passenger_staging:
 restart_passenger_prod:
   stage: manual_actions
   only:
-  - ci_config
+  - master
   script:
   - passenger-config restart-app $(pwd)
   when: manual
