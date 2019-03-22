@@ -341,14 +341,14 @@ feature 'Searching' do
       end
       scenario 'items have a thumbnail built from slugs' do
         item = Item.last
-        image_url = "http://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
+        image_url = "https://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
         within '.document-position-1' do
           expect(page).to have_xpath("//img[contains(@src,\"#{image_url}\")]")
         end
       end
       scenario 'collections have thumbnails inherited from the repository' do
         within '.document-position-0' do
-          expect(page.html).to include "http://dlg.galileo.usg.edu/do-th:#{@collection.repository.slug}"
+          expect(page.html).to include "https://dlg.galileo.usg.edu/do-th:#{@collection.repository.slug}"
         end
       end
     end

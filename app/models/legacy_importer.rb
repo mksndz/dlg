@@ -6,7 +6,7 @@ class LegacyImporter
 
   @logger = Logger.new('./log/repo_and_coll_import.log')
 
-  THUMBNAIL_ROOT = 'http://dlg.galileo.usg.edu/do-th:'.freeze
+  THUMBNAIL_ROOT = 'https://dlg.galileo.usg.edu/do-th:'.freeze
 
   def self.create_repository(repo_hash)
 

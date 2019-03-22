@@ -66,7 +66,7 @@ class Collection < ActiveRecord::Base
 
     string :thumbnail, stored: true do
       # TODO: use brad's thumb links for now
-      "http://dlg.galileo.usg.edu/do-th:#{repository.slug}"
+      "https://dlg.galileo.usg.edu/do-th:#{repository.slug}"
     end
 
     boolean :public
