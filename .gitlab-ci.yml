@@ -5,6 +5,8 @@ stages:
 
 deploy_to_staging:
   stage: deploy_staging
+  only:
+  - staging
   script:
   - echo This is a placeholder action
   environment: staging
@@ -24,13 +26,14 @@ deploy_to_production:
   - RAILS_ENV=production bundle exec rake assets:precompile --trace
   - passenger-config restart-app /app/meta
   - ./restart_workers.sh
-  when: manual
   environment: production
   tags:
     - metaweb2-shell
 
 restart_passenger_staging:
   stage: manual_actions
+  only:
+  - staging
   script:
   - echo This is a placeholder action
   when: manual
