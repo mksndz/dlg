@@ -8,6 +8,16 @@ deploy_to_staging:
   only:
   - ci_config
   script:
+  - echo This is a placeholder action
+  environment: staging
+  tags:
+    - metaweb2-shell
+    
+deploy_to_production:
+  stage: deploy_production
+  only:
+  - ci_config
+  script:
   - rsync -rv --exclude=.git* . /deploy/meta/
   - cd /deploy/meta
   - /deploy/scripts/post_fetch.sh
@@ -16,16 +26,6 @@ deploy_to_staging:
   - RAILS_ENV=production bundle exec rake assets:precompile --trace
   - passenger-config restart-app /app/meta
   - ./restart_workers.sh
-  environment: staging
-  tags:
-    - metaweb2-shell
-
-deploy_to_production:
-  stage: deploy_production
-  only:
-  - ci_config
-  script:
-  - echo This is a placeholder action
   environment: production
   tags:
     - metaweb2-shell
@@ -35,7 +35,7 @@ restart_passenger_staging:
   only:
   - ci_config
   script:
-  - passenger-config restart-app $(pwd)
+  - echo This is a placeholder action
   when: manual
   environment: staging
   tags:
@@ -46,7 +46,7 @@ restart_passenger_prod:
   only:
   - ci_config
   script:
-  - echo This is a placeholder action
+  - passenger-config restart-app $(pwd)
   when: manual
   environment: production
   tags:
