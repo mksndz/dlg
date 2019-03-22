@@ -1,6 +1,6 @@
 module ItemsHelper
   def legacy_thumbnail_tag(item) # todo this duplicates functionality in BlacklightHelper
-    url = "http://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
+    url = "https://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
     image_tag url, class: 'img-thumbnail'
   end
 

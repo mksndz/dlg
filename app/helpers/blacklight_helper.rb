@@ -21,12 +21,12 @@ module BlacklightHelper
             if document.has_key?('slug_ss') &&
                document.has_key?('collection_slug_ss') &&
                document.has_key?('repository_slug_ss')
-              "http://dlg.galileo.usg.edu/#{document['repository_slug_ss']}/#{document['collection_slug_ss']}/do-th:#{document['slug_ss']}"
+              "https://dlg.galileo.usg.edu/#{document['repository_slug_ss']}/#{document['collection_slug_ss']}/do-th:#{document['slug_ss']}"
             else
               NO_THUMB_ICON
             end
           when 'Collection'
-            document['thumbnail_ss']
+            document['thumbnail_ss'].gsub('http://', 'https://')
           else
             NO_THUMB_ICON
           end
