@@ -6,12 +6,16 @@ stages:
 deploy_to_staging:
   stage: deploy_staging
   only:
-  - staging
+  - staging_config
   script:
-  - echo This is a placeholder action
+  - rsync -rv --exclude=.git* . /deploy/meta/
+  - cd /deploy/meta
+  - /deploy/scripts/post_fetch.sh
+  - bundle install --path vendor/bundle
+  - echo Staging deploy complete - pending addition of staging env
   environment: staging
   tags:
-    - metaweb2-shell
+    - meta-staging-shell
     
 deploy_to_production:
   stage: deploy_production
@@ -33,9 +37,9 @@ deploy_to_production:
 restart_passenger_staging:
   stage: manual_actions
   only:
-  - staging
+  - staging_config
   script:
-  - echo This is a placeholder action
+  - passenger-config restart-app /app/meta
   when: manual
   environment: staging
   tags:
@@ -46,7 +50,7 @@ restart_passenger_prod:
   only:
   - master
   script:
-  - passenger-config restart-app $(pwd)
+  - passenger-config restart-app /app/meta
   when: manual
   environment: production
   tags:
