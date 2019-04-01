@@ -7,12 +7,13 @@ class DplaController < ApplicationController
   before_action :authenticate_token
 
   def index
-    response = Blacklight.default_index.connection.get 'select', params: {
-      rows: rows, facet: false, sort: 'id asc', wt: 'json',
-      fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
-      fl: dpla_fields.join(', '),
-      cursorMark: cursor_mark
-    }
+    response = blacklight_query
+    # TODO: remove these debugging lines!!!
+    if params[:cursormark]
+      logger.debug "cursormark from params: #{params[:cursormark]}"
+      logger.debug "Unencoded cursormark: #{decoded_cursormark}"
+    end
+    logger.debug "nextCursorMark value: #{response['nextCursorMark']}"
     render json: {
       numFound: response['response']['numFound'],
       items: response['response']['docs'],
@@ -31,6 +32,15 @@ class DplaController < ApplicationController
   end
 
   private
+
+  def blacklight_query
+    Blacklight.default_index.connection.get 'select', params: {
+      rows: rows, facet: false, sort: 'id asc', wt: 'json',
+      fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
+      fl: dpla_fields.join(', '),
+      cursorMark: cursor_mark
+    }
+  end
 
   def dpla_fields
     %w[id collection_titles_sms dcterms_provenance_display
@@ -52,7 +62,7 @@ class DplaController < ApplicationController
   end
 
   def cursor_mark
-    params[:cursormark] ? URI.decode_www_form_component(params[:cursormark]) : '*'
+    params[:cursormark] ? decoded_cursormark : '*'
   end
 
   def authenticate_token
@@ -61,5 +71,9 @@ class DplaController < ApplicationController
     else
       head :unauthorized
     end
+  end
+
+  def decoded_cursormark
+    URI.decode_www_form_component(params[:cursormark])
   end
 end
