@@ -28,7 +28,7 @@ class DplaController < ApplicationController
   private
 
   def blacklight_query
-    Blacklight.default_index.connection.get 'select', params: {
+    Blacklight.default_index.connection.post 'select', params: {
       rows: rows, facet: false, sort: 'id asc', wt: 'json',
       fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
       fl: dpla_fields.join(', '),
