@@ -8,12 +8,6 @@ class DplaController < ApplicationController
 
   def index
     response = blacklight_query
-    # TODO: remove these debugging lines!!!
-    if params[:cursormark]
-      logger.debug "cursormark from params: #{params[:cursormark]}"
-      logger.debug "Unencoded cursormark: #{decoded_cursormark}"
-    end
-    logger.debug "nextCursorMark value: #{response['nextCursorMark']}"
     render json: {
       numFound: response['response']['numFound'],
       items: response['response']['docs'],
@@ -62,7 +56,7 @@ class DplaController < ApplicationController
   end
 
   def cursor_mark
-    params[:cursormark] ? decoded_cursormark : '*'
+    params[:cursormark] ? URI.decode_www_form_component(params[:cursormark]) : '*'
   end
 
   def authenticate_token
@@ -73,7 +67,4 @@ class DplaController < ApplicationController
     end
   end
 
-  def decoded_cursormark
-    URI.decode_www_form_component(params[:cursormark])
-  end
 end
