@@ -28,12 +28,11 @@ class DplaController < ApplicationController
   private
 
   def blacklight_query
-    Blacklight.default_index.connection.get 'select', params: {
-      rows: rows, facet: false, sort: 'id asc', wt: 'json',
-      fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
-      fl: dpla_fields.join(', '),
-      cursorMark: cursor_mark
-    }
+    Blacklight.default_index.connection.post 'select', data: query_string
+  end
+
+  def query_string
+    "cursorMark=#{cursor_mark}&rows=#{rows}&facet=false&sort=id+asc&wt=json&fq=display_b%3A1%2C+dpla_b%3A+1%2C+class_name_ss%3A+Item&fl=id%2C+collection_titles_sms%2C+dcterms_provenance_display%2C+dcterms_title_display%2C+dcterms_creator_display%2C+dcterms_subject_display%2C+dcterms_description_display%2C+edm_is_shown_at_display%2C+edm_is_shown_by_display%2C+dc_date_display%2C+dcterms_spatial_display%2C+dc_format_display%2C+dc_right_display%2C+dcterms_type_display%2C+dcterms_language_display%2C+dlg_subject_personal_display%2C+dcterms_bibliographic_citation_display%2C+dcterms_identifier_display%2C+dc_relation_display%2C+dcterms_contributor_display%2C+dcterms_publisher_display%2C+dcterms_temporal_display%2C+dcterms_is_part_of_display%2C+dcterms_rights_holder_display%2C+dlg_local_right_display%2C+dcterms_medium_display%2C+dcterms_extent_display%2C+created_at_dts%2C+updated_at_dts"
   end
 
   def dpla_fields
