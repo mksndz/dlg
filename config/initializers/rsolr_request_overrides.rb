@@ -29,7 +29,7 @@ RSolr::Client.module_eval do
     opts[:query] = nil
     unless opts[:params].empty?
       query = RSolr::Uri.params_to_solr(opts[:params])
-      query = cursor_mark ? "#{query}&cursorMark=#{cursor_mark}" : query
+      query = cursor_mark ? "cursorMark=#{cursor_mark}&#{query}" : query
       opts[:query] = query
     end
     if opts[:data].is_a? Hash
