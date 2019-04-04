@@ -56,7 +56,7 @@ class DplaController < ApplicationController
   end
 
   def cursor_mark
-    params[:cursormark] ? URI.decode_www_form_component(params[:cursormark]).tr('%2B', ' ') : '*'
+    params[:cursormark] ? URI.decode_www_form_component(params[:cursormark]).tr('+', ' ') : '*'
   end
 
   def authenticate_token
