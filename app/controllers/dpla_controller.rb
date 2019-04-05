@@ -32,7 +32,8 @@ class DplaController < ApplicationController
       rows: rows, facet: false, sort: 'id asc', wt: 'json',
       fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
       fl: dpla_fields.join(', '),
-      cursorMark: cursor_mark
+      # cursorMark: cursor_mark
+      cursorMark: 'CHEESE'
     }
   end
 
