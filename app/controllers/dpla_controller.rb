@@ -7,7 +7,7 @@ class DplaController < ApplicationController
   before_action :authenticate_token
 
   def index
-    response = Blacklight.default_index.connection.get 'select', params: {
+    response = Blacklight.default_index.connection.post 'select', data: {
       rows: rows, facet: false, sort: 'id asc', wt: 'json',
       fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
       fl: dpla_fields.join(', '),
