@@ -46,6 +46,14 @@ RSpec.describe 'DPLA Harvesting Support endpoint', type: :request do
       expect(body['numFound']).to eq 11
       expect(body['nextCursorMark']).not_to be_empty
     end
+    # it 'sends a + to solr' do
+    #   cursormark = '+'
+    #   get '/dpla', { cursormark: URI.encode_www_form_component(cursormark), rows: 3 }, headers
+    #   body = JSON.parse(response.body)
+    #   expect(body['items'].length).to eq 3
+    #   expect(body['numFound']).to eq 11
+    #   expect(body['nextCursorMark']).not_to be_empty
+    # end
   end
   context 'can show using #show' do
     before(:each) do
