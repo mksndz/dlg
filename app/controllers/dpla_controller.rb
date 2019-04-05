@@ -23,12 +23,16 @@ class DplaController < ApplicationController
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
       http.request(request)
     end
-    r = JSON.parse response.body
-    render json: {
-      numFound: r['response']['numFound'],
-      items: r['response']['docs'],
-      nextCursorMark: r['nextCursorMark']
-    }
+    if response.code == '200'
+      r = JSON.parse response.body
+      render json: {
+        numFound: r['response']['numFound'],
+        items: r['response']['docs'],
+        nextCursorMark: r['nextCursorMark']
+      }
+    else
+      render json: { status: 'failed' }
+    end
   end
 
   def show
