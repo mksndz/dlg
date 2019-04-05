@@ -7,7 +7,12 @@ class DplaController < ApplicationController
   before_action :authenticate_token
 
   def index
-    response = blacklight_query
+    response = Blacklight.default_index.connection.get 'select', params: {
+      rows: rows, facet: false, sort: 'id asc', wt: 'json',
+      fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
+      fl: dpla_fields.join(', '),
+      cursorMark: cursor_mark
+    }
     render json: {
       numFound: response['response']['numFound'],
       items: response['response']['docs'],
@@ -26,15 +31,6 @@ class DplaController < ApplicationController
   end
 
   private
-
-  def blacklight_query
-    Blacklight.default_index.connection.get 'select', params: {
-      rows: rows, facet: false, sort: 'id asc', wt: 'json',
-      fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
-      fl: dpla_fields.join(', '),
-      cursorMark: cursor_mark
-    }
-  end
 
   def dpla_fields
     %w[id collection_titles_sms dcterms_provenance_display
