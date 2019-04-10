@@ -2,6 +2,7 @@
 
 # Stage Definitions
 # :setup: will include manual jobs used to initialize db an other services
+#   TODO: not currently in use
 # :deploy_staging: will include jobs used in the deployment of the app to the
 #   staging environment
 # :deploy_production: will include jobs used in the deployment of the app to the
@@ -9,7 +10,7 @@
 # :manual_actions: will include jobs that can be run any time after setup and
 #   deployment
 stages:
-  - setup
+#  - setup
   - deploy_staging
   - deploy_production
   - manual_actions
@@ -88,18 +89,18 @@ restart_passenger_prod:
 
 # Initialize Staging App Database
 # Deploys app code and secrets, then runs rake task to initialize database
-initialize_staging_database:
-  stage: setup
-  only:
-    - staging
-  script:
-    - rsync -rv --exclude=.git* . /deploy/meta/
-    - cd /deploy/meta
-    - /deploy/scripts/post_fetch.sh
-    - bundle install --path vendor/bundle
-    - RAILS_ENV=staging bundle exec rake db:setup
-  when: manual
-  environment:
-    name: staging
-  tags:
-    - meta-staging-shell
+#initialize_staging_database:
+#  stage: setup
+#  only:
+#    - staging
+#  script:
+#    - rsync -rv --exclude=.git* . /deploy/meta/
+#    - cd /deploy/meta
+#    - /deploy/scripts/post_fetch.sh
+#    - bundle install --path vendor/bundle
+#    - RAILS_ENV=staging bundle exec rake db:setup
+#  when: manual
+#  environment:
+#    name: staging
+#  tags:
+#    - meta-staging-shell
