@@ -37,7 +37,7 @@ deploy_to_staging:
   tags:
     - meta-staging-shell
 
-# Deploy To Staging
+# Deploy To Production
 # This job copies app code and secrets to PRODUCTION machine, installs gems,
 # runs any database migrations, deploys assets and restarts passenger. Resque
 # workers are also killed and restarted so be careful not to run this when
@@ -66,7 +66,7 @@ restart_passenger_staging:
   only:
     - staging
   script:
-    - passenger-config restart-app $(pwd)
+    - passenger-config restart-app /app/meta
   when: manual
   environment:
     name: staging
@@ -79,7 +79,7 @@ restart_passenger_prod:
   only:
     - master
   script:
-    - passenger-config restart-app $(pwd)
+    - passenger-config restart-app /app/meta
   when: manual
   environment:
     name: production
