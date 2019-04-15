@@ -33,7 +33,7 @@ deploy_to_staging:
     - RAILS_ENV=staging bundle exec rake db:migrate --trace
     - RAILS_ENV=staging bundle exec rake assets:precompile --trace
     - passenger-config restart-app /app/meta
-    - ./restart_workers.sh
+    - ./restart_workers_staging.sh
   environment:
     name: staging
   tags:
@@ -56,7 +56,7 @@ deploy_to_production:
     - RAILS_ENV=production bundle exec rake db:migrate --trace
     - RAILS_ENV=production bundle exec rake assets:precompile --trace
     - passenger-config restart-app /app/meta
-    - ./restart_workers.sh
+    - ./restart_workers_production.sh
   environment:
     name: production
   tags:
