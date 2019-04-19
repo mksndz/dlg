@@ -63,7 +63,7 @@ fi
 #Begin new PG Installation
 #Get prerequisites
 apt update
-apt install build-essential libreadline-dev zlib1g-dev libssl-dev
+apt install -y build-essential libreadline-dev zlib1g-dev libssl-dev
 #Download and unpack
 wget https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.gz
 tar xzf postgresql-$PG_VERSION.tar.gz
