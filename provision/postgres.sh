@@ -6,6 +6,8 @@
 #   https://wiki.postgresql.org/wiki/PostgreSQL_For_Development_With_Vagrant
 #   and modified to be more friendly with vagrant and rails.
 
+# This configuration was subsequently mangled by Kevin
+
 # Edit the following to change the name of the database user that will be created:
 APP_DB_USER=vagrant
 APP_DB_PASS=vagrant
@@ -14,7 +16,10 @@ APP_DB_PASS=vagrant
 APP_DB_NAME=meta
 
 # Edit the following to change the version of PostgreSQL that is installed
-PG_VERSION=11
+PG_VERSION=11.1
+
+#Edit the following to control the number of threads for compilation, recommended max = processing cores * 1.5
+THREADS = 1
 
 ###########################################################
 # Changes below this line are probably not necessary
@@ -55,31 +60,57 @@ then
   exit
 fi
 
-PG_REPO_APT_SOURCE=/etc/apt/sources.list.d/pgdg.list
-if [ ! -f "$PG_REPO_APT_SOURCE" ]
-then
-  # Add PG apt repo:
-  echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" > "$PG_REPO_APT_SOURCE"
+#Begin new PG Installation
+#Get prerequisites
+apt update
+apt install build-essential libreadline-dev zlib1g-dev libssl-dev
+#Download and unpack
+wget https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.gz
+tar xzf postgresql-$PG_VERSION.tar.gz
+cd postgresql-$PG_VERSION
 
-  # Add PGDG repo key:
-  wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add -
-fi
+#Configure and build
+./configure --prefix=/app/postgresql --with-systemd --with-openssl
+make world -j$THREADS
+make install-world
 
-# Update package list and upgrade all packages
-apt-get update
-apt-get -y -q upgrade
+#create systemd service
+echo "[Unit]" > "/etc/systemd/system/postgresql.service"
+echo "Description=PostgreSQL database server" >> "/etc/systemd/system/postgresql.service"
+echo "Documentation=man:postgres(1)" >> "/etc/systemd/system/postgresql.service"
+echo "" >> "/etc/systemd/system/postgresql.service"
+echo "[Service]" >> "/etc/systemd/system/postgresql.service"
+echo "Type=notify" >> "/etc/systemd/system/postgresql.service"
+echo "User=postgres" >> "/etc/systemd/system/postgresql.service"
+echo "ExecStart=/app/postgres$PG_VERSION/bin/postgres -D /app/pgdbstor/db/" >> "/etc/systemd/system/postgresql.service" 
+echo "ExecReload=/bin/kill -HUP $MAINPID" >> "/etc/systemd/system/postgresql.service"
+echo "KillMode=mixed" >> "/etc/systemd/system/postgresql.service"
+echo "KillSignal=SIGINT" >> "/etc/systemd/system/postgresql.service"
+echo "TimeoutSec=0" >> "/etc/systemd/system/postgresql.service"
+echo ""
+echo "[Install]" >> "/etc/systemd/system/postgresql.service"
+echo "WantedBy=multi-user.target" >> "/etc/systemd/system/postgresql.service"
 
-apt-get -y install "postgresql-$PG_VERSION" "postgresql-contrib-$PG_VERSION" "libpq-dev"
+systemctl daemon-reload
 
-PG_CONF="/etc/postgresql/$PG_VERSION/main/postgresql.conf"
-PG_HBA="/etc/postgresql/$PG_VERSION/main/pg_hba.conf"
-PG_DIR="/var/lib/postgresql/$PG_VERSION/main"
+useradd postgres
+groupadd postgres
+usermod -aG postgres postgres
+
+mkdir -p /app/pgdbstor/db
+chown -R postgres:postgres /app/pgdbstor
+
+sudo -u postgres /app/postgres$PG_VERSION/bin/initdb /app/pgdbstor/db
+
+PG_CONF="/app/pgdbstor/postgresql.conf"
+PG_HBA="/app/pgdbstor/pg_hba.conf"
+PG_DIR="/app/pgdbstor/db"
 
 # Edit postgresql.conf to change listen address to '*':
 sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" "$PG_CONF"
 
 # Append to pg_hba.conf to add password auth:
-echo "host    all             all             all                     md5" >> "$PG_HBA"
+echo "hostssl    all             all             all                     md5" >> "$PG_HBA"
 
 # Explicitly set default client_encoding
 echo "client_encoding = utf8" >> "$PG_CONF"
@@ -87,7 +118,7 @@ echo "client_encoding = utf8" >> "$PG_CONF"
 # Restart so that all new config is loaded:
 service postgresql restart
 
-echo "Creating META user and development database"
+echo "Creating $APP_DB_NAME user and development database"
 
 cat << EOF | su - postgres -c psql
 -- Create the database user:
