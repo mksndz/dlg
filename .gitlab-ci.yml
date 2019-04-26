@@ -49,6 +49,7 @@ deploy_to_production:
   only:
     - master
   script:
+    - rm -rf /deploy/meta && mkdir /deploy/meta
     - rsync -rv --exclude=.git* . /deploy/meta/
     - cd /deploy/meta
     - /deploy/scripts/post_fetch.sh
