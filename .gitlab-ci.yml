@@ -1,54 +1,108 @@
+# DLGAdmin GitLab CI Configurations
+
+# Stage Definitions
+# :setup: will include manual jobs used to initialize db an other services
+#   TODO: not currently in use
+# :deploy_staging: will include jobs used in the deployment of the app to the
+#   staging environment
+# :deploy_production: will include jobs used in the deployment of the app to the
+#   production environment
+# :manual_actions: will include jobs that can be run any time after setup and
+#   deployment
 stages:
+  #  - setup
   - deploy_staging
   - deploy_production
   - manual_actions
 
+# Deploy To Staging
+# This job copies app code and secrets to staging machine, installs gems,
+# runs any database migrations, deploys assets and restarts passenger. Resque
+# workers are also killed and restarted so be careful not to run this when
+# workers are working.
 deploy_to_staging:
   stage: deploy_staging
   only:
-  - staging
+    - staging
   script:
-  - echo This is a placeholder action
-  environment: staging
+    - rm -rf /deploy/meta && mkdir /deploy/meta
+    - rsync -rv --exclude=.git* . /deploy/meta/
+    - cd /deploy/meta
+    - /deploy/scripts/post_fetch.sh
+    - bundle install --deployment
+    - RAILS_ENV=staging bundle exec rake db:migrate --trace
+    - RAILS_ENV=staging bundle exec rake assets:precompile --trace
+    - passenger-config restart-app /app/meta
+    - ./restart_workers_staging.sh
+  environment:
+    name: staging
   tags:
-    - metaweb2-shell
-    
+    - meta-staging-shell
+
+# Deploy To Production
+# This job copies app code and secrets to PRODUCTION machine, installs gems,
+# runs any database migrations, deploys assets and restarts passenger. Resque
+# workers are also killed and restarted so be careful not to run this when
+# workers are working.
 deploy_to_production:
   stage: deploy_production
   only:
-  - master
+    - master
   script:
-  - rsync -rv --exclude=.git* . /deploy/meta/
-  - cd /deploy/meta
-  - /deploy/scripts/post_fetch.sh
-  - bundle install --path vendor/bundle
-  - RAILS_ENV=production bundle exec rake db:migrate --trace
-  - RAILS_ENV=production bundle exec rake assets:precompile --trace
-  - passenger-config restart-app /app/meta
-  - ./restart_workers.sh
-  environment: production
+    - rm -rf /deploy/meta && mkdir /deploy/meta
+    - rsync -rv --exclude=.git* . /deploy/meta/
+    - cd /deploy/meta
+    - /deploy/scripts/post_fetch.sh
+    - bundle install --deployment
+    - RAILS_ENV=production bundle exec rake db:migrate --trace
+    - RAILS_ENV=production bundle exec rake assets:precompile --trace
+    - passenger-config restart-app /app/meta
+    - ./restart_workers_production.sh
+  environment:
+    name: production
   tags:
     - metaweb2-shell
 
+# Restart Passenger on Staging
 restart_passenger_staging:
   stage: manual_actions
   only:
-  - staging
+    - staging
   script:
-  - echo This is a placeholder action
+    - passenger-config restart-app /app/meta
   when: manual
-  environment: staging
+  environment:
+    name: staging
   tags:
-   - metaweb2-shell
-   
+    - meta-staging-shell
+
+# Restart Passenger on Production
 restart_passenger_prod:
   stage: manual_actions
   only:
-  - master
+    - master
   script:
-  - passenger-config restart-app $(pwd)
+    - passenger-config restart-app /app/meta
   when: manual
-  environment: production
+  environment:
+    name: production
   tags:
-   - metaweb2-shell
+    - metaweb2-shell
 
+# Initialize Staging App Database
+# Deploys app code and secrets, then runs rake task to initialize database
+#initialize_staging_database:
+#  stage: setup
+#  only:
+#    - staging
+#  script:
+#    - rsync -rv --exclude=.git* . /deploy/meta/
+#    - cd /deploy/meta
+#    - /deploy/scripts/post_fetch.sh
+#    - bundle install --path vendor/bundle
+#    - RAILS_ENV=staging bundle exec rake db:setup
+#  when: manual
+#  environment:
+#    name: staging
+#  tags:
+#    - meta-staging-shell
