@@ -9,6 +9,15 @@ feature 'Item Management' do
     before :each do
       login_as super_user, scope: :user
     end
+    context 'index page' do
+      scenario 'shows a link to modify page information' do
+        i = Fabricate :item_with_parents_and_pages
+        visit items_path
+        within 'a.pages-link' do
+          have_text i.pages_count
+        end
+      end
+    end
     context 'batch_items listing for item' do
       scenario 'item created from batch_item should link to batch and batch_item
                 from whence it came' do

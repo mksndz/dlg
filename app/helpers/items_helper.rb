@@ -20,10 +20,6 @@ module ItemsHelper
     end
   end
 
-  def pages_count(rec)
-    rec.pages_count ? rec.pages_count : '0'
-  end
-
   def portal_badges(rec)
     labels = []
     rec.portals.each do |p|
@@ -41,8 +37,13 @@ module ItemsHelper
     changes = Diffy::Diff.new(version1, version2,
                               include_plus_and_minus_in_html: true,
                               include_diff_info: true
-    )
+                           )
     changes.to_s.present? ? changes.to_s(:html).html_safe : false
+  end
+
+  def pages_link_for(item)
+    pages = item.pages_count || '0'
+    link_to pages, item_pages_path(item), class: 'pages-link badge'
   end
 
   private

@@ -105,8 +105,8 @@
             <td>
               <%= portal_badges item %>
             </td>
-            <td>
-              <%= link_to pages_count(item), item_pages_path(item) %>
+            <td class="text-center">
+              <%= pages_link_for item %>
             </td>
             <td>
               <%= display_date item.created_at %>
