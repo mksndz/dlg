@@ -9,6 +9,13 @@ en:
       last_word_connector: "<br> "
   activerecord:
     attributes:
+      page:
+        item_id: 'Item'
+        number: 'Number'
+        file_type: 'File Type'
+        title: 'Title'
+        fulltext: 'Full Text'
+        file: 'Image File'
       project:
         title: 'Title'
         fiscal_year: 'Fiscal Year'
@@ -55,12 +62,24 @@ en:
       fulltext_ingest:
         title: 'Title'
         description: 'Description'
-        file: 'File Name'
+        file: 'File'
         results: 'Results'
         user_id: 'User'
         queued_at: 'Queued At'
         finished_at: 'Finished'
         undone_at: 'Undone'
+        created_at: 'Created At'
+        updated_at: 'Updated At'
+      page_ingest:
+        title: 'Title'
+        description: 'Description'
+        file: 'File'
+        results: 'Results'
+        user_id: 'User'
+        page_json: 'Pages JSON'
+        results_json: 'Results'
+        finished_at: 'Finished'
+        queued_at: 'Queued At'
         created_at: 'Created At'
         updated_at: 'Updated At'
       subject:

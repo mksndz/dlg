@@ -12,8 +12,7 @@ class TimePeriodsController < ApplicationController
   end
 
   # GET /time_periods/1
-  def show
-  end
+  def show; end
 
   # GET /time_periods/new
   def new
@@ -21,8 +20,7 @@ class TimePeriodsController < ApplicationController
   end
 
   # GET /time_periods/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /time_periods
   def create

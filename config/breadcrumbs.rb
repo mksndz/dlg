@@ -125,17 +125,16 @@ end
 crumb :batch do |batch|
   if batch.persisted?
     link batch.name if batch.name
-    parent :batches, batch
   else
     link 'New'
-    parent :batches, batch
   end
+  parent :batches, batch
 end
 
 crumb :batch_results do |batch|
-    link batch.name, batch_path(batch) if batch.name
-    link 'Results'
-    parent :batches, batch
+  link batch.name, batch_path(batch) if batch.name
+  link 'Results'
+  parent :batches, batch
 end
 
 # BATCH IMPORT
@@ -247,6 +246,21 @@ crumb :fulltext_ingest do |fulltext_ingest|
   parent :fulltext_ingests
 end
 
+# PAGE INGESTS
+
+crumb :page_ingests do
+  link 'Page Ingests', page_ingests_path
+end
+
+crumb :page_ingest do |page_ingest|
+  if page_ingest.persisted?
+    link page_ingest.title
+  else
+    link 'New'
+  end
+  parent :page_ingests
+end
+
 # PROJECTS
 
 crumb :projects do
@@ -275,4 +289,23 @@ crumb :holding_institution do |holding_institution|
     link 'New'
   end
   parent :holding_institutions
+end
+
+# PAGE
+
+crumb :pages do |item|
+  link item.record_id, item
+  link 'Pages', item_pages_path(item)
+  parent :items
+end
+
+crumb :page do |page|
+  link 'Items', items_path
+  link page.item.record_id, page.item
+  link 'Pages', item_pages_path(page.item)
+  if page.id
+    link page.number
+  else
+    link 'New'
+  end
 end

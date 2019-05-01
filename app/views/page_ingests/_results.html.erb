@@ -1,0 +1,52 @@
+<div class="panel panel-<%= @page_ingest.failed? ? 'danger' : 'default' %>">
+  <div class="panel-heading">
+    <strong>Results</strong>
+  </div>
+  <% if @page_ingest.results_json.empty? %>
+    <div class="panel-body">
+      <p><%= t('meta.page_ingests.messages.not_yet_run') %></p>
+    </div>
+  <% else %>
+    <div class="panel-body">
+      <p><%= @page_ingest.results_json['message'] %></p>
+    </div>
+    <% if @page_ingest.failed.any? %>
+      <table class="table page-ingest-results-table-failed">
+        <thead>
+        <tr>
+          <th><%= t('meta.page_ingests.labels.id') %></th>
+          <th><%= t('activerecord.attributes.page_ingest.title') %></th>
+          <th><%= t('meta.page_ingests.labels.message') %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @page_ingest.failed.each do |f| %>
+          <tr class="danger">
+            <td><%= f['id'] %></td>
+            <td><%= f['page_title'] %></td>
+            <td><%= f['message'] %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <% if @page_ingest.succeeded.any? %>
+      <table class="table page-ingest-results-table-succeeded">
+        <thead>
+        <tr>
+          <th><%= t('meta.page_ingests.labels.id') %></th>
+          <th><%= t('activerecord.attributes.page_ingest.title') %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @page_ingest.succeeded.each do |f| %>
+          <tr class="success">
+            <td><%= f['id'] %></td>
+            <td><%= f['page_title'] %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>

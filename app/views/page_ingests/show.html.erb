@@ -1,0 +1,19 @@
+<%= content_for :title do %>
+    Show Page Ingest
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @page_ingest.title %>
+<% end %>
+
+<% breadcrumb :page_ingest, @page_ingest %>
+
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.title'), value: @page_ingest.title %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.description'), value: @page_ingest.description %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.user_id'), value: @page_ingest.user.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.file'), value: @page_ingest.file %>
+<%= render 'results' %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.queued_at'), value: display_date(@page_ingest.queued_at) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.finished_at'), value: display_date(@page_ingest.finished_at) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.created_at'), value: display_date(@page_ingest.created_at) %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.updated_at'), value: display_date(@page_ingest.updated_at) %>

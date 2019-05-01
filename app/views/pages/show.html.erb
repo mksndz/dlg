@@ -1,0 +1,45 @@
+<%= content_for :title do %>
+    Show Page
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @page.title %>
+<% end %>
+
+<% breadcrumb :page, @page %>
+
+<%= link_to t('meta.defaults.actions.edit'), edit_item_page_path(@page.item, @page),
+            class: 'btn btn-default' %>
+<%= link_to t('meta.defaults.labels.iiif_info'), @page.iiif_info_link,
+            class: 'btn btn-default', target: '_blank' %>
+<%= link_to t('meta.defaults.labels.iiif_file'), @page.iiif_file_link,
+            class: 'btn btn-default', target: '_blank' %>
+
+<br><br>
+
+<% if show_iiif_viewer? %>
+<label>IIF View</label>
+<div class="row">
+  <div class="col-md-12">
+    <div class="well">
+      <%= openseadragon_picture_tag @page.iiif_info_link %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.page.title'),
+           value: @page.number %>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.page.title'),
+           value: @page.title %>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.page.file_type'),
+           value: @page.file_type %>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.page.fulltext'),
+           value: @page.fulltext %>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.page.file'),
+           value: uploaded_image_value %>
