@@ -8,6 +8,12 @@ RSpec.describe Item, type: :model do
     Fabricate :item_with_parents
     expect(Item.count).to eq 1
   end
+  context 'Page association' do
+    let(:item_with_pages) { Fabricate(:item_with_parents_and_pages) }
+    it 'can have Pages' do
+      expect(item_with_pages.pages.first).to be_a Page
+    end
+  end
   it 'should require a Collection' do
     i = Fabricate.build(:item, collection: nil)
     i.valid?
@@ -189,9 +195,6 @@ RSpec.describe Item, type: :model do
     it 'has a String title' do
       expect(item.title).to be_kind_of String
     end
-    it 'has a string for full text' do
-      expect(item.fulltext).to be_kind_of String
-    end
     it 'has an Array dcterms_title' do
       expect(item.dcterms_title).to be_kind_of Array
     end
@@ -354,6 +357,12 @@ RSpec.describe Item, type: :model do
             end
           end
         end
+      end
+    end
+    context 'fulltext handling' do
+      let(:item) { Fabricate :item_with_parents_and_pages }
+      it 'has a string for full text' do
+        expect(item.fulltext).to be_kind_of String
       end
     end
   end

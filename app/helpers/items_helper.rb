@@ -1,4 +1,8 @@
 module ItemsHelper
+  def show_item_iiif_viewer?
+    @item.pages.any? && show_iiif_viewer?
+  end
+
   def legacy_thumbnail_tag(item) # todo this duplicates functionality in BlacklightHelper
     url = "https://dlg.galileo.usg.edu/#{item.repository.slug}/#{item.collection.slug}/do-th:#{item.slug}"
     image_tag url, class: 'img-thumbnail'
@@ -14,6 +18,10 @@ module ItemsHelper
       content_tag(:span, nil, class: 'glyphicon glyphicon-remove validation-errors', aria: { hidden: true }, data: { content: errors_html(item.errors), toggle: 'popover' } ) +
         content_tag(:sup, item.errors.count)
     end
+  end
+
+  def pages_count(rec)
+    rec.pages_count ? rec.pages_count : '0'
   end
 
   def portal_badges(rec)

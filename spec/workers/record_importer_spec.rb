@@ -9,9 +9,9 @@ describe RecordImporter, type: :model do
           item_ids { [i.id] }
           format { 'search query' }
         end
-        expect{
+        expect do
           RecordImporter.perform(batch_import.id)
-        }.to change(BatchItem, :count).by 1
+        end.to change(BatchItem, :count).by 1
         results = BatchImport.last.results
         expect(results['updated'].length).to eq 1
         expect(BatchItem.last.portals).to eq i.portals
