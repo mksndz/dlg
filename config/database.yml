@@ -30,7 +30,6 @@ staging:
 
 production:
   <<: *default
-#  host: pg.galib.uga.edu ## OLD
   host: pg01.galib.uga.edu
   port: 5432
   username: <%= Rails.application.secrets.db_user %>
