@@ -8,13 +8,31 @@
 
 <% breadcrumb :item, @item %>
 
-<%= link_to t('meta.defaults.actions.edit'), edit_item_path(@item), class: 'btn btn-default' %>
-<%= link_to t('meta.item.actions.copy'), copy_item_path(@item), class: 'btn btn-default', data: { confirm: 'Are you sure?' } %>
-<%= link_to t('meta.item.actions.xml'), '#xml' , class: 'btn btn-default', data: { turbolinks: false } %>
-<%= link_to t('meta.item.actions.versions'), '#versions' , class: 'btn btn-default', data: { turbolinks: false } %>
-<%= link_to(t('meta.item.actions.full_text'), fulltext_item_path , class: 'btn btn-default') unless @item.fulltext.blank? %>
+<div class="btn-group" role="group" aria-label="Item actions">
+  <%= link_to t('meta.defaults.actions.edit'), edit_item_path(@item), class: 'btn btn-default' %>
+  <%= link_to t('meta.item.actions.copy'), copy_item_path(@item), class: 'btn btn-default', data: { confirm: 'Are you sure?' } %>
+  <%= link_to I18n.t('meta.item.actions.pages'), item_pages_path(@item), class: 'btn btn-default'  %>
+  <%= link_to t('meta.item.actions.xml'), '#xml' , class: 'btn btn-default', data: { turbolinks: false } %>
+  <%= link_to t('meta.item.actions.versions'), '#versions' , class: 'btn btn-default', data: { turbolinks: false } %>
+  <%= link_to(t('meta.item.actions.full_text'), fulltext_item_path , class: 'btn btn-default') unless @item.fulltext.blank? %>
+</div>
 
 <br><br>
+
+<% if @item.pages.any? && @item.page_urls.any? %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="well">
+        <% if @item.pdf? %>
+        <div class="alert alert-warning">
+          This document has PDF pages - the viewer here renders the first page as a JPG.
+        </div>
+        <% end %>
+        <%= openseadragon_picture_tag @item.page_urls, { data: { openseadragon: { sequenceMode: true }}} %>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 <%= render 'shared/show_field', field_name: t('meta.item.labels.view.thumbnail'), value: legacy_thumbnail_tag(@item) %>
 

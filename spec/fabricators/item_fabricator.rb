@@ -49,6 +49,10 @@ Fabricator(:item_with_parents, from: :item) do
   holding_institutions(count: 1)
 end
 
+Fabricator(:item_with_parents_and_pages, from: :item_with_parents) do
+  pages(count: 3)
+end
+
 Fabricator(:invalid_item) do
   slug do
     Faker::Internet.slug(

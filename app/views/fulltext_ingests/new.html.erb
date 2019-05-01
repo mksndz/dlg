@@ -4,4 +4,10 @@
 
 <% breadcrumb :fulltext_ingest, @fulltext_ingest %>
 
+<div class="well">
+  This form is for the addition of un-paginated full text data to Item(s). For
+  paginated full text, or for Items with multiple digital objects, use the
+  <%= link_to 'Page Ingest', new_page_ingest_path %> tool.
+</div>
+
 <%= render 'form' %>
