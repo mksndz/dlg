@@ -121,16 +121,14 @@ Fabricator(:page_ingest_with_json_and_mixed_results, from: :page_ingest) do
     {
       status: 'partial success',
       message: '2 pages created',
-      outcomes: {
-        failed: [
-          { id: 'a_b_c', page_title: 'Failed Page Title',
-            message: 'Could not import' }
-        ],
-        succeeded: [
-          { id: 'a_b_c', title: 'Succeeded Page Title' },
-          { id: 'a_b_d', title: 'Second Succeeded Page Title' }
-        ]
-      }
+      failed: [
+        { id: 'a_b_c', page_title: 'Failed Page Title',
+          message: 'Could not import' }
+      ],
+      succeeded: [
+        { id: 'a_b_c', title: 'Succeeded Page Title' },
+        { id: 'a_b_d', title: 'Second Succeeded Page Title' }
+      ]
     }
   end
 end
@@ -141,13 +139,11 @@ Fabricator(:page_ingest_with_json_and_success, from: :page_ingest) do
   results_json do
     {
       status: 'success', message: '2 pages created',
-      outcomes: {
-        succeeded: [
-          { id: 'a_b_c', page_title: 'Succeeded Page Title' },
-          { id: 'a_b_d', page_title: 'Second Succeeded Page Title' },
-        ],
-        failed: []
-      }
+      succeeded: [
+        { id: 'a_b_c', page_title: 'Succeeded Page Title' },
+        { id: 'a_b_d', page_title: 'Second Succeeded Page Title' },
+      ],
+      failed: []
     }
   end
 end
@@ -159,13 +155,12 @@ Fabricator(:page_ingest_with_json_and_total_failure, from: :page_ingest) do
     {
       status: 'failed',
       message: 'Worker failed completely',
-      outcomes: {
-        succeeded: [],
-        failed: []
-      }
+      succeeded: [],
+      failed: []
     }
   end
 end
+
 Fabricator(:page_ingest_with_json_and_failed_pages, from: :page_ingest) do
   queued_at { Faker::Time.between(Time.zone.today - 1, Time.zone.today) }
   finished_at { Faker::Time.between(Time.zone.today, Time.zone.today + 1) }
@@ -173,15 +168,13 @@ Fabricator(:page_ingest_with_json_and_failed_pages, from: :page_ingest) do
     {
       status: 'failed',
       message: 'All Pages failed to ingest',
-      outcomes: {
-        succeeded: [],
-        failed: [
-          { id: 'a_b_c', page_title: 'Failed Page Title',
-            message: 'Could not import' },
-          { id: 'a_b_c', page_title: 'Failed Page 2 Title',
-            message: 'Could not import' }
-        ]
-      }
+      succeeded: [],
+      failed: [
+        { id: 'a_b_c', page_title: 'Failed Page Title',
+          message: 'Could not import' },
+        { id: 'a_b_c', page_title: 'Failed Page 2 Title',
+          message: 'Could not import' }
+      ]
     }
   end
 end

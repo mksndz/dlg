@@ -16,11 +16,11 @@ class PageIngest < ActiveRecord::Base
   end
 
   def succeeded
-    results_json['outcomes']['succeeded']
+    results_json['succeeded']
   end
 
   def failed
-    results_json['outcomes']['failed']
+    results_json['failed']
   end
 
   def failed?

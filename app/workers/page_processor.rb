@@ -64,6 +64,7 @@ class PageProcessor
       @results = { status: nil, message: nil, added: [], errors: [] }
     end
 
+    # @param [Hash] item_data
     def includes_item_fulltext(item_data)
       item_data.key?('fulltext') && item_data['fulltext'].present?
     end

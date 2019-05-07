@@ -10,7 +10,7 @@
     <div class="panel-body">
       <p><%= @page_ingest.results_json['message'] %></p>
     </div>
-    <% if @page_ingest.failed.any? %>
+    <% if @page_ingest.failed.present? %>
       <table class="table page-ingest-results-table-failed">
         <thead>
         <tr>
@@ -30,7 +30,7 @@
         </tbody>
       </table>
     <% end %>
-    <% if @page_ingest.succeeded.any? %>
+    <% if @page_ingest.succeeded.present? %>
       <table class="table page-ingest-results-table-succeeded">
         <thead>
         <tr>
