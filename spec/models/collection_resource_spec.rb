@@ -32,4 +32,27 @@ RSpec.describe CollectionResource, type: :model do
     end
   end
 
+  context 'when validating' do
+    it 'requires a slug' do
+      collection_resource = Fabricate.build :collection_resource, slug: nil
+      collection_resource.valid?
+      expect(collection_resource.errors).to have_key :slug
+    end
+    it 'requires a title' do
+      collection_resource = Fabricate.build :collection_resource, title: nil
+      collection_resource.valid?
+      expect(collection_resource.errors).to have_key :title
+    end
+    it 'requires a content' do
+      collection_resource = Fabricate.build :collection_resource, content: nil
+      collection_resource.valid?
+      expect(collection_resource.errors).to have_key :content
+    end
+    it 'requires a collection' do
+      collection_resource = Fabricate.build :collection_resource, collection: nil
+      collection_resource.valid?
+      expect(collection_resource.errors).to have_key :collection_id
+    end
+  end
+
 end
