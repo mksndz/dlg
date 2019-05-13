@@ -20,7 +20,7 @@ class PageIngest < ActiveRecord::Base
   end
 
   def failed
-    results_json['failed']
+    results_json['errors']
   end
 
   def failed?
