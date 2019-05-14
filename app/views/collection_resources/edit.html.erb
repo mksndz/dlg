@@ -1,14 +1,14 @@
 <div class="row">
   <div class="col-sm-12 col-md-11">
     <%= content_for :title do %>
-        Edit Batch Item
+        Edit Collection Resource
     <% end %>
 
     <%= content_for :subtitle do %>
-        <%= @batch_item.title %>
+        <%= @collection_resource.title %>
     <% end %>
 
-    <% breadcrumb :batch_item, @batch_item %>
+    <% breadcrumb :collection_resource, @collection_resource %>
 
     <%= render 'shared/record_floating_nav' %>
 

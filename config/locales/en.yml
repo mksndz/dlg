@@ -145,6 +145,12 @@ en:
         portal_ids: 'Portals'
         created_at: "Created"
         updated_at: "Last Updated"
+      collection_resource:
+        slug: "Slug"
+        content: "Content"
+        created_at: "Created"
+        updated_at: "Last Updated"
+        collection_id: "Collection"
       item:
         slug: "Item ID"
         record_id: "Record ID"

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class CollectionResourceController < RecordController
+class CollectionResourcesController < RecordController
   authorize_resource
-  decorates_finders
+
   # decorates_association
   include ErrorHandling
   include Sorting

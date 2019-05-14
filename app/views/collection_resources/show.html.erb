@@ -1,41 +1,36 @@
 <%= content_for :title do %>
-    Show Batch Item
+    Show Collection Resource
 <% end %>
 
 <%= content_for :subtitle do %>
-    <%= @batch_item.title %>
+    <%= @collection_resource.title %>
 <% end %>
 
-<% breadcrumb :batch_item, @batch_item %>
+<% breadcrumb :collection_resource, @collection_resource %>
 
-<%= link_to t('meta.defaults.actions.edit'), edit_batch_batch_item_path(@batch, @batch_item), class: 'btn btn-default' %>
+<%= link_to t('meta.defaults.actions.edit'),
+            edit_collection_collection_resource_path(@collection,
+                                                     @collection_resource),
+            class: 'btn btn-default' %>
 
 <br><br>
 
-<%= render('shared/show_field', field_name: t('activerecord.attributes.batch_item.collection_id'), value: @batch_item.collection.display_title) if @batch_item.collection %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.portal_ids'), value: portals_list(@batch_item) %>
+<%= render('shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.collection_id'),
+           value: @collection_resource.collection.display_title) if @collection_resource.collection %>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.slug'), value: @batch_item.slug %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.dpla'), value: @batch_item.dpla %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.public'), value: @batch_item.public %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.local'), value: @batch_item.local %>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.slug'),
+           value: @collection_resource.slug %>
 
-<%= render partial: 'shared/show_dc_fields', locals: { entity: @batch_item} %>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.content'),
+           value: @collection_resource.content %>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <strong><%= t('activerecord.attributes.batch_item.other_collections') %></strong>
-  </div>
-  <div class="panel-body">
-    <ul>
-      <% @batch_item.other_collection_titles.each do |c| %>
-          <li><%= c %></li>
-      <% end %>
-    </ul>
-  </div>
-</div>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.created_at'),
+           value: display_date(@collection_resource.created_at) %>
 
-<%= render 'shared/show_field', field_name: I18n.t('activerecord.attributes.batch_item.fulltext'), value: @batch_item.fulltext %>
-
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.created_at'), value: display_date(@batch_item.created_at) %>
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.batch_item.updated_at'), value: display_date(@batch_item.updated_at) %>
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.updated_at'),
+           value: display_date(@collection_resource.updated_at) %>
