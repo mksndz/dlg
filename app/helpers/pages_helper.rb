@@ -7,4 +7,8 @@ module PagesHelper
   def uploaded_image_value
     @page.file.url ? image_tag(@page.file.url) : 'File not uploaded via form'
   end
+
+  def page_title(page)
+    page.title? ? page.title : 'No Title'
+  end
 end
