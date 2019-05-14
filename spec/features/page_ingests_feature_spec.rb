@@ -2,7 +2,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature 'Page Ingests' do
+feature 'Page Ingests', js: true do
   let(:super_user) { Fabricate :super }
   before :each do
     login_as super_user, scope: :user

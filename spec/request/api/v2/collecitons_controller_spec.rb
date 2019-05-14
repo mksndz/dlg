@@ -4,6 +4,7 @@ RSpec.describe 'API V2 for Items', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.api_token }
   context 'can list using #index' do
     before(:each) do
+      Collection.destroy_all
       Fabricate.times 11, :empty_collection, public: true
       @collection = Collection.last
     end
