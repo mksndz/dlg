@@ -124,7 +124,7 @@ Fabricator(:page_ingest_with_json_and_mixed_results, from: :page_ingest) do
       errors: [
         { id: 'a_b_c', message: 'Could not import' }
       ],
-      succeeded: [
+      added: [
         { id: 'a_b_c', title: 'Succeeded Page Title' },
         { id: 'a_b_d', title: 'Second Succeeded Page Title' }
       ]
@@ -138,7 +138,7 @@ Fabricator(:page_ingest_with_json_and_success, from: :page_ingest) do
   results_json do
     {
       status: 'success', message: '2 pages created',
-      succeeded: [
+      added: [
         { id: 'a_b_c', page_title: 'Succeeded Page Title' },
         { id: 'a_b_d', page_title: 'Second Succeeded Page Title' }
       ],
@@ -154,7 +154,7 @@ Fabricator(:page_ingest_with_json_and_total_failure, from: :page_ingest) do
     {
       status: 'failed',
       message: 'Worker failed completely',
-      succeeded: [],
+      added: [],
       errors: []
     }
   end
@@ -167,7 +167,7 @@ Fabricator(:page_ingest_with_json_and_failed_pages, from: :page_ingest) do
     {
       status: 'failed',
       message: 'All Pages failed to ingest',
-      succeeded: [],
+      added: [],
       errors: [
         { id: 'a_b_c', page_title: 'Failed Page Title',
           message: 'Could not import' },
