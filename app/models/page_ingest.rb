@@ -16,7 +16,7 @@ class PageIngest < ActiveRecord::Base
   end
 
   def succeeded
-    results_json['succeeded']
+    results_json['added']
   end
 
   def failed
