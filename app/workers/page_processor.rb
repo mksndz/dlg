@@ -101,7 +101,7 @@ class PageProcessor
     end
 
     def add_error(record_id, message)
-      @results[:errors] << { record_id => message }
+      @results[:errors] << { id: record_id, message: message }
     end
 
     def judge_job_outcome
