@@ -29,7 +29,7 @@ class PageIngestsController < ApplicationController
         notice: I18n.t('meta.page_ingests.messages.success.queued')
       )
     else
-      render :new, I18n.t('meta.defaults.messages.errors.not_created', entity: 'Page Ingest')
+      render :new, alert: I18n.t('meta.defaults.messages.errors.not_created', entity: 'Page Ingest')
     end
   end
 
@@ -76,7 +76,7 @@ class PageIngestsController < ApplicationController
   end
 
   def json_text?(text)
-    text != '{}' && test.present?
+    text != '{}' && text.present?
   end
 
 end

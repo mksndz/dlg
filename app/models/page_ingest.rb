@@ -30,4 +30,5 @@ class PageIngest < ActiveRecord::Base
   def partial_failure?
     results_json['status'] == 'partial failure'
   end
+
 end
