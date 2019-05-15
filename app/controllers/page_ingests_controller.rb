@@ -36,7 +36,8 @@ class PageIngestsController < ApplicationController
   def show; end
 
   def destroy
-    # TODO should pages be deleted?
+    @page_ingest.destroy
+    redirect_to page_ingests_path, notice: I18n.t('meta.defaults.messages.success.destroyed', entity: 'Page Ingest')
   end
 
   private
