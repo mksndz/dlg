@@ -67,26 +67,22 @@ end
 Fabricator(:page_ingest_with_fulltext_conflict, from: :page_ingest) do
   queued_at { Faker::Time.between(Time.zone.today - 1, Time.zone.today) }
   page_json do
-    [
-      { id: Fabricate(:item_with_parents).record_id,
-        fulltext: 'Item-level un-paginated full text',
-        pages: [
-          { file_type: 'jp2', number: 1 }
-        ] }
-    ]
+    [{ id: Fabricate(:item_with_parents).record_id,
+       fulltext: 'Item-level un-paginated full text',
+       pages: [
+         { file_type: 'jp2', number: 1 }
+       ] }]
   end
 end
 
 Fabricator(:page_ingest_with_internal_fulltext_conflict, from: :page_ingest) do
   queued_at { Faker::Time.between(Time.zone.today - 1, Time.zone.today) }
   page_json do
-    [
-      { id: Fabricate(:item_with_parents, fulltext: nil).record_id,
-        fulltext: 'Item-level un-paginated full text',
-        pages: [
-          { fulltext: 'Page-level fulltext', file_type: 'jp2', number: 1 }
-        ] }
-    ]
+    [{ id: Fabricate(:item_with_parents, fulltext: nil).record_id,
+       fulltext: 'Item-level un-paginated full text',
+       pages: [
+         { fulltext: 'Page-level fulltext', file_type: 'jp2', number: 1 }
+       ] }]
   end
 end
 
@@ -122,11 +118,11 @@ Fabricator(:page_ingest_with_json_and_mixed_results, from: :page_ingest) do
       status: 'partial success',
       message: '2 pages created',
       errors: [
-        { id: 'a_b_c', message: 'Could not import' }
+        { item_id: 'a_b_c', message: 'Could not import' }
       ],
       added: [
-        { id: 'a_b_c', title: 'Succeeded Page Title' },
-        { id: 'a_b_d', title: 'Second Succeeded Page Title' }
+        { item_id: '1', message: 'Succeeded Page', id: '1' },
+        { item_id: '2', message: 'Second Succeeded Page', id: '2' }
       ]
     }
   end
@@ -139,8 +135,8 @@ Fabricator(:page_ingest_with_json_and_success, from: :page_ingest) do
     {
       status: 'success', message: '2 pages created',
       added: [
-        { id: 'a_b_c', page_title: 'Succeeded Page Title' },
-        { id: 'a_b_d', page_title: 'Second Succeeded Page Title' }
+        { item_id: '1', message: 'Succeeded Page', id: '1' },
+        { item_id: '2', message: 'Second Succeeded Page', id: '2' }
       ],
       errors: []
     }
@@ -169,10 +165,8 @@ Fabricator(:page_ingest_with_json_and_failed_pages, from: :page_ingest) do
       message: 'All Pages failed to ingest',
       added: [],
       errors: [
-        { id: 'a_b_c', page_title: 'Failed Page Title',
-          message: 'Could not import' },
-        { id: 'a_b_c', page_title: 'Failed Page 2 Title',
-          message: 'Could not import' }
+        { item_id: 'a_b_c', message: 'Could not import' },
+        { item_id: 'a_b_c', message: 'Could not import' }
       ]
     }
   end

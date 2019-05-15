@@ -13,11 +13,11 @@ class PageProcessor
       record_id = item_data.delete('id')
       item = Item.find_by record_id: record_id
       unless item
-        add_error record_id, 'No Item for record_id'
+        page_failed record_id, 'No Item for record_id'
         next
       end
       if item.fulltext.present? && includes_item_fulltext(item_data)
-        add_error(
+        page_failed(
           record_id,
           'Item already has full text added - remove it from the Item if you want to update via this process.'
         )
@@ -32,9 +32,9 @@ class PageProcessor
 
           page = Page.create page_data.merge(item: item)
           page.file_type = item_file_type if item_file_type
-          page.save ? page_added(page) : page_failed(page)
+          page.save ? page_added(item.id, page) : page_failed(record_id, page)
         rescue StandardError => e
-          add_error record_id, "Problem creating Page for #{record_id}: #{e}"
+          page_failed record_id, "Problem creating Page for #{record_id}: #{e}"
           next
         end
       end
@@ -73,15 +73,18 @@ class PageProcessor
       page_data.key?('fulltext') && page_data['fulltext'].present?
     end
 
-    def page_added(page)
+    def page_added(item_id, page)
       @results[:added] << {
-        page.id => "Page #{page.number} successfully added."
+        id: page.id,
+        message: "Page #{page.number} successfully added.",
+        item_id: item_id
       }
     end
 
-    def page_failed(page)
+    def page_failed(record_id, message)
       @results[:errors] << {
-        page.id => "Page #{page.number} save failed: #{page.errors}"
+        item_id: record_id,
+        message: "Page save failed: #{message}"
       }
     end
 
@@ -98,10 +101,6 @@ class PageProcessor
     def job_failed(message)
       @results[:status] = 'failed'
       @results[:message] = message
-    end
-
-    def add_error(record_id, message)
-      @results[:errors] << { id: record_id, message: message }
     end
 
     def judge_job_outcome

@@ -71,6 +71,7 @@ en:
         created_at: 'Created At'
         updated_at: 'Updated At'
       page_ingest:
+        page_id: 'Page'
         title: 'Title'
         description: 'Description'
         file: 'File'
