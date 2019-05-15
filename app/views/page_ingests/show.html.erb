@@ -17,3 +17,8 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.finished_at'), value: display_date(@page_ingest.finished_at) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.created_at'), value: display_date(@page_ingest.created_at) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.page_ingest.updated_at'), value: display_date(@page_ingest.updated_at) %>
+
+<h5>Debug Info:</h5>
+
+<pre><%= JSON.pretty_generate(@page_ingest.results_json) %></pre>
+
