@@ -44,27 +44,6 @@
           <%= sortable 'collection_resources.title',
                        t('meta.defaults.labels.columns.title') %>
         </th>
-        <th>
-          <%= sortable 'collection_resources.valid_item',
-                       t('meta.defaults.labels.columns.valid') %>
-        </th>
-        <th>
-          <%= sortable 'collection_resources.public',
-                       t('meta.defaults.labels.columns.public') %>
-        </th>
-        <th>
-          <%= t('meta.defaults.labels.columns.portals') %>
-        </th>
-        <th>
-          <% if @collection.committed? %>
-              <%= t('meta.collection_resource.labels.columns.resource_created_or_modified') %>
-          <% else %>
-              <%= t('meta.collection_resource.labels.columns.resource_to_update') %>
-          <% end %>
-        </th>
-        <th>
-          <%= t('meta.collection_resource.labels.columns.collection') %>
-        </th>
         <th width="185px"></th>
       </tr>
       </thead>
@@ -83,42 +62,21 @@
                                                                    resource) %>
             </td>
             <td>
-              <%= resource.title.first %>
-            </td>
-            <td>
-              <%= item_validation_status resource %>
-            </td>
-            <td>
-              <%= boolean_check_icon resource.public %>
-            </td>
-            <td>
-              <%= portal_badges resource %>
-            </td>
-            <td>
-              <% if resource.item %>
-                <%= link_to resource.item.id, item_path(resource.item) %>
-              <% else %>
-                <%= t('meta.defaults.labels.na') %>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to(resource.collection.display_title, collection_path(resource.collection)) if resource.collection %>
+              <%= resource.title %>
             </td>
             <td>
               <div class="btn-group btn-group-xs">
                 <%= link_to t('meta.defaults.actions.view'),
                             collection_collection_resource_path(@collection, resource),
                             class: 'btn btn-default' %>
-                <% unless @collection.committed? %>
-                  <%= link_to t('meta.defaults.actions.edit'),
-                              edit_collection_collection_resource_path(@collection, resource),
-                              class: 'btn btn-default' %>
-                  <%= link_to t('meta.defaults.actions.destroy'),
-                              collection_collection_resource_path(@collection, resource),
-                              method: :delete,
-                              data: { confirm: t('meta.defaults.labels.confirm') },
-                              class: 'btn btn-default' %>
-                <% end %>
+                <%= link_to t('meta.defaults.actions.edit'),
+                            edit_collection_collection_resource_path(@collection, resource),
+                            class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.destroy'),
+                            collection_collection_resource_path(@collection, resource),
+                            method: :delete,
+                            data: { confirm: t('meta.defaults.labels.confirm') },
+                            class: 'btn btn-default' %>
               </div>
             </td>
           </tr>

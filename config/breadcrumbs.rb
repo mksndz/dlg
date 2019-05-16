@@ -295,3 +295,22 @@ crumb :holding_institution do |holding_institution|
   end
   parent :holding_institutions
 end
+
+# COLLECTION RESOURCES
+
+crumb :collection_resources do |collection|
+  link collection.display_title, collection
+  link 'Resources', collection_collection_resources_path(collection)
+  parent :collections
+end
+
+crumb :collection_resource do |resource|
+  link resource.collection.display_title, resource.collection
+  link 'Resources', collection_collection_resources_path(resource.collection)
+  parent :collections
+  if resource.id
+    link resource.title
+  else
+    link 'New'
+  end
+end

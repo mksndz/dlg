@@ -17,11 +17,19 @@
 
 <%= render('shared/show_field',
            field_name: t('activerecord.attributes.collection_resource.collection_id'),
-           value: @collection_resource.collection.display_title) if @collection_resource.collection %>
+           value: @collection_resource.collection.display_title) %>
 
 <%= render 'shared/show_field',
            field_name: t('activerecord.attributes.collection_resource.slug'),
            value: @collection_resource.slug %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.title'),
+           value: @collection_resource.title %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.position'),
+           value: @collection_resource.position %>
 
 <%= render 'shared/show_field',
            field_name: t('activerecord.attributes.collection_resource.content'),
