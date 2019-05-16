@@ -134,6 +134,7 @@ GEM
       devise (>= 3.2.0)
     diff-lcs (1.3)
     diffy (3.1.0)
+    docile (1.3.1)
     dot-properties (0.1.3)
     erubis (2.7.0)
     exception_notification (4.2.2)
@@ -303,6 +304,11 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    simplecov (0.16.1)
+      docile (~> 1.1)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.2)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -416,6 +422,7 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  simplecov
   slack-notifier
   spring
   sunspot_rails
@@ -427,4 +434,4 @@ DEPENDENCIES
   xray-rails
 
 BUNDLED WITH
-   1.16.4
+   1.16.6
