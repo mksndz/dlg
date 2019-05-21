@@ -289,6 +289,7 @@ en:
         columns:
           repository: 'Repository'
           items: 'Items'
+          resources: 'Resources'
         view:
           other_repositories: 'Other Repositories'
           subjects: 'Subjects'
