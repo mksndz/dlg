@@ -87,7 +87,7 @@ echo "ExecReload=/bin/kill -HUP \$MAINPID" >> "/etc/systemd/system/postgresql.se
 echo "KillMode=mixed" >> "/etc/systemd/system/postgresql.service"
 echo "KillSignal=SIGINT" >> "/etc/systemd/system/postgresql.service"
 echo "TimeoutSec=0" >> "/etc/systemd/system/postgresql.service"
-echo ""
+echo "" >> "/etc/systemd/system/postgresql.service"
 echo "[Install]" >> "/etc/systemd/system/postgresql.service"
 echo "WantedBy=multi-user.target" >> "/etc/systemd/system/postgresql.service"
 
