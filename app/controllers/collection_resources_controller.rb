@@ -1,30 +1,27 @@
 # frozen_string_literal: true
 
-class CollectionResourceController < RecordController
+class CollectionResourcesController < RecordController
   authorize_resource
-  decorates_finders
+
   # decorates_association
   include ErrorHandling
   include Sorting
   before_action :set_collection
-  # before_action :set_data, only: [:new, :edit]
-  # before_action :check_if_committed, except: [:index, :show]
+  before_action :set_resource, except: [:index, :new, :create]
 
   # GET /collection_resources
   # GET /collection_resources.json
   def index
     @collection_resources = CollectionResource
                             .order(sort_column + ' ' + sort_direction)
-                            .where(collection_id: @collection.id)
+                            .where(collection: @collection)
                             .page(params[:page]).per(params[:per_page])
                             .includes(:collection)
   end
 
   # GET /collection_resources/1
   # GET /collection_resources/1.json
-  def show
-    @collection_resource = CollectionResource.find(params[:id]).decorate
-  end
+  def show; end
 
   # GET /collection_resources/new
   def new
@@ -93,8 +90,12 @@ class CollectionResourceController < RecordController
           .permit(:collection_id, :slug, :position, :title, :content)
   end
 
+  def set_resource
+    @collection_resource = CollectionResource.find(params[:id]).decorate
+  end
+
   def set_collection
-    @collection = Collection.find(params[:collection_id])
+    @collection = Collection.find(params[:collection_id]) # TODO: decorate?
   end
 
 end

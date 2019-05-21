@@ -1,105 +1,82 @@
 <%= content_for :title do %>
-    Items for Batch
+    Resources for Collection
 <% end %>
 
 <%=
   content_for :subtitle do
-    @batch.name
+    @collection.title
   end
 %>
 
-<% breadcrumb :batch_items, @batch %>
+<% breadcrumb :collection_resources, @collection %>
 
-<div class="btn-group" role="group" aria-label="Batch Items Actions">
-  <%= link_to(t('meta.batch_item.action.add'), new_batch_batch_item_path(@batch), class: 'btn btn-default') unless @batch.committed? %>
-  <%= link_to t('meta.batch.actions.batch_imports'), batch_batch_imports_path(@batch), class: 'btn btn-default' %>
+<div class="btn-group" role="group" aria-label="Collection Resources Actions">
+  <%= link_to(t('meta.collection_resource.action.add'),
+              new_collection_collection_resource_path(@collection),
+              class: 'btn btn-default') %>
 </div>
 
 <%= render 'shared/per_pager' %>
 
 <br><br>
 
-<% if @batch_items.empty? %>
+<% if @collection_resources.empty? %>
 
-    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Batch Items') %></p>
+    <p><%= t('meta.defaults.labels.no_records_found',
+             entity: 'Collection Resources') %></p>
 
 <% else %>
 
-    <%= paginate @batch_items %>
+    <%= paginate @collection_resources %>
 
     <table class="table table-condensed table-hover">
       <thead>
       <tr>
         <th>
-          <%= sortable 'batch_items.id', t('meta.defaults.labels.columns.id') %>
+          <%= sortable 'collection_resources.id',
+                       t('meta.defaults.labels.columns.id') %>
         </th>
         <th>
-          <%= sortable 'batch_items.slug', t('meta.defaults.labels.columns.slug') %>
+          <%= sortable 'collection_resources.slug',
+                       t('meta.defaults.labels.columns.slug') %>
         </th>
         <th>
-          <%= sortable 'batch_items.dcterms_title', t('meta.defaults.labels.columns.title') %>
-        </th>
-        <th>
-          <%= sortable 'batch_items.valid_item', t('meta.defaults.labels.columns.valid') %>
-        </th>
-        <th>
-          <%= sortable 'batch_items.public', t('meta.defaults.labels.columns.public') %>
-        </th>
-        <th>
-          <%= t('meta.defaults.labels.columns.portals') %>
-        </th>
-        <th>
-          <% if @batch.committed? %>
-              <%= t('meta.batch_item.labels.columns.item_created_of_modified') %>
-          <% else %>
-              <%= t('meta.batch_item.labels.columns.item_to_update') %>
-          <% end %>
-        </th>
-        <th>
-          <%= t('meta.batch_item.labels.columns.collection') %>
+          <%= sortable 'collection_resources.title',
+                       t('meta.defaults.labels.columns.title') %>
         </th>
         <th width="185px"></th>
       </tr>
       </thead>
 
       <tbody>
-      <% @batch_items.each do |item| %>
+      <% @collection_resources.each do |resource| %>
           <tr>
             <td>
-              <%= link_to item.id, batch_batch_item_path(@batch, item) %>
+              <%= link_to resource.id,
+                          collection_collection_resource_path(@collection,
+                                                              resource) %>
             </td>
             <td>
-              <%= link_to item.slug, edit_batch_batch_item_path(@batch, item) %>
+              <%= link_to resource.slug,
+                          edit_collection_collection_resource_path(@collection,
+                                                                   resource) %>
             </td>
             <td>
-              <%= item.dcterms_title.first %>
-            </td>
-            <td>
-              <%= item_validation_status item %>
-            </td>
-            <td>
-              <%= boolean_check_icon item.public %>
-            </td>
-            <td>
-              <%= portal_badges item %>
-            </td>
-            <td>
-              <% if item.item %>
-                <%= link_to item.item.id, item_path(item.item) %>
-              <% else %>
-                <%= t('meta.defaults.labels.na') %>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to(item.collection.display_title, collection_path(item.collection)) if item.collection %>
+              <%= resource.title %>
             </td>
             <td>
               <div class="btn-group btn-group-xs">
-                <%= link_to t('meta.defaults.actions.view'), batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
-                <% unless @batch.committed? %>
-                  <%= link_to t('meta.defaults.actions.edit'), edit_batch_batch_item_path(@batch, item) , class: 'btn btn-default' %>
-                  <%= link_to t('meta.defaults.actions.destroy'), batch_batch_item_path(@batch, item), method: :delete, data: { confirm: t('meta.defaults.labels.confirm') }, class: 'btn btn-default' %>
-                <% end %>
+                <%= link_to t('meta.defaults.actions.view'),
+                            collection_collection_resource_path(@collection, resource),
+                            class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.edit'),
+                            edit_collection_collection_resource_path(@collection, resource),
+                            class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.destroy'),
+                            collection_collection_resource_path(@collection, resource),
+                            method: :delete,
+                            data: { confirm: t('meta.defaults.labels.confirm') },
+                            class: 'btn btn-default' %>
               </div>
             </td>
           </tr>
@@ -107,6 +84,6 @@
       </tbody>
     </table>
 
-    <%= paginate @batch_items %>
+    <%= paginate @collection_resources %>
 
 <% end %>

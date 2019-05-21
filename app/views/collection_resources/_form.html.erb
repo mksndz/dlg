@@ -1,35 +1,15 @@
-<%= bootstrap_form_for([@batch, @batch_item]) do |f| %>
+<%= bootstrap_form_for([@collection, @collection_resource]) do |f| %>
 
-    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Batch Item') %>
+    <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Collection Resource') %>
 
     <%= f.text_field :slug %>
+    <%= f.text_field :title %>
+    <%= f.number_field :position %>
 
-    <%= f.select :collection_id, @data[:collections].collect { |c| [c.display_title, c.id] }, { include_blank: true } %>
-
-    <%= f.form_group :public do %>
-        <%= f.check_box :public %>
-    <% end %>
-
-    <%= f.form_group :dpla do %>
-        <%= f.check_box :dpla %>
-    <% end %>
-
-    <%= f.form_group :local do %>
-        <%= f.check_box :local %>
-    <% end %>
-
-    <%= f.select :other_collections, @data[:collections].collect { |c| [c.display_title, c.id] }, { include_blank: true }, { multiple: true,  class: 'fancy-multiselect' } %>
-
-    <%= f.select :portal_ids, @data[:portals].collect { |c| [c.name, c.id] }, { }, { multiple: true,  class: 'fancy-multiselect' } %>
-
-    <%= render partial: 'shared/edit_dc_fields', locals: { f: f, entity: @batch_item } %>
-
-    <%= f.text_area :fulltext, class: 'fulltext-input' %>
+    <%= f.text_area :content, class: 'content-input' %>
 
   <div class="action-buttons">
       <%= f.primary I18n.t('meta.defaults.actions.save'), class: 'btn btn-primary fixed-save-button' %>
-      <%= f.submit(t('meta.defaults.actions.save_and_goto_next'), name: 'next') if @next %>
-      <%= f.submit(t('meta.defaults.actions.save_and_goto_previous'), name: 'previous') if @previous %>
-    </div>
+  </div>
 
 <% end %>

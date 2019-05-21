@@ -1,6 +1,7 @@
 # Decorator for the CollectionResource class
 class CollectionResourceDecorator < Draper::Decorator
   delegate_all
+  decorates_finders
 
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:

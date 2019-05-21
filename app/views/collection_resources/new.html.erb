@@ -1,19 +1,16 @@
 <div class="row">
   <div class="col-sm-12 col-md-11">
     <%= content_for :title do %>
-        New Batch Item
+        New Collection Resource
     <% end %>
     <%=
       content_for :subtitle do
-        @batch.name
+        @collection.display_title
       end
     %>
 
-    <% breadcrumb :batch_item, @batch_item %>
+    <% breadcrumb :collection_resource, @collection_resource %>
 
     <%= render 'form' %>
-  </div>
-  <div class="col-md-1">
-    <%= render 'shared/record_floating_nav' %>
   </div>
 </div>
