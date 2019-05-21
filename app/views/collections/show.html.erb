@@ -29,6 +29,9 @@
 
 <%= render partial: 'shared/show_dc_fields', locals: { entity: @collection } %>
 
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.sponsor_note'), value: @collection.sponsor_note %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.sponsor_image'), value: image_tag(@collection.sponsor_image) %>
+
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.created_at'), value: display_date(@collection.created_at) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.collection.updated_at'), value: display_date(@collection.updated_at) %>
 

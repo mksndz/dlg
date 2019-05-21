@@ -12,11 +12,13 @@ class Collection < ActiveRecord::Base
   has_many :public_items, -> { where public: true }, class_name: 'Item'
   has_many :dpla_items, -> { where dpla: true }, class_name: 'Item'
   has_many :batch_items, dependent: :nullify
-  has_many :collection_resources, counter_cache: true
+  has_many :collection_resources
   belongs_to :repository, counter_cache: true
   has_and_belongs_to_many :subjects
   has_and_belongs_to_many :time_periods
   has_and_belongs_to_many :users
+
+  mount_uploader :sponsor_image, ImageUploader
 
   scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
   scope :are_public, -> { where(public: true) }

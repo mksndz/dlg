@@ -45,6 +45,22 @@ feature 'Collections Management' do
       end
     end
     context 'edit page' do
+      context 'sponsor behavior' do
+        subject(:collection) { Fabricate :empty_collection }
+        scenario 'can add a sponsor not and logo' do
+          snickers = 'Snickers Satisfies'
+          visit edit_collection_path(collection)
+          fill_in I18n.t('activerecord.attributes.collection.sponsor_note'), with: snickers
+          attach_file(
+            I18n.t('activerecord.attributes.collection.sponsor_image'),
+            Rails.root.to_s + '/spec/files/aarl.gif'
+          )
+          click_button I18n.t('meta.defaults.actions.save')
+          expect(page).to have_current_path collection_path(collection)
+          expect(page).to have_css "img[src*='record_image']"
+          expect(page).to have_text snickers
+        end
+      end
       context 'portal behavior' do
         scenario 'cannot save a new collection with no portal value' do
           visit new_collection_path
