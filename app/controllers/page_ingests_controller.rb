@@ -17,7 +17,7 @@ class PageIngestsController < ApplicationController
 
   # show form to create a new page ingest
   def new
-    @page_ingest = PageIngest.new
+    @page_ingest = PageIngest.new(page_json: '')
   end
 
   # create a page ingest and queue ingest job
@@ -72,7 +72,7 @@ class PageIngestsController < ApplicationController
       text.strip
     else
       raise(ImportFailedError,
-            I18n.t('meta.batch_import.messages.errors.no_data'))
+            I18n.t('meta.page_ingests.messages.errors.no_data'))
     end
   end
 

@@ -497,7 +497,7 @@ en:
           could_not_undo: 'Could not undo'
           both_types: 'You provided both a file and XML text. Choose one only!'
           file_error: 'Could not read from uploaded file.'
-          no_data: 'No source for Batch Items provided!'
+          no_data: 'No source for Pages provided!'
     project:
       action:
         add: 'New Project'
