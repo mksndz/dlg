@@ -33,7 +33,7 @@ class BatchCommitter
   end
 
   def self.notify(msg)
-    @slack.ping msg if Rails.env.production?
+    @slack.ping msg if Rails.env.production? || Rails.env.staging?
   end
 
   def self.add_job_error(msg)

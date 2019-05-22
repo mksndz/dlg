@@ -12,7 +12,7 @@ class FulltextProcessor
     unless @fti
       @results[:status] = 'failed'
       @results[:message] = "Fulltext Ingest with ID = #{fulltext_ingest_id} could not be found."
-      @slack.ping "Fulltext ingest (#{@fti.title}) failed: Fulltext Ingest with ID = #{fulltext_ingest_id} could not be found." if Rails.env.production?
+      @slack.ping "Fulltext ingest (#{@fti.title}) failed: Fulltext Ingest with ID = #{fulltext_ingest_id} could not be found." if Rails.env.production? || Rails.env.staging?
       @fti.results = @results
       @fti.save
       exit
@@ -25,7 +25,7 @@ class FulltextProcessor
         if @files.zero?
           @results[:status] = 'failed'
           @results[:message] = 'Empty ZIP file'
-          @slack.ping "Fulltext ingest (#{@fti.title}) failed: Empty Zip file" if Rails.env.production?
+          @slack.ping "Fulltext ingest (#{@fti.title}) failed: Empty Zip file" if Rails.env.production? || Rails.env.staging?
           @fti.results = @results
           @fti.save
           exit
@@ -60,7 +60,7 @@ class FulltextProcessor
     rescue StandardError => e
       @results[:status] = 'failed'
       @results[:message] = e.message
-      @slack.ping "Fulltext ingest (#{@fti.title}) failed: #{e.message}" if Rails.env.production?
+      @slack.ping "Fulltext ingest (#{@fti.title}) failed: #{e.message}" if Rails.env.production? || Rails.env.staging?
       @fti.results = @results
       @fti.save
       exit
@@ -78,7 +78,7 @@ class FulltextProcessor
     end
     @fti.finished_at = Date.today
     @fti.results = @results
-    @slack.ping "Fulltext ingest complete: `#{@fti.title}`" if Rails.env.production?
+    @slack.ping "Fulltext ingest complete: `#{@fti.title}`" if Rails.env.production? || Rails.env.staging?
     @fti.save
   end
 

@@ -43,15 +43,15 @@ class PageProcessor
     judge_job_outcome
     @pi.finished_at = Time.zone.today
     @pi.results_json = @results
-    @slack.ping "Page ingest complete: `#{@pi.title}`" if Rails.env.production?
+    @slack.ping "Page ingest complete: `#{@pi.title}`" if Rails.env.production? || Rails.env.staging?
     @pi.save!
   rescue StandardError => e
     if @pi
-      @slack.ping "Page ingest (#{@pi.title}) failed: #{e}" if Rails.env.production?
+      @slack.ping "Page ingest (#{@pi.title}) failed: #{e}" if Rails.env.production? || Rails.env.staging?
       @pi.results_json = @results
       @pi.save
     else
-      if Rails.env.production?
+      if Rails.env.production? || Rails.env.staging?
         @slack.ping "Page ingest could not be found by PageProcessor: #{e}"
       end
     end
