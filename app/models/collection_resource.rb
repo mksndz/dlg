@@ -3,6 +3,8 @@
 class CollectionResource < ActiveRecord::Base
   belongs_to :collection, counter_cache: true
 
+  default_scope { order position: :asc }
+
   validates_presence_of :slug
   validates_presence_of :title
   validates_presence_of :content

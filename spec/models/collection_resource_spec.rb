@@ -8,6 +8,15 @@ RSpec.describe CollectionResource, type: :model do
     Fabricate(:collection_resource)
     expect(CollectionResource.count).to eq 1
   end
+  it 'is ordered by position by default' do
+    collection = Fabricate :empty_collection
+    Fabricate.times(2, :collection_resource) do
+      collection collection
+      position { sequence(:position, 1) }
+    end
+    expect(CollectionResource.all.first.position).to eq 1
+    expect(CollectionResource.all.last.position).to eq 2
+  end
   context 'when a basic collection_resource is created' do
     subject(:collection_resource) { Fabricate :collection_resource }
     it 'has a slug' do
@@ -31,7 +40,6 @@ RSpec.describe CollectionResource, type: :model do
       expect(collection_resource.updated_at).not_to be_nil
     end
   end
-
   context 'when validating' do
     it 'requires a slug' do
       collection_resource = Fabricate.build :collection_resource, slug: nil

@@ -60,5 +60,18 @@ RSpec.describe 'API V2 for Items', type: :request do
       json = JSON.parse(response.body)
       expect(json['id']).to eq @collection.id
     end
+    context 'with CollectionResources' do
+      before(:each) do
+        @collection.collection_resources << Fabricate.times(2, :collection_resource)
+      end
+      it 'returns CollectionResource info without content' do
+        get "/api/v2/collections/#{@collection.id}.json",
+            {},
+            headers
+        json = JSON.parse(response.body)
+        expect(json['collection_resources'].length).to eq 2
+        expect(json['collection_resources'][0].keys).to include 'slug', 'title', 'position'
+      end
+    end
   end
 end
