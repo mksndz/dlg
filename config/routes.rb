@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         resources :collections, only: %i[index show]
         resources :holding_institutions, only: %i[index show]
         resources :features, only: :index
+        get 'collections/:collection/resource/:slug', to: 'collection_resources#show'
       end
     end
   end

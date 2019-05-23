@@ -29,6 +29,12 @@ Fabricator(:empty_collection, from: :collection) do
   portals { |attrs| attrs[:repository].portals }
 end
 
+Fabricator(:empty_collection_with_resource, from: :collection) do
+  repository(fabricator: :empty_repository)
+  portals { |attrs| attrs[:repository].portals }
+  collection_resources(count:1)
+end
+
 Fabricator(:collection_with_repo_and_item, from: :collection) do
   repository(fabricator: :empty_repository)
   portals { |attrs| attrs[:repository].portals }

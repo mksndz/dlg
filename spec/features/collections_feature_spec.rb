@@ -46,7 +46,10 @@ feature 'Collections Management' do
     end
     context 'edit page' do
       context 'sponsor behavior' do
-        subject(:collection) { Fabricate :empty_collection }
+        subject(:collection) do
+          Fabricate(:empty_collection,
+            sponsor_note: '', sponsor_image: nil)
+        end
         scenario 'can add a sponsor not and logo' do
           snickers = 'Snickers Satisfies'
           visit edit_collection_path(collection)

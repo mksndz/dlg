@@ -12,7 +12,7 @@ RSpec.describe CollectionResource, type: :model do
     collection = Fabricate :empty_collection
     Fabricate.times(2, :collection_resource) do
       collection collection
-      position { sequence(:position, 1) }
+      position { sequence(:new_position, 1) }
     end
     expect(CollectionResource.all.first.position).to eq 1
     expect(CollectionResource.all.last.position).to eq 2

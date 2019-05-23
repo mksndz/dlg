@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'API V2 for Items', type: :request do
+RSpec.describe 'API V2 for Collections', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.api_token }
   context 'can list using #index' do
     before(:each) do
