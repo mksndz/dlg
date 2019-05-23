@@ -18,6 +18,8 @@ Fabricator(:collection) do
   dcterms_spatial ['United States, Georgia, Bibb County, 32.8064982, -83.69742']
   edm_is_shown_at ['http://dlg.galileo.usg.edu']
   edm_is_shown_by ['http://dlg.galileo.usg.edu']
+  sponsor_note Faker::Lorem.sentence(5)
+  sponsor_image File.open("#{Rails.root}/spec/files/snickers.jpg")
   dcterms_type ['Collection']
   holding_institutions(count: 1)
 end

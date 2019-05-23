@@ -59,6 +59,7 @@ RSpec.describe 'API V2 for Items', type: :request do
           headers
       json = JSON.parse(response.body)
       expect(json['id']).to eq @collection.id
+      expect(json.keys).to include 'sponsor_note', 'sponsor_image'
     end
     context 'with CollectionResources' do
       before(:each) do
