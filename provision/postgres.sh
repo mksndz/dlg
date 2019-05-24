@@ -82,7 +82,7 @@ echo "" >> "/etc/systemd/system/postgresql.service"
 echo "[Service]" >> "/etc/systemd/system/postgresql.service"
 echo "Type=notify" >> "/etc/systemd/system/postgresql.service"
 echo "User=postgres" >> "/etc/systemd/system/postgresql.service"
-echo "ExecStart=/app/postgres$PG_VERSION/bin/postgres -D /app/pgdbstor/db/" >> "/etc/systemd/system/postgresql.service" 
+echo "ExecStart=/app/postgresql$PG_VERSION/bin/postgres -D /app/pgdbstor/db/" >> "/etc/systemd/system/postgresql.service"
 echo "ExecReload=/bin/kill -HUP \$MAINPID" >> "/etc/systemd/system/postgresql.service"
 echo "KillMode=mixed" >> "/etc/systemd/system/postgresql.service"
 echo "KillSignal=SIGINT" >> "/etc/systemd/system/postgresql.service"
@@ -98,10 +98,10 @@ useradd postgres
 mkdir -p /app/pgdbstor/db
 chown -R postgres:postgres /app/pgdbstor
 
-sudo -u postgres /app/postgres$PG_VERSION/bin/initdb /app/pgdbstor/db
+sudo -u postgres /app/postgresql$PG_VERSION/bin/initdb /app/pgdbstor/db
 
-PG_CONF="/app/pgdbstor/postgresql.conf"
-PG_HBA="/app/pgdbstor/pg_hba.conf"
+PG_CONF="/app/pgdbstor/db/postgresql.conf"
+PG_HBA="/app/pgdbstor/db/pg_hba.conf"
 PG_DIR="/app/pgdbstor/db"
 
 # Edit postgresql.conf to change listen address to '*':
