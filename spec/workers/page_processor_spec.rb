@@ -54,5 +54,17 @@ describe PageProcessor, type: :model do
       expect(Page.find(page_ingest.succeeded[1]['id']).file_type).to eq 'jp2'
       expect(Page.find(page_ingest.succeeded[2]['id']).file_type).to eq 'tiff'
     end
+    context 'can update existing Pages' do
+      before :each do
+        @ingest = Fabricate :page_ingest_for_updating_existing_page
+        @page = Page.last
+      end
+      it 'updates number, file_type and fulltext values' do
+        PageProcessor.perform(@ingest.id)
+        @page.reload
+        expect(@page.file_type).to eq 'jp2'
+        expect(@page.fulltext).to eq 'Updated fulltext'
+      end
+    end
   end
 end

@@ -30,9 +30,19 @@ class PageProcessor
         begin
           raise StandardError, 'Item already has full text added - remove it if you want to add paginated full text' if item.fulltext? && includes_page_fulltext(page_data)
 
-          page = Page.create page_data.merge(item: item)
-          page.file_type = item_file_type if item_file_type
-          page.save ? page_added(item.id, page) : page_failed(record_id, page)
+          existing_page = item.pages.find_by(number: page_data['number'])
+          if existing_page
+            # update
+            existing_page.number = page_data['number'] if page_data.key? 'number'
+            existing_page.file_type = page_data['file_type'] if page_data.key? 'file_type'
+            existing_page.fulltext = page_data['fulltext'] if page_data.key? 'fulltext'
+            existing_page.save ? page_updated(item.id, existing_page) : page_failed(record_id, existing_page)
+          else
+            page = Page.create page_data.merge(item: item)
+            page.file_type = item_file_type if item_file_type
+            page.save ? page_added(item.id, page) : page_failed(record_id, page)
+          end
+
         rescue StandardError => e
           page_failed record_id, "Problem creating Page for #{record_id}: #{e}"
           next
@@ -61,7 +71,7 @@ class PageProcessor
     private
 
     def init_results
-      @results = { status: nil, message: nil, added: [], errors: [] }
+      @results = { status: nil, message: nil, added: [], updated: [], errors: [] }
     end
 
     # @param [Hash] item_data
@@ -77,6 +87,14 @@ class PageProcessor
       @results[:added] << {
         id: page.id,
         message: "Page #{page.number} successfully added.",
+        item_id: item_id
+      }
+    end
+
+    def page_updated(item_id, page)
+      @results[:updated] << {
+        id: page.id,
+        message: "Page #{page.number} successfully updated.",
         item_id: item_id
       }
     end

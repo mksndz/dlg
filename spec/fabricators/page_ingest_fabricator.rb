@@ -171,3 +171,17 @@ Fabricator(:page_ingest_with_json_and_failed_pages, from: :page_ingest) do
     }
   end
 end
+
+Fabricator(:page_ingest_for_updating_existing_page, from: :page_ingest) do
+  file ''
+  page_json do
+    [
+      { id: Fabricate(:item_with_parents, fulltext: nil).record_id,
+        pages: [
+          { fulltext: 'Updated fulltext',
+            file_type: 'jp2',
+            number: Fabricate(:page, item: Item.last).number }
+        ] }
+    ]
+  end
+end

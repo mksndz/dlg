@@ -19,6 +19,10 @@ class PageIngest < ActiveRecord::Base
     results_json['added']
   end
 
+  def updated
+    results_json['updated']
+  end
+
   def failed
     results_json['errors']
   end
