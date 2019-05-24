@@ -19,7 +19,7 @@ APP_DB_NAME=meta
 PG_VERSION=11.1
 
 #Edit the following to control the number of threads for compilation, recommended max = processing cores * 1.5
-THREADS = 1
+THREADS=1
 
 ###########################################################
 # Changes below this line are probably not necessary
@@ -94,8 +94,6 @@ echo "WantedBy=multi-user.target" >> "/etc/systemd/system/postgresql.service"
 systemctl daemon-reload
 
 useradd postgres
-groupadd postgres
-usermod -aG postgres postgres
 
 mkdir -p /app/pgdbstor/db
 chown -R postgres:postgres /app/pgdbstor
@@ -123,7 +121,6 @@ echo "Creating $APP_DB_NAME user and development database"
 cat << EOF | su - postgres -c psql
 -- Create the database user:
 CREATE USER $APP_DB_USER WITH PASSWORD '$APP_DB_PASS' SUPERUSER CREATEDB;
-
 
 -- Create the database:
 CREATE DATABASE $APP_DB_NAME WITH OWNER=$APP_DB_USER
