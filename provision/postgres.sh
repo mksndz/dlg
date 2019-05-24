@@ -70,7 +70,7 @@ tar xzf postgresql-$PG_VERSION.tar.gz
 cd postgresql-$PG_VERSION
 
 #Configure and build
-./configure --prefix=/app/postgresql --with-systemd --with-openssl
+./configure --prefix=/app/postgresql$PG_VERSION --with-systemd --with-openssl
 make world -j$THREADS
 make install-world
 
