@@ -114,7 +114,7 @@ echo "hostssl    all             all             all                     md5" >>
 echo "client_encoding = utf8" >> "$PG_CONF"
 
 # Add postgres to the env
-sed -i 's/.$/:\/app\/postgresql$PG_VERSION\/bin"/' /etc/environment
+sed -i "s/.$/:\/app\/postgresql$PG_VERSION\/bin\"/" /etc/environment
 
 export PATH=$PATH:/app/postgresql$PG_VERSION/bin
 
