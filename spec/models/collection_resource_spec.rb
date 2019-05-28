@@ -70,7 +70,7 @@ RSpec.describe CollectionResource, type: :model do
       collection_resource = Fabricate.build :collection_resource,
                                             raw_content: raw_content
       collection_resource.save
-      expect(collection_resource.errors).to have_key :collection_id
+      expect(collection_resource.raw_content).to eq raw_content
       expect(collection_resource.scrubbed_content).to eq scrubbed_content
     end
   end

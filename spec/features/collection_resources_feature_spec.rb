@@ -26,7 +26,8 @@ feature 'Collection Resource management' do
         expect(page).to have_text resource.slug
         expect(page).to have_text resource.title
         expect(page).to have_text resource.position
-        expect(page).to have_text resource.content
+        expect(page).to have_text resource.raw_content
+        expect(page).to have_text resource.scrubbed_content
       end
     end
     context 'edit page' do
@@ -44,7 +45,7 @@ feature 'Collection Resource management' do
                 with: new_position
         fill_in I18n.t('activerecord.attributes.collection_resource.title'),
                 with: new_title
-        fill_in I18n.t('activerecord.attributes.collection_resource.content'),
+        fill_in I18n.t('activerecord.attributes.collection_resource.raw_content'),
                 with: new_content
         click_button I18n.t('meta.defaults.actions.save')
         expect(page).to have_current_path collection_collection_resource_path(
@@ -70,7 +71,7 @@ feature 'Collection Resource management' do
                 with: new_position
         fill_in I18n.t('activerecord.attributes.collection_resource.title'),
                 with: new_title
-        fill_in I18n.t('activerecord.attributes.collection_resource.content'),
+        fill_in I18n.t('activerecord.attributes.collection_resource.raw_content'),
                 with: new_content
         click_button I18n.t('meta.defaults.actions.save')
         new_resource = CollectionResource.last
@@ -85,7 +86,7 @@ feature 'Collection Resource management' do
         click_button I18n.t('meta.defaults.actions.save')
         expect(page).to have_text "#{I18n.t('activerecord.attributes.collection_resource.slug')} #{I18n.t('activerecord.errors.messages.blank')}"
         expect(page).to have_text "#{I18n.t('activerecord.attributes.collection_resource.title')} #{I18n.t('activerecord.errors.messages.blank')}"
-        expect(page).to have_text "#{I18n.t('activerecord.attributes.collection_resource.content')} #{I18n.t('activerecord.errors.messages.blank')}"
+        expect(page).to have_text "#{I18n.t('activerecord.attributes.collection_resource.raw_content')} #{I18n.t('activerecord.errors.messages.blank')}"
       end
     end
   end

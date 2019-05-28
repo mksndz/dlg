@@ -150,7 +150,8 @@ en:
       collection_resource:
         slug: "Slug"
         title: "Title"
-        content: "Content"
+        raw_content: "Provided Content"
+        scrubbed_content: "Display Content"
         position: "Position"
         created_at: "Created"
         updated_at: "Last Updated"
