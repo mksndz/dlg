@@ -87,7 +87,7 @@ class CollectionResourcesController < RecordController
 
   def collection_resource_params
     params.require(:collection_resource)
-          .permit(:collection_id, :slug, :position, :title, :content)
+          .permit(:collection_id, :slug, :position, :title, :raw_content)
   end
 
   def set_resource

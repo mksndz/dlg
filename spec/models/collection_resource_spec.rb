@@ -52,14 +52,26 @@ RSpec.describe CollectionResource, type: :model do
       expect(collection_resource.errors).to have_key :title
     end
     it 'requires a content' do
-      collection_resource = Fabricate.build :collection_resource, content: nil
+      collection_resource = Fabricate.build :collection_resource, raw_content: nil
       collection_resource.valid?
-      expect(collection_resource.errors).to have_key :content
+      expect(collection_resource.errors).to have_key :raw_content
     end
     it 'requires a collection' do
       collection_resource = Fabricate.build :collection_resource, collection: nil
       collection_resource.valid?
       expect(collection_resource.errors).to have_key :collection_id
+    end
+  end
+
+  context 'html scrubbing' do
+    it 'removes unwanted html content' do
+      raw_content = '<p><script>Remove me!!!</script></p>'
+      scrubbed_content = '<p></p>'
+      collection_resource = Fabricate.build :collection_resource,
+                                            raw_content: raw_content
+      collection_resource.save
+      expect(collection_resource.errors).to have_key :collection_id
+      expect(collection_resource.scrubbed_content).to eq scrubbed_content
     end
   end
 

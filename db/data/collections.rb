@@ -18,6 +18,6 @@ Collection.create!([
                    ])
 
 CollectionResource.create!([
-                             { id: 1, collection_id: 1, slug: 'bibliography', title: 'Bibliography', position: 1, content: 'Some content for this page' },
-                             { id: 2, collection_id: 1, slug: 'acknowledgments', title: 'Acknowledgements', position: 2, content: 'Some content for this page' }
+                             {id: 1, collection_id: 1, slug: 'bibliography', title: 'Bibliography', position: 1, raw_content: 'Some content for this page' },
+                             {id: 2, collection_id: 1, slug: 'acknowledgments', title: 'Acknowledgements', position: 2, raw_content: 'Some content for this page' }
                            ])

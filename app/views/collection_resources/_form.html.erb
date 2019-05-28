@@ -6,7 +6,7 @@
     <%= f.text_field :title %>
     <%= f.number_field :position %>
 
-    <%= f.text_area :content, class: 'content-input' %>
+    <%= f.text_area :raw_content, class: 'content-input' %>
 
   <div class="action-buttons">
       <%= f.primary I18n.t('meta.defaults.actions.save'), class: 'btn btn-primary fixed-save-button' %>
