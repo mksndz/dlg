@@ -12,7 +12,9 @@ RSpec.describe 'API V2 for Collection Resources', type: :request do
           {},
           headers
       json = JSON.parse(response.body)
-      expect(json)
+      expect(json['slug']).to eq @resource.slug
+      expect(json['title']).to eq @resource.title
+      expect(json['scrubbed_content']).to eq @resource.scrubbed_content
     end
   end
 end
