@@ -32,8 +32,12 @@
            value: @collection_resource.position %>
 
 <%= render 'shared/show_field',
-           field_name: t('activerecord.attributes.collection_resource.content'),
-           value: @collection_resource.content %>
+           field_name: t('activerecord.attributes.collection_resource.raw_content'),
+           value: @collection_resource.raw_content %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.scrubbed_content'),
+           value: @collection_resource.scrubbed_content %>
 
 <%= render 'shared/show_field',
            field_name: t('activerecord.attributes.collection_resource.created_at'),

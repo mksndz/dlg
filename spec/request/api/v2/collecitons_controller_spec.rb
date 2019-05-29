@@ -61,6 +61,17 @@ RSpec.describe 'API V2 for Collections', type: :request do
       expect(json['id']).to eq @collection.id
       expect(json.keys).to include 'sponsor_note', 'sponsor_image'
     end
+    context 'with HoldingInstitutions' do
+      before(:each) do
+        @collection.holding_institutions << Fabricate.times(2, :holding_institution)
+      end
+      it 'returns Holding Institution names and images' do
+        get "/api/v2/collections/#{@collection.id}.json", {}, headers
+        json = JSON.parse(response.body)
+        expect(json['holding_institutions'].length).to eq 3
+        expect(json['holding_institutions'][0].keys).to include 'display_name', 'image'
+      end
+    end
     context 'with CollectionResources' do
       before(:each) do
         @collection.collection_resources << Fabricate.times(2, :collection_resource)

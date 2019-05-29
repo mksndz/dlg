@@ -7,7 +7,7 @@ module Api
         resource = CollectionResource.find_by(
           collection: collection, slug: params[:slug])
 
-        render json: resource, except: :collection_id,
+        render json: resource, except: %i[collection_id raw_content],
                include: { collection: { only: %i[record_id display_title] } }
       rescue ActiveRecord::NotFound => _
         # TODO: return error message

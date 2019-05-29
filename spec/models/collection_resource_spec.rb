@@ -28,8 +28,11 @@ RSpec.describe CollectionResource, type: :model do
     it 'has a position' do
       expect(collection_resource.position).to be_a Integer
     end
-    it 'has content' do
-      expect(collection_resource.content).to be_a String
+    it 'has raw content' do
+      expect(collection_resource.raw_content).to be_a String
+    end
+    it 'has scrubbed content' do
+      expect(collection_resource.scrubbed_content).to be_a String
     end
     it 'has an associated Collection' do
       expect(collection_resource.collection).to be_a Collection
@@ -70,7 +73,7 @@ RSpec.describe CollectionResource, type: :model do
       collection_resource = Fabricate.build :collection_resource,
                                             raw_content: raw_content
       collection_resource.save
-      expect(collection_resource.errors).to have_key :collection_id
+      expect(collection_resource.raw_content).to eq raw_content
       expect(collection_resource.scrubbed_content).to eq scrubbed_content
     end
   end
