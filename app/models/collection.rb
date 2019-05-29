@@ -35,6 +35,7 @@ class Collection < ActiveRecord::Base
     %w[repository_id public].freeze
   end
 
+  # TODO: decorator method
   def title
     display_title || 'No Title'
   end
@@ -221,10 +222,12 @@ class Collection < ActiveRecord::Base
     end
   end
 
+  # TODO: decorator method
   def holding_institution_image
     holding_institutions.first.image.url if holding_institutions.any?
   end
 
+  # TODO: decorator method
   def repository_title
     repository.title
   end

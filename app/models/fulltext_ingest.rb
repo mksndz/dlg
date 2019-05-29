@@ -22,18 +22,22 @@ class FulltextIngest < ActiveRecord::Base
     save
   end
 
+  # TODO: decorator method
   def success?
     results['status'] == 'success'
   end
 
+  # TODO: decorator method
   def failed?
     results['status'] == 'failed'
   end
 
+  # TODO: decorator method
   def partial_failure?
     results['status'] == 'partial failure'
   end
 
+  # TODO: decorator method
   def processed_files
     return nil unless results.key? 'files'
     results['files']

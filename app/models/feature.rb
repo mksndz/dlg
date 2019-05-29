@@ -17,7 +17,7 @@ class Feature < ActiveRecord::Base
   def self.available_areas
     %w[carousel tabs]
   end
-
+  # TODO: Not being used, remove?
   def to_json
     super(options.merge!(except: :id))
   end

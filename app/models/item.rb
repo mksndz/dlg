@@ -157,10 +157,12 @@ class Item < ActiveRecord::Base
     (other_repository_titles << repository.title).reverse.uniq
   end
 
+  # TODO: decorator method
   def title
     dcterms_title.first ? dcterms_title.first.strip : 'No Title'
   end
 
+  # TODO: decorator method
   def to_xml(options = {})
     new_options = {
       dasherize: false,
@@ -203,6 +205,7 @@ class Item < ActiveRecord::Base
 
   end
 
+  # TODO: decorator method
   def other_collection_titles
     other_colls.map(&:title)
   end
@@ -225,6 +228,7 @@ class Item < ActiveRecord::Base
     self.record_id = "#{repository.slug}_#{collection.slug}_#{slug}".downcase
   end
 
+  # TODO: decorator method
   def other_repository_titles
     Collection.find(other_collections).map(&:repository_title)
   end

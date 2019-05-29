@@ -24,14 +24,17 @@ class HoldingInstitution < ActiveRecord::Base
     %w[institution_type]
   end
 
+  # TODO: Not being used, remove?
   def public_collections
     collections.are_public.alphabetized
   end
 
+  # TODO: Not being used, remove?
   def item_count
     items.count
   end
 
+  # TODO: Not being used, remove?
   def item_count_for(collection_id)
     # This takes too long for production-like queries
     # items.where(collection_id: collection_id).count +
@@ -39,6 +42,7 @@ class HoldingInstitution < ActiveRecord::Base
     #               collection_id: collection_id).count
   end
 
+  # TODO: decorator method
   def portals
     repositories.collect(&:portals).flatten.uniq
   end

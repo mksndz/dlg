@@ -24,18 +24,22 @@ class BatchItem < ActiveRecord::Base
     batch_import_id
   ].freeze
 
+  # TODO: decorator method
   def title
     dcterms_title.first
   end
 
+  # TODO: Not being used, remove?
   def thumbnail?
     has_thumbnail
   end
 
+  # TODO: decorator method
   def other_collection_titles
     Collection.find(other_collections.reject(&:nil?)).map(&:title)
   end
 
+  # TODO: decorator method
   def commit
     attributes = self.attributes.except(*COMMIT_SCRUB_ATTRIBUTES)
     item_id = attributes.delete('item_id')

@@ -10,6 +10,7 @@ class BatchImport < ActiveRecord::Base
     !completed_at.nil?
   end
 
+  # TODO: decorator method
   def from_search_result?
     format == SEARCH_RESULT_SOURCE
   end

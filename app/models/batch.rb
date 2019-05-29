@@ -19,6 +19,7 @@ class Batch < ActiveRecord::Base
     batch_items.where(valid_item: false).exists?
   end
 
+  # TODO: decorator method
   def committed?
     committed_at
   end

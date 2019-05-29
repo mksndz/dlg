@@ -11,6 +11,7 @@ class Project < ActiveRecord::Base
     %w[fiscal_year holding_institution_id]
   end
 
+  # TODO: decorator method
   def self.fiscal_years
     uniq.pluck :fiscal_year
   end

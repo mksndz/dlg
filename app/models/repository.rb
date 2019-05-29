@@ -23,6 +23,7 @@ class Repository < ActiveRecord::Base
     %w[].freeze
   end
 
+  # TODO: decorator method
   def record_id
     slug
   end

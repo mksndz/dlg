@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
     email
   end
 
+  # TODO: decorator method
   # return array of role names
   def roles
     roles = []
@@ -44,14 +45,17 @@ class User < ActiveRecord::Base
     roles
   end
 
+  # TODO: decorator method
   def super?
     is_super
   end
 
+  # TODO: decorator method
   def coordinator?
     is_coordinator
   end
 
+  # TODO: decorator method
   def committer?
     is_committer
   end
