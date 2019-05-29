@@ -51,6 +51,7 @@ group :test do
   gem 'resque_spec'
   gem 'rspec-mocks'
   gem 'rspec-rails', '~> 3.0'
+  gem 'simplecov'
 end
 
 group :development do
