@@ -18,7 +18,7 @@ stages:
 
 # Dependency Check
 # This is to test if we can integrate bundler audit using a single host
-deploy_to_staging:
+bundler_audit:
   stage: dependency_check
   only:
     - pg-devenv-improvement
@@ -26,7 +26,7 @@ deploy_to_staging:
     - bundle-audit update
     - bundle audit check --update
   environment:
-    name: pre-staging
+    name: staging
   tags:
     - shell
 
