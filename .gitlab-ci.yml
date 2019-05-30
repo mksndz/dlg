@@ -11,9 +11,25 @@
 #   deployment
 stages:
 #  - setup
+  - dependency_check
   - deploy_staging
   - deploy_production
   - manual_actions
+
+# Dependency Check
+# This is to test if we can integrate bundler audit using a single host
+deploy_to_staging:
+  stage: dependency_check
+  only:
+    - pg-devenv-improvement
+  script:
+    - bundle-audit update
+    - bundle audit check --update
+  environment:
+    name: pre-staging
+  tags:
+    - runner
+
 
 # Deploy To Staging
 # This job copies app code and secrets to staging machine, installs gems,
