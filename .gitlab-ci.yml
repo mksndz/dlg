@@ -28,7 +28,7 @@ deploy_to_staging:
   environment:
     name: pre-staging
   tags:
-    - runner
+    - shell
 
 
 # Deploy To Staging
