@@ -136,6 +136,11 @@ GEM
     diffy (3.1.0)
     docile (1.3.1)
     dot-properties (0.1.3)
+    draper (2.1.0)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0)
     erubis (2.7.0)
     exception_notification (4.2.2)
       actionmailer (>= 4.0, < 6)
@@ -399,6 +404,7 @@ DEPENDENCIES
   devise-guests (~> 0.3)
   devise_invitable
   diffy
+  draper (~> 2.1.0)
   exception_notification
   fabrication
   faker
