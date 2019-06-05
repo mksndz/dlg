@@ -3,9 +3,9 @@
 <% end %>
 
 <%= content_for :subtitle do %>
-    <%= @subject.name %>
+    <%= subject.name %>
 <% end %>
 
-<% breadcrumb :subject, @subject %>
+<% breadcrumb :subject, subject %>
 
 <%= render 'form' %>

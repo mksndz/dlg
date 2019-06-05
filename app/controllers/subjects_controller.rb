@@ -1,8 +1,10 @@
 class SubjectsController < ApplicationController
-
+  decorates_assigned :subject, :subjects
   load_and_authorize_resource
   include ErrorHandling
   include Sorting
+
+
 
   # GET /subjects
   def index

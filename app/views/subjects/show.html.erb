@@ -3,12 +3,12 @@
 <% end %>
 
 <%= content_for :subtitle do %>
-    <%= @subject.name %>
+    <%= subject.name %>
 <% end %>
 
-<% breadcrumb :subject, @subject %>
+<% breadcrumb :subject, subject %>
 
-<%= link_to t('meta.defaults.actions.edit'), edit_subject_path(@subject), class: 'btn btn-default' %>
+<%= subject.edit_link %>
 
 <br><br>
 
@@ -26,3 +26,5 @@
     </ul>
   </div>
 </div>
+
+<% console %>

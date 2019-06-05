@@ -15,35 +15,24 @@
     <table class="table table-condensed table-hover">
       <thead>
       <tr>
-        <th>
-          <%= sortable 'subjects.id', t('meta.defaults.labels.columns.id') %>
-        </th>
-        <th>
-          <%= sortable 'subjects.name', t('meta.defaults.labels.columns.name') %>
-        </th>
+        <th><%= subjects.id_header %></th>
+        <th><%= subjects.name_header %></th>
         <th width="185px"></th>
       </tr>
       </thead>
 
       <tbody>
-      <% @subjects.each do |subject| %>
+      <% subjects.each do |subject| %>
           <tr>
-            <td>
-              <%= link_to subject.id, subject_path(subject) %>
-            </td>
-            <td>
-              <%= link_to subject.name, subject_path(subject) %>
-            </td>
-            <td>
-              <%= render partial: 'shared/entity_actions', locals: { base_path: subject_path(subject), edit_path: edit_subject_path(subject), entity: subject, show_bl: false } %>
-            </td>
+            <td><%= subject.id_link %></td>
+            <td><%= subject.name_link %></td>
+            <td><%= subject.entity_actions%></td>
           </tr>
       <% end %>
       </tbody>
     </table>
 
     <%= paginate @subjects %>
-
 <% end %>
 
 
