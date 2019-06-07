@@ -19,39 +19,65 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |t, args|
        created_at_dts updated_at_dts]
   end
 
-  def rows
-    (defined?(args) && args[:records_per_file]) || '10000'
-  end
-
-  ## CONFIGS
-  # S3 credentials
-  # Local File storage
-  # DPLA Fields
-
-  @logger = Logger.new('./log/dpla_feed.log')
+  logger = Logger.new('./log/dpla_feed.log')
 
   start_time = Time.now
 
+  local_file_storage = File.join(
+    Rails.application.root,
+    'public'
+  )
+
+  date_string = Time.now.strftime('%Y%m%d')
+
+  run_file_storage = File.join(
+    local_file_storage,
+    date_string
+  )
+
+  Dir.mkdir(run_file_storage) unless Dir.exist?(run_file_storage)
+
   solr = Blacklight.default_index.connection
 
-  f1 = solr.post 'select', data: {
-    rows: rows,
-    fq: ['display_b:1', 'dpla_b: 1', 'class_name_ss: Item'],
-    fl: dpla_fields
-  }
+  last_cursor_mark = '*'
+  cursor_mark = ''
+  run = 1
 
-  puts f1['response']['docs'].length
+  rows = if defined?(args) && args[:records_per_file]
+           args[:records_per_file]
+         else
+           '10000'
+         end
 
-  # response = Blacklight.default_index.connection.post 'select', data: {
-  #   rows: rows, facet: false, sort: 'id asc', wt: 'json',
-  #   fq: 'display_b:1, dpla_b: 1, class_name_ss: Item',
-  #   fl: dpla_fields.join(', ') }
+  while last_cursor_mark != cursor_mark do
+    response = solr.post 'select', data: {
+      rows: rows,
+      fq: ['display_b:1', 'dpla_b: 1', 'class_name_ss: Item'],
+      fl: dpla_fields,
+      cursorMark: cursor_mark
+    }
 
+    last_cursor_mark = cursor_mark
+    cursor_mark = response['nextCursorMark'] if response['nextCursorMark']
 
+    set_file_name = File.join(
+      run_file_storage,
+      "set_#{run}.jsonl"
+    )
+    f = File.open(set_file_name, 'w')
+
+    response['response']['docs'].each do |doc|
+      f.puts doc.to_json
+    end
+    f.close
+    run += 1
+  end
+
+  # Upload files
 
   finish_time = Time.now
 
-  @logger.info 'complete!'
-  @logger.info "Processing took #{finish_time - start_time} seconds!"
+  logger.info 'complete!'
+  logger.info "Processing took #{finish_time - start_time} seconds!"
 
 end
