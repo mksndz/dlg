@@ -28,7 +28,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |t, args|
     'public'
   )
 
-  date_string = Time.now.strftime('%Y%m%d')
+  date_string = "dpla_feed_#{Time.now.strftime('%Y%m%d')}"
 
   run_file_storage = File.join(
     local_file_storage,
@@ -39,8 +39,8 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |t, args|
 
   solr = Blacklight.default_index.connection
 
-  last_cursor_mark = '*'
-  cursor_mark = ''
+  last_cursor_mark = ''
+  cursor_mark = '*'
   run = 1
 
   rows = if defined?(args) && args[:records_per_file]
@@ -49,16 +49,19 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |t, args|
            '10000'
          end
 
-  while last_cursor_mark != cursor_mark do
+  while last_cursor_mark != cursor_mark
     response = solr.post 'select', data: {
       rows: rows,
+      sort: 'id asc',
       fq: ['display_b:1', 'dpla_b: 1', 'class_name_ss: Item'],
       fl: dpla_fields,
       cursorMark: cursor_mark
     }
 
+    next_cursor_mark = response['nextCursorMark']
+    logger.info "Run #{} nextCursorMark from response: #{next_cursor_mark}"
     last_cursor_mark = cursor_mark
-    cursor_mark = response['nextCursorMark'] if response['nextCursorMark']
+    cursor_mark = next_cursor_mark
 
     set_file_name = File.join(
       run_file_storage,

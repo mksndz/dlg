@@ -21,6 +21,9 @@
 # ignore uploads folder
 /public/uploads/*
 
+# ignore files for DPLA feed
+/public/dpla*
+
 # ignore uninteresting jetty/solr config files
 jetty/*
 !jetty/solr/blacklight-core/conf/schema.xml
