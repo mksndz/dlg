@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190221160515) do
+ActiveRecord::Schema.define(version: 20190609115522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -434,6 +434,8 @@ ActiveRecord::Schema.define(version: 20190221160515) do
     t.boolean  "is_uploader",            default: false, null: false
     t.boolean  "is_viewer",              default: false, null: false
     t.boolean  "is_pm",                  default: false, null: false
+    t.boolean  "is_fulltext_ingester",   default: false, null: false
+    t.boolean  "is_page_ingester",       default: false, null: false
   end
 
   add_index "users", ["creator_id"], name: "index_users_on_creator_id", using: :btree

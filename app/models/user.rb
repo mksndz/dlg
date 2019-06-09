@@ -41,6 +41,8 @@ class User < ActiveRecord::Base
     roles << 'uploader' if is_uploader
     roles << 'viewer' if is_viewer
     roles << 'pm' if is_pm
+    roles << 'fulltext ingester' if is_fulltext_ingester
+    # roles << 'page ingester' if is_page_ingester
     roles
   end
 
@@ -66,6 +68,14 @@ class User < ActiveRecord::Base
 
   def pm?
     is_pm
+  end
+
+  # def page_ingester?
+  #   is_page_ingester
+  # end
+
+  def fulltext_ingester?
+    is_fulltext_ingester
   end
 
   def basic?
