@@ -2,7 +2,7 @@
 
 require 'rake'
 
-task(:feed_the_dpla, [:records_per_file] => [:environment]) do |t, args|
+task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
 
   def dpla_fields
     %w[id collection_titles_sms dcterms_provenance_display
@@ -59,7 +59,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |t, args|
     }
 
     next_cursor_mark = response['nextCursorMark']
-    logger.info "Run #{} nextCursorMark from response: #{next_cursor_mark}"
+    logger.info "Run #{run}: nextCursorMark from response: #{next_cursor_mark}"
     last_cursor_mark = cursor_mark
     cursor_mark = next_cursor_mark
 
