@@ -34,5 +34,13 @@ Fabricator(:pm, from: :user) do
   is_pm { true }
 end
 
+Fabricator(:fulltext_ingester, from: :user) do
+  is_fulltext_ingester { true }
+end
+
+Fabricator(:page_ingester, from: :user) do
+  is_page_ingester { true }
+end
+
 # todo to support legacy code, remove
 Fabricator(:basic, from: :user)
