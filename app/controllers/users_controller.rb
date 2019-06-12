@@ -79,7 +79,9 @@ class UsersController < ApplicationController
        tf_checkbox(user_params[:is_uploader]) ||
        tf_checkbox(user_params[:is_viewer]) ||
        tf_checkbox(user_params[:is_committer]) ||
-       tf_checkbox(user_params[:is_pm])
+       tf_checkbox(user_params[:is_pm]) ||
+       tf_checkbox(user_params[:is_fulltext_ingester]) ||
+       tf_checkbox(user_params[:is_page_ingester])
       true
     else
       false
@@ -87,7 +89,11 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :creator_id, :is_super, :is_coordinator, :is_uploader, :is_viewer, :is_committer, :is_pm, repository_ids: [], collection_ids: [])
+    params.require(:user).permit(:email, :password, :password_confirmation,
+      :creator_id, :is_super, :is_coordinator, :is_uploader, :is_viewer,
+      :is_committer, :is_pm, :is_page_ingester, :is_fulltext_ingester,
+      repository_ids: [], collection_ids: []
+    )
   end
 
   def set_user_creator
@@ -112,8 +118,8 @@ class UsersController < ApplicationController
       new_user_repository_ids = user_params[:repository_ids] || []
       super_user_collection_ids = current_user.repository_ids || []
       super_user_repository_ids = current_user.collection_ids || []
-      new_user_collection_ids.reject! { |i| i.empty? }
-      new_user_repository_ids.reject! { |i| i.empty? }
+      new_user_collection_ids.reject!(&:empty?)
+      new_user_repository_ids.reject!(&:empty?)
       raise UserRestrictionsError unless (new_user_repository_ids - super_user_repository_ids).empty?
       raise UserRestrictionsError unless (new_user_collection_ids - super_user_collection_ids).empty?
       raise UserRestrictionsError if params_contain_role_info
