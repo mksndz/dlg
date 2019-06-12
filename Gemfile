@@ -1,12 +1,14 @@
 source 'https://rubygems.org'
 
 gem 'activerecord-in_batches', git: 'git://github.com/siadat/in_batches.git'
+gem 'aws-sdk-s3', '~> 1'
 gem 'blacklight', '>= 6.0.0'
 gem 'blacklight-gallery'
 gem 'blacklight-maps'
 gem 'blacklight-marc' # TODO: remove
 gem 'blacklight_advanced_search'
 gem 'bootstrap_form'
+gem 'bundler', '< 2.0'
 gem 'cancancan', '~> 1.15'
 gem 'carrierwave', '~> 1.0'
 gem 'chosen-rails'
@@ -49,6 +51,7 @@ group :test do
   gem 'resque_spec'
   gem 'rspec-mocks'
   gem 'rspec-rails', '~> 3.0'
+  gem 'simplecov'
 end
 
 group :development do
