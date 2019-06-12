@@ -13,8 +13,6 @@ Rails.application.routes.draw do
     get 'api/carousel_features',  to: 'api#carousel_features', as: 'api_carousel_features'
   end
 
-  resources :dpla, only: %i[index show], format: :json
-
   # API v2
   namespace :api do
     namespace :v2 do

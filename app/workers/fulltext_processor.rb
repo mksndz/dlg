@@ -44,10 +44,11 @@ class FulltextProcessor
             next
           end
           # save text stripping any non utf-8 characters
-          item.fulltext = file.get_input_stream.read.encode(
+          fulltext_input = file.get_input_stream.read.encode(
             Encoding.find('UTF-8'),
             invalid: :replace, undef: :replace, replace: ''
-          ).gsub(/[^0-9a-z ]/i, '')
+          )
+          item.fulltext = fulltext_input.gsub(/[^0-9a-z\s]/i, '')
           begin
             item.save!(validate: false)
             success_file_results record_id, item.id

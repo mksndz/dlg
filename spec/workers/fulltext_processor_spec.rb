@@ -39,5 +39,10 @@ describe FulltextProcessor, type: :model do
            'reason' => 'No Item exists matching record_id')
       )
     end
+    it 'retains whitespace characters' do
+      FulltextProcessor.perform(fti.id)
+      item = Item.find_by_record_id('r1_c1_i2')
+      expect(item.fulltext).to include "\n"
+    end
   end
 end
