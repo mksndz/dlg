@@ -56,7 +56,7 @@ class Ability
 
       can(:manage, Project) if roles.include? 'pm'
       can(:manage, FulltextIngest) if roles.include? 'fulltext ingester'
-      # can(:manage, PageIngest) if roles.include? 'page ingester'
+      can(:manage, PageIngest) if roles.include? 'page ingester'
 
       if roles.include?('committer') && roles.include?('coordinator')
 
