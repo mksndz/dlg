@@ -11,6 +11,7 @@ class Item < ActiveRecord::Base
   belongs_to :collection, counter_cache: true
   has_one :repository, through: :collection
   has_many :batch_items
+  has_many :pages
 
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection
@@ -102,7 +103,7 @@ class Item < ActiveRecord::Base
     text :collection_titles
 
     # Full Text
-    text :fulltext
+    text :pages_or_item_fulltext
 
     # Blacklight 'Required' fields # TODO do we use them properly in DLG?
     string(:title, as: 'title') { dcterms_title.first ? dcterms_title.first : slug }
@@ -127,10 +128,43 @@ class Item < ActiveRecord::Base
     string(:geojson, as: 'geojson', multiple: true)
     string(:placename, as: 'placename', multiple: true)
 
+    string :iiif_ids, stored: true, multiple: true
+
   end
 
   def self.index_query_fields
     %w[collection_id public valid_item].freeze
+  end
+
+  def iiif_ids
+    pages.map(&:iiif_identifier)
+  end
+
+  def pages_or_item_fulltext
+    pages_fulltext || fulltext
+  end
+
+  def pages_fulltext
+    txt = pages.map(&:fulltext).reject(&:blank?).join("\n")
+    return nil if txt.empty?
+
+    txt
+  end
+
+  def page_urls
+    # because IIIF spec doesn't support PDF pagination,
+    # provide only url for first page if the document is a PDF
+    return [pages.first.iiif_info_link] if pdf?
+
+    urls = pages.map(&:iiif_info_link).reject(&:blank?)
+    return nil unless urls.any?
+
+    urls
+  end
+
+  def pdf?
+    # items is considered a PDF here if any page is a PDF
+    pages.map(&:pdf?).include? true
   end
 
   def display?
@@ -194,7 +228,8 @@ class Item < ActiveRecord::Base
       'id',
       'created_at',
       'updated_at',
-      'valid_item'
+      'valid_item',
+      'pages_count'
     )
 
     batch_item = BatchItem.new attributes

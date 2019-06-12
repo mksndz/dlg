@@ -69,6 +69,9 @@
             <%= t('meta.defaults.labels.columns.portals') %>
           </th>
           <th>
+            <%= sortable 'items.pages_count', t('meta.item.labels.columns.pages') %>
+          </th>
+          <th>
             <%= sortable 'items.created_at', t('activerecord.attributes.item.created_at')  %>
           </th>
           <th>
@@ -101,6 +104,9 @@
             </td>
             <td>
               <%= portal_badges item %>
+            </td>
+            <td>
+              <%= link_to pages_count(item), item_pages_path(item) %>
             </td>
             <td>
               <%= display_date item.created_at %>

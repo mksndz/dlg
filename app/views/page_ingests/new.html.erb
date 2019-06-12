@@ -1,0 +1,15 @@
+<%= content_for :title do %>
+    New Page Ingest
+<% end %>
+
+<% breadcrumb :page_ingest, @page_ingest%>
+
+<div class="well">
+  This form is for the bulk creation of Page(s) for an Item(s). To add full
+  text data to Item(s) without adding Page(s), use the
+  <%= link_to 'Full Text Ingest', new_fulltext_ingest_path %> tool. You can
+  check the validity of your JSON using
+  <%= link_to 'this tool', 'https://jsonlint.com/', target: '_blank' %>.
+</div>
+
+<%= render 'form' %>

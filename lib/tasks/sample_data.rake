@@ -4,10 +4,12 @@ task sample_data: :environment do
   if Repository.any? || Collection.any? || Item.any? || HoldingInstitution.any?
     abort 'Records are already loaded! Exiting.'
   end
-  load File.join(Rails.root, 'db', 'data', 'holding_institutions.rb')
-  load File.join(Rails.root, 'db', 'data', 'repositories.rb')
-  load File.join(Rails.root, 'db', 'data', 'collections.rb')
-  load File.join(Rails.root, 'db', 'data', 'items.rb')
+  load Rails.root.join 'db', 'data', 'holding_institutions.rb'
+  load Rails.root.join 'db', 'data', 'repositories.rb'
+  load Rails.root.join 'db', 'data', 'collections.rb'
+  load Rails.root.join 'db', 'data', 'items.rb'
+  load Rails.root.join 'db', 'data', 'pages.rb'
+  Item.reindex
   puts 'Records loaded!'
   Sunspot.commit
 end

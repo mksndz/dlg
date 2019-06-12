@@ -12,7 +12,7 @@ class Batch < ActiveRecord::Base
   validates_presence_of :user, :name
 
   def self.index_query_fields
-    %w(user_id committed_at).freeze
+    %w[user_id committed_at].freeze
   end
 
   def invalid_batch_items?
@@ -109,7 +109,7 @@ class Batch < ActiveRecord::Base
 
   def batch_items_from_items(item_ids)
     Item.find(item_ids).map do |item|
-      scrub_attributes = %w[created_at updated_at]
+      scrub_attributes = %w[created_at updated_at pages_count]
       attributes = item.attributes.except(*scrub_attributes)
       item_id = attributes.delete('id')
       batch_item = BatchItem.new attributes

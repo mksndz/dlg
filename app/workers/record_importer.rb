@@ -293,7 +293,7 @@ class RecordImporter
   end
 
   def self.notify(msg)
-    @slack.ping msg if Rails.env.production?
+    @slack.ping msg if Rails.env.production? || Rails.env.staging?
   end
 
 end

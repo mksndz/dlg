@@ -20,6 +20,7 @@
 
 # ignore uploads folder
 /public/uploads/*
+/public/digital_objects/*
 
 # ignore files for DPLA feed
 /public/dpla*

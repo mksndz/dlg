@@ -127,7 +127,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.4)
     crass (1.0.4)
     debug_inspector (0.0.2)
     delayed_job (4.1.2)
@@ -214,7 +214,7 @@ GEM
     multi_json (1.12.1)
     nokogiri (1.9.1)
       mini_portile2 (~> 2.4.0)
-    openseadragon (0.2.1)
+    openseadragon (0.5.0)
       rails (> 3.2.0)
     orm_adapter (0.5.0)
     paper_trail (5.2.0)

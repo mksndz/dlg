@@ -1,0 +1,11 @@
+<%= bootstrap_form_for(@page_ingest) do |f| %>
+
+  <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save'), entity: 'Page Ingest' %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description %>
+  <%= f.text_area :page_json, placeholder: '' %>
+  <%= f.file_field :file %>
+  <%= f.hidden_field :file_cache %>
+  <%= f.primary t('meta.defaults.actions.save') %>
+
+<% end %>

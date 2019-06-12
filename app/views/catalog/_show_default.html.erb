@@ -1,6 +1,12 @@
 <% doc_presenter = show_presenter(document) %>
 <%# default partial to display solr document fields in catalog show view -%>
 
+<% if iiif_urls(document) %>
+  <div class="well">
+    <%= openseadragon_picture_tag iiif_urls(document), { data: { openseadragon: { sequenceMode: true }}} %>
+  </div>
+<% end %>
+
 <%- if has_thumbnail?(document) %>
   <div id="show-document-thumbnail" class="pull-right">
     <%= render_thumbnail_tag(document, {}) %>

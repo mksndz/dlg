@@ -5,8 +5,8 @@ class BatchItemsController < RecordController
   include Sorting
   include MetadataHelper
   before_action :set_batch
-  before_action :set_data, only: [:new, :edit]
-  before_action :check_if_committed, except: [:index, :show]
+  before_action :set_data, only: %i[new edit]
+  before_action :check_if_committed, except: %i[index show]
 
   rescue_from BatchCommittedError do
     redirect_to({ action: 'index' }, alert: I18n.t('meta.batch.messages.errors.batch_already_committed'))
@@ -16,10 +16,10 @@ class BatchItemsController < RecordController
   # GET /batch_items.json
   def index
     @batch_items = BatchItem
-                       .order(sort_column + ' ' + sort_direction)
-                       .where(batch_id: @batch.id)
-                       .page(params[:page]).per(params[:per_page])
-                       .includes(:collection)
+                   .order(sort_column + ' ' + sort_direction)
+                   .where(batch_id: @batch.id)
+                   .page(params[:page]).per(params[:per_page])
+                   .includes(:collection)
   end
 
   # GET /batch_items/1

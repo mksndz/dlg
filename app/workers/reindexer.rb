@@ -33,7 +33,7 @@ class Reindexer
   end
 
   def self.notify(message)
-    @slack.ping(message) if Rails.env.production?
+    @slack.ping(message) if Rails.env.production? || Rails.env.staging?
   end
 
 end

@@ -187,6 +187,7 @@ en:
         items: 'Items'
         batches: 'Batches'
         fulltext_ingests: 'Fulltext Ingests'
+        page_ingests: 'Page Ingests'
         roles: 'Roles'
         users: 'Users'
         subjects: 'Subjects'
@@ -219,6 +220,8 @@ en:
         save_and_goto_previous: 'Save and Go To Previous'
         filter: 'Filter'
       labels:
+        iiif_info: 'IIIF Info'
+        iiif_file: 'IIIF File'
         na: 'N/A'
         unfiltered_index_subtitle: 'All of Them'
         filtered_by_subtitle: 'For %{title}'
@@ -254,22 +257,35 @@ en:
           invalid_on_save: 'The %{entity} could not be saved due to the following errors:'
           not_created: '%{entity} could not be created!'
           not_updated: '%{entity} could not be updated!'
+          not_saved: '%{entity} could not be saved!'
+          not_deleted: '%{entity} could not be deleted!'
         success:
           created: '%{entity} created'
           updated: '%{entity} updated'
           destroyed: '%{entity} deleted'
       errors:
+    page:
+      actions:
+        add: 'New Page'
+      labels:
+        remove_file: 'Remove Uploaded File'
+        columns:
+          title: 'Title'
+          number: 'Number'
+          fulltext: 'Full Text'
     item:
       actions:
         add: 'New Item'
         copy: 'Copy Item'
         xml: 'XML for Item'
+        pages: 'Pages'
         versions: 'Previous Versions'
         deleted: 'Deleted Items'
         restore: 'Restore'
         full_text: 'Full Text'
       labels:
         columns:
+          pages: 'Pages'
           collection: 'Collection'
           deleted_by: 'Deleted By'
           deleted_at: 'At'
@@ -461,6 +477,27 @@ en:
           undone: 'Fulltext Ingest Undone'
         errors:
           could_not_undo: 'Could not undo'
+    page_ingests:
+      labels:
+        number: 'Number'
+        file: 'JSON File Name'
+        outcome: 'Outcome'
+        item_link: 'Item Updated'
+        item_id: 'Item Record ID'
+        message: 'Error'
+      action:
+        add: 'New Page Ingest'
+        undo: 'Undo'
+      messages:
+        not_yet_run: 'Job has not yet run.'
+        success:
+          queued: 'Fulltext Ingest Queued'
+          undone: 'Fulltext Ingest Undone'
+        errors:
+          could_not_undo: 'Could not undo'
+          both_types: 'You provided both a file and XML text. Choose one only!'
+          file_error: 'Could not read from uploaded file.'
+          no_data: 'No source for Pages provided!'
     project:
       action:
         add: 'New Project'

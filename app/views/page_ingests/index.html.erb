@@ -1,0 +1,76 @@
+<%= content_for :title do %>
+    Page Ingests
+<% end %>
+
+<% breadcrumb :page_ingests %>
+
+<%= link_to t('meta.page_ingests.action.add'), new_page_ingest_path, class: 'btn btn-default' %>
+
+<br><br>
+
+<% if @page_ingests.empty? %>
+
+    <p><%= t('meta.defaults.labels.no_records_found', entity: 'Page Ingests') %></p>
+
+<% else %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'page_ingests.id', t('meta.defaults.labels.columns.id') %>
+        </th>
+        <th>
+          <%= sortable 'page_ingests.title', t('meta.defaults.labels.columns.name') %>
+        </th>
+        <th>
+          <%= t('activerecord.attributes.page_ingest.user_id') %>
+        </th>
+        <th>
+          <%= sortable 'page_ingests.queued_at', t('activerecord.attributes.page_ingest.queued_at') %>
+        </th>
+        <th>
+          <%= sortable 'page_ingests.finished_at', t('activerecord.attributes.page_ingest.finished_at') %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @page_ingests.each do |page_ingest| %>
+          <tr>
+            <td>
+              <%= link_to page_ingest.id, page_ingest_path(page_ingest) %>
+            </td>
+            <td>
+              <%= link_to page_ingest.title, page_ingest_path(page_ingest) %>
+            </td>
+            <td>
+              <%= page_ingest.user.email %>
+            </td>
+            <td>
+              <%= display_date page_ingest.queued_at %>
+            </td>
+            <td>
+              <%= display_date page_ingest.finished_at %>
+            </td>
+            <td>
+              <div class="btn-group btn-group-xs">
+                <%= link_to t('meta.defaults.actions.view'), page_ingest_path(page_ingest), class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.destroy'),
+                            page_ingest_path(page_ingest),
+                            method: :delete,
+                            data: { confirm: I18n.t('meta.defaults.labels.confirm') },
+                            class: 'btn btn-default' %>
+              </div>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @page_ingests %>
+
+<% end %>
+
+

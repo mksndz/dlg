@@ -23,6 +23,7 @@ class ItemsController < RecordController
     item_query = Item.index_query(params)
                      .order(sort_column + ' ' + sort_direction)
                      .includes(:collection)
+                     .includes(:portals)
 
     if params[:portal_id]
       portals_filter = params[:portal_id].reject(&:empty?)

@@ -8,6 +8,15 @@ production:
     log_level: WARNING
     path: /solr/meta-prod
 
+staging:
+  solr:
+    read_timeout: 20
+    open_timeout: 10
+    hostname: solrcloud.galib.uga.edu
+    port: 8983
+    log_level: WARNING
+    path: /solr/meta-staging
+
 development:
   solr:
     hostname: localhost

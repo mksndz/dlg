@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+
+# handle logic for composing, sending and receiving invitations
 class InvitationsController < Devise::InvitationsController
 
-  authorize_resource class: false, except: [:edit, :update]
+  authorize_resource class: false, except: %i[edit update]
 
   include ErrorHandling
 
   after_action :set_user_creator, only: [:create]
-  before_action :set_data, only: [:new, :create]
+  before_action :set_data, only: %i[new create]
   before_action :configure_permitted_parameters, only: [:create]
 
   # show all pending invitations
@@ -25,10 +28,10 @@ class InvitationsController < Devise::InvitationsController
   def create
     super
   end
-
-  def update
-    super
-  end
+  #
+  # def update
+  #   super
+  # end
 
   private
 

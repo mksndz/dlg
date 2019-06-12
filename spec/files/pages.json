@@ -1,0 +1,27 @@
+[
+  {
+    "id": "a_b_c",
+    "pages": [
+      {
+        "fulltext": "First page fulltext",
+        "file_type": "jp2",
+        "number": 1
+      },
+      {
+        "fulltext": "Second page fulltext",
+        "file_type": "jp2",
+        "number": 2
+      }
+    ]
+  },
+  {
+    "id": "a_b_d",
+    "pages": [
+      {
+        "fulltext": "First page fulltext",
+        "file_type": "jp2",
+        "number": 1
+      }
+    ]
+  }
+]

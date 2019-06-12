@@ -1,0 +1,72 @@
+<div class="panel panel-<%= @page_ingest.failed? ? 'danger' : 'default' %>">
+  <div class="panel-heading">
+    <strong>Results</strong>
+  </div>
+  <% if @page_ingest.results_json.empty? %>
+    <div class="panel-body">
+      <p><%= t('meta.page_ingests.messages.not_yet_run') %></p>
+    </div>
+  <% else %>
+    <div class="panel-body">
+      <p><%= @page_ingest.results_json['message'] %></p>
+    </div>
+    <% if @page_ingest.failed.present? %>
+      <table class="table page-ingest-results-table-failed">
+        <thead>
+        <tr>
+          <th><%= t('meta.page_ingests.labels.item_id') %></th>
+          <th><%= t('meta.page_ingests.labels.message') %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @page_ingest.failed.each do |f| %>
+          <tr class="danger">
+            <td><%= f['item_id'] %></td>
+            <td><%= f['message'] %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <% if @page_ingest.updated.present? %>
+      <table class="table page-ingest-results-table-updated">
+        <thead>
+        <tr>
+          <th><%= t('meta.page_ingests.labels.item_link') %></th>
+          <th><%= t('activerecord.attributes.page_ingest.title') %></th>
+          <th><%= t('activerecord.attributes.page_ingest.page_id') %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @page_ingest.updated.each do |f| %>
+          <tr class="primary">
+            <td><%= link_to 'Item', item_path(f['item_id']) %></td>
+            <td><%= f['message'] %></td>
+            <td><%= link_to 'Page', item_page_path(f['item_id'], f['id']) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <% if @page_ingest.succeeded.present? %>
+      <table class="table page-ingest-results-table-succeeded">
+        <thead>
+        <tr>
+          <th><%= t('meta.page_ingests.labels.item_link') %></th>
+          <th><%= t('activerecord.attributes.page_ingest.title') %></th>
+          <th><%= t('activerecord.attributes.page_ingest.page_id') %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @page_ingest.succeeded.each do |f| %>
+          <tr class="success">
+            <td><%= link_to 'Item', item_path(f['item_id']) %></td>
+            <td><%= f['message'] %></td>
+            <td><%= link_to 'Page', item_page_path(f['item_id'], f['id']) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+</div>
