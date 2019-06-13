@@ -8,11 +8,11 @@
 
 <% breadcrumb :subject, @subject %>
 
-<%= link_to t('meta.defaults.actions.edit'), edit_subject_path(@subject), class: 'btn btn-default' %>
+<%= @subject.edit_button %>
 
 <br><br>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.subject.name'), value: @subject.name %>
+<%= @subject.name_field %>
 
 <div class="panel panel-default">
   <div class="panel-heading">

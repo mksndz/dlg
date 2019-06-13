@@ -14,6 +14,22 @@ class ApplicationController < ActionController::Base
     current_user ? current_user.id : nil
   end
 
+  # For presenters
+  concerning :Presenters do
+    included do
+      helper_method :present
+    end
+
+    def present(record_or_array, klass)
+      if record_or_array.respond_to?(:map)
+        record_or_array.map {|item| klass.new(item, view_context) }
+      else
+        klass.new(record_or_array, view_context)
+      end
+    end
+  end
+
+
   private
 
   def prepare_exception_notifier

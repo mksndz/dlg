@@ -1,5 +1,4 @@
 class SubjectsController < ApplicationController
-
   load_and_authorize_resource
   include ErrorHandling
   include Sorting
@@ -9,10 +8,12 @@ class SubjectsController < ApplicationController
     @subjects = Subject
                     .order(sort_column + ' ' + sort_direction)
                     .page(params[:page])
+    @subjects_presenter = present(@subjects, SubjectPresenter)
   end
 
   # GET /subjects/1
   def show
+    @subject = present(Subject.find(params[:id]), SubjectPresenter)
   end
 
   # GET /subjects/new
