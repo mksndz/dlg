@@ -6,7 +6,7 @@ class DplaS3Service
   # @param [String] folder
   def initialize(folder)
     configure_aws
-    @bucket = Rails.application.secrets['dpla_s3_dlg_bucket']
+    @bucket = Rails.application.secrets.dpla_s3_dlg_bucket
     @folder = folder
     @notifier = NotifierService.new
   end
@@ -30,8 +30,8 @@ class DplaS3Service
 
   def configure_aws
     s3_client = Aws::S3::Client.new(
-      access_key_id: Rails.application.secrets['dpla_s3_access_key_id'],
-      secret_access_key: Rails.application.secrets['dpla_s3_secret_access_key']
+      access_key_id: Rails.application.secrets.dpla_s3_access_key_id,
+      secret_access_key: Rails.application.secrets.dpla_s3_secret_access_key
     )
     @s3 = Aws::S3::Resource.new(client: s3_client)
   end
