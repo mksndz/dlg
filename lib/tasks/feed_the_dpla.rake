@@ -4,6 +4,8 @@ require 'rake'
 
 task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
 
+  # explicitly state fields to be included in Solr response, and therefore the
+  # JSON for the DPLA
   def dpla_fields
     %w[id collection_titles_sms dcterms_provenance_display
        dcterms_title_display dcterms_creator_display dcterms_subject_display
@@ -19,37 +21,39 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
        created_at_dts updated_at_dts]
   end
 
-  logger = Logger.new('./log/dpla_feed.log')
+  # build path for server file storage
+  local_file_storage = File.join(Rails.application.root,'public')
 
-  start_time = Time.now
+  # build date strings for file path and S3 folder
+  date = Time.zone.now.strftime('%Y%m%d')
+  date_string = "dpla_feed_#{date}"
+  run_file_storage = File.join(local_file_storage, date_string)
 
-  local_file_storage = File.join(
-    Rails.application.root,
-    'public'
-  )
-
-  date_string = "dpla_feed_#{Time.now.strftime('%Y%m%d')}"
-
-  run_file_storage = File.join(
-    local_file_storage,
-    date_string
-  )
-
+  # create local directory if needed
   Dir.mkdir(run_file_storage) unless Dir.exist?(run_file_storage)
 
+  # initialize s3 uploader
+  s3 = DplaS3Service.new date
+
+  # initialize Solr connection object
   solr = Blacklight.default_index.connection
 
+  # set cursorMark variables for while loop below
   last_cursor_mark = ''
   cursor_mark = '*'
   run = 1
 
+  # get rows from command params or use default
   rows = if defined?(args) && args[:records_per_file]
            args[:records_per_file]
          else
            '10000'
          end
 
+  # query Solr until the end of the set is reached
   while last_cursor_mark != cursor_mark
+    # do query
+    # TODO: catch exception (cursorMark errors?)
     response = solr.post 'select', data: {
       rows: rows,
       sort: 'id asc',
@@ -58,29 +62,31 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
       cursorMark: cursor_mark
     }
 
+    # cycle cursorMark variables
     next_cursor_mark = response['nextCursorMark']
-    logger.info "Run #{run}: nextCursorMark from response: #{next_cursor_mark}"
     last_cursor_mark = cursor_mark
     cursor_mark = next_cursor_mark
 
+    # build file name for this query response data
     set_file_name = File.join(
       run_file_storage,
       "set_#{run}.jsonl"
     )
-    f = File.open(set_file_name, 'w')
 
+    # create file
+    file = File.open(set_file_name, 'w')
+
+    # write JSON to file line
     response['response']['docs'].each do |doc|
-      f.puts doc.to_json
+      file.puts doc.to_json
     end
-    f.close
+    file.close
+
+    # upload file to DPLA S3 bucket
+    # TODO: handle errors (failed upload)
+    s3.upload file
+
     run += 1
   end
-
-  # Upload files
-
-  finish_time = Time.now
-
-  logger.info 'complete!'
-  logger.info "Processing took #{finish_time - start_time} seconds!"
 
 end
