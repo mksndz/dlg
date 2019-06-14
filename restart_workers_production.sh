@@ -16,4 +16,4 @@ PIDFILE=./pidfiles/reindex_worker.pid BACKGROUND=yes QUEUE=reindex RAILS_ENV=pro
 PIDFILE=./pidfiles/optimize_worker.pid BACKGROUND=yes QUEUE=optimize RAILS_ENV=production bundle exec rake resque:work
 PIDFILE=./pidfiles/fulltext_worker.pid BACKGROUND=yes QUEUE=fulltext_ingest_queue RAILS_ENV=production bundle exec rake resque:work
 PIDFILE=./pidfiles/resave_worker.pid BACKGROUND=yes QUEUE=resave RAILS_ENV=production bundle exec rake resque:work
-PIDFILE=./pidfiles/page_processor_worker.pid BACKGROUND=yes QUEUE=page_ingest_queue RAILS_ENV=staging bundle exec rake resque:work
+PIDFILE=./pidfiles/page_processor_worker.pid BACKGROUND=yes QUEUE=page_ingest_queue RAILS_ENV=production bundle exec rake resque:work
