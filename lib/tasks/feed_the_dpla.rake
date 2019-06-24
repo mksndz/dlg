@@ -42,6 +42,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
   last_cursor_mark = ''
   cursor_mark = '*'
   run = 1
+  outcomes = []
 
   # get rows from command params or use default
   rows = if defined?(args) && args[:records_per_file]
@@ -80,13 +81,20 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
     response['response']['docs'].each do |doc|
       file.puts doc.to_json
     end
-    file.close
 
     # upload file to DPLA S3 bucket
     # TODO: handle errors (failed upload)
-    s3.upload file
+    outcome = s3.upload file.path
+
+    outcomes << {
+      run: run,
+      file: file.path,
+      uploaded: outcome
+    }
+
+    file.close
 
     run += 1
   end
-
+  outcomes.find { |o| !o[:uploaded] }.empty?
 end

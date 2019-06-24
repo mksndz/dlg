@@ -8,15 +8,15 @@ class DplaS3Service
     configure_aws
     @bucket = Rails.application.secrets.dpla_s3_dlg_bucket
     @folder = folder
-    @notifier = NotifierService.new
+    @notifier = NotificationService.new
   end
 
-  # @param [File] file
-  def upload(file)
-    return false unless file.is_a? File
+  # @param [String] path
+  def upload(path)
+    return false unless File.exist? path
 
-    name = File.join @folder, file.basename
-    upload = @s3.bucket(@bucket).object(name).upload_file(file)
+    name = File.join @folder, File.basename(path)
+    upload = @s3.bucket(@bucket).object(name).upload_file(path)
     msg = if upload
             "DPLA S3 Service: `#{name}` was uploaded to #{@bucket}`."
           else
@@ -30,6 +30,7 @@ class DplaS3Service
 
   def configure_aws
     s3_client = Aws::S3::Client.new(
+      region: 'us-east-1',
       access_key_id: Rails.application.secrets.dpla_s3_access_key_id,
       secret_access_key: Rails.application.secrets.dpla_s3_secret_access_key
     )

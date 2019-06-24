@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # facilitate the sending of (slack) notifications
-class NotifierService
+class NotificationService
 
   NOTIFICATION_ENVIRONMENTS = %w[production staging].freeze
 
