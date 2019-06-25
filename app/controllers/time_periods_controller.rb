@@ -9,10 +9,14 @@ class TimePeriodsController < ApplicationController
     @time_periods = TimePeriod
                     .order(sort_column + ' ' + sort_direction)
                     .page(params[:page])
+    @time_periods_presenter = present(@time_periods, TimePeriodPresenter)
   end
 
   # GET /time_periods/1
-  def show; end
+  def show
+    @time_period_presenter = present(Subject.find(params[:id]),
+                                  TimePeriodPresenter)
+  end
 
   # GET /time_periods/new
   def new

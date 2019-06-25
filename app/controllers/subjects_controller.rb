@@ -13,7 +13,7 @@ class SubjectsController < ApplicationController
 
   # GET /subjects/1
   def show
-    @subject = present(Subject.find(params[:id]), SubjectPresenter)
+    @subject_presenter = present(Subject.find(params[:id]), SubjectPresenter)
   end
 
   # GET /subjects/new

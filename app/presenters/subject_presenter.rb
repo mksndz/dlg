@@ -15,7 +15,6 @@ class SubjectPresenter < Presenter
                      entity: self, show_bl: false }
   end
 
-
   def edit_button
     h.link_to h.t('meta.defaults.actions.edit'),
               h.edit_subject_path(self),
@@ -27,7 +26,5 @@ class SubjectPresenter < Presenter
              field_name: h.t('activerecord.attributes.subject.name'),
              value: name
   end
-
-
 
 end

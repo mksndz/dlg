@@ -3,16 +3,16 @@
 <% end %>
 
 <%= content_for :subtitle do %>
-    <%= @time_period.name %>
+    <%= @time_period_presenter.name %>
 <% end %>
 
-<% breadcrumb :time_period, @time_period %>
+<% breadcrumb :time_period, @time_period_presenter %>
 
-<%= link_to t('meta.defaults.actions.edit'), edit_time_period_path(@time_period), class: 'btn btn-default' %>
+<%= @time_period_presenter.edit_button %>
 
 <br><br>
 
-<%= render 'shared/show_field', field_name: t('activerecord.attributes.time_period.name'), value: @time_period.name %>
+<%= @time_period_presenter.name_field %>
 
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -20,7 +20,7 @@
   </div>
   <div class="panel-body">
     <ul>
-      <% @time_period.collections.each do |c| %>
+      <% @time_period_presenter.collections.each do |c| %>
           <li><%= link_to c.display_title, c %></li>
       <% end %>
     </ul>
