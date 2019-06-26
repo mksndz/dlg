@@ -99,6 +99,8 @@ en:
         is_committer: "Committer"
         is_viewer: "Viewer"
         is_pm: "Project Manager"
+        is_fulltext_ingester: "Fulltext Ingester"
+        is_page_ingester: "Page Ingester"
         creator: "Creator"
         repository_ids: "Assigned Repositories"
         collection_ids: "Assigned Collections"

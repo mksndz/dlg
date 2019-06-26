@@ -10,6 +10,8 @@ RSpec.describe Ability, type: :model do
   let(:uploader_user) { Fabricate :uploader }
   let(:viewer_user) { Fabricate :viewer }
   let(:pm_user) { Fabricate :pm }
+  let(:page_ingester_user) { Fabricate :page_ingester }
+  let(:fulltext_ingester_user) { Fabricate :fulltext_ingester }
 
   context 'for a Super user' do
     subject { Ability.new super_user }
@@ -32,6 +34,18 @@ RSpec.describe Ability, type: :model do
     subject { Ability.new pm_user }
     it 'can manage Projects' do
       is_expected.to be_able_to :manage, Project
+    end
+  end
+  context 'for a Fulltext Ingester user' do
+    subject { Ability.new fulltext_ingester_user }
+    it 'can manage Fulltext Ingests' do
+      is_expected.to be_able_to :manage, FulltextIngest
+    end
+  end
+  context 'for a Page Ingester user' do
+    subject { Ability.new page_ingester_user }
+    it 'can manage Page Ingests' do
+      is_expected.to be_able_to :manage, PageIngest
     end
   end
   context 'for a Coordinator user' do
