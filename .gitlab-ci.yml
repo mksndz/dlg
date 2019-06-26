@@ -11,9 +11,25 @@
 #   deployment
 stages:
 #  - setup
+  - dependency_scan
   - deploy_staging
   - deploy_production
   - manual_actions
+
+
+# Dependency Scan
+# Run Bundler Audit on the gemfile for staging/master deployment
+bundler_audit:
+  stage: dependency_scan
+  only:
+    - staging
+    - master
+  script:
+    - bundle audit check --update
+  environment:
+    name: dependency_scan
+  tags:
+    - shell
 
 # Deploy To Staging
 # This job copies app code and secrets to staging machine, installs gems,
@@ -25,10 +41,8 @@ deploy_to_staging:
   only:
     - staging
   script:
-    - rm -rf /deploy/meta && mkdir /deploy/meta
-    - rsync -rv --exclude=.git* . /deploy/meta/
     - cd /deploy/meta
-    - /deploy/scripts/post_fetch.sh
+    - git pull
     - bundle install --deployment
     - RAILS_ENV=staging bundle exec rake db:migrate --trace
     - RAILS_ENV=staging bundle exec rake assets:precompile --trace
