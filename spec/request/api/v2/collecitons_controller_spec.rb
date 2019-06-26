@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'API V2 for Items', type: :request do
+RSpec.describe 'API V2 for Collections', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.api_token }
   context 'can list using #index' do
     before(:each) do
@@ -60,6 +60,20 @@ RSpec.describe 'API V2 for Items', type: :request do
           headers
       json = JSON.parse(response.body)
       expect(json['id']).to eq @collection.id
+      expect(json.keys).to include 'sponsor_note', 'sponsor_image'
+    end
+    context 'with CollectionResources' do
+      before(:each) do
+        @collection.collection_resources << Fabricate.times(2, :collection_resource)
+      end
+      it 'returns CollectionResource info without content' do
+        get "/api/v2/collections/#{@collection.id}.json",
+            {},
+            headers
+        json = JSON.parse(response.body)
+        expect(json['collection_resources'].length).to eq 2
+        expect(json['collection_resources'][0].keys).to include 'slug', 'title', 'position'
+      end
     end
   end
 end

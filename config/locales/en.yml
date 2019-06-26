@@ -165,8 +165,18 @@ en:
         dcterms_language: 'Language (use ISO 639-2)'
         dcterms_identifier: 'Identifier'
         portal_ids: 'Portals'
+        sponsor_note: 'Sponsor Note'
+        sponsor_image: 'Sponsor Image'
         created_at: "Created"
         updated_at: "Last Updated"
+      collection_resource:
+        slug: "Slug"
+        title: "Title"
+        content: "Content"
+        position: "Position"
+        created_at: "Created"
+        updated_at: "Last Updated"
+        collection_id: "Collection"
       item:
         slug: "Item ID"
         record_id: "Record ID"

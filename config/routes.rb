@@ -22,6 +22,7 @@ Rails.application.routes.draw do
         resources :collections, only: %i[index show]
         resources :holding_institutions, only: %i[index show]
         resources :features, only: :index
+        get 'collections/:collection/resource/:slug', to: 'collection_resources#show'
       end
     end
   end
@@ -43,13 +44,17 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :repositories, :collections, :users, :subjects, :time_periods,
+  resources :repositories, :users, :subjects, :time_periods,
             :features, :projects, :holding_institutions
 
   resources :item_versions, only: [] do
     member do
       patch :restore
     end
+  end
+
+  resources :collections do
+    resources :collection_resources
   end
 
   resources :items do

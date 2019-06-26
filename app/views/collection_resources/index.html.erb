@@ -1,0 +1,89 @@
+<%= content_for :title do %>
+    Resources for Collection
+<% end %>
+
+<%=
+  content_for :subtitle do
+    @collection.title
+  end
+%>
+
+<% breadcrumb :collection_resources, @collection %>
+
+<div class="btn-group" role="group" aria-label="Collection Resources Actions">
+  <%= link_to(t('meta.collection_resource.action.add'),
+              new_collection_collection_resource_path(@collection),
+              class: 'btn btn-default') %>
+</div>
+
+<%= render 'shared/per_pager' %>
+
+<br><br>
+
+<% if @collection_resources.empty? %>
+
+    <p><%= t('meta.defaults.labels.no_records_found',
+             entity: 'Collection Resources') %></p>
+
+<% else %>
+
+    <%= paginate @collection_resources %>
+
+    <table class="table table-condensed table-hover">
+      <thead>
+      <tr>
+        <th>
+          <%= sortable 'collection_resources.id',
+                       t('meta.defaults.labels.columns.id') %>
+        </th>
+        <th>
+          <%= sortable 'collection_resources.slug',
+                       t('meta.defaults.labels.columns.slug') %>
+        </th>
+        <th>
+          <%= sortable 'collection_resources.title',
+                       t('meta.defaults.labels.columns.title') %>
+        </th>
+        <th width="185px"></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @collection_resources.each do |resource| %>
+          <tr>
+            <td>
+              <%= link_to resource.id,
+                          collection_collection_resource_path(@collection,
+                                                              resource) %>
+            </td>
+            <td>
+              <%= link_to resource.slug,
+                          edit_collection_collection_resource_path(@collection,
+                                                                   resource) %>
+            </td>
+            <td>
+              <%= resource.title %>
+            </td>
+            <td>
+              <div class="btn-group btn-group-xs">
+                <%= link_to t('meta.defaults.actions.view'),
+                            collection_collection_resource_path(@collection, resource),
+                            class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.edit'),
+                            edit_collection_collection_resource_path(@collection, resource),
+                            class: 'btn btn-default' %>
+                <%= link_to t('meta.defaults.actions.destroy'),
+                            collection_collection_resource_path(@collection, resource),
+                            method: :delete,
+                            data: { confirm: t('meta.defaults.labels.confirm') },
+                            class: 'btn btn-default' %>
+              </div>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @collection_resources %>
+
+<% end %>

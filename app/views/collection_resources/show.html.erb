@@ -1,0 +1,44 @@
+<%= content_for :title do %>
+    Show Collection Resource
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @collection_resource.title %>
+<% end %>
+
+<% breadcrumb :collection_resource, @collection_resource %>
+
+<%= link_to t('meta.defaults.actions.edit'),
+            edit_collection_collection_resource_path(@collection,
+                                                     @collection_resource),
+            class: 'btn btn-default' %>
+
+<br><br>
+
+<%= render('shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.collection_id'),
+           value: @collection_resource.collection.display_title) %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.slug'),
+           value: @collection_resource.slug %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.title'),
+           value: @collection_resource.title %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.position'),
+           value: @collection_resource.position %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.content'),
+           value: @collection_resource.content %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.created_at'),
+           value: display_date(@collection_resource.created_at) %>
+
+<%= render 'shared/show_field',
+           field_name: t('activerecord.attributes.collection_resource.updated_at'),
+           value: display_date(@collection_resource.updated_at) %>
