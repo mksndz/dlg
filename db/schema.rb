@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190221160515) do
+ActiveRecord::Schema.define(version: 20190521190611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,16 @@ ActiveRecord::Schema.define(version: 20190221160515) do
 
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
+  create_table "collection_resources", force: :cascade do |t|
+    t.string   "slug"
+    t.integer  "position"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "collection_id"
+  end
+
   create_table "collections", force: :cascade do |t|
     t.integer   "repository_id"
     t.text      "display_title",                                  null: false
@@ -156,6 +166,9 @@ ActiveRecord::Schema.define(version: 20190221160515) do
     t.text      "edm_is_shown_by",                default: [],    null: false, array: true
     t.string    "partner_homepage_url"
     t.text      "homepage_text"
+    t.integer   "collection_resources_count"
+    t.string    "sponsor_note"
+    t.string    "sponsor_image"
   end
 
   add_index "collections", ["repository_id"], name: "index_collections_on_repository_id", using: :btree

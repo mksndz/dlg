@@ -296,6 +296,8 @@ en:
     collection:
       actions:
         add: 'New Collection'
+        add_collection_resource: 'Add Collection Resource'
+        collection_resource: 'Manage Collection Resource'
         manage_items: 'Manage Items'
         xml: 'View XML'
         download_item_xml: 'Download Items XML'
@@ -303,11 +305,26 @@ en:
         columns:
           repository: 'Repository'
           items: 'Items'
+          resources: 'Resources'
         view:
           other_repositories: 'Other Repositories'
           subjects: 'Subjects'
           time_periods: 'Time Periods'
           xml: 'XML'
+      messages:
+        errors:
+          has_invalid_collection_resources: 'You cannot commit a Collection
+          with invalid resources'
+
+    collection_resource:
+      action:
+        add: 'Create Collection Resource'
+      labels:
+        columns:
+          collection: 'Collection'
+          collection_resource: 'Collection Resource'
+          resource_to_update: 'Resource to Update'
+          resource_created_or_modified: 'Resource Created/Modified'
     repository:
       actions:
         add: 'New Repository'
