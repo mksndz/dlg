@@ -19,7 +19,8 @@ module Api
 
         render json: collection, include: {
           portals: {},
-          collection_resources: { only: %i[slug title position] }
+          collection_resources: { only: %i[slug title position] },
+          holding_institutions: { only: %i[image display_name authorized_name] }
         }
       end
 
