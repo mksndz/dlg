@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 gem 'activerecord-in_batches', git: 'git://github.com/siadat/in_batches.git'
