@@ -11,9 +11,25 @@
 #   deployment
 stages:
 #  - setup
+  - dependency_scan
   - deploy_staging
   - deploy_production
   - manual_actions
+
+
+# Dependency Scan
+# Run Bundler Audit on the gemfile for staging/master deployment
+bundler_audit:
+  stage: dependency_scan
+  only:
+    - staging
+    - master
+  script:
+    - bundle audit check --update
+  environment:
+    name: dependency_scan
+  tags:
+    - shell
 
 # Deploy To Staging
 # This job copies app code and secrets to staging machine, installs gems,
