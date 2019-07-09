@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/siadat/in_batches.git
+  remote: https://github.com/siadat/in_batches.git
   revision: 31d8a19553368955dd063ef57a3ce6b8aa5dfd21
   specs:
     activerecord-in_batches (0.0.1)
