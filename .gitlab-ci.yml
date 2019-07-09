@@ -25,10 +25,7 @@ deploy_to_staging:
   only:
     - staging
   script:
-    - rm -rf /deploy/meta && mkdir /deploy/meta
-    - rsync -rv --exclude=.git* . /deploy/meta/
     - cd /deploy/meta
-    - /deploy/scripts/post_fetch.sh
     - bundle install --deployment
     - RAILS_ENV=staging bundle exec rake db:migrate --trace
     - RAILS_ENV=staging bundle exec rake assets:precompile --trace
@@ -49,10 +46,7 @@ deploy_to_production:
   only:
     - master
   script:
-    - rm -rf /deploy/meta && mkdir /deploy/meta
-    - rsync -rv --exclude=.git* . /deploy/meta/
     - cd /deploy/meta
-    - /deploy/scripts/post_fetch.sh
     - bundle install --deployment
     - RAILS_ENV=production bundle exec rake db:migrate --trace
     - RAILS_ENV=production bundle exec rake assets:precompile --trace
