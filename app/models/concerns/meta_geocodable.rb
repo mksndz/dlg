@@ -39,7 +39,7 @@ module MetaGeocodable
     Item.connection.select_all("
       SELECT DISTINCT * FROM (
         SELECT unnest(dcterms_spatial) spatial FROM items
-      ) s WHERE spatial LIKE '#{spatial_term}%, %.%, %.%';
+      ) s WHERE spatial LIKE $$#{spatial_term}%, %.%, %.%$$;
     ")
   end
 end
