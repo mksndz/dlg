@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
-gem 'activerecord-in_batches', git: 'git://github.com/siadat/in_batches.git'
+gem 'activerecord-in_batches', git: 'https://github.com/siadat/in_batches.git'
 gem 'aws-sdk-s3', '~> 1'
 gem 'blacklight', '>= 6.0.0'
 gem 'blacklight-gallery'
