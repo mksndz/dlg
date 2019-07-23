@@ -10,7 +10,7 @@
 # :manual_actions: will include jobs that can be run any time after setup and
 #   deployment
 stages:
-#  - setup
+  #  - setup
   - dependency_scan
   - deploy_staging
   - deploy_production
@@ -63,10 +63,8 @@ deploy_to_production:
   only:
     - master
   script:
-    - rm -rf /deploy/meta && mkdir /deploy/meta
-    - rsync -rv --exclude=.git* . /deploy/meta/
     - cd /deploy/meta
-    - /deploy/scripts/post_fetch.sh
+    - git pull
     - bundle install --deployment
     - RAILS_ENV=production bundle exec rake db:migrate --trace
     - RAILS_ENV=production bundle exec rake assets:precompile --trace
