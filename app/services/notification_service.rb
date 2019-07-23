@@ -11,6 +11,6 @@ class NotificationService
 
   # send a basic notification
   def notify(message)
-    @slack.ping(message) if NOTIFICATION_ENVIRONMENTS.includes Rails.env
+    @slack.ping(message) if NOTIFICATION_ENVIRONMENTS.include? Rails.env
   end
 end

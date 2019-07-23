@@ -22,10 +22,10 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
   end
 
   # build path for server file storage
-  local_file_storage = File.join(Rails.application.root,'public')
+  local_file_storage = File.join(Rails.application.root, 'public')
 
   # build date strings for file path and S3 folder
-  date = Time.zone.now.strftime('%Y%m%d')
+  date = Time.zone.now.strftime('%m%d%Y')
   date_string = "dpla_feed_#{date}"
   run_file_storage = File.join(local_file_storage, date_string)
 
@@ -67,6 +67,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
     next_cursor_mark = response['nextCursorMark']
     last_cursor_mark = cursor_mark
     cursor_mark = next_cursor_mark
+    break if last_cursor_mark == next_cursor_mark
 
     # build file name for this query response data
     set_file_name = File.join(
@@ -96,5 +97,5 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
 
     run += 1
   end
-  outcomes.find { |o| !o[:uploaded] }.empty?
+  outcomes.find { |o| !o[:uploaded] }.present?
 end

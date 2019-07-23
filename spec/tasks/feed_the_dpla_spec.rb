@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'rake'
 
 describe 'DPLA Harvest Task' do
-  ## Useful when testing chenges to or errors with DPLA Feed task
+  # # Useful when testing changes to or errors with DPLA Feed task
   # before do
   #   Meta::Application.load_tasks
   #   Rake::Task.define_task :environment
