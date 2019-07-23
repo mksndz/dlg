@@ -21,6 +21,8 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
        created_at_dts updated_at_dts]
   end
 
+  notifier = NotificationService.new
+
   # build path for server file storage
   local_file_storage = File.join(Rails.application.root, 'public')
 
@@ -97,5 +99,6 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
 
     run += 1
   end
+  notifier.notify "DPLA feed complete: `#{outcomes.length}` files uploaded."
   outcomes.find { |o| !o[:uploaded] }.present?
 end

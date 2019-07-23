@@ -17,12 +17,9 @@ class DplaS3Service
 
     name = File.join @folder, File.basename(path)
     upload = @s3.bucket(@bucket).object(name).upload_file(path)
-    msg = if upload
-            "DPLA S3 Service: `#{name}` was uploaded to #{@bucket}`."
-          else
-            "DPLA S3 Service: upload of `#{name}` to `#{@bucket}` failed!"
-          end
-    @notifier.notify msg
+    unless upload
+      @notifier.notify "DPLA S3 Service: upload of `#{name}` to `#{@bucket}` failed!"
+    end
     upload
   end
 
