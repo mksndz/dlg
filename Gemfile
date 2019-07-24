@@ -20,7 +20,6 @@ gem 'devise'
 gem 'devise-guests', '~> 0.3' # TODO: remove?
 gem 'devise_invitable'
 gem 'diffy'
-gem 'draper', '~> 2.1.0'
 gem 'exception_notification'
 gem 'geocoder'
 gem 'gretel'

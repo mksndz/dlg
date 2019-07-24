@@ -41,6 +41,10 @@
                        t('meta.defaults.labels.columns.slug') %>
         </th>
         <th>
+          <%= sortable 'collection_resources.slug',
+                       t('meta.collection_resource.labels.columns.position') %>
+        </th>
+        <th>
           <%= sortable 'collection_resources.title',
                        t('meta.defaults.labels.columns.title') %>
         </th>
@@ -60,6 +64,9 @@
               <%= link_to resource.slug,
                           edit_collection_collection_resource_path(@collection,
                                                                    resource) %>
+            </td>
+            <td>
+              <%= resource.position %>
             </td>
             <td>
               <%= resource.title %>

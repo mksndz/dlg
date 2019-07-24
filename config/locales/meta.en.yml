@@ -321,6 +321,7 @@ en:
         add: 'Create Collection Resource'
       labels:
         columns:
+          position: 'Position'
           collection: 'Collection'
           collection_resource: 'Collection Resource'
           resource_to_update: 'Resource to Update'

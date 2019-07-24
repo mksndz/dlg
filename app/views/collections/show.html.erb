@@ -10,6 +10,7 @@
 
 <div class="btn-group">
   <%= link_to t('meta.defaults.actions.edit'), edit_collection_path(@collection), class: 'btn btn-default' %>
+  <%= link_to t('meta.collection.actions.add_collection_resource'), collection_collection_resources_path(@collection), class: 'btn btn-default' %>
   <%= link_to t('meta.collection.actions.xml'), '#xml' , class: 'btn btn-default', data: { turbolinks: false } %>
   <%= link_to t('meta.collection.actions.manage_items'), items_path( { collection_id: @collection.id } ) , class: 'btn btn-default' %>
   <%= link_to t('meta.collection.actions.download_item_xml'), items_path( { collection_id: @collection.id, format: :xml } ) , class: 'btn btn-default' %>

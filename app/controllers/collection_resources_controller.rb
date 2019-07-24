@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
+# Collection Resource page actions
 class CollectionResourcesController < RecordController
   authorize_resource
 
-  # decorates_association
   include ErrorHandling
   include Sorting
   before_action :set_collection
-  before_action :set_resource, except: [:index, :new, :create]
+  before_action :set_resource, except: %i[index new create]
 
   # GET /collection_resources
   # GET /collection_resources.json
@@ -47,7 +47,6 @@ class CollectionResourcesController < RecordController
                                      entity: 'Collection Resource')
         end
       else
-        # TODO: Is this right?
         format.html { render :new }
       end
     end
@@ -91,11 +90,11 @@ class CollectionResourcesController < RecordController
   end
 
   def set_resource
-    @collection_resource = CollectionResource.find(params[:id]).decorate
+    @collection_resource = CollectionResource.find(params[:id])
   end
 
   def set_collection
-    @collection = Collection.find(params[:collection_id]) # TODO: decorate?
+    @collection = Collection.find(params[:collection_id])
   end
 
 end
