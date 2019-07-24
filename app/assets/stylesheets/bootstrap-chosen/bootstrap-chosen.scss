@@ -115,13 +115,13 @@
     bottom: 0;
 
     span {
-      background: url($chosen-sprite-path) no-repeat -4px -3px;
+      background: image_url($chosen-sprite-path) no-repeat -4px -3px;
     }
   }
 
   .chosen-results-scroll-up {
     span {
-      background: url($chosen-sprite-path) no-repeat -22px -3px;
+      background: image_url($chosen-sprite-path) no-repeat -22px -3px;
     }
   }
 }
