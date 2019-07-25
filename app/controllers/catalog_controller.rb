@@ -342,8 +342,8 @@ class CatalogController < ApplicationController
     config.add_search_field('full_text') do |field|
       field.label = 'Full Text'
       field.solr_local_parameters = {
-        qf: 'fulltext_text',
-        pf: 'fulltext_text'
+        qf: 'fulltext_texts',
+        pf: 'fulltext_texts'
       }
     end
 
