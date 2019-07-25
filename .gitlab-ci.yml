@@ -42,6 +42,7 @@ deploy_to_staging:
     - staging
   script:
     - cd /deploy/meta
+    - git pull
     - bundle install --deployment
     - RAILS_ENV=staging bundle exec rake db:migrate --trace
     - RAILS_ENV=staging bundle exec rake assets:precompile --trace
@@ -63,6 +64,7 @@ deploy_to_production:
     - master
   script:
     - cd /deploy/meta
+    - git pull
     - bundle install --deployment
     - RAILS_ENV=production bundle exec rake db:migrate --trace
     - RAILS_ENV=production bundle exec rake assets:precompile --trace
