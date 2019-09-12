@@ -24,6 +24,7 @@ en:
         storage_used: 'Storage Used'
         holding_institution: 'Holding Institution'
         collection_ids: 'Collections'
+        notes: 'Notes'
         created_at: 'Created At'
         updated_at: 'Updated At'
       holding_institution:

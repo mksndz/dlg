@@ -42,5 +42,6 @@
 </div>
 <% end %>
 
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.project.notes'), value: @project.notes %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.project.created_at'), value: @project.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.project.updated_at'), value: @project.updated_at %>
