@@ -14,8 +14,6 @@ class BatchItem < ActiveRecord::Base
   belongs_to :item
   has_one :repository, through: :collection
 
-  after_save :lookup_coordinates
-
   COMMIT_SCRUB_ATTRIBUTES = %w[
     id
     created_at

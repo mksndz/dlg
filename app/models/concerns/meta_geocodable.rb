@@ -7,6 +7,8 @@ module MetaGeocodable
   private
 
   def lookup_coordinates
+    return unless dcterms_spatial_changed?
+
     with_coordinates = []
     dcterms_spatial.each do |spatial|
       if spatial =~ /(-?\d+\.\d+), (-?\d+\.\d+)/
