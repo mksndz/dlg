@@ -43,12 +43,7 @@ class FulltextProcessor
             failed_file_results(record_id, 'No Item exists matching record_id')
             next
           end
-          # save text stripping any non utf-8 characters
-          fulltext_input = file.get_input_stream.read.encode(
-            Encoding.find('UTF-8'),
-            invalid: :replace, undef: :replace, replace: ''
-          )
-          item.fulltext = fulltext_input.gsub(/[^0-9a-z\s]/i, '')
+          item.fulltext = cleansed_file_contents(file)
           begin
             item.save!(validate: false)
             success_file_results record_id, item.id
@@ -70,7 +65,7 @@ class FulltextProcessor
     if errors.zero?
       @results[:status] = 'success'
       @results[:message] = "#{@files} items updated."
-    elsif errors > 0 && errors < @files
+    elsif errors.positive? && errors < @files
       @results[:status] = 'partial failure'
       @results[:message] = "#{errors} of #{@files} items failed to update."
     elsif errors == @files
@@ -81,6 +76,20 @@ class FulltextProcessor
     @fti.results = @results
     @slack.ping "Fulltext ingest complete: `#{@fti.title}`" if Rails.env.production? || Rails.env.staging?
     @fti.save
+  end
+
+  # save text stripping any non utf-8 characters and other garbage
+  # TODO: factor this out since it is used by PageProcessor as well
+  def self.cleansed_file_contents(file)
+    fulltext_input = file.get_input_stream.read.encode(
+      Encoding.find('UTF-8'),
+      invalid: :replace, undef: :replace, replace: ''
+    )
+    # break text up into array before clearing control chars, as newline is a
+    # control char :/
+    fulltext_lines = fulltext_input.gsub(/[^0-9a-z\s]/i, ' ').split("\n")
+    fulltext_lines.map { |line| line.gsub!(/[[:cntrl:]]/, ' ') }
+    fulltext_lines.join("\n")
   end
 
   def self.failed_file_results(file_name, message)
