@@ -79,6 +79,7 @@ class FulltextProcessor
   end
 
   # save text stripping any non utf-8 characters and other garbage
+  # TODO: factor this out since it is used by PageProcessor as well
   def self.cleansed_file_contents(file)
     fulltext_input = file.get_input_stream.read.encode(
       Encoding.find('UTF-8'),

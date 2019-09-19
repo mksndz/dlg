@@ -23,7 +23,7 @@ class PageProcessor
         )
         next
       elsif includes_item_fulltext(item_data)
-        item.fulltext = item_data['fulltext']
+        item.fulltext = cleansed_file_contents item_data['fulltext']
       end
       item_file_type = item_data.key?('file_type') ? item_data['file_type'] : nil
       item_data['pages'].each do |page_data|
@@ -35,7 +35,8 @@ class PageProcessor
             # update
             existing_page.number = page_data['number'] if page_data.key? 'number'
             existing_page.file_type = page_data['file_type'] if page_data.key? 'file_type'
-            existing_page.fulltext = page_data['fulltext'] if page_data.key? 'fulltext'
+            existing_page.title = page_data['title'] if page_data.key? 'title'
+            existing_page.fulltext = cleansed_file_contents(page_data['fulltext']) if page_data.key? 'fulltext'
             existing_page.save ? page_updated(item.id, existing_page) : page_failed(record_id, existing_page)
           else
             page = Page.create page_data.merge(item: item)
@@ -69,6 +70,16 @@ class PageProcessor
 
   class << self
     private
+
+    # save text stripping any non utf-8 characters and other garbage
+    # TODO: factor this out since it is used by FulltextProcessor as well
+    def cleansed_file_contents(fulltext)
+      # break text up into array before clearing control chars, as newline is a
+      # control char :/
+      fulltext_lines = fulltext.gsub(/[^0-9a-z\s]/i, ' ').split("\n")
+      fulltext_lines.map { |line| line.gsub!(/[[:cntrl:]]/, ' ') }
+      fulltext_lines.join("\n")
+    end
 
     def init_results
       @results = { status: nil, message: nil, added: [], updated: [], errors: [] }
