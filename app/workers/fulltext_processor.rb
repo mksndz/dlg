@@ -65,7 +65,7 @@ class FulltextProcessor
     if errors.zero?
       @results[:status] = 'success'
       @results[:message] = "#{@files} items updated."
-    elsif errors > 0 && errors < @files
+    elsif errors.positive? && errors < @files
       @results[:status] = 'partial failure'
       @results[:message] = "#{errors} of #{@files} items failed to update."
     elsif errors == @files
@@ -84,10 +84,11 @@ class FulltextProcessor
       Encoding.find('UTF-8'),
       invalid: :replace, undef: :replace, replace: ''
     )
-    # remove control chars, and non alphanumeric & whitespace chars
-    fulltext_input
-      .gsub(/[^0-9a-z\s]/i, ' ')
-      .gsub!(/[[:cntrl:]]/, ' ')
+    # break text up into array before clearing control chars, as newline is a
+    # control char :/
+    fulltext_lines = fulltext_input.gsub(/[^0-9a-z\s]/i, ' ').split("\n")
+    fulltext_lines.map { |line| line.gsub!(/[[:cntrl:]]/, ' ') }
+    fulltext_lines.join("\n")
   end
 
   def self.failed_file_results(file_name, message)
