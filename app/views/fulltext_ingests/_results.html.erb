@@ -48,7 +48,29 @@
     </table>
   <% else %>
     <div class="panel-body">
-      <%= @fulltext_ingest.results['message'] %>
+      <% if @fulltext_ingest.results['message'] %>
+        <div class="alert alert-danger">
+          <%= @fulltext_ingest.results['message'] %>
+        </div>
+      <% end %>
+      <% if @fulltext_ingest.processed_files %>
+      <table class="table table-hover fulltext-ingest-results-table">
+        <thead>
+          <tr>
+            <th><%= t('meta.fulltext_ingests.labels.file') %></th>
+            <th><%= t('meta.fulltext_ingests.labels.outcome') %></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @fulltext_ingest.processed_files.each do |file| %>
+          <tr>
+            <td><%= file[0] %></td>
+            <td><%= truncate file[1]['reason'], length: 100 %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <% end %>
     </div>
   <% end %>
 </div>

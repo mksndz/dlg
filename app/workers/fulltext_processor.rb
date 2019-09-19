@@ -43,12 +43,7 @@ class FulltextProcessor
             failed_file_results(record_id, 'No Item exists matching record_id')
             next
           end
-          # save text stripping any non utf-8 characters
-          fulltext_input = file.get_input_stream.read.encode(
-            Encoding.find('UTF-8'),
-            invalid: :replace, undef: :replace, replace: ''
-          )
-          item.fulltext = fulltext_input.gsub(/[^0-9a-z\s]/i, '')
+          item.fulltext = cleansed_file_contents(file)
           begin
             item.save!(validate: false)
             success_file_results record_id, item.id
@@ -81,6 +76,18 @@ class FulltextProcessor
     @fti.results = @results
     @slack.ping "Fulltext ingest complete: `#{@fti.title}`" if Rails.env.production? || Rails.env.staging?
     @fti.save
+  end
+
+  # save text stripping any non utf-8 characters and other garbage
+  def self.cleansed_file_contents(file)
+    fulltext_input = file.get_input_stream.read.encode(
+      Encoding.find('UTF-8'),
+      invalid: :replace, undef: :replace, replace: ''
+    )
+    # remove control chars, and non alphanumeric & whitespace chars
+    fulltext_input
+      .gsub(/[^0-9a-z\s]/i, ' ')
+      .gsub!(/[[:cntrl:]]/, ' ')
   end
 
   def self.failed_file_results(file_name, message)
