@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
 
   def project_params
     clean_params(
-      params.require(:project).permit(:title, :fiscal_year, :hosting,
+      params.require(:project).permit(:title, :fiscal_year, :hosting, :notes,
                                       :storage_used, :holding_institution_id,
                                       collection_ids: [], funding_sources: [])
     )

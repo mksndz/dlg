@@ -15,6 +15,7 @@ RSpec.describe 'API V2 for Features', type: :request do
       json = JSON.parse(response.body)
       expect(json.length).to eq 6
       expect(json.first['primary']).to be true
+      expect(json[1]['created_at']).to be > json[5]['created_at']
     end
     it 'returns an array of carousel features, properly ordered' do
       get '/api/v2/features.json', { type: 'carousel' }, headers
