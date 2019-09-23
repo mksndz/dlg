@@ -1,9 +1,10 @@
 # controller actions for batch imports
 class BatchImportsController < ApplicationController
-  load_and_authorize_resource
+  authorize_resource
   include ErrorHandling
   include Sorting
   before_action :set_batch, except: [:help]
+  before_action :set_batch_import, except: %i[index new create help]
   before_action :ensure_uncommitted_batch, except: %i[index show xml help]
 
   rescue_from ImportFailedError do |e|
@@ -104,6 +105,10 @@ class BatchImportsController < ApplicationController
 
   def set_batch
     @batch = Batch.find(params[:batch_id])
+  end
+
+  def set_batch_import
+    @batch_import = BatchImport.find params[:id]
   end
 
   def batch_import_params

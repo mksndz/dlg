@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<items type="array">
+  <item>
+    <id type="integer">276914</id>
+    <dpla type="boolean">true</dpla>
+    <public type="boolean">true</public>
+    <dc_format type="array">
+      <dc_format>text/html</dc_format>
+      <dc_format>image/jpeg</dc_format>
+      <dc_format>image/x-djvu</dc_format>
+    </dc_format>
+    <dc_right type="array">
+      <dc_right>http://rightsstatements.org/vocab/NoC-US/1.0/</dc_right>
+    </dc_right>
+    <dc_date type="array">
+      <dc_date>1831-12-28</dc_date>
+    </dc_date>
+    <dc_relation type="array">
+      <dc_relation>Mode of access: World Wide Web.</dc_relation>
+      <dc_relation>System requirements: AT&amp;T DjVu browser plug-in needed to view images of documents.</dc_relation>
+    </dc_relation>
+    <slug>ch012</slug>
+    <dcterms_is_part_of type="array"/>
+    <dcterms_contributor type="array">
+      <dcterms_contributor>Ridge, John, 1803-1839</dcterms_contributor>
+    </dcterms_contributor>
+    <dcterms_creator type="array">
+      <dcterms_creator>Martin, John, 1784-1840</dcterms_creator>
+    </dcterms_creator>
+    <dcterms_description type="array">
+      <dcterms_description>This is a letter from John Martin and John Ridge, Cherokee leaders in Washington, to John Ross, Principal Chief of the Cherokee Nation, dated December 28, 1831. Martin and Ridge report to Ross on the progress of the Cherokee delegation in Washington and their decision to delay the delivery of the Cherokee Memorial to Congress. They indicate that they have news of atrocities against the Cherokees in Georgia. They further inform Ross that Elias Boudinot and John Ridge have met with Henry Clay who has pledged his support. They lament the hypocrisy with which they are met in dealing with the U.S. government. In addition, Martin and Ridge make reference to a delegation of Creek leaders also in Washington and comment on William Wirt's involvement in the Supreme Court case Worcester v. Georgia.</dcterms_description>
+      <dcterms_description>Digital image and encoded transcription of an original manuscript, scanned, transcribed and encoded by the University of Tennessee, Knoxville Libraries in 2000, as part of GALILEO, funded in part by a grant from the Institute of Museum and Library Services.</dcterms_description>
+    </dcterms_description>
+    <dcterms_extent type="array">
+      <dcterms_extent>4 pages/leaves</dcterms_extent>
+    </dcterms_extent>
+    <dcterms_medium type="array">
+      <dcterms_medium>Official reports</dcterms_medium>
+    </dcterms_medium>
+    <dcterms_identifier type="array">
+      <dcterms_identifier>ch012</dcterms_identifier>
+    </dcterms_identifier>
+    <dcterms_language type="array"/>
+    <dcterms_spatial type="array">
+      <dcterms_spatial>Southern States, 33.346678, -84.119434</dcterms_spatial>
+    </dcterms_spatial>
+    <dcterms_publisher type="array">
+      <dcterms_publisher>Manuscript held by the The Tennessee State Library and Archives, Nashville, TN, State Library Cherokee Collection, box 1, folder  16, document ch012.</dcterms_publisher>
+    </dcterms_publisher>
+    <dcterms_rights_holder type="array"/>
+    <dcterms_subject type="array">
+      <dcterms_subject>Cherokee Indians--Violence against</dcterms_subject>
+      <dcterms_subject>Cherokee Indians--Government relations</dcterms_subject>
+    </dcterms_subject>
+    <dcterms_temporal type="array"/>
+    <dcterms_title type="array">
+      <dcterms_title>[Letter] 1831 Dec. 28, Washington [to] John Ross, Cherokee Nation / John Martin [and] John Ridge of an image</dcterms_title>
+    </dcterms_title>
+    <dcterms_type type="array">
+      <dcterms_type>Text</dcterms_type>
+    </dcterms_type>
+    <edm_is_shown_at type="array">
+      <edm_is_shown_at>http://dlg.galileo.usg.edu/id:dlg_zlna_ch012</edm_is_shown_at>
+    </edm_is_shown_at>
+    <dlg_local_right type="array"/>
+    <dcterms_bibliographic_citation type="array">
+      <dcterms_bibliographic_citation>Cite as: [title of item], State Library Cherokee Collection, The Tennessee State Library and Archives, Nashville, TN, presented in the Digital Library of Georgia</dcterms_bibliographic_citation>
+    </dcterms_bibliographic_citation>
+    <local type="boolean">true</local>
+    <dlg_subject_personal type="array"/>
+    <edm_is_shown_by type="array">
+      <edm_is_shown_by>http://dlg.galileo.usg.edu/do:dlg_zlna_ch012</edm_is_shown_by>
+    </edm_is_shown_by>
+    <pages_count type="integer" nil="true"/>
+    <dcterms_provenance type="array">
+      <dcterms_provenance>Tennessee State Library and Archives</dcterms_provenance>
+    </dcterms_provenance>
+    <other_colls type="array"/>
+    <collection>
+      <record_id>dlg_zlna</record_id>
+    </collection>
+    <portals type="array">
+      <portal>
+        <code>georgia</code>
+      </portal>
+    </portals>
+  </item>
+</items>

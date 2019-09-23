@@ -54,6 +54,13 @@ feature 'Batch Importing Batch Items' do
         expect(page).to have_current_path batch_batch_import_path @batch, BatchImport.last
         expect(page).to have_text I18n.t('meta.batch_import.messages.success.created')
       end
+      scenario 'can use the form and file upload to create a new batch import' do
+        visit new_batch_batch_import_path @batch
+        attach_file I18n.t('activerecord.attributes.batch_import.xml_file'), Rails.root.to_s + '/spec/files/batch_import.xml'
+        click_on I18n.t('meta.defaults.actions.save')
+        expect(page).to have_current_path batch_batch_import_path @batch, BatchImport.last
+        expect(page).to have_text I18n.t('meta.batch_import.messages.success.created')
+      end
       scenario 'gets an error when submitting an empty form' do
         visit new_batch_batch_import_path(@batch)
         click_on I18n.t('meta.defaults.actions.save')
