@@ -109,6 +109,7 @@ class BatchImportsController < ApplicationController
   def batch_import_params
     params.require(:batch_import).permit(
       :xml,
+      :xml_file,
       :validations,
       :match_on_id,
       :item_ids
