@@ -103,7 +103,7 @@ class Item < ActiveRecord::Base
     text :collection_titles
 
     # Full Text
-    text :pages_or_item_fulltext, stored: true
+    text :pages_or_item_fulltext, stored: true, as: 'fulltext_texts'
 
     # Blacklight 'Required' fields # TODO do we use them properly in DLG?
     string(:title, as: 'title') { dcterms_title.first ? dcterms_title.first : slug }
