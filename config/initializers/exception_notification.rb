@@ -19,7 +19,7 @@ ExceptionNotification.configure do |config|
   end
 
   config.add_notifier :slack,
-                      webhook_url: 'https://hooks.slack.com/services/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',
+                      webhook_url: Rails.application.secrets.slack_worker_webhook,
                       channel: '#app-exceptions',
                       username: 'dlg-admin',
                       additional_parameters: {
