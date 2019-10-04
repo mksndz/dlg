@@ -115,6 +115,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'edm_is_shown_at_display',                label: I18n.t('meta.search.labels.edm_is_shown_at'), helper_method: :linkify
     config.add_show_field 'edm_is_shown_by_display',                label: I18n.t('meta.search.labels.edm_is_shown_by'), helper_method: :linkify
     config.add_show_field 'dcterms_rights_holder_display',          label: I18n.t('meta.search.labels.dcterms_rights_holder')
+    config.add_show_field 'dlg_local_right_display',                label: I18n.t('meta.search.labels.dlg_local_right')
     config.add_show_field 'dcterms_bibliographic_citation_display', label: I18n.t('meta.search.labels.dcterms_bibliographic_citation')
     config.add_show_field 'dcterms_extent_display',                 label: I18n.t('meta.search.labels.dcterms_extent')
     config.add_show_field 'dcterms_medium_display',                 label: I18n.t('meta.search.labels.dcterms_medium')
