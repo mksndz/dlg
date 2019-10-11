@@ -43,7 +43,8 @@ class FulltextProcessor
             failed_file_results(record_id, 'No Item exists matching record_id')
             next
           end
-          item.fulltext = cleansed_file_contents(file)
+          file_contents = contents_of(file)
+          item.fulltext = whitelisted file_contents
           begin
             item.save!(validate: false)
             success_file_results record_id, item.id
@@ -80,14 +81,19 @@ class FulltextProcessor
 
   # save text stripping any non utf-8 characters and other garbage
   # TODO: factor this out since it is used by PageProcessor as well
-  def self.cleansed_file_contents(file)
+  def self.contents_of(file)
     fulltext_input = file.get_input_stream.read.encode(
       Encoding.find('UTF-8'),
       invalid: :replace, undef: :replace, replace: ''
     )
+  end
+
+  def self.whitelisted(text)
     # break text up into array before clearing control chars, as newline is a
     # control char :/
-    fulltext_lines = fulltext_input.gsub(/[^0-9a-z\s]/i, ' ').split("\n")
+    fulltext_lines = text.gsub(
+      /[^0-9a-z\s\[\]—\-"$&£()\/*._%©]/i, ' '
+    ).split("\n")
     fulltext_lines.map { |line| line.gsub!(/[[:cntrl:]]/, ' ') }
     fulltext_lines.join("\n")
   end
