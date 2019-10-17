@@ -1,7 +1,6 @@
-# frozen_string_literal: true
-
 # job to ingest a ZIP file of fulltext records
 class FulltextProcessor
+  # require 'fulltext_helper'
   require 'zip'
 
   @queue = :fulltext_ingest_queue
@@ -43,7 +42,8 @@ class FulltextProcessor
             failed_file_results(record_id, 'No Item exists matching record_id')
             next
           end
-          item.fulltext = cleansed_file_contents(file)
+          file_contents = contents_of(file)
+          item.fulltext = FulltextUtils.whitelisted file_contents
           begin
             item.save!(validate: false)
             success_file_results record_id, item.id
@@ -79,17 +79,11 @@ class FulltextProcessor
   end
 
   # save text stripping any non utf-8 characters and other garbage
-  # TODO: factor this out since it is used by PageProcessor as well
-  def self.cleansed_file_contents(file)
-    fulltext_input = file.get_input_stream.read.encode(
+  def self.contents_of(file)
+    file.get_input_stream.read.encode(
       Encoding.find('UTF-8'),
       invalid: :replace, undef: :replace, replace: ''
     )
-    # break text up into array before clearing control chars, as newline is a
-    # control char :/
-    fulltext_lines = fulltext_input.gsub(/[^0-9a-z\s]/i, ' ').split("\n")
-    fulltext_lines.map { |line| line.gsub!(/[[:cntrl:]]/, ' ') }
-    fulltext_lines.join("\n")
   end
 
   def self.failed_file_results(file_name, message)
