@@ -48,7 +48,7 @@ describe FulltextProcessor, type: :model do
   describe '#whitelisted' do
     it 'retains the characters we like, and rejects those we dont' do
       string = "[Redacted]--$&£\"(CheesE)xa/*.——%X-©"
-      expect(FulltextProcessor.whitelisted(string)).to(
+      expect(FulltextUtil.whitelisted(string)).to(
           eq("[Redacted]--$&£\"(CheesE)xa/*.——%X-©")
       )
     end

@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 # job to ingest a ZIP file of fulltext records
 class FulltextProcessor
-  include FulltextHelper
+  # require 'fulltext_helper'
   require 'zip'
 
   @queue = :fulltext_ingest_queue
@@ -45,7 +43,7 @@ class FulltextProcessor
             next
           end
           file_contents = contents_of(file)
-          item.fulltext = whitelisted file_contents
+          item.fulltext = FulltextUtils.whitelisted file_contents
           begin
             item.save!(validate: false)
             success_file_results record_id, item.id

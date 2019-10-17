@@ -1,6 +1,6 @@
 # common methods for dealing with fulltext ingestion
-module FulltextHelper
-  def whitelisted(text)
+class FulltextUtils
+  def self.whitelisted(text)
     fulltext_whitelist_regex = /[^0-9a-z\s\[\]—\-"$&£()\/*._%©]/i
     # break text up into array before clearing control chars, as newline is a
     # control char :/

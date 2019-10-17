@@ -3,7 +3,7 @@
 # FULLTEXT conflicts between Item and Page will result in errors
 # FILE TYPE values set at Page level will be overridden if set at Item level
 class PageProcessor
-  include FulltextHelper
+  # require 'fulltext_helper'
 
   @queue = :page_ingest_queue
   @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
@@ -25,7 +25,7 @@ class PageProcessor
         )
         next
       elsif includes_item_fulltext(item_data)
-        item.fulltext = cleansed_file_contents item_data['fulltext']
+        item.fulltext = FulltextUtils.whitelisted item_data['fulltext']
       end
       item_file_type = item_data.key?('file_type') ? item_data['file_type'] : nil
       item_data['pages'].each do |page_data|
@@ -38,7 +38,7 @@ class PageProcessor
             existing_page.number = page_data['number'] if page_data.key? 'number'
             existing_page.file_type = page_data['file_type'] if page_data.key? 'file_type'
             existing_page.title = page_data['title'] if page_data.key? 'title'
-            existing_page.fulltext = whitelisted(page_data['fulltext']) if page_data.key? 'fulltext'
+            existing_page.fulltext = FulltextUtils.whitelisted(page_data['fulltext']) if page_data.key? 'fulltext'
             existing_page.save ? page_updated(item.id, existing_page) : page_failed(record_id, existing_page)
           else
             page = Page.create page_data.merge(item: item)
