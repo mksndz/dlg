@@ -45,4 +45,12 @@ describe FulltextProcessor, type: :model do
       expect(item.fulltext).to include "\n"
     end
   end
+  describe '#whitelisted' do
+    it 'retains the characters we like, and rejects those we dont' do
+      string = "\b\u0000[Redacted]-\n-$&£\"(Che:esE)xa/*.——%X-©"
+      expect(FulltextUtils.whitelisted(string)).to(
+        eq("  [Redacted]-\n-$&£\"(Che:esE)xa/*.——%X-©")
+      )
+    end
+  end
 end
