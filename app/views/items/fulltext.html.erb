@@ -12,4 +12,4 @@
 
 <br><br>
 
-<%= render 'shared/show_field', field_name: I18n.t('activerecord.attributes.item.fulltext'), value: @item.fulltext %>
+<%= render 'shared/show_field', field_name: I18n.t('activerecord.attributes.item.fulltext'), value: simple_format(@item.fulltext) %>
