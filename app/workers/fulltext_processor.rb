@@ -46,7 +46,7 @@ class FulltextProcessor
           item.fulltext = FulltextUtils.whitelisted file_contents
           begin
             item.save!(validate: false)
-            success_file_results record_id, item.id
+            success_file_results item.id
           rescue StandardError => e
             errors += 1
             failed_file_results record_id, e.message
