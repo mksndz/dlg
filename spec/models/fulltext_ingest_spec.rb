@@ -34,16 +34,9 @@ describe FulltextIngest do
   context 'has an undo action' do
     it 'removes added fulltext' do
       fti = Fabricate :completed_fulltext_ingest_for_undoing
-      r = Fabricate :empty_repository, slug: 'r1'
-      c = Fabricate(
-        :empty_collection,
-        slug: 'c1', repository: r, portals: r.portals
-      )
-      i = Fabricate(:item, slug: 'i1') do
-        collection c
-        portals c.portals
-        fulltext 'Fulltext'
-      end
+      i = Item.last
+      i.fulltext = 'Fulltext'
+      i.save
       fti.undo
       expect(fti.undone_at).not_to be_blank
       i.reload
@@ -62,7 +55,8 @@ describe FulltextIngest do
         expect(fti.finished_at).not_to be_blank
       end
       it 'returns all modified record ids' do
-        expect(fti.modified_record_ids).to eq %w(r1_c1_i1 r1_c1_i2)
+        expect(fti.modified_record_ids.length).to eq 2
+        expect(fti.modified_record_ids).to include Item.last.record_id
       end
     end
     context 'on partial failure' do
@@ -74,19 +68,13 @@ describe FulltextIngest do
       it 'has a true partial failure status' do
         expect(fti.partial_failure?).to be_truthy
       end
-      it 'has information for each file processed' do
-        processed_files = fti.processed_files
-        expect(processed_files.length).to eq 2
-        expect(processed_files).to have_key 'r1_c1_i1'
-        expect(processed_files).to have_key 'r1_c1_i2'
-        expect(processed_files['r1_c1_i1']).to have_key 'status'
-        expect(processed_files['r1_c1_i1']).to have_key 'item'
-        expect(processed_files['r1_c1_i2']).to have_key 'status'
-        expect(processed_files['r1_c1_i2']).to have_key 'reason'
-        expect(processed_files['r1_c1_i1']['status']).to eq 'success'
-        expect(processed_files['r1_c1_i1']['item']).to eq Item.last.id
-        expect(processed_files['r1_c1_i2']['status']).to eq 'failed'
-        expect(processed_files['r1_c1_i2']['reason']).to eq 'Exception message'
+      it 'has information for failed files' do
+        expect(fti.failed.length).to eq 1
+        expect(fti.failed.first[1]).to eq 'Exception message'
+      end
+      it 'has information for succeeded files' do
+        expect(fti.succeeded.length).to eq 1
+        expect(fti.succeeded).to eq [Item.last.id]
       end
     end
     context 'on total failure' do

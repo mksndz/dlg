@@ -46,7 +46,7 @@ class FulltextProcessor
           item.fulltext = FulltextUtils.whitelisted file_contents
           begin
             item.save!(validate: false)
-            success_file_results record_id, item.id
+            success_file_results item.id
           rescue StandardError => e
             errors += 1
             failed_file_results record_id, e.message
@@ -87,20 +87,14 @@ class FulltextProcessor
   end
 
   def self.failed_file_results(file_name, message)
-    @results[:files][file_name] = {
-      status: 'failed',
-      reason: message
-    }
+    @results[:files][:failed][file_name] = message
   end
 
-  def self.success_file_results(file_name, item)
-    @results[:files][file_name] = {
-      status: 'success',
-      item: item
-    }
+  def self.success_file_results(item_id)
+    @results[:files][:succeeded] << item_id
   end
 
   def self.init_results
-    @results = { status: nil, message: nil, files: {} }
+    @results = { status: nil, message: nil, files: { succeeded: [], failed: {} } }
   end
 end
