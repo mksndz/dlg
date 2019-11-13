@@ -60,8 +60,7 @@ feature 'Fulltext Ingests' do
           expect(all('tr').length).to eq 2
           expect(page).to have_css 'tr.success'
           expect(page).not_to have_css 'tr.danger'
-          expect(page).to have_text @fti.processed_files.first[0]
-          expect(page).to have_link 'Item Updated'
+          expect(page).to have_link I18n.t('meta.fulltext_ingests.labels.item_link')
         end
       end
     end
@@ -76,8 +75,7 @@ feature 'Fulltext Ingests' do
           expect(all('tr').length).to eq 2
           expect(page).to have_css 'tr.success'
           expect(page).to have_css 'tr.danger'
-          expect(page).to have_text @fti.processed_files.first[0]
-          expect(page).to have_text @fti.processed_files['r1_c1_i2']['reason']
+          expect(page).to have_text @fti.failed[0]
         end
       end
     end
