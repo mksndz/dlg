@@ -31,7 +31,7 @@ class FulltextIngest < ActiveRecord::Base
   end
 
   def failed?
-    results['status'] == 'failed'
+    results && results['status'] == 'failed'
   end
 
   def failed
