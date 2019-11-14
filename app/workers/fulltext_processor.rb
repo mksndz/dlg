@@ -87,7 +87,7 @@ class FulltextProcessor
   end
 
   def self.failed_file_results(file_name, message)
-    @results[:files][:failed][file_name] = message
+    @results[:files][:failed][file_name] = message.truncate(100)
   end
 
   def self.success_file_results(item_id)
