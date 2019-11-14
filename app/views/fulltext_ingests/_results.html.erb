@@ -9,7 +9,7 @@
       </div>
     </div>
   <% end %>
-  <% if @fulltext_ingest.success? or @fulltext_ingest.partial_failure? %>
+  <% if @fulltext_ingest.results and (@fulltext_ingest.success? or @fulltext_ingest.partial_failure?) %>
       <% if @fulltext_ingest.succeeded.present? or @fulltext_ingest.failed.present? %>
         <% i = 1 %>
         <table class="table table-hover fulltext-ingest-results-table">
@@ -52,6 +52,11 @@
       <% end %>
   <% else %>
     <div class="panel-body">
+      <% unless @fulltext_ingest.results %>
+        <div class="alert alert-danger">
+          The results for this load had to be removed because they were too large :/
+        </div>
+      <% end %>
       <% if @fulltext_ingest.results['message'] %>
         <div class="alert alert-danger">
           <%= @fulltext_ingest.results['message'] %>
