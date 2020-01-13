@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   end
 
   resources :repositories, :users, :subjects, :time_periods,
-            :features, :projects, :holding_institutions
+            :features, :projects, :holding_institutions, :remediation_action
 
   resources :item_versions, only: [] do
     member do
