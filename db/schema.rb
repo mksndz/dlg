@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190912180054) do
+ActiveRecord::Schema.define(version: 20200113142656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -393,6 +393,17 @@ ActiveRecord::Schema.define(version: 20190912180054) do
     t.integer  "holding_institution_id"
     t.string   "funding_sources",        default: [], null: false, array: true
     t.string   "notes"
+  end
+
+  create_table "remediation_actions", force: :cascade do |t|
+    t.string   "field"
+    t.string   "old_text"
+    t.string   "new_text"
+    t.integer  "user_id"
+    t.integer  "items",        default: [], array: true
+    t.datetime "performed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "repositories", force: :cascade do |t|

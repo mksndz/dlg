@@ -281,6 +281,21 @@ crumb :page_ingest do |page_ingest|
   parent :page_ingests
 end
 
+# REMEDIATION ACTIONS
+
+crumb :remediation_actions do
+  link 'Remediation Actions', remediation_actions_path
+end
+
+crumb :remediation_action do |remediation_action|
+  if remediation_action.persisted?
+    link remediation_action.id
+  else
+    link 'New'
+  end
+  parent :remediation_actions
+end
+
 # PROJECTS
 
 crumb :projects do

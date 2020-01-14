@@ -1,0 +1,10 @@
+<%= bootstrap_form_for(@remediation_action) do |f| %>
+
+  <%= f.alert_message t('meta.defaults.messages.errors.invalid_on_save', entity: 'Remediation Action') %>
+
+  <%= f.select :field, options_for_select(multivalued_fields) %>
+  <%= f.text_field :old_text %>
+  <%= f.text_field :new_text %>
+  <%= f.primary t('meta.remediation_action.action.review') %>
+
+<% end %>
