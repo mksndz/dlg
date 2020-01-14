@@ -194,7 +194,8 @@ en:
         features: 'Features'
         time_periods: 'Time Periods'
         projects: 'Projects'
-        holding_instititutions: 'Holding Institutions'
+        holding_institutions: 'Holding Institutions'
+        remediation_actions: 'Remediation Actions'
         resque: 'Background Jobs'
       user_menu:
         profile: 'User Info'
@@ -315,7 +316,6 @@ en:
         errors:
           has_invalid_collection_resources: 'You cannot commit a Collection
           with invalid resources'
-
     collection_resource:
       action:
         add: 'Create Collection Resource'
@@ -525,3 +525,9 @@ en:
         administrative: 'Administrative Information'
       action:
         add: 'New Holding Institution'
+    remediation_action:
+      action:
+        review: 'Review'
+        perform: 'Perform'
+      messages:
+        form_help: 'Use this form to perform a search and replace action across all Items. Choose a field, then enter the <em>complete</em> metadata element to match in "Value to Change" and then enter the replacement text in "Replacement Value". Clicking "Review" will give you the opportunity to see which Items will be subject to remediation.'

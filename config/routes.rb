@@ -45,7 +45,14 @@ Rails.application.routes.draw do
   end
 
   resources :repositories, :users, :subjects, :time_periods,
-            :features, :projects, :holding_institutions, :remediation_action
+            :features, :projects, :holding_institutions
+
+  resources :remediation_actions do
+    member do
+      post 'perform', to: 'remediation_actions#perform'
+      get 'review', to: 'remediation_actions#review'
+    end
+  end
 
   resources :item_versions, only: [] do
     member do

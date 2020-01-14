@@ -1,0 +1,28 @@
+<%= content_for :title do %>
+    Show Remediation Action
+<% end %>
+
+<%= content_for :subtitle do %>
+    <%= @remediation_action.id %>
+<% end %>
+
+<% breadcrumb :remediation_action, @remediation_action %>
+
+<% unless @remediation_action.performed_at %>
+<div class="btn-group" role="group" aria-label="Remediation Action actions">
+  <%= link_to t('meta.defaults.actions.edit'), edit_remediation_action_path(@remediation_action), class: 'btn btn-default' %>
+  <%= link_to(t('meta.defaults.actions.destroy'), remediation_action_path(@remediation_action), method: :delete, data: { confirm: t('meta.defaults.labels.confirm')}, class: 'btn btn-default') %>
+</div>
+
+<br /><br />
+<% end %>
+
+<%= render('items', items: @items) if @remediation_action.items.any? %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.field'), value: @remediation_action.field %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.old_text'), value: @remediation_action.old_text %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.new_text'), value: @remediation_action.new_text %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.user_id'), value: @remediation_action.user.email %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.created_at'), value: @remediation_action.created_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.updated_at'), value: @remediation_action.updated_at %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.performed_at'), value: @remediation_action.performed_at %>
+

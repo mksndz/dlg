@@ -84,6 +84,15 @@ en:
         queued_at: 'Queued At'
         created_at: 'Created At'
         updated_at: 'Updated At'
+      remediation_action:
+        field: 'Field'
+        old_text: 'Value to Change'
+        new_text: 'Replacement Value'
+        user_id: 'User'
+        items: 'Items Remediated'
+        performed_at: 'Performed At'
+        created_at: 'Created At'
+        updated_at: 'Updated At'
       subject:
         name: "Name"
       time_period:
