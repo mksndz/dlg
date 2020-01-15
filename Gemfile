@@ -15,7 +15,7 @@ gem 'cancancan', '~> 1.15'
 gem 'carrierwave', '~> 1.0'
 gem 'chosen-rails'
 gem 'coffee-rails', '~> 4.1.0'
-gem 'delayed_job_active_record' # TODO: remove
+#gem 'delayed_job_active_record' # TODO: remove
 gem 'devise'
 gem 'devise-guests', '~> 0.3' # TODO: remove?
 gem 'devise_invitable'
@@ -38,7 +38,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slack-notifier'
 gem 'sunspot_rails'
-gem 'therubyracer', platforms: :ruby
+#gem 'therubyracer', platforms: :ruby
 gem 'turbolinks'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'uglifier', '>= 1.3.0'
