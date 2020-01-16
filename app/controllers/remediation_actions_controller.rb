@@ -5,7 +5,7 @@ class RemediationActionsController < ApplicationController
   load_and_authorize_resource
   include ErrorHandling
   include Sorting
-  include MetadataHelper
+  include RemediationActionsHelper
 
   before_action :load_items, only: %i[review show]
 
