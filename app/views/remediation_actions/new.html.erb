@@ -1,0 +1,11 @@
+<%= content_for :title do %>
+  New Remediation Action
+<% end %>
+
+<% breadcrumb :remediation_action, @remediation_action %>
+
+<div class="well">
+  <%= t('meta.remediation_action.messages.form_help') %>
+</div>
+
+<%= render 'form' %>
