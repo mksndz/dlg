@@ -10,7 +10,6 @@
 
 <% unless @remediation_action.performed_at %>
   <div class="btn-group" role="group" aria-label="Remediation Action actions">
-    <%= link_to t('meta.defaults.actions.edit'), edit_remediation_action_path(@remediation_action), class: 'btn btn-default' %>
     <%= link_to(t('meta.defaults.actions.destroy'), remediation_action_path(@remediation_action), method: :delete, data: { confirm: t('meta.defaults.labels.confirm')}, class: 'btn btn-default') %>
   </div>
 

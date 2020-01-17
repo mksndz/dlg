@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   resources :repositories, :collections, :users, :subjects, :time_periods,
             :features, :projects, :holding_institutions
 
-  resources :remediation_actions do
+  resources :remediation_actions, except: %i[edit update] do
     member do
       post 'perform', to: 'remediation_actions#perform'
       get 'review', to: 'remediation_actions#review'
