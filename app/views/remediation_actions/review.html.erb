@@ -1,0 +1,21 @@
+<%= content_for :title do %>
+  Review and Perform Remediations
+<% end %>
+
+<%=
+  content_for :subtitle do
+    @remediation_action.id
+  end
+%>
+
+<% breadcrumb :remediation_action, @remediation_action %>
+
+<p>
+  <%= @items.count %> Items will be modified by this action!
+</p>
+
+<%= render 'items', items: @items %>
+
+<%= bootstrap_form_tag url: perform_remediation_action_path do |f| %>
+  <%= f.primary t('meta.remediation_action.action.perform') %>
+<% end %>
