@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Items</strong>
+  </div>
+  <div class="panel-body">
+    <ul>
+      <% items.each do |item| %>
+        <li><%= link_to item.record_id, item %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
