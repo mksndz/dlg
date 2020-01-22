@@ -129,7 +129,6 @@ class Item < ActiveRecord::Base
     string(:placename, as: 'placename', multiple: true)
 
     string :iiif_ids, stored: true, multiple: true
-
   end
 
   def self.index_query_fields

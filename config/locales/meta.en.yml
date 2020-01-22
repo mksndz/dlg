@@ -154,6 +154,7 @@ en:
         dcterms_medium: 'Medium'
         dlg_local_right: 'Local Rights Stmt.'
         dlg_subject_personal: 'Subject Personal'
+        iiif_ids: 'IIIF IDs'
         created_at: 'Created'
         updated_at: 'Updated'
       sort:
