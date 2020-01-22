@@ -24,6 +24,7 @@ class Item < ActiveRecord::Base
   # after_save :check_for_thumbnail
   before_save :set_record_id
   after_update :record_id_change_in_solr
+  after_touch :reindex
 
   searchable do
     integer(:collection_id) { collection.id }
@@ -254,6 +255,10 @@ class Item < ActiveRecord::Base
   end
 
   private
+
+  def reindex
+    Sunspot.index! self
+  end
 
   def set_record_id
     self.record_id = "#{repository.slug}_#{collection.slug}_#{slug}".downcase
