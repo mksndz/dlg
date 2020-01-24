@@ -3,11 +3,9 @@
 source 'https://rubygems.org'
 
 gem 'activerecord-in_batches', git: 'https://github.com/siadat/in_batches.git'
-gem 'aws-sdk-s3', '~> 1'
 gem 'blacklight', '>= 6.0.0'
 gem 'blacklight-gallery'
 gem 'blacklight-maps'
-gem 'blacklight-marc' # TODO: remove
 gem 'blacklight_advanced_search'
 gem 'bootstrap_form'
 gem 'bundler', '< 2.0'
@@ -15,9 +13,7 @@ gem 'cancancan', '~> 1.15'
 gem 'carrierwave', '~> 1.0'
 gem 'chosen-rails'
 gem 'coffee-rails', '~> 4.1.0'
-#gem 'delayed_job_active_record' # TODO: remove
 gem 'devise'
-gem 'devise-guests', '~> 0.3' # TODO: remove?
 gem 'devise_invitable'
 gem 'diffy'
 gem 'exception_notification'
@@ -38,11 +34,9 @@ gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slack-notifier'
 gem 'sunspot_rails'
-#gem 'therubyracer', platforms: :ruby
 gem 'turbolinks'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'uglifier', '>= 1.3.0'
-
 
 group :test do
   gem 'capybara'
