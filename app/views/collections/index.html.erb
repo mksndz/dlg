@@ -64,6 +64,9 @@
             <%= sortable 'collections.items_count', t('meta.defaults.labels.columns.items_count') %>
           </th>
           <th>
+            <%= sortable 'collections.collection_resources_count', t('meta.collection.labels.columns.resources') %>
+          </th>
+          <th>
             <%= sortable 'collections.created_at', t('activerecord.attributes.collection.created_at')  %>
           </th>
           <th>
@@ -96,6 +99,9 @@
               </td>
               <td>
                 <%= link_to(collection.items.size, items_path(collection_id: collection.id)) %>
+              </td>
+              <td>
+                <%= link_to(collection.collection_resources.size, collection_collection_resources_path(collection)) %>
               </td>
               <td>
                 <%= display_date collection.created_at %>

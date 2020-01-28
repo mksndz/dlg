@@ -120,6 +120,7 @@ class CatalogController < ApplicationController
     config.add_show_field 'dcterms_extent_display',                 label: I18n.t('meta.search.labels.dcterms_extent')
     config.add_show_field 'dcterms_medium_display',                 label: I18n.t('meta.search.labels.dcterms_medium')
     config.add_show_field 'dlg_subject_personal_display',           label: I18n.t('meta.search.labels.dlg_subject_personal')
+    config.add_show_field 'iiif_ids_sms',                           label: I18n.t('meta.search.labels.iiif_ids')
     config.add_show_field 'created_at_dts',                         label: I18n.t('meta.search.labels.created_at')
     config.add_show_field 'updated_at_dts',                         label: I18n.t('meta.search.labels.updated_at')
 

@@ -18,6 +18,8 @@ Fabricator(:collection) do
   dcterms_spatial ['United States, Georgia, Bibb County, 32.8064982, -83.69742']
   edm_is_shown_at ['http://dlg.galileo.usg.edu']
   edm_is_shown_by ['http://dlg.galileo.usg.edu']
+  sponsor_note Faker::Lorem.sentence(5)
+  sponsor_image File.open("#{Rails.root}/spec/files/snickers.jpg")
   dcterms_type ['Collection']
   holding_institutions(count: 1)
 end
@@ -25,6 +27,12 @@ end
 Fabricator(:empty_collection, from: :collection) do
   repository(fabricator: :empty_repository)
   portals { |attrs| attrs[:repository].portals }
+end
+
+Fabricator(:empty_collection_with_resource, from: :collection) do
+  repository(fabricator: :empty_repository)
+  portals { |attrs| attrs[:repository].portals }
+  collection_resources(count:1)
 end
 
 Fabricator(:collection_with_repo_and_item, from: :collection) do

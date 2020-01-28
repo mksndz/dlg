@@ -44,11 +44,25 @@ RSpec.describe Api::V2::CollectionsController do
     end
 
     it 'routes to #show' do
-      expect(get: 'api/v2/collections/r_c_i.json?').to route_to(
+      expect(get: 'api/v2/collections/r_c_i.json').to route_to(
         controller: 'api/v2/collections',
         action: 'show',
         format: 'json',
         id: 'r_c_i'
+      )
+    end
+  end
+end
+
+RSpec.describe Api::V2::CollectionResourcesController do
+  describe 'routing' do
+    it 'routes to #show' do
+      expect(get: 'api/v2/collections/r_c/resource/slug.json').to route_to(
+        controller: 'api/v2/collection_resources',
+        action: 'show',
+        format: 'json',
+        collection: 'r_c',
+        slug: 'slug'
       )
     end
   end
