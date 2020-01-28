@@ -25,17 +25,8 @@
 # ignore files for DPLA feed
 /public/dpla*
 
-# ignore uninteresting jetty/solr config files
-jetty/*
-!jetty/solr/blacklight-core/conf/schema.xml
-!jetty/solr/blacklight-core/conf/solrconfig.xml
-
 # hide secrets
 /config/secrets.yml
 
 # redis file
 dump.rdb
-
-# large collections of images
-/app/assets/images/collection_thumbnails/*
-#/app/assets/images/rs_org_icons/*
