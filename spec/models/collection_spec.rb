@@ -81,6 +81,11 @@ RSpec.describe Collection, type: :model do
     it 'responds to DPLA Items' do
       expect(collection).to respond_to :dpla_items
     end
+    it 'can have associated CollectionResources' do
+      collection.collection_resources << Fabricate(:collection_resource)
+      expect(collection).to respond_to :collection_resources
+      expect(collection.collection_resources.first).to be_a CollectionResource
+    end
     it 'can have associated Subjects' do
       collection.subjects << Fabricate(:subject)
       expect(collection).to respond_to 'subjects'

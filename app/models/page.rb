@@ -1,10 +1,11 @@
 # represent a Page: an optional component of an Item
 class Page < ActiveRecord::Base
-  belongs_to :item, counter_cache: true
+  belongs_to :item, counter_cache: true, touch: true
   validates :file_type, presence: true
   validates :number, presence: true
   validates :number, uniqueness: { scope: :item }
   validates :number, numericality: true
+
   mount_uploader :file, DigitalObjectUploader
 
   PAGE_PATH_LENGTH = 5
@@ -33,6 +34,10 @@ class Page < ActiveRecord::Base
   end
 
   private
+
+  def reinex_parent
+    Sunspot.index item
+  end
 
   def iiif_link_with_id
     "#{Rails.application.secrets.iiif_base_uri}#{iiif_identifier}"

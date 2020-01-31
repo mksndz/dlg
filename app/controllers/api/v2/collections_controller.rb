@@ -17,7 +17,11 @@ module Api
                      end
         raise ActiveRecord::RecordNotFound unless collection && collection.public?
 
-        render json: collection, include: %i[portals]
+        render json: collection, include: {
+          portals: {},
+          collection_resources: { only: %i[slug title position] },
+          holding_institutions: { only: %i[image display_name authorized_name] }
+        }
       end
 
       private

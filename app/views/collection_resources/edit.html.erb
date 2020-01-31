@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-sm-12 col-md-11">
+    <%= content_for :title do %>
+        Edit Collection Resource
+    <% end %>
+
+    <%= content_for :subtitle do %>
+        <%= @collection_resource.title %>
+    <% end %>
+
+    <% breadcrumb :collection_resource, @collection_resource %>
+
+    <%= render 'form' %>
+  </div>
+</div>

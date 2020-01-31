@@ -65,6 +65,26 @@ crumb :collection do |collection|
   parent :collections
 end
 
+# COLLECTION RESOURCES
+
+crumb :collection_resources do |collection|
+  link collection.display_title, collection
+  link 'Collection Resources', collection_collection_resources_path(collection)
+  parent :collections
+end
+
+crumb :collection_resource do |collection_resource|
+  link collection_resource.collection.display_title,
+       collection_resource.collection
+  parent :collections
+  link 'Collection Resources', collection_collection_resources_path(collection_resource.collection)
+  if collection_resource.id
+    link collection_resource.title
+  else
+    link 'New'
+  end
+end
+
 # ITEM
 
 crumb :items do

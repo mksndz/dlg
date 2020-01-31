@@ -10,7 +10,7 @@
 # :manual_actions: will include jobs that can be run any time after setup and
 #   deployment
 stages:
-#  - setup
+  #  - setup
   - dependency_scan
   - deploy_staging
   - deploy_production

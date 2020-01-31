@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'API V2 for Items', type: :request do
+RSpec.describe 'API V2 for Collections', type: :request do
   headers = { 'X-User-Token' => Rails.application.secrets.api_token }
   context 'can list using #index' do
     before(:each) do
@@ -52,7 +52,6 @@ RSpec.describe 'API V2 for Items', type: :request do
           headers
       json = JSON.parse(response.body)
       expect(json['id']).to eq @collection.id
-      expect(json['holding_institution_image']).to eq @collection.holding_institution_image
     end
     it 'returns all data about an item using database ID' do
       get "/api/v2/collections/#{@collection.id}.json",
@@ -60,6 +59,33 @@ RSpec.describe 'API V2 for Items', type: :request do
           headers
       json = JSON.parse(response.body)
       expect(json['id']).to eq @collection.id
+      expect(json.keys).to include 'sponsor_note', 'sponsor_image'
+    end
+    context 'with CollectionResources' do
+      before(:each) do
+        @collection.collection_resources << Fabricate.times(2, :collection_resource)
+      end
+      it 'returns CollectionResource info without content' do
+        get "/api/v2/collections/#{@collection.id}.json",
+            {},
+            headers
+        json = JSON.parse(response.body)
+        expect(json['collection_resources'].length).to eq 2
+        expect(json['collection_resources'][0].keys).to include 'slug', 'title', 'position'
+      end
+    end
+    context 'with HoldingInstitutions' do
+      before(:each) do
+        @collection.holding_institutions << Fabricate(:holding_institution)
+      end
+      it 'returns holding institution info and image url' do
+        get "/api/v2/collections/#{@collection.id}.json",
+            {},
+            headers
+        json = JSON.parse(response.body)
+        expect(json['holding_institutions'].length).to eq 2
+        expect(json['holding_institutions'][0].keys).to include 'display_name', 'authorized_name', 'image'
+      end
     end
   end
 end

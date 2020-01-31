@@ -3,11 +3,11 @@
     <strong>Results</strong>
   </div>
   <% if @fulltext_ingest.undone_at %>
-    <div class="panel-body">
-      <div class="alert alert-warning">
-        This Ingest was undone at <%= display_date(@fulltext_ingest.undone_at) %>, which removed the loaded fulltext from the Items linked to below.
-      </div>
+  <div class="panel-body">
+    <div class="alert alert-warning">
+      This Ingest was undone at <%= display_date(@fulltext_ingest.undone_at) %>, which removed the loaded fulltext from the Items linked to below.
     </div>
+  </div>
   <% end %>
   <% if @fulltext_ingest.results and (@fulltext_ingest.success? or @fulltext_ingest.partial_failure?) %>
       <% if @fulltext_ingest.succeeded.present? or @fulltext_ingest.failed.present? %>
