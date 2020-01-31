@@ -26,8 +26,16 @@ class FulltextIngest < ActiveRecord::Base
     results['status'] == 'success'
   end
 
+  def succeeded
+    results['files']['succeeded']
+  end
+
   def failed?
-    results['status'] == 'failed'
+    results && results['status'] == 'failed'
+  end
+
+  def failed
+    results['files']['failed']
   end
 
   def partial_failure?
@@ -41,10 +49,6 @@ class FulltextIngest < ActiveRecord::Base
   end
 
   def modified_record_ids
-    ids = []
-    processed_files.each do |record_id, outcome|
-      ids << record_id if outcome['status'] == 'success'
-    end
-    ids
+    Item.where(id: succeeded).pluck(:record_id)
   end
 end

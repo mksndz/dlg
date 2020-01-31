@@ -45,22 +45,6 @@ GEM
     arel (6.0.4)
     autoprefixer-rails (9.6.1)
       execjs
-    aws-eventstream (1.0.3)
-    aws-partitions (1.172.0)
-    aws-sdk-core (3.54.2)
-      aws-eventstream (~> 1.0, >= 1.0.2)
-      aws-partitions (~> 1.0)
-      aws-sigv4 (~> 1.1)
-      jmespath (~> 1.0)
-    aws-sdk-kms (1.21.0)
-      aws-sdk-core (~> 3, >= 3.53.0)
-      aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.42.0)
-      aws-sdk-core (~> 3, >= 3.53.0)
-      aws-sdk-kms (~> 1)
-      aws-sigv4 (~> 1.1)
-    aws-sigv4 (1.1.0)
-      aws-eventstream (~> 1.0, >= 1.0.2)
     bcrypt (3.1.13)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -84,13 +68,6 @@ GEM
       leaflet-markercluster-rails
       leaflet-rails
       rails
-    blacklight-marc (6.1.0)
-      blacklight (~> 6.1)
-      library_stdnums
-      marc (>= 0.4.3, < 1.1)
-      marc-fastxmlwriter
-      rails
-      traject (~> 2.1)
     blacklight_advanced_search (6.0.2)
       blacklight (~> 6.0, >= 6.0.1)
       parslet
@@ -130,11 +107,6 @@ GEM
     concurrent-ruby (1.1.5)
     crass (1.0.5)
     debug_inspector (0.0.2)
-    delayed_job (4.1.2)
-      activesupport (>= 3.0, < 5.1)
-    delayed_job_active_record (4.1.1)
-      activerecord (>= 3.0, < 5.1)
-      delayed_job (>= 3.0, < 5)
     deprecation (1.0.0)
       activesupport
     devise (4.7.1)
@@ -143,15 +115,12 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-guests (0.5.0)
-      devise
     devise_invitable (1.6.0)
       actionmailer (>= 3.2.6)
       devise (>= 3.2.0)
     diff-lcs (1.3)
     diffy (3.1.0)
     docile (1.3.1)
-    dot-properties (0.1.3)
     erubis (2.7.0)
     exception_notification (4.2.2)
       actionmailer (>= 4.0, < 6)
@@ -166,14 +135,11 @@ GEM
       activesupport (>= 4.2.0)
     gretel (3.0.8)
       rails (>= 3.2.0)
-    hashie (3.4.4)
-    httpclient (2.8.0)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
-    jmespath (1.4.0)
     jquery-rails (4.1.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -190,18 +156,11 @@ GEM
     leaflet-markercluster-rails (0.7.0)
       railties (>= 3.1)
     leaflet-rails (0.7.7)
-    library_stdnums (1.4.1)
-    libv8 (3.16.14.13)
     loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    marc (1.0.0)
-      scrub_rb (>= 1.0.1, < 2)
-      unf
-    marc-fastxmlwriter (1.0.0)
-      marc (~> 1.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -211,7 +170,7 @@ GEM
     mono_logger (1.1.0)
     multi-select-rails (0.9.12)
       railties (>= 3.0)
-    multi_json (1.12.1)
+    multi_json (1.14.1)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
     openseadragon (0.5.0)
@@ -267,18 +226,17 @@ GEM
       ffi (~> 1.0)
     rdoc (4.2.2)
       json (~> 1.4)
-    redis (3.2.1)
-    redis-namespace (1.5.2)
-      redis (~> 3.0, >= 3.0.4)
-    ref (2.0.0)
+    redis (4.1.3)
+    redis-namespace (1.7.0)
+      redis (>= 3.0.4)
     request_store (1.3.1)
     responders (2.4.1)
       actionpack (>= 4.2.0, < 6.0)
       railties (>= 4.2.0, < 6.0)
-    resque (1.26.0)
+    resque (2.0.0)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
-      redis-namespace (~> 1.3)
+      redis-namespace (~> 1.6)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
     resque_spec (0.17.0)
@@ -320,7 +278,6 @@ GEM
     sassc (2.0.1)
       ffi (~> 1.9)
       rake
-    scrub_rb (1.0.1)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -329,12 +286,11 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    sinatra (1.4.6)
-      rack (~> 1.4)
+    sinatra (1.4.8)
+      rack (~> 1.5)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
     slack-notifier (2.3.1)
-    slop (3.6.0)
     spring (1.7.2)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
@@ -350,21 +306,9 @@ GEM
       nokogiri
       rails (>= 3)
       sunspot (= 2.2.5)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
-      ref
     thor (0.20.3)
     thread_safe (0.3.6)
-    tilt (2.0.8)
-    traject (2.3.1)
-      concurrent-ruby (>= 0.8.0)
-      dot-properties (>= 0.1.1)
-      hashie (~> 3.1)
-      httpclient (~> 2.5)
-      marc (~> 1.0)
-      marc-fastxmlwriter (~> 1.0)
-      slop (>= 3.4.5, < 4.0)
-      yell
+    tilt (2.0.10)
     turbolinks (5.0.0)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
@@ -376,9 +320,6 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.7.2)
     vegas (0.1.11)
       rack (>= 1.0.0)
     warden (1.2.7)
@@ -395,18 +336,15 @@ GEM
       nokogiri (~> 1.3)
     xray-rails (0.3.1)
       rails (>= 3.1.0)
-    yell (2.0.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   activerecord-in_batches!
-  aws-sdk-s3 (~> 1)
   blacklight (>= 6.0.0)
   blacklight-gallery
   blacklight-maps
-  blacklight-marc
   blacklight_advanced_search
   bootstrap_form
   bundler (< 2.0)
@@ -416,9 +354,7 @@ DEPENDENCIES
   carrierwave (~> 1.0)
   chosen-rails
   coffee-rails (~> 4.1.0)
-  delayed_job_active_record
   devise
-  devise-guests (~> 0.3)
   devise_invitable
   diffy
   exception_notification
@@ -448,7 +384,6 @@ DEPENDENCIES
   slack-notifier
   spring
   sunspot_rails
-  therubyracer
   turbolinks
   tzinfo-data
   uglifier (>= 1.3.0)

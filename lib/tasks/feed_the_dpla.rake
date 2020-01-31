@@ -35,7 +35,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
   Dir.mkdir(run_file_storage) unless Dir.exist?(run_file_storage)
 
   # initialize s3 uploader
-  s3 = DplaS3Service.new date
+  # s3 = DplaS3Service.new date
 
   # initialize Solr connection object
   solr = Blacklight.default_index.connection
@@ -87,12 +87,13 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
 
     # upload file to DPLA S3 bucket
     # TODO: handle errors (failed upload)
-    outcome = s3.upload file.path
+    # TODO: disable until i can diagnose missing data on s3 upload
+    # outcome = s3.upload file.path
 
     outcomes << {
       run: run,
-      file: file.path,
-      uploaded: outcome
+      file: file.path
+      # uploaded: outcome
     }
 
     file.close

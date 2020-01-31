@@ -24,7 +24,8 @@ module Meta
     config.active_record.raise_in_transactional_callbacks = true
 
     # configure queue adapter
-    config.active_job.queue_adapter = :delayed_job
+    # Removed in favor of Resque
+    #config.active_job.queue_adapter = :delayed_job
 
     config.generators do |g|
       g.test_framework      :rspec, fixture: true
