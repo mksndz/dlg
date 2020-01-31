@@ -25,18 +25,11 @@ describe FulltextProcessor, type: :model do
       expect(fti.success?).to be_falsey
       expect(fti.partial_failure?).to be_truthy
       expect(fti.failed?).to be_falsey
-      expect(fti.processed_files.length).to eq 3
-      expect(fti.processed_files['r1_c1_i1']).to(
-        eq('status' => 'success',
-           'item' => Item.find_by_record_id('r1_c1_i1').id)
-      )
-      expect(fti.processed_files['r1_c1_i2']).to(
-        eq('status' => 'success',
-           'item' => Item.find_by_record_id('r1_c1_i2').id)
-      )
-      expect(fti.processed_files['invalid_record_id']).to(
-        eq('status' => 'failed',
-           'reason' => 'No Item exists matching record_id')
+      expect(fti.succeeded.length).to eq 2
+      expect(fti.failed.length).to eq 1
+      expect(fti.succeeded).to include(Item.find_by_record_id('r1_c1_i1').id, Item.find_by_record_id('r1_c1_i2').id)
+      expect(fti.failed['invalid_record_id']).to(
+        eq('No Item exists matching record_id')
       )
     end
     it 'retains whitespace characters' do

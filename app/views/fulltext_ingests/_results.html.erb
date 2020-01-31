@@ -9,67 +9,77 @@
     </div>
   </div>
   <% end %>
-  <% if @fulltext_ingest.success? or @fulltext_ingest.partial_failure? %>
-    <table class="table table-hover fulltext-ingest-results-table">
-      <thead>
-      <tr>
-        <th>
-          <%= t('meta.fulltext_ingests.labels.number') %>
-        </th>
-        <th>
-          <%= t('meta.fulltext_ingests.labels.file') %>
-        </th>
-        <th>
-          <%= t('meta.fulltext_ingests.labels.outcome') %>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <% i = 1 %>
-      <% @fulltext_ingest.processed_files.each do |f| %>
-        <tr class="<%= f[1]['status'] == 'success' ? 'success' : 'danger' %>">
-          <td>
-            <%= i %>
-          </td>
-          <td>
-            <%= f[0] %>
-          </td>
-          <td>
-            <% if f[1]['status'] == 'success' %>
-              <%= link_to t('meta.fulltext_ingests.labels.item_link'), item_path(f[1]['item']) %>
-            <% else %>
-              <%= f[1]['reason'] %>
-            <% end %>
-          </td>
-        </tr>
-        <% i += 1 %>
-      <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <div class="panel-body">
-      <% if @fulltext_ingest.results['message'] %>
-        <div class="alert alert-danger">
-          <%= @fulltext_ingest.results['message'] %>
+  <% if @fulltext_ingest.results and (@fulltext_ingest.success? or @fulltext_ingest.partial_failure?) %>
+      <% if @fulltext_ingest.succeeded.present? or @fulltext_ingest.failed.present? %>
+        <% i = 1 %>
+        <table class="table table-hover fulltext-ingest-results-table">
+          <thead>
+          <tr>
+            <th>
+              <%= t('meta.fulltext_ingests.labels.number') %>
+            </th>
+            <th>
+              <%= t('meta.fulltext_ingests.labels.file') %>
+            </th>
+            <th>
+              <%= t('meta.fulltext_ingests.labels.outcome') %>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @fulltext_ingest.failed.each do |record_id, message| %>
+            <tr class="danger">
+              <td><%= i %></td>
+              <td><%= record_id %></td>
+              <td><%= message %></td>
+            </tr>
+            <% i += 1 %>
+          <% end %>
+          <% @fulltext_ingest.succeeded.each do |item_id| %>
+            <tr class="success">
+              <td><%= i %></td>
+              <td></td>
+              <td><%= link_to t('meta.fulltext_ingests.labels.item_link'), item_path(item_id) %></td>
+            </tr>
+            <% i += 1 %>
+          <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="well">
+          <%= @fulltext_ingest.results %>
         </div>
       <% end %>
-      <% if @fulltext_ingest.processed_files %>
-      <table class="table table-hover fulltext-ingest-results-table">
-        <thead>
-          <tr>
-            <th><%= t('meta.fulltext_ingests.labels.file') %></th>
-            <th><%= t('meta.fulltext_ingests.labels.outcome') %></th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @fulltext_ingest.processed_files.each do |file| %>
-          <tr>
-            <td><%= file[0] %></td>
-            <td><%= truncate file[1]['reason'], length: 100 %></td>
-          </tr>
+  <% else %>
+    <div class="panel-body">
+      <% if @fulltext_ingest.results %>
+        <% if @fulltext_ingest.results['message'] %>
+          <div class="alert alert-danger">
+            <%= @fulltext_ingest.results['message'] %>
+          </div>
         <% end %>
-        </tbody>
-      </table>
+        <% if @fulltext_ingest.processed_files %>
+          <table class="table table-hover fulltext-ingest-results-table">
+            <thead>
+            <tr>
+              <th><%= t('meta.fulltext_ingests.labels.file') %></th>
+              <th><%= t('meta.fulltext_ingests.labels.outcome') %></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @fulltext_ingest.failed do |record_id, message| %>
+              <tr>
+                <td><%= record_id %></td>
+                <td><%= truncate message, length: 100 %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      <% else %>
+        <div class="alert alert-danger">
+          The results for this load had to be removed because they were too large :/
+        </div>
       <% end %>
     </div>
   <% end %>

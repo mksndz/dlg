@@ -1,9 +1,9 @@
 <%= content_for :title do %>
-    Show Remediation Action
+  Show Remediation Action
 <% end %>
 
 <%= content_for :subtitle do %>
-    <%= @remediation_action.id %>
+  <%= @remediation_action.id %>
 <% end %>
 
 <% breadcrumb :remediation_action, @remediation_action %>
@@ -12,7 +12,8 @@
   <div class="btn-group" role="group" aria-label="Remediation Action actions">
     <%= link_to(t('meta.defaults.actions.destroy'), remediation_action_path(@remediation_action), method: :delete, data: { confirm: t('meta.defaults.labels.confirm')}, class: 'btn btn-default') %>
   </div>
-<br /><br />
+
+  <br /><br />
 <% end %>
 
 <%= render('items', items: @items) if @remediation_action.items.any? %>
@@ -23,4 +24,3 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.created_at'), value: @remediation_action.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.updated_at'), value: @remediation_action.updated_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.remediation_action.performed_at'), value: @remediation_action.performed_at %>
-
