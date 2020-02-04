@@ -12,9 +12,12 @@
 stages:
   #  - setup
   - dependency_scan
+  - setup_db_solr
+  - setup_web_and_test
+  - deconstruct
   - deploy_staging
   - deploy_production
-  - manual_actions
+  - push
 
 
 # Dependency Scan
@@ -30,6 +33,46 @@ bundler_audit:
     name: dependency_scan
   tags:
     - shell
+
+# Setup PG and Solr containers to support test runner
+setup_db_solr:
+  stage: setup_db_solr
+  except:
+    - prod
+    - staging
+  script:
+    - docker network create meta_testing_${CI_PIPELINE_ID}
+    - docker run -d --name solr_${CI_PIPELINE_ID} --expose 8983 -v `pwd`:/data -w /data --network meta_testing_${CI_PIPELINE_ID} --network-alias=solr --entrypoint "/bin/bash" solr:6 /data/provision/solr-entrypoint.sh
+    - docker run --name db_${CI_PIPELINE_ID} --expose 5432 --network meta_testing_${CI_PIPELINE_ID} --network-alias=db -d postgres
+    - docker run --name redis_${CI_PIPELINE_ID} --expose 6379 --network meta_testing_${CI_PIPELINE_ID} --network-alias=redis -d redis:5
+    - docker ps
+  tags:
+    - shell
+
+# Setup Web container to run RSpec tests
+setup_web_and_test:
+  stage: setup_web_and_test
+  except:
+    - prod
+    - staging
+  script:
+    - docker run -d --name web_${CI_PIPELINE_ID} -v `pwd`:/code -w /code --network meta_testing_${CI_PIPELINE_ID} --network-alias=web --entrypoint "/bin/bash" ruby:2.4.5 /code/provision/web-entrypoint.sh && docker attach web_${CI_PIPELINE_ID}
+  tags:
+    - shell
+
+# Teardown containers on shell runner
+deconstruct:
+  stage: deconstruct
+  except:
+    - prod
+    - staging
+  script:
+    - docker rm -f solr_${CI_PIPELINE_ID} db_${CI_PIPELINE_ID} web_${CI_PIPELINE_ID} redis_${CI_PIPELINE_ID}
+    - docker network rm meta_testing_${CI_PIPELINE_ID}
+  when: always
+  tags:
+    - shell
+
 
 # Deploy To Staging
 # This job copies app code and secrets to staging machine, installs gems,
@@ -70,32 +113,6 @@ deploy_to_production:
     - RAILS_ENV=production bundle exec rake assets:precompile --trace
     - passenger-config restart-app /app/meta
     - ./restart_workers_production.sh
-  environment:
-    name: production
-  tags:
-    - metaweb2-shell
-
-# Restart Passenger on Staging
-restart_passenger_staging:
-  stage: manual_actions
-  only:
-    - staging
-  script:
-    - passenger-config restart-app /app/meta
-  when: manual
-  environment:
-    name: staging
-  tags:
-    - meta-staging-shell
-
-# Restart Passenger on Production
-restart_passenger_prod:
-  stage: manual_actions
-  only:
-    - master
-  script:
-    - passenger-config restart-app /app/meta
-  when: manual
   environment:
     name: production
   tags:
