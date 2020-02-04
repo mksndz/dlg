@@ -273,7 +273,7 @@ ActiveRecord::Schema.define(version: 20200204194620) do
     t.text     "site_visits"
     t.text     "consultations"
     t.text     "impact_stories"
-    t.text     "newspaper_patnerships"
+    t.text     "newspaper_partnerships"
     t.text     "committee_participation"
     t.text     "other"
   end

@@ -58,6 +58,13 @@ feature 'Holding Institution management' do
         expect(page).to have_text holding_institution.analytics_emails.first
         expect(page).to have_text holding_institution.subgranting
         expect(page).to have_text holding_institution.grant_partnerships
+        expect(page).to have_text holding_institution.training
+        expect(page).to have_text holding_institution.site_visits
+        expect(page).to have_text holding_institution.consultations
+        expect(page).to have_text holding_institution.impact_stories
+        expect(page).to have_text holding_institution.newspaper_partnerships
+        expect(page).to have_text holding_institution.committee_participation
+        expect(page).to have_text holding_institution.other
       end
     end
     context 'edit page', js: true do
