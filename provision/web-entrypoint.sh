@@ -14,5 +14,6 @@ cp /code/config/blacklight.yml.ci /code/config/blacklight.yml
 cp /code/config/secrets.yml.ci /code/config/secrets.yml
 HOME=/code bundle exec rake db:create RAILS_ENV=test
 HOME=/code bundle exec rake db:schema:load RAILS_ENV=test
+HOME=/code bundle config --global jobs 8
 chown -R gitlab-runner:gitlab-runner /code
 sudo -E -u gitlab-runner bundle exec rspec --color --format documentation
