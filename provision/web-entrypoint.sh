@@ -12,7 +12,9 @@ HOME=/code bundle install --jobs=8
 cp /code/config/database.yml.ci /code/config/database.yml
 cp /code/config/blacklight.yml.ci /code/config/blacklight.yml
 cp /code/config/secrets.yml.ci /code/config/secrets.yml
+echo 'Creating database'
 HOME=/code bundle exec rake db:create RAILS_ENV=test
+echo 'Loading schema'
 HOME=/code bundle exec rake db:schema:load RAILS_ENV=test
 chown -R gitlab-runner:gitlab-runner /code
 sudo -E -u gitlab-runner bundle exec rspec --color --format documentation
