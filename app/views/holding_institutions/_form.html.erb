@@ -36,8 +36,16 @@
   <%= f.select :harvest_strategy, HoldingInstitutionsHelper::HARVEST_STRATEGIES, { }, { class: 'fancy-select' } %>
   <%= meta_textarea @holding_institution, :oai_urls %>
   <%= f.text_area :ignored_collections %>
+  <%= f.date_field :last_harvested_at %>
   <%= meta_textarea @holding_institution, :analytics_emails %>
   <%= f.text_area :subgranting %>
   <%= f.text_area :grant_partnerships %>
+  <%= f.text_area :training %>
+  <%= f.text_area :site_visits %>
+  <%= f.text_area :consultations %>
+  <%= f.text_area :impact_stories %>
+  <%= f.text_area :newspaper_patnerships %>
+  <%= f.text_area :committee_participation %>
+  <%= f.text_area :other %>
   <%= f.primary t('meta.defaults.actions.save') %>
 <% end %>
