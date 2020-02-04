@@ -34,6 +34,7 @@ bundler_audit:
   tags:
     - shell
 
+
 # Setup PG and Solr containers to support test runner
 setup_db_solr:
   stage: setup_db_solr
@@ -73,6 +74,22 @@ deconstruct:
   tags:
     - shell
 
+# Staging Push
+# Automatic job to push the last commit to master to staging
+push_to_staging:
+  stage: push
+  only:
+    - master
+  script:
+    - git clone -n https://gitlab.galileo.usg.edu/DLG/meta.git /tmp/dlg_${CI_PIPELINE_ID}
+    - cd /tmp/meta_${CI_PIPELINE_ID}
+    - git checkout ${CI_COMMIT_SHA} 
+    - sudo -H -u pushbot git push origin HEAD:staging 
+    - cd /tmp
+    - rm -rf /tmp/meta_${CI_PIPELINE_ID}
+  tags:
+    - shell 
+
 
 # Deploy To Staging
 # This job copies app code and secrets to staging machine, installs gems,
@@ -95,6 +112,24 @@ deploy_to_staging:
     name: staging
   tags:
     - meta-staging-shell
+
+
+# Production push
+# Manual job to push the staging server code to production
+push_to_prod:
+  stage: push
+  only:
+    - staging
+  when: manual
+  script:
+    - git clone -n https://gitlab.galileo.usg.edu/DLG/meta.git /tmp/dlg_${CI_PIPELINE_ID}
+    - cd /tmp/meta_{CI_PIPELINE_ID}
+    - git checkout ${CI_COMMIT_SHA} 
+    - sudo -H -u pushbot git push origin HEAD:prod 
+    - cd /tmp
+    - rm -rf /tmp/dlg_${CI_PIPELINE_ID}
+  tags:
+    - shell 
 
 # Deploy To Production
 # This job copies app code and secrets to PRODUCTION machine, installs gems,
