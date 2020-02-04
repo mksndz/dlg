@@ -117,21 +117,3 @@ deploy_to_production:
     name: production
   tags:
     - metaweb2-shell
-
-# Initialize Staging App Database
-# Deploys app code and secrets, then runs rake task to initialize database
-#initialize_staging_database:
-#  stage: setup
-#  only:
-#    - staging
-#  script:
-#    - rsync -rv --exclude=.git* . /deploy/meta/
-#    - cd /deploy/meta
-#    - /deploy/scripts/post_fetch.sh
-#    - bundle install --path vendor/bundle
-#    - RAILS_ENV=staging bundle exec rake db:setup
-#  when: manual
-#  environment:
-#    name: staging
-#  tags:
-#    - meta-staging-shell
