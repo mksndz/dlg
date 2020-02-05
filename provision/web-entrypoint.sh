@@ -15,8 +15,6 @@ cp /code/config/secrets.yml.ci /code/config/secrets.yml
 echo 'Creating database'
 HOME=/code bundle exec rake db:create RAILS_ENV=test
 echo 'Loading schema'
-HOME=/code bundle exec rake db:schema:load RAILS_ENV=test
-echo 'Loading seeds'
-HOME=/code bundle exec rake db:seed RAILS_ENV=test
+HOME=/code bundle exec rake db:test:prepare RAILS_ENV=test
 chown -R gitlab-runner:gitlab-runner /code
 sudo -E -u gitlab-runner bundle exec rspec --color --format documentation
