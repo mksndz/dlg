@@ -139,7 +139,7 @@ push_to_prod:
 deploy_to_production:
   stage: deploy_production
   only:
-    - master
+    - prod
   script:
     - cd /deploy/meta
     - git pull
