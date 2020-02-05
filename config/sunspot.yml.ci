@@ -1,0 +1,7 @@
+test:
+  solr:
+    hostname: solr
+    port: 8983
+    log_level: WARNING
+    path: /solr/meta-test
+    
