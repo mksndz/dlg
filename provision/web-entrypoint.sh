@@ -14,4 +14,5 @@ cp /code/config/database.yml.ci /code/config/database.yml
 cp /code/config/blacklight.yml.ci /code/config/blacklight.yml
 cp /code/config/secrets.yml.ci /code/config/secrets.yml
 HOME=/code bundle exec rake db:setup RAILS_ENV=test
+cat /code/meta/logs/test.log
 sudo -E -u gitlab-runner bundle exec rspec --color --format documentation
