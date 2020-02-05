@@ -48,6 +48,7 @@ group :test do
   gem 'rspec-mocks'
   gem 'rspec-rails', '~> 3.0'
   gem 'simplecov'
+  gem 'transactional_capybara'
 end
 
 group :development do
