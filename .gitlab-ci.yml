@@ -81,7 +81,7 @@ push_to_staging:
   only:
     - master
   script:
-    - git clone -n https://gitlab.galileo.usg.edu/DLG/meta.git /tmp/dlg_${CI_PIPELINE_ID}
+    - git clone -n https://gitlab.galileo.usg.edu/DLG/meta.git /tmp/meta_${CI_PIPELINE_ID}
     - cd /tmp/meta_${CI_PIPELINE_ID}
     - git checkout ${CI_COMMIT_SHA} 
     - sudo -H -u pushbot git push origin HEAD:staging 
@@ -122,12 +122,12 @@ push_to_prod:
     - staging
   when: manual
   script:
-    - git clone -n https://gitlab.galileo.usg.edu/DLG/meta.git /tmp/dlg_${CI_PIPELINE_ID}
+    - git clone -n https://gitlab.galileo.usg.edu/DLG/meta.git /tmp/meta_${CI_PIPELINE_ID}
     - cd /tmp/meta_{CI_PIPELINE_ID}
     - git checkout ${CI_COMMIT_SHA} 
     - sudo -H -u pushbot git push origin HEAD:prod 
     - cd /tmp
-    - rm -rf /tmp/dlg_${CI_PIPELINE_ID}
+    - rm -rf /tmp/meta_${CI_PIPELINE_ID}
   tags:
     - shell 
 
