@@ -1,1 +1,2 @@
-$redis = Redis.new(host: 'localhost', port: 6379)
+host = Rails.application.secrets.try(:redis_host) || 'localhost'
+$redis = Redis.new(host: host, port: 6379)

@@ -1,0 +1,3 @@
+test: &test
+  adapter: solr
+  url: http://solr:8983/solr/meta-test
