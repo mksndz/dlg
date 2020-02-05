@@ -13,6 +13,6 @@ cp /code/config/database.yml.ci /code/config/database.yml
 cp /code/config/blacklight.yml.ci /code/config/blacklight.yml
 cp /code/config/secrets.yml.ci /code/config/secrets.yml
 cp /code/config/sunspot.yml.ci /code/config/sunspot.yml
-HOME=/code RAILS_ENV=test bundle exec rake db:setup --trace
+HOME=/code RAILS_ENV=test bundle exec rake db:setup
 chown -R gitlab-runner:gitlab-runner /code
 sudo -E -u gitlab-runner bundle exec rspec --color --format documentation
