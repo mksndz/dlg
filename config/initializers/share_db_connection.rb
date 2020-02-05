@@ -1,6 +1,6 @@
 # Needed to make Integration testing work with Poltergeist
 
-# if Rails.env == 'test'
+if Rails.env == 'test'
 #
 #   class ActiveRecord::Base
 #     mattr_accessor :shared_connection
@@ -15,5 +15,5 @@
 #   # Capybara because it starts the web server in a thread.
 #   ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 #
-# end
+end
 
