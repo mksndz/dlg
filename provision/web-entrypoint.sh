@@ -8,7 +8,7 @@ cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /bin/
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=918727
 export OPENSSL_CONF=/dev/null
 HOME=/code gem install bundler
-HOME=/code bundle install --jobs=8
+HOME=/code bundle install --jobs=4
 cp /code/config/database.yml.ci /code/config/database.yml
 cp /code/config/blacklight.yml.ci /code/config/blacklight.yml
 cp /code/config/secrets.yml.ci /code/config/secrets.yml
