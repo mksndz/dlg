@@ -123,7 +123,7 @@ push_to_prod:
   when: manual
   script:
     - git clone -n https://gitlab.galileo.usg.edu/DLG/meta.git /tmp/meta_${CI_PIPELINE_ID}
-    - cd /tmp/meta_{CI_PIPELINE_ID}
+    - cd /tmp/meta_${CI_PIPELINE_ID}
     - git checkout ${CI_COMMIT_SHA} 
     - sudo -H -u pushbot git push origin HEAD:prod 
     - cd /tmp
