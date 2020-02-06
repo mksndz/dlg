@@ -74,7 +74,7 @@ class HoldingInstitutionsController < ApplicationController
                 :public_contact_email, :public_contact_phone,
                 :last_harvested_at, :training, :site_visits, :consultations,
                 :impact_stories, :newspaper_partnerships,
-                :committee_participation, :other,
+                :committee_participation, :other, :wikidata_id,
                 repository_ids: [])
     )
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200204194620) do
+ActiveRecord::Schema.define(version: 20200206151735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -276,6 +276,7 @@ ActiveRecord::Schema.define(version: 20200204194620) do
     t.text     "newspaper_partnerships"
     t.text     "committee_participation"
     t.text     "other"
+    t.string   "wikidata_id"
   end
 
   add_index "holding_institutions", ["authorized_name"], name: "index_holding_institutions_on_authorized_name", using: :btree

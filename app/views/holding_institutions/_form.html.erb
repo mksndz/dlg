@@ -31,6 +31,7 @@
   <%= f.select :repository_ids, @data[:repositories].collect { |c| [c.title, c.id] }.unshift(''), { include_blank: true }, { multiple: true, class: 'fancy-multiselect' } %>
   <%= f.check_box :galileo_member %>
   <%= f.select :institution_type, HoldingInstitutionsHelper::HOLDING_INSTITUTION_TYPES, { }, { class: 'fancy-select' } %>
+  <%= f.text_field :wikidata_id %>
   <%= f.text_field :contact_name %>
   <%= f.text_field :contact_email %>
   <%= f.select :harvest_strategy, HoldingInstitutionsHelper::HARVEST_STRATEGIES, { }, { class: 'fancy-select' } %>

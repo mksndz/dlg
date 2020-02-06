@@ -47,6 +47,7 @@ en:
         public_contact_phone: 'Public Contact Phone'
         institution_type: 'Type'
         galileo_member: 'GALILEO Member?'
+        wikidata_id: 'Wikidata ID'
         contact_name: 'Contact Name'
         contact_email: 'Contact Email'
         harvest_strategy: 'Harvest Strategy'
