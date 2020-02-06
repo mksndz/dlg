@@ -2,7 +2,7 @@ Vagrant.configure('2') do |config|
   config.vm.box = 'ubuntu/xenial64'
   config.vm.network :forwarded_port, guest: 8983, host: 4983
   config.vm.network :forwarded_port, guest: 5432, host: 4432
-  config.vm.network :forwarded_port, guest: 6379, host: 6379
+  config.vm.network :forwarded_port, guest: 6379, host: 4379
   config.vm.provider :virtualbox do |v, _|
     v.memory = 1024
   end

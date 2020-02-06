@@ -112,6 +112,7 @@
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_name'), value: @holding_institution.contact_name %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.contact_email'), value: mail_to(@holding_institution.contact_email) %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.galileo_member'), value: @holding_institution.galileo_member %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.wikidata_id'), value: @holding_institution.wikidata_id %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.harvest_strategy'), value: @holding_institution.harvest_strategy %>
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.oai_urls'), values: @holding_institution.oai_urls %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.ignored_collections'), value: @holding_institution.ignored_collections %>
@@ -119,5 +120,13 @@
 <%= render 'shared/show_multivalued_field', field_name: t('activerecord.attributes.holding_institution.analytics_emails'), values: @holding_institution.analytics_emails %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.subgranting'), value: @holding_institution.subgranting %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.grant_partnerships'), value: @holding_institution.grant_partnerships %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.training'), value: @holding_institution.training %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.site_visits'), value: @holding_institution.site_visits %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.consultations'), value: @holding_institution.consultations %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.impact_stories'), value: @holding_institution.impact_stories %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.newspaper_partnerships'), value: @holding_institution.newspaper_partnerships %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.committee_participation'), value: @holding_institution.committee_participation %>
+<%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.other'), value: @holding_institution.other %>
+
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.created_at'), value: @holding_institution.created_at %>
 <%= render 'shared/show_field', field_name: t('activerecord.attributes.holding_institution.updated_at'), value: @holding_institution.updated_at %>

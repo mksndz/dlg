@@ -31,13 +31,22 @@
   <%= f.select :repository_ids, @data[:repositories].collect { |c| [c.title, c.id] }.unshift(''), { include_blank: true }, { multiple: true, class: 'fancy-multiselect' } %>
   <%= f.check_box :galileo_member %>
   <%= f.select :institution_type, HoldingInstitutionsHelper::HOLDING_INSTITUTION_TYPES, { }, { class: 'fancy-select' } %>
+  <%= f.text_field :wikidata_id %>
   <%= f.text_field :contact_name %>
   <%= f.text_field :contact_email %>
   <%= f.select :harvest_strategy, HoldingInstitutionsHelper::HARVEST_STRATEGIES, { }, { class: 'fancy-select' } %>
   <%= meta_textarea @holding_institution, :oai_urls %>
   <%= f.text_area :ignored_collections %>
+  <%= f.date_field :last_harvested_at %>
   <%= meta_textarea @holding_institution, :analytics_emails %>
   <%= f.text_area :subgranting %>
   <%= f.text_area :grant_partnerships %>
+  <%= f.text_area :training %>
+  <%= f.text_area :site_visits %>
+  <%= f.text_area :consultations %>
+  <%= f.text_area :impact_stories %>
+  <%= f.text_area :newspaper_partnerships %>
+  <%= f.text_area :committee_participation %>
+  <%= f.text_area :other %>
   <%= f.primary t('meta.defaults.actions.save') %>
 <% end %>
