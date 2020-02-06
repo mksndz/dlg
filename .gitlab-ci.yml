@@ -12,9 +12,12 @@
 stages:
   #  - setup
   - dependency_scan
+  - setup_db_solr
+  - setup_web_and_test
+  - deconstruct
   - deploy_staging
   - deploy_production
-  - manual_actions
+  - push
 
 
 # Dependency Scan
@@ -30,6 +33,63 @@ bundler_audit:
     name: dependency_scan
   tags:
     - shell
+
+
+# Setup PG and Solr containers to support test runner
+setup_db_solr:
+  stage: setup_db_solr
+  except:
+    - prod
+    - staging
+  script:
+    - docker network create meta_testing_${CI_PIPELINE_ID}
+    - docker run -d --name solr_${CI_PIPELINE_ID} --expose 8983 -v `pwd`:/data -w /data --network meta_testing_${CI_PIPELINE_ID} --network-alias=solr --entrypoint "/bin/bash" solr:6 /data/provision/solr-entrypoint.sh
+    - docker run --name db_${CI_PIPELINE_ID} --expose 5432 --network meta_testing_${CI_PIPELINE_ID} --network-alias=db -d postgres
+    - docker run --name redis_${CI_PIPELINE_ID} --expose 6379 --network meta_testing_${CI_PIPELINE_ID} --network-alias=redis -d redis:5
+    - docker ps
+  tags:
+    - shell
+
+# Setup Web container to run RSpec tests
+setup_web_and_test:
+  stage: setup_web_and_test
+  except:
+    - prod
+    - staging
+  script:
+    - docker run -d --name web_${CI_PIPELINE_ID} -v `pwd`:/code -w /code --network meta_testing_${CI_PIPELINE_ID} --network-alias=web --entrypoint "/bin/bash" ruby:2.4.5 /code/provision/web-entrypoint.sh && docker attach web_${CI_PIPELINE_ID}
+  tags:
+    - shell
+
+# Teardown containers on shell runner
+deconstruct:
+  stage: deconstruct
+  except:
+    - prod
+    - staging
+  script:
+    - docker rm -f solr_${CI_PIPELINE_ID} db_${CI_PIPELINE_ID} web_${CI_PIPELINE_ID} redis_${CI_PIPELINE_ID}
+    - docker network rm meta_testing_${CI_PIPELINE_ID}
+  when: always
+  tags:
+    - shell
+
+# Staging Push
+# Automatic job to push the last commit to master to staging
+push_to_staging:
+  stage: push
+  only:
+    - master
+  script:
+    - git clone -n https://gitlab.galileo.usg.edu/DLG/meta.git /tmp/meta_${CI_PIPELINE_ID}
+    - cd /tmp/meta_${CI_PIPELINE_ID}
+    - git checkout ${CI_COMMIT_SHA} 
+    - sudo -H -u pushbot git push origin HEAD:staging 
+    - cd /tmp
+    - rm -rf /tmp/meta_${CI_PIPELINE_ID}
+  tags:
+    - shell 
+
 
 # Deploy To Staging
 # This job copies app code and secrets to staging machine, installs gems,
@@ -53,6 +113,24 @@ deploy_to_staging:
   tags:
     - meta-staging-shell
 
+
+# Production push
+# Manual job to push the staging server code to production
+push_to_prod:
+  stage: push
+  only:
+    - staging
+  when: manual
+  script:
+    - git clone -n https://gitlab.galileo.usg.edu/DLG/meta.git /tmp/meta_${CI_PIPELINE_ID}
+    - cd /tmp/meta_{CI_PIPELINE_ID}
+    - git checkout ${CI_COMMIT_SHA} 
+    - sudo -H -u pushbot git push origin HEAD:prod 
+    - cd /tmp
+    - rm -rf /tmp/meta_${CI_PIPELINE_ID}
+  tags:
+    - shell 
+
 # Deploy To Production
 # This job copies app code and secrets to PRODUCTION machine, installs gems,
 # runs any database migrations, deploys assets and restarts passenger. Resque
@@ -61,7 +139,7 @@ deploy_to_staging:
 deploy_to_production:
   stage: deploy_production
   only:
-    - master
+    - prod
   script:
     - cd /deploy/meta
     - git pull
@@ -74,47 +152,3 @@ deploy_to_production:
     name: production
   tags:
     - metaweb2-shell
-
-# Restart Passenger on Staging
-restart_passenger_staging:
-  stage: manual_actions
-  only:
-    - staging
-  script:
-    - passenger-config restart-app /app/meta
-  when: manual
-  environment:
-    name: staging
-  tags:
-    - meta-staging-shell
-
-# Restart Passenger on Production
-restart_passenger_prod:
-  stage: manual_actions
-  only:
-    - master
-  script:
-    - passenger-config restart-app /app/meta
-  when: manual
-  environment:
-    name: production
-  tags:
-    - metaweb2-shell
-
-# Initialize Staging App Database
-# Deploys app code and secrets, then runs rake task to initialize database
-#initialize_staging_database:
-#  stage: setup
-#  only:
-#    - staging
-#  script:
-#    - rsync -rv --exclude=.git* . /deploy/meta/
-#    - cd /deploy/meta
-#    - /deploy/scripts/post_fetch.sh
-#    - bundle install --path vendor/bundle
-#    - RAILS_ENV=staging bundle exec rake db:setup
-#  when: manual
-#  environment:
-#    name: staging
-#  tags:
-#    - meta-staging-shell

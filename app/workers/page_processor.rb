@@ -51,6 +51,7 @@ class PageProcessor
           next
         end
       end
+      Sunspot.index item
     end
     Sunspot.commit
     judge_job_outcome
