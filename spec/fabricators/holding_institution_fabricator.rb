@@ -16,9 +16,17 @@ Fabricator(:holding_institution) do
   harvest_strategy 'OAI'
   oai_urls { Faker::Internet.url }
   ignored_collections 'None'
+  last_harvested_at { Faker::Date.backward }
   analytics_emails { [Faker::Internet.email, Faker::Internet.email] }
   subgranting { Faker::Hipster.sentence(2) }
   grant_partnerships { Faker::Hipster.sentence(2) }
+  training { Faker::Hipster.sentence(10) }
+  site_visits { Faker::Hipster.sentence(9) }
+  consultations { Faker::Hipster.sentence(8) }
+  impact_stories { Faker::Hipster.sentence(7) }
+  newspaper_partnerships { Faker::Hipster.sentence(6) }
+  committee_participation { Faker::Hipster.sentence(5) }
+  other { Faker::Hipster.sentence(4) }
   notes { Faker::Hipster.sentence(10) }
   parent_institution { Faker::University.name }
   image File.open("#{Rails.root}/spec/files/aarl.gif")

@@ -72,6 +72,9 @@ class HoldingInstitutionsController < ApplicationController
                 :grant_partnerships, :image, :remove_image, :image_cache,
                 :notes, :parent_institution, :slug, :public_contact_address,
                 :public_contact_email, :public_contact_phone,
+                :last_harvested_at, :training, :site_visits, :consultations,
+                :impact_stories, :newspaper_partnerships,
+                :committee_participation, :other, :wikidata_id,
                 repository_ids: [])
     )
   end

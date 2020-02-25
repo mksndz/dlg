@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-kill -9 `cat ./pidfiles/commit_worker.pid`
-kill -9 `cat ./pidfiles/xml_worker.pid`
-kill -9 `cat ./pidfiles/xml_worker2.pid`
-kill -9 `cat ./pidfiles/reindex_worker.pid`
-kill -9 `cat ./pidfiles/optimize_worker.pid`
-kill -9 `cat ./pidfiles/fulltext_worker.pid`
-kill -9 `cat ./pidfiles/resave_worker.pid`
-kill -9 `cat ./pidfiles/page_processor_worker.pid`
+kill -15 `cat ./pidfiles/commit_worker.pid` &
+kill -15 `cat ./pidfiles/xml_worker.pid` &
+kill -15 `cat ./pidfiles/xml_worker2.pid` &
+kill -15 `cat ./pidfiles/reindex_worker.pid` &
+kill -15 `cat ./pidfiles/optimize_worker.pid` &
+kill -15 `cat ./pidfiles/fulltext_worker.pid` &
+kill -15 `cat ./pidfiles/resave_worker.pid` &
+kill -15 `cat ./pidfiles/page_processor_worker.pid` &
 
 PIDFILE=./pidfiles/commit_worker.pid BACKGROUND=yes QUEUE=batch_commit_queue RAILS_ENV=staging bundle exec rake resque:work
 PIDFILE=./pidfiles/xml_worker.pid BACKGROUND=yes QUEUE=xml RAILS_ENV=staging bundle exec rake resque:work

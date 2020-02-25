@@ -9,6 +9,7 @@ require 'capybara/rspec'
 require 'paper_trail/frameworks/rspec'
 require 'capybara-screenshot/rspec'
 require 'capybara/poltergeist'
+require 'transactional_capybara/rspec'
 
 # Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
