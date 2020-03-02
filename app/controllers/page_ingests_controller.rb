@@ -67,7 +67,7 @@ class PageIngestsController < ApplicationController
         raise(ImportFailedError,
               I18n.t('meta.page_ingests.messages.errors.file_error'))
       end
-      file.read
+      file.read.strip
     elsif text.present?
       text.strip
     else
