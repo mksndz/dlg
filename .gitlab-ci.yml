@@ -28,7 +28,7 @@ bundler_audit:
     - staging
     - master
   script:
-    - bundle audit check --update --ignore CVE-2020-10663 #mitigated by https://gitlab.galileo.usg.edu/DLG/meta/-/commit/a07e05dda9704fd964732c02157ff8e1b5f1a208#20c32a58cfcd70f3d89b0d11b2c0e85fa09d22c9
+    - bundle audit check --update --ignore GHSA-65cv-r6x7-79hv #mitigated by https://gitlab.galileo.usg.edu/DLG/meta/-/commit/a07e05dda9704fd964732c02157ff8e1b5f1a208#20c32a58cfcd70f3d89b0d11b2c0e85fa09d22c9
   environment:
     name: dependency_scan
   tags:
