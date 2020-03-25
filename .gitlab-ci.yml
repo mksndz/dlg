@@ -44,7 +44,7 @@ setup_db_solr:
   script:
     - docker network create meta_testing_${CI_PIPELINE_ID}
     - docker run -d --name solr_${CI_PIPELINE_ID} --expose 8983 -v `pwd`:/data -w /data --network meta_testing_${CI_PIPELINE_ID} --network-alias=solr --entrypoint "/bin/bash" solr:6 /data/provision/solr-entrypoint.sh
-    - docker run --name db_${CI_PIPELINE_ID} --expose 5432 --network meta_testing_${CI_PIPELINE_ID} --network-alias=db -d postgres
+    - docker run --name db_${CI_PIPELINE_ID} --expose 5432 --network meta_testing_${CI_PIPELINE_ID} -e POSTGRES_HOST_AUTH_METHOD="trust" -e POSTGRES_PASSWORD="testing" --network-alias=db -d postgres
     - docker run --name redis_${CI_PIPELINE_ID} --expose 6379 --network meta_testing_${CI_PIPELINE_ID} --network-alias=redis -d redis:5
     - docker ps
   tags:
