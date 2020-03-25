@@ -15,7 +15,7 @@ describe RemediationService, type: :model do
   describe '#prepare' do
     it 'sets the IDs for the items to update' do
       service.prepare(@action)
-      expect(@action.items).to eq @items.collect(&:id)
+      expect(@action.items).to  match_array(@items.collect(&:id))
     end
   end
   describe '#run' do
