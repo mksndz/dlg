@@ -20,6 +20,11 @@ class Collection < ActiveRecord::Base
 
   mount_uploader :sponsor_image, ImageUploader
 
+  scope :for_indexing, lambda {
+                         includes(:portals)
+                           .includes(:holding_institutions)
+                           .includes(:repository)
+                       }
   scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
   scope :are_public, -> { where(public: true) }
   scope :alphabetized, -> { order(display_title: :asc) }

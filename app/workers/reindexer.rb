@@ -3,7 +3,7 @@ class Reindexer
   @queue = :reindex
   @slack = Slack::Notifier.new Rails.application.secrets.slack_worker_webhook
 
-  REINDEX_BATCH_SIZE = 1000
+  REINDEX_BATCH_SIZE = 10_000
 
   def self.perform(model, ids = [])
     @model = model
@@ -17,8 +17,15 @@ class Reindexer
   def self.reindex_model
     notify "Reindexing all `#{@model}` objects."
     @model.constantize.find_in_batches(batch_size: REINDEX_BATCH_SIZE) do |batch|
-      Sunspot.index! batch
+      retries ||= 0
+      Sunspot.index batch
+    rescue Net::ReadTimeout => e
+      raise(e) if (retries += 1) < 3
+
+      @slack.ping "Retrying batch index due to timeout (retry #{i})"
+      retry
     end
+    Sunspot.commit
   rescue StandardError => e
     notify "Reindexing failed for model `#{@model}`: ```#{e}```"
   end

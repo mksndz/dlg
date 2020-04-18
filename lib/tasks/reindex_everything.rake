@@ -2,7 +2,7 @@ require 'rake'
 
 task reindex_everything: :environment do
   @logger = Logger.new('./log/reindex.log')
-  INDEXED_MODELS = %w(Item Collection).freeze
+  INDEXED_MODELS = %w[Item Collection].freeze
   INDEXED_MODELS.each do |model|
     if model.constantize.respond_to? :reindex
       Resque.enqueue(Reindexer, model)

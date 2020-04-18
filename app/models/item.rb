@@ -16,7 +16,12 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :slug, scope: :collection_id
   validates_presence_of :collection
 
-  scope :updated_since, lambda { |since| where('updated_at >= ?', since) }
+  scope :for_indexing, lambda {
+                         includes(:portals)
+                           .includes(:holding_institutions)
+                           .includes(:collection).includes(:repository)
+                       }
+  scope :updated_since, ->(since) { where('updated_at >= ?', since) }
   scope :are_public, -> { where(public: true) }
 
   has_paper_trail class_name: 'ItemVersion', ignore: [:record_id]
