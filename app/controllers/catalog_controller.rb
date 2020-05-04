@@ -242,6 +242,15 @@ class CatalogController < ApplicationController
       }
     end
 
+    # subject (personal)
+    config.add_search_field('subject_personal') do |field|
+      field.label = 'Subject'
+      field.solr_local_parameters = {
+        qf: 'subject_personal_unstem_search^100 dlg_subject_personal_text^50',
+        pf: 'subject_personal_unstem_search^100 dlg_subject_personal_text^50'
+      }
+    end
+
     # description
     config.add_search_field('description') do |field|
       field.label = 'Description'

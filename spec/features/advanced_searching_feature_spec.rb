@@ -172,6 +172,15 @@ feature 'Advanced Searching' do
       click_button 'Search'
       expect(all('.edit-record').count).to eq 1
     end
+    scenario 'subject personal search returns only relevant results' do
+      @item.dlg_subject_personal = ['ZZZZZZZZZZ']
+      @item.save
+      Sunspot.commit
+      visit blacklight_advanced_search_engine.advanced_search_path
+      fill_in 'subject_personal', with: 'ZZZZZZZZZZ'
+      click_button 'Search'
+      expect(all('.edit-record').count).to eq 1
+    end
     scenario 'is part of search returns only relevant results' do
       @item.dcterms_is_part_of = ['ZZZZZZZZZZ']
       @item.save
