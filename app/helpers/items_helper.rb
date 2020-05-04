@@ -33,6 +33,8 @@ module ItemsHelper
   end
 
   def version_author_name(version)
+    return 'Batch Action' unless version
+
     user = User.get_version_author(version)
     user ? user.email : 'A Deleted User'
   end
