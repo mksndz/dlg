@@ -28,7 +28,8 @@ class FulltextIngestsController < ApplicationController
         notice: I18n.t('meta.fulltext_ingests.messages.success.queued')
       )
     else
-      render :new, I18n.t('meta.defaults.messages.errors.not_created', entity: 'Fulltext Ingest')
+      render :new, alert: I18n.t('meta.defaults.messages.errors.not_created',
+                                 entity: 'Fulltext Ingest')
     end
   end
 
