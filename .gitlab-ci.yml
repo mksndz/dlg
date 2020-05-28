@@ -28,7 +28,7 @@ bundler_audit:
     - staging
     - master
   script:
-    - bundle audit check --update --ignore CVE-2020-5267 #mitigated by https://gitlab.galileo.usg.edu/DLG/meta/-/commit/a07e05dda9704fd964732c02157ff8e1b5f1a208#20c32a58cfcd70f3d89b0d11b2c0e85fa09d22c9
+    - bundle audit check --update --ignore CVE-2020-5267 CVE-2020-8161 CVE-2020-8165 CVE-2020-8164 CVE-2020-8166 CVE-2020-8167  # ignored CVEs are either mitigated in code or not exposed by meta app. will be cleared once we upgrade to rails 5
   environment:
     name: dependency_scan
   tags:
