@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'digest/md5'
+
 # Facilitates upload to the DPLA's AWS S3 bucket for the DLG
 class DplaS3Service
 
@@ -16,7 +18,10 @@ class DplaS3Service
     return false unless File.exist? path
 
     name = File.join @folder, File.basename(path)
-    upload = @s3.bucket(@bucket).object(name).upload_file(path)
+    file_md5 = Digest::MD5.file(path).base64digest
+    upload = @s3.bucket(@bucket)
+                .object(name)
+                .upload_file(path, content_md5: file_md5)
     unless upload
       @notifier.notify "DPLA S3 Service: upload of `#{name}` to `#{@bucket}` failed!"
     end

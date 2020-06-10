@@ -35,7 +35,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
   Dir.mkdir(run_file_storage) unless Dir.exist?(run_file_storage)
 
   # initialize s3 uploader
-  # s3 = DplaS3Service.new date
+  s3 = DplaS3Service.new date
 
   # initialize Solr connection object
   solr = Blacklight.default_index.connection
@@ -50,7 +50,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
   rows = if defined?(args) && args[:records_per_file]
            args[:records_per_file]
          else
-           '10000'
+           '5000'
          end
 
   # query Solr until the end of the set is reached
@@ -86,14 +86,12 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
     end
 
     # upload file to DPLA S3 bucket
-    # TODO: handle errors (failed upload)
-    # TODO: disable until i can diagnose missing data on s3 upload
-    # outcome = s3.upload file.path
+    outcome = s3.upload file.path
 
     outcomes << {
       run: run,
-      file: file.path
-      # uploaded: outcome
+      file: file.path,
+      uploaded: outcome
     }
 
     file.close
