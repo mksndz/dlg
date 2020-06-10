@@ -2,6 +2,16 @@
 
 require 'rake'
 
+## This job extracts DPLA=true records from solr, build JSON files and uploads
+# them to the DPLA S3 bucket just for the DLG. AWS credentials and bucket name
+# are in the secrets.yml file.
+#
+# Avoid using a number of rows higher than 5000 as it may lead to file sizes
+# that will trigger an 'multipart' upload to S3, which will break the md5
+# checksum validation in place for each upload (see DplaS3Service).
+
+# Also, periodically remove the set_* files from /tmp
+
 task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
 
   # explicitly state fields to be included in Solr response, and therefore the
@@ -50,7 +60,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
   rows = if defined?(args) && args[:records_per_file]
            args[:records_per_file]
          else
-           '10000'
+           '5000'
          end
 
   # query Solr until the end of the set is reached
