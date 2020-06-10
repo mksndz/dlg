@@ -24,7 +24,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
   notifier = NotificationService.new
 
   # build path for server file storage
-  local_file_storage = File.join(Rails.application.root, 'public')
+  local_file_storage = File.join(Rails.application.root, 'tmp')
 
   # build date strings for file path and S3 folder
   date = Time.zone.now.strftime('%m%d%Y')
