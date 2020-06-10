@@ -50,7 +50,7 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
   rows = if defined?(args) && args[:records_per_file]
            args[:records_per_file]
          else
-           '5000'
+           '10000'
          end
 
   # query Solr until the end of the set is reached
@@ -85,6 +85,8 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
       file.puts doc.to_json
     end
 
+    file.close
+
     # upload file to DPLA S3 bucket
     outcome = s3.upload file.path
 
@@ -93,8 +95,6 @@ task(:feed_the_dpla, [:records_per_file] => [:environment]) do |_, args|
       file: file.path,
       uploaded: outcome
     }
-
-    file.close
 
     run += 1
   end
